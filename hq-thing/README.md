@@ -22,18 +22,15 @@ Documenting the various redesigned parts of the prototype at Hack Club HQ.
 | 4        | smooth 6mm?? idler pulleys     | Amazon            |                           |
 | 1        | timing belt                    | Amazon            |                           |
 
-tood finish
-
 ### Fabricated parts
 
-| Quantity | Part             | File                                                              | Notes                                                                                                                                 |
-| -------- | ---------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| 2        | Belt clamp clamp | [belt-clamp-clamp.stl](./3d/belt-clamp-clamp.stl)                 |                                                                                                                                       |
-| 1        | Belt clamp       | [belt-clamp-thick.stl](./3d/belt-clamp-thick.stl)                 |                                                                                                                                       |
-| 1        | Pen holder       | [pen-holder-pen-part.stl](./3d/pen-holder-pen-part.stl)           | part that holds the pen                                                                                                               |
-| 1        | Pen holder       | [pen-holder-vertical-part.stl](./3d/pen-holder-vertical-part.stl) | part attaches to the belt-clamp-thick                                                                                                 |
-| 1        | servo arm        | [servo-arm.stl](./3d/servo-arm.stl)                               |                                                                                                                                       |
-| 2        | foot             | [feet.stl](./3d/foot.stl)                                         | need to redesign. This is the part the steppers are mounted on. I think right now, it's kind of weak and will probably sag over time. |
-| 1        | carriage         | [carriage.dxf](./laser/carriage.dxf)                              | laser cut 1/4" acrylic. TODO: check if this is actually the right file                                                                |
-
-toodoo: add jerryr-gied idler pulley
+| Quantity | Part             | File                                                                                                    | Notes                                                                                                                                 |
+| -------- | ---------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| 2        | Belt clamp clamp | [belt-clamp-clamp.stl](./3d/belt-clamp-clamp.stl)                                                       |                                                                                                                                       |
+| 1        | Belt clamp       | [belt-clamp-thick.stl](./3d/belt-clamp-thick.stl)                                                       |                                                                                                                                       |
+| 1        | Pen holder       | [pen-holder-pen-part.stl](./3d/pen-holder-pen-part.stl)                                                 | part that holds the pen                                                                                                               |
+| 1        | Pen holder       | [pen-holder-vertical-part.stl](./3d/pen-holder-vertical-part.stl)                                       | part attaches to the belt-clamp-thick                                                                                                 |
+| 1        | servo arm        | [servo-arm.stl](./3d/servo-arm.stl)                                                                     |                                                                                                                                       |
+| 2        | foot             | [feet.stl](./3d/foot.stl)                                                                               | need to redesign. This is the part the steppers are mounted on. I think right now, it's kind of weak and will probably sag over time. |
+| 1        | carriage         | [carriage.dxf](./laser/carriage.dxf)                                                                    | laser cut 1/4" acrylic. TODO: check if this is actually the right file                                                                |
+| 1        | idler (2 parts)  | [idler-round-thing.stl](./3d/idler-round-thing.stl) and [idler-with-mount.stl](3d/idler-with-mount.stl) | idler that goes on one end of the axis that moves                                                                                     |
