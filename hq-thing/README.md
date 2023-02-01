@@ -2,6 +2,9 @@
 
 Documenting the various redesigned parts of the prototype at Hack Club HQ.
 
+![drawing-thing-1](https://user-images.githubusercontent.com/72365100/216111031-4d0d3c92-9011-4a9d-b6a0-00293544a068.gif)
+
+
 ## Bill of Materials
 
 ### Off-the-shelf parts
