@@ -1,6 +1,6 @@
 # pen holder
 
-##### Version 0
+##### v0
 
 It took up a lot of horizontal space on the axis which reduced the range of movement on the y-axis. (We halved the length of each axis from the original design.)
 
@@ -15,13 +15,16 @@ I think the rubber band was a good idea because it seemed to work well and was l
 
 ##### large thing
 
-img
+![IMG_3242 (1)](https://user-images.githubusercontent.com/72365100/217917593-46de7c44-d5de-4a69-b075-070def97bf8f.JPG)
+
 
 The main issue this one solves is being more vertical instead of horizontal.
 
 This one didn't look very good. The pen was too far from the surface which made it more unstable. The rubber band part could be improved.
 
 ##### plastic thing
+
+![IMG_3261 (2)](https://user-images.githubusercontent.com/72365100/217917626-98b932fd-5dbe-4ffe-a029-26d6ea7406f4.JPG)
 
 Use flexibility of plastic for pen pressure. Secured by 2 zip ties which seemed to improve stability.
 
