@@ -2,6 +2,8 @@
 
 We're in the early stages of developing our next "you ship, we ship", you make some digital art and we'll send you a drawing robot which can fabricate that art. 
 
+Drawing thing is designed to be the best introduction to digital fabrication. It's a small machine you can own, take apart, play with, and modify at any level of its design. You can change the control software, path planning, machine interface and more all from a friendly browser-based IDE (and all in JavaScript).
+
 ![image](https://user-images.githubusercontent.com/27078897/210051827-ec3f2719-cfe1-448b-9c77-6a50a4dd31cd.png)
 
 We're also pushing the state of the art with how hackable these machines can be by working with some researchers at MIT to create a new framework for modular machine control called [Modular Things](https://github.com/modular-things/modular-things
