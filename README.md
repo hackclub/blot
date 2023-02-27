@@ -51,4 +51,5 @@ Here are some blogs about plotting which are worth checking out:
 - http://andymakes.com/#Plotter
 - https://www.eyesofpanda.com/
 - https://mattdesl.svbtle.com/pen-plotter-1
+- https://muffinman.io/art/
 
