@@ -41,14 +41,14 @@ You can also get started working on generative design and pen plotting. [Drawing
 
 Here are some blogs about plotting which are worth checking out:
 
-https://revdancatt.com/
-https://penplotterartwork.com/
-https://greweb.me/
-https://targz.fr/
-https://larswander.com/
-https://www.v3ga.net/
-https://bylr.info/
-http://andymakes.com/#Plotter
-https://www.eyesofpanda.com/
-https://mattdesl.svbtle.com/pen-plotter-1
+- https://revdancatt.com/
+- https://penplotterartwork.com/
+- https://greweb.me/
+- https://targz.fr/
+- https://larswander.com/
+- https://www.v3ga.net/
+- https://bylr.info/
+- http://andymakes.com/#Plotter
+- https://www.eyesofpanda.com/
+- https://mattdesl.svbtle.com/pen-plotter-1
 
