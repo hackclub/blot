@@ -37,3 +37,18 @@ There is a lot to do. As previously stated the aim is to make a good quality and
 
 If you want to follow along as we build the project out you can follow along on Slack in [development-of-things-and-stuff](https://app.slack.com/client/T0266FRGM/C04GCH8A91D/thread/C04GCH8A91D-1672275851.810779)
 
+You can also get started working on generative design and pen plotting. [Drawingbots](https://drawingbots.net/) is a good resources. Specifically the [tool section](https://drawingbots.net/knowledge/tools) has a bunch of programs for making plottable patterns.
+
+Here are some blogs about plotting which are worth checking out:
+
+https://revdancatt.com/
+https://penplotterartwork.com/
+https://greweb.me/
+https://targz.fr/
+https://larswander.com/
+https://www.v3ga.net/
+https://bylr.info/
+http://andymakes.com/#Plotter
+https://www.eyesofpanda.com/
+https://mattdesl.svbtle.com/pen-plotter-1
+
