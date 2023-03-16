@@ -39,3 +39,5 @@ The quantity of each part is listed in the name as such `name_x${QUANTITY}`.
 # Pen Holder
 
 The pen holder is not accounted for above. A [potential design can be found here](https://cad.onshape.com/documents/c1f5eeb5e941fbf9d7330a99/w/dd3d59e4690b0b43272af915/e/82ecaea7c0ef64149c49e771?renderMode=0&uiState=64137e56fdbd7c18958dbbed).
+
+Note that this design requires a 2.5mm x 25mm screw and 2.5mm nut
