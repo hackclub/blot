@@ -22,6 +22,7 @@ The [full model can be found here](https://cad.onshape.com/documents/093c10251b0
 | 5mm x 20mm screws | 4 | for the carriage idlers | button head in my design |
 | 5mm x 35mm screws | 8 | for the v-wheels | button head in my design |
 | 5mm x 10mm screws | 10 | for mounting on the alu extrusions | button head in my design |
+| 5mm x 13mm screws | 4 | 12mm could also work, for the feet | button head in my design |
 | 2.5mm x 10mm screws | 4 | | button head in my design |
 | 3.5mm x 10mm screws | 8 | | button head in my design |
 | servo motor | 1 | | [https://www.amazon.com/Smraza-Helicopter-Airplane-Control-Arduino/dp/B07L2SF3R4/ref=sr_1_5?crid=2AQGJMAW5CBU8&keywords=servo%2Bmotor&qid=1676579262&sprefix=servo%2Bmotor%2Caps%2C82&sr=8-5&th=1](https://www.amazon.com/Smraza-Helicopter-Airplane-Control-Arduino/dp/B07L2SF3R4/ref=sr_1_5?crid=2AQGJMAW5CBU8&keywords=servo%2Bmotor&qid=1676579262&sprefix=servo%2Bmotor%2Caps%2C82&sr=8-5&th=1) |
