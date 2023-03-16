@@ -15,15 +15,15 @@ The [full model can be found here](https://cad.onshape.com/documents/093c10251b0
 | t-nuts | 20 | | [https://www.amazon.com/Fastener-Nickel-Plated-Sliding-Aluminum-Profile/dp/B086MKNYDS/ref=sr_1_8?crid=21VQGH6T8RDXV&keywords=t+nut&qid=1676574676&sprefix=t+nut%2Caps%2C112&sr=8-8](https://www.amazon.com/Fastener-Nickel-Plated-Sliding-Aluminum-Profile/dp/B086MKNYDS/ref=sr_1_8?crid=21VQGH6T8RDXV&keywords=t+nut&qid=1676574676&sprefix=t+nut%2Caps%2C112&sr=8-8) |
 | v-wheels | 8 | | [https://www.amazon.com/V-Shape-Bearing-Accessories-Sliding-Printer/dp/B07NSHH9N4/ref=sr_1_4?crid=18BCJ1C1W468K&keywords=v+wheels&qid=1676574357&sprefix=%2Caps%2C221&sr=8-4](https://www.amazon.com/V-Shape-Bearing-Accessories-Sliding-Printer/dp/B07NSHH9N4/ref=sr_1_4?crid=18BCJ1C1W468K&keywords=v+wheels&qid=1676574357&sprefix=%2Caps%2C221&sr=8-4) |
 | eccentric nut | 4 | | [https://openbuildspartstore.com/eccentric-spacer/](https://www.amazon.com/Befenybay-Hexagonal-Eccentric-Column-Printer/dp/B08LMQ8JFY/ref=sr_1_3?crid=186MAB27TI3AC&keywords=eccentric+nuts+5mm+6mm+height&qid=1676574454&sprefix=eccentric+nuts+5mm+6mm+height%2Caps%2C77&sr=8-3) |
-| 1mm spacers 10mm od | 5 | | |
+| 1mm spacers 10mm od | 5 | | [openbuilds](https://openbuildspartstore.com/precision-shim-10x5x1mm/) |
 | 6mm spacers 10mm od | 4 | | [https://www.mcmaster.com/spacers/system-of-measurement~metric/for-screw-size~m5/length~6-mm/od~10mm/](https://www.mcmaster.com/spacers/system-of-measurement~metric/for-screw-size~m5/length~6-mm/od~10mm/) |
 | 20mm x 20mm v slot extrusion | 2 | | [https://openbuildspartstore.com/v-slot-20x20-linear-rail/?sku=255-LP&gclid=Cj0KCQiAxbefBhDfARIsAL4XLRqRouKE4KMl3HNY35u6MQoBaKNPmS5ODHVxXfpoFuROiafi1i7nwi4aAs3AEALw_wcB](https://openbuildspartstore.com/v-slot-20x20-linear-rail/?sku=255-LP&gclid=Cj0KCQiAxbefBhDfARIsAL4XLRqRouKE4KMl3HNY35u6MQoBaKNPmS5ODHVxXfpoFuROiafi1i7nwi4aAs3AEALw_wcB) |
 | stepper motor tooth pulley (12mm dia) | 2 | | [https://www.amazon.com/GT2-Creality-Ender-3-Printer-Stepper/dp/B088WB8D7W/ref=sr_1_3?crid=1XFDO30864FP9&keywords=stepper+motor+pulley+25+teeth+5mm&qid=1676579183&sprefix=stepper+motor+pulley+25+teeth+5mm%2Caps%2C68&sr=8-3](https://www.amazon.com/GT2-Creality-Ender-3-Printer-Stepper/dp/B088WB8D7W/ref=sr_1_3?crid=1XFDO30864FP9&keywords=stepper+motor+pulley+25+teeth+5mm&qid=1676579183&sprefix=stepper+motor+pulley+25+teeth+5mm%2Caps%2C68&sr=8-3) |
-| 5mm x 20mm screws | 4 | for the carriage idlers | |
-| 5mm x 35mm screws | 8 | for the v-wheels | |
-| 5mm x 10mm screws | 10 | for mounting on the alu extrusions | |
-| 2.5mm x 10mm screws | 4 | | |
-| 3.5mm x 10mm screws | 8 | | |
+| 5mm x 20mm screws | 4 | for the carriage idlers | button head in my design |
+| 5mm x 35mm screws | 8 | for the v-wheels | button head in my design |
+| 5mm x 10mm screws | 10 | for mounting on the alu extrusions | button head in my design |
+| 2.5mm x 10mm screws | 4 | | button head in my design |
+| 3.5mm x 10mm screws | 8 | | button head in my design |
 | servo motor | 1 | | [https://www.amazon.com/Smraza-Helicopter-Airplane-Control-Arduino/dp/B07L2SF3R4/ref=sr_1_5?crid=2AQGJMAW5CBU8&keywords=servo%2Bmotor&qid=1676579262&sprefix=servo%2Bmotor%2Caps%2C82&sr=8-5&th=1](https://www.amazon.com/Smraza-Helicopter-Airplane-Control-Arduino/dp/B07L2SF3R4/ref=sr_1_5?crid=2AQGJMAW5CBU8&keywords=servo%2Bmotor&qid=1676579262&sprefix=servo%2Bmotor%2Caps%2C82&sr=8-5&th=1) |
 | 8mm wrench | 1 | | [https://www.amazon.com/Crescent-8mm-Point-Combination-Wrench/dp/B095KWT4QZ/ref=sr_1_4?crid=2SV61IGO2MXIR&keywords=8mm+wrench&qid=1676584359&s=hi&sprefix=8mm+wrench%2Ctools%2C78&sr=1-4](https://www.amazon.com/Crescent-8mm-Point-Combination-Wrench/dp/B095KWT4QZ/ref=sr_1_4?crid=2SV61IGO2MXIR&keywords=8mm+wrench&qid=1676584359&s=hi&sprefix=8mm+wrench%2Ctools%2C78&sr=1-4) |
 | 5mm allen key | 1 | | | [https://www.mcmaster.com/allen-keys/l-keys-9/system-of-measurement~metric/size~5-mm/](https://www.mcmaster.com/allen-keys/l-keys-9/system-of-measurement~metric/size~5-mm/) |
