@@ -21,9 +21,10 @@ The [full model can be found here](https://cad.onshape.com/documents/093c10251b0
 | 6mm spacers 10mm od | 4 | | [mcmaster](https://www.mcmaster.com/spacers/system-of-measurement~metric/for-screw-size~m5/length~6-mm/od~10mm/) |
 | 20mm x 20mm v slot extrusion | 2 | | [openbuilds](https://openbuildspartstore.com/v-slot-20x20-linear-rail/?sku=255-LP&gclid=Cj0KCQiAxbefBhDfARIsAL4XLRqRouKE4KMl3HNY35u6MQoBaKNPmS5ODHVxXfpoFuROiafi1i7nwi4aAs3AEALw_wcB) |
 | stepper motor tooth pulley (12mm dia) | 2 | | [amazon](https://www.amazon.com/GT2-Creality-Ender-3-Printer-Stepper/dp/B088WB8D7W/ref=sr_1_3?crid=1XFDO30864FP9&keywords=stepper+motor+pulley+25+teeth+5mm&qid=1676579183&sprefix=stepper+motor+pulley+25+teeth+5mm%2Caps%2C68&sr=8-3) |
-| 5mm x 20mm screws | 6 | for the carriage idlers (need 4) | button head in my design |
-| 5mm x 35mm screws | 10 | for the v-wheels (need 8) | button head in my design |
-| 5mm x 10mm screws | 20 | for mounting on the alu extrusions (need 11) | button head in my design |
+| 5mm x 20mm screws | 6 | carriage idlers (need 4) | button head in my design |
+| 5mm x 35mm screws | 10 | v-wheels (need 8) | button head in my design |
+| 5mm x 30mm screws | 2 | belt clamp | button head in my design |
+| 5mm x 10mm screws | 20 | mounting on the alu extrusions (need 11) | button head in my design |
 | 5mm x 13mm screws | 4 | 12mm could also work, for the feet | button head in my design |
 | 2.5mm x 10mm screws | 4 | | button head in my design |
 | 3.5mm x 10mm screws | 8 | | button head in my design |
