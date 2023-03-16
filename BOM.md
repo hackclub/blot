@@ -26,7 +26,7 @@ The [full model can be found here](https://cad.onshape.com/documents/093c10251b0
 | 3.5mm x 10mm screws | 8 | | |
 | servo motor | 1 | | [https://www.amazon.com/Smraza-Helicopter-Airplane-Control-Arduino/dp/B07L2SF3R4/ref=sr_1_5?crid=2AQGJMAW5CBU8&keywords=servo%2Bmotor&qid=1676579262&sprefix=servo%2Bmotor%2Caps%2C82&sr=8-5&th=1](https://www.amazon.com/Smraza-Helicopter-Airplane-Control-Arduino/dp/B07L2SF3R4/ref=sr_1_5?crid=2AQGJMAW5CBU8&keywords=servo%2Bmotor&qid=1676579262&sprefix=servo%2Bmotor%2Caps%2C82&sr=8-5&th=1) |
 | 8mm wrench | 1 | | [https://www.amazon.com/Crescent-8mm-Point-Combination-Wrench/dp/B095KWT4QZ/ref=sr_1_4?crid=2SV61IGO2MXIR&keywords=8mm+wrench&qid=1676584359&s=hi&sprefix=8mm+wrench%2Ctools%2C78&sr=1-4](https://www.amazon.com/Crescent-8mm-Point-Combination-Wrench/dp/B095KWT4QZ/ref=sr_1_4?crid=2SV61IGO2MXIR&keywords=8mm+wrench&qid=1676584359&s=hi&sprefix=8mm+wrench%2Ctools%2C78&sr=1-4) |
-| 5mm allen key | | 1 | | [https://www.mcmaster.com/allen-keys/l-keys-9/system-of-measurement~metric/size~5-mm/](https://www.mcmaster.com/allen-keys/l-keys-9/system-of-measurement~metric/size~5-mm/) |
+| 5mm allen key | 1 | | | [https://www.mcmaster.com/allen-keys/l-keys-9/system-of-measurement~metric/size~5-mm/](https://www.mcmaster.com/allen-keys/l-keys-9/system-of-measurement~metric/size~5-mm/) |
 | 3.5 mm allen key | 1 | | [https://www.mcmaster.com/allen-keys/l-keys-9/system-of-measurement~metric/size~3-5-mm/](https://www.mcmaster.com/allen-keys/l-keys-9/system-of-measurement~metric/size~3-5-mm/) |
 
 # Printed Parts
@@ -37,4 +37,4 @@ The quantity of each part is listed in the name as such `name_x${QUANTITY}`.
 
 # Pen Holder
 
-The pen holder is not accounted for above. A [potentional design can be found here](https://cad.onshape.com/documents/c1f5eeb5e941fbf9d7330a99/w/dd3d59e4690b0b43272af915/e/82ecaea7c0ef64149c49e771?renderMode=0&uiState=64137e56fdbd7c18958dbbed).
+The pen holder is not accounted for above. A [potential design can be found here](https://cad.onshape.com/documents/c1f5eeb5e941fbf9d7330a99/w/dd3d59e4690b0b43272af915/e/82ecaea7c0ef64149c49e771?renderMode=0&uiState=64137e56fdbd7c18958dbbed).
