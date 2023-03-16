@@ -1,5 +1,7 @@
 # Parts for Drawing Thing (with 3D printed carriage)
 
+<img width="808" alt="Screen Shot 2023-03-16 at 4 58 01 PM" src="https://user-images.githubusercontent.com/27078897/225751238-2d40a1ca-5b1c-4cba-b572-e138905d7257.png">
+
 ## Model
 
 The [full model can be found here](https://cad.onshape.com/documents/093c10251b077919c05ae92c/w/7b13786fba2aec43dcfab15d/e/5687b6fe35f0477aa77dedea?renderMode=0&uiState=64137ddfbaa9af4c9b13bd38).
