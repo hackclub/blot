@@ -2,6 +2,32 @@
 
 This is a list of weekly developments for the drawing-thing updated every Friday.
 
+## 2023-03-20 - @leomcelroy
+
+This week we tested some resin parts, built two pen holders, and published the BOM (bill of materials) for the most up to date machine design. 
+
+We ordered the parts from [JLCPCB's 3D printing service](https://jlcpcb.com/3d-printing) which is amazingly cheap and quick. The concern using resin prints over FDM ones is that resin tends to be more brittle. The print quality is very nice and consistent though so the verdict is still up in the air.
+
+A friend Rob Hart helped design a sliding mechanism for a pen holder with very few parts. It uses 3 little posts on compliant levers which act as little springs holding the moving portion of the design in place. The other pen design is an adapted version of the lever which B. Smith used all the way back in our v0 prototype. You can see both of these designs in the photos below.
+
+Below is the full slider machine with resin parts:
+
+<img width="930" alt="slider" src="https://user-images.githubusercontent.com/27078897/226514041-fc2cbc7f-644f-4fa9-8e50-8c01ac3027af.png">
+
+Here is the front of the slider:
+
+<img width="854" alt="front slider" src="https://user-images.githubusercontent.com/27078897/226514096-f837e4fe-2329-4fe8-a91b-4b59f1c8e555.png">
+
+Here is the inner portion:
+
+<img width="510" alt="inner slider" src="https://user-images.githubusercontent.com/27078897/226514143-354ff9eb-48ae-4fe0-ab09-2daeb55cefad.png">
+
+Here is the same machine with a lever pen holder:
+
+<img width="974" alt="lever" src="https://user-images.githubusercontent.com/27078897/226514072-dec44dda-8f80-48c5-9f13-a7c76f246998.png">
+
+I also organized and published the materials and STL files for this current machine design. [The BOM can be found here](https://github.com/hackclub/drawing-thing/blob/main/BOM.md).
+
 ## 2023-03-10 - @leomcelroy
 
 > https://hackclub.slack.com/archives/C04GCH8A91D/p1678497440093879
