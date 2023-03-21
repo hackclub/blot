@@ -16,7 +16,7 @@ The [full model can be found here](https://cad.onshape.com/documents/093c10251b0
 | stepper motors | 2 | | [amazon](https://www.amazon.com/STEPPERONLINE-Stepper-63-74oz-Connector-Extruder/dp/B07LCHHQ97/ref=sr_1_3?crid=2JKWSAFLUD7FK&keywords=stepper+motor+nema+15&qid=1676574905&sprefix=stepper+motors+nema+15%2Caps%2C94&sr=8-3) |
 | t-nuts | 20 | | [amazon](https://www.amazon.com/Fastener-Nickel-Plated-Sliding-Aluminum-Profile/dp/B086MKNYDS/ref=sr_1_8?crid=21VQGH6T8RDXV&keywords=t+nut&qid=1676574676&sprefix=t+nut%2Caps%2C112&sr=8-8) |
 | v-wheels | 8 | | [amazon](https://www.amazon.com/V-Shape-Bearing-Accessories-Sliding-Printer/dp/B07NSHH9N4/ref=sr_1_4?crid=18BCJ1C1W468K&keywords=v+wheels&qid=1676574357&sprefix=%2Caps%2C221&sr=8-4) |
-| 6mm eccentric nut | 4 | | [openbuilds](https://www.amazon.com/Befenybay-Hexagonal-Eccentric-Column-Printer/dp/B08LMQ8JFY/ref=sr_1_3?crid=186MAB27TI3AC&keywords=eccentric+nuts+5mm+6mm+height&qid=1676574454&sprefix=eccentric+nuts+5mm+6mm+height%2Caps%2C77&sr=8-3) |
+| 6mm eccentric nut | 4 | | [Amazon](https://www.amazon.com/Befenybay-Hexagonal-Eccentric-Column-Printer/dp/B08LMQ8JFY/ref=sr_1_3?crid=186MAB27TI3AC&keywords=eccentric+nuts+5mm+6mm+height&qid=1676574454&sprefix=eccentric+nuts+5mm+6mm+height%2Caps%2C77&sr=8-3) |
 | 1mm spacers 10mm od | 5 | | [openbuilds](https://openbuildspartstore.com/precision-shim-10x5x1mm/) |
 | 6mm spacers 10mm od | 4 | | [mcmaster](https://www.mcmaster.com/spacers/system-of-measurement~metric/for-screw-size~m5/length~6-mm/od~10mm/) |
 | 20mm x 20mm v slot extrusion | 2 | | [openbuilds](https://openbuildspartstore.com/v-slot-20x20-linear-rail/?sku=255-LP&gclid=Cj0KCQiAxbefBhDfARIsAL4XLRqRouKE4KMl3HNY35u6MQoBaKNPmS5ODHVxXfpoFuROiafi1i7nwi4aAs3AEALw_wcB) |
