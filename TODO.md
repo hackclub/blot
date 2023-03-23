@@ -8,20 +8,25 @@ Below is a list of various things we are working on, and ways you can engage wit
 
 ### Mechanical
 
-__Design a pen holder.__. 
+__Design a pen holder.__
 We still need to finalize the part that makes this machine a drawing machine, the pen holder!
 We put out an open challange to help with this which you can find here (FILL IN LINK).
 
+__Build your own machine.__
 You can already build your own machine if you have access to a 3D printer. 
 The [bill of materials can be found here](https://github.com/hackclub/drawing-thing/blob/main/BOM.md).
 
 ### Electrical
 
+__Remake the circuits in SVG-PCB__
 The [circuits used in the system are designed here](https://github.com/modular-things/modular-things-circuits). 
 I would love to see people remake the circuit designs in [SVG-PCB](https://leomcelroy.com/svg-pcb-website/#/home).
 
-Board-to-board connection layer.
+__Create a board-to-board link layer.__
+We don't have anyway to connect boards to eachother.
+Right now they are all connected to the computer through USB.
 
+__Create a Bus__
 Currently our system uses point-to-point connections. 
 It would be more efficient to design a bus for modular things. 
 Some thoughts on [bus design for modular things are available here](https://github.com/modular-things/modular-bus).
@@ -44,7 +49,7 @@ __Sequential motor control.__
 We need smoother motion for our machine. 
 Right now we stop at each corner, it would be better to interpolate between them.
 
-Cleaning up OSAP the networking library.
+__Clean up OSAP the networking library.__
 Jake and I are working on making OSAP more comprehensible. 
 I made a [toy implementaion recreating some of OSAP's functionality](https://github.com/leomcelroy/nosap).
 Making a visualizer for OSAP networks would be a great project.
@@ -67,7 +72,7 @@ Something like printables but with the source for the designs available.
 
 ### Weekly Updates
 
-Each week or so we post an update to our change log.
+Each week or so we post an update to our changelog.
 
 https://github.com/hackclub/drawing-thing/blob/main/CHANGELOG.md
 
