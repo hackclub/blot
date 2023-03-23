@@ -50,16 +50,19 @@ Making a visualizer for OSAP networks would be a great project.
 
 ## Engagement (Interaction Mode/Handles)
 
-### Make a parametric generator
+__Make some parametric art.__
+Make some generative art which could be drawn by a plotter. For some examples of this check out the blogs linked below.
 
+__Make a parametric generator.__
 You can also get started working on generative design and pen plotting. 
 [Drawingbots](https://drawingbots.net/) is a good resources. 
 Specifically the [tool section](https://drawingbots.net/knowledge/tools) has a bunch of programs 
 for making plottable patterns.
 
-### Gallery
 
-**Functional** designs and generators with coherent and consistent interfaces. Something like printables but with the source for the designs available.
+__Gallery__
+_Functional_ designs and generators with coherent and consistent interfaces. 
+Something like printables but with the source for the designs available.
 
 ### Weekly Updates
 
