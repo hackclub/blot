@@ -29,14 +29,19 @@ Some thoughts on [bus design for modular things are available here](https://gith
 
 ### Editor
 
-- add console to editor
+__Add console to the editor.__
+Right now when you run a program in the editor it runs everything.
+A console would allow you to run select functions and also log outputs.
+Pranav is working on this.
 
-Create interface to drawing machine in modular things.
+__Create interface to drawing machine in modular things.__
 Here is some [skeleton for an interface](https://github.com/modular-things/modular-things/blob/main/examples/machine-interface.js) which isn't hooked up to any machine.
 
 ### Firmware
 
-- sequential motor control
+__Sequential motor control.__
+We need smoother motion for our machine. 
+Right now we stop at each corner, it would be better to interpolate between them.
 
 Cleaning up OSAP the networking library.
 Jake and I are working on making OSAP more comprehensible. 
