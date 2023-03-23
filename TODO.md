@@ -64,8 +64,6 @@ https://github.com/hackclub/drawing-thing/blob/main/CHANGELOG.md
 
 ## General Inspiration
 
-Blogs from drawing people
-
 Here are some blogs about plotting which are worth checking out:
 
 - https://revdancatt.com/
