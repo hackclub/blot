@@ -62,7 +62,7 @@ Pen holder design challenge.
 
 https://github.com/hackclub/drawing-thing/blob/main/CHANGELOG.md
 
-### Inspiration
+## General Inspiration
 
 Blogs from drawing people
 
