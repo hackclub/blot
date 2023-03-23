@@ -26,9 +26,9 @@ __Create a board-to-board link layer.__
 We don't have anyway to connect boards to eachother.
 Right now they are all connected to the computer through USB.
 
-__Create a Bus__
+__Create a bus.__
 Currently our system uses point-to-point connections. 
-It would be more efficient to design a bus for modular things. 
+It would be more efficient to design a bus (one-to-many connection) for modular things. 
 Some thoughts on [bus design for modular things are available here](https://github.com/modular-things/modular-bus).
 
 ## Software
