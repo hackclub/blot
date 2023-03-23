@@ -8,7 +8,11 @@ Below is a list of various things we are working on, and ways you can engage wit
 
 ### Mechanical
 
-- pen holder design
+We still need to finalize the part that makes this machine a drawing machine, the __pen holder__!
+We put out an open challange to help with this which you can find here (FILL IN LINK).
+
+You can already build your own machine if you have access to a 3D printer. 
+The [bill of materials can be found here](https://github.com/hackclub/drawing-thing/blob/main/BOM.md).
 
 ### Electrical
 
@@ -50,15 +54,11 @@ for making plottable patterns.
 
 ### Gallery
 
-**Functional** designs and generators with coherent and consistent interfaces
-
-### Challenges
-
-Build your own. https://github.com/hackclub/drawing-thing/blob/main/BOM.md
-
-Pen holder design challenge.
+**Functional** designs and generators with coherent and consistent interfaces. Something like printables but with the source for the designs available.
 
 ### Weekly Updates
+
+Each week or so we post an update to our change log.
 
 https://github.com/hackclub/drawing-thing/blob/main/CHANGELOG.md
 
