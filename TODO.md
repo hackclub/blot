@@ -22,7 +22,9 @@ Some thoughts on [bus design for modular things are available here](https://gith
 ### Editor
 
 - add console to editor
-- create interface to drawing machine in modular things
+
+Create interface to drawing machine in modular things.
+Here is some [skeleton for an interface](https://github.com/modular-things/modular-things/blob/main/examples/machine-interface.js) which isn't hooked up to any machine.
 
 ### Firmware
 
