@@ -66,7 +66,7 @@ Specifically the [tool section](https://drawingbots.net/knowledge/tools) has a b
 for making plottable patterns.
 
 
-__Gallery__
+__Gallery.__
 _Functional_ designs and generators with coherent and consistent interfaces. 
 Something like printables but with the source for the designs available.
 
