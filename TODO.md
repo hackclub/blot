@@ -8,7 +8,10 @@
 
 ### Electrical
 
-- board-to-board connection layer
+The [circuits used in the system are designed here](https://github.com/modular-things/modular-things-circuits). 
+I would love to see people remake the circuit designs in [SVG-PCB](https://leomcelroy.com/svg-pcb-website/#/home).
+
+Board-to-board connection layer.
 
 Currently our system uses point-to-point connections. 
 It would be more efficient to design a bus for modular things. 
@@ -24,6 +27,11 @@ Some thoughts on [bus design for modular things are available here](https://gith
 ### Firmware
 
 - sequential motor control
+
+Cleaning up OSAP the networking library.
+Jake and I are working on making OSAP more comprhensible. 
+I made a [toy implementaion recreating some of OSAP's functionality](https://github.com/leomcelroy/nosap).
+Making a visualizer for OSAP networks would be a great project.
 
 ## Engagement (Interaction Mode/Handles)
 
