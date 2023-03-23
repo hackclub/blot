@@ -39,7 +39,7 @@ Here is some [skeleton for an interface](https://github.com/modular-things/modul
 - sequential motor control
 
 Cleaning up OSAP the networking library.
-Jake and I are working on making OSAP more comprhensible. 
+Jake and I are working on making OSAP more comprehensible. 
 I made a [toy implementaion recreating some of OSAP's functionality](https://github.com/leomcelroy/nosap).
 Making a visualizer for OSAP networks would be a great project.
 
