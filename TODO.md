@@ -4,11 +4,15 @@
 
 ### Mechanical
 
-- pen Holder Design
+- pen holder design
 
 ### Electrical
 
 - board-to-board connection layer
+
+Currently our system uses point-to-point connections. 
+It would be more efficient to design a bus for modular things. 
+Some thoughts on [bus design for modular things are available here](https://github.com/modular-things/modular-bus).
 
 ## Software
 
