@@ -1,4 +1,8 @@
-# TODO
+# So many things TODO
+
+There are many tasks left in the development of our drawing machine which will become one of the best ways to get into digital fabrication. We are rethinking and remakign how hackable these types of machines can be with the [Modular Things project](https://github.com/modular-things/modular-things). Tasks range from mechanical design, to low-level firmware, and high-level interfaces.
+
+Below is a list of various things we are working on, and ways you can engage with the tasks at hand or the associated concepts.
 
 ## Hardware
 
