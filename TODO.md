@@ -27,7 +27,7 @@ I would love to see people remake the circuit designs in [SVG-PCB](https://leomc
 __Create a board-to-board link layer.__
 We don't have anyway to connect boards to each other. Right now they are all connected to the computer through USB.
 
-__Create a bus.__
+__Create a [bus](https://en.wikipedia.org/wiki/Bus_(computing)).__
 Currently our system uses point-to-point connections. 
 It would be more efficient to design a bus (one-to-many connection) for modular things. 
 Some thoughts on [bus design for modular things are available here](https://github.com/modular-things/modular-bus).
