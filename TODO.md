@@ -32,15 +32,7 @@ Some thoughts on [bus design for modular things are available here](https://gith
 
 ## Software
 
-### Editor
-
-__Add console to the editor.__
-Right now when you run a program in the editor it runs everything.
-A console would allow you to run select functions and also log outputs.
-[@pranavnt](https://github.com/pranavnt) is working on this.
-
-__Create interface to drawing machine in the modular things editor.__
-Here is some [skeleton for an interface](https://github.com/modular-things/modular-things/blob/main/examples/machine-interface.js) which isn't hooked up to any machine.
+> The software can be found at https://github.com/modular-things/modular-things.
 
 ### Firmware
 
@@ -54,6 +46,16 @@ https://github.com/modular-things/modular-things/tree/main/src/lib/osapjs
 Jake and Leo are working on making OSAP more comprehensible. 
 Leo made a [toy implementaion recreating some of OSAP's functionality](https://github.com/leomcelroy/nosap).
 Making a visualizer for OSAP networks would be a great project.
+
+### Editor
+
+__Add console to the editor.__
+Right now when you run a program in the editor it runs everything.
+A console would allow you to run select functions and also log outputs.
+[@pranavnt](https://github.com/pranavnt) is working on this.
+
+__Create interface to drawing machine in the modular things editor.__
+Here is some [skeleton for an interface](https://github.com/modular-things/modular-things/blob/main/examples/machine-interface.js) which isn't hooked up to any machine.
 
 ## Engagement (Interaction Mode/Handles)
 
