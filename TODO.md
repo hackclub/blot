@@ -18,6 +18,8 @@ The [bill of materials can be found here](https://github.com/hackclub/drawing-th
 
 ### Electrical
 
+> The Modular Things hardware repo is at https://github.com/modular-things/modular-things-circuits.
+
 __Remake the circuits in SVG-PCB.__
 The [circuits used in the system are designed here](https://github.com/modular-things/modular-things-circuits). 
 I would love to see people remake the circuit designs in [SVG-PCB](https://leomcelroy.com/svg-pcb-website/#/home).
