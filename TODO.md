@@ -46,7 +46,7 @@ Right now we stop at each corner; it would be better to interpolate between them
 __Clean up OSAP the networking library.__
 https://github.com/modular-things/modular-things/tree/main/src/lib/osapjs
 Jake and Leo are working on making OSAP more comprehensible. 
-Leo made a [toy implementaion recreating some of OSAP's functionality](https://github.com/leomcelroy/nosap).
+Leo made a [toy implementaion recreating some of OSAP's functionality](https://github.com/modular-things/nosap).
 Making a visualizer for OSAP networks would be a great project.
 
 ### Editor
