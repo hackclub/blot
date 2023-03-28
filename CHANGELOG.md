@@ -1,6 +1,21 @@
 # Changelog
 
-This is a list of weekly developments for the drawing-thing updated every Friday.
+This is a list of weekly developments for the drawing-thing updated every week.
+
+## 2023-03-28 - @leomcelroy
+
+This week I released a toy re-implementation of the networking library we are using for modular things. 
+You can find this library here [modular-things/nosap](https://github.com/modular-things/nosap).
+The point of this is better understand what [OSAP](http://osap.tools/) (current JavaScript implementation [here](https://github.com/jakeread/osapjs/tree/main)) does and what it needs to do. 
+Primarily it's a library for packing and routing messages across devices.
+
+It differs somewhat from what Jake (the original OSAP author) describes in his [approach](http://osap.tools/approach/) for the sake of making things simpler and easier to comprehend.
+Hopefully these difference will diminish in the near future. 
+In a series of long conversations with Jake I've come to better understand OSAP itself and I believe to persuade him to remove notions of hierarchy from the graph design.
+
+I'd like to make a visualizer for networks in the toy implementation which can be used to investigate actual OSAP networks in the future. Which brings us to another thing we worked on last week. 
+
+We released a [TODO list](https://github.com/hackclub/drawing-thing/blob/main/TODO.md) to help people find ways to participate in the project. This will evolve into proper GitHub issues with good project management but we started just by dumping thoughts and tasks into this Markdown document.
 
 ## 2023-03-20 - @leomcelroy
 
