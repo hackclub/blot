@@ -69,6 +69,10 @@ Specifically the [tool section](https://drawingbots.net/knowledge/tools) has a b
 __Make some parametric art.__
 Make some generative art which could be drawn by a plotter. For some examples of this check out [the blogs linked at the bottom](#general-inspiration).
 
+Last year I made a [basic Turtle drawing editor](https://microworlds.hackclub.dev/?file=turtle) as part of the microworld project at Hack Club. As an aside the idea with this project was to create a series of workshops in the form of [microworlds](https://en.wikipedia.org/wiki/Mindstorms_(book)). These workshops integrated a small library for making a specific type of thing, a live-editor and visualizer for that library, documentation, and some easy sharing tools.
+
+The Sprig editor is another microworld and we'll almost certainly make one for this project too.
+
 __Gallery for parametric generators and art.__
 _Functional_ designs and generators with coherent and consistent interfaces. 
 Something like [Printables](https://printables.com) but with the source for the designs available.
