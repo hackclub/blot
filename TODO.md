@@ -43,6 +43,8 @@ https://github.com/modular-things/modular-things/blob/main/src/lib/virtualThings
 We need smoother motion for our machine. 
 Right now we stop at each corner; it would be better to interpolate between them.
 
+__Klipper Style Motion Planning__
+
 __Clean up OSAP the networking library.__
 https://github.com/modular-things/modular-things/tree/main/src/lib/osapjs
 Jake and Leo are working on making OSAP more comprehensible. 
