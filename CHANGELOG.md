@@ -2,6 +2,29 @@
 
 This is a list of weekly developments for the drawing-thing updated every week.
 
+## 2023-04-3 - @leomcelroy
+
+Big updates from last week! 
+
+I decided to make a single control board to make it easier to send people supplies to complete due diligence on what the cheapest version of the machine might be. A contributor to SVG PCB recently submitted some PRs adding excellent Gerber support so I took great satisfaction designing the boards in my own CAD tool and ordering them from JLCPCB. You can find the design [here](./motor-board.js).
+
+Here is a picture of the device.
+
+![PXL_20230331_190512856](https://user-images.githubusercontent.com/27078897/229580883-e7aa550a-e553-4fa2-98c8-350248c619ae.jpg)
+
+We've made heaps of pen holders but none were stiff enough. Not anymore! By 3D printing a rail and using a similar v-wheel carriage design to the rest of the machine we were able to make this slick little servo-driven z-axis which works very well. I'm extremely pleased with this design!
+
+Thanks to finally having a good pen holder we were able to put together a well functioning complete machine. Conviently this happened on the day Ella came to visit cambridge so we got to run it together.
+
+Here are some shots of the complete device below.
+
+![PXL_20230331_190512856](https://user-images.githubusercontent.com/27078897/229580883-e7aa550a-e553-4fa2-98c8-350248c619ae.jpg)
+![PXL_20230331_181623941](https://user-images.githubusercontent.com/27078897/229580887-b8b1f037-6bfd-4293-abf1-afa319781167.jpg)
+![PXL_20230401_194444526](https://user-images.githubusercontent.com/27078897/229580889-4126d6ec-d9ff-42d8-a2f6-cb6034fc875a.jpg)
+![PXL_20230331_155348599](https://user-images.githubusercontent.com/27078897/229580877-e9b5ddb2-307a-4a15-a72b-7476413d2106.jpg)
+![PXL_20230331_180032688](https://user-images.githubusercontent.com/27078897/229580879-11ef0f5d-234c-4880-a3fd-4ee8dbe78cbb.jpg)
+![PXL_20230331_180037006](https://user-images.githubusercontent.com/27078897/229580881-2e2974af-0c2f-416a-b622-705ffee39d0f.jpg)
+
 ## 2023-03-28 - @leomcelroy
 
 This week I released a toy re-implementation of the networking library we are using for modular things. 
