@@ -20,10 +20,10 @@ let board = new PCB();
 
 let interior = path(
   pt(0.62, 1.4),
-  ["fillet", 0.09, pt(2.15, 1.4)],
-  ["fillet", 0.09, pt(2.15, -0.45)],
-  ["fillet", 0.09, pt(-0.55, -0.45)],
-  ["fillet", 0.09, pt(-0.55, 1.4)],
+  ["fillet", 0.07, pt(2.15, 1.4)],
+  ["fillet", 0.07, pt(2.15, -0.45)],
+  ["fillet", 0.07, pt(-0.55, -0.45)],
+  ["fillet", 0.07, pt(-0.55, 1.4)],
   pt(0.62, 1.4),
 );
 
@@ -33,7 +33,7 @@ board.addShape("interior", interior);
 const stepper_x = -0.07;
 const stepper_y = 0.10;
 const stepper_spacing = 0.88
-const stepper_pinout_y = -0.28;
+const stepper_pinout_y = -0.31;
 const stepper_header_offset = 0.15
 const stepper_capacitor_y = -0.04;
 const stepper_capacitor_x = 0.30;
@@ -65,42 +65,42 @@ board.wire(path(
 
 board.wire(path(
   pt(-0.22, -0.15),
-  pt(-0.22, -0.27),), 0.03);
+  pt(-0.22, -0.31),), 0.03);
 board.wire(path(
-  pt(-0.12, -0.28),
+  pt(-0.12, -0.31),
   pt(-0.12, -0.16),), 0.03);
 board.wire(path(
-  pt(-0.02, -0.28),
+  pt(-0.02, -0.31),
   pt(-0.02, -0.15),), 0.03);
 board.wire(path(
   pt(0.080, -0.16),
-  pt(0.080, -0.27),
+  pt(0.080, -0.31),
   ), 0.03);
 
 board.wire(path(
-  pt(0.660, -0.28),
+  pt(0.660, -0.31),
   pt(0.660, -0.15),), 0.03);
 board.wire(path(
   pt(0.760, -0.16),
-  pt(0.760, -0.27),), 0.03);
+  pt(0.760, -0.31),), 0.03);
 board.wire(path(
-  pt(0.860, -0.28),
+  pt(0.860, -0.31),
   pt(0.860, -0.16),), 0.03);
 board.wire(path(
-  pt(0.960, -0.28),
+  pt(0.960, -0.31),
   pt(0.960, -0.16),), 0.03);
 
 board.wire(path(
-  pt(1.540, -0.28),
+  pt(1.540, -0.31),
   pt(1.540, -0.15),), 0.03);
 board.wire(path(
-  pt(1.640, -0.28),
+  pt(1.640, -0.31),
   pt(1.640, -0.16),), 0.03);
 board.wire(path(
-  pt(1.740, -0.28),
+  pt(1.740, -0.31),
   pt(1.740, -0.15),), 0.03);
 board.wire(path(
-  pt(1.840, -0.28),
+  pt(1.840, -0.31),
   pt(1.840, -0.15),), 0.03);
 
 board.wire(path(
@@ -148,16 +148,16 @@ board.wire(path(
   pt(0.08, 1.13),
   pt(0.08, 1.31),
   pt(-0.5, 1.31),
-  pt(-0.5, -0.36),
-  pt(1.94, -0.35),), 0.03, "B.Cu");
+  pt(-0.5, -0.39),
+  pt(1.94, -0.4),), 0.03, "B.Cu");
 
 board.wire(path(
   pt(0.460, -0.15),
-  pt(0.46, -0.35),), 0.03, "B.Cu");
+  pt(0.46, -0.39),), 0.03, "B.Cu");
 
 board.wire(path(
   pt(1.340, -0.15),
-  pt(1.34, -0.35),), 0.03, "B.Cu");
+  pt(1.34, -0.4),), 0.03, "B.Cu");
 
 board.wire(path(
   pt(0.509, 1.049),
@@ -179,13 +179,13 @@ board.wire(path(
   pt(1.440, -0.14),), 0.03, "B.Cu");
 
 board.wire(path(
-  pt(0.18027848157929113, -0.3523260458702933),
+  pt(0.18, -0.38),
   pt(0.180, -0.16),), 0.03, "B.Cu");
 board.wire(path(
-  pt(1.06, -0.35),
+  pt(1.06, -0.4),
   pt(1.061, -0.155),), 0.03, "B.Cu");
 board.wire(path(
-  pt(1.94, -0.35),
+  pt(1.94, -0.4),
   pt(1.940, -0.15),), 0.03, "B.Cu");
 
 board.wire(path(
@@ -225,7 +225,7 @@ board.wire(path(
   pt(-0.086, 0.839),), 0.03, "F.Cu");
 
 board.wire(path(
-  pt(-0.42, -0.36),
+  pt(-0.42, -0.39),
   pt(-0.42, -0.15),), 0.03, "B.Cu");
 
 
