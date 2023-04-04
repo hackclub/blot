@@ -16,6 +16,10 @@ We've made heaps of pen holders but none were stiff enough. Not anymore! By 3D p
 
 Thanks to finally having a good pen holder we were able to put together a well functioning complete machine. Conviently this happened on the day Ella came to visit cambridge so we got to run it together.
 
+We also wrote a [small Turtle drawing libarary](./editor-examples/turtle.js) which can drive the machine. You can first visualize what you will draw in the editor and then run the machine.
+
+<img width="991" alt="Screen Shot 2023-04-04 at 1 30 21 PM" src="https://user-images.githubusercontent.com/27078897/229871440-1ce4843d-60e7-4c8e-8a62-0cfbdd91c1ce.png">
+
 Here are some shots of the complete device below.
 
 ![PXL_20230331_155348599](https://user-images.githubusercontent.com/27078897/229580877-e9b5ddb2-307a-4a15-a72b-7476413d2106.jpg)
