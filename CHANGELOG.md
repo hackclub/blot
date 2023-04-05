@@ -14,7 +14,9 @@ Here is a picture of the board.
 
 We've made heaps of pen holders but none were stiff enough. Not anymore! By 3D printing a rail and using a similar v-wheel carriage design to the rest of the machine we were able to make this slick little servo-driven z-axis which works very well. I'm extremely pleased with this design!
 
-Thanks to finally having a good pen holder we were able to put together a well functioning complete machine. Conviently this happened on the day Ella came to visit cambridge so we got to run it together.
+![Screen Shot 2023-04-05 at 11 54 21 AM](https://user-images.githubusercontent.com/27078897/230136134-608da594-d128-4077-90af-82aeeda1ac40.png)
+
+Thanks to finally having a good pen holder we were able to put together a well functioning complete machine. Conveniently this happened on the day Ella came to visit cambridge so we got to run it together.
 
 We also wrote a [small Turtle drawing libarary](./editor-examples/turtle.js) which can drive the machine. You can first visualize what you will draw in the editor and then run the machine.
 
