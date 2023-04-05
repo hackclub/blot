@@ -6,7 +6,7 @@ This is a list of weekly developments for the drawing-thing updated every week.
 
 Big updates from last week! 
 
-I decided to make a single control board to make it easier to send people supplies to complete due diligence on what the cheapest version of the machine might be. A contributor to SVG PCB recently submitted some PRs adding excellent Gerber support so I took great satisfaction designing the boards in my own CAD tool and ordering them from JLCPCB. You can find the design [here](./motor-board.js).
+I decided to make a single control board to make it easier to send people supplies to complete due diligence on what the cheapest version of the machine might be. A contributor to SVG PCB recently submitted some PRs adding excellent Gerber support so I took great satisfaction designing the boards in my own CAD tool and ordering them from JLCPCB. You can find the design [here](./motor-board.js). You can also play with the [design in the SVG-PCB editor here](https://leomcelroy.com/svg-pcb/?file=https://raw.githubusercontent.com/hackclub/drawing-thing/main/motor-board.js).
 
 Here is a picture of the board.
 
@@ -18,7 +18,7 @@ We've made heaps of pen holders but none were stiff enough. Not anymore! By 3D p
 
 Thanks to finally having a good pen holder we were able to put together a well functioning complete machine. Conveniently this happened on the day Ella came to visit cambridge so we got to run it together.
 
-We also wrote a [small Turtle drawing libarary](./editor-examples/turtle.js) which can drive the machine. You can first visualize what you will draw in the editor and then run the machine.
+We also wrote a [small Turtle drawing library](./editor-examples/turtle.js) which can drive the machine. You can first visualize what you will draw in the editor and then run the machine.
 
 <img width="991" alt="Screen Shot 2023-04-04 at 1 30 21 PM" src="https://user-images.githubusercontent.com/27078897/229871440-1ce4843d-60e7-4c8e-8a62-0cfbdd91c1ce.png">
 
