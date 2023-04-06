@@ -1,6 +1,6 @@
 # Parts for Drawing Thing (with 3D printed carriage)
 
-<img width="808" alt="drawing machine with a turtle illustration" src="https://cloud-9nntt30gv-hack-club-bot.vercel.app/0image.png">
+<img width="808" alt="drawing machine with a turtle illustration" src="https://cloud-g6sk6by5j-hack-club-bot.vercel.app/0screenshot_2023-04-06_at_1.50.17_pm.png">
 
 ## Model
 
