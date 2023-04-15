@@ -1,6 +1,6 @@
 # WIP
 
-# A single control board
+# [A single control board](https://leomcelroy.com/svg-pcb/?file=https://raw.githubusercontent.com/hackclub/drawing-thing/main/motor-board.js)
 
 Ultimately the idea is that each device will have it's own little board which we network together through modular things. 
 For development purposes (and for the sake of doing due diligence) I decided to make a single control board as well which the two steppers and single servo and plug into.
