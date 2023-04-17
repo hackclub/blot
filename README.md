@@ -2,6 +2,8 @@
 
 Hack Club is working on our next "you ship, we ship" project. This time if you make some digital art we'll send you a robot which can make that art real!
 
+![PXL_20230331_155345423](https://user-images.githubusercontent.com/27078897/232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg)
+
 We're also working with some researchers at MIT to make digital fabrication machines like this much more open and hackable. We're doing this by taking functionality which would ordinarily be inaccessible in the firmware and lifting it up to the user in a programmable browser editor. We call it [Modular Things](https://github.com/modular-things/modular-things).
 
 # Getting Involved
