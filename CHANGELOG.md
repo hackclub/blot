@@ -1,6 +1,78 @@
 # Changelog
 
-This is a list of weekly developments for the drawing-thing updated every Friday.
+This is a list of weekly developments for the drawing-thing updated every week.
+
+## 2023-04-3 - @leomcelroy
+
+Big updates from last week! 
+
+I decided to make a single control board to make it easier to send people supplies to complete due diligence on what the cheapest version of the machine might be. A contributor to SVG PCB recently submitted some PRs adding excellent Gerber support so I took great satisfaction designing the boards in my own CAD tool and ordering them from JLCPCB. You can find the design [here](./motor-board.js). You can also play with the [design in the SVG-PCB editor here](https://leomcelroy.com/svg-pcb/?file=https://raw.githubusercontent.com/hackclub/drawing-thing/main/motor-board.js).
+
+Here is a picture of the board.
+
+![anon (29)](https://user-images.githubusercontent.com/27078897/229582246-6fe83a9a-d152-4247-8ec1-05eac1996bb9.png)
+
+We've made heaps of pen holders but none were stiff enough. Not anymore! By 3D printing a rail and using a similar v-wheel carriage design to the rest of the machine we were able to make this slick little servo-driven z-axis which works very well. I'm extremely pleased with this design!
+
+![Screen Shot 2023-04-05 at 11 54 21 AM](https://user-images.githubusercontent.com/27078897/230136134-608da594-d128-4077-90af-82aeeda1ac40.png)
+
+Thanks to finally having a good pen holder we were able to put together a well functioning complete machine. Conveniently this happened on the day Ella came to visit cambridge so we got to run it together.
+
+We also wrote a [small Turtle drawing library](./editor-examples/turtle.js) which can drive the machine. You can first visualize what you will draw in the editor and then run the machine.
+
+<img width="991" alt="Screen Shot 2023-04-04 at 1 30 21 PM" src="https://user-images.githubusercontent.com/27078897/229871440-1ce4843d-60e7-4c8e-8a62-0cfbdd91c1ce.png">
+
+Here are some shots of the complete device below.
+
+![PXL_20230331_155348599](https://user-images.githubusercontent.com/27078897/229580877-e9b5ddb2-307a-4a15-a72b-7476413d2106.jpg)
+
+![PXL_20230331_180032688](https://user-images.githubusercontent.com/27078897/229580879-11ef0f5d-234c-4880-a3fd-4ee8dbe78cbb.jpg)
+![PXL_20230331_180037006](https://user-images.githubusercontent.com/27078897/229580881-2e2974af-0c2f-416a-b622-705ffee39d0f.jpg)
+
+![PXL_20230331_190512856](https://user-images.githubusercontent.com/27078897/229580883-e7aa550a-e553-4fa2-98c8-350248c619ae.jpg)
+![PXL_20230331_181623941](https://user-images.githubusercontent.com/27078897/229580887-b8b1f037-6bfd-4293-abf1-afa319781167.jpg)
+![PXL_20230401_194444526](https://user-images.githubusercontent.com/27078897/229580889-4126d6ec-d9ff-42d8-a2f6-cb6034fc875a.jpg)
+
+## 2023-03-28 - @leomcelroy
+
+This week I released a toy re-implementation of the networking library we are using for modular things. 
+You can find this library here [modular-things/nosap](https://github.com/modular-things/nosap).
+The point of this is better understand what [OSAP](http://osap.tools/) (current JavaScript implementation [here](https://github.com/jakeread/osapjs/tree/main)) does and what it needs to do. 
+Primarily it's a library for packing and routing messages across devices.
+
+It differs somewhat from what Jake (the original OSAP author) describes in his [approach](http://osap.tools/approach/) for the sake of making things simpler and easier to comprehend.
+Hopefully these difference will diminish in the near future. 
+In a series of long conversations with Jake I've come to better understand OSAP itself and I believe to persuade him to remove notions of hierarchy from the graph design.
+
+I'd like to make a visualizer for networks in the toy implementation which can be used to investigate actual OSAP networks in the future. Which brings us to another thing we worked on last week. 
+
+We released a [TODO list](https://github.com/hackclub/drawing-thing/blob/main/TODO.md) to help people find ways to participate in the project. This will evolve into proper GitHub issues with good project management but we started just by dumping thoughts and tasks into this Markdown document.
+
+## 2023-03-20 - @leomcelroy
+
+This week we tested some resin parts, built two pen holders, and published the BOM (bill of materials) for the most up to date machine design. 
+
+We ordered the parts from [JLCPCB's 3D printing service](https://jlcpcb.com/3d-printing) which is amazingly cheap and quick. The concern using resin prints over FDM ones is that resin tends to be more brittle. The print quality is very nice and consistent though so the verdict is still up in the air.
+
+A friend Rob Hart helped design a sliding mechanism for a pen holder with very few parts. It uses 3 little posts on compliant levers which act as little springs holding the moving portion of the design in place. The other pen design is an adapted version of the lever which B. Smith used all the way back in our v0 prototype. You can see both of these designs in the photos below.
+
+Below is the full slider machine with resin parts:
+
+<img width="930" alt="slider" src="https://user-images.githubusercontent.com/27078897/226514041-fc2cbc7f-644f-4fa9-8e50-8c01ac3027af.png">
+
+Here is the front of the slider:
+
+<img width="854" alt="front slider" src="https://user-images.githubusercontent.com/27078897/226514096-f837e4fe-2329-4fe8-a91b-4b59f1c8e555.png">
+
+Here is the inner portion:
+
+<img width="510" alt="inner slider" src="https://user-images.githubusercontent.com/27078897/226514143-354ff9eb-48ae-4fe0-ab09-2daeb55cefad.png">
+
+Here is the same machine with a lever pen holder:
+
+<img width="974" alt="lever" src="https://user-images.githubusercontent.com/27078897/226514072-dec44dda-8f80-48c5-9f13-a7c76f246998.png">
+
+I also organized and published the materials and STL files for this current machine design. [The BOM can be found here](https://github.com/hackclub/drawing-thing/blob/main/BOM.md).
 
 ## 2023-03-10 - @leomcelroy
 
