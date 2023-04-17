@@ -35,7 +35,7 @@ The [full model can be found here](https://cad.onshape.com/documents/093c10251b0
 
 # Printed Parts
 
-Printed parts can be found in [/drawthing-things-stls](./stls).
+Printed parts can be found in [/stls](./stls).
 
 The quantity of each part is listed in the name as such `name_x${QUANTITY}`.
 
