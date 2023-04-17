@@ -6,6 +6,8 @@ We're also working with some researchers at MIT to make digital fabrication mach
 
 # Getting Involved
 
+We post regular updates in our [CHANGELOG](./CHANGELOG.md).
+
 We have a [TODO](./TODO.md) list which you can check out for various tasks that are being worked on (or need to be worked on). 
 
 One of the best ways to get involved is by building and testing one of the machines. All you need is a 3D printer and a little bit of hardware outlined in the [bill of materials here](./drawing-thing-v1/BOM.md).
