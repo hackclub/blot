@@ -8,9 +8,10 @@ Below is a list of various things we are working on, and ways you can engage wit
 
 ### Mechanical
 
-~~__Design a pen holder.__~~
+~~__Design a pen holder.__
 We still need to finalize the part that makes this machine a drawing machine, the pen holder!
 We put out an open challange to help with this which you can find [here](https://gist.github.com/exu3/e5c1469467667c8790b3f5bda7172f39).
+~~
 
 __Build your own machine.__
 You can already build your own machine if you have access to a 3D printer. 
