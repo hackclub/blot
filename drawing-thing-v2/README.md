@@ -1,6 +1,6 @@
 # Haxidraw
 
-<img width="300" alt="drawing machine with a turtle illustration" src="https://cloud-g6sk6by5j-hack-club-bot.vercel.app/0screenshot_2023-04-06_at_1.50.17_pm.png" align="right" />
+<img width="500" alt="drawing machine with a turtle illustration" src="https://cloud-g6sk6by5j-hack-club-bot.vercel.app/0screenshot_2023-04-06_at_1.50.17_pm.png" align="right" />
 
 The Haxidraw is a "you ship, we ship" project, similar to [Sprig](https://sprig.hackclub.com). This time if you make some digital art we'll send you the parts to build a robot which can make that art real.
 
@@ -11,6 +11,8 @@ We're also working with some researchers at MIT to make digital fabrication mach
 The [full model can be found here](https://cad.onshape.com/documents/63bea8a7de5a67f20db27d22/w/8d3bc6b2e7a16d7a1133b3b5/e/b415f757fff520875b42c91b?renderMode=0&uiState=643ecd204eaa6208ded4c597) - haxidraw - v11.
 
 ## BOM
+
+In addition to the parts below, you'll need the 3D printed parts found in [`/stls`](./stls). The quantity of each part is listed in the name as such `name_x${QUANTITY}`.
 
 ### Parts
 
@@ -39,10 +41,4 @@ The [full model can be found here](https://cad.onshape.com/documents/63bea8a7de5
 | 16   | SG90 Servo Motor                    | 1        |                                                           | [Amazon](https://www.amazon.com/Smraza-Helicopter-Airplane-Control-Arduino/dp/B07L2SF3R4/ref=sr_1_5?crid=2AQGJMAW5CBU8&keywords=servo%2Bmotor&qid=1676579262&sprefix=servo%2Bmotor%2Caps%2C82&sr=8-5&th=1)                                                                                                                                                                                                                                               |
 | box  | 20mm x 20mm v slot extrusion        | 2        |                                                           | [OpenBuilds](https://openbuildspartstore.com/v-slot-20x20-linear-rail/?sku=255-LP&gclid=Cj0KCQiAxbefBhDfARIsAL4XLRqRouKE4KMl3HNY35u6MQoBaKNPmS5ODHVxXfpoFuROiafi1i7nwi4aAs3AEALw_wcB)                                                                                                                                                                                                                                                                    |
 | box  | Nema 17 Stepper Motor               | 2        |                                                           | [Amazon](https://www.amazon.com/STEPPERONLINE-Stepper-63-74oz-Connector-Extruder/dp/B07LCHHQ97/ref=sr_1_3?crid=2JKWSAFLUD7FK&keywords=stepper+motor+nema+15&qid=1676574905&sprefix=stepper+motors+nema+15%2Caps%2C94&sr=8-3)                                                                                                                                                                                                                             |
-| box  | 8mm wrench                          | 1        | for adjusting eccentric spacers and belt tensioner        | Amazon                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-
-# Printed Parts
-
-Printed parts can be found in [`/stls`](./stls).
-
-The quantity of each part is listed in the name as such `name_x${QUANTITY}`.
+| box  | 8mm wrench                          | 1        | for adjusting eccentric spacers and belt tensioner        | Amazon                                                                                                                                                                                                                                                                                                                                                                                                                                                 
