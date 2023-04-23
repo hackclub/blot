@@ -14,7 +14,7 @@ We put out an open challange to help with this which you can find [here](https:/
 
 __Build your own machine.__
 You can already build your own machine if you have access to a 3D printer. 
-The [bill of materials can be found here](https://github.com/hackclub/drawing-thing/blob/main/BOM.md).
+The [bill of materials can be found here](https://github.com/hackclub/drawing-thing/tree/main/drawing-thing-v2).
 
 ### Electrical
 
