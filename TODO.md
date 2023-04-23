@@ -14,7 +14,7 @@ We put out an open challange to help with this which you can find [here](https:/
 
 __Build your own machine.__
 You can already build your own machine if you have access to a 3D printer. 
-The [bill of materials can be found here](https://github.com/hackclub/drawing-thing/blob/main/BOM.md). You can also find it on [Printables](https://www.printables.com/model/425878-drawing-thing-v10-3d-printed-carriage) for ease of downloading files, but the BOM on GitHub will be more up-to-date.
+The [bill of materials can be found here](https://github.com/hackclub/drawing-thing/blob/main/BOM.md).
 
 ### Electrical
 
