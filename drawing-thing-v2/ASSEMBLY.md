@@ -1,9 +1,11 @@
 # Assembly Instructions
 
-- carriage
-- feet + motors (x-axis)
-- front idler, belt tensioner, pen holder (y-axis)
-- adjustment
+This assembly guide is broken down into a few parts:
+- Carriage
+- Motors and Feet
+- Front Idler
+  - Pen holder
+- Belt tensioner
 
 ## Carriage
 
@@ -25,22 +27,30 @@
 | fab  | 1        | 3D printed carriage |                                    |
 
 - Put M5 hex nuts in all of the nut holes in the carriage.
+
+<img src="https://user-images.githubusercontent.com/72365100/234363170-4ead0521-bb16-4796-bd1b-4e006f917602.JPG" width="200" /> <img src="https://user-images.githubusercontent.com/72365100/234363174-666faea8-b479-4f77-b7fe-8d49b964c74f.JPG" width="200" />
+
 - Assemble idlers by stacking 2 flanged bearings together.
   - The flanged parts should be the top and bottom.
-  - Screw them to the bottom of the carriage using a ???M5 screw and 1mm shim between the carriage and the idler.
-  - The idlers should be able to spin smoothly.
+  - Screw them to the bottom of the carriage using a 20mm M5 screw and 1mm shim between the carriage and the idler.
+
+<img src="https://user-images.githubusercontent.com/72365100/234363972-a0a3c322-8e71-47a4-a7cb-5f4a7fcf7508.JPG" width="200" /> <img src="https://user-images.githubusercontent.com/72365100/234364196-861787f1-bf1c-4c5b-84fe-e2e836f52a3a.JPG" width="200" />
+
 - Attach the v-wheels to the carriage.
   - Use a 35mm M5 screw a v-wheel and 6mm spacer between the v-wheel and the carriage.
   - Repeat for all 8 wheels.
-  - If the screw appears to barely touch the nut, you can "pull" the nut deeper into the nut trap by threading a screw through the nut.
+  - If the screw appears to barely touch the nut, you can pull the nut deeper into the nut trap by threading a screw through the nut.
+ 
+<img src="https://user-images.githubusercontent.com/72365100/234364176-accf515e-f831-4d34-a10d-80a9029d5f01.JPG" width="200" /> <img src="https://user-images.githubusercontent.com/72365100/234364183-4ef1a041-c6fa-4a20-9e0e-cfca15186d01.JPG" width="200" />
+
 
 ## Motors and Feet
 
 Tools:
 
-- M3 allen
-- M5 allen
-- The allen key the stepper motor pulley comes with
+- M3 allen key
+- M5 allen key
+- The allen key the stepper motor pulley comes wit
 
 Parts you'll need:
 
@@ -59,13 +69,24 @@ Parts you'll need:
 | fab  | 2        | 3D printed motor bracket         |                                                |
 | fab  | 2        | Feet                             |                                                |
 
-- Attach ONE of the motor brackets to the aluminum extrusion using 10mm M5 screws and t-nuts in the respective holes.
+- Attach one of the motor brackets to the aluminum extrusion using 10mm M5 screws and t-nuts in the respective holes.
 - Slide the carriage onto the aluminum.
   - The distance between the wheels on each side may need to be adjusted for a better fit on the extrusion.
-- Attach other motor bracket to the aluminum extrusion using 10mm M5 screws and t-nuts in respective holes.
+  - 
+<img src="https://user-images.githubusercontent.com/72365100/234364753-278947d7-c028-41ab-bf35-76057fc45c54.JPG" width="300" />
+
+- With the carriage still on, attach other motor bracket to the aluminum extrusion using 10mm M5 screws and t-nuts in respective holes.
+
+<img src="https://user-images.githubusercontent.com/72365100/234364900-449ba3f2-77c7-4af1-a057-b0b55a923486.JPG" width="300" />
+
 - Attach the feet to the motor brackets using 12mm M5 screws and hex nuts inserted into the appropriate slots in them motor bracket.
+
+<img src="https://user-images.githubusercontent.com/72365100/234365048-3f79e839-32a9-4387-9fbc-6c3645de6b6d.JPG" width="300" />
+
 - Attach pulley wheel things to the stepper motors; don't tighten all the way as you'll need to adjust the height later.
 - Attach the stepper motors to the motor brackets using 10mm M3 screws.
+
+<img src="https://user-images.githubusercontent.com/72365100/234365209-6d29746e-54a5-4081-95b4-5133eb37f99d.JPG" width="300" />
 
 ## Front Idler
 
