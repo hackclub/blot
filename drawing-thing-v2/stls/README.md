@@ -1,5 +1,7 @@
 # Notes on 3D printing the parts
 
+<img src="https://cloud-kip63zhfi-hack-club-bot.vercel.app/0img_3948.jpg" alt="parts on Prusa MINI bed" width="500">
+
 _I've tried to print the parts for this machine with various printers/filaments/beds/settings, and have listed my takeaways below. This was just my experience, so perhaps yours could be different._
 
 - I recommend printing with PLA. Print at 90% speed for the first layer, with flow set to 105%. Then switch back to default (100 speed, 95 flow) after first layer.
