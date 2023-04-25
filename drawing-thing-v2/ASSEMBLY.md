@@ -140,7 +140,7 @@ Parts:
 - belt tensioner printed part
 - 2 of the belt clamp printed part
 
-- 2x M5 screws
+- 2x 30mm M5 screws
 - 2x 10mm M5 screws, for attaching to rail
 - 4x M5 hex nut
 - 2x M5 t-nut
@@ -149,4 +149,4 @@ Parts:
 - Slide the other aluminum rail between the wheels on the bottom of the carriage.
 - Screw the belt tensioner onto the end of the aluminum rail using 10mm M5 screws and t-nuts.
 - Attach belt to machine. See diagram for belt path.
-- Screw on the belt clamps to hold the belt in place. Adjust the tightness of the belt by loosening/tightening the nuts.
+- Screw on the belt clamps to hold the belt in place (30mm screw). Adjust the tightness of the belt by loosening/tightening the nuts on the outside.
