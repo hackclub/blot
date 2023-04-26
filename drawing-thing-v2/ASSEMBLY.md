@@ -1,6 +1,7 @@
 # Assembly Instructions
 
 This assembly guide is broken down into a few parts:
+
 - Carriage
 - Motors and Feet
 - Front Idler
@@ -40,9 +41,8 @@ This assembly guide is broken down into a few parts:
   - Use a 35mm M5 screw a v-wheel and 6mm spacer between the v-wheel and the carriage.
   - Repeat for all 8 wheels.
   - If the screw appears to barely touch the nut, you can pull the nut deeper into the nut trap by threading a screw through the nut.
- 
-<img src="https://user-images.githubusercontent.com/72365100/234364176-accf515e-f831-4d34-a10d-80a9029d5f01.JPG" width="200" /> <img src="https://user-images.githubusercontent.com/72365100/234364183-4ef1a041-c6fa-4a20-9e0e-cfca15186d01.JPG" width="200" />
 
+<img src="https://user-images.githubusercontent.com/72365100/234364176-accf515e-f831-4d34-a10d-80a9029d5f01.JPG" width="200" /> <img src="https://user-images.githubusercontent.com/72365100/234364183-4ef1a041-c6fa-4a20-9e0e-cfca15186d01.JPG" width="200" />
 
 ## Motors and Feet
 
@@ -71,9 +71,9 @@ Parts you'll need:
 
 - Attach one of the motor brackets to the aluminum extrusion using 10mm M5 screws and t-nuts in the respective holes.
 - Slide the carriage onto the aluminum.
+
   - The distance between the wheels on each side may need to be adjusted for a better fit on the extrusion.
-  - 
-<img src="https://user-images.githubusercontent.com/72365100/234364753-278947d7-c028-41ab-bf35-76057fc45c54.JPG" width="300" />
+  - <img src="https://user-images.githubusercontent.com/72365100/234364753-278947d7-c028-41ab-bf35-76057fc45c54.JPG" width="300" />
 
 - With the carriage still on, attach other motor bracket to the aluminum extrusion using 10mm M5 screws and t-nuts in respective holes.
 
@@ -136,7 +136,7 @@ Parts:
 ## Belt Tensioner
 
 - belt tensioner printed part
-- 2 of the belt clamp printed part
+- 2 of the belt clamp cap printed part
 
 - 2x 30mm M5 screws
 - 2x 10mm M5 screws, for attaching to rail
