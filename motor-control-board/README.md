@@ -1,5 +1,3 @@
-# WIP
-
 # [A single control board](https://leomcelroy.com/svg-pcb/?file=https://raw.githubusercontent.com/hackclub/drawing-thing/main/motor-control-board/motor-board.js)
 
 Ultimately the idea is that each device will have it's own little board which we network together through Modular Things.
@@ -36,3 +34,4 @@ https://www.snapeda.com/parts/102010388/Seeed%20Technology%20Co.%2C%20Ltd/view-p
 | 1        | 3-pin header                                                                                                                                     | Generic                                                                                                |
 | 4        | 4-pin header                                                                                                                                     | Generic                                                                                                |
 | 1        | RP2040 Xiao board                                                                                                                                | Seeed                                                                                                  |
+<img width="877" alt="Screen Shot 2023-04-28 at 12 14 20" src="https://user-images.githubusercontent.com/72365100/235199943-90dc2df5-dc4d-4326-883e-f35f49397ed1.png">
