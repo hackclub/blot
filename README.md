@@ -2,7 +2,7 @@
 
 This is the next "you ship, we ship"[^1] project. This time, if you make some digital art, we'll send you the parts to build a drawing robot which can make that art real!
 
-[^1]: Like [Sprig](https://sprig.hackclub.com), where you ship a project, and Hack Club ships you hardware/electronics.
+[^1]: Like [Sprig](https://sprig.hackclub.com)—where you ship a project, and Hack Club ships you hardware/electronics.
 
 ![Drawing machine creating turtle art](https://user-images.githubusercontent.com/27078897/232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg)
 
