@@ -106,8 +106,6 @@ Parts:
 - 2x M2 nuts, for screwing servo
 - 1x 1mm precision shim
 
-- instructions Instructions
-
 - Assemble idler from 2 flanged bearings and use a 20mm M5 screw to secure idler.
   - Put a shim between the plastic and the idler, and insert a hex nut into the rectangular nut trap.
 - Attach servo to pen holder rail part using 2 of the 10mm M2 screws and nuts.
@@ -148,5 +146,13 @@ Parts:
 
 - Slide the other aluminum rail between the wheels on the bottom of the carriage.
 - Screw the belt tensioner onto the end of the aluminum rail using 10mm M5 screws and t-nuts.
-- Attach belt to machine. See diagram for belt path.
-- Screw on the belt clamps to hold the belt in place (30mm screw). Adjust the tightness of the belt by loosening/tightening the nuts on the outside.
+
+<img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/0img_4011.jpg" width="250" /> <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/1img_4012.jpg" width="250 />
+  
+- Clamp belt on one side with 30mm screws, and thread belt through machine. TODO attach diagram for belt path
+  
+<img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/3img_4014.jpg" width="200" />
+  
+- Tighten belt, clamp other side with cap and 2 additional hex nuts. Adjust the tightness of the belt by loosening/tightening the nuts on the outside.
+  
+<img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/4img_4015.jpg" width="300" />
