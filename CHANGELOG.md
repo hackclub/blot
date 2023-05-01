@@ -4,13 +4,13 @@ This is a list of weekly developments for the drawing-thing updated every week.
 
 ## 2023-05-01 - @exu3
 
-We got some control boards from JLCPCB, and I assembled some. I documented the components and assembly process in [`motor-control-board/`](./motor-control-board/README.md). Here's a photo of what the board looks like:
+Last week, we recevied the control boards from JLCPCB, and I assembled a few. I documented the components and assembly process in [`motor-control-board/`](./motor-control-board/README.md). Here's a photo of what the board looks like:
 
 ![assembled control board](https://cloud-gxlagq7i7-hack-club-bot.vercel.app/0img_4025.jpg)
 
 The next step would be writing firmware for this board so that it can be used in the modular-things editor.
 
-I also wrote an assembly guide for the drawing machine so people can start building them. It can be found in [`drawing-thing-v2/ASSEMBLY.md`](./drawing-thing-v2/ASSEMBLY.md). I also updated the Bill of Materials, adding line numbers which correspond to the various bags of hardware that people will receive the drawing machine parts in.
+I also wrote an assembly guide for the drawing machine so people can start building them. It can be found in [`drawing-thing-v2/ASSEMBLY.md`](./drawing-thing-v2/ASSEMBLY.md). The Bill of Materials, adding line numbers which correspond to the various bags of hardware that people will receive the drawing machine parts in.
 
 ## 2023-04-03 - @leomcelroy
 
