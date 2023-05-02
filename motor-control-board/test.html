@@ -5,6 +5,7 @@
   let haxidraw;
   if (ports.length > 0) {
     haxidraw = await createHaxidraw(ports[0]);
+    console.log(haxidraw);
   }
 
   document
@@ -36,7 +37,7 @@
           (x - y)*stepsPerUnit
         );
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 5; i++) {
           const x = 0;
           const y = i%2===0 ? .4 : -1;
           const stepsPerUnit = 200*16;
@@ -44,10 +45,12 @@
             (x + y)*stepsPerUnit, 
             (x - y)*stepsPerUnit
           );
+
+          await haxidraw.servo(i%2===0 ? 0 : 1000);
           await delay(2000);
         }
         
-        // await servo();
+        
       }
     });
 

@@ -1,4 +1,9 @@
 #include <AccelStepper.h>
+#include <Servo.h>
+
+#define PIN_SERVO D4
+
+Servo servo;
 
 // #define STEPS_PER_REV 200*16
 uint16_t MAX_SPEED = 5000;
@@ -12,6 +17,8 @@ const int stepPins[NUMBER_OF_AXIS] = { D6, D7 };
 AccelStepper steppers[NUMBER_OF_AXIS];
 
 void setup() {
+  // servo.attach(PIN_SERVO);
+  // servo.write(0);
   Serial.begin(115200); // initialize serial communication
   for (int i = 0; i < NUMBER_OF_AXIS; i++) {
     steppers[i] = AccelStepper(1, stepPins[i], dirPins[i]);
@@ -79,8 +86,11 @@ void readSerial() {
       }
 
       if (msg == 0x03) { // "servo"
-        uint16_t microsecond = read_uint16(msgBuffer, 1);
-        Serial.println(microsecond);
+        uint16_t pulse_us = read_uint16(msgBuffer, 1);
+        servo.writeMicroseconds(pulse_us);
+
+        Serial.println("servo");
+        Serial.println(pulse_us);
       }
 
       bufferIndex = 0;
