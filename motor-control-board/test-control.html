@@ -1,0 +1,230 @@
+<script defer type="module">
+
+  const ports = await navigator.serial.getPorts();
+  // const ports = [];
+  let buffers = [];
+  
+  for (const port of ports) {
+    const buffer = await createWebserialBuffer(port);
+    buffers.push(buffer);
+  }
+
+  document
+    .querySelector(".connect")
+    .addEventListener("click", () => {
+    // const usbVendorId = 0xabcd;
+    navigator.serial
+      .requestPort({ filters: [] })
+      .then((port) => {
+        // Connect to `port` or add it to the list of available ports.
+      })
+      .catch((e) => {
+        // The user didn't select a port.
+      });
+    });
+
+  document
+    .querySelector(".cmd")
+    .addEventListener("click", async () => {
+      if (ports.length > 0) {
+        await setMaxSpeed(5000);
+        await setAccel(5000);
+        
+        const x = 0;
+        const y = -.4;
+        const stepsPerUnit = 200*16;
+        await moveTo(
+          (x + y)*stepsPerUnit, 
+          (x - y)*stepsPerUnit
+        );
+
+        for (let i = 0; i < 20; i++) {
+          const x = 0;
+          const y = i%2===0 ? .4 : -1;
+          const stepsPerUnit = 200*16;
+          await moveTo(
+            (x + y)*stepsPerUnit, 
+            (x - y)*stepsPerUnit
+          );
+          await new Promise(r => setTimeout(r, 2000));
+        }
+        // await servo();
+      }
+    });
+
+  async function moveTo(x, y) {
+    const bytes = floatsToBytes([ x, y ]);
+    
+    const msg = new Uint8Array(10);
+
+    msg[0] = 0x00;
+    bytes.forEach((byte, i) => {
+      msg[i + 1] = byte;
+    })
+    msg[bytes.length + 1] = 0x0A;
+
+    const port = buffers[0];
+    await port.write(msg);
+  }
+
+  async function setAccel(val) {
+    const msg = new Uint8Array(6);
+    const bytes = floatsToBytes([ val ]);
+    
+    msg[0] = 0x01;
+    bytes.forEach((byte, i) => {
+      msg[i + 1] = byte;
+    })
+    msg[bytes.length + 1] = 0x0A;
+
+    const port = buffers[0];
+    await port.write(msg);
+  }
+
+  async function setMaxSpeed(val) {
+    const msg = new Uint8Array(6);
+    const bytes = floatsToBytes([ val ]);
+    
+    msg[0] = 0x02;
+    bytes.forEach((byte, i) => {
+      msg[i + 1] = byte;
+    })
+    msg[bytes.length + 1] = 0x0A;
+
+    const port = buffers[0];
+    await port.write(msg);
+  }
+
+  async function servo(microseconds) {
+    const msg = new Uint8Array(4);
+    const bytes = uint16ToBytes([ microseconds ]);
+
+    msg[0] = 0x03;
+    byteView.forEach((byte, i) => {
+      msg[i + 1] = byte;
+    })
+    msg[byteView.length + 1] = 0x0A;
+    
+    const port = buffers[0];
+    await port.write(msg);
+  }
+
+  setInterval(() => {
+    const port = buffers[0];
+    if (!port) return;
+    const msg = [];
+    while(port.available()) {
+      msg.push(port.read());
+    }
+
+
+    if (msg.length > 0) {
+      const msgString = String.fromCharCode.apply(null, msg);
+      console.log(msgString);    
+    }
+    
+  }, 50)
+
+  async function createWebserialBuffer(port, baudrate = 115200) {
+
+    const buffer = [];
+  
+    await port.open({ baudRate: baudrate });
+  
+    async function stuffBuffer() {
+      try  {
+        while (port.readable) {
+          const reader = port.readable.getReader();
+  
+          while (true) {
+            const { value, done } = await reader.read();
+  
+            if (value) {
+              for (let i = 0; i < value.length; i++) {
+                buffer.push(value[i]);
+              }
+            }
+  
+            if (done) {
+              reader.releaseLock();
+              break;
+            }
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        await port.close();
+      }
+    }
+  
+    stuffBuffer();
+  
+    async function write(msg) {
+      const writer = port.writable.getWriter();
+      await writer.write(msg);
+      writer.releaseLock();
+    }
+  
+    return {
+      write,
+      read: () => buffer.length > 0 ? buffer.shift() : null,
+      available: () => buffer.length > 0,
+    }
+  }  
+
+  function floatsToBytes(arr) {
+    var data = new Float32Array(arr);
+    var buffer = new ArrayBuffer(data.byteLength);
+    var floatView = new Float32Array(buffer).set(data);
+    var byteView = new Uint8Array(buffer);
+
+    return byteView;
+  }
+
+  function uint16ToBytes(arr) {
+    var data = new Uint16Array(arr);
+    var buffer = new ArrayBuffer(data.byteLength);
+    var uint16View = new Uint16Array(buffer).set(data);
+    var byteView = new Uint8Array(buffer);
+
+    return byteView;
+  }
+  
+</script>
+
+<style>
+  /* css go here */
+
+  body {
+    margin: 0px;
+  }
+
+  .hello {
+    display: grid;
+    place-content: center;
+    background: coral;
+    height: 100vh;
+    width: 100vw;
+  }
+</style>
+
+<main>
+  <!-- html goes here -->
+  <div class="hello">
+    <button class="connect">test</button>
+    <button class="cmd">send command</button>
+    Hello there!
+  </div>
+</main>
+
+
+
+
+
+
+
+
+
+
+
