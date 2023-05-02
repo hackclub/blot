@@ -56,8 +56,8 @@ void readSerial() {
       uint8_t msg = msgBuffer[0];
       if (msg == 0x00) { // "go"
         // 2 signed floats
-        float floatData0 = readFloat(msgBuffer, 1);
-        float floatData1 = readFloat(msgBuffer, 5);
+        float floatData0 = read_float(msgBuffer, 1);
+        float floatData1 = read_float(msgBuffer, 5);
         
         steppers[0].moveTo(floatData0);
         steppers[1].moveTo(floatData1);
@@ -67,7 +67,7 @@ void readSerial() {
       }
 
       if (msg == 0x01) { // "accel"
-        float value = readFloat(msgBuffer, 1);
+        float value = read_float(msgBuffer, 1);
         for (int i = 0; i < NUMBER_OF_AXIS; i++) {
           steppers[i].setAcceleration(value);
         }
@@ -76,7 +76,7 @@ void readSerial() {
       }
 
       if (msg == 0x02) { // "maxSpeed"
-        float value = readFloat(msgBuffer, 1);
+        float value = read_float(msgBuffer, 1);
         for (int i = 0; i < NUMBER_OF_AXIS; i++) {
           steppers[i].setMaxSpeed(value);
         }
@@ -85,7 +85,7 @@ void readSerial() {
       }
 
       if (msg == 0x03) { // "servo"
-        float angle = readFloat(msgBuffer, 1);
+        int angle = read_int(msgBuffer, 1);
         servo.write(angle);
 
         Serial.println("servo");
@@ -100,7 +100,7 @@ void readSerial() {
   }
 }
 
-float readFloat(uint8_t* buffer, int index) {
+float read_float(uint8_t* buffer, int index) {
   uint8_t byte0 = buffer[index];
   uint8_t byte1 = buffer[index+1];
   uint8_t byte2 = buffer[index+2];
@@ -128,6 +128,22 @@ uint16_t read_uint16(uint8_t* buffer, int index) {
   memcpy(&value, &byteArray, sizeof(value));
 
   Serial.println("uint16");
+  Serial.println(value);
+
+  return value;
+}
+
+uint16_t read_int(uint8_t* buffer, int index) {
+  uint8_t byte0 = buffer[index];
+  uint8_t byte1 = buffer[index+1];
+  uint8_t byte2 = buffer[index+2];
+  uint8_t byte3 = buffer[index+3];
+
+  uint8_t byteArray[] = {byte0, byte1, byte2, byte3};
+  int value;
+  memcpy(&value, &byteArray, sizeof(value));
+
+  Serial.println("int");
   Serial.println(value);
 
   return value;
