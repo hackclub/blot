@@ -2,11 +2,21 @@
 
 This is a list of weekly developments for the drawing-thing updated every week.
 
-## 2023-04-3 - @leomcelroy
+## 2023-05-01 - @exu3
 
-Big updates from last week! 
+Last week, we recevied the control boards from JLCPCB, and I assembled a few. I documented the components and assembly process in [`motor-control-board/`](./motor-control-board/README.md). Here's a photo of what the board looks like:
 
-I decided to make a single control board to make it easier to send people supplies to complete due diligence on what the cheapest version of the machine might be. A contributor to SVG PCB recently submitted some PRs adding excellent Gerber support so I took great satisfaction designing the boards in my own CAD tool and ordering them from JLCPCB. You can find the design [here](./motor-board.js). You can also play with the [design in the SVG-PCB editor here](https://leomcelroy.com/svg-pcb/?file=https://raw.githubusercontent.com/hackclub/drawing-thing/main/motor-board.js).
+![assembled control board](https://cloud-gxlagq7i7-hack-club-bot.vercel.app/0img_4025.jpg)
+
+The next step would be writing firmware for this board so that it can be used in the modular-things editor.
+
+I also wrote an assembly guide for the drawing machine so people can start building them. It can be found in [`drawing-thing-v2/ASSEMBLY.md`](./drawing-thing-v2/ASSEMBLY.md). The Bill of Materials, adding line numbers which correspond to the various bags of hardware that people will receive the drawing machine parts in.
+
+## 2023-04-03 - @leomcelroy
+
+Big updates from last week!
+
+I decided to make a single control board to make it easier to send people supplies to complete due diligence on what the cheapest version of the machine might be. A contributor to SVG PCB recently submitted some PRs adding excellent Gerber support so I took great satisfaction designing the boards in my own CAD tool and ordering them from JLCPCB. You can find the design [here](./motor-control-board/). You can also play with the [design in the SVG-PCB editor here](https://leomcelroy.com/svg-pcb/?file=https://raw.githubusercontent.com/hackclub/drawing-thing/main/motor-board.js).
 
 Here is a picture of the board.
 
@@ -35,22 +45,22 @@ Here are some shots of the complete device below.
 
 ## 2023-03-28 - @leomcelroy
 
-This week I released a toy re-implementation of the networking library we are using for modular things. 
+This week I released a toy re-implementation of the networking library we are using for modular things.
 You can find this library here [modular-things/nosap](https://github.com/modular-things/nosap).
-The point of this is better understand what [OSAP](http://osap.tools/) (current JavaScript implementation [here](https://github.com/jakeread/osapjs/tree/main)) does and what it needs to do. 
+The point of this is better understand what [OSAP](http://osap.tools/) (current JavaScript implementation [here](https://github.com/jakeread/osapjs/tree/main)) does and what it needs to do.
 Primarily it's a library for packing and routing messages across devices.
 
 It differs somewhat from what Jake (the original OSAP author) describes in his [approach](http://osap.tools/approach/) for the sake of making things simpler and easier to comprehend.
-Hopefully these difference will diminish in the near future. 
+Hopefully these difference will diminish in the near future.
 In a series of long conversations with Jake I've come to better understand OSAP itself and I believe to persuade him to remove notions of hierarchy from the graph design.
 
-I'd like to make a visualizer for networks in the toy implementation which can be used to investigate actual OSAP networks in the future. Which brings us to another thing we worked on last week. 
+I'd like to make a visualizer for networks in the toy implementation which can be used to investigate actual OSAP networks in the future. Which brings us to another thing we worked on last week.
 
 We released a [TODO list](https://github.com/hackclub/drawing-thing/blob/main/TODO.md) to help people find ways to participate in the project. This will evolve into proper GitHub issues with good project management but we started just by dumping thoughts and tasks into this Markdown document.
 
 ## 2023-03-20 - @leomcelroy
 
-This week we tested some resin parts, built two pen holders, and published the BOM (bill of materials) for the most up to date machine design. 
+This week we tested some resin parts, built two pen holders, and published the BOM (bill of materials) for the most up to date machine design.
 
 We ordered the parts from [JLCPCB's 3D printing service](https://jlcpcb.com/3d-printing) which is amazingly cheap and quick. The concern using resin prints over FDM ones is that resin tends to be more brittle. The print quality is very nice and consistent though so the verdict is still up in the air.
 
