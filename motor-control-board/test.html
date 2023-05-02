@@ -1,0 +1,108 @@
+<script defer type="module">
+  import { createHaxidraw } from "./js/createHaxidraw.js";
+
+  const ports = await navigator.serial.getPorts();
+  let haxidraw;
+  if (ports.length > 0) {
+    haxidraw = await createHaxidraw(ports[0]);
+  }
+
+  document
+    .querySelector(".connect")
+    .addEventListener("click", () => {
+    // const usbVendorId = 0xabcd;
+    navigator.serial
+      .requestPort({ filters: [] })
+      .then((port) => {
+        // Connect to `port` or add it to the list of available ports.
+      })
+      .catch((e) => {
+        // The user didn't select a port.
+      });
+    });
+
+  document
+    .querySelector(".cmd")
+    .addEventListener("click", async () => {
+      if (haxidraw) {
+        await haxidraw.setMaxSpeed(5000);
+        await haxidraw.setAccel(5000);
+        
+        const x = 0;
+        const y = -.4;
+        const stepsPerUnit = 200*16;
+        await haxidraw.moveTo(
+          (x + y)*stepsPerUnit, 
+          (x - y)*stepsPerUnit
+        );
+
+        for (let i = 0; i < 20; i++) {
+          const x = 0;
+          const y = i%2===0 ? .4 : -1;
+          const stepsPerUnit = 200*16;
+          await haxidraw.moveTo(
+            (x + y)*stepsPerUnit, 
+            (x - y)*stepsPerUnit
+          );
+          await delay(2000);
+        }
+        
+        // await servo();
+      }
+    });
+
+  async function delay(ms) {
+    return await new Promise(r => setTimeout(r, ms));
+  }
+
+  setInterval(() => {
+    if (!haxidraw) return;
+    const port = haxidraw.port;
+
+    const msg = [];
+    while(port.available()) {
+      msg.push(port.read());
+    }
+
+    if (msg.length > 0) {
+      const msgString = String.fromCharCode.apply(null, msg);
+      console.log(msgString);    
+    }
+    
+  }, 50)  
+</script>
+
+<style>
+  /* css go here */
+
+  body {
+    margin: 0px;
+  }
+
+  .hello {
+    display: grid;
+    place-content: center;
+    background: coral;
+    height: 100vh;
+    width: 100vw;
+  }
+</style>
+
+<main>
+  <!-- html goes here -->
+  <div class="hello">
+    <button class="connect">connect</button>
+    <button class="cmd">send command</button>
+  </div>
+</main>
+
+
+
+
+
+
+
+
+
+
+
