@@ -17,8 +17,7 @@ const int stepPins[NUMBER_OF_AXIS] = { D6, D7 };
 AccelStepper steppers[NUMBER_OF_AXIS];
 
 void setup() {
-  // servo.attach(PIN_SERVO);
-  // servo.write(0);
+  servo.attach(PIN_SERVO);
   Serial.begin(115200); // initialize serial communication
   for (int i = 0; i < NUMBER_OF_AXIS; i++) {
     steppers[i] = AccelStepper(1, stepPins[i], dirPins[i]);
@@ -41,7 +40,7 @@ void loop() {
 
 /*
 
-packet structure
+possible packet structure
 
 msglength msg packetlength payload
 
@@ -86,11 +85,11 @@ void readSerial() {
       }
 
       if (msg == 0x03) { // "servo"
-        uint16_t pulse_us = read_uint16(msgBuffer, 1);
-        servo.writeMicroseconds(pulse_us);
+        float angle = readFloat(msgBuffer, 1);
+        servo.write(angle);
 
         Serial.println("servo");
-        Serial.println(pulse_us);
+        Serial.println(angle);
       }
 
       bufferIndex = 0;
@@ -114,18 +113,22 @@ float readFloat(uint8_t* buffer, int index) {
   float floatValue;
   memcpy(&floatValue, &byteArray, sizeof(floatValue));
 
+  Serial.println("floatValue");
   Serial.println(floatValue);
 
   return floatValue;
 }
 
-float read_uint16(uint8_t* buffer, int index) {
+uint16_t read_uint16(uint8_t* buffer, int index) {
   uint8_t byte0 = buffer[index];
   uint8_t byte1 = buffer[index+1];
 
   uint8_t byteArray[] = {byte0, byte1};
   uint16_t value;
   memcpy(&value, &byteArray, sizeof(value));
+
+  Serial.println("uint16");
+  Serial.println(value);
 
   return value;
 }

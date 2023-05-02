@@ -44,9 +44,9 @@ export async function createHaxidraw(rawPort) {
     await port.write(msg);
   }
 
-  async function servo(microseconds) {
-    const msg = new Uint8Array(4);
-    const bytes = uint16ToBytes([ microseconds ]);
+  async function servo(angle) {
+    const msg = new Uint8Array(6);
+    const bytes = floatsToBytes([ angle ]);
 
     msg[0] = 0x03;
     bytes.forEach((byte, i) => {

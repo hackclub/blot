@@ -46,7 +46,7 @@
             (x - y)*stepsPerUnit
           );
 
-          await haxidraw.servo(i%2===0 ? 0 : 1000);
+          await haxidraw.servo(i%2===0 ? -180 : 180);
           await delay(2000);
         }
         
