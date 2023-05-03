@@ -2,11 +2,20 @@
 
 This assembly guide is broken down into a few parts:
 
-- Carriage
-- Motors and Feet
-- Front Idler
-  - Pen holder
-- Belt tensioner
+- [Assembly Instructions](#assembly-instructions)
+  - [Carriage](#carriage)
+    - [Tools](#tools)
+    - [Parts](#parts)
+  - [Motors and Feet](#motors-and-feet)
+    - [Tools](#tools-1)
+    - [Parts](#parts-1)
+  - [Front Idler](#front-idler)
+    - [Tools](#tools-2)
+    - [Parts](#parts-2)
+  - [Pen holder!](#pen-holder)
+    - [Parts](#parts-3)
+  - [Belt Tensioner](#belt-tensioner)
+    - [Parts](#parts-4)
 
 ## Carriage
 
@@ -16,16 +25,16 @@ This assembly guide is broken down into a few parts:
 
 ### Parts
 
-| Line | Quantity | Thing               | Notes                              |
-| ---- | -------- | ------------------- | ---------------------------------- |
-|      | 8        | Flanged bearings    | 2 bearings stacked, makes an idler |
-| 5    | 8        | V-wheels            |                                    |
-|      | 8        | 6mm spacer          |                                    |
-|      | 8        | 35mm M5 screw       | for v-wheels                       |
-|      | 4        | 20mm M5 screw       | for idlers                         |
-|      | 4        | 1mm precision shim  | for idlers                         |
-|      | 12       | M5 hex nut          |                                    |
-| fab  | 1        | 3D printed carriage |                                    |
+| Quantity | Thing               | Notes                              |
+| -------- | ------------------- | ---------------------------------- |
+| 8        | Flanged bearings    | 2 bearings stacked, makes an idler |
+| 8        | V-wheels            |                                    |
+| 8        | 6mm spacer          |                                    |
+| 8        | 35mm M5 screw       | for v-wheels                       |
+| 4        | 20mm M5 screw       | for idlers                         |
+| 4        | 1mm precision shim  | for idlers                         |
+| 12       | M5 hex nut          |                                    |
+| 1        | 3D printed carriage |                                    |
 
 - Put M5 hex nuts in all of the nut holes in the carriage.
 
@@ -46,13 +55,13 @@ This assembly guide is broken down into a few parts:
 
 ## Motors and Feet
 
-Tools:
+### Tools
 
 - M3 allen key
 - M5 allen key
-- The allen key the stepper motor pulley comes wit
+- The allen key the stepper motor pulley comes with
 
-Parts you'll need:
+### Parts
 
 - the assembled carriage from above.
 
@@ -90,7 +99,11 @@ Parts you'll need:
 
 ## Front Idler
 
-Parts:
+### Tools
+
+- M5 allen key
+
+### Parts
 
 - Front idler printed part
 - Pen holder rail printed part
@@ -116,9 +129,9 @@ Parts:
     - If you are running into issues, be sure the orientation of the nut is correct.
 - Attach the idler part to using 10mm M5 screws and t-nuts.
 
-### Pen holder!
+## Pen holder!
 
-Parts:
+### Parts
 
 - printed pen holder part
 - 3x v-wheels
@@ -134,6 +147,8 @@ Parts:
 - Slide the pen holder onto the plastic rail and adjust wheels accordingly.
 
 ## Belt Tensioner
+
+### Parts
 
 - belt tensioner printed part
 - 2 of the belt clamp cap printed part
