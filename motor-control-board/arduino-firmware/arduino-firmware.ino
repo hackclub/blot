@@ -95,7 +95,11 @@ void readSerial() {
       bufferIndex = 0;
     } else {
       msgBuffer[bufferIndex] = incoming;
-      bufferIndex++;
+      bufferIndex = bufferIndex + 1;
+
+      if (bufferIndex >= 100) {
+        Serial.println("Communication buffer overflow.");
+      }
     }
   }
 }
@@ -133,7 +137,7 @@ uint16_t read_uint16(uint8_t* buffer, int index) {
   return value;
 }
 
-uint16_t read_int(uint8_t* buffer, int index) {
+int read_int(uint8_t* buffer, int index) {
   uint8_t byte0 = buffer[index];
   uint8_t byte1 = buffer[index+1];
   uint8_t byte2 = buffer[index+2];
@@ -148,5 +152,6 @@ uint16_t read_int(uint8_t* buffer, int index) {
 
   return value;
 }
+
 
 
