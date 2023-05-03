@@ -387,12 +387,11 @@ const t = new Turtle();
 
 function main() {
   t.up();
-  t.goTo(2, 3);
+  t.goTo(1, 1);
   t.down();
-  for (let i = 0; i < 30; i++) {
-    t.forward(i/100*2);
-    t.right(61);
-    t.left(1.2);
+  for (let i = 0; i < 4; i++) {
+    t.forward(1);
+    t.right(90);
   }
 
 
