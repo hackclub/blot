@@ -148,11 +148,15 @@ Parts:
 - Screw the belt tensioner onto the end of the aluminum rail using 10mm M5 screws and t-nuts.
 
 <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/0img_4011.jpg" width="250" /> <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/1img_4012.jpg" width="250 />
-  
+
 - Clamp belt on one side with 30mm screws, and thread belt through machine. TODO attach diagram for belt path
-  
+
 <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/3img_4014.jpg" width="200" />
   
 - Tighten belt, clamp other side with cap and 2 additional hex nuts. Adjust the tightness of the belt by loosening/tightening the nuts on the outside.
   
 <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/4img_4015.jpg" width="300" />
+
+---
+
+🖌️ Wahoo! Now that your machine is assembled, you can set up the control board to start making things with your machine in the [Modular Things editor](https://modular-things.github.io/modular-things). See [SETUP.md](../motor-control-board/SETUP.md) for instructions on how to set up your control board.
