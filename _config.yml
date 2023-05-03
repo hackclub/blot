@@ -1,0 +1,6 @@
+theme: minima
+header_pages:
+  - drawing-thing-v2/README.md
+  - drawing-thing-v2/ASSEMBLY.md
+  - motor-control-board/README.md
+  - motor-control-board/SETUP.md
