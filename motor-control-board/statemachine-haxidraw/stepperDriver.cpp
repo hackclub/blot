@@ -16,7 +16,7 @@ void stepper_init(void){
   }
 }
 
-void stepper_step(int i, boolean dir){
+void stepper_step(int i, boolean dir) {
   if (dir) {
     sio_hw->gpio_set = pins_dir_bm[i];
   } else {

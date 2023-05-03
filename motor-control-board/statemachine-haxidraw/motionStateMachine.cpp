@@ -118,11 +118,11 @@ void motion_setPositionTarget(int i, float _targ, float _maxVel, float _maxAccel
   interrupts();
 }
 
-void motion_setPosition(int i, float _pos){
+void motion_setPosition(int i, float _pos) {
   pos[i] = _pos;
 }
 
-void motion_getCurrentStates(int i, motionState_t* statePtr){
+void motion_getCurrentStates(int i, motionState_t* statePtr) {
   noInterrupts();
   statePtr->pos = pos[i];
   statePtr->vel = vel[i];
