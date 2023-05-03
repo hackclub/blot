@@ -2,7 +2,7 @@
 
 You'll need a computer with the Arduino IDE installed, as well as the control board with the Xiao RP2040, and a USB-C cable. By the end of these instructions, you'll be set up to use your motor control board and Modular Things editor to interface with the drawing machine.
 
-## Hardware Setup
+## Hardware
 
 Hold the `B` (BOOT) button on the XIAO board and plug it in to your computer.
 
@@ -10,7 +10,7 @@ Hold the `B` (BOOT) button on the XIAO board and plug it in to your computer.
 
 The "RPI-RP2" disk should show up on your computer if the above step was successful.
 
-## Software Setup
+## Software
 
 > You'll need to have the latest version of the Arduino IDE installed. [Install it here.](https://www.arduino.cc/en/software/)
 
