@@ -1,12 +1,12 @@
 # Setup
 
-You'll need a computer with the Arduino IDE installed, as well as the control board with the Xiao RP2040, and a USB-C cable.
+You'll need a computer with the Arduino IDE installed, as well as the control board with the Xiao RP2040, and a USB-C cable. By the end of these instructions, you'll be set up to use your motor control board and Modular Things editor to interface with the drawing machine.
 
 ## Hardware Setup
 
 Hold the `B` (BOOT) button on the XIAO board and plug it in to your computer.
 
-<img src="https://cloud-875fn52pd-hack-club-bot.vercel.app/0img_4068.jpg" width="200">
+<img src="https://cloud-875fn52pd-hack-club-bot.vercel.app/0img_4068.jpg" width="300">
 
 The "RPI-RP2" disk should show up on your computer if the above step was successful.
 
@@ -24,17 +24,17 @@ https://raw.githubusercontent.com/qbolsee/ArduinoCore-fab-sam/master/json/packag
 
 4. Navigate to **Tools** > **Board** > **Boards Manager**, and search for "rp2040". Install the latest version of "Raspberry Pi Pico/RP2040" (author Earle F. Philhower, III).
 
-<img src="https://cloud-emp4hciw2-hack-club-bot.vercel.app/0screenshot_2023-05-03_at_6.18.35_am.png" alt="rp2040 in boards manager">
+<img src="https://cloud-emp4hciw2-hack-club-bot.vercel.app/0screenshot_2023-05-03_at_6.18.35_am.png" alt="rp2040 in boards manager" width="500">
 
 5. Now that you have the board package installed, you can upload the firmware to the board. Select your board and port in **Tools** > **Board** and find "**Seeed Studio XIAO RP2040**.
 
-<img alt="select board" src="https://cloud-62cyva491-hack-club-bot.vercel.app/0screenshot_2023-05-03_at_6.21.56_am.png" width="300">
+<img alt="select board" src="https://cloud-62cyva491-hack-club-bot.vercel.app/0screenshot_2023-05-03_at_6.21.56_am.png" width="400">
 
 To select the port, go to **Tools** > **Port** and select the serial port name of the connected board.
 
-<img src="https://cloud-iclq94ywi-hack-club-bot.vercel.app/0screenshot_2023-05-03_at_6.29.06_am.png" alt="select serial port" width="200">
+<img src="https://cloud-iclq94ywi-hack-club-bot.vercel.app/0screenshot_2023-05-03_at_6.29.06_am.png" alt="select serial port" width="400">
 
-> Install the following libraries via Arduino's library manager:
+> Then, install the following libraries via Arduino's library manager:
 >
 > - FlashStorage_SAMD (by Cristian Maglie, Khoi Hoang)
 > - AccelStepper (by Mike McCauley)
@@ -42,4 +42,4 @@ To select the port, go to **Tools** > **Port** and select the serial port name o
 
 6. Copy the Arduino code from [`arduino-firmware/arduino-firmware.ino`](./arduino-firmware/arduino-firmware.ino) into your IDE and upload to your board.
 
-<img alt="Upload firmware to board" src="https://cloud-8rt747if7-hack-club-bot.vercel.app/0screenshot_2023-05-03_at_6.31.30_am.png" width="400">
+<img alt="Upload firmware to board" src="https://cloud-8rt747if7-hack-club-bot.vercel.app/0screenshot_2023-05-03_at_6.31.30_am.png" width="500">
