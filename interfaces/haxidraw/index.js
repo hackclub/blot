@@ -28,12 +28,17 @@ const state = {
   },
   transforming: false,
   panZoomFuncs: null,
+  haxidraw: null,
 };
 
 const view = (state) => html`
   <div class="interface-container">
     <div class="control-panel">
-      <div class="button connect">Connect to machine</div>
+      <div class="button-container">
+        <div class="button connect" @click=${onConnectClick}>
+          Connect to machine
+        </div>
+      </div>
       <div class="x-y">
         <div class="x-value">
           x:<span class="position-value">${state.position.x.toFixed(2)}</span>
@@ -398,9 +403,50 @@ svgEl.addEventListener("wheel", () => {
   r();
 });
 
-function onHomeClick() {
+async function onConnectClick() {
+  console.log("you clicked connect");
+
+  navigator.serial
+    .requestPort({ filters: [] })
+    .then(async (port) => {
+      // Connect to `port` or add it to the list of available ports.
+      state.haxidraw = await createHaxidraw(port);
+    })
+    .catch((e) => {
+      // The user didn't select a port.
+    });
+}
+
+async function onHomeClick() {
   console.log("you clicked home");
   console.log(getColoredShapes(state));
+
+  const haxidraw = state.haxidraw;
+  console.log("haxidraw", haxidraw);
+
+  if (haxidraw) {
+    await haxidraw.setMaxSpeed(5000);
+    await haxidraw.setAccel(5000);
+
+    const x = 0;
+    const y = -0.4;
+    const stepsPerUnit = 200 * 16;
+    await haxidraw.moveTo((x + y) * stepsPerUnit, (x - y) * stepsPerUnit);
+
+    for (let i = 0; i < 5; i++) {
+      const x = 0;
+      const y = i % 2 === 0 ? 0.4 : -1;
+      const stepsPerUnit = 200 * 16;
+      await haxidraw.moveTo((x + y) * stepsPerUnit, (x - y) * stepsPerUnit);
+
+      await haxidraw.servo(i % 2 === 0 ? -180 : 180);
+      await delay(2000);
+    }
+  }
+}
+
+async function delay(ms) {
+  return await new Promise((r) => setTimeout(r, ms));
 }
 
 function onCutClick() {
