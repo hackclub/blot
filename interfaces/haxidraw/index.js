@@ -411,6 +411,21 @@ async function onConnectClick() {
     .then(async (port) => {
       // Connect to `port` or add it to the list of available ports.
       state.haxidraw = await createHaxidraw(port);
+
+        setInterval(() => {
+          const port = state.haxidraw.port;
+
+          const msg = [];
+          while(port.available()) {
+            msg.push(port.read());
+          }
+
+          if (msg.length > 0) {
+            const msgString = String.fromCharCode.apply(null, msg);
+            console.log(msgString);    
+          }
+          
+        }, 0);  
     })
     .catch((e) => {
       // The user didn't select a port.
