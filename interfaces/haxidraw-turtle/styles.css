@@ -23,4 +23,5 @@ html {
   height: 90%;
   border: 1px black solid;
   margin: 10px;
+  transform: scale(1, -1);
 }

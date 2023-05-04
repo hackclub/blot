@@ -1,11 +1,11 @@
 #include "motionStateMachine.h"
 #include "stepperDriver.h"
 
-// #include <Servo.h>
+#include <Servo.h>
 
-// #define PIN_SERVO D4
+#define PIN_SERVO D4
 
-// Servo servo;
+Servo servo;
 
 // motion_setPositionTarget(targ, maxVel, maxAccel);
 // motion_setVelocityTarget(targ, maxAccel);
@@ -13,11 +13,11 @@
 // motion_setPosition(pos);
 // stepper_setCScale(cscale);
 
-float MAX_SPEED = 5000;
-float ACCEL = 5000;
+float MAX_SPEED = 5000.0F;
+float ACCEL = 5000.0F;
 
 void setup() {
-  // servo.attach(PIN_SERVO);
+  servo.attach(PIN_SERVO);
 
   Serial.begin(115200); // initialize serial communication
 
@@ -48,28 +48,32 @@ void readSerial() {
         motion_setPositionTarget(1, floatData1, MAX_SPEED, ACCEL);
 
         // in js should await this response
-        Serial.println("moving");
+        Serial.print("moveTo: ");
+        Serial.print(floatData0);
+        Serial.print(" ");
+        Serial.print(floatData1);
+        Serial.println("");
       }
 
       if (msg == 0x01) { // "accel"
         float value = read_float(msgBuffer, 1);
         ACCEL = value;
-        Serial.println("accel");
+        Serial.print("accel: ");
         Serial.println(value);
       }
 
       if (msg == 0x02) { // "maxSpeed"
         float value = read_float(msgBuffer, 1);
         MAX_SPEED = value;
-        Serial.println("speed");
+        Serial.print("speed: ");
         Serial.println(value);
       }
 
       if (msg == 0x03) { // "servo"
         int angle = read_int(msgBuffer, 1);
-        // servo.write(angle);
+        servo.write(angle);
 
-        Serial.println("servo");
+        Serial.print("servo: ");
         Serial.println(angle);
       }
 
@@ -98,8 +102,8 @@ float read_float(uint8_t* buffer, int index) {
   float floatValue;
   memcpy(&floatValue, &byteArray, sizeof(floatValue));
 
-  Serial.println("floatValue");
-  Serial.println(floatValue);
+  // Serial.println("floatValue");
+  // Serial.println(floatValue);
 
   return floatValue;
 }
@@ -112,8 +116,8 @@ uint16_t read_uint16(uint8_t* buffer, int index) {
   uint16_t value;
   memcpy(&value, &byteArray, sizeof(value));
 
-  Serial.println("uint16");
-  Serial.println(value);
+  // Serial.println("uint16");
+  // Serial.println(value);
 
   return value;
 }
@@ -128,8 +132,8 @@ int read_int(uint8_t* buffer, int index) {
   int value;
   memcpy(&value, &byteArray, sizeof(value));
 
-  Serial.println("int");
-  Serial.println(value);
+  // Serial.println("int");
+  // Serial.println(value);
 
   return value;
 }

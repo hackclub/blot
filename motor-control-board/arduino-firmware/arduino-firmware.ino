@@ -1,4 +1,6 @@
 #include <AccelStepper.h>
+#include <MultiStepper.h>
+
 #include <Servo.h>
 
 #define PIN_SERVO D4
@@ -6,7 +8,7 @@
 Servo servo;
 
 // #define STEPS_PER_REV 200*16
-uint16_t MAX_SPEED = 5000;
+uint16_t MAX_SPEED = 300;
 uint16_t ACCEL = 5000;
 
 #define NUMBER_OF_AXIS 2
@@ -14,15 +16,20 @@ uint16_t ACCEL = 5000;
 const int dirPins[NUMBER_OF_AXIS] = { D5, D8 };
 const int stepPins[NUMBER_OF_AXIS] = { D6, D7 };
 
-AccelStepper steppers[NUMBER_OF_AXIS];
+long positions[NUMBER_OF_AXIS];
+
+AccelStepper stepperArr[NUMBER_OF_AXIS];
+
+MultiStepper steppers;
 
 void setup() {
   servo.attach(PIN_SERVO);
   Serial.begin(115200); // initialize serial communication
   for (int i = 0; i < NUMBER_OF_AXIS; i++) {
-    steppers[i] = AccelStepper(1, stepPins[i], dirPins[i]);
-    steppers[i].setMaxSpeed(MAX_SPEED);
-    steppers[i].setAcceleration(ACCEL);
+    AccelStepper stepper(1, stepPins[i], dirPins[i]);
+    stepperArr[i] = stepper;
+    stepper.setMaxSpeed(MAX_SPEED);
+    steppers.addStepper(stepper);
   }
 }
 
@@ -30,12 +37,7 @@ void loop() {
   // check for incoming serial data
   readSerial();
 
-  // run the stepper motors
-  for (int i = 0; i < NUMBER_OF_AXIS; i++) {
-    if (steppers[i].distanceToGo() != 0) {
-      steppers[i].run();
-    }
-  }
+  // steppers.run();
 }
 
 /*
@@ -59,8 +61,19 @@ void readSerial() {
         float floatData0 = read_float(msgBuffer, 1);
         float floatData1 = read_float(msgBuffer, 5);
         
-        steppers[0].moveTo(floatData0);
-        steppers[1].moveTo(floatData1);
+        // stepperArr[0].moveTo(floatData0);
+        // stepperArr[1].moveTo(floatData1);
+
+        positions[0] = floatData0;
+        positions[1] = floatData1;
+
+        steppers.moveTo(positions);
+        
+        for(int i = 0; i < 2; i++) {
+          Serial.print(positions[i]);
+        }
+
+        steppers.runSpeedToPosition();
 
         // in js should await this response
         Serial.println("moving");
@@ -69,7 +82,7 @@ void readSerial() {
       if (msg == 0x01) { // "accel"
         float value = read_float(msgBuffer, 1);
         for (int i = 0; i < NUMBER_OF_AXIS; i++) {
-          steppers[i].setAcceleration(value);
+          stepperArr[i].setAcceleration(value);
         }
         Serial.println("accel");
         Serial.println(value);
@@ -78,7 +91,7 @@ void readSerial() {
       if (msg == 0x02) { // "maxSpeed"
         float value = read_float(msgBuffer, 1);
         for (int i = 0; i < NUMBER_OF_AXIS; i++) {
-          steppers[i].setMaxSpeed(value);
+          stepperArr[i].setMaxSpeed(value);
         }
         Serial.println("speed");
         Serial.println(value);

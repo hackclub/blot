@@ -1,12 +1,7 @@
 #include "motionStateMachine.h"
 #include "stepperDriver.h"
 
-// stopping criteria... state machine is not perfect,
 #define POS_EPSILON 0.01F
-#define VEL_EPSILON 1.0F
-#define TICK_INTERVAL 1000.0F
-
-#define PIN_DEBUG_CLK 26
 
 #define ALARM_DT_NUM 1
 #define ALARM_DT_IRQ TIMER_IRQ_1

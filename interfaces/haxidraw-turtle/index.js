@@ -4,17 +4,17 @@ let haxidraw = null;
 
 async function penUp() {
   await haxidraw.servo(-90);
-  await delay(1000);
+  await delay(2000);
 }
 
 async function penDown() {
   await haxidraw.servo(90);
-  await delay(1000);
+  await delay(2000);
 }
 
 async function goTo(x, y) {
   await haxidraw.moveTo(x+y, y-x);
-  await delay(1000);
+  await delay(2000);
 }
 
 async function delay(ms) {
@@ -389,9 +389,9 @@ function main() {
   t.up();
   t.goTo(1, 1);
   t.down();
-  for (let i = 0; i < 4; i++) {
-    t.forward(1);
-    t.right(90);
+  for (let i = 0; i < 10; i++) {
+    t.forward(1*i*0.1);
+    t.right(61);
   }
 
 
