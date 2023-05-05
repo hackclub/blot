@@ -1,6 +1,8 @@
 # Firmware
 
-You'll need a computer with the Arduino IDE installed, as well as the control board with the Xiao RP2040, and a USB-C cable. By the end of these instructions, you'll be set up to use your motor control board and Modular Things editor to interface with the drawing machine.
+<img src="https://cloud-las1eixli-hack-club-bot.vercel.app/0235199943-90dc2df5-dc4d-4326-883e-f35f49397ed1.png" alt="assembled control board with annotations" width="500">
+
+You'll need a computer with the Arduino IDE installed, as well as the control board and a USB-C cable. After following these steps, you'll be set up to use your motor control board to interface with your new drawing machine.
 
 ## Hardware setup
 
@@ -9,6 +11,8 @@ Hold the `B` (BOOT) button on the XIAO board and plug it in to your computer.
 <img src="https://cloud-875fn52pd-hack-club-bot.vercel.app/0img_4068.jpg" width="300">
 
 The "RPI-RP2" disk should show up on your computer if the above step was successful.
+
+<img src="https://cloud-744uh7pdl-hack-club-bot.vercel.app/0image.png" width="200" alt="disk in macos finder">
 
 ## Software setup
 
@@ -43,3 +47,5 @@ To select the port, go to **Tools** > **Port** and select the serial port name o
 6. Copy the Arduino code from [`arduino-firmware/arduino-firmware.ino`](./arduino-firmware/arduino-firmware.ino) into your IDE and upload to your board.
 
 <img alt="Upload firmware to board" src="https://cloud-8rt747if7-hack-club-bot.vercel.app/0screenshot_2023-05-03_at_6.31.30_am.png" width="500">
+
+> Now you can write your own web interface and use it to control your machine. Check out some example [interfaces](../interfaces/) which are open source on GitHub.
