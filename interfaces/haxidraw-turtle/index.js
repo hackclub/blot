@@ -13,7 +13,8 @@ async function penDown() {
 }
 
 async function goTo(x, y) {
-  await haxidraw.moveTo(x+y, y-x);
+  console.log(x, y);
+  await haxidraw.moveTo(x, y);
   await delay(2000);
 }
 
@@ -380,18 +381,18 @@ function addPanZoom(el) {
 const machineWidth = 5;
 const machineHeight = 4;
 
-let spu = 200*16;
-const SCALE = [.5, -.5].map(x => x*spu);
+let spu = 10;
+const SCALE = [.2, -.2].map(x => x*spu);
 
 const t = new Turtle();
 
 function main() {
   t.up();
-  t.goTo(1, 1);
+  t.goTo(2, 1);
   t.down();
-  for (let i = 0; i < 10; i++) {
-    t.forward(1*i*0.1);
-    t.right(61);
+  for (let i = 0; i < 15; i++) {
+    t.forward(.05*i);
+    t.right(90);
   }
 
 

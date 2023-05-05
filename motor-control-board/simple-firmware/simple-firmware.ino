@@ -1,58 +1,49 @@
 
-#define NUMBER_OF_AXIS 2
+#define AXIS_NUM 2
 
-const int dirPins[NUMBER_OF_AXIS] = { D5, D8 };
-const int stepPins[NUMBER_OF_AXIS] = { D6, D7 };
+const int dirPins[AXIS_NUM] = { D5, D8 };
+const int stepPins[AXIS_NUM] = { D6, D7 };
 
 int targetPositions[] = {0, 0};
 int positions[] = {0, 0};
 // int speeds[] = {300, 300};
 
-unsigned long previousMotorTimes[] = { millis(), millis() };
-long motorIntervals[] = {2, 1};
-
 void setup() {
   Serial.begin(115200);
-  for (int i = 0; i < NUMBER_OF_AXIS; i++) {
+  for (int i = 0; i < AXIS_NUM; i++) {
     pinMode(dirPins[i], OUTPUT);
     pinMode(stepPins[i], OUTPUT);
   }
 
+  goTo(0, 0);
+  goTo(0, -0.5);
+  goTo(1, -0.5);
+  goTo(1, -1.5);
+  goTo(2, -1.5);
+  goTo(2, -2.5);
+  goTo(3, -2.5);
+
+  // goTo(0, 0);
+  // goTo(1, 0);
+  // goTo(1, 1);
+  // goTo(0, 1);
+  // goTo(0, 0);
+
+  // goTo(1, .5);
+  // goTo(3, .5);
+  // goTo(-.3, -.5);
+  // goTo(0, 0);
+
 }
 
 void loop() {
-  // unsigned long currentMotorTimes[] = { millis(), millis() };
-
-  // for (int i = 0; i < NUMBER_OF_AXIS; i++) {
-  //   // if (distanceToGo(i) == 0) continue;
-
-  //   if (currentMotorTimes[i] - previousMotorTimes[i] > motorIntervals[i]) {
-  //     bool dir = distanceToGo(i) > 0;
-  //     if (distanceToGo(i) != 0) step(i, dir);
-
-  //     previousMotorTimes[i] = currentMotorTimes[i];
-  //   }
-  // }
-
-  // float stepRatio = abs(distanceToGo(0)/distanceToGo(1));
-  // int maxIndex = stepRatio < 1 ? 1 : 0;
-  // int maxSteps = abs(distanceToGo(maxIndex));
-
-  // int lastStep = 0;
-  // for (int i = 0; i < maxSteps; i++) {
-  //   moveCloser(maxIndex);
-
-  //   if (i - lastStep > (stepRatio < 1 ? 1/stepRatio : stepRatio)) {
-  //     moveCloser((maxIndex+1)%2);
-  //     lastStep = i;
-  //   }
-  // }
-
-
+  readSerial();
 }
 
+float motorIntervals[AXIS_NUM] = { 100, 100 };
+
 void moveToTarget() {
-  int maxIndex = abs(distanceToGo(0)) > abs(distanceToGo(1)) ? 1 : 0;
+  int maxIndex = abs(distanceToGo(0)) > abs(distanceToGo(1)) ? 0 : 1;
   int minIndex = (maxIndex+1)%2;
   int maxSteps = abs(distanceToGo(maxIndex));
   int minSteps = abs(distanceToGo(minIndex));
@@ -62,11 +53,13 @@ void moveToTarget() {
   for (int i = 0; i < maxSteps; i++) {
     moveCloser(maxIndex);
 
-    if (i - lastStep > maxSteps/minSteps) {
+    while (i - lastStep > maxSteps/minSteps) {
       moveCloser(minIndex);
-      lastStep = i;
+      lastStep++;
     }
   }
+
+  while (distanceToGo(minIndex) != 0) moveCloser(minIndex);
 }
 
 void moveCloser(int i) {
@@ -101,10 +94,14 @@ void readSerial() {
       uint8_t msg = msgBuffer[0];
       if (msg == 0x00) { // "go"
 
-        targetPositions[0] = read_int(msgBuffer, 1);
-        targetPositions[1] = read_int(msgBuffer, 5);
+        float x = read_float(msgBuffer, 1);
+        float y = read_float(msgBuffer, 5);
         
-        moveToTarget()
+        goTo(x, y);
+
+        Serial.println(x);
+        Serial.println(y);
+        Serial.println("move");
       }
 
       // if (msg == 0x01) { // "accel"
@@ -123,7 +120,7 @@ void readSerial() {
 
       if (msg == 0x03) { // "servo"
         int angle = read_int(msgBuffer, 1);
-        servo.write(angle);
+        // servo.write(angle);
 
         Serial.print("servo: ");
         Serial.println(angle);
@@ -164,8 +161,21 @@ int read_int(uint8_t* buffer, int index) {
   int value;
   memcpy(&value, &byteArray, sizeof(value));
 
-  // Serial.println("int");
-  // Serial.println(value);
-
   return value;
 }
+
+void goTo(float x, float y) {
+  int SCALE = 1000;
+  int step0 = (int)(x + y)*SCALE;
+  int step1 = (int)(y - x)*SCALE;
+  targetPositions[0] = step0;
+  targetPositions[1] = step1;
+  moveToTarget();
+  delay(2000);
+}
+
+
+
+
+
+

@@ -35,8 +35,11 @@ connect.addEventListener("click", () => {
       haxidraw = await createHaxidraw(port);
       console.log(haxidraw);
 
-      let scale = 1000;
+      let scale = 5000;
       await goTo(0*scale, 0*scale);
+      await goTo(1*scale, 1*scale);
+      await goTo(0*scale, 0*scale);
+      
       await goTo(1*scale, 0*scale);
       await goTo(1*scale, 1*scale);
       await goTo(0*scale, 1*scale);

@@ -1,5 +1,5 @@
 import { createWebSerialBuffer } from "./createWebSerialBuffer.js";
-import { floatsToBytes, uint16ToBytes } from "./converters.js";
+import { floatsToBytes, uint16ToBytes, intsToBytes } from "./converters.js";
 
 export async function createHaxidraw(rawPort) {
   const port = await createWebSerialBuffer(rawPort);
