@@ -1,38 +1,28 @@
 
 #define AXIS_NUM 2
+#define SPU 400.0
+#define EPSILON 0.1
 
 const int dirPins[AXIS_NUM] = { D5, D8 };
 const int stepPins[AXIS_NUM] = { D6, D7 };
 
-int targetPositions[] = {0, 0};
-int positions[] = {0, 0};
-// int speeds[] = {300, 300};
+float targetPositions[] = {0, 0};
+float positions[] = {0, 0};
+
+unsigned long motorIntervals[AXIS_NUM] = { 0, 0 };
+unsigned long prevMotorTime[AXIS_NUM] = { 0, 0 };
 
 void setup() {
   Serial.begin(115200);
+
   for (int i = 0; i < AXIS_NUM; i++) {
     pinMode(dirPins[i], OUTPUT);
     pinMode(stepPins[i], OUTPUT);
   }
 
-  goTo(0, 0);
-  goTo(0, -0.5);
-  goTo(1, -0.5);
-  goTo(1, -1.5);
-  goTo(2, -1.5);
-  goTo(2, -2.5);
-  goTo(3, -2.5);
-
-  // goTo(0, 0);
-  // goTo(1, 0);
-  // goTo(1, 1);
-  // goTo(0, 1);
-  // goTo(0, 0);
-
-  // goTo(1, .5);
-  // goTo(3, .5);
-  // goTo(-.3, -.5);
-  // goTo(0, 0);
+  goTo(0.0, 0.0);
+  goTo(3.0, 5.0);
+  goTo(0.0, 0.0);
 
 }
 
@@ -40,31 +30,82 @@ void loop() {
   readSerial();
 }
 
-float motorIntervals[AXIS_NUM] = { 100, 100 };
+
 
 void moveToTarget() {
-  int maxIndex = abs(distanceToGo(0)) > abs(distanceToGo(1)) ? 0 : 1;
-  int minIndex = (maxIndex+1)%2;
-  int maxSteps = abs(distanceToGo(maxIndex));
-  int minSteps = abs(distanceToGo(minIndex));
-
-  int lastStep = 0;
-
-  for (int i = 0; i < maxSteps; i++) {
-    moveCloser(maxIndex);
-
-    while (i - lastStep > maxSteps/minSteps) {
-      moveCloser(minIndex);
-      lastStep++;
+  while (!isDone()) {
+    
+    for (int i = 0; i < AXIS_NUM; i++) {
+      unsigned long prev = prevMotorTime[i];
+      unsigned long curr = millis();
+      if (curr - prev > motorIntervals[i]) {
+        moveCloser(i);
+        prevMotorTime[i] = curr;
+      }
+      
     }
   }
-
-  while (distanceToGo(minIndex) != 0) moveCloser(minIndex);
 }
 
-void moveCloser(int i) {
-  if (distanceToGo(i) == 0) return;
+void setIntervals() {
+  // give a fixed amount of time to the bigger step
+  float delta_0 = targetPositions[0] - positions[0];
+  float delta_1 = targetPositions[1] - positions[1];
+  float maxDist = max(delta_0, delta_1);
+  float minDist = min(delta_0, delta_1);
+  int maxIndex = delta_0 >= delta_1 ? 0 : 1;
+  int minIndex = delta_0 < delta_1 ? 0 : 1;
 
+  // float maxD = max(delta_0, delta_1);
+  // float minD = min(delta_0, delta_1);
+
+  // float ratio = abs(delta_0/delta_1);
+
+  // Serial.println(abs(minD/maxD));
+  // Serial.println(ratio);
+
+  Serial.println("deltas");
+  Serial.println(delta_0);
+  Serial.println(delta_1);
+  Serial.println(delta_0/delta_1);
+  Serial.println("end");
+
+  float ratio = abs(delta_0/delta_1);
+
+  motorIntervals[0] = 1.0;
+  motorIntervals[1] = 1.0;
+
+}
+
+bool isDone() {
+  bool isDone = true;
+  for (int i = 0; i < AXIS_NUM; i++) {
+    isDone = isDone && (abs(distanceToGo(i)) < EPSILON);
+  }
+
+  return isDone;
+}
+
+void goTo(float x, float y) {
+  // int SCALE = 1000;
+  targetPositions[0] = x + y;
+  targetPositions[1] = y - x;
+  
+  Serial.println("b start");
+
+  bresenhem_loop();
+
+  Serial.println("b end");
+
+  // setIntervals();
+  // moveToTarget();
+  // delay(200);
+}
+
+
+void moveCloser(int i) {
+  // Serial.println(distanceToGo(i));
+  // if (abs(distanceToGo(i)) < EPSILON) return;
   bool dir = distanceToGo(i) > 0;
   step(i, dir);
 }
@@ -73,14 +114,14 @@ void step(int i, bool dir) {
   digitalWrite(dirPins[i], dir);
 
   digitalWrite(stepPins[i], HIGH);
-  delayMicroseconds(500);
+  delayMicroseconds(5);
   digitalWrite(stepPins[i], LOW);
-  delayMicroseconds(500);
+  delayMicroseconds(5);
 
-  positions[i] = positions[i] + ( dir ? 1 : -1);
+  positions[i] = positions[i] + (dir ? 1.0 : -1.0)/SPU;
 }
 
-int distanceToGo(int i) {
+float distanceToGo(int i) {
   return targetPositions[i] - positions[i];
 }
 
@@ -164,17 +205,57 @@ int read_int(uint8_t* buffer, int index) {
   return value;
 }
 
-void goTo(float x, float y) {
-  int SCALE = 1000;
-  int step0 = (int)(x + y)*SCALE;
-  int step1 = (int)(y - x)*SCALE;
-  targetPositions[0] = step0;
-  targetPositions[1] = step1;
-  moveToTarget();
-  delay(2000);
+void bresenhem_loop() {
+  // Set your target distances for each motor (in steps)
+  float motor1Target = targetPositions[0];
+  float motor2Target = targetPositions[1];
+
+  // Initialize variables for Bresenham's Algorithm
+  float motor1Step = 0.0;
+  float motor2Step = 0.0;
+  float motor1Error = motor1Target / 2.0;
+  float motor2Error = motor2Target / 2.0;
+
+  Serial.println("b start");
+
+  // Loop until both motors reach their target steps
+  while (motor1Step < motor1Target || motor2Step < motor2Target) {
+    // Motor 1
+    motor1Error -= motor1Target;
+    if (motor1Error < 0 && motor1Step < motor1Target) {
+      motor1Step += bresenhem_step(0);
+      motor1Error += motor2Target;
+    }
+
+    // Motor 2
+    motor2Error -= motor2Target;
+    if (motor2Error < 0 && motor2Step < motor2Target) {
+      motor2Step += bresenhem_step(1);
+      motor2Error += motor1Target;
+    }
+  }
+
+  Serial.println("b done");
+
+  // Add a delay or other code here if you want to run the movement repeatedly
+  delay(100);
 }
 
+float bresenhem_step(int i) {
+  bool dir = distanceToGo(i) > 0;
 
+  digitalWrite(dirPins[i], dir);
+
+  digitalWrite(stepPins[i], HIGH);
+  delayMicroseconds(1);
+  digitalWrite(stepPins[i], LOW);
+  delayMicroseconds(1);
+
+  float delta = (dir ? 1.0 : -1.0)/SPU;
+  positions[i] = positions[i] + delta;
+
+  return delta;
+}
 
 
 
