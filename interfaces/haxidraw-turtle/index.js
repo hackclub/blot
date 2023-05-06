@@ -15,7 +15,7 @@ async function penDown() {
 async function goTo(x, y) {
   console.log(x, y);
   await haxidraw.moveTo(x, y);
-  await delay(2000);
+  await delay(200);
 }
 
 async function delay(ms) {
@@ -390,8 +390,8 @@ function main() {
   t.up();
   t.goTo(2, 1);
   t.down();
-  for (let i = 0; i < 15; i++) {
-    t.forward(.05*i);
+  for (let i = 0; i < 30; i++) {
+    t.forward(.1*i);
     t.right(90);
   }
 

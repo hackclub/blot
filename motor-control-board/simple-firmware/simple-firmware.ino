@@ -13,7 +13,7 @@ unsigned long motorIntervals[AXIS_NUM] = { 0, 0 };
 unsigned long prevMotorTime[AXIS_NUM] = { 0, 0 };
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   for (int i = 0; i < AXIS_NUM; i++) {
     pinMode(dirPins[i], OUTPUT);
@@ -21,13 +21,14 @@ void setup() {
   }
 
   goTo(0.0, 0.0);
-  goTo(3.0, 5.0);
-  goTo(0.0, 0.0);
+  goTo(10.0, 10.0);
+  // goTo(0.0, 0.0);
 
 }
 
 void loop() {
   readSerial();
+  
 }
 
 
@@ -91,11 +92,7 @@ void goTo(float x, float y) {
   targetPositions[0] = x + y;
   targetPositions[1] = y - x;
   
-  Serial.println("b start");
-
-  bresenhem_loop();
-
-  Serial.println("b end");
+  bresenham_loop();
 
   // setIntervals();
   // moveToTarget();
@@ -205,7 +202,7 @@ int read_int(uint8_t* buffer, int index) {
   return value;
 }
 
-void bresenhem_loop() {
+void bresenham_loop() {
   // Set your target distances for each motor (in steps)
   float motor1Target = targetPositions[0];
   float motor2Target = targetPositions[1];
@@ -213,35 +210,46 @@ void bresenhem_loop() {
   // Initialize variables for Bresenham's Algorithm
   float motor1Step = 0.0;
   float motor2Step = 0.0;
-  float motor1Error = motor1Target / 2.0;
-  float motor2Error = motor2Target / 2.0;
+  float motor1Error = abs(motor1Target) / 2;
+  float motor2Error = abs(motor2Target) / 2;
 
-  Serial.println("b start");
+  // Set motor direction based on target values
+  digitalWrite(dirPins[0], motor1Target >= 0 ? HIGH : LOW);
+  digitalWrite(dirPins[1], motor2Target >= 0 ? HIGH : LOW);
 
   // Loop until both motors reach their target steps
-  while (motor1Step < motor1Target || motor2Step < motor2Target) {
+  while (abs(motor1Step) < abs(motor1Target) || abs(motor2Step) < abs(motor2Target)) {
     // Motor 1
-    motor1Error -= motor1Target;
-    if (motor1Error < 0 && motor1Step < motor1Target) {
-      motor1Step += bresenhem_step(0);
-      motor1Error += motor2Target;
+    motor1Error -= abs(motor1Target);
+    if (motor1Error < 0 && abs(motor1Step) < abs(motor1Target)) {
+      digitalWrite(stepPins[0], HIGH);
+      delayMicroseconds(1); // Adjust for desired motor speed
+      digitalWrite(stepPins[0], LOW);
+      delayMicroseconds(1); // Adjust for desired motor speed
+
+      motor1Step += motor1Target >= 0 ? 1.0/SPU : -1.0/SPU;
+      motor1Error += abs(motor2Target);
     }
 
     // Motor 2
-    motor2Error -= motor2Target;
-    if (motor2Error < 0 && motor2Step < motor2Target) {
-      motor2Step += bresenhem_step(1);
-      motor2Error += motor1Target;
+    motor2Error -= abs(motor2Target);
+    if (motor2Error < 0 && abs(motor2Step) < abs(motor2Target)) {
+      digitalWrite(stepPins[1], HIGH);
+      delayMicroseconds(1); // Adjust for desired motor speed
+      digitalWrite(stepPins[1], LOW);
+      delayMicroseconds(1); // Adjust for desired motor speed
+
+      motor2Step += motor2Target >= 0 ? 1.0/SPU : -1.0/SPU;
+      motor2Error += abs(motor1Target);
     }
   }
 
-  Serial.println("b done");
 
   // Add a delay or other code here if you want to run the movement repeatedly
   delay(100);
 }
 
-float bresenhem_step(int i) {
+float bresenham_step(int i) {
   bool dir = distanceToGo(i) > 0;
 
   digitalWrite(dirPins[i], dir);
