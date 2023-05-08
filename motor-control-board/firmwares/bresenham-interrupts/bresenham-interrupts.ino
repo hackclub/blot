@@ -1,3 +1,7 @@
+#include "pico/stdlib.h"
+#include "hardware/timer.h"
+#include "hardware/irq.h"
+
 #define SPU 400
 
 float pos[] = {0, 0};
@@ -7,11 +11,26 @@ const int motor1DirPin = D5;
 const int motor2StepPin = D7;
 const int motor2DirPin = D8;
 
+const uint32_t interruptFrequency = 20000; // 20,000 Hz, or 50 microseconds interval
+
+const unsigned long stepDuration = 500; // The time it takes to perform one step in microseconds
+volatile float motor1Step = 0;
+volatile float motor2Step = 0;
+volatile float motor1Target = 0;
+volatile float motor2Target = 0;
+volatile unsigned long motor1StepInterval = 0;
+volatile unsigned long motor2StepInterval = 0;
+volatile unsigned long motor1PrevStepTime = 0;
+volatile unsigned long motor2PrevStepTime = 0;
+
+
 void setup() {
   pinMode(motor1StepPin, OUTPUT);
   pinMode(motor1DirPin, OUTPUT);
   pinMode(motor2StepPin, OUTPUT);
   pinMode(motor2DirPin, OUTPUT);
+
+  initTimer();
 }
 
 void loop() {
@@ -22,9 +41,9 @@ void loop() {
 }
 
 void goTo(float x, float y) {
-    // Set your target distances for each motor (in steps)
-  float motor1Target = (x + y) - pos[0];
-  float motor2Target = (y - x) - pos[1];
+  // Set your target distances for each motor (in steps)
+  motor1Target = (x + y) - pos[0];
+  motor2Target = (y - x) - pos[1];
 
   // Set motor direction based on target values
   digitalWrite(motor1DirPin, motor1Target >= 0 ? HIGH : LOW);
@@ -35,45 +54,64 @@ void goTo(float x, float y) {
   float motor1Speed = abs(motor1Target) / maxSteps;
   float motor2Speed = abs(motor2Target) / maxSteps;
 
-  unsigned long stepDuration = 500; // The time it takes to perform one step in microseconds
-  unsigned long motor1StepInterval = stepDuration / motor1Speed;
-  unsigned long motor2StepInterval = stepDuration / motor2Speed;
+  motor1StepInterval = stepDuration / motor1Speed;
+  motor2StepInterval = stepDuration / motor2Speed;
 
   // Initialize variables for step timing
-  unsigned long motor1PrevStepTime = 0;
-  unsigned long motor2PrevStepTime = 0;
-  float motor1Step = 0;
-  float motor2Step = 0;
+  motor1PrevStepTime = micros();
+  motor2PrevStepTime = motor1PrevStepTime;
 
-  // Loop until both motors reach their target steps
-  while (abs(motor1Step) < abs(motor1Target) || abs(motor2Step) < abs(motor2Target)) {
-    unsigned long currentTime = micros();
+  // Reset step counters
+  motor1Step = 0;
+  motor2Step = 0;
+}
 
-    // Motor 1
-    if (abs(motor1Step) < abs(motor1Target) && currentTime - motor1PrevStepTime >= motor1StepInterval) {
-      digitalWrite(motor1StepPin, HIGH);
-      delayMicroseconds(1);
-      digitalWrite(motor1StepPin, LOW);
-      delayMicroseconds(1);
+void step_ISR() {
+  unsigned long currentTime = micros();
 
-      motor1Step += (motor1Target >= 0 ? 1.0 : -1.0)/SPU;
-      motor1PrevStepTime = currentTime;
-    }
+  // Motor 1
+  if (abs(motor1Step) < abs(motor1Target) && currentTime - motor1PrevStepTime >= motor1StepInterval) {
+    digitalWrite(motor1StepPin, HIGH);
+    delayMicroseconds(1);
+    digitalWrite(motor1StepPin, LOW);
+    delayMicroseconds(1);
 
-    // Motor 2
-    if (abs(motor2Step) < abs(motor2Target) && currentTime - motor2PrevStepTime >= motor2StepInterval) {
-      digitalWrite(motor2StepPin, HIGH);
-      delayMicroseconds(1);
-      digitalWrite(motor2StepPin, LOW);
-      delayMicroseconds(1);
-
-      motor2Step += (motor2Target >= 0 ? 1.0 : -1.0)/SPU;
-      motor2PrevStepTime = currentTime;
-    }
+    motor1Step += (motor1Target >= 0 ? 1.0 : -1.0) / SPU;
+    motor1PrevStepTime = currentTime;
   }
 
-  pos[0] += motor1Step;
-  pos[1] += motor2Step;
+  // Motor 2
+  if (abs(motor2Step) < abs(motor2Target) && currentTime - motor2PrevStepTime >= motor2StepInterval) {
+    digitalWrite(motor2StepPin, HIGH);
+    delayMicroseconds(1);
+    digitalWrite(motor2StepPin, LOW);
+    delayMicroseconds(1);
+
+    motor2Step += (motor2Target >= 0 ? 1.0 : -1.0) / SPU;
+    motor2PrevStepTime = currentTime;
+  }
+
+  // Update position when both motors reach their target steps
+  if (abs(motor1Step) >= abs(motor1Target) && abs(motor2Step) >= abs(motor2Target)) {
+    pos[0] += motor1Step;
+    pos[1] += motor2Step;
+  }
+}
+
+void initTimer() {
+  // Select a free timer
+  int timerID = 0;
+  hardware_alarm_claim(timerID);
+
+  // Set the frequency
+  uint32_t ticks = clock_get_hz(clk_sys) / interruptFrequency;
+  hardware_timer_set_ticks(timerID, ticks);
+
+  // Enable the interrupt
+  hardware_timer_clear_overflow(timerID);
+  irq_set_exclusive_handler(TIMER_IRQ_0, step_ISR);
+  irq_set_enabled(TIMER_IRQ_0, true);
+  hardware_timer_set_repeating(timerID, true);
 }
 
 

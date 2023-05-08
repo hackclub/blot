@@ -5,21 +5,21 @@
 <script type="module">
 import { createHaxidraw } from "../../motor-control-board/js/createHaxidraw.js";
 
-let haxidraw = null;
+window.haxidraw = null;
 
-async function penUp() {
-  await haxidraw.servo(-90);
-  await delay(2000);
-}
+// async function penUp() {
+//   await haxidraw.servo(-90);
+//   await delay(2000);
+// }
 
-async function penDown() {
-  await haxidraw.servo(90);
-  await delay(2000);
-}
+// async function penDown() {
+//   await haxidraw.servo(90);
+//   await delay(2000);
+// }
 
 async function goTo(x, y) {
   await haxidraw.moveTo(x+y, y-x);
-  await delay(2000);
+  // await delay(2000);
 }
 
 async function delay(ms) {
@@ -35,31 +35,16 @@ connect.addEventListener("click", () => {
       haxidraw = await createHaxidraw(port);
       console.log(haxidraw);
 
-      let scale = 5000;
-      await goTo(0*scale, 0*scale);
-      await goTo(1*scale, 1*scale);
-      await goTo(0*scale, 0*scale);
+      // let scale = 5000;
+      // await goTo(0*scale, 0*scale);
+      // await goTo(1*scale, 1*scale);
+      // await goTo(0*scale, 0*scale);
       
-      await goTo(1*scale, 0*scale);
-      await goTo(1*scale, 1*scale);
-      await goTo(0*scale, 1*scale);
-      await goTo(0*scale, 0*scale);
-      await goTo(1*scale, 1*scale);
-
-      setInterval(() => {
-        const port = haxidraw.port;
-
-        const msg = [];
-        while(port.available()) {
-          msg.push(port.read());
-        }
-
-        if (msg.length > 0) {
-          const msgString = String.fromCharCode.apply(null, msg);
-          console.log(msgString);    
-        }
-        
-      }, 0);
+      // await goTo(1*scale, 0*scale);
+      // await goTo(1*scale, 1*scale);
+      // await goTo(0*scale, 1*scale);
+      // await goTo(0*scale, 0*scale);
+      // await goTo(1*scale, 1*scale);
     })
     .catch((e) => {
       // The user didn't select a port.
