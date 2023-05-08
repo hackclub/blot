@@ -2,6 +2,21 @@
 
 This is a list of weekly developments for the drawing-thing updated every week.
 
+## 2023-05-08 - @leomcelroy
+
+It looks like we'll be using the single control board designed for the drawing machine in the version we ship. Consequently I'm writing the firmware for this specific machine. Some design considerations:
+
+- We should still be able to interface with the machine in high-level languages as a virtual object.
+- The motor control should be good
+
+These two goals and our approaches to addressing them are heavily influenced by the work we did the Modular Things project. For the first goal we need to define a communication interface. Almost like a REST API for the machine (if you're coming from the web dev world). 
+
+Motor control is a tricky topic. Historically most digital fabrication machines have been built around [GRBL](https://github.com/grbl/grbl) recently [Klipper3D](https://www.klipper3d.org/) has risen in popularity.
+
+The basic problem is about figuring out how to turn multiple motors who's collective motion results in the movement of the machine in a controlled manner. In the case of our machine we have two motors which are coupled together through a belt. 
+
+
+
 ## 2023-05-01 - @exu3
 
 Last week, we recevied the control boards from JLCPCB, and I assembled a few. I documented the components and assembly process in [`motor-control-board/`](./motor-control-board/README.md). Here's a photo of what the board looks like:
