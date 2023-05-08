@@ -15,7 +15,85 @@ Motor control is a tricky topic. Historically most digital fabrication machines 
 
 The basic problem is about figuring out how to turn multiple motors who's collective motion results in the movement of the machine in a controlled manner. In the case of our machine we have two motors which are coupled together through a belt. 
 
+In short I managed to write a fairly low quality motion controller (but a functional one) which has constant speed. Preferably we would set maximum accelerations and the planner would figure out the appropriate speeds based on the path it needs to take. But we'll build up to that in the coming weeks. We are sending out machines to testers and developers now so we need to have a nice interface for people to develop devices.
 
+Something like this:
+
+```js
+import { createHaxidraw } from "createHaxidraw.js";
+
+await haxidraw.servo(-90);
+await haxidraw.moveTo(x, y);
+```
+
+This is a virtual machine which communicates with the actual machine through the serial port.
+
+On the other side of this communication is the firmware. I took five passes on this and ultimately made one that does the right thing by using Bresenham's Line Algorithm to coordinate the stepper motor motion. The relevant code is below:
+
+```c++
+void goTo(float x, float y) {
+    // Set your target distances for each motor (in steps)
+  float motor1Target = (x + y) - pos[0];
+  float motor2Target = (y - x) - pos[1];
+
+  // Set motor direction based on target values
+  digitalWrite(motor1DirPin, motor1Target >= 0 ? HIGH : LOW);
+  digitalWrite(motor2DirPin, motor2Target >= 0 ? HIGH : LOW);
+
+  // Calculate the relative speeds and maximum duration for both motors
+  float maxSteps = max(abs(motor1Target), abs(motor2Target));
+  float motor1Speed = abs(motor1Target) / maxSteps;
+  float motor2Speed = abs(motor2Target) / maxSteps;
+
+  unsigned long stepDuration = 500; // The time it takes to perform one step in microseconds
+  unsigned long motor1StepInterval = stepDuration / motor1Speed;
+  unsigned long motor2StepInterval = stepDuration / motor2Speed;
+
+  // Initialize variables for step timing
+  unsigned long motor1PrevStepTime = 0;
+  unsigned long motor2PrevStepTime = 0;
+  float motor1Step = 0;
+  float motor2Step = 0;
+
+  // Loop until both motors reach their target steps
+  while (abs(motor1Step) < abs(motor1Target) || abs(motor2Step) < abs(motor2Target)) {
+    unsigned long currentTime = micros();
+
+    // Motor 1
+    if (abs(motor1Step) < abs(motor1Target) && currentTime - motor1PrevStepTime >= motor1StepInterval) {
+      digitalWrite(motor1StepPin, HIGH);
+      delayMicroseconds(1);
+      digitalWrite(motor1StepPin, LOW);
+      delayMicroseconds(1);
+
+      motor1Step += (motor1Target >= 0 ? 1.0 : -1.0)/SPU;
+      motor1PrevStepTime = currentTime;
+    }
+
+    // Motor 2
+    if (abs(motor2Step) < abs(motor2Target) && currentTime - motor2PrevStepTime >= motor2StepInterval) {
+      digitalWrite(motor2StepPin, HIGH);
+      delayMicroseconds(1);
+      digitalWrite(motor2StepPin, LOW);
+      delayMicroseconds(1);
+
+      motor2Step += (motor2Target >= 0 ? 1.0 : -1.0)/SPU;
+      motor2PrevStepTime = currentTime;
+    }
+  }
+
+  pos[0] += motor1Step;
+  pos[1] += motor2Step;
+}
+```
+
+Ella and I ported some of the interfaces from Modular Things to be stand alone web-pages.
+
+Using the Turtle drawing tool I managed to get some images which came out more or less as intended.
+
+![PXL_20230506_055516518 (1)](https://user-images.githubusercontent.com/27078897/236872728-09c65721-2e53-40ab-93e9-96a6875925c6.jpg)
+
+Next I'm going to use interupts to make the movement code non-blocking in the firmware and have the JS messages properly await confirmations (or "acks") from the machine.
 
 ## 2023-05-01 - @exu3
 
@@ -26,6 +104,16 @@ Last week, we recevied the control boards from JLCPCB, and I assembled a few. I 
 The next step would be writing firmware for this board so that it can be used in the modular-things editor.
 
 I also wrote an assembly guide for the drawing machine so people can start building them. It can be found in [`drawing-thing-v2/ASSEMBLY.md`](./drawing-thing-v2/ASSEMBLY.md). The Bill of Materials, adding line numbers which correspond to the various bags of hardware that people will receive the drawing machine parts in.
+
+## April 2023 - @leomcelroy
+
+Not directly about the development but during this month I went to two conferences where I shared the machine. You can read about them in my Slack posts here:
+
+https://hackclub.slack.com/archives/C04GCH8A91D/p1681746685468929
+
+and here:
+
+https://hackclub.slack.com/archives/C04GCH8A91D/p1682972980825199
 
 ## 2023-04-03 - @leomcelroy
 
