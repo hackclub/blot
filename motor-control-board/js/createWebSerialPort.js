@@ -17,7 +17,7 @@ export async function createWebSerialPort(rawPort) {
       if (byte === TERMINATOR) {
 
         // what's msg structure
-        // length msg 1 | msg ... | length payload 1 | payload ... | isPromise 1 | promiseIndex 1
+        // length msg 1 | msg ... | length payload 1 | payload ... | promiseIndex 1
 
         const data = unpack(msg);
 
