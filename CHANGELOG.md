@@ -2,6 +2,70 @@
 
 This is a list of weekly developments for the drawing-thing updated every week.
 
+## 2023-05-15 - @leomcelroy
+
+I made the JS controls function asyncronously by adding a number ID to each message and sending back acknowledgements. This allows us to write code like such:
+
+```js
+const port = await createWebSerialPort(rawPort);
+const bytes = floatsToBytes([ x, y ]);
+await port.send("go", bytes);
+```
+
+in which the machine actually executes and finishes the command before the await resolves.
+
+In the firmware I have a list of `EventCallback` structs.
+
+```c++
+typedef void (*CallbackFunction)(uint8_t*, int);
+
+struct EventCallback {
+  String event;
+  CallbackFunction callback;
+};
+
+const int MAX_EVENTS = 255; // Maximum number of events to store, adjust as needed
+EventCallback eventCallbacks[MAX_EVENTS];
+int eventCount = 0;
+
+void on(String event, CallbackFunction callback) {
+  if (eventCount < MAX_EVENTS) {
+    eventCallbacks[eventCount].event = event;
+    eventCallbacks[eventCount].callback = callback;
+    eventCount++;
+  } else {
+    Serial.println("Max number of events reached. Cannot register new event.");
+  }
+}
+
+bool triggerEvent(String event, uint8_t* payload, int payloadLength) {
+  for (int i = 0; i < eventCount; i++) {
+    if (eventCallbacks[i].event == event) {
+      // want to pass payload and payloadLength, need to get response payload
+      eventCallbacks[i].callback(payload, payloadLength);
+      return true;
+    }
+  }
+
+  Serial.println("No event registered.");
+  return false;
+}
+```
+
+You may notice this is still somewhat incomplete as I'm not sending back response payloads. This could be added fairly easily though I don't actually have a need for it now. I was also planning to use interrupts but haven't completed that yet. I got a bit sidetracked testing writing firmware with other languages. Specifically Nim and TinyGo.
+
+Both were fairly easy to set up. I used [piconim](https://github.com/EmbeddedNim/picostdlib) for Nim and TinyGo just worked out of the box (https://tinygo.org/docs/reference/microcontrollers/xiao-rp2040/). So far TinyGo has the cleanest development experience. After downloading the compiler you just need to use these two commands to build UF2s
+
+```
+tinygo build -target=xiao-rp2040 -gc=none -o hello.uf2 ./test.go
+```
+
+or flash UF2s
+
+```
+tinygo flash -target=xiao-rp2040 ./test.go
+```
+
 ## 2023-05-08 - @leomcelroy
 
 It looks like we'll be using the single control board designed for the drawing machine in the version we ship. Consequently I'm writing the firmware for this specific machine. Some design considerations:
@@ -93,7 +157,7 @@ Using the Turtle drawing tool I managed to get some images which came out more o
 
 ![PXL_20230506_055516518 (1)](https://user-images.githubusercontent.com/27078897/236872728-09c65721-2e53-40ab-93e9-96a6875925c6.jpg)
 
-Next I'm going to use interupts to make the movement code non-blocking in the firmware and have the JS messages properly await confirmations (or "acks") from the machine.
+Next I'm going to use interrupts to make the movement code non-blocking in the firmware and have the JS messages properly await confirmations (or "acks") from the machine.
 
 ## 2023-05-01 - @exu3
 
