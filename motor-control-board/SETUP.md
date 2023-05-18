@@ -44,7 +44,9 @@ To select the port, go to **Tools** > **Port** and select the serial port name o
 > - AccelStepper (by Mike McCauley)
 > - osap (by Jake Robert Read)
 
-6. Copy the Arduino code from [`arduino-firmware/arduino-firmware.ino`](./arduino-firmware/arduino-firmware.ino) into your IDE and upload to your board.
+1. Copy the Arduino code from the respective firmware file (found in [`./firmwares`](./firmwares/)) into your IDE and upload to your board.
+
+> The firmware is very fresh and poorly documented (and rapidly changing). Ask in #haxidraw-developemnt for a link to the latest version.
 
 <img alt="Upload firmware to board" src="https://cloud-8rt747if7-hack-club-bot.vercel.app/0screenshot_2023-05-03_at_6.31.30_am.png" width="500">
 

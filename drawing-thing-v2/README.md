@@ -12,9 +12,30 @@ The [full model can be found here](https://cad.onshape.com/documents/63bea8a7de5
 
 ## BOM
 
-In addition to the parts below, you'll need the 3D printed parts found in [`/stls`](./stls). The quantity of each part is listed in the name as such `name_x${QUANTITY}`.
+### 3D Printed Parts
 
-### Parts
+The 3D printed parts are found in [`/stls`](./stls) if you are able to print them yourself. The quantity of each part is listed in the name as such `name_x${QUANTITY}`.
+
+| Part           | Quantity | Image                                                                                                                      | notes                                      |
+| -------------- | -------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Belt clamp     | 1        | <img alt="b" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/5screen_shot_2023-05-17_at_20.22.06.png" width="200" /> |                                            |
+| Foot           | 2        | <img alt="f" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/3screen_shot_2023-05-17_at_20.22.47.png" width="200" /> | laser cut, peel off the film if applicable |
+| Motor bracket  | 2        | <img alt="m" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/1screen_shot_2023-05-17_at_20.23.34.png" width="200" /> |                                            |
+| Belt clamp cap | 2        | <img alt="c" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/7screen_shot_2023-05-17_at_20.21.54.png" width="200" /> |                                            |
+| Carriage       | 1        | <img alt="c" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/0screen_shot_2023-05-17_at_20.22.32.png" width="200" /> |                                            |
+| Idler front    | 1        | <img alt="i" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/2screen_shot_2023-05-17_at_20.22.58.png" width="200" /> |                                            |
+| Pen holder     | 1        | <img alt="p" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/4screen_shot_2023-05-17_at_20.23.42.png" width="200" /> |                                            |
+| Printed rail   | 1        | <img alt="r" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/6screen_shot_2023-05-17_at_20.23.52.png" width="200" /> |                                            |
+
+### Electronics
+
+| Part                           | Quantity | Notes                                           |
+| ------------------------------ | -------- | ----------------------------------------------- |
+| Circuit board                  | 1        | included parts on board are 2 stepsticks, usb-c |
+| XIAO RP-2040 development board | 1        | with headers                                    |
+| USB-C charger with adapter     | 1        | not included in box (bring your own)            |
+
+### Hardware
 
 <!-- todo: add part numbers to mcmaster parts -->
 
@@ -29,7 +50,7 @@ In addition to the parts below, you'll need the 3D printed parts found in [`/stl
 | 4    | M5 t-nuts                                                    | 22       |                                                           | [Amazon](https://www.amazon.com/Fastener-Nickel-Plated-Sliding-Aluminum-Profile/dp/B086MKNYDS/ref=sr_1_8?crid=21VQGH6T8RDXV&keywords=t+nut&qid=1676574676&sprefix=t+nut%2Caps%2C112&sr=8-8)                                                                                                                                                                                                                                                              |
 | 5    | V-wheels                                                     | 11       | 8 for the carriage, 3 for pen holder                      | [Amazon](https://www.amazon.com/V-Shape-Bearing-Accessories-Sliding-Printer/dp/B07NSHH9N4/ref=sr_1_4?crid=18BCJ1C1W468K&keywords=v+wheels&qid=1676574357&sprefix=%2Caps%2C221&sr=8-4)                                                                                                                                                                                                                                                                    |
 | 7    | 6mm spacers 10mm OD                                          | 11       |                                                           | [McMaster-Carr](https://www.mcmaster.com/spacers/system-of-measurement~metric/for-screw-size~m5/length~6-mm/od~10mm/)                                                                                                                                                                                                                                                                                                                                    |
-| 8    | 3mm allen key (M5)                                           | 1        | For M5 button head screw                                  | [McMaster-Carr](https://www.mcmaster.com/allen-keys/l-keys-9/system-of-measurement~metric/size~5-mm/)                                                                                                                                                                                                                                                                                                                                                    |
+| 8    | 3mm allen key (M5)                                           | 1        | For M5 button head screw                                  | [McMaster-Carr](https://www.mcmaster.com/allen-keys/l-keys-9/system-of-measurement~metric/size~3-mm/)                                                                                                                                                                                                                                                                                                                                                    |
 | 8    | M5 x 10mm screws                                             | 20       | for mounting on the extrusions (need 11)                  | McMaster-Carr                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | 9    | M5 x 12mm screws                                             | 4        | 13mm could also work, for the feet (14mmm is a bit tight) | McMaster-Carr                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | 10   | M5 x 20mm screws                                             | 6        | for carriage idlers (need 4), 1 for front idler           | McMaster-Carr                                                                                                                                                                                                                                                                                                                                                                                                                                            |

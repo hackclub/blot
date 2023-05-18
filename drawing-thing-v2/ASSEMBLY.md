@@ -47,7 +47,7 @@ This assembly guide is broken down into a few parts:
 <img src="https://user-images.githubusercontent.com/72365100/234363972-a0a3c322-8e71-47a4-a7cb-5f4a7fcf7508.JPG" width="200" /> <img src="https://user-images.githubusercontent.com/72365100/234364196-861787f1-bf1c-4c5b-84fe-e2e836f52a3a.JPG" width="200" />
 
 - Attach the v-wheels to the carriage.
-  - Use a 35mm M5 screw a v-wheel and 6mm spacer between the v-wheel and the carriage.
+  - Use a 35mm M5 screw, a v-wheel, and 6mm spacer between the v-wheel and the carriage.
   - Repeat for all 8 wheels.
   - If the screw appears to barely touch the nut, you can pull the nut deeper into the nut trap by threading a screw through the nut.
 
@@ -129,6 +129,10 @@ This assembly guide is broken down into a few parts:
     - If you are running into issues, be sure the orientation of the nut is correct.
 - Attach the idler part to using 10mm M5 screws and t-nuts.
 
+<img src="https://cloud-ps7mwhrf0-hack-club-bot.vercel.app/0img_3955.jpg" alt="front idler with bearing" width="400" />
+
+<img src="https://cloud-6odk47zmz-hack-club-bot.vercel.app/0img_3958.jpg" alt="pen holder rail and front idler" width="400" />
+
 ## Pen holder!
 
 ### Parts
@@ -145,6 +149,8 @@ This assembly guide is broken down into a few parts:
 - The screw hole on the front is for securing the pen in the pen holder.
   - Be sure to insert a nut into the nut trap on the inside of the pen holder.
 - Slide the pen holder onto the plastic rail and adjust wheels accordingly.
+
+<img src="https://cloud-p5ywg1h87-hack-club-bot.vercel.app/0img_3962.jpg" alt="completed pen holder" width="400" />
 
 ## Belt Tensioner
 
@@ -164,14 +170,14 @@ This assembly guide is broken down into a few parts:
 
 <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/0img_4011.jpg" width="250" /> <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/1img_4012.jpg" width="250 />
 
-- Clamp belt on one side with 30mm screws, and thread belt through machine. TODO attach diagram for belt path
+- Clamp belt on one side with 30mm screws, and thread belt through machine according to diagram below.
 
-<img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/3img_4014.jpg" width="200" />
-  
+<img src="https://cloud-ckhe9dv8v-hack-club-bot.vercel.app/0image_from_ios.jpg" alt="traced belt path" width="200"> <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/3img_4014.jpg" width="200" />
+
 - Tighten belt, clamp other side with cap and 2 additional hex nuts. Adjust the tightness of the belt by loosening/tightening the nuts on the outside.
-  
+
 <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/4img_4015.jpg" width="300" />
 
 ---
 
-🖌️ Wahoo! Now that your machine is assembled, you can set up the control board to start making things with your machine in the [Modular Things editor](https://modular-things.github.io/modular-things). See [SETUP.md](../motor-control-board/SETUP.md) for instructions on how to set up your control board.
+🖌️ Wahoo! Now that your machine is assembled, you can set up the control board and start writing interfaces to control your machine. See [SETUP.md](../motor-control-board/SETUP.md) for instructions on how to set up your control board.
