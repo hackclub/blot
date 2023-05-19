@@ -8,6 +8,20 @@
 
 Servo servo;
 
+// Define a struct to hold commands and payloads
+struct Command {
+  String event;
+  uint8_t* payload;
+  int payloadLength;
+  uint8_t msgCount;
+};
+
+// Define a queue to hold incoming commands
+#define MAX_COMMANDS 50
+Command commandQueue[MAX_COMMANDS];
+int queueStart = 0;
+int queueEnd = 0;
+
 typedef void (*CallbackFunction)(uint8_t*, int);
 
 struct EventCallback {
@@ -40,6 +54,13 @@ void loop() {
 
   readSerial();
 
+  if (queueStart != queueEnd) {
+    bool triggered = triggerEvent(commandQueue[queueStart].event, commandQueue[queueStart].payload, commandQueue[queueStart].payloadLength);
+    if (triggered) {
+      sendAck(commandQueue[queueStart].msgCount);
+    }
+    queueStart = (queueStart + 1) % MAX_COMMANDS;
+  }
 }
 
 void goTo(float x, float y) {
@@ -141,90 +162,6 @@ bool triggerEvent(String event, uint8_t* payload, int payloadLength) {
   // Serial.println(" No event registered.");
   return false;
 }
-
-// int bufferIndex = 0;
-// uint8_t msgBuffer[100];
-
-// void readSerial() {
-//   if (Serial.available() > 0) {
-//     uint8_t incoming = Serial.read(); 
-//     if (incoming == 0) { // \n terminated, this is also just 10, need to use cobs
-//       msgBuffer[bufferIndex] = incoming;
-
-//       int length = 0;
-//       while (msgBuffer[length] != 0) {
-//         length++;
-//       }
-
-//       uint8_t decoded[length];
-//       uint8_t encoded[length+1];
-
-//       for (int i = 0; i < length+1; i++) {
-//         encoded[i] = msgBuffer[i];
-//       }
-
-//       cobs_decode(decoded, encoded, length+1);
-
-//       // decode with cobs
-
-//       int offset = 0;
-//       int i = 0;
-
-//       uint8_t msgLength = decoded[i];
-//       uint8_t msgArr[msgLength];
-
-//       i++;
-//       while (i < 1 + msgLength) {
-//         msgArr[offset] = decoded[i];
-//         i++;
-//         offset++;
-//       }
-
-//       uint8_t payloadLength = decoded[i];
-//       uint8_t payload[payloadLength];
-
-//       offset = 0;
-//       i++;
-//       while (i < 1 + msgLength + 1 + payloadLength) {
-//         payload[offset] = decoded[i];
-//         i++;
-//         offset++;
-//       }
-
-//       uint8_t msgCount = decoded[i];
-
-//       bufferIndex = 0;
-
-//       String msg = String((char*)msgArr);
-
-//       // Serial.print("msgCount: ");
-//       // Serial.println(msgCount);
-//       bool triggered = triggerEvent(msg, payload, payloadLength);
-//       if (triggered) {
-//         uint8_t byteArray[] = {
-//           0x03, // 3
-//           0x61, 0x63, 0x6B, // ack
-//           0x00, // 0
-//           msgCount
-//         }; 
-//         // encode with cobs
-//         size_t arrayLength = sizeof(byteArray) / sizeof(byteArray[0]); // Calculate the length of the byte array
-        
-//         uint8_t byteArrayEncoded[arrayLength+1];
-//         cobs_encode(byteArrayEncoded, byteArray, arrayLength);
-
-//         Serial.write(byteArrayEncoded, arrayLength+1);
-//       }
-//     } else {
-//       msgBuffer[bufferIndex] = incoming;
-//       bufferIndex = bufferIndex + 1;
-
-//       if (bufferIndex >= 100) {
-//         // Serial.println("Communication buffer overflow.");
-//       }
-//     }
-//   }
-// }
 
 float read_float(uint8_t* buffer, int index) {
   uint8_t byte0 = buffer[index];
@@ -406,15 +343,16 @@ void readSerial() {
 
     uint8_t msgCount = decoded[i];
 
-    // At this point, the message and payload have been extracted from the buffer
-    bufferIndex = 0; // Reset the buffer for the next message
-
     String msg = String((char*)msgArr);
 
-    bool triggered = triggerEvent(msg, payload, payloadLength);
-    if (triggered) {
-      sendAck(msgCount);
-    }
+    commandQueue[queueEnd].event = msg;
+    commandQueue[queueEnd].payload = payload;
+    commandQueue[queueEnd].payloadLength = payloadLength;
+    commandQueue[queueEnd].msgCount = msgCount;
+    queueEnd = (queueEnd + 1) % MAX_COMMANDS;
+
+    // At this point, the message and payload have been extracted from the buffer
+    bufferIndex = 0; // Reset the buffer for the next message
   }
 }
 

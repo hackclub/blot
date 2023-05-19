@@ -147,7 +147,7 @@ export async function runMachineHelper(state, [scaleX, scaleY]) {
       // else if (i === 1) await state.haxidraw.servo(90);
       console.log("moveTo", x, y);
       await state.haxidraw.moveTo(x*scaleX, y*scaleY);
-      // await delay(1000);
+      await delay(2000);
     }
 
   }

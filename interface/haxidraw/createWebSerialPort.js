@@ -16,21 +16,17 @@ export async function createWebSerialPort(rawPort) {
       const byte = buffer.read();
       msg.push(byte);
       
-      if (byte === 0) { // using cobs
+      if (byte === 0x00) { // using cobs
 
         // what's msg structure
         // length msg 1 | msg ... | length payload 1 | payload ... | promiseIndex 1
         
-        console.log(msg);
-
         const data = unpack(msg);
-
-        console.log(data);
 
         if (data.msg === "ack") {
           const resolver = msgPromises[data.msgCount];
           resolver(data.payload);
-          console.log("resolved", data.msgCount);
+          console.log("resolved", data);
         } else if (data.msg in msgHandlers) {
           msgHandlers[data.msg](data.payload);
           const ackBuffer = pack("ack", new Uint8Array(0), data.msgCount);
@@ -50,18 +46,22 @@ export async function createWebSerialPort(rawPort) {
   }
 
   function send(msg, payload) {
-    console.log("sending", { msg, payload, msgCount });
-
     const packedMsg = pack(msg, payload, msgCount);
     const promise = new Promise((resolve, reject) => {
       msgPromises[msgCount] = resolve;
     })
 
-    msgCount = (msgCount + 1) % 255;
+    console.log("sending",
+      {
+        msg: { msg, payload, msgCount },
+        packed: packedMsg,
+        unpacked: unpack(packedMsg)
+      }
+    );
 
     buffer.write(packedMsg);
 
-    // console.log("sending", packedMsg);
+    msgCount = (msgCount + 1) % 255;
 
     return promise;
   }
