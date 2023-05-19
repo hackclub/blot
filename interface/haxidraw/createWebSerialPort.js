@@ -1,6 +1,7 @@
 import { createWebSerialBuffer } from "./createWebSerialBuffer.js";
+import * as cobs from "./cobs.js";
 
-const TERMINATOR = 0x0A;
+// const TERMINATOR = 0x0A;
 
 export async function createWebSerialPort(rawPort) {
   const buffer = await createWebSerialBuffer(rawPort);
@@ -13,18 +14,23 @@ export async function createWebSerialPort(rawPort) {
     let msg = [];
     while(buffer.available()) {
       const byte = buffer.read();
+      msg.push(byte);
       
-      if (byte === TERMINATOR) {
+      if (byte === 0) { // using cobs
 
         // what's msg structure
         // length msg 1 | msg ... | length payload 1 | payload ... | promiseIndex 1
+        
+        console.log(msg);
 
         const data = unpack(msg);
 
+        console.log(data);
 
         if (data.msg === "ack") {
           const resolver = msgPromises[data.msgCount];
           resolver(data.payload);
+          console.log("resolved", data.msgCount);
         } else if (data.msg in msgHandlers) {
           msgHandlers[data.msg](data.payload);
           const ackBuffer = pack("ack", new Uint8Array(0), data.msgCount);
@@ -35,8 +41,6 @@ export async function createWebSerialPort(rawPort) {
         }
 
         msg = [];
-      } else {
-        msg.push(byte);
       }
     }
   }, 0);
@@ -46,6 +50,8 @@ export async function createWebSerialPort(rawPort) {
   }
 
   function send(msg, payload) {
+    console.log("sending", { msg, payload, msgCount });
+
     const packedMsg = pack(msg, payload, msgCount);
     const promise = new Promise((resolve, reject) => {
       msgPromises[msgCount] = resolve;
@@ -85,13 +91,16 @@ function pack(msg, payload, msgCount) {
   buffer.push(payload.length);
   payload.forEach(byte => buffer.push(byte));
   buffer.push(msgCount);
-  buffer.push(TERMINATOR);
+  // buffer.push(TERMINATOR);
 
-  return new Uint8Array(buffer);
+  // return new Uint8Array(buffer);
+  return cobs.encode(buffer);
 }
 
 function unpack(bytes) {
+  bytes = cobs.decode(bytes);
 
+  // skip the length byte
   let i = 0;
   const msgLength = bytes[i++];
   const msgBytes = [];

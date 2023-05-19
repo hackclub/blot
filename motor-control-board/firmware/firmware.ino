@@ -4,6 +4,8 @@
 
 #define PIN_SERVO D4
 
+// #define TERMINATOR 0x0A
+
 Servo servo;
 
 typedef void (*CallbackFunction)(uint8_t*, int);
@@ -100,6 +102,10 @@ void go(uint8_t* payload, int length) {
   float y = read_float(payload, 4);
   
   goTo(x, y);
+  // Serial.print(x);
+  // Serial.print(" , ");
+  // Serial.print(y);
+  // Serial.println(" , moved in firmware");
 }
 
 void moveServo(uint8_t* payload, int length) {
@@ -118,7 +124,7 @@ void on(String event, CallbackFunction callback) {
     eventCallbacks[eventCount].callback = callback;
     eventCount++;
   } else {
-    Serial.println("Max number of events reached. Cannot register new event.");
+    // Serial.println("Max number of events reached. Cannot register new event.");
   }
 }
 
@@ -131,70 +137,94 @@ bool triggerEvent(String event, uint8_t* payload, int payloadLength) {
     }
   }
 
-  Serial.println("No event registered.");
+  // Serial.print(event);
+  // Serial.println(" No event registered.");
   return false;
 }
 
-int bufferIndex = 0;
-uint8_t msgBuffer[100];
+// int bufferIndex = 0;
+// uint8_t msgBuffer[100];
 
-void readSerial() {
-  if (Serial.available() > 0) {
-    uint8_t incoming = Serial.read(); 
-    if (incoming == 0x0A) { // \n terminated
-      int offset;
-      int i = 0;
+// void readSerial() {
+//   if (Serial.available() > 0) {
+//     uint8_t incoming = Serial.read(); 
+//     if (incoming == 0) { // \n terminated, this is also just 10, need to use cobs
+//       msgBuffer[bufferIndex] = incoming;
 
-      uint8_t msgLength = msgBuffer[i];
-      uint8_t msgArr[msgLength];
+//       int length = 0;
+//       while (msgBuffer[length] != 0) {
+//         length++;
+//       }
 
-      i++;
-      while (i < 1 + msgLength) {
-        msgArr[offset] = msgBuffer[i];
-        i++;
-        offset++;
-      }
+//       uint8_t decoded[length];
+//       uint8_t encoded[length+1];
 
-      uint8_t payloadLength = msgBuffer[i];
-      uint8_t payload[payloadLength];
+//       for (int i = 0; i < length+1; i++) {
+//         encoded[i] = msgBuffer[i];
+//       }
 
-      offset = 0;
-      i++;
-      while (i < 1 + msgLength + 1 + payloadLength) {
-        payload[offset] = msgBuffer[i];
-        i++;
-        offset++;
-      }
+//       cobs_decode(decoded, encoded, length+1);
 
-      uint8_t msgCount = msgBuffer[i];
+//       // decode with cobs
 
-      bufferIndex = 0;
+//       int offset = 0;
+//       int i = 0;
 
-      String msg = String((char*)msgArr);
+//       uint8_t msgLength = decoded[i];
+//       uint8_t msgArr[msgLength];
 
-      bool triggered = triggerEvent(msg, payload, payloadLength);
-      if (triggered) {
-        uint8_t byteArray[] = {
-          0x03, // 3
-          0x61, 0x63, 0x6B, // ack
-          0x00, // 0
-          msgCount,
-          0x0A
-        }; 
-        size_t arrayLength = sizeof(byteArray) / sizeof(byteArray[0]); // Calculate the length of the byte array
+//       i++;
+//       while (i < 1 + msgLength) {
+//         msgArr[offset] = decoded[i];
+//         i++;
+//         offset++;
+//       }
 
-        Serial.write(byteArray, arrayLength);
-      }
-    } else {
-      msgBuffer[bufferIndex] = incoming;
-      bufferIndex = bufferIndex + 1;
+//       uint8_t payloadLength = decoded[i];
+//       uint8_t payload[payloadLength];
 
-      if (bufferIndex >= 100) {
-        Serial.println("Communication buffer overflow.");
-      }
-    }
-  }
-}
+//       offset = 0;
+//       i++;
+//       while (i < 1 + msgLength + 1 + payloadLength) {
+//         payload[offset] = decoded[i];
+//         i++;
+//         offset++;
+//       }
+
+//       uint8_t msgCount = decoded[i];
+
+//       bufferIndex = 0;
+
+//       String msg = String((char*)msgArr);
+
+//       // Serial.print("msgCount: ");
+//       // Serial.println(msgCount);
+//       bool triggered = triggerEvent(msg, payload, payloadLength);
+//       if (triggered) {
+//         uint8_t byteArray[] = {
+//           0x03, // 3
+//           0x61, 0x63, 0x6B, // ack
+//           0x00, // 0
+//           msgCount
+//         }; 
+//         // encode with cobs
+//         size_t arrayLength = sizeof(byteArray) / sizeof(byteArray[0]); // Calculate the length of the byte array
+        
+//         uint8_t byteArrayEncoded[arrayLength+1];
+//         cobs_encode(byteArrayEncoded, byteArray, arrayLength);
+
+//         Serial.write(byteArrayEncoded, arrayLength+1);
+//       }
+//     } else {
+//       msgBuffer[bufferIndex] = incoming;
+//       bufferIndex = bufferIndex + 1;
+
+//       if (bufferIndex >= 100) {
+//         // Serial.println("Communication buffer overflow.");
+//       }
+//     }
+//   }
+// }
 
 float read_float(uint8_t* buffer, int index) {
   uint8_t byte0 = buffer[index];
@@ -267,7 +297,158 @@ if (msg == 0x03) { // "servo"
 */
 
 
+void cobs_encode(uint8_t *dst, const uint8_t *src, size_t len) {
+    if (len == 0) return;
+    size_t read_idx = 0;
+    size_t write_idx = 1;
+    size_t code_idx = 0;
+    uint8_t code = 1;
 
+    while (read_idx < len) {
+        if (src[read_idx] == 0) {
+            dst[code_idx] = code;
+            code = 1;
+            code_idx = write_idx++;
+            read_idx++;
+        } else {
+            dst[write_idx++] = src[read_idx++];
+            code++;
+            if (code == 0xFF) {
+                dst[code_idx] = code;
+                code = 1;
+                code_idx = write_idx++;
+            }
+        }
+    }
+
+    dst[code_idx] = code;
+}
+
+void cobs_decode(uint8_t *dst, const uint8_t *src, size_t len) {
+    if (len == 0) return;
+    size_t read_idx = 0;
+    size_t write_idx = 0;
+    uint8_t code;
+    uint8_t i;
+
+    while (read_idx < len) {
+        code = src[read_idx];
+
+        if (read_idx + code > len && code != 1) {
+            return; // Input is malformed.
+        }
+
+        read_idx++;
+
+        for (i = 1; i < code; i++) {
+            dst[write_idx++] = src[read_idx++];
+        }
+        if (code != 0xFF && read_idx != len) {
+            dst[write_idx++] = '\0';
+        }
+    }
+}
+
+
+const int MAX_BUFFER_SIZE = 100;
+const int MAX_MSG_LENGTH = 50;
+const int MAX_PAYLOAD_LENGTH = 50;
+
+int bufferIndex = 0;
+uint8_t msgBuffer[MAX_BUFFER_SIZE + 2]; // Increased by 2 for possible COBS overhead
+
+void readSerial() {
+  while (Serial.available() > 0) {
+    uint8_t incoming = Serial.read(); 
+    if (bufferIndex >= MAX_BUFFER_SIZE) {
+      bufferIndex = 0; // Reset the buffer index if buffer is full
+      return;
+    }
+
+    msgBuffer[bufferIndex++] = incoming;
+
+    if (incoming != 0) {
+      continue; // Proceed to the next byte if current byte is not null
+    }
+
+    // cobsPrint("complete");
+
+
+    // Now we have a full message, perform COBS decoding
+    uint8_t decoded[MAX_BUFFER_SIZE];
+    cobs_decode(decoded, msgBuffer, bufferIndex);
+
+
+    // Parse the decoded message
+    int i = 0;
+
+    uint8_t msgLength = decoded[i++];
+    if (msgLength > MAX_MSG_LENGTH || i + msgLength > bufferIndex) {
+      // Message length is too large or out of buffer, possibly a corrupted message
+      bufferIndex = 0; // Reset the buffer
+      return;
+    }
+
+    uint8_t msgArr[MAX_MSG_LENGTH];
+    memcpy(msgArr, decoded + i, msgLength); // Copy the message
+    i += msgLength;
+
+    uint8_t payloadLength = decoded[i++];
+    if (payloadLength > MAX_PAYLOAD_LENGTH || i + payloadLength > bufferIndex) {
+      // Payload length is too large or out of buffer, possibly a corrupted message
+      bufferIndex = 0; // Reset the buffer
+      return;
+    }
+
+    uint8_t payload[MAX_PAYLOAD_LENGTH];
+    memcpy(payload, decoded + i, payloadLength); // Copy the payload
+    i += payloadLength;
+
+    uint8_t msgCount = decoded[i];
+
+    // At this point, the message and payload have been extracted from the buffer
+    bufferIndex = 0; // Reset the buffer for the next message
+
+    String msg = String((char*)msgArr);
+
+    bool triggered = triggerEvent(msg, payload, payloadLength);
+    if (triggered) {
+      sendAck(msgCount);
+    }
+  }
+}
+
+void sendAck(uint8_t msgCount) {
+  uint8_t byteArray[] = {
+    0x03, // 3
+    0x61, 0x63, 0x6B, // ack
+    0x00, // 0
+    msgCount
+  }; 
+
+  size_t arrayLength = sizeof(byteArray) / sizeof(byteArray[0]);
+    
+  uint8_t byteArrayEncoded[arrayLength + 2]; // +2 for possible COBS overhead
+  cobs_encode(byteArrayEncoded, byteArray, arrayLength);
+
+  Serial.write(byteArrayEncoded, arrayLength + 2);
+}
+
+void cobsPrint(const String& message) {
+  // Convert the message to a byte array
+  int length = message.length();
+  uint8_t byteArray[length + 1]; // +1 for the null terminator
+  message.getBytes(byteArray, length + 1);
+
+  // Prepare the buffer for the encoded message
+  uint8_t encoded[length + 2]; // +2 for possible COBS overhead
+  
+  // Perform COBS encoding
+  cobs_encode(encoded, byteArray, length + 1);
+
+  // Send the encoded message
+  Serial.write(encoded, length + 2); // Write the encoded bytes
+}
 
 
 

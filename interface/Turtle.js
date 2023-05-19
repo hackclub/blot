@@ -78,13 +78,13 @@ export class Turtle {
   }
 
   right(theta) {
-    this.angle += theta;
+    this.angle -= theta;
 
     return this;
   }
 
   left(theta) {
-    this.angle -= theta;
+    this.angle += theta;
 
     return this;
   }

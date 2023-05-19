@@ -26,7 +26,7 @@ export function init(state) {
   }
 
   state.execute = execute;
-
+  state.render = r;
   r();
   
   const root = document.querySelector(".root");
@@ -119,9 +119,30 @@ export function init(state) {
 
   listener("click", ".filename-trigger", () => {
     let newName = prompt("Please provide a new filename.", state.filename);
-    newName = newName.replaceAll(/\s/g, "-");
+    // if (newName !== null) newName = newName.replaceAll(/\s/g, "-");
     if (newName !== "" && newName !== null) state.filename = newName;
     r();
   });
 
+  automaticallyConnect(state);
+
 }
+
+
+async function automaticallyConnect(state) {
+  const ports = await navigator.serial.getPorts();
+
+  ports.forEach(async (port) => {
+    const info = port.getInfo();
+
+    if (info.usbVendorId === 11914) {
+      state.haxidraw = await createHaxidraw(port);
+      state.render();
+    }
+  })
+
+}
+
+
+
+

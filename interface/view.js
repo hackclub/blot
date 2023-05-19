@@ -61,6 +61,7 @@ const viewer = state => html`
           stroke-width="3"
           vector-effect="non-scaling-stroke"
           style="scale: ${state.scaleX} ${state.scaleY};"/>
+        <circle cx="0" cy="0" r="0.1" fill="orange"/>
         ${state.turtles.map(x => drawPath(x.path))}
       </g>
     </svg>

@@ -34,12 +34,14 @@ await machine.penDown();
 x - machine disconnect
 better styles
   - command line
-  - highlight numbers
+  - top buttons
+  x - highlight numbers (needed to format html correctly)
   x - get codemirror horizontal scrollbar to always appear
 drag and transform turtles
 command line
   - store previous command
   - use arrows to move amoung them
+  - pretty print objects
 window resizing
 examples
 
