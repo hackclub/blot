@@ -1,4 +1,10 @@
+#include <Servo.h>
+
 #define SPU 400
+
+#define PIN_SERVO D4
+
+Servo servo;
 
 typedef void (*CallbackFunction)(uint8_t*, int);
 
@@ -15,7 +21,8 @@ const int motor2StepPin = D7;
 const int motor2DirPin = D8;
 
 void setup() {
-
+  servo.attach(PIN_SERVO);
+  
   Serial.begin(9600);
 
   pinMode(motor1StepPin, OUTPUT);
@@ -24,6 +31,7 @@ void setup() {
   pinMode(motor2DirPin, OUTPUT);
 
   on("go", go);
+  on("servo", moveServo);
 }
 
 void loop() {
@@ -92,6 +100,12 @@ void go(uint8_t* payload, int length) {
   float y = read_float(payload, 4);
   
   goTo(x, y);
+}
+
+void moveServo(uint8_t* payload, int length) {
+  float angle = read_float(payload, 0);
+  
+  servo.write(angle);
 }
 
 const int MAX_EVENTS = 255; // Maximum number of events to store, adjust as needed

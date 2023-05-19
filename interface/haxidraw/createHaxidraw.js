@@ -2,9 +2,7 @@ import { createWebSerialPort } from "./createWebSerialPort.js";
 import { floatsToBytes, uint16ToBytes, intsToBytes } from "./converters.js";
 
 export async function createHaxidraw(rawPort) {
-  console.log(rawPort);
   const port = await createWebSerialPort(rawPort);
-  console.log(port);
 
   async function moveTo(x, y) {
     const bytes = floatsToBytes([ x, y ]);
