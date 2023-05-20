@@ -1,26 +1,9 @@
 #include <Servo.h>
 
 #define SPU 400
-
 #define PIN_SERVO D4
 
-// #define TERMINATOR 0x0A
-
 Servo servo;
-
-// Define a struct to hold commands and payloads
-struct Command {
-  String event;
-  uint8_t* payload;
-  int payloadLength;
-  uint8_t msgCount;
-};
-
-// Define a queue to hold incoming commands
-#define MAX_COMMANDS 50
-Command commandQueue[MAX_COMMANDS];
-int queueStart = 0;
-int queueEnd = 0;
 
 typedef void (*CallbackFunction)(uint8_t*, int);
 
@@ -51,16 +34,7 @@ void setup() {
 }
 
 void loop() {
-
   readSerial();
-
-  if (queueStart != queueEnd) {
-    bool triggered = triggerEvent(commandQueue[queueStart].event, commandQueue[queueStart].payload, commandQueue[queueStart].payloadLength);
-    if (triggered) {
-      sendAck(commandQueue[queueStart].msgCount);
-    }
-    queueStart = (queueStart + 1) % MAX_COMMANDS;
-  }
 }
 
 void goTo(float x, float y) {
@@ -123,10 +97,6 @@ void go(uint8_t* payload, int length) {
   float y = read_float(payload, 4);
   
   goTo(x, y);
-  // Serial.print(x);
-  // Serial.print(" , ");
-  // Serial.print(y);
-  // Serial.println(" , moved in firmware");
 }
 
 void moveServo(uint8_t* payload, int length) {
@@ -158,7 +128,6 @@ bool triggerEvent(String event, uint8_t* payload, int payloadLength) {
     }
   }
 
-  // Serial.print(event);
   // Serial.println(" No event registered.");
   return false;
 }
@@ -287,57 +256,36 @@ void cobs_decode(uint8_t *dst, const uint8_t *src, size_t len) {
 }
 
 
-const int MAX_BUFFER_SIZE = 100;
-const int MAX_MSG_LENGTH = 50;
-const int MAX_PAYLOAD_LENGTH = 50;
-
 int bufferIndex = 0;
-uint8_t msgBuffer[MAX_BUFFER_SIZE + 2]; // Increased by 2 for possible COBS overhead
+uint8_t msgBuffer[100]; // Increased by 2 for possible COBS overhead
 
 void readSerial() {
   while (Serial.available() > 0) {
     uint8_t incoming = Serial.read(); 
-    if (bufferIndex >= MAX_BUFFER_SIZE) {
-      bufferIndex = 0; // Reset the buffer index if buffer is full
-      return;
-    }
 
-    msgBuffer[bufferIndex++] = incoming;
+    msgBuffer[bufferIndex] = incoming;
 
     if (incoming != 0) {
+      bufferIndex++;
       continue; // Proceed to the next byte if current byte is not null
     }
 
-    // cobsPrint("complete");
-
-
     // Now we have a full message, perform COBS decoding
-    uint8_t decoded[MAX_BUFFER_SIZE];
+    uint8_t decoded[bufferIndex+1];
     cobs_decode(decoded, msgBuffer, bufferIndex);
-
 
     // Parse the decoded message
     int i = 0;
 
-    uint8_t msgLength = decoded[i++];
-    if (msgLength > MAX_MSG_LENGTH || i + msgLength > bufferIndex) {
-      // Message length is too large or out of buffer, possibly a corrupted message
-      bufferIndex = 0; // Reset the buffer
-      return;
-    }
-
-    uint8_t msgArr[MAX_MSG_LENGTH];
+    uint8_t msgLength = decoded[i];
+    uint8_t msgArr[msgLength];
+    i++;
     memcpy(msgArr, decoded + i, msgLength); // Copy the message
     i += msgLength;
 
-    uint8_t payloadLength = decoded[i++];
-    if (payloadLength > MAX_PAYLOAD_LENGTH || i + payloadLength > bufferIndex) {
-      // Payload length is too large or out of buffer, possibly a corrupted message
-      bufferIndex = 0; // Reset the buffer
-      return;
-    }
-
-    uint8_t payload[MAX_PAYLOAD_LENGTH];
+    uint8_t payloadLength = decoded[i];
+    uint8_t payload[payloadLength];
+    i++;
     memcpy(payload, decoded + i, payloadLength); // Copy the payload
     i += payloadLength;
 
@@ -345,13 +293,11 @@ void readSerial() {
 
     String msg = String((char*)msgArr);
 
-    commandQueue[queueEnd].event = msg;
-    commandQueue[queueEnd].payload = payload;
-    commandQueue[queueEnd].payloadLength = payloadLength;
-    commandQueue[queueEnd].msgCount = msgCount;
-    queueEnd = (queueEnd + 1) % MAX_COMMANDS;
+    bool triggered = triggerEvent(msg, payload, payloadLength);
+    if (triggered) {
+      sendAck(msgCount);
+    }
 
-    // At this point, the message and payload have been extracted from the buffer
     bufferIndex = 0; // Reset the buffer for the next message
   }
 }
