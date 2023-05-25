@@ -1,7 +1,7 @@
 import { createWebSerialBuffer } from "./createWebSerialBuffer.js";
 import * as cobs from "./cobs.js";
 
-// const TERMINATOR = 0x0A;
+const TERMINATOR = 0x0A;
 
 export async function createWebSerialPort(rawPort) {
   const buffer = await createWebSerialBuffer(rawPort);
@@ -16,11 +16,14 @@ export async function createWebSerialPort(rawPort) {
       const byte = buffer.read();
       msg.push(byte);
       
-      if (byte === 0x00) { // using cobs
+      if (byte === 0) { // using cobs
 
         // what's msg structure
         // length msg 1 | msg ... | length payload 1 | payload ... | promiseIndex 1
         
+        // ADD THIS TO DECODE WITH COBS
+        msg = cobs.decode(msg);
+
         const data = unpack(msg);
 
         if (data.msg === "ack") {
@@ -30,7 +33,8 @@ export async function createWebSerialPort(rawPort) {
         } else if (data.msg in msgHandlers) {
           msgHandlers[data.msg](data.payload);
           const ackBuffer = pack("ack", new Uint8Array(0), data.msgCount);
-          buffer.write(ackBuffer);
+          const encodedAck = cobs.encode(ackBuffer);
+          buffer.write(encodedAck);
         } else {
           const msgString = String.fromCharCode.apply(null, msg);
           console.log("unknown msg:", { msg, msgString });
@@ -46,18 +50,21 @@ export async function createWebSerialPort(rawPort) {
   }
 
   function send(msg, payload) {
-    const packedMsg = pack(msg, payload, msgCount);
+    let packedMsg = pack(msg, payload, msgCount);
+    packedMsg = cobs.encode(packedMsg);
+
     const promise = new Promise((resolve, reject) => {
       msgPromises[msgCount] = resolve;
     })
 
-    console.log("sending",
-      {
-        msg: { msg, payload, msgCount },
-        packed: packedMsg,
-        unpacked: unpack(packedMsg)
-      }
-    );
+    console.log("sending", { 
+      msg, 
+      payload, 
+      msgCount, 
+      // packedMsg, 
+      // decoded: cobs.decode(packedMsg),
+      // unpacked: unpack(cobs.decode(packedMsg))
+    });
 
     buffer.write(packedMsg);
 
@@ -93,13 +100,10 @@ function pack(msg, payload, msgCount) {
   buffer.push(msgCount);
   // buffer.push(TERMINATOR);
 
-  // return new Uint8Array(buffer);
-  return cobs.encode(buffer);
+  return new Uint8Array(buffer);
 }
 
 function unpack(bytes) {
-  bytes = cobs.decode(bytes);
-
   // skip the length byte
   let i = 0;
   const msgLength = bytes[i++];

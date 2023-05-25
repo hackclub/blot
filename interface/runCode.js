@@ -79,7 +79,8 @@ export async function runCode(code, state) {
     },
     setStepsPerUnit: async (spu) => { // need to implement this
       await state.haxidraw.setStepsPerUnit(spu);
-    }
+    },
+    port: state.haxidraw.port
   }
 
   const runMachine = () => runMachineHelper(state, [state.scaleX, state.scaleY]);
@@ -140,14 +141,11 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 export async function runMachineHelper(state, [scaleX, scaleY]) {
   const polylines = state.turtles.map(x => x.path).flat();
   for (const polyline of polylines) {
-    console.log("pl", polyline);
     for (let i = 0; i < polyline.length; i++) { 
       const {x, y} = polyline[i];
       // if (i === 0) await state.haxidraw.servo(-90);
       // else if (i === 1) await state.haxidraw.servo(90);
-      console.log("moveTo", x, y);
       await state.haxidraw.moveTo(x*scaleX, y*scaleY);
-      await delay(2000);
     }
 
   }
