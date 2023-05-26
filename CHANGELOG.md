@@ -58,6 +58,10 @@ for (int i = 0; i < bufferIndex; i++) {
 Serial.println("DONE");
 ```
 
+I acquired some Gellyroll pens which I used to make some of our most intentional drawings yet.
+
+![PXL_20230526_180104718](https://github.com/hackclub/haxidraw/assets/27078897/da37007c-b7d2-45d5-842c-dbc35f990336)
+
 ## 2023-05-15 - @leomcelroy
 
 I made the JS controls function asyncronously by adding a number ID to each message and sending back acknowledgements. This allows us to write code like such:
