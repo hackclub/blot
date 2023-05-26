@@ -80,7 +80,7 @@ export async function runCode(code, state) {
     setStepsPerUnit: async (spu) => { // need to implement this
       await state.haxidraw.setStepsPerUnit(spu);
     },
-    port: state.haxidraw.port
+    port: state.haxidraw?.port
   }
 
   const runMachine = () => runMachineHelper(state, [state.scaleX, state.scaleY]);

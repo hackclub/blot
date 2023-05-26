@@ -1,7 +1,7 @@
 import { createWebSerialBuffer } from "./createWebSerialBuffer.js";
 import * as cobs from "./cobs.js";
 
-const TERMINATOR = 0x0A;
+// const TERMINATOR = 0x0A;
 
 export async function createWebSerialPort(rawPort) {
   const buffer = await createWebSerialBuffer(rawPort);

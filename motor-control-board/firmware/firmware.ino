@@ -243,7 +243,8 @@ void cobs_decode(uint8_t *dst, const uint8_t *src, size_t len) {
 
 /* ------------------------------------------------------------ */
 
-void cobsPrint(const String& message) {
+// TODO: THINK THIS IS BUGGY
+void cobs_print(const String& message) {
   // Convert the message to a byte array
   int length = message.length();
   uint8_t byteArray[length + 1]; // +1 for the null terminator
