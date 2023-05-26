@@ -126,17 +126,17 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function runMachineHelper(state, [scaleX, scaleY]) {
   await state.haxidraw.servo(1000);
-  await delay(1000);
+  await delay(200);
   const polylines = state.turtles.map(x => x.path).flat();
   for (const polyline of polylines) {
     for (let i = 0; i < polyline.length; i++) { 
       const {x, y} = polyline[i];
       if (i === 0) {
         await state.haxidraw.servo(1000);
-        await delay(1000);
+        await delay(200);
       } else if (i === 1) {
         await state.haxidraw.servo(1700);
-        await delay(1000);
+        await delay(500);
       }
 
       await state.haxidraw.goTo(x*scaleX, y*scaleY);
@@ -145,5 +145,5 @@ export async function runMachineHelper(state, [scaleX, scaleY]) {
   }
 
   await state.haxidraw.servo(1000);
-  await delay(1000);
+  await delay(200);
 }
