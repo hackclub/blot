@@ -45,7 +45,18 @@ One design consideration when making the editor is that when a user calls the `r
 
 Moving on to the firmware. It took a bit of patience to implement COBS properly. Though implementing it in JavaScript recently I willfully ignored doing so for the embedded instead opting to use newline delimiters for the communication stream. The ASCII for newline is `0x0A` otherwise known as 10. 10 periodically does show up in bytesteam encodings, which was giving me some trouble. This is what COBS is for, to give you a known unique character which will occur only at the end of your messages. The challenge in implementing it is my Arduino print statements (my primary debugging technique) no longer worked because the other end of my serial communication connection in the browser was then expecting 0 delimited messages. 
 
-WIP
+The solution is pretty straightforward though. Just implement the encoding and decoding incrementally. So first verify I can encode and decode messages just in JS. Then send encoded messages to the firmware but expect to receive back newline delimited messages so I can read the print statements. Then when I know everything else works encode the messages coming back up and decode them in JS.
+
+I ended up using this pattern frequently for inspecting the packets:
+
+```cpp
+Serial.print("RECEIVED: ");
+for (int i = 0; i < bufferIndex; i++) {
+  Serial.print(msgBuffer[i]);
+  Serial.print(", ");
+}
+Serial.println("DONE");
+```
 
 ## 2023-05-15 - @leomcelroy
 
