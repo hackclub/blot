@@ -301,7 +301,7 @@ String byteArrayToString(byte arr[], int length) {
 
 
 void goTo(float x, float y) {
-    // Set your target distances for each motor (in steps)
+  // Set your target distances for each motor (in steps)
   float motor1Target = (x + y) - pos[0];
   float motor2Target = (y - x) - pos[1];
 

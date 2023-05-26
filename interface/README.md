@@ -1,4 +1,11 @@
-# Interfaces
+# Interface to Haxidraw
 
-<https://hackclub.github.io/drawing-thing/interfaces/haxidraw/>
-<https://hackclub.github.io/drawing-thing/interfaces/haxidraw-turtle/>
+To run
+
+```
+yarn
+yarn dev
+```
+
+
+
