@@ -366,9 +366,9 @@ uint8_t go(uint8_t* payload, int length, uint8_t* reply) {
 }
 
 uint8_t moveServo(uint8_t* payload, int length, uint8_t* reply) {
-  float angle = read_float(payload, 0);
+  int angle = read_int(payload, 0);
   
-  servo.write(angle);
+  servo.writeMicroseconds(angle);
 
   return 0;
 }
