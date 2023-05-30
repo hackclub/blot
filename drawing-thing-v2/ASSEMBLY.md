@@ -25,16 +25,16 @@ This assembly guide is broken down into a few parts:
 
 ### Parts
 
-| Line | Quantity | Thing               | Notes                              |
-| ---- | -------- | -------------------------------- | ---------------------------------------------- |
-| | 8        | Flanged bearings    | 2 bearings stacked, makes an idler |
-| |8        | V-wheels            |                                    |
-| |8        | 6mm spacer          |                                    |
-| |8        | 35mm M5 screw       | for v-wheels                       |
-| |4        | 20mm M5 screw       | for idlers                         |
-| |4        | 1mm precision shim  | for idlers                         |
-| |12       | M5 hex nut          |                                    |
-|fab|1        | 3D printed carriage |                                    |
+| Quantity | Thing               | Notes                              |
+| -------- | ------------------- | ---------------------------------- |
+| 8        | Flanged bearings    | 2 bearings stacked, makes an idler |
+| 8        | V-wheels            |                                    |
+| 8        | 6mm spacer          |                                    |
+| 8        | 35mm M5 screw       | for v-wheels                       |
+| 4        | 20mm M5 screw       | for idlers                         |
+| 4        | 1mm precision shim  | for idlers                         |
+| 12       | M5 hex nut          |                                    |
+| 1        | 3D printed carriage |                                    |
 
 - Put M5 hex nuts in all of the nut holes in the carriage.
 
@@ -104,20 +104,20 @@ This assembly guide is broken down into a few parts:
 - M5 allen key
 
 ### Parts
-| Line | Quantity | Thing                            | Notes                                          |
-| ---- | -------- | -------------------------------- | ---------------------------------------------- |
-|fab|1|Front idler printed part|
-fab|1|Pen holder rail printed part|
-|      |2| flanged bearings
-|      |2| 20mm M5 screw| for screwing idler down, for pen rail (upper)
-|      |3| 10mm M5 screw| for screwing into aluminum rail
-|      |1| 25mm M5 screw| for pen rail (lower)
-|      |3| M5 hex nut| for screwing idler
-|      |3| M5 t-nut, to attach to extrusion
-|      |1| Servo and arm
-|      |2| M2 screws| for screwing servo
-|      |2| M2 nuts| for screwing servo
-|      |1| 1mm precision shim
+
+- Front idler printed part
+- Pen holder rail printed part
+
+- 2x flanged bearings
+- 2x 20mm M5 screw, for screwing idler down, for pen rail (upper)
+- 3x 10mm M5 screw, for screwing into aluminum rail
+- 1x 25mm M5 screw, for pen rail (lower)
+- 3x M5 hex nut, for screwing idler
+- 3x M5 t-nut, to attach to extrusion
+- Servo and arm
+- 2x M2 screws, for screwing servo
+- 2x M2 nuts, for screwing servo
+- 1x 1mm precision shim
 
 - Assemble idler from 2 flanged bearings and use a 20mm M5 screw to secure idler.
   - Put a shim between the plastic and the idler, and insert a hex nut into the rectangular nut trap.
@@ -136,14 +136,13 @@ fab|1|Pen holder rail printed part|
 ## Pen holder!
 
 ### Parts
-| Line | Quantity | Thing                            | Notes                                          |
-| ---- | -------- | -------------------------------- | ---------------------------------------------- |
-|fab|1|printed pen holder part
-| |3| v-wheels
-| |4| hex nut
-| |3| 25mm M5 screw|for wheels
-| |3| 6mm spacer|for wheel
-| |1| 25mm M5 screw|for securing pen (or any length)
+
+- printed pen holder part
+- 3x v-wheels
+- 4x hex nut
+- 3x 25mm M5 screw, for wheels
+- 3x 6mm spacer, for wheel
+- 1x 25mm M5 screw, for securing pen (or any length)
 
 - Insert nuts into nut traps.
 - Attach the v-wheels to the pen holder using 25mm M5 screws and spacers.
@@ -156,15 +155,15 @@ fab|1|Pen holder rail printed part|
 ## Belt Tensioner
 
 ### Parts
-| Line | Quantity | Thing                            | Notes                                          |
-| ---- | -------- | -------------------------------- | ---------------------------------------------- |
-|fab|1| belt tensioner printed part
-|fab|2| belt clamp cap printed part
-|   |2| 30mm M5 screws
-|   |2| 10mm M5 screws|for attaching to rail
-|   |4| M5 hex nut
-|   |2| M5 t-nut
-|   |1| GT2 timing belt
+
+- belt tensioner printed part
+- 2 of the belt clamp cap printed part
+
+- 2x 30mm M5 screws
+- 2x 10mm M5 screws, for attaching to rail
+- 4x M5 hex nut
+- 2x M5 t-nut
+- GT2 timing belt
 
 - Slide the other aluminum rail between the wheels on the bottom of the carriage.
 - Screw the belt tensioner onto the end of the aluminum rail using 10mm M5 screws and t-nuts.
