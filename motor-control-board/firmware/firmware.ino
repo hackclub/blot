@@ -120,17 +120,12 @@ void readSerial() {
     // String msg = String((char*)msgArr);
     String msg = byteArrayToString(msgArr, msgLength);
 
-    // Serial.println(msg);
+    Serial.println(msg);
 
-    // Serial.print("PAYLOAD: ");
-    // for (int i = 0; i < payloadLength; i++) {
-    //   Serial.print(payload[i]);
-    //   Serial.print(", ");
-    // }
-    // Serial.println("PAYLOAD-END");
+    printArray("PAYLOAD", payload, payloadLength);
 
-    // Serial.print("MSGCOUNT: ");
-    // Serial.println(msgCount);
+    Serial.print("MSGCOUNT: ");
+    Serial.println(msgCount);
 
     bool triggered = triggerEvent(msg, payload, payloadLength, msgCount);
 
@@ -175,24 +170,36 @@ bool triggerEvent(String event, uint8_t* payload, int payloadLength, uint8_t msg
 }
 
 void sendAck(uint8_t msgCount, uint8_t* reply, uint8_t length) {
-  int arrayLength = 6 + length;
+  int arrayLength = 7 + length;
   uint8_t byteArray[arrayLength];
 
   byteArray[0] = 0x03;
   byteArray[1] = 0x61;
   byteArray[2] = 0x63;
   byteArray[3] = 0x6B;
+
+  // byteArray[4] = 0;
+  // byteArray[5] = msgCount;
+
   byteArray[4] = length;
   for (int i = 0; i < length; i++) {
     byteArray[i+5] = reply[i];
   }
   byteArray[5+length] = msgCount;
-  byteArray[5] = msgCount;
-      
-  uint8_t byteArrayEncoded[arrayLength + 2]; // +2 for possible COBS overhead
-  cobs_encode(byteArrayEncoded, byteArray, arrayLength);
 
-  Serial.write(byteArrayEncoded, arrayLength + 2);
+  byteArray[6+length] = 0x0A;
+
+  // Serial.println(msgCount);
+  // printArray("ACK", byteArray, 5+length);
+
+  Serial.write(byteArray, arrayLength);
+      
+  // uint8_t byteArrayEncoded[arrayLength + 2]; // +2 for possible COBS overhead
+  // cobs_encode(byteArrayEncoded, byteArray, arrayLength);
+  // Serial.write(byteArrayEncoded, arrayLength + 2);
+
+  // printArray("ENCODED-ACK", byteArray, 5+length);
+
 }
 
 /* ------------------------------------------------------------ */
@@ -326,7 +333,11 @@ void goTo(float x, float y) {
   float motor2Step = 0;
 
   // Loop until both motors reach their target steps
+  int count = 0;
   while (abs(motor1Step) < abs(motor1Target) || abs(motor2Step) < abs(motor2Target)) {
+    if (count > 1000000) break;
+    count++;
+
     unsigned long currentTime = micros();
 
     // Motor 1
@@ -372,6 +383,20 @@ uint8_t moveServo(uint8_t* payload, int length, uint8_t* reply) {
 
   return 0;
 }
+
+/* ------ */
+
+void printArray(String label, uint8_t* arr, int arrSize) {
+  Serial.print(label);
+  Serial.print("-BEGIN: ");
+  for (int i = 0; i < arrSize; i++) {
+    Serial.print(arr[i]);
+    Serial.print(", ");
+  }
+  Serial.print(label);
+  Serial.println("-END");
+}
+
 
 
 

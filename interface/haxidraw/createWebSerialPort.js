@@ -1,7 +1,7 @@
 import { createWebSerialBuffer } from "./createWebSerialBuffer.js";
 import * as cobs from "./cobs.js";
 
-// const TERMINATOR = 0x0A;
+const TERMINATOR = 0x0A;
 
 export async function createWebSerialPort(rawPort) {
   const buffer = await createWebSerialBuffer(rawPort);
@@ -15,14 +15,16 @@ export async function createWebSerialPort(rawPort) {
     while(buffer.available()) {
       const byte = buffer.read();
       msg.push(byte);
+
+      // console.log(msg);
       
-      if (byte === 0) { // using cobs
+      if (byte === TERMINATOR) { // using cobs
 
         // what's msg structure
         // length msg 1 | msg ... | length payload 1 | payload ... | promiseIndex 1
         
         // ADD THIS TO DECODE WITH COBS
-        msg = cobs.decode(msg);
+        // msg = cobs.decode(msg);
 
         const data = unpack(msg);
 
@@ -61,14 +63,14 @@ export async function createWebSerialPort(rawPort) {
       msg, 
       payload, 
       msgCount, 
-      // packedMsg, 
-      // decoded: cobs.decode(packedMsg),
-      // unpacked: unpack(cobs.decode(packedMsg))
+      packedMsg, 
+      decoded: cobs.decode(packedMsg),
+      unpacked: unpack(cobs.decode(packedMsg))
     });
 
     buffer.write(packedMsg);
 
-    msgCount = (msgCount + 1) % 255;
+    msgCount = (msgCount + 1) % 9;
 
     return promise;
   }
