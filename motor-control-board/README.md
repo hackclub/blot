@@ -1,4 +1,4 @@
-# [Motor Control Board](https://leomcelroy.com/svg-pcb/?file=https://github.com/hackclub/haxidraw/blob/main/motor-control-board/circuit/motor-control-board.js)
+# [Motor Control Board](https://leomcelroy.com/svg-pcb/?file=https://raw.githubusercontent.com/hackclub/haxidraw/main/motor-control-board/circuit/motor-control-board.js)
 
 Ultimately the idea is that each device will have it's own little board which we network together through Modular Things.
 
