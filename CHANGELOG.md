@@ -2,6 +2,66 @@
 
 This is a list of weekly developments for the drawing-thing updated every week.
 
+## 2023-05-26 - @leomcelroy
+
+Over the last two weeks I built a drawing interface/web editor for controlling the machine, added acknowledgments to the communication system, added COBS encoding and decoding.
+
+Here is the draft interface:
+
+<img width="1113" alt="Screen Shot 2023-05-26 at 10 44 05 AM" src="https://github.com/hackclub/haxidraw/assets/27078897/ca30829b-d886-4253-8fa9-216b2684c198">
+
+I created two ways to make drawings. One is using the Turtle class which lets you create drawings programmatically, and two is by dropping an SVG into the editor which will automatically be converted into a Turtle. You can then use affine transformations (scale, rotate, translate) to position it properly. 
+
+In the bottom right corner the editor has a little console. This was somewhat interesting to implement. I wanted it to have access to the functions in the top-level scope of the most recently run script. So you can define functions in the editor and then run them on command in the command line. I did this by rewriting the script a bit before running it.
+
+Here is the relevant code:
+
+```js
+const ast = acorn.parse(code, { ecmaVersion: "latest" });
+
+const topScopeInserts = [];
+
+ast.body.forEach(statement => {
+  const { type } = statement;
+
+  if (type === "VariableDeclaration") {
+    statement.declarations.forEach(x => {
+      topScopeInserts.push(x.id.name);
+    })
+  }
+
+  if (type === "FunctionDeclaration") {
+    topScopeInserts.push(statement.id.name);
+  }
+
+})
+
+topScopeInserts.forEach(name => {
+  code += `\n;topScope["${name}"] = ${name};`
+});
+```
+
+One design consideration when making the editor is that when a user calls the `runMachine()` function it should run the drawing which is currently visible.
+
+Moving on to the firmware. It took a bit of patience to implement COBS properly. Though implementing it in JavaScript recently I willfully ignored doing so for the embedded instead opting to use newline delimiters for the communication stream. The ASCII for newline is `0x0A` otherwise known as 10. 10 periodically does show up in bytesteam encodings, which was giving me some trouble. This is what COBS is for, to give you a known unique character which will occur only at the end of your messages. The challenge in implementing it is my Arduino print statements (my primary debugging technique) no longer worked because the other end of my serial communication connection in the browser was then expecting 0 delimited messages. 
+
+The solution is pretty straightforward though. Just implement the encoding and decoding incrementally. So first verify I can encode and decode messages just in JS. Then send encoded messages to the firmware but expect to receive back newline delimited messages so I can read the print statements. Then when I know everything else works encode the messages coming back up and decode them in JS.
+
+I ended up using this pattern frequently for inspecting the packets:
+
+```cpp
+Serial.print("RECEIVED: ");
+for (int i = 0; i < bufferIndex; i++) {
+  Serial.print(msgBuffer[i]);
+  Serial.print(", ");
+}
+Serial.println("DONE");
+```
+
+I acquired some Gelly Roll Sakura pens which I used to make some of our most intentional drawings yet.
+
+![PXL_20230526_180104718](https://github.com/hackclub/haxidraw/assets/27078897/da37007c-b7d2-45d5-842c-dbc35f990336)
+
 ## 2023-05-15 - @leomcelroy
 
 I made the JS controls function asyncronously by adding a number ID to each message and sending back acknowledgements. This allows us to write code like such:

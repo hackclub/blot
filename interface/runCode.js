@@ -67,20 +67,7 @@ export async function runCode(code, state) {
 
   state.turtles = [];
 
-  const haxidraw = {
-    penUp: async () => {
-      await state.haxidraw.servo(-90);
-    },
-    penDown: async () => {
-      await state.haxidraw.servo(90);
-    },
-    goTo: async (x, y) => {
-      await state.haxidraw.moveTo(x, y);
-    },
-    setStepsPerUnit: async (spu) => { // need to implement this
-      await state.haxidraw.setStepsPerUnit(spu);
-    }
-  }
+  const haxidraw = state.haxidraw;
 
   const runMachine = () => runMachineHelper(state, [state.scaleX, state.scaleY]);
   const clear = () => {
@@ -138,19 +125,25 @@ export async function runCode(code, state) {
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function runMachineHelper(state, [scaleX, scaleY]) {
+  await state.haxidraw.servo(1000);
+  await delay(200);
   const polylines = state.turtles.map(x => x.path).flat();
   for (const polyline of polylines) {
-    console.log("pl", polyline);
     for (let i = 0; i < polyline.length; i++) { 
       const {x, y} = polyline[i];
-      // if (i === 0) await state.haxidraw.servo(-90);
-      // else if (i === 1) await state.haxidraw.servo(90);
-      console.log("moveTo", x, y);
-      await state.haxidraw.moveTo(x*scaleX, y*scaleY);
-      await delay(2000);
+      if (i === 0) {
+        await state.haxidraw.servo(1000);
+        await delay(200);
+      } else if (i === 1) {
+        await state.haxidraw.servo(1700);
+        await delay(500);
+      }
+
+      await state.haxidraw.goTo(x*scaleX, y*scaleY);
     }
 
   }
 
-  // await state.haxidraw.servo(-90);
+  await state.haxidraw.servo(1000);
+  await delay(200);
 }
