@@ -27,3 +27,7 @@ html, body {
 .maze-2d {
   border: 1px solid black;
 }
+
+.raycast {
+  border: 1px solid black;
+}

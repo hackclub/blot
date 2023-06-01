@@ -1,154 +1,4 @@
-// Import the necessary Three.js classes
-import { 
-  Scene, 
-  PerspectiveCamera, 
-  WebGLRenderer, 
-  BoxGeometry, 
-  MeshBasicMaterial, 
-  PointLight, 
-  MeshStandardMaterial,
-  Mesh,
-  Vector3
-} from 'three';
-import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
-
-
-// Define the size of the maze
-const MAZE_SIZE = 10;
-const delta = 0.1;
-const player = {
-  x: -1,
-  y: -1,
-  z: 0,
-  width: 0.5,
-  depth: 0.5,
-  height: 0.5
-};
-
-
-
-// Create a scene
-const scene = new Scene();
-
-const geometry = new BoxGeometry(player.width, player.depth, player.height);
-// Change to MeshStandardMaterial
-const material = new MeshStandardMaterial({ color: 0xFFA500 });
-const cube = new Mesh(geometry, material);
-cube.position.set(player.x, player.y, player.z);
-scene.add(cube);
-
-// Create a camera
-const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(player.x, player.y, MAZE_SIZE);
-
-// Create a light
-const light = new PointLight(0xffffff, 1, 0);
-light.position.set(MAZE_SIZE / 2, MAZE_SIZE / 2, MAZE_SIZE / 2);
-scene.add(light);
-
-// Create a WebGL renderer
-const renderer = new WebGLRenderer();
-const renderTarget = document.querySelector(".render-target");
-const bb = renderTarget.getBoundingClientRect();
-renderer.setSize(bb.width, bb.height);
-renderTarget.appendChild(renderer.domElement);
-
-
-// Create a 2D array to represent the maze
-let maze = new Array(MAZE_SIZE).fill(false).map(() => new Array(MAZE_SIZE).fill(false));
-
-// Randomly fill the maze with walls
-for (let i = 0; i < MAZE_SIZE; i++) {
-  for (let j = 0; j < MAZE_SIZE; j++) {
-    if (Math.random() < 0.3) { // 30% chance of a wall
-      maze[i][j] = true;
-    }
-  }
-}
-
-// Create a cube for each wall
-for (let i = 0; i < MAZE_SIZE; i++) {
-  for (let j = 0; j < MAZE_SIZE; j++) {
-    if (maze[i][j]) {
-      const geometry = new BoxGeometry(1, 1, 1);
-      // Change to MeshStandardMaterial
-      const material = new MeshStandardMaterial({ color: 0x00ff00 });
-      const cube = new Mesh(geometry, material);
-      cube.position.set(i, j, 0);
-      scene.add(cube);
-    }
-  }
-}
-
-// Listen for keydown event
-document.addEventListener('keydown', (event) => {
-  switch (event.code) {
-    case 'KeyW':
-      player.y += .1;
-      break;
-    case 'KeyA':
-      player.x -= .1;
-      break;
-    case 'KeyS':
-      player.y -= .1;
-      break;
-    case 'KeyD':
-      player.x += .1;
-      break;
-  }
-}, false);
-
-window.addEventListener("resize", onWindowResize());
-    
-
-function onWindowResize() {
-  const bb = renderTarget.getBoundingClientRect();
-
-  camera.aspect = bb.width / bb.height;
-  camera.updateProjectionMatrix();
-  renderer.setSize(bb.width, bb.height);
-}
-
-// Update camera and controls each frame
-function animate() {
-
-  requestAnimationFrame(animate);
-
-  // Move the camera
-  // controls.moveRight(-velocity.x * delta);
-  // controls.moveForward(-velocity.z * delta);
-
-  // controls.update();
-  cube.position.set(player.x, player.y, player.z);
-  camera.position.set(player.x, player.y, MAZE_SIZE);
-
-  renderer.render(scene, camera);
-}
-
-animate();
-
-function cubesIntersect(cube1, cube2) {
-    // Calculate the half widths, depths, and heights
-    const halfWidth1 = cube1.width / 2;
-    const halfDepth1 = cube1.depth / 2;
-    const halfHeight1 = cube1.height / 2;
-
-    const halfWidth2 = cube2.width / 2;
-    const halfDepth2 = cube2.depth / 2;
-    const halfHeight2 = cube2.height / 2;
-
-    // Check for intersection
-    if (Math.abs(cube1.x - cube2.x) < (halfWidth1 + halfWidth2) &&
-        Math.abs(cube1.y - cube2.y) < (halfHeight1 + halfHeight2) &&
-        Math.abs(cube1.z - cube2.z) < (halfDepth1 + halfDepth2)) {
-        return true;
-    }
-
-    return false;
-}
-
-
-
+import { raycastMap } from "./raycasting.js";
 
 const maze2D = document.querySelector(".maze-2d");
 const ctx = maze2D.getContext("2d");
@@ -156,27 +6,32 @@ const ctx = maze2D.getContext("2d");
 const w = maze2D.width;
 const h = maze2D.width;
 
-const width = 7;
-const height = 7;
+const n = 7;
 
-const mazeData = new Array(width*height)
-  .fill(0)
-  .map(cell => {
-    return Math.random() < .6 ? 1 : 0;
-  });
+const state = {
+  width: n,
+  height: n,
+  orientation: "north",
+  mazeData: randomVector(n*n)
+}
+
+const width = state.width;
+const height = state.height;
 
 const halfWidth = (width-1)/2;
 const i = get1DIndex(width, halfWidth, halfWidth);
-mazeData[i] = 0;
-
-let orientation = "north";
+state.mazeData[i] = 0;
 
 const xWidth = w/width;
 const yWidth = h/height;
 
-drawMaze(mazeData);
+drawMaze(state);
 
-function drawMaze(maze) {
+function drawMaze(state) {
+
+  const { width, height, orientation, mazeData } = state;
+  const maze = mazeData;
+
   maze.forEach((cell, i) => {
     const { x, y } = getCoordinates(i, width);
     ctx.fillStyle = cell === 1 ? "black" : "white";
@@ -273,10 +128,16 @@ function randomVector(length, prob = 0.5) {
 }
 
 window.addEventListener("keydown", e => {
+  const { width, height, orientation, mazeData } = state;
+
   const halfWidth = (width-1)/2;
   switch (event.code) {
     case 'KeyI':
       {
+        if (orientation !== "north") {
+          state.orientation = "north";
+          break;
+        }
         const i = get1DIndex(width, halfWidth, halfWidth-1);
         const fill = mazeData[i];
         if (fill === 1) return;
@@ -286,6 +147,10 @@ window.addEventListener("keydown", e => {
       break;
     case 'KeyJ':
       {
+        if (orientation !== "east") {
+          state.orientation = "east";
+          break;
+        }
         const i = get1DIndex(width, halfWidth-1, halfWidth);
         const fill = mazeData[i];
         if (fill === 1) return;
@@ -295,6 +160,10 @@ window.addEventListener("keydown", e => {
       break;
     case 'KeyK':
       {
+        if (orientation !== "south") {
+          state.orientation = "south";
+          break;
+        }
         const i = get1DIndex(width, halfWidth, halfWidth+1);
         const fill = mazeData[i];
         if (fill === 1) return;
@@ -304,6 +173,10 @@ window.addEventListener("keydown", e => {
       break;
     case 'KeyL':
       {
+        if (orientation !== "west") {
+          state.orientation = "west";
+          break;
+        }
         const i = get1DIndex(width, halfWidth+1, halfWidth);
         const fill = mazeData[i];
         if (fill === 1) return;
@@ -311,29 +184,9 @@ window.addEventListener("keydown", e => {
         removeColumn(mazeData, width+1, 0);
       }
       break;
-    case 'KeyW':
-      {
-        orientation = "north";
-      }
-      break;
-    case 'KeyA':
-      {
-        orientation = "east";
-      }
-      break;
-    case 'KeyS':
-      {
-        orientation = "south";
-      }
-      break;
-    case 'KeyD':
-      {
-        orientation = "west";
-      }
-      break;
   }
 
-  drawMaze(mazeData);
+  drawMaze(state);
 })
 
 function get1DIndex(width, x, y) {
@@ -341,6 +194,9 @@ function get1DIndex(width, x, y) {
 }
 
 
+const raycast = document.querySelector(".raycast");
+
+raycastMap(state, raycast);
 
 
 
