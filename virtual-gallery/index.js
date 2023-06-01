@@ -148,29 +148,24 @@ window.addEventListener("keydown", e => {
     KeyI() {
       dx = Math.sin((state.angle+0)/180*Math.PI)*r;
       dy = Math.cos(state.angle/180*Math.PI)*r;
-
-      state.playerX += dx;
-      state.playerY -= dy;
+      movePlayer(dx, dy);
     },
     KeyJ() {
       dx = Math.sin((state.angle+270)/180*Math.PI)*r;
       dy = Math.cos((state.angle+270)/180*Math.PI)*r;
-      state.playerX += dx;
-      state.playerY -= dy;
+      movePlayer(dx, dy);
       // jMove({ width, halfWidth, mazeData })
     },
     KeyK() {
       dx = Math.sin((state.angle+180)/180*Math.PI)*r;
       dy = Math.cos((state.angle+180)/180*Math.PI)*r;
-      state.playerX += dx;
-      state.playerY -= dy;
+      movePlayer(dx, dy);
       // kMove({ width, halfWidth, mazeData })
     },
     KeyL() {
       dx = Math.sin((state.angle+90)/180*Math.PI)*r;
       dy = Math.cos((state.angle+90)/180*Math.PI)*r;
-      state.playerX += dx;
-      state.playerY -= dy;
+      movePlayer(dx, dy);
       // lMove({ width, halfWidth, mazeData })
     },
     KeyA() {
@@ -187,22 +182,22 @@ window.addEventListener("keydown", e => {
 
   if (branch) branch();
 
-  if (state.playerX > n/2 + .9) {
+  if (state.playerX > n/2 + 1) {
     moveWest({ width, halfWidth, mazeData });
     state.playerX = n/2;
   }
 
-  if (state.playerX < n/2 - .9) {
+  if (state.playerX < n/2 - 1) {
     moveEast({ width, halfWidth, mazeData });
     state.playerX = n/2;
   }
 
-  if (state.playerY > n/2 + .9) {
+  if (state.playerY > n/2 + 1) {
     moveSouth({ width, halfWidth, mazeData });
     state.playerY = n/2;
   }
 
-  if (state.playerY < n/2 - .9) {
+  if (state.playerY < n/2 - 1) {
     moveNorth({ width, halfWidth, mazeData });
     state.playerY = n/2;
   }
@@ -270,6 +265,48 @@ function findClosestIndex(target, arr) {
   }
 
   return closestIndex;
+}
+
+function movePlayer(dx, dy) {
+  const newX = state.playerX + dx;
+  const newY = state.playerY - dy;
+
+  const width = state.width;
+  const halfWidth = (width-1)/2;
+
+  let moveableX = true;
+  let moveableY = true;
+
+  if (dx < 0) {
+    const i = get1DIndex(width, halfWidth-1, halfWidth);
+    const fill = state.mazeData[i];
+    
+    if (fill) moveableX = false;
+  }
+
+  if (dx > 0) {
+    const i = get1DIndex(width, halfWidth+1, halfWidth);
+    const fill = state.mazeData[i];
+    
+    if (fill) moveableX = false;
+  }
+
+  if (dy < 0) {
+    const i = get1DIndex(width, halfWidth, halfWidth+1);
+    const fill = state.mazeData[i];
+    
+    if (fill) moveableY = false;
+  }
+
+  if (dy > 0) {
+    const i = get1DIndex(width, halfWidth, halfWidth-1);
+    const fill = state.mazeData[i];
+    
+    if (fill) moveableY = false;
+  }
+
+  if (moveableX) state.playerX += dx;
+  if (moveableY) state.playerY -= dy;
 }
 
 
