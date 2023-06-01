@@ -24,7 +24,7 @@ export function raycastMap(state, el) {
   const SCREEN_WIDTH = bb.width;
   const SCREEN_HEIGHT = bb.height;
   const TICK = 30;
-  const CELL_SIZE = 16;
+  const CELL_SIZE = 8;
   const FOV = toRadians(60);
 
   const COLORS = {
@@ -233,6 +233,14 @@ export function raycastMap(state, el) {
         1,
         SCREEN_HEIGHT / 2 - wallHeight / 2
       );
+      context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;      
+      context.fillRect(
+        i,
+        SCREEN_HEIGHT / 2 + wallHeight / 2,
+        1,
+        SCREEN_HEIGHT / 2 - wallHeight / 2
+      );
+
       context.fillStyle = COLORS.ceiling;
       context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
     });
@@ -250,7 +258,7 @@ export function raycastMap(state, el) {
     clearScreen();
     const rays = getRays();
     renderScene(rays);
-    renderMinimap(0, 0, 0.75, rays);
+    renderMinimap(0, 0, 1, rays);
   }
 
   setInterval(gameLoop, TICK);
