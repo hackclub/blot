@@ -12,6 +12,7 @@ const state = {
   width: n,
   height: n,
   orientation: "north",
+  angle: 0,
   mazeData: randomVector(n*n)
 }
 
@@ -47,12 +48,13 @@ function drawMaze(state) {
   const rx = width/2*xWidth;
   const ry = height/2*yWidth;
   const redRectWidth = xWidth/8;
-  const angle = {
-    "north": 0,
-    "east": 270,
-    "south": 180,
-    "west": 90,
-  }[orientation];
+  const angle = state.angle;
+  // const angle = {
+  //   "north": 0,
+  //   "east": 270,
+  //   "south": 180,
+  //   "west": 90,
+  // }[orientation];
   ctx.translate(rx, ry);
   ctx.rotate(angle * Math.PI / 180); // in the screenshot I used angle = 20
   ctx.fillStyle = "red";
@@ -182,6 +184,16 @@ window.addEventListener("keydown", e => {
         if (fill === 1) return;
         insertColumn(mazeData, width, width, randomVector(width));
         removeColumn(mazeData, width+1, 0);
+      }
+      break;
+    case 'KeyA':
+      {
+        state.angle -= 5;
+      }
+      break;
+    case 'KeyD':
+      {
+        state.angle += 5;
       }
       break;
   }

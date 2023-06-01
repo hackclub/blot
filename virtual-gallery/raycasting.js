@@ -4,17 +4,17 @@ export function raycastMap(state, el) {
   const getMap = () => reshapeArray(state.mazeData, state.width);
   const getPlayer = () => {
 
-    const angle = {
-      "north": 270,
-      "east": 180,
-      "south": 90,
-      "west": 0,
-    }[state.orientation];
+    // const angle = {
+    //   "north": 270,
+    //   "east": 180,
+    //   "south": 90,
+    //   "west": 0,
+    // }[state.orientation];
 
     return {
-      x: 3.5*CELL_SIZE,
-      y: 3.5*CELL_SIZE,
-      angle: toRadians(angle),
+      x: state.width/2*CELL_SIZE,
+      y: state.height/2*CELL_SIZE,
+      angle: toRadians(state.angle-90),
       speed: 0,
     }
   }
