@@ -25,7 +25,7 @@ export function raycastMap(state, el) {
   const SCREEN_HEIGHT = bb.height;
   const TICK = 30;
   const CELL_SIZE = 16;
-  const FOV = toRadians(90);
+  const FOV = toRadians(60);
 
   const COLORS = {
     floor: "#d52b1e", // "#ff6361"
@@ -219,8 +219,13 @@ export function raycastMap(state, el) {
     rays.forEach((ray, i) => {
       const distance = fixFishEye(ray.distance, ray.angle, player.angle);
       const wallHeight = ((CELL_SIZE * 5) / distance) * 277;
+
       context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
       context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
+      
+      context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;      
+      context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
+
       context.fillStyle = COLORS.floor;
       context.fillRect(
         i,

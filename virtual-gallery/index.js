@@ -133,70 +133,45 @@ window.addEventListener("keydown", e => {
   const { width, height, orientation, mazeData } = state;
 
   const halfWidth = (width-1)/2;
-  switch (event.code) {
-    case 'KeyI':
-      {
-        if (orientation !== "north") {
-          state.orientation = "north";
-          break;
-        }
-        const i = get1DIndex(width, halfWidth, halfWidth-1);
-        const fill = mazeData[i];
-        if (fill === 1) return;
-        insertRow(mazeData, width, 0, randomVector(width));
-        removeRow(mazeData, width, width);
-      }
-      break;
-    case 'KeyJ':
-      {
-        if (orientation !== "east") {
-          state.orientation = "east";
-          break;
-        }
-        const i = get1DIndex(width, halfWidth-1, halfWidth);
-        const fill = mazeData[i];
-        if (fill === 1) return;
-        insertColumn(mazeData, height, 0, randomVector(height));
-        removeColumn(mazeData, width+1, width);
-      }
-      break;
-    case 'KeyK':
-      {
-        if (orientation !== "south") {
-          state.orientation = "south";
-          break;
-        }
-        const i = get1DIndex(width, halfWidth, halfWidth+1);
-        const fill = mazeData[i];
-        if (fill === 1) return;
-        insertRow(mazeData, width, width, randomVector(width));
-        removeRow(mazeData, width, 0);
-      }
-      break;
-    case 'KeyL':
-      {
-        if (orientation !== "west") {
-          state.orientation = "west";
-          break;
-        }
-        const i = get1DIndex(width, halfWidth+1, halfWidth);
-        const fill = mazeData[i];
-        if (fill === 1) return;
-        insertColumn(mazeData, width, width, randomVector(width));
-        removeColumn(mazeData, width+1, 0);
-      }
-      break;
-    case 'KeyA':
-      {
-        state.angle -= 5;
-      }
-      break;
-    case 'KeyD':
-      {
-        state.angle += 5;
-      }
-      break;
-  }
+
+  const branch = {
+    KeyI() {
+      const i = get1DIndex(width, halfWidth, halfWidth-1);
+      const fill = mazeData[i];
+      if (fill === 1) return;
+      insertRow(mazeData, width, 0, randomVector(width));
+      removeRow(mazeData, width, width);
+    },
+    KeyJ() {
+      const i = get1DIndex(width, halfWidth-1, halfWidth);
+      const fill = mazeData[i];
+      if (fill === 1) return;
+      insertColumn(mazeData, height, 0, randomVector(height));
+      removeColumn(mazeData, width+1, width);
+    },
+    KeyK() {
+      const i = get1DIndex(width, halfWidth, halfWidth+1);
+      const fill = mazeData[i];
+      if (fill === 1) return;
+      insertRow(mazeData, width, width, randomVector(width));
+      removeRow(mazeData, width, 0);
+    },
+    KeyL() {
+      const i = get1DIndex(width, halfWidth+1, halfWidth);
+      const fill = mazeData[i];
+      if (fill === 1) return;
+      insertColumn(mazeData, width, width, randomVector(width));
+      removeColumn(mazeData, width+1, 0);
+    },
+    KeyA() {
+      state.angle -= 5;
+    },
+    KeyD() {  
+      state.angle += 5;
+    }
+  }[event.code];
+
+  if (branch) branch();
 
   drawMaze(state);
 })
