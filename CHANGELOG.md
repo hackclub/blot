@@ -2,6 +2,32 @@
 
 This is a list of weekly developments for the drawing-thing updated every week.
 
+## 2023-05-xx - @leomcelroy
+
+Arpan's drawings
+
+```
+int count = 0;
+while (abs(motor1Step) < abs(motor1Target) || abs(motor2Step) < abs(motor2Target)) {
+  if (count > 1000000) break;
+  count++;
+  ...
+}
+```
+
+```
+void printArray(String label, uint8_t* arr, int arrSize) {
+  Serial.print(label);
+  Serial.print("-BEGIN: ");
+  for (int i = 0; i < arrSize; i++) {
+    Serial.print(arr[i]);
+    Serial.print(", ");
+  }
+  Serial.print(label);
+  Serial.println("-END");
+}
+```
+
 ## 2023-05-26 - @leomcelroy
 
 Over the last two weeks I built a drawing interface/web editor for controlling the machine, added acknowledgments to the communication system, added COBS encoding and decoding.
