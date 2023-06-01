@@ -12,8 +12,8 @@ export function raycastMap(state, el) {
     // }[state.orientation];
 
     return {
-      x: state.width/2*CELL_SIZE,
-      y: state.height/2*CELL_SIZE,
+      x: state.playerX*CELL_SIZE,
+      y: state.playerY*CELL_SIZE,
       angle: toRadians(state.angle-90),
       speed: 0,
     }
@@ -28,10 +28,10 @@ export function raycastMap(state, el) {
   const FOV = toRadians(60);
 
   const COLORS = {
-    floor: "#d52b1e", // "#ff6361"
+    floor: "#b5b5b5", // "#ff6361"
     ceiling: "#ffffff", // "#012975",
     wall: "#013aa6", // "#58508d"
-    wallDark: "#012975", // "#003f5c"
+    wallDark: "#063389", // "#003f5c"
     rays: "#ffa600",
   };
 
@@ -218,7 +218,7 @@ export function raycastMap(state, el) {
 
     rays.forEach((ray, i) => {
       const distance = fixFishEye(ray.distance, ray.angle, player.angle);
-      const wallHeight = ((CELL_SIZE * 5) / distance) * 277;
+      const wallHeight = ((CELL_SIZE * 5) / distance) * 100;
 
       context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
       context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);

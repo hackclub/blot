@@ -13,7 +13,9 @@ const state = {
   height: n,
   orientation: "north",
   angle: 0,
-  mazeData: randomVector(n*n)
+  mazeData: randomVector(n*n),
+  playerX: n/2,
+  playerY: n/2
 }
 
 const width = state.width;
@@ -134,44 +136,76 @@ window.addEventListener("keydown", e => {
 
   const halfWidth = (width-1)/2;
 
+  const orientationIndex = findClosestIndex(state.angle, [ 0, 90, 180, 270, 360 ]);
+  const iMove = [moveNorth, moveWest, moveSouth, moveEast, moveNorth][orientationIndex];
+  const kMove = [moveSouth, moveEast, moveNorth, moveWest, moveSouth][orientationIndex];
+  const lMove = [moveWest, moveSouth, moveEast, moveNorth, moveWest][orientationIndex];
+  const jMove = [moveEast, moveNorth, moveWest, moveSouth, moveEast][orientationIndex];
+
+  const r = 0.1;
+  let dx, dy;
   const branch = {
     KeyI() {
-      const i = get1DIndex(width, halfWidth, halfWidth-1);
-      const fill = mazeData[i];
-      if (fill === 1) return;
-      insertRow(mazeData, width, 0, randomVector(width));
-      removeRow(mazeData, width, width);
+      dx = Math.sin((state.angle+0)/180*Math.PI)*r;
+      dy = Math.cos(state.angle/180*Math.PI)*r;
+
+      state.playerX += dx;
+      state.playerY -= dy;
     },
     KeyJ() {
-      const i = get1DIndex(width, halfWidth-1, halfWidth);
-      const fill = mazeData[i];
-      if (fill === 1) return;
-      insertColumn(mazeData, height, 0, randomVector(height));
-      removeColumn(mazeData, width+1, width);
+      dx = Math.sin((state.angle+270)/180*Math.PI)*r;
+      dy = Math.cos((state.angle+270)/180*Math.PI)*r;
+      state.playerX += dx;
+      state.playerY -= dy;
+      // jMove({ width, halfWidth, mazeData })
     },
     KeyK() {
-      const i = get1DIndex(width, halfWidth, halfWidth+1);
-      const fill = mazeData[i];
-      if (fill === 1) return;
-      insertRow(mazeData, width, width, randomVector(width));
-      removeRow(mazeData, width, 0);
+      dx = Math.sin((state.angle+180)/180*Math.PI)*r;
+      dy = Math.cos((state.angle+180)/180*Math.PI)*r;
+      state.playerX += dx;
+      state.playerY -= dy;
+      // kMove({ width, halfWidth, mazeData })
     },
     KeyL() {
-      const i = get1DIndex(width, halfWidth+1, halfWidth);
-      const fill = mazeData[i];
-      if (fill === 1) return;
-      insertColumn(mazeData, width, width, randomVector(width));
-      removeColumn(mazeData, width+1, 0);
+      dx = Math.sin((state.angle+90)/180*Math.PI)*r;
+      dy = Math.cos((state.angle+90)/180*Math.PI)*r;
+      state.playerX += dx;
+      state.playerY -= dy;
+      // lMove({ width, halfWidth, mazeData })
     },
     KeyA() {
       state.angle -= 5;
+      if (state.angle < 0) state.angle = state.angle + 360
+      state.angle %= 360;
     },
     KeyD() {  
       state.angle += 5;
+      if (state.angle < 0) state.angle = state.angle + 360
+      state.angle %= 360;
     }
   }[event.code];
 
   if (branch) branch();
+
+  if (state.playerX > n/2 + .9) {
+    moveWest({ width, halfWidth, mazeData });
+    state.playerX = n/2;
+  }
+
+  if (state.playerX < n/2 - .9) {
+    moveEast({ width, halfWidth, mazeData });
+    state.playerX = n/2;
+  }
+
+  if (state.playerY > n/2 + .9) {
+    moveSouth({ width, halfWidth, mazeData });
+    state.playerY = n/2;
+  }
+
+  if (state.playerY < n/2 - .9) {
+    moveNorth({ width, halfWidth, mazeData });
+    state.playerY = n/2;
+  }
 
   drawMaze(state);
 })
@@ -186,6 +220,57 @@ const raycast = document.querySelector(".raycast");
 raycastMap(state, raycast);
 
 
+function moveNorth({ width, halfWidth, mazeData }) {
+  // const i = get1DIndex(width, halfWidth, halfWidth-1);
+  // const fill = mazeData[i];
+  // if (fill === 1) return false;
+  insertRow(mazeData, width, 0, randomVector(width));
+  removeRow(mazeData, width, width);
+  return true;
+}
+
+function moveEast({ width, halfWidth, mazeData }) {
+  // const i = get1DIndex(width, halfWidth-1, halfWidth);
+  // const fill = mazeData[i];
+  // if (fill === 1) return false;
+  insertColumn(mazeData, height, 0, randomVector(height));
+  removeColumn(mazeData, width+1, width);
+  return true;
+}
+
+function moveSouth({ width, halfWidth, mazeData }) {
+  // const i = get1DIndex(width, halfWidth, halfWidth+1);
+  // const fill = mazeData[i];
+  // if (fill === 1) return false;
+  insertRow(mazeData, width, width, randomVector(width));
+  removeRow(mazeData, width, 0);
+  return true;
+}
+
+function moveWest({ width, halfWidth, mazeData }) {
+  // const i = get1DIndex(width, halfWidth+1, halfWidth);
+  // const fill = mazeData[i];
+  // if (fill === 1) return false;
+  insertColumn(mazeData, width, width, randomVector(width));
+  removeColumn(mazeData, width+1, 0);
+  return true;
+}
+
+
+function findClosestIndex(target, arr) {
+  let closestIndex = 0;
+  let closestDistance = Math.abs(arr[0] - target);
+  
+  for(let i = 1; i < arr.length; i++) {
+      let distance = Math.abs(arr[i] - target);
+      if(distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = i;
+      }
+  }
+
+  return closestIndex;
+}
 
 
 
