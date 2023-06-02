@@ -1,6 +1,7 @@
 // import { createHaxidraw } from "../../motor-control-board/js/createHaxidraw.js";
 import { GLOBAL_STATE } from "./GLOBAL_STATE.js";
 import { init } from "./init.js";
+import "./videoLoop.js";
 
 
 /* TURTLE SCRIPT */
