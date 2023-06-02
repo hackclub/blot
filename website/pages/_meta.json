@@ -1,0 +1,15 @@
+{
+  "index": "Introduction",
+  "another": "Another Page",
+  "firmware": "Firmware",
+  "about": {
+    "title": "About",
+    "type": "page"
+  },
+  "editor": {
+    "title": "Editor ↗",
+    "type": "page",
+    "href": "https://editor.haxidraw.hackclub.com",
+    "newWindow": true
+  }
+}
