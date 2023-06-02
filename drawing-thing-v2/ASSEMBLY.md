@@ -21,7 +21,7 @@ This assembly guide is broken down into a few parts:
 
 ### Tools
 
-- M5 allen key
+- M5 allen key (3mm)
 
 ### Parts
 
@@ -57,8 +57,8 @@ This assembly guide is broken down into a few parts:
 
 ### Tools
 
-- M3 allen key
-- M5 allen key
+- M3 allen key (2.5mm)
+- M5 allen key (3mm)
 - The allen key the stepper motor pulley comes with
 
 ### Parts
@@ -101,7 +101,7 @@ This assembly guide is broken down into a few parts:
 
 ### Tools
 
-- M5 allen key
+- M5 allen key (3mm)
 
 ### Parts
 

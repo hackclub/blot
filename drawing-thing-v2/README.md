@@ -33,7 +33,7 @@ The 3D printed parts are found in [`/stls`](./stls) if you are able to print the
 | ------------------------------ | -------- | ----------------------------------------------- |
 | Circuit board                  | 1        | included parts on board are 2 stepsticks, usb-c |
 | XIAO RP-2040 development board | 1        | with headers                                    |
-| USB-C charger with adapter     | 1        | not included in box (bring your own)            |
+| USB-C charger with adapter     | 1        | not included (bring your own)                   |
 
 ### Hardware
 
