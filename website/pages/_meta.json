@@ -4,7 +4,7 @@
     "display": "hidden"
   },
   "assembly": "Assembly",
-  "firmware": "Firmware",
+  "firmware": "Firmware setup",
   "about": {
     "title": "About",
     "type": "page",

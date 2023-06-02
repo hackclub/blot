@@ -8,7 +8,7 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: "https://github.com/hackclub/haxidraw",
   footer: {
-    text: "hi",
+    text: "The Haxidraw is a project by Hack Club. Built by teenagers, for teenagers.",
   },
 };
 
