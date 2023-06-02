@@ -1,10 +1,14 @@
 {
   "index": "Introduction",
-  "another": "Another Page",
+  "another": {
+    "display": "hidden"
+  },
+  "assembly": "Assembly",
   "firmware": "Firmware",
   "about": {
     "title": "About",
-    "type": "page"
+    "type": "page",
+    "display": "hidden"
   },
   "editor": {
     "title": "Editor ↗",
