@@ -120,12 +120,12 @@ void readSerial() {
     // String msg = String((char*)msgArr);
     String msg = byteArrayToString(msgArr, msgLength);
 
-    Serial.println(msg);
+    // Serial.println(msg);
 
-    printArray("PAYLOAD", payload, payloadLength);
+    // printArray("PAYLOAD", payload, payloadLength);
 
-    Serial.print("MSGCOUNT: ");
-    Serial.println(msgCount);
+    // Serial.print("MSGCOUNT: ");
+    // Serial.println(msgCount);
 
     bool triggered = triggerEvent(msg, payload, payloadLength, msgCount);
 
@@ -169,25 +169,29 @@ bool triggerEvent(String event, uint8_t* payload, int payloadLength, uint8_t msg
   return false;
 }
 
+const int arrayLength = 7; // + length;
+static uint8_t byteArray[arrayLength];
+
 void sendAck(uint8_t msgCount, uint8_t* reply, uint8_t length) {
-  int arrayLength = 7 + length;
-  uint8_t byteArray[arrayLength];
+  // Serial.println("SEND ACK");
+
+  // int arrayLength = 7; // + length;
+  // static uint8_t byteArray[arrayLength];
 
   byteArray[0] = 0x03;
   byteArray[1] = 0x61;
   byteArray[2] = 0x63;
   byteArray[3] = 0x6B;
+  byteArray[4] = 0x00;
+  byteArray[5] = msgCount;
+  byteArray[6] = 0x0A;
 
-  // byteArray[4] = 0;
-  // byteArray[5] = msgCount;
-
-  byteArray[4] = length;
-  for (int i = 0; i < length; i++) {
-    byteArray[i+5] = reply[i];
-  }
-  byteArray[5+length] = msgCount;
-
-  byteArray[6+length] = 0x0A;
+  // byteArray[4] = length;
+  // for (int i = 0; i < length; i++) {
+  //   byteArray[i+5] = reply[i];
+  // }
+  // byteArray[5+length] = msgCount;
+  // byteArray[6+length] = 0x0A;
 
   // Serial.println(msgCount);
   // printArray("ACK", byteArray, 5+length);
@@ -309,6 +313,9 @@ String byteArrayToString(byte arr[], int length) {
 
 
 void goTo(float x, float y) {
+
+  // Serial.println("START GOTO");
+
   // Set your target distances for each motor (in steps)
   float motor1Target = (x + y) - pos[0];
   float motor2Target = (y - x) - pos[1];
@@ -362,6 +369,8 @@ void goTo(float x, float y) {
       motor2PrevStepTime = currentTime;
     }
   }
+
+  // Serial.println("END GOTO");
 
   pos[0] += motor1Step;
   pos[1] += motor2Step;

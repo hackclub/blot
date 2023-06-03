@@ -1,0 +1,19 @@
+{
+  "index": "Introduction",
+  "another": {
+    "display": "hidden"
+  },
+  "assembly": "Assembly",
+  "firmware": "Firmware setup",
+  "about": {
+    "title": "About",
+    "type": "page",
+    "display": "hidden"
+  },
+  "editor": {
+    "title": "Editor ↗",
+    "type": "page",
+    "href": "https://editor.haxidraw.hackclub.com",
+    "newWindow": true
+  }
+}

@@ -21,7 +21,7 @@ This assembly guide is broken down into a few parts:
 
 ### Tools
 
-- M5 allen key
+- M5 allen key (3mm)
 
 ### Parts
 
@@ -57,8 +57,8 @@ This assembly guide is broken down into a few parts:
 
 ### Tools
 
-- M3 allen key
-- M5 allen key
+- M3 allen key (2.5mm)
+- M5 allen key (3mm)
 - The allen key the stepper motor pulley comes with
 
 ### Parts
@@ -101,7 +101,7 @@ This assembly guide is broken down into a few parts:
 
 ### Tools
 
-- M5 allen key
+- M5 allen key (3mm)
 
 ### Parts
 | Line | Quantity | Thing                            | Notes                                          |
@@ -169,7 +169,7 @@ fab|1|Pen holder rail printed part|
 - Slide the other aluminum rail between the wheels on the bottom of the carriage.
 - Screw the belt tensioner onto the end of the aluminum rail using 10mm M5 screws and t-nuts.
 
-<img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/0img_4011.jpg" width="250" /> <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/1img_4012.jpg" width="250 />
+<img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/0img_4011.jpg" width="250" /> <img src="https://cloud-kh0iuuad2-hack-club-bot.vercel.app/1img_4012.jpg" width="250" />
 
 - Clamp belt on one side with 30mm screws, and thread belt through machine according to diagram below.
 

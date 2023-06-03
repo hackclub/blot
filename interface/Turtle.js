@@ -133,6 +133,10 @@ export class Turtle {
 
     return this;
   }
+
+  extrema() {
+    return extrema(this.path.flat());
+  }
 }
 
 function iteratePath(turtle, fn) {
