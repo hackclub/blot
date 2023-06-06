@@ -2,7 +2,7 @@
 
 This is a list of weekly developments for the drawing-thing updated every week.
 
-## 2023-05-xx - @leomcelroy
+## 2023-06-06 - @leomcelroy
 
 I've gotten into running proper jobs on the machine and debugging whatever comes up.
 
