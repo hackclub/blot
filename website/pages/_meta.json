@@ -5,6 +5,7 @@
   },
   "assembly": "Assembly",
   "firmware": "Firmware setup",
+  "operation": "Editor",
   "about": {
     "title": "About",
     "type": "page",
