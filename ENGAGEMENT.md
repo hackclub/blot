@@ -14,9 +14,9 @@ Let's explore some ideas to address this.
 
 Let's create a collectively developed physical/digital art exhibit for the Museum of Modern Art in NYC. 
 
-Hack Club will produce a microworld web-based environment for creating generative line drawings which can be fabricated on the Haxidraw. We will encourage students around the world to create digital art which can be submitted to our virtual or AR gallery space where they can explore pieces created by thousands of teens around the worlds. When they have curated their own exhibit (collection) in this virtual gallery we send them a machine so they can run a physical pop-up exhibit in their high school. We do this for one year. 
+Hack Club will produce a microworld web-based environment for creating generative line drawings which can be fabricated on the Haxidraw. We will encourage students to create a collection of digital art which can be submitted to our virtual or AR gallery space where they can see their work alongside pieces created by thousands of teens around the world. When they have curated their own exhibit (collection) in this virtual gallery we send them a machine so they can run a physical pop-up exhibit in their high school, printed using the haxi-draw machines that they have assembled. We will do this for one year. 
 
-After that year is up we do a physical installation of these pop-up exhibits at a museum we partner with and fly out the contributors from around the world to celebrate their collective creation together.
+After that year, we will host a physical installation of these pop-up exhibits at a museum we partner with and fly out many contributors from around the world to celebrate their collective creation together.
 
 There are a couple units of interaction with this model.
 
