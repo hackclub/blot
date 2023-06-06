@@ -2,7 +2,7 @@
 
 Haxidraw is a "you ship, we ship" project. That means we will send the machine to people you build projects with the machine. And the way to start this engagement is just by getting started building.
 
-A well designed "you ship, we ship" should feel like everyone is contributing to a coherent project while not having contributors be dependent on each other. Each contribution is self-contained and satisfying to develop on it's own but the aggregate of them results in something greater than the sum of it's parts.
+A well designed "you ship, we ship" should feel like everyone is contributing to a coherent project while not having contributors be dependent on each other. Each contribution is self-contained and satisfying to develop on its own but the aggregate results in something greater than the sum of its parts.
 
 With Sprig we didn't just build a DIY Gameboy, we built a whole library of games. A new class of console where everyone that plays it helped build it.
 
