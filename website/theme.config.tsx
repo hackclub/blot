@@ -8,8 +8,7 @@ const config: DocsThemeConfig = {
   project: {
     link: "https://github.com/hackclub/haxidraw",
   },
-  docsRepositoryBase:
-    "https://github.com/hackclub/haxidraw/blob/main/website/pages",
+  docsRepositoryBase: "https://github.com/hackclub/haxidraw/blob/main/website/",
   footer: {
     text: "The Haxidraw is a project by Hack Club. Built by teenagers, for teenagers.",
   },
