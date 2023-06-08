@@ -6,6 +6,7 @@
   "assembly": "Assembly",
   "firmware": "Firmware setup",
   "operation": "Editor",
+  "troubleshooting": "Troubleshooting",
   "about": {
     "title": "About",
     "type": "page",
