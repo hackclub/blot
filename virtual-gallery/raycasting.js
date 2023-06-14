@@ -25,7 +25,7 @@ export function raycastMap(state, el) {
   const SCREEN_HEIGHT = bb.height;
   const TICK = 30;
   const CELL_SIZE = 8;
-  const FOV = toRadians(60);
+  const FOV = toRadians(80);
 
   const COLORS = {
     floor: "#b5b5b5", // "#ff6361"
@@ -42,7 +42,7 @@ export function raycastMap(state, el) {
   const context = canvas.getContext("2d");
 
   function clearScreen() {
-    context.fillStyle = "red";
+    context.fillStyle = COLORS["wall"];
     context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
   }
 
@@ -51,26 +51,32 @@ export function raycastMap(state, el) {
     const player = getPlayer();
 
     const cellSize = scale * CELL_SIZE;
+
     map.forEach((row, y) => {
-      row.forEach((cell, x) => {
+      row.forEach((cell, x) => 
+      {
+        context.fillStyle = '#000000';
+        context.fillRect(
+          posX + x * cellSize,
+          posY + y * cellSize,
+          cellSize,
+          cellSize
+        );
         if (cell) {
-          context.fillStyle = "grey";
-          context.fillRect(
-            posX + x * cellSize,
-            posY + y * cellSize,
-            cellSize,
-            cellSize
-          );
+          context.fillStyle = "#3355ff";
+        } else {
+          context.fillStyle ="#dddddd";
         }
+
+        context.fillRect(
+          posX + x * cellSize,
+          posY + y * cellSize,
+          cellSize - 1,
+          cellSize - 1
+        );
       });
     });
-    context.fillStyle = "blue";
-    context.fillRect(
-      posX + player.x * scale - 10 / 2,
-      posY + player.y * scale - 10 / 2,
-      10,
-      10
-    );
+
 
     context.strokeStyle = "blue";
     context.beginPath();
@@ -93,6 +99,16 @@ export function raycastMap(state, el) {
       context.closePath();
       context.stroke();
     });
+    context.fillStyle = "#000000";
+    context.fillRect(
+      posX + player.x * scale - 5 / 2,
+      posY + player.y * scale - 5 / 2,
+      5,
+      5
+    );
+
+    context.font = "30px Monospace";
+    context.fillText(state.lastX + "," + state.lastY, 10, 220); 
   }
 
   function toRadians(deg) {
@@ -213,6 +229,10 @@ export function raycastMap(state, el) {
     });
   }
 
+  function fogCurve(distance) {
+    return Math.pow(1.06, (distance - 40)) - 1
+  }
+
   function renderScene(rays) {
     const player = getPlayer();
 
@@ -222,9 +242,9 @@ export function raycastMap(state, el) {
 
       context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
       context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
-      
-      context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;      
-      context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
+
+      context.fillStyle = `rgba(0, 0, 0, ${distance/80})`;      
+      context.fillRect(i, (SCREEN_HEIGHT / 2) - (wallHeight / 2), 1, wallHeight);
 
       context.fillStyle = COLORS.floor;
       context.fillRect(
@@ -233,25 +253,21 @@ export function raycastMap(state, el) {
         1,
         SCREEN_HEIGHT / 2 - wallHeight / 2
       );
-      context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;      
+      context.fillStyle = `rgba(0, 0, 0, ${distance/80})`;      
       context.fillRect(
         i,
-        SCREEN_HEIGHT / 2 + wallHeight / 2,
+        (SCREEN_HEIGHT / 2 + wallHeight / 2) - 1,
         1,
-        SCREEN_HEIGHT / 2 - wallHeight / 2
+        (SCREEN_HEIGHT / 2 - wallHeight / 2)
       );
 
       context.fillStyle = COLORS.ceiling;
       context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
-    });
-  }
 
-  function reshapeArray(arr, width) {
-    let result = [];
-    for(let i = 0; i < arr.length; i += width) {
-        result.push(arr.slice(i, i + width));
-    }
-    return result;
+      context.fillStyle = `rgba(120, 120, 120, ${fogCurve(distance)})`;
+      //context.fillRect(i, 0, 1, SCREEN_HEIGHT);
+
+    });
   }
 
   function gameLoop() {
@@ -263,4 +279,12 @@ export function raycastMap(state, el) {
 
   setInterval(gameLoop, TICK);
 
+}
+
+export function reshapeArray(arr, width) {
+  let result = [];
+  for(let i = 0; i < arr.length; i += width) {
+      result.push(arr.slice(i, i + width));
+  }
+  return result;
 }
