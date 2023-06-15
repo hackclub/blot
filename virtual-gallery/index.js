@@ -129,10 +129,7 @@ function removeColumn(matrix, width, columnIndex) {
 }
 
 function pseudoRandom(x, y) {
-  x = x
-  y = y
   return ((Math.tan(x * y))*Math.cos(x)*Math.sin(y))
-  //return ((Math.abs(x + y) % 2) - 1)
 }
 
 function randomVector(length, prob = 0.3) {

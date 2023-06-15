@@ -162,6 +162,8 @@ export function raycastMap(state, el) {
       angle,
       distance: distance(player.x, player.y, nextX, nextY),
       vertical: true,
+      x: (nextX / CELL_SIZE) + (state.lastX),
+      y: (nextY / CELL_SIZE) - (state.lastY),
     };
   }
 
@@ -201,6 +203,8 @@ export function raycastMap(state, el) {
       angle,
       distance: distance(player.x, player.y, nextX, nextY),
       vertical: false,
+      x: (nextX / CELL_SIZE) + (state.lastX),
+      y: (nextY / CELL_SIZE) - (state.lastY),
     };
   }
 
@@ -233,40 +237,71 @@ export function raycastMap(state, el) {
     return Math.pow(1.06, (distance - 40)) - 1
   }
 
+  function hash(x, y) {
+    return Math.abs((Math.floor(x + y)) % images.length);
+  }
+
+
+  // Once there's an API for user images, it should be pretty easy to request and cache new images once their hash comes up.
+  // This is just a placeholder for now
+const image1 = new Image();
+image1.src = 'https://assets.hackclub.com/icon-rounded.png';
+
+const image2 = new Image();
+image2.src = 'https://assets.hackclub.com/hack-club-bank-light.png';
+
+const image3 = new Image();
+image3.src = 'https://assets.hackclub.com/hack-club-bank-dark.png';
+
+let images = [image1, image2, image3]
+
   function renderScene(rays) {
     const player = getPlayer();
 
     rays.forEach((ray, i) => {
       const distance = fixFishEye(ray.distance, ray.angle, player.angle);
-      const wallHeight = ((CELL_SIZE * 5) / distance) * 100;
+      const hashed = hash(ray.x, ray.y);
 
-      context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
-      context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
+      const hitposX = ray.x - Math.floor(ray.x);
+      const hitposY = ray.y - Math.floor(ray.y);
 
-      context.fillStyle = `rgba(0, 0, 0, ${distance/80})`;      
-      context.fillRect(i, (SCREEN_HEIGHT / 2) - (wallHeight / 2), 1, wallHeight);
+      const wallHeight = ((CELL_SIZE * 5) / distance) * 80;
 
+      //context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
+      //context.fillStyle = `rgba(${[0, 100, 200][hashed]}, 255, 255, 255)`
+      //context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
       context.fillStyle = COLORS.floor;
       context.fillRect(
         i,
-        SCREEN_HEIGHT / 2 + wallHeight / 2,
+        0,
         1,
-        SCREEN_HEIGHT / 2 - wallHeight / 2
+        SCREEN_HEIGHT
       );
+ 
+      context.drawImage(images[hashed],
+        (ray.vertical ? hitposY : hitposX) * 512, 0, 1, 512,
+        i, (SCREEN_HEIGHT / 2) - (wallHeight / 2), 1, wallHeight * 1.2);
+        
+        context.fillStyle = `rgba(0, 0, 0, ${ray.vertical ? 0.1 : 0})`;   
+        context.fillRect( i, 0, 1, SCREEN_HEIGHT);
+
       context.fillStyle = `rgba(0, 0, 0, ${distance/80})`;      
+      context.fillRect(i, 0, 1, SCREEN_HEIGHT);
+      
+     /* context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;    
       context.fillRect(
         i,
         (SCREEN_HEIGHT / 2 + wallHeight / 2) - 1,
         1,
         (SCREEN_HEIGHT / 2 - wallHeight / 2)
       );
-
-      context.fillStyle = COLORS.ceiling;
-      context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
+*/
+      
+      //context.fillStyle = COLORS.floor;
+      //context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
 
       context.fillStyle = `rgba(120, 120, 120, ${fogCurve(distance)})`;
       //context.fillRect(i, 0, 1, SCREEN_HEIGHT);
-
     });
   }
 
