@@ -255,6 +255,13 @@ image3.src = 'https://assets.hackclub.com/hack-club-bank-dark.png';
 
 let images = [image1, image2, image3]
 
+
+var fogCanvas = document.createElement('canvas'), ctx = fogCanvas.getContext('2d'), grd = ctx.createLinearGradient(0, (SCREEN_HEIGHT/2) + 20, 0, (SCREEN_HEIGHT/2) + 50);
+fogCanvas.width = 700;
+fogCanvas.height = 700;
+grd.addColorStop(1,"rgba(50,50,50,0)");
+grd.addColorStop(0,"black");
+
   function renderScene(rays) {
     const player = getPlayer();
 
@@ -265,7 +272,7 @@ let images = [image1, image2, image3]
       const hitposX = ray.x - Math.floor(ray.x);
       const hitposY = ray.y - Math.floor(ray.y);
 
-      const wallHeight = ((CELL_SIZE * 5) / distance) * 80;
+      const wallHeight = ((CELL_SIZE * 5) / distance) * 100;
 
       //context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
       //context.fillStyle = `rgba(${[0, 100, 200][hashed]}, 255, 255, 255)`
@@ -280,28 +287,29 @@ let images = [image1, image2, image3]
  
       context.drawImage(images[hashed],
         (ray.vertical ? hitposY : hitposX) * 512, 0, 1, 512,
-        i, (SCREEN_HEIGHT / 2) - (wallHeight / 2), 1, wallHeight * 1.2);
+        i, (SCREEN_HEIGHT / 2) - (wallHeight / 2), 1, wallHeight);
         
         context.fillStyle = `rgba(0, 0, 0, ${ray.vertical ? 0.1 : 0})`;   
         context.fillRect( i, 0, 1, SCREEN_HEIGHT);
 
+        context.fillStyle = COLORS.floor;
+        context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2, 1, SCREEN_HEIGHT);
+
       context.fillStyle = `rgba(0, 0, 0, ${distance/80})`;      
-      context.fillRect(i, 0, 1, SCREEN_HEIGHT);
+      context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
+
+      context.fillStyle = grd;
+      context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2 - 1, 1, SCREEN_HEIGHT / 2 + wallHeight / 2 + 50);
       
-     /* context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;    
+     /*context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;    
       context.fillRect(
         i,
         (SCREEN_HEIGHT / 2 + wallHeight / 2) - 1,
         1,
         (SCREEN_HEIGHT / 2 - wallHeight / 2)
-      );
-*/
+      );*/
       
-      //context.fillStyle = COLORS.floor;
-      //context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
-
-      context.fillStyle = `rgba(120, 120, 120, ${fogCurve(distance)})`;
-      //context.fillRect(i, 0, 1, SCREEN_HEIGHT);
+      //context.fillStyle = `rgba(120, 120, 120, ${fogCurve(distance)})`;
     });
   }
 
