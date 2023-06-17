@@ -28,9 +28,10 @@ export function view(state) {
 const menuBar = state => html`
   <div class="menu-bar">
     <div class="center filename-trigger" style="color: white;">${state.filename}</div>
-    <button class="run-trigger">run</button>
+    <button class="run-trigger">run code</button>
     <button class="connect-trigger">${state.haxidraw ? "disconnect" : "connect"}</button>
     <button class="save-trigger">save</button>
+    <button class="run-machine-trigger">run machine</button>
   </div>
 `
 

@@ -2,7 +2,7 @@ import { render } from "lit-html";
 import { createListener } from "./createListener.js";
 import { addPanZoom } from "./addPanZoom.js";
 import { view } from "./view.js";
-import { runCode } from "./runCode.js";
+import { runCode, runMachineHelper } from "./runCode.js";
 import { runCommand } from "./runCommand.js";
 import { addCaching } from "./addCaching.js";
 import { addDropUpload } from "./addDropUpload.js";
@@ -88,6 +88,20 @@ export function init(state) {
   listener("click", ".run-trigger", () => {
     const code = editor.state.doc.toString();   
     runCode(code, state).then(() => r());
+  });
+
+  listener("click", ".run-machine-trigger", () => {
+    const runMachine = () => runMachineHelper(state, [state.scaleX, state.scaleY]);
+
+    const code = editor.state.doc.toString();   
+    runCode(code, state).then(() => {
+      r();
+      if (!state.haxidraw) {
+        console.log("not connected");
+        return;
+      }
+      runMachine();
+    });
   });
 
   listener("click", ".connect-trigger", async () => {

@@ -1,5 +1,6 @@
 import * as acorn from 'acorn';
 import { Turtle } from "./Turtle.js";
+import { noise } from "./noise.js";
 
 let intervals = [];
 let timeouts = [];
@@ -85,6 +86,7 @@ export async function runCode(code, state) {
     topScope,
     setInterval: patchedInterval,
     setTimeout: patchedTimeout,
+    noise,
     loop,
     delay,
     console: {
