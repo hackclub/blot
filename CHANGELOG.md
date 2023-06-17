@@ -2,9 +2,25 @@
 
 This is a list of weekly developments for the drawing-thing updated every week.
 
-## 2023-05-xx - @leomcelroy
+## 2023-06-06 - @leomcelroy
 
-Arpan's drawings
+I've gotten into running proper jobs on the machine and debugging whatever comes up.
+
+Arpan posted a few programmatic drawings that he made. A few of us with machines started making them.
+
+Here are some of my attempts:
+
+![PXL_20230530_172936749](https://github.com/hackclub/haxidraw/assets/27078897/75c54edc-9938-413d-8534-c1383082556b)
+
+And some of Hugo's:
+
+![IMG_1407](https://github.com/hackclub/haxidraw/assets/27078897/168a2e93-c15c-4043-a00e-3aa2a851fe2b)
+
+I also tested some drawings from [PlotterFiles](https://plotterfiles.com/), like the one below.
+
+![PXL_20230602_034828485](https://github.com/hackclub/haxidraw/assets/27078897/2b694f74-4cf9-4d5c-89d5-82cadcededfc)
+
+The first issue I encountered was the line interpolation function hanging in the firmware when moving to points very close to zero. I naively fix this just by adding a maximum number of steps to the while loop.
 
 ```
 int count = 0;
@@ -14,6 +30,9 @@ while (abs(motor1Step) < abs(motor1Target) || abs(motor2Step) < abs(motor2Target
   ...
 }
 ```
+I was finding it difficult to debug with the cobs encoded messages coming up from the device so started using cobs encoding to send messages but using new line  (`0x0A`) delimiters to differentiate messages being sent back.
+
+The print function is useful for debugging arrays.
 
 ```
 void printArray(String label, uint8_t* arr, int arrSize) {
@@ -27,6 +46,55 @@ void printArray(String label, uint8_t* arr, int arrSize) {
   Serial.println("-END");
 }
 ```
+
+Unfortunately the firmware was still hanging frequently. My friend Jake Read suggested that the bytearray I was sending in the acknowledgement may be getting corrupted and I should try allocating it statically. To make this a bit easier I decided to remove sending variable length responses in the ack payload. The adjusted code with some remnants of the old code can be seen below.
+
+```
+const int arrayLength = 7; // + length;
+static uint8_t byteArray[arrayLength];
+
+void sendAck(uint8_t msgCount, uint8_t* reply, uint8_t length) {
+  // Serial.println("SEND ACK");
+
+  // int arrayLength = 7; // + length;
+  // static uint8_t byteArray[arrayLength];
+
+  byteArray[0] = 0x03;
+  byteArray[1] = 0x61;
+  byteArray[2] = 0x63;
+  byteArray[3] = 0x6B;
+  byteArray[4] = 0x00;
+  byteArray[5] = msgCount;
+  byteArray[6] = 0x0A;
+
+  // byteArray[4] = length;
+  // for (int i = 0; i < length; i++) {
+  //   byteArray[i+5] = reply[i];
+  // }
+  // byteArray[5+length] = msgCount;
+  // byteArray[6+length] = 0x0A;
+
+  // Serial.println(msgCount);
+  // printArray("ACK", byteArray, 5+length);
+
+  Serial.write(byteArray, arrayLength);
+      
+  // uint8_t byteArrayEncoded[arrayLength + 2]; // +2 for possible COBS overhead
+  // cobs_encode(byteArrayEncoded, byteArray, arrayLength);
+  // Serial.write(byteArrayEncoded, arrayLength + 2);
+
+  // printArray("ENCODED-ACK", byteArray, 5+length);
+
+}
+```
+
+So far this has worked pretty well for me, but Shawn is still reporting some issues so we need to run more tests.
+
+Moving on to some other parts of the project. I wrote up a [doc describing an engagement model](https://github.com/hackclub/haxidraw/blob/main/ENGAGEMENT.md) for gettine the machine. 
+
+Part of that model involves submitting pieces to a virtual gallery space. I decided an interesting space could be a infinite maze which gets randomly populated with submitted art work. I made a quick implementation of the maze which ended up being a classic raycasting project. Right now it's very Wolfenstein.
+
+![243733376-f5eefed6-7b86-4d67-b5d4-550e8e094344](https://github.com/hackclub/haxidraw/assets/27078897/a9b231fb-9058-43a3-8db9-43ff23d3ecb0)
 
 ## 2023-05-26 - @leomcelroy
 

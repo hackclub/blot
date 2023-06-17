@@ -2,7 +2,7 @@
 
 Haxidraw is a "you ship, we ship" project. That means we will send the machine to people you build projects with the machine. And the way to start this engagement is just by getting started building.
 
-A well designed "you ship, we ship" should feel like everyone is contributing to a coherent project while not having contributors be dependent on each other. Each constribution is self-contained and satisfying to develop on it's own but the aggregate of them results in something greater than the sum of it's parts.
+A well designed "you ship, we ship" should feel like everyone is contributing to a coherent project while not having contributors be dependent on each other. Each contribution is self-contained and satisfying to develop on its own but the aggregate results in something greater than the sum of its parts.
 
 With Sprig we didn't just build a DIY Gameboy, we built a whole library of games. A new class of console where everyone that plays it helped build it.
 
@@ -14,9 +14,9 @@ Let's explore some ideas to address this.
 
 Let's create a collectively developed physical/digital art exhibit for the Museum of Modern Art in NYC. 
 
-Hack Club will produce a microworld web-based environment for creating generative line drawings which can be fabricated on the Haxidraw. We will encourage students around the world to create digital art which can be submitted to our virtual or AR gallery space where they can explore pieces created by thousands of teens around the worlds. When they have curated their own exhibit (collection) in this virtual gallery we send them a machine so they can run a physical pop-up exhibit in their high school. We do this for one year. 
+Hack Club will produce a microworld web-based environment for creating generative line drawings which can be fabricated on the Haxidraw. We will encourage students to create a collection of digital art which can be submitted to our virtual or AR gallery space where they can see their work alongside pieces created by thousands of teens around the world. When they have curated their own exhibit (collection) in this virtual gallery we send them a machine so they can run a physical pop-up exhibit in their high school, printed using the haxidraw machines that they have assembled. We will do this for one year. 
 
-After that year is up we do a physical installation of these pop-up exhibits at a museum we partner with and fly out the contributors from around the world to celebrate their collective creation together.
+After that year, we will host a physical installation of these pop-up exhibits at a museum we partner with and fly out many contributors from around the world to celebrate their collective creation together.
 
 There are a couple units of interaction with this model.
 
