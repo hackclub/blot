@@ -2,8 +2,8 @@
 
 export const GLOBAL_STATE = {
   turtles: [],
-  machineWidth: 10,
-  machineHeight: 8,
+  machineWidth: 1,
+  machineHeight: 1,
   scaleX: 1,
   scaleY: 1,
   logs: [],

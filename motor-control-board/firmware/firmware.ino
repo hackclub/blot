@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-#define SPU 400
+#define SPU 200
 #define PIN_SERVO D4
 
 Servo servo;
@@ -340,10 +340,8 @@ void goTo(float x, float y) {
   float motor2Step = 0;
 
   // Loop until both motors reach their target steps
-  int count = 0;
   while (abs(motor1Step) < abs(motor1Target) || abs(motor2Step) < abs(motor2Target)) {
-    if (count > 1000000) break;
-    count++;
+
 
     unsigned long currentTime = micros();
 

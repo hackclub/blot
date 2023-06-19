@@ -34,8 +34,8 @@ export function init(state) {
   const panZoom = addPanZoom(root.querySelector("svg"));
 
   panZoom.setScaleXY({
-    x: [0, state.machineWidth],
-    y: [0, state.machineHeight]
+    x: [-5, 5],
+    y: [-5, 5]
   });
 
   const editorContainer = document.querySelector(".dictionary");

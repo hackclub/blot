@@ -48,20 +48,23 @@ const commandLine = state => html`
   </div>
 `
 
+const drawWorkarea = state => html`
+  <rect 
+    width=${state.machineWidth} 
+    height=${state.machineHeight} 
+    x="0" 
+    y="0"
+    fill="none"
+    stroke="grey"
+    stroke-width="3"
+    vector-effect="non-scaling-stroke"
+    style="scale: ${state.scaleX} ${state.scaleY};"/>
+`
+
 const viewer = state => html`
   <div class="svg-container">
     <svg class="svg-viewer">
       <g class="transform-group">
-        <rect 
-          width=${state.machineWidth} 
-          height=${state.machineHeight} 
-          x="0" 
-          y="0"
-          fill="none"
-          stroke="grey"
-          stroke-width="3"
-          vector-effect="non-scaling-stroke"
-          style="scale: ${state.scaleX} ${state.scaleY};"/>
         <circle cx="0" cy="0" r="0.1" fill="orange"/>
         ${state.turtles.map(x => drawPath(x.path))}
       </g>
