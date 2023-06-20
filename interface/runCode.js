@@ -140,12 +140,14 @@ export async function runMachineHelper(state, [scaleX, scaleY]) {
         await state.haxidraw.servo(1700);
         await delay(500);
       }
-
+      
       await state.haxidraw.goTo(x*scaleX, y*scaleY);
+
     }
 
   }
 
   await state.haxidraw.servo(1000);
   await delay(200);
+  await state.haxidraw.goTo(0, 0);
 }

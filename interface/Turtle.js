@@ -90,6 +90,8 @@ export class Turtle {
   }
 
   translate(x, y, origin) {
+    this.location = translate(this.location, x, y, origin);
+    
     iteratePath(this, pt => {
       const newPt = translate(pt, x, y, origin);
       pt.x = newPt.x;
