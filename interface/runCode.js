@@ -119,7 +119,7 @@ export async function runCode(code, state) {
   const AsyncFunction = (async function () { }).constructor;
   const f = new AsyncFunction(...names, code);
 
-  f(...values);
+  await f(...values);
 
   state.topScope = topScope;
 }
