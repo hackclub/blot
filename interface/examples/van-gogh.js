@@ -8,6 +8,5 @@ const height = extrema.yMax - extrema.yMin;
 
 t.scale(5/width);
 extrema = t.extrema();
-t.translate(0, 0, [extrema.xMin, extrema.yMin])
+t.translate([ 0, 0 ], [extrema.xMin, extrema.yMin])
 drawTurtles(t);
-runMachine();

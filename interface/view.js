@@ -32,6 +32,7 @@ const menuBar = state => html`
     <button class="connect-trigger">${state.haxidraw ? "disconnect" : "connect"}</button>
     <button class="save-trigger">save</button>
     <button class="run-machine-trigger">run machine</button>
+    <button class="examples-trigger">examples</button>
   </div>
 `
 
@@ -77,7 +78,7 @@ function drawPath(path) {
   let d = "";
   path.forEach(polyline => {
     polyline.forEach((pt, i) => {
-      let {x, y} = pt;
+      let [ x, y ] = pt;
       if (i === 0) d += `M ${x} ${y}`
       else d += `L ${x} ${y}`
     })

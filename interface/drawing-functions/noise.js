@@ -1,11 +1,11 @@
+import { rand } from "./rand.js";
+
 let PERLIN_YWRAPB = 4;
 let PERLIN_YWRAP = 1<<PERLIN_YWRAPB;
 let PERLIN_ZWRAPB = 8;
 let PERLIN_ZWRAP = 1<<PERLIN_ZWRAPB;
 let PERLIN_SIZE = 4095;
 
-let perlin_octaves = 4; // default to medium smooth
-let perlin_amp_falloff = 0.5; // 50% reduction/octave
 
 let scaled_cosine = function(i) {
   return 0.5*(1.0-Math.cos(i*Math.PI));
@@ -13,14 +13,19 @@ let scaled_cosine = function(i) {
 
 let perlin; // will be initialized lazily by noise() or noiseSeed()
 
-export function noise(x, y = 0, z = 0) {
+export function noise(vector, options = {}) {
+  if (typeof vector === "number") vector = [vector, 0, 0];
+  let [ x, y, z ] = vector;
   y = y || 0;
   z = z || 0;
+
+  const perlin_octaves = options?.octaves || 4; // default to medium smooth
+  const perlin_amp_falloff = options?.falloff || 0.5; // 50% reduction/octave
 
   if (perlin == null) {
     perlin = new Array(PERLIN_SIZE + 1);
     for (let i = 0; i < PERLIN_SIZE + 1; i++) {
-      perlin[i] = Math.random();
+      perlin[i] = rand();
     }
   }
 
