@@ -14,7 +14,7 @@ export class Turtle {
   up() {
     this.drawing = false;
     this.path.push([
-      createPoint(this.location.x, this.location.y)
+      createPoint(this.location[0], this.location[1])
     ])
     return this;
   }
@@ -24,7 +24,7 @@ export class Turtle {
     return this;
   }
 
-  goTo(x, y) {
+  goto(x, y) {
 
     const lastPath = this.path.at(-1);
     if (this.drawing) {
@@ -41,10 +41,10 @@ export class Turtle {
   forward(distance) {
     const last = this.location;
     const a = this.angle/180 * Math.PI;
-    const x = last.x + distance * Math.cos(a);
-    const y = last.y + distance * Math.sin(a);
+    const x = last[0] + distance * Math.cos(a);
+    const y = last[1] + distance * Math.sin(a);
 
-    this.goTo(x, y);
+    this.goto(x, y);
 
     return this;
   }
@@ -66,7 +66,7 @@ export class Turtle {
       this.forward(distanceStep);
     }
 
-    this.setAngle(ogAngle + angle);
+    this.setAngle(ogAngle - angle);
 
     return this;
   }
@@ -89,16 +89,10 @@ export class Turtle {
     return this;
   }
 
-  translate(x, y, origin) {
-    this.location = translate(this.location, x, y, origin);
+  translate(to, origin) {
+    this.location = translate(this.location, to, origin);
     
-    iteratePath(this, pt => {
-      const newPt = translate(pt, x, y, origin);
-      pt.x = newPt.x;
-      pt.y = newPt.y;
-      pt[0] = newPt.x;
-      pt[1] = newPt.y;
-    })
+    iteratePath(this, pt => translate(pt, to, origin));
   }
 
   rotate(angle, origin) {
@@ -106,13 +100,7 @@ export class Turtle {
 
     this.location = rotate(this.location, angle, origin);
 
-    iteratePath(this, pt => {
-      const newPt = rotate(pt, angle, origin);
-      pt.x = newPt.x;
-      pt.y = newPt.y;
-      pt[0] = newPt.x;
-      pt[1] = newPt.y;
-    })
+    iteratePath(this, pt => rotate(pt, angle, origin));
   }
 
   scale(factor, origin) {
@@ -120,13 +108,7 @@ export class Turtle {
 
     this.location = scale(this.location, factor, origin);
 
-    iteratePath(this, pt => {
-      const newPt = scale(pt, factor, origin);
-      pt.x = newPt.x;
-      pt.y = newPt.y;
-      pt[0] = newPt.x;
-      pt[1] = newPt.y;
-    })
+    iteratePath(this, pt => scale(pt, factor, origin));
   }
 
   fromSVG(svgString) {
@@ -138,7 +120,7 @@ export class Turtle {
     pls.forEach(pl => {
       this.up();
       pl.points.forEach((pt, i) => {
-        this.goTo(pt.x, pt.y);
+        this.goto(pt[0], pt[1]);
         if (i === 0) this.down();
       })
     })
@@ -175,13 +157,13 @@ export class Turtle {
     
     const pt = this.path.at(0).at(0);
 
-    return [ pt.x, pt.y ];
+    return [ pt[0], pt[1] ];
   }
 
   get end() {
     const pt = this.path.at(-1).at(-1);
 
-    return [ pt.x, pt.y ];
+    return [ pt[0], pt[1] ];
   }
 
   get lt() {
@@ -266,7 +248,7 @@ export class Turtle {
   }
 
   iteratePath(fn) {
-    iteratePath(turtle);
+    return iteratePath(this, fn);
   }
 
 
@@ -275,54 +257,46 @@ export class Turtle {
 function iteratePath(turtle, fn) {
   const path = turtle.path;
 
-  path.flat().forEach(fn);
-}
-
-function convertPt(pt) {
-  if (Array.isArray(pt)) {
-    return createPoint(pt[0], pt[1]);
-  } else {
-    return pt;
+  for (let i = 0; i < path.length; i++){
+    for (let j = 0; j < path[i].length; j++){
+      const pt = path[i][j];
+      const [ newX, newY ] = fn(pt);
+      path[i][j] = [ newX, newY ]; 
+    }
   }
+
+  return turtle;
 }
 
-function translate(pt, x, y, origin = { x: 0, y: 0 }) {
-  origin = convertPt(origin);
-
+function translate(pt, [ x, y ], origin = [ 0, 0 ]) {
   return createPoint(
-    pt.x + x - origin.x,
-    pt.y + y - origin.y
+    pt[0] + x - origin[0],
+    pt[1] + y - origin[1]
   );
 }
 
 
 function rotate(pt, angle, origin) {
-  pt = convertPt(pt);
-  origin = convertPt(origin);
-
   let delta = (angle / 180) * Math.PI;
 
-  let hereX = pt.x - origin.x;
-  let hereY = pt.y - origin.y;
+  let hereX = pt[0] - origin[0];
+  let hereY = pt[1] - origin[1];
 
   let newPoint = createPoint(
-    hereX * Math.cos(delta) - hereY * Math.sin(delta) + origin.x,
-    hereY * Math.cos(delta) + hereX * Math.sin(delta) + origin.y,
+    hereX * Math.cos(delta) - hereY * Math.sin(delta) + origin[0],
+    hereY * Math.cos(delta) + hereX * Math.sin(delta) + origin[1],
   );
 
   return newPoint;
 }
 
 function scale(pt, factor, origin) {
-  pt = convertPt(pt);
-  origin = convertPt(origin);
-
   if (typeof factor === "number") factor = [ factor, factor ];
   const [ xFactor, yFactor ] = factor;
-  const  { x, y } = origin;
+  const  [ x, y ] = origin;
   const newPoint = createPoint(
-    (pt.x - x) * xFactor + x, 
-    (pt.y - y) * yFactor + y
+    (pt[0] - x) * xFactor + x, 
+    (pt[1] - y) * yFactor + y
   );
 
   return newPoint;
@@ -353,9 +327,17 @@ function extrema(pts) {
 
 function createPoint(x, y) {
   const pt = [ x, y ];
-  pt.x = x;
-  pt.y = y;
+  pt[0] = x;
+  pt[1] = y;
   
   return pt;
 }
+
+// function convertPt(pt) {
+//   if (Array.isArray(pt)) {
+//     return createPoint(pt[0], pt[1]);
+//   } else {
+//     return pt;
+//   }
+// }
 

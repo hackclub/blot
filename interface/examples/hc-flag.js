@@ -3,9 +3,7 @@ t.fromSVG(String.raw`<svg fill="none" height="158" viewBox="0 0 280 158" width="
 
 t.scale([0.05, 0.05])
 t.rotate(-197)
-t.translate(-131, -65)
+t.translate([-131, -65])
 
 drawTurtles(t);
-
-runMachine();
 

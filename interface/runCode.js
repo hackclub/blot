@@ -1,6 +1,23 @@
 import * as acorn from 'acorn';
-import { Turtle } from "./Turtle.js";
-import { noise } from "./noise.js";
+import { Turtle } from "./drawing-functions/Turtle.js";
+import { noise } from "./drawing-functions/noise.js";
+import { rand, setRandSeed, randInRange, randIntInRange } from "./drawing-functions/rand.js";
+import { displace } from "./drawing-functions/displace.js";
+import { interpolatePolyline } from "./drawing-functions/interpolatePolyline.js";
+
+const drawingFunctions = {
+  Turtle,
+  noise,
+  rand,
+  setRandSeed,
+  randInRange, 
+  randIntInRange,
+  displace,
+  interpolatePolyline,
+  lerp(start, end, t) {
+    return (1 - t) * start + t * end;
+  }
+}
 
 let intervals = [];
 let timeouts = [];
@@ -78,7 +95,7 @@ export async function runCode(code, state) {
   const topScope = { haxidraw, runMachine, clear };
 
   const args = {
-    Turtle,
+    ...drawingFunctions,
     drawTurtles: (...turtles) => {
       state.turtles.push(...turtles);
     },
@@ -86,7 +103,6 @@ export async function runCode(code, state) {
     topScope,
     setInterval: patchedInterval,
     setTimeout: patchedTimeout,
-    noise,
     loop,
     delay,
     console: {

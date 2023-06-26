@@ -32,6 +32,7 @@ const menuBar = state => html`
     <button class="connect-trigger">${state.haxidraw ? "disconnect" : "connect"}</button>
     <button class="save-trigger">save</button>
     <button class="run-machine-trigger">run machine</button>
+    <button class="examples-trigger">examples</button>
   </div>
 `
 
@@ -78,7 +79,7 @@ function drawPath(path) {
   let d = "";
   path.forEach(polyline => {
     polyline.forEach((pt, i) => {
-      let { x, y } = pt;
+      let [ x, y ] = pt;
       if (i === 0) d += `M ${x} ${y}`
       else d += `L ${x} ${y}`
     })
@@ -90,6 +91,6 @@ function drawPath(path) {
 
 function drawTurtleDirection(turtle) {
   return svg`
-    <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location.x}px, ${turtle.location.y}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
+    <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location[0]}px, ${turtle.location[1]}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
   `
 }
