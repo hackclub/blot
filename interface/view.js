@@ -68,12 +68,13 @@ const viewer = state => html`
       <g class="transform-group">
         <circle cx="0" cy="0" r="0.1" fill="orange"/>
         ${state.turtles.map(x => drawPath(x.path))}
+        ${state.turtles.map(x => drawTurtleDirection(x))}
       </g>
     </svg>
   </div>
 `
 
-  
+
 function drawPath(path) {
   let d = "";
   path.forEach(polyline => {
@@ -85,5 +86,11 @@ function drawPath(path) {
   })
   return svg`
     <path d="${d}" stroke="black" stroke-width="2px" fill="none" vector-effect="non-scaling-stroke"/>
+  `
+}
+
+function drawTurtleDirection(turtle) {
+  return svg`
+    <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location[0]}px, ${turtle.location[1]}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
   `
 }
