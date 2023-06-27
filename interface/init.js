@@ -145,6 +145,14 @@ export function init(state) {
 
   automaticallyConnect(state);
 
+
+  const search = window.location.search;
+  const run = new URLSearchParams(search).get("run");
+  if (run === "true") {
+    const code = editor.state.doc.toString();   
+    runCode(code, state).then(() => r());
+  }
+
 }
 
 

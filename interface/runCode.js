@@ -3,17 +3,18 @@ import { Turtle } from "./drawing-functions/Turtle.js";
 import { noise } from "./drawing-functions/noise.js";
 import { rand, setRandSeed, randInRange, randIntInRange } from "./drawing-functions/rand.js";
 import { displace } from "./drawing-functions/displace.js";
-import { interpolatePolyline } from "./drawing-functions/interpolatePolyline.js";
 
 const drawingFunctions = {
   Turtle,
+  createTurtle(start = [0, 0]) {
+    return new Turtle(start);
+  },
   noise,
   rand,
   setRandSeed,
   randInRange, 
   randIntInRange,
   displace,
-  interpolatePolyline,
   lerp(start, end, t) {
     return (1 - t) * start + t * end;
   }

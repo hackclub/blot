@@ -75,6 +75,10 @@ t.join(anotherTurtle)
 // to apply a function to all pts in a turtle
 // this will replace the old point values with the new ones
 t.iteratePath(fn)
+
+t.resample(resolution)
+
+t.interpolate(tValue)
 ```
 
 To render a turtle use `drawTurtles` it is variadic (can take multiple turtles as arguments).

@@ -1,4 +1,9 @@
 import { flattenSVG } from "flatten-svg";
+import { displace } from "./displace.js";
+import { resample } from "./resample.js";
+import { interpolatePolylines } from "./interpolatePolylines.js";
+import { getAngle } from "./getAngle.js";
+import { trimPolylines } from "./trimPolylines.js";
 
 export class Turtle {
   constructor(start = [ 0, 0 ]) {
@@ -24,7 +29,7 @@ export class Turtle {
     return this;
   }
 
-  goto(x, y) {
+  goto([ x, y ]) {
 
     const lastPath = this.path.at(-1);
     if (this.drawing) {
@@ -44,7 +49,7 @@ export class Turtle {
     const x = last[0] + distance * Math.cos(a);
     const y = last[1] + distance * Math.sin(a);
 
-    this.goto(x, y);
+    this.goto([ x, y ]);
 
     return this;
   }
@@ -93,7 +98,9 @@ export class Turtle {
     this.location = translate(this.location, to, origin);
     
     iteratePath(this, pt => translate(pt, to, origin));
+    return this;
   }
+
 
   rotate(angle, origin) {
     if (!origin) origin = this.cc;
@@ -101,6 +108,7 @@ export class Turtle {
     this.location = rotate(this.location, angle, origin);
 
     iteratePath(this, pt => rotate(pt, angle, origin));
+    return this;
   }
 
   scale(factor, origin) {
@@ -109,6 +117,23 @@ export class Turtle {
     this.location = scale(this.location, factor, origin);
 
     iteratePath(this, pt => scale(pt, factor, origin));
+    return this;
+  }
+
+  displace(fn) {
+    this.path.forEach(pl => displace(pl, fn));
+
+    return this;
+  }
+
+  iteratePath(fn) {
+    iteratePath(this, fn);
+    return this;
+  }
+
+  originate() {
+    this.translate([0, 0], this.cc);
+    return this;
   }
 
   fromSVG(svgString) {
@@ -120,7 +145,7 @@ export class Turtle {
     pls.forEach(pl => {
       this.up();
       pl.points.forEach((pt, i) => {
-        this.goto(pt[0], pt[1]);
+        this.goto([ pt[0], pt[1] ]);
         if (i === 0) this.down();
       })
     })
@@ -128,11 +153,67 @@ export class Turtle {
     return this;
   }
 
-  join(turtle) {
-    this.path = [
-      ...this.path,
-      ...tutle.path
-    ];
+  join(...turtles) {
+    turtles.forEach(t => {
+      this.path.push(...t.path);
+    })
+
+    return this;
+  }
+
+  resample(resolution) {
+    this.path.forEach(pl => {
+      const newPl = resample(pl, resolution);
+      while (pl.length > 0) pl.pop();
+
+      while (newPl.length > 0) {
+        pl.push(newPl.shift());
+      }
+    })
+
+    return this;
+  }
+
+  interpolate(t) {
+    return interpolatePolylines(this.path, t);
+  }
+
+  getAngle(t) {
+    return getAngle(this.path, t);
+  }
+
+  trim(t0, t1) {
+    trimPolylines(this.path, t0, t1);
+    return this;
+  }
+
+  warp(turtle) {
+
+    const tValues = tValuesForPoints(this.path);
+
+    const newPts = [];
+
+    const scale = this.length/turtle.width;
+
+    tValues.forEach((t, i) => {
+      const pt = this.path.flat()[i];
+      const angle = this.getAngle(t);
+      const warpPt = turtle.interpolate(t);
+      const warpAngle = turtle.getAngle(t);
+
+      const warpY = warpPt[1]*scale;
+      const lift = [0, warpY];
+
+      const newPoint = rotate(lift, angle);
+
+      newPts.push([pt[0] + newPoint[0], pt[1] + newPoint[1]]);
+    });
+
+    this.path.flat().forEach((pt, i, arr) => {
+      // if (i === 0 || i === arr.length - 1) return;
+      pt[0] = newPts[i][0];
+      pt[1] = newPts[i][1];
+    });
 
     return this;
   }
@@ -151,6 +232,10 @@ export class Turtle {
     const { yMin, yMax } = this.extrema();
 
     return yMax - yMin;
+  }
+
+  get length() {
+    return getTotalLength(this.path);
   }
 
   get start() {
@@ -247,20 +332,21 @@ export class Turtle {
     ]
   }
 
-  iteratePath(fn) {
-    return iteratePath(this, fn);
-  }
-
 
 }
 
 function iteratePath(turtle, fn) {
   const path = turtle.path;
+  // const toRemove = [];
 
   for (let i = 0; i < path.length; i++){
     for (let j = 0; j < path[i].length; j++){
       const pt = path[i][j];
-      const [ newX, newY ] = fn(pt);
+      const newPt = fn(pt, j, path[i]);
+      // if (!newPt) {
+
+      // }
+      const [ newX, newY ] = newPt;
       path[i][j] = [ newX, newY ]; 
     }
   }
@@ -276,7 +362,7 @@ function translate(pt, [ x, y ], origin = [ 0, 0 ]) {
 }
 
 
-function rotate(pt, angle, origin) {
+function rotate(pt, angle, origin = [0, 0]) {
   let delta = (angle / 180) * Math.PI;
 
   let hereX = pt[0] - origin[0];
@@ -309,7 +395,7 @@ function extrema(pts) {
   let yMax = Number.NEGATIVE_INFINITY;
 
   pts.forEach((p) => {
-    const  { x, y } = p;
+    const  [ x, y ] = p;
 
     if (xMin > x) xMin = x;
     if (xMax < x) xMax = x;
@@ -327,8 +413,6 @@ function extrema(pts) {
 
 function createPoint(x, y) {
   const pt = [ x, y ];
-  pt[0] = x;
-  pt[1] = y;
   
   return pt;
 }
@@ -340,4 +424,48 @@ function createPoint(x, y) {
 //     return pt;
 //   }
 // }
+
+function tValuesForPoints(polylines) {
+    let totalLength = 0;
+    let lengths = [];
+    let tValues = [0];
+
+    for (let i = 0; i < polylines.length; i++) {
+        let polyline = polylines[i];
+        for (let j = 1; j < polyline.length; j++) {
+            let dx = polyline[j][0] - polyline[j - 1][0];
+            let dy = polyline[j][1] - polyline[j - 1][1];
+            let segmentLength = Math.sqrt(dx * dx + dy * dy);
+            totalLength += segmentLength;
+            lengths.push(segmentLength);
+        }
+    }
+
+    let accumulatedLength = 0;
+    for (let i = 0; i < lengths.length; i++) {
+        accumulatedLength += lengths[i];
+        tValues.push(accumulatedLength / totalLength);
+    }
+
+    return tValues;
+}
+
+function getTotalLength(polylines) {
+    let totalLength = 0;
+    for (let i = 0; i < polylines.length; i++) {
+        let polyline = polylines[i];
+        for (let j = 1; j < polyline.length; j++) {
+            let dx = polyline[j][0] - polyline[j - 1][0];
+            let dy = polyline[j][1] - polyline[j - 1][1];
+            totalLength += Math.sqrt(dx * dx + dy * dy);
+        }
+    }
+    return totalLength;
+}
+
+
+
+
+
+
 

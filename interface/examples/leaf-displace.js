@@ -16,11 +16,18 @@ for (let i = 1; i < max; i++) {
   let ya = leafW*y* (noise([t*2,1])*1.0+0.8);
   let yb = leafW*y* (noise([t*2,2])*1.0+0.8);
 
+  
+  // ya += Math.sin(t*100)*0.2+0.2;
   sinPts.push([x, ya]);
   otherSinPts.push([x, -yb]);
 }
 
+
+displace(sinPts, t => Math.sin(t)*0.02+0.06)
+
 sinPts.push(...otherSinPts.reverse())
+
+
 
 function stem_func(t){
   // return 0;
@@ -154,5 +161,6 @@ t.iteratePath(pt => {
   return [x, y]
 })
 
+t.translate([3, 0])
 
 drawTurtles(t);
