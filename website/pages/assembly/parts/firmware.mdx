@@ -25,8 +25,11 @@ The "RPI-RP2" disk should show up on your computer if the above step was success
 > You'll need to have the latest version of the Arduino IDE installed. [Install it here.](https://www.arduino.cc/en/software/)
 
 1. Open the Arduino IDE.
-2. Add the Seeed Studio XIAO RP2040 board package to your IDE. Navigate to **Arduino IDE** > **Settings...** and add the following URLs to the **Additional Board Manager URLs** field.
+2. Add the Seeed Studio XIAO RP2040 board package to your IDE.
+> - On macOS: Navigate to **Arduino IDE** > **Preferences** > **Settings**
+> - On Windows/Linux: Navigate to **File** > **Preferences** > **Settings**
 
+and add the following URLs to the **Additional Board Manager URLs** field:
 ```
 https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 https://raw.githubusercontent.com/qbolsee/ArduinoCore-fab-sam/master/json/package_Fab_SAM_index.json
@@ -51,6 +54,8 @@ To select the port, go to **Tools** > **Port** and select the serial port name o
 > - osap (by Jake Robert Read)
 
 6. Copy the Arduino code from [`motor-control-board/firmware`](https://github.com/hackclub/haxidraw/blob/main/motor-control-board/firmware/firmware.ino) into your IDE and upload to your board.
+
+> On Linux? You may need to add your user to the `dialout` group to be able to upload to the board. Run `sudo usermod -a -G dialout $USER` in a terminal, then reboot.
 
 <HImg src={imgFirmwareUpload} alt="Upload firmware to board" />
 
