@@ -1,4 +1,9 @@
 export function trimPolylines(polylines, t1, t2) {
+    t1 = Math.min(1, t1);
+    t1 = Math.max(0, t1);
+    t2 = Math.min(1, t2);
+    t2 = Math.max(0, t2);
+
     let totalLength = getTotalLength(polylines);
     let targetLength1 = totalLength * t1;
     let targetLength2 = totalLength * t2;

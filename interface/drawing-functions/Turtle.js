@@ -3,7 +3,11 @@ import { displace } from "./displace.js";
 import { resample } from "./resample.js";
 import { interpolatePolylines } from "./interpolatePolylines.js";
 import { getAngle } from "./getAngle.js";
+import { getNormal } from "./getNormal.js";
 import { trimPolylines } from "./trimPolylines.js";
+import { filterPolylines } from "./filterPolylines.js";
+import { breakPolylines } from "./breakPolylines.js";
+import { filterBreakPolylines } from "./filterBreakPolylines.js";
 
 export class Turtle {
   constructor(start = [ 0, 0 ]) {
@@ -33,6 +37,9 @@ export class Turtle {
 
     const lastPath = this.path.at(-1);
     if (this.drawing) {
+      const [ lastX, lastY ] = this.location;
+      const dist = Math.sqrt((x-lastX)**2+(y-lastY)**2);
+      if (dist < 0.0001) return this;
       lastPath.push(createPoint(x, y));
     } else {
       if (lastPath.length === 1) lastPath[0] = createPoint(x, y);
@@ -161,6 +168,13 @@ export class Turtle {
     return this;
   }
 
+  copy() {
+    const newPath = JSON.parse(JSON.stringify(this.path));
+    const t = new Turtle();
+    t.path = newPath;
+    return t;
+  }
+
   resample(resolution) {
     this.path.forEach(pl => {
       const newPl = resample(pl, resolution);
@@ -182,35 +196,41 @@ export class Turtle {
     return getAngle(this.path, t);
   }
 
+  getNormal(t) {
+    return getNormal(this.path, t);
+  }
+
   trim(t0, t1) {
     trimPolylines(this.path, t0, t1);
     return this;
   }
 
-  warp(turtle) {
+  warp(fn) {
+
+    if (fn instanceof Turtle) {
+      const ogTurtle = fn;
+      fn = (t) => ogTurtle.interpolate(t)[1];
+    }
 
     const tValues = tValuesForPoints(this.path);
 
     const newPts = [];
 
-    const scale = this.length/turtle.width;
-
     tValues.forEach((t, i) => {
       const pt = this.path.flat()[i];
       const angle = this.getAngle(t);
-      const warpPt = turtle.interpolate(t);
-      const warpAngle = turtle.getAngle(t);
+      // const normal = this.getNormal(t);
 
-      const warpY = warpPt[1]*scale;
-      const lift = [0, warpY];
+      const y = fn(t);
 
-      const newPoint = rotate(lift, angle);
+      // const newPt = displacePointAlongNormal(pt, normal, y);
+      // newPts.push(newPt);
 
+      const newPoint = rotate([0, y], angle);
       newPts.push([pt[0] + newPoint[0], pt[1] + newPoint[1]]);
     });
 
     this.path.flat().forEach((pt, i, arr) => {
-      // if (i === 0 || i === arr.length - 1) return;
       pt[0] = newPts[i][0];
       pt[1] = newPts[i][1];
     });
@@ -337,19 +357,29 @@ export class Turtle {
 
 function iteratePath(turtle, fn) {
   const path = turtle.path;
-  // const toRemove = [];
+  const toRemove = new Set();
+  const toBreak = new Set();
 
   for (let i = 0; i < path.length; i++){
     for (let j = 0; j < path[i].length; j++){
       const pt = path[i][j];
       const newPt = fn(pt, j, path[i]);
-      // if (!newPt) {
-
-      // }
-      const [ newX, newY ] = newPt;
-      path[i][j] = [ newX, newY ]; 
+      if (newPt === "BREAK") {
+        toBreak.add(`${i},${j}`);
+      } else if (newPt === "REMOVE") {
+        toRemove.add(`${i},${j}`);
+      } else if (Array.isArray(newPt)) {
+        const [ newX, newY ] = newPt;
+        path[i][j] = [ newX, newY ]; 
+      }
     }
   }
+
+  filterBreakPolylines(
+    path, 
+    (i, j, arr) => toRemove.has(`${i},${j}`), 
+    (i, j, arr) => toBreak.has(`${i},${j}`)
+  );
 
   return turtle;
 }
@@ -461,6 +491,19 @@ function getTotalLength(polylines) {
         }
     }
     return totalLength;
+}
+
+
+function displacePointAlongNormal([ px, py ], normal, magnitude) {
+    // Scale the normal by the magnitude
+    let dx = normal[0] * magnitude;
+    let dy = normal[1] * magnitude;
+
+    // Translate the point by the scaled normal
+    let newPx = px + dx;
+    let newPy = py + dy;
+
+    return [newPx, newPy];
 }
 
 
