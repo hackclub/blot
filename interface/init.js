@@ -136,6 +136,14 @@ export function init(state) {
     downloadText(`${state.filename}.js`, code);
   });
 
+  listener("click", ".export-trigger", () => {
+    const svg = root.querySelector("svg");
+    const svgString = new XMLSerializer().serializeToString(svg);
+    console.log(typeof svgString)
+    const rotated = svgString.slice(0, svgString.indexOf("scale")) + "rotate(180deg)" + svgString.slice(svgString.indexOf("scale") - 1);
+    downloadText(`${state.filename}.svg`, rotated);
+  });
+
   listener("click", ".filename-trigger", () => {
     let newName = prompt("Please provide a new filename.", state.filename);
     // if (newName !== null) newName = newName.replaceAll(/\s/g, "-");

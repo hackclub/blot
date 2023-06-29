@@ -31,6 +31,7 @@ const menuBar = state => html`
     <button class="run-trigger">run code</button>
     <button class="connect-trigger">${state.haxidraw ? "disconnect" : "connect"}</button>
     <button class="save-trigger">save</button>
+    <button class="export-trigger">export svg</button>
     <button class="run-machine-trigger">run machine</button>
     <button class="examples-trigger">examples</button>
   </div>
