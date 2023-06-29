@@ -54,11 +54,11 @@ function veins() {
       .forward(r)
       .resample(0.01)
       .warp(warper)
-      .resample(.1)
+      .resample(.07)
       .trim(0, trimTo);
 
     line.iteratePath(pt => {
-      return Math.random() < .1 ? "BREAK" : pt;
+      return Math.random() < .2 ? "BREAK" : pt;
     })
     
     lines.join(line)
