@@ -92,6 +92,12 @@ t.iteratePath(pt => {
   return [x, y]
 });
 
+const workarea = createTurtle()
+  .forward(5*25.4)
+  .right(90)
+  .forward(4.8*25.4);
+
 drawTurtles(
-  t
+  t,
+  // workarea
 );
