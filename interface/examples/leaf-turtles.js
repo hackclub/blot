@@ -52,9 +52,9 @@ function veins() {
     
     line
       .forward(r)
-      .resample(0.01)
+      .resample(0.04)
       .warp(warper)
-      .resample(.07)
+      .resample(0.29)
       .trim(0, trimTo);
 
     line.iteratePath(pt => {
@@ -92,28 +92,6 @@ t.iteratePath(pt => {
   return [x, y]
 });
 
-const path = createTurtle()
-  .forward(43)
-  .resample(1)
-  .warp(t => noise(t*8.8, { octaves: 1})*12);
-
-const time = 0.002*28
-
-const pathLeaves = createTurtle();
-
-let iMax = 10
-for (let i = 0; i < iMax; i++) {
-  const time = i/(iMax-1);
-  const targetPt = path.interpolate(time);
-  const leaf = t.copy();
-  leaf.translate(targetPt, leaf.cc);
-  leaf.rotate(noise(time*29)*46, targetPt)
-  pathLeaves.join(leaf)
-}
-
-
 drawTurtles(
-  t,
-  // pathLeaves,
-  // path
+  t
 );

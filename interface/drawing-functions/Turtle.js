@@ -205,7 +205,7 @@ export class Turtle {
     return this;
   }
 
-  warp(fn) {
+  warp(fn, baseAngle = 0) {
 
     if (fn instanceof Turtle) {
       const ogTurtle = fn;
@@ -218,7 +218,7 @@ export class Turtle {
 
     tValues.forEach((t, i) => {
       const pt = this.path.flat()[i];
-      const angle = this.getAngle(t);
+      const angle = this.getAngle(t) + baseAngle;
       // const normal = this.getNormal(t);
 
       const y = fn(t);
@@ -227,7 +227,11 @@ export class Turtle {
       // newPts.push(newPt);
 
       const newPoint = rotate([0, y], angle);
-      newPts.push([pt[0] + newPoint[0], pt[1] + newPoint[1]]);
+      
+      newPts.push([
+        pt[0] + newPoint[0], 
+        pt[1] + newPoint[1]
+      ]);
     });
 
     this.path.flat().forEach((pt, i, arr) => {

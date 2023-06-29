@@ -149,7 +149,7 @@ export async function runMachineHelper(state, [scaleX, scaleY]) {
   const polylines = state.turtles.map(x => x.path).flat();
   for (const polyline of polylines) {
     for (let i = 0; i < polyline.length; i++) { 
-      const {x, y} = polyline[i];
+      const [ x, y ] = polyline[i];
       if (i === 0) {
         await state.haxidraw.servo(1000);
         await delay(200);
