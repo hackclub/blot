@@ -76,6 +76,13 @@ export function init(state) {
     }
   })
 
+  for(let i = 0; i < state.examples.length; i++){
+    let opt = document.createElement("option");
+    opt.value = state.examples[i] + ".js";
+    opt.innerText = state.examples[i].replace("-", " ");
+    document.querySelector(".examples-trigger").appendChild(opt);
+  }
+
   const listener = createListener(root);
 
   /* <button class="set-origin-trigger">set origin</button> */
@@ -134,6 +141,24 @@ export function init(state) {
   listener("click", ".save-trigger", () => {
     const code = editor.state.doc.toString();
     downloadText(`${state.filename}.js`, code);
+  });
+
+  listener("change", ".examples-trigger", () => {
+    if(document.querySelector(".examples-trigger").value !== "none") {
+      if(confirm("This will replace your current code. Are you sure you want to continue?")) {
+        fetch('/examples/' + document.querySelector(".examples-trigger").value)
+          .then(response => response.text())
+          .then(data => {
+            editor.update([editor.state.update({changes: {from: 0, to: editor.state.doc.length, insert: data}})]);
+          })
+          .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Error:', error);
+          });
+      }else{
+        document.querySelector(".examples-trigger").value = "none";
+      }
+    }
   });
 
   listener("click", ".export-trigger", () => {
