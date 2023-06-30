@@ -74,6 +74,12 @@ export function init(state) {
       runCode(code, state).then(() => r());
       e.preventDefault();
     }
+
+    if (e.ctrlKey && e.key === 's') {
+      e.preventDefault();
+      const code = editor.state.doc.toString();
+      downloadText(`${state.filename}.js`, code);
+    }
   })
 
   const listener = createListener(root);
