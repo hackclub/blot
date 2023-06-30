@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && cp -r ./examples ./dist",
     "preview": "vite preview"
   },
   "devDependencies": {
