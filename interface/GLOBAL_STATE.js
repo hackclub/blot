@@ -14,6 +14,15 @@ await fetch('/examples/examples.json')
     console.error('Error:', error);
   });
 
+let title
+
+if (localStorage.getItem('filename') === null) {
+  title = adjectives[Math.floor(Math.random() * adjectives.length)] + '_' + nouns[Math.floor(Math.random() * nouns.length)]
+  localStorage.setItem('filename', title)
+} else {
+  title = localStorage.getItem('filename')
+}
+
 export const GLOBAL_STATE = {
   turtles: [],
   machineWidth: 1,
@@ -24,6 +33,6 @@ export const GLOBAL_STATE = {
   codemirror: null,
   topScope: {},
   haxidraw: null,
-  filename: adjectives[Math.floor(Math.random() * adjectives.length)] + '_' + nouns[Math.floor(Math.random() * nouns.length)],
-  examples: examplesArr
+  examples: examplesArr,
+  filename: title
 }
