@@ -167,7 +167,7 @@ export async function runMachineHelper(state, [scaleX, scaleY]) {
         await delay(200);
       } else if (i === 1) {
         await state.haxidraw.servo(1700);
-        await delay(500);
+        await delay(100);
       }
       
       await state.haxidraw.goTo(x*scaleX, y*scaleY);

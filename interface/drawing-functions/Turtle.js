@@ -21,6 +21,7 @@ export class Turtle {
   }
 
   up() {
+    if (!this.drawing) return this;
     this.drawing = false;
     this.path.push([
       createPoint(this.location[0], this.location[1])

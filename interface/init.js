@@ -74,6 +74,12 @@ export function init(state) {
       runCode(code, state).then(() => r());
       e.preventDefault();
     }
+
+    if (e.ctrlKey && e.key === 's') {
+      e.preventDefault();
+      const code = editor.state.doc.toString();
+      downloadText(`${state.filename}.js`, code);
+    }
   })
 
   const listener = createListener(root);
@@ -147,7 +153,10 @@ export function init(state) {
   listener("click", ".filename-trigger", () => {
     let newName = prompt("Please provide a new filename.", state.filename);
     // if (newName !== null) newName = newName.replaceAll(/\s/g, "-");
-    if (newName !== "" && newName !== null) state.filename = newName;
+    if (newName !== "" && newName !== null) {
+      state.filename = newName;
+      localStorage.setItem('filename', newName);
+    }
     r();
   });
 
