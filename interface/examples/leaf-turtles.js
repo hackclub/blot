@@ -24,7 +24,7 @@ for (let i = 0; i < max; i++) {
 function veins() {
   const lines = createTurtle();
 
-  let littleLinesMax = 36;
+  let littleLinesMax = 82;
   for (let i = 4; i < littleLinesMax-5; i++) {
     
     const t = i/(littleLinesMax-1);
@@ -35,7 +35,7 @@ function veins() {
     
     const line = createTurtle([ x0, y0 ]);
 
-    line.right(-62+t*37 + randInRange(-4, 4));
+    line.right(-70+t*37 + randInRange(-4, 4));
 
     let r = y*0.7;
 
@@ -52,13 +52,15 @@ function veins() {
     
     line
       .forward(r)
-      .resample(0.04)
+      .resample(0.01)
       .warp(warper)
-      .resample(0.29)
+      .resample(.05)
       .trim(0, trimTo);
 
     line.iteratePath(pt => {
-      return Math.random() < .2 ? "BREAK" : pt;
+      return Math.random() < (i % 5 === 0 ? +0.17 : 0.56)
+        ? "BREAK" 
+        : pt;
     })
     
     lines.join(line)
@@ -71,7 +73,7 @@ const t = createTurtle();
 
 const bottom = edge.copy().scale([1, -1], [0, 0])
 
-edge.warp(t => noise(t*20.4, { octaves: 2})*0.09*(t===0 || t === 1 ? 0 : 1))
+edge.warp(t => noise(t*20.4, { octaves: 2 })*0.09*(t===0 || t === 1 ? 0 : 1))
 bottom.warp(t => noise(t*23.6, { octaves: 2})*-0.10*(t===0 || t === 1 ? 0 : 1))
 
 t.join(edge);
@@ -92,12 +94,15 @@ t.iteratePath(pt => {
   return [x, y]
 });
 
+t.translate([58, -60])
+t.scale(17.2)
+
 const workarea = createTurtle()
   .forward(5*25.4)
   .right(90)
-  .forward(4.8*25.4);
+  .forward(4.8*25.4)
 
 drawTurtles(
   t,
-  // workarea
+  workarea
 );

@@ -157,8 +157,10 @@ export function init(state) {
   const search = window.location.search;
   const run = new URLSearchParams(search).get("run");
   if (run === "true") {
-    const code = editor.state.doc.toString();   
-    runCode(code, state).then(() => r());
+    setTimeout(() => {
+      const code = editor.state.doc.toString();   
+      runCode(code, state).then(() => r());
+    }, 500);
   }
 
 }

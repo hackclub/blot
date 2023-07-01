@@ -3,6 +3,11 @@ import { Turtle } from "./drawing-functions/Turtle.js";
 import { noise } from "./drawing-functions/noise.js";
 import { rand, setRandSeed, randInRange, randIntInRange } from "./drawing-functions/rand.js";
 import { displace } from "./drawing-functions/displace.js";
+import { createCubicBez } from "./drawing-functions/createCubicBez.js";
+import { makeCubicShaper } from "./drawing-functions/makeCubicShaper.js";
+import { bezierEasing } from "./drawing-functions/bezierEasing.js";
+import { bezierEasing as be } from "./drawing-functions/bezierEasing2.js";
+import { bezierEasing as be1 } from "./drawing-functions/bezierEasing3.js";
 
 const drawingFunctions = {
   Turtle,
@@ -14,10 +19,17 @@ const drawingFunctions = {
   setRandSeed,
   randInRange, 
   randIntInRange,
-  displace,
+  // displace,
+  makeCubicShaper,
+  createCubicBez,
+  bezierEasing,
+  be,
+  be1,
   lerp(start, end, t) {
     return (1 - t) * start + t * end;
   }
+  // softmax
+  // softmin
 }
 
 let intervals = [];
