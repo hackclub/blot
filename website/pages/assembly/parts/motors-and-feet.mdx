@@ -1,3 +1,9 @@
+import HImg from "@/components/HImg";
+import imgMotorsCarriageExtrusion from "./img/motors-carriage-extrusion.jpg";
+import imgMotorsBracket from "./img/motors-bracket.jpg";
+import imgMotorsFeet from "./img/motors-feet.jpg";
+import imgMotorsStepper from "./img/motors-stepper.jpg";
+
 # Motors and Feet
 
 ## Tools
@@ -18,39 +24,33 @@
 |      | 6        | 10mm M5 screw                    | for attaching motor bracket to aluminum rail   |
 |      | 6        | M5 t-nut                         | for attaching motor bracket to aluminum rail   |
 |      | 2        | Stepper motor                    |                                                |
-|      | 2        | stepper motor pulley wheel thing |                                                |
+|      | 2        | stepper motor belt pulley | cylindrical silver piece with teeth the belt meshes with                                       |
 |      | 1        | aluminum extrusion               |                                                |
 | fab  | 2        | 3D printed motor bracket         |                                                |
 | fab  | 2        | Feet                             |                                                |
 
-- Attach one of the motor brackets to the aluminum extrusion using 10mm M5 screws and t-nuts in the respective holes.
-- Slide the carriage onto the aluminum.
+- Attach one of the motor brackets to the aluminum extrusion using 3x 10mm M5 screws and t-nuts in the respective holes:
+
+  - Slide the end of the aluminum extrusion into the motor bracket
+  - Place a t-nut into the slot on the extrusion, and line it up with the hole on the motor bracket. You can use an allen key align the t-nut with the hole if it is slightly off-center - just insert the key through both holes and move it in a circular motion. 
+  - Screw the 10mm M5 screw into the t-nut through the motor bracket. Once fully tightened, the t-nut will rotate 90 degrees, locking it in place.
+  - Repeat these steps for the two remaining holes.
+
+- Slide the carriage onto the aluminum extrusion, making sure it is in the orientation indicated in the picture (bottom of the carriage with the v-wheels for the Y axis extrusion on the side opposite to the single side which does *not* have a motor bracket screw).
 
   - The distance between the wheels on each side may need to be adjusted for a better fit on the extrusion.
 
-<img
-  src="https://user-images.githubusercontent.com/72365100/234364753-278947d7-c028-41ab-bf35-76057fc45c54.JPG"
-  width="300"
-/>
+<HImg src={imgMotorsCarriageExtrusion} />
 
-- With the carriage still on, attach other motor bracket to the aluminum extrusion using 10mm M5 screws and t-nuts in respective holes.
+- With the carriage still on, attach other motor bracket to the aluminum extrusion (same side up as the other bracket) using 3x 10mm M5 screws and t-nuts following the same procedure as before.
 
-<img
-  src="https://user-images.githubusercontent.com/72365100/234364900-449ba3f2-77c7-4af1-a057-b0b55a923486.JPG"
-  width="300"
-/>
+<HImg src={imgMotorsBracket} />
 
-- Attach the feet to the motor brackets using 12mm M5 screws and hex nuts inserted into the appropriate slots in them motor bracket.
+- Attach the feet to the motor brackets using two M5 hex nuts (inserted into the motor bracket) and two 12mm M5 screws per piece.
 
-<img
-  src="https://user-images.githubusercontent.com/72365100/234365048-3f79e839-32a9-4387-9fbc-6c3645de6b6d.JPG"
-  width="300"
-/>
+<HImg src={imgMotorsFeet} />
 
-- Attach pulley wheel things to the stepper motors; don't tighten all the way as you'll need to adjust the height later.
+- Attach the belt pulleys to the stepper motors, with the side with the screws facing down. Rotate the pulley so that one of the screws is aligned with the flat side of the shaft, and tighten that screw enough so that the pulley can't rotate anymore. Don't tighten the screws all the way as you'll need to adjust the height later.
 - Attach the stepper motors to the motor brackets using 10mm M3 screws.
 
-<img
-  src="https://user-images.githubusercontent.com/72365100/234365209-6d29746e-54a5-4081-95b4-5133eb37f99d.JPG"
-  width="300"
-/>
+<HImg src={imgMotorsStepper} />

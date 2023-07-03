@@ -68,7 +68,7 @@ html {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  transform: scale(-1, -1);
+  transform: scale(1, -1);
 }
 
 .command-entry {

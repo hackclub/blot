@@ -74,6 +74,12 @@ export function init(state) {
       runCode(code, state).then(() => r());
       e.preventDefault();
     }
+
+    if (e.ctrlKey && e.key === 's') {
+      e.preventDefault();
+      const code = editor.state.doc.toString();
+      downloadText(`${state.filename}.js`, code);
+    }
   })
 
   const listener = createListener(root);
@@ -136,14 +142,35 @@ export function init(state) {
     downloadText(`${state.filename}.js`, code);
   });
 
+  listener("click", ".export-trigger", () => {
+    const svg = root.querySelector("svg");
+    const svgString = new XMLSerializer().serializeToString(svg);
+    console.log(typeof svgString)
+    const rotated = svgString.slice(0, svgString.indexOf("scale")) + "rotate(180deg)" + svgString.slice(svgString.indexOf("scale") - 1);
+    downloadText(`${state.filename}.svg`, rotated);
+  });
+
   listener("click", ".filename-trigger", () => {
     let newName = prompt("Please provide a new filename.", state.filename);
     // if (newName !== null) newName = newName.replaceAll(/\s/g, "-");
-    if (newName !== "" && newName !== null) state.filename = newName;
+    if (newName !== "" && newName !== null) {
+      state.filename = newName;
+      localStorage.setItem('filename', newName);
+    }
     r();
   });
 
   automaticallyConnect(state);
+
+
+  const search = window.location.search;
+  const run = new URLSearchParams(search).get("run");
+  if (run === "true") {
+    setTimeout(() => {
+      const code = editor.state.doc.toString();   
+      runCode(code, state).then(() => r());
+    }, 500);
+  }
 
 }
 
