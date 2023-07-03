@@ -39,8 +39,8 @@ Now we can warp the line by resampling points and then using `warp` with a bezie
 ```js
 const edge = createTurtle()
   .forward(leafLength)
-  .resample(.01)
-  .warp(bezierEasing(0, [0.4, 2.58], [0.52, 0.31], 0));
+  .resample(.01) // we resample to have points to bend
+  .warp(bezierEasing(0, [0.4, 2.58], [0.52, 0.31], 0)); // bezierEasing takes a start y, control point, control point, end y
 ```
 
 <img width="374" alt="Screen Shot 2023-07-03 at 2 19 18 PM" src="https://github.com/hackclub/haxidraw/assets/27078897/1ed396a9-41bd-42d6-bd60-95dd8eea3719">
@@ -90,11 +90,13 @@ function veins() {
 
   let littleLinesMax = 61;
   for (let i = 4; i < littleLinesMax-5; i++) {
-    
-    const t = i/(littleLinesMax-1);
+
+    const t = i/(littleLinesMax-1);  // this line to get t values 0 to 1 while iterating is very common
     const x0 = t*leafLength;
     const y0 = 0;
 
+    // try playing with the `0.1` term
+    // interpolate returns a point and we take `[1]` to get the y value 
     y = edge.interpolate(t+0.1)[1];
     
     const line = createTurtle([ x0, y0 ]);
@@ -135,11 +137,13 @@ If we add back in the randomness term `randInRange(-4, 4)` to the angle of the l
 Now let's bend the lines with our warping function again.
 
 ```js
+
+// try removing the y scaling and see what happens
 const warper = bezierEasing(0, [0.28, y/4], [0.58, y/8], 0);
 
 line
   .forward(r)
-  .resample(0.01)
+  .resample(0.01) // we resample so there are points to warp, see what happens when this is removed
   .warp(warper)
 ```
 <img width="363" alt="Screen Shot 2023-07-03 at 2 32 08 PM" src="https://github.com/hackclub/haxidraw/assets/27078897/03698576-c5ec-4aaf-9168-7bcaa90274bf">
@@ -147,7 +151,8 @@ line
 Let's randomly trim each vein with every fifth being a bite longer.
 
 ```js
-const trimTo = (i % 5 === 0) 
+// the ternary makes evey fifth line trimmed up to 0.7 to 0.9 and all the others between 0.1 and 0.7
+const trimTo = (i % 5 === 0)
   ? randInRange(0.7, 0.9) 
   : randInRange(0.1, 0.7);
 
@@ -213,9 +218,11 @@ leaf.iteratePath(pt => {
   return [x, y]
 });
 ```
-
 And now we have a leaf!
 
 <img width="416" alt="Screen Shot 2023-07-03 at 2 37 02 PM" src="https://github.com/hackclub/haxidraw/assets/27078897/ced13771-b8e6-4eb0-a035-5528c9e38cde">
 
+## Acknowledgements
+
+Thanks to [Lingdong](https://github.com/LingDong-) for drawing the first draft of the leaf with me.
 
