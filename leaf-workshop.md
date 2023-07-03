@@ -1,6 +1,6 @@
 # How to draw a leaf
 
-You can follow along in this editor: https://editor.haxidraw.hackclub.com/
+> You can follow along in this editor: https://editor.haxidraw.hackclub.com/
 
 ---
 
