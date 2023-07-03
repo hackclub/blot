@@ -1,5 +1,9 @@
 # How to draw a leaf
 
+You can follow along in this editor: https://editor.haxidraw.hackclub.com/
+
+---
+
 Let's learn how to draw a leaf that looks likes this.
 
 <img width="389" alt="Screen Shot 2023-07-03 at 2 14 10 PM" src="https://github.com/hackclub/haxidraw/assets/27078897/9ce96217-bc5e-49cc-87b2-178681188eb3">
