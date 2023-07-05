@@ -19,6 +19,15 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 This Turborepo uses Yarn 3.x - if you have [Corepack](https://github.com/nodejs/corepack) enabled, you shouldn't have to worry about what version you have installed (Corepack will read the requested version from the `packageManager` property of `package.json` and configure it automatically). Otherwise, make sure you have the correct Yarn version by running `yarn --version`. 
 
+We aren't using Yarn's zero-install system so the repo isn't hundreds of megabytes, which means you'll have to manually run commands to install dependencies and set up IDE integration:
+
+```sh
+yarn install
+yarn dlx @yarnpkg/sdks vscode
+```
+
+If VS Code doesn't prompt you, manually make it use the workspace version of TypeScript by pressing `ctrl+shift+p`, choosing "Select TypeScript Version", then "Use Workspace Version".
+
 ### Build
 
 To build all apps and packages, run the following command:
