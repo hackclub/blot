@@ -1,0 +1,29 @@
+{
+  "name": "editor",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^2.2.1",
+    "@astrojs/vercel": "^3.6.0",
+    "@carbon/icons-react": "^11.21.0",
+    "@codemirror/commands": "^6.2.4",
+    "@codemirror/lang-javascript": "^6.1.9",
+    "@codemirror/language": "^6.8.0",
+    "@codemirror/state": "^6.2.1",
+    "@codemirror/view": "^6.14.0",
+    "@prefresh/vite": "^2.4.1",
+    "@rollup/browser": "^3.26.0",
+    "astro": "^2.7.3",
+    "codemirror": "^6.0.1",
+    "niue": "^0.2.0",
+    "preact": "^10.6.5"
+  }
+}
