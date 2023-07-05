@@ -9,6 +9,8 @@ import { displace } from "./drawing-functions/displace.js";
 // import { bezierEasing as be } from "./drawing-functions/bezierEasing2.js";
 import { bezierEasing } from "./drawing-functions/bezierEasing3.js";
 import { isPointInPolyline, inside } from "./drawing-functions/isPointInPolyline.js";
+import { renderCanvas } from "./init.js";
+import { render } from 'lit-html';
 
 const drawingFunctions = {
   Turtle,
@@ -170,7 +172,8 @@ export async function runMachineHelper(state, [scaleX, scaleY]) {
       }
       
       await state.haxidraw.goTo(x*scaleX, y*scaleY);
-
+      state.turtlePos = [x, y];
+      renderCanvas(state);
     }
 
   }
@@ -178,4 +181,5 @@ export async function runMachineHelper(state, [scaleX, scaleY]) {
   await state.haxidraw.servo(1000);
   await delay(200);
   await state.haxidraw.goTo(0, 0);
+  state.turtlePos = [0, 0];
 }
