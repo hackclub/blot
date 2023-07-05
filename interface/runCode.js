@@ -3,11 +3,12 @@ import { Turtle } from "./drawing-functions/Turtle.js";
 import { noise } from "./drawing-functions/noise.js";
 import { rand, setRandSeed, randInRange, randIntInRange } from "./drawing-functions/rand.js";
 import { displace } from "./drawing-functions/displace.js";
-import { createCubicBez } from "./drawing-functions/createCubicBez.js";
-import { makeCubicShaper } from "./drawing-functions/makeCubicShaper.js";
-import { bezierEasing } from "./drawing-functions/bezierEasing.js";
-import { bezierEasing as be } from "./drawing-functions/bezierEasing2.js";
-import { bezierEasing as be1 } from "./drawing-functions/bezierEasing3.js";
+// import { createCubicBez } from "./drawing-functions/createCubicBez.js";
+// import { makeCubicShaper } from "./drawing-functions/makeCubicShaper.js";
+// import { bezierEasing } from "./drawing-functions/bezierEasing.js";
+// import { bezierEasing as be } from "./drawing-functions/bezierEasing2.js";
+import { bezierEasing } from "./drawing-functions/bezierEasing3.js";
+import { isPointInPolyline, inside } from "./drawing-functions/isPointInPolyline.js";
 
 const drawingFunctions = {
   Turtle,
@@ -20,11 +21,9 @@ const drawingFunctions = {
   randInRange, 
   randIntInRange,
   // displace,
-  makeCubicShaper,
-  createCubicBez,
   bezierEasing,
-  be,
-  be1,
+  isPointInPolyline,
+  inside,
   lerp(start, end, t) {
     return (1 - t) * start + t * end;
   }

@@ -8,6 +8,7 @@ import { trimPolylines } from "./trimPolylines.js";
 import { filterPolylines } from "./filterPolylines.js";
 import { breakPolylines } from "./breakPolylines.js";
 import { filterBreakPolylines } from "./filterBreakPolylines.js";
+import { mergePolylines } from "./mergePolylines.js";
 
 export class Turtle {
   constructor(start = [ 0, 0 ]) {
@@ -165,6 +166,12 @@ export class Turtle {
     turtles.forEach(t => {
       this.path.push(...t.path);
     })
+
+    return this;
+  }
+
+  merge(threshold = 0.01) {
+    this.path = mergePolylines(this.path, threshold);
 
     return this;
   }
