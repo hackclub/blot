@@ -44,7 +44,7 @@ export function init(state) {
   const root = document.querySelector(".root");
   canvas = document.getElementById("view");
   
-  gpu = canvas.getContext("webgpu") 
+  gpu = null//canvas.getContext("webgpu") 
 
   if (gpu === null) {
   gl = null//canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
@@ -52,9 +52,11 @@ export function init(state) {
     console.log("Canvas initialized");
     ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;
+    state.panX = canvas.width/2;
+    state.panY = canvas.height/2;
   } else {
     state.panX -= canvas.width/2;
-    state.panY += canvas.height/2;
+    state.panY -= canvas.height/2;
     console.log("WebGL initialized");
     glEnabled = true;
     initGl();
@@ -100,9 +102,8 @@ export function init(state) {
 
   canvas.addEventListener("wheel", e => {
     e.preventDefault();
-    state.scaleX *= 1 + (-e.deltaY * 0.0001);
-    state.scaleY *= 1 + (-e.deltaY * 0.0001);
-    console.log(resRatioX, resRatioY)
+    state.renderScaleX *= 1 + (-e.deltaY * 0.0001);
+    state.renderScaleY *= 1 + (-e.deltaY * 0.0001);
     if (glEnabled | gpuEnabled) {
       state.panX += (state.mouseX * resRatioX - state.panX - canvas.width/2) * (e.deltaY * 0.0001);
       state.panY += (state.mouseY * resRatioY - state.panY - canvas.height/2) * (e.deltaY * 0.0001);
@@ -278,9 +279,9 @@ export function renderCanvas(state) {
       ctx.beginPath();
       for (let i = 0; i < polyline.length; i++) {
         let [x, y] = polyline[i];
-        x = state.panX + x * state.scaleX
-        y = state.panY + y * state.scaleY
-        ctx.lineTo(x, y)
+        x = state.panX + x * state.renderScaleX
+        y = -state.panY + y * state.renderScaleY
+        ctx.lineTo(x, -y)
       }
       ctx.stroke()
     }
@@ -290,11 +291,11 @@ export function renderCanvas(state) {
 function renderTurtleCanvas(state) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
-  ctx.arc(state.panX + state.turtlePos[0] * state.scaleX, state.panY + state.turtlePos[1] * state.scaleY, 7, 0, 2 * Math.PI);
+  ctx.arc(state.panX + state.turtlePos[0] * state.renderScaleX, state.panY + state.turtlePos[1] * state.renderScaleY, 7, 0, 2 * Math.PI);
   ctx.strokeStyle = "white";
   ctx.stroke();
   ctx.strokeStyle = "black";
-  ctx.fillStyle = "rgba(255, 255, 0, 1)";
+  ctx.fillStyle = "rgba(150, 255, 0, 1)";
   ctx.fill();
 }
 
@@ -349,8 +350,8 @@ export function renderGl(state) {
     for (const polyline of turtle.path) {
       for (let i = 0; i < polyline.length; i++) {
         let [x, y] = polyline[i];
-        x = (state.panX + x * state.scaleX)
-        y = (state.panY + y * state.scaleY)
+        x = (state.panX + x * state.renderScaleX)
+        y = (state.panY + y * state.renderScaleY)
         path.push((x / canvas.width), (y / canvas.height))
       }
     }
@@ -381,8 +382,8 @@ async function renderGpu(state) {
     for (const polyline of turtle.path) {
       for (let i = 0; i < polyline.length; i++) {
         let [x, y] = polyline[i];
-        x = (state.panX + x * state.scaleX)
-        y = (state.panY + y * state.scaleY)
+        x = (state.panX + x * state.renderScaleX)
+        y = (state.panY + y * state.renderScaleY)
         path.push((2 * x / canvas.width), (-2 * y / canvas.height), 1, 1, 1, 1, 1, 1)
       }
     }
