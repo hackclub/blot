@@ -50,7 +50,7 @@ const commandLine = state => html`
   </div>
 `
 
-export function svgViewer (state, resRatioX, resRatioY) {
+export function svgViewer (state) {
   return html`
     <div class="svg-container">
       <canvas 
@@ -69,7 +69,7 @@ export function svgViewer (state, resRatioX, resRatioY) {
         ">
         <g class="transform-group">
           <circle fill="orange" r="0.3" cx="0" cy="0"/>
-          ${state.turtles.map(x => drawPath(x.path, state, resRatioX, resRatioY))}
+          ${state.turtles.map(x => drawPath(x.path))}
           ${state.turtles.map(x => drawTurtleDirection(x))}
         </g>
       </svg>
@@ -77,7 +77,7 @@ export function svgViewer (state, resRatioX, resRatioY) {
   `
 }
 
-function drawPath(path, state, resRatioX, resRatioY) {
+function drawPath(path) {
   let d = "";
   path.forEach(polyline => {
     polyline.forEach((pt, i) => {
