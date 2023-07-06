@@ -125,6 +125,8 @@ export function init(state) {
   });
 
   listener("click", ".connect-trigger", async () => {
+    state.turtlePos = [0, 0];
+    renderCanvas(state);
     if (!navigator.serial) {
       alert(
         "Your browser doesn't seem to support the Web Serial API, which is required for the Haxidraw editor to connect to the machine. Chrome Version 89 or above is the recommended browser."
@@ -153,7 +155,6 @@ export function init(state) {
       console.log("disconnecting");
       await state.haxidraw.port.close();
       state.haxidraw = null;
-      state.turtlePos = [0, 0];
       r();
     }
 
@@ -176,7 +177,7 @@ export function init(state) {
   });
 
   listener("click", ".export-trigger", () => {
-    document.body.insertAdjacentHTML("beforeend", `${svgViewer(state, resRatioX, resRatioY)}`);
+    document.body.insertAdjacentHTML("beforeend", `${svgViewer(state, canvas)}`);
     let svg = document.getElementsByClassName("svg-viewer")[0];
     const svgString = new XMLSerializer().serializeToString(svg);
     downloadText(`${state.filename}.svg`,svgString);
@@ -211,3 +212,231 @@ async function automaticallyConnect(state) {
 }
 
 
+function renderTurtleCanvas(state) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  ctx.arc(state.panX + state.turtlePos[0] * state.renderScaleX, state.panY - state.turtlePos[1] * state.renderScaleY, 7, 0, 2 * Math.PI);
+  ctx.strokeStyle = "white";
+  ctx.stroke();
+  ctx.strokeStyle = "black";
+  ctx.fillStyle = "rgba(150, 255, 0, 1)";
+  ctx.fill();
+}
+
+
+function initGl() {
+  gl.viewport(0, 0, canvas.width, canvas.height);
+  var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+  gl.shaderSource(vertexShader, `
+  #version 100
+  attribute vec2 position;
+  void main() {
+    gl_Position = vec4(position.x, position.y, 0.0, 1.0);
+  }
+`);
+  gl.compileShader(vertexShader);
+  var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+  gl.shaderSource(fragmentShader,`
+  #version 100
+  void main() {
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+  }
+  `);
+  gl.compileShader(fragmentShader);
+  let program = gl.createProgram();
+  gl.attachShader(program, vertexShader);
+  gl.attachShader(program, fragmentShader);
+  gl.linkProgram(program);
+  gl.detachShader(program, vertexShader);
+  gl.detachShader(program, fragmentShader);
+  gl.deleteShader(vertexShader);
+  gl.deleteShader(fragmentShader);
+  gl.enableVertexAttribArray(0);
+  initializeAttributes();
+  gl.useProgram(program);
+  gl.lineWidth(1);
+}
+
+function initializeAttributes() {
+  gl.enableVertexAttribArray(0);
+  let buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0.0, 0.0]), gl.DYNAMIC_DRAW);
+  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+}
+
+export function renderGl(state) {
+  gl.clearColor(1, 1, 1, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  if (state.turtles.length === 0) return;
+  state.turtles.forEach(turtle => {
+    let path = []
+    for (const polyline of turtle.path) {
+      for (let i = 0; i < polyline.length; i++) {
+        let [x, y] = polyline[i];
+        x = (state.panX + x * state.renderScaleX)
+        y = (state.panY + y * state.renderScaleY)
+        path.push((x / canvas.width), (y / canvas.height))
+      }
+    }
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(path), gl.STATIC_DRAW);
+    gl.drawArrays(gl.LINE_STRIP, 0, path.length / 2);
+  })
+}
+
+async function renderGpu(state) {
+  commandEncoder = device.createCommandEncoder();
+  const clearColor = { r: 0.9, g: 0.9, b: 0.9, a: 1.0 };
+
+  renderPassDescriptor = {
+    colorAttachments: [
+      {
+        clearValue: clearColor,
+        loadOp: "clear",
+        storeOp: "store",
+        view: gpu.getCurrentTexture().createView(),
+      },
+    ],
+  };
+  passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
+  passEncoder.setPipeline(renderPipeline);
+  if (state.turtles.length === 0) return;
+  let path = []
+  state.turtles.forEach(turtle => {
+    for (const polyline of turtle.path) {
+      for (let i = 0; i < polyline.length; i++) {
+        let [x, y] = polyline[i];
+        x = (state.panX + x * state.renderScaleX)
+        y = (state.panY + y * state.renderScaleY)
+        path.push((2 * x / canvas.width), (-2 * y / canvas.height), 1, 1, 1, 1, 1, 1)
+      }
+    }
+
+  })
+  vertices = new Float32Array(path);
+  vertexBuffer = device.createBuffer({
+    size: vertices.byteLength,
+    usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
+  });
+  
+  device.queue.writeBuffer(vertexBuffer, 0, vertices);
+  passEncoder.setVertexBuffer(0, vertexBuffer);
+  passEncoder.draw(vertices.length/8);
+  passEncoder.end();
+  device.queue.submit([commandEncoder.finish()]);
+}
+
+async function initGpu() {
+  if (!navigator.gpu) {
+    throw Error("WebGPU not supported.");
+  }
+
+  const adapter = await navigator.gpu.requestAdapter();
+  if (!adapter) {
+    throw Error("Couldn't request WebGPU adapter.");
+  }
+
+  device = await adapter.requestDevice();
+
+  shaders = `
+    struct VertexOut {
+      @builtin(position) position : vec4f,
+      @location(0) color : vec4f
+    }
+
+    @vertex
+    fn vertex_main(@location(0) position: vec4f, @location(1) color: vec4f) -> VertexOut
+    {
+      var output : VertexOut;
+      output.position = position;
+      output.color = vec4f(0.0, 0.0, 0.0, 1.0);
+      return output;
+    }
+
+    @fragment
+    fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
+    {
+      return fragData.color;
+    }
+    `;
+
+    const shaderModule = device.createShaderModule({
+      code: shaders,
+    });
+    gpu.configure({
+      device: device,
+      format: navigator.gpu.getPreferredCanvasFormat(),
+      alphaMode: "premultiplied",
+    });
+
+    vertices =  new Float32Array([
+      0.0, 0.6, 0, 1, 1, 0, 0, 1, -0.5, -0.6, 0, 1, 0, 1, 0, 1, 0.5, -0.6, 0, 1, 0,
+      0, 1, 1,
+    ]);
+
+    vertexBuffer = device.createBuffer({
+      size: vertices.byteLength,
+      usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
+    });
+    
+    device.queue.writeBuffer(vertexBuffer, 0, vertices);
+
+    vertexBuffers = [
+      {
+        attributes: [
+          {
+            shaderLocation: 0,
+            offset: 0,
+            format: "float32x4",
+          },
+          {
+            shaderLocation: 1,
+            offset: 16,
+            format: "float32x4",
+          },
+        ],
+        arrayStride: 32,
+        stepMode: "vertex",
+      },
+    ];    
+
+    const pipelineDescriptor = {
+      vertex: {
+        module: shaderModule,
+        entryPoint: "vertex_main",
+        buffers: vertexBuffers,
+      },
+      fragment: {
+        module: shaderModule,
+        entryPoint: "fragment_main",
+        targets: [
+          {
+            format: navigator.gpu.getPreferredCanvasFormat(),
+          },
+        ],
+      },
+      primitive: {
+        topology: "line-strip",
+      },
+      layout: "auto",
+    };
+
+    renderPipeline = device.createRenderPipeline(pipelineDescriptor);
+
+    commandEncoder = device.createCommandEncoder();
+
+    const clearColor = { r: 0.9, g: 0.9, b: 0.9, a: 1.0 };
+
+    renderPassDescriptor = {
+      colorAttachments: [
+        {
+          clearValue: clearColor,
+          loadOp: "clear",
+          storeOp: "store",
+          view: gpu.getCurrentTexture().createView(),
+        },
+      ],
+    };
+    passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
+    passEncoder.setPipeline(renderPipeline);
+}
