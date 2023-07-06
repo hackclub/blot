@@ -13,7 +13,7 @@ export function view(state) {
         <div class="dictionary"></div>
 
         <div class="right-panel">
-          ${viewer(state)}
+          ${svgViewer(state)}
           ${commandLine(state)}
         </div>
       </div>
@@ -64,15 +64,18 @@ const commandLine = state => html`
 `*/
 
 export function svgViewer (state, resRatioX, resRatioY) {
-  return `
-  <div class="svg-container">
-    <svg class="svg-viewer" style = "transform:scale(1, -1)">
-      <g class="transform-group">
-        ${state.turtles.map(x => drawPath(x.path, state, resRatioX, resRatioY))}
-        ${state.turtles.map(x => drawTurtleDirection(x))}
-      </g>
-    </svg>
-  </div>`}
+  return html`
+    <div class="svg-container">
+      <svg class="svg-viewer" style = "transform:scale(1, -1)">
+        <g class="transform-group">
+          <circle fill="orange" r="0.3" cx="0" cy="0"/>
+          ${state.turtles.map(x => drawPath(x.path, state, resRatioX, resRatioY))}
+          ${state.turtles.map(x => drawTurtleDirection(x))}
+        </g>
+      </svg>
+    </div>
+  `
+}
 
 const viewer = () => html`
   <canvas width="1200" height="900" id="view"></canvas>
@@ -84,17 +87,22 @@ function drawPath(path, state, resRatioX, resRatioY) {
   path.forEach(polyline => {
     polyline.forEach((pt, i) => {
       let [ x, y ] = pt;
-      if (i === 0) d += `M ${state.panX + x * state.renderScaleX } ${state.panY + y * state.renderScaleY}`
-      else d += `L ${state.panX + x * state.renderScaleX } ${state.panY + y * state.renderScaleY}`
+
+      // if (i === 0) d += `M ${state.panX + x * state.renderScaleX } ${state.panY + y * state.renderScaleY}`
+      // else d += `L ${state.panX + x * state.renderScaleX } ${state.panY + y * state.renderScaleY}`
+
+      if (i === 0) d += `M ${x} ${y}`;
+      else d += `L ${x} ${y}`;
     })
   })
-  return `
+
+  return svg`
     <path d="${d}" stroke="black" stroke-width="2px" fill="none" vector-effect="non-scaling-stroke"/>
   `
 }
 
 function drawTurtleDirection(turtle) {
-  return true ? "" : `
+  return true ? "" : html`
     <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location[0]}px, ${turtle.location[1]}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
   `
 }

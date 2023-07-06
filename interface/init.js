@@ -9,6 +9,8 @@ import { addDropUpload } from "./addDropUpload.js";
 import { addNumberDragging } from "./addNumberDragging.js";
 import { downloadText } from "./download.js";
 
+import { addPanZoom } from "./addPanZoom.js";
+
 import { EditorView, basicSetup } from "codemirror"
 import { keymap } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript"
@@ -50,6 +52,8 @@ export function init(state) {
    x: [-5, 5],
    y: [-5, 5]
   });
+
+
 
   const editorContainer = document.querySelector(".dictionary");
 
@@ -176,11 +180,13 @@ export function init(state) {
   });
 
   listener("click", ".export-trigger", () => {
-    document.body.insertAdjacentHTML("beforeend", `${svgViewer(state, resRatioX, resRatioY)}`);
-    let svg = document.getElementsByClassName("svg-viewer")[0];
-    const svgString = new XMLSerializer().serializeToString(svg);
-    downloadText(`${state.filename}.svg`,svgString);
-    svg.remove();
+    // TODO: reimplement
+    
+    // document.body.insertAdjacentHTML("beforeend", `${svgViewer(state, resRatioX, resRatioY)}`);
+    // let svg = document.getElementsByClassName("svg-viewer")[0];
+    // const svgString = new XMLSerializer().serializeToString(svg);
+    // downloadText(`${state.filename}.svg`,svgString);
+    // svg.remove();
   });
 
 
@@ -206,6 +212,40 @@ async function automaticallyConnect(state) {
       state.haxidraw = await createHaxidraw(port);
       state.render();
     }
+  })
+
+}
+
+function addPanZoom2() { // TODO finish
+
+  // const canvas =
+
+  canvas.addEventListener("wheel", e => {
+    e.preventDefault();
+
+    state.renderScaleX *= 1 + (-e.deltaY * 0.0001);
+    state.renderScaleY *= 1 + (-e.deltaY * 0.0001);
+
+    if (glEnabled || gpuEnabled) {
+      state.panX += (state.mouseX * resRatioX - state.panX - canvas.width/2) * (e.deltaY * 0.0001);
+      state.panY += (state.mouseY * resRatioY - state.panY - canvas.height/2) * (e.deltaY * 0.0001);
+    } else {
+      state.panX += (state.mouseX * resRatioY - state.panX) * (e.deltaY * 0.0001);
+      state.panY += (state.mouseY * resRatioX - state.panY) * (e.deltaY * 0.0001);
+    }
+  })
+
+  canvas.addEventListener('mouseup', () => state.drag = false);
+  canvas.addEventListener('mousedown', () => state.drag = true);
+
+  canvas.addEventListener("mousemove", e => {
+    e.preventDefault();
+    state.mouseX = Math.floor((e.clientX - boundRect.left));
+    state.mouseY = Math.floor((e.clientY - boundRect.top));
+    if (!state.drag) return;
+    state.panX += e.movementX * ((glEnabled | gpuEnabled) ? resRatioX : resRatioX);
+    state.panY += e.movementY * ((glEnabled | gpuEnabled) ? resRatioY : resRatioY);
+    // renderCanvas(state)
   })
 
 }
