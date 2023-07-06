@@ -7,24 +7,20 @@ export function initCanvas(state) {
   const ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = false;
 
-  panZoomParams.ctx = ctx;
-  panZoomParams.canvas = canvas;
 
   const r = () => {
-    renderCanvas(state, panZoomParams);
+    renderCanvas(state, panZoomParams, canvas, ctx);
     requestAnimationFrame(r);
   };
 
   requestAnimationFrame(r);
 }
 
-export function renderCanvas(state, panZoomParams) {
+function renderCanvas(state, panZoomParams, canvas, ctx) {
 
-  renderTurtleCanvas(state, panZoomParams);
+  renderTurtleCanvas(state, panZoomParams, canvas, ctx);
 
   if (state.turtles.length === 0) return;
-
-  const { ctx } = panZoomParams;
 
   state.turtles.forEach(turtle => {
     for (const polyline of turtle.path) {
@@ -40,9 +36,7 @@ export function renderCanvas(state, panZoomParams) {
   })
 }
 
-function renderTurtleCanvas(state, panZoomParams) {
-  const { ctx, canvas } = panZoomParams;
-
+function renderTurtleCanvas(state, panZoomParams, canvas, ctx) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
   ctx.arc(
@@ -59,7 +53,7 @@ function renderTurtleCanvas(state, panZoomParams) {
   ctx.fill();
 }
 
-export function addPanZoom(canvas) {
+function addPanZoom(canvas) {
 
   const panZoomParams = {
     renderScaleX: 1,
