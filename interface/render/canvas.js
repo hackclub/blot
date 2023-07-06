@@ -26,13 +26,10 @@ export function renderCanvas(state, panZoomParams, canvas, ctx) {
 
   renderTurtleCanvas(state, panZoomParams, canvas, ctx);
 
-  const { panX, panY, renderScaleX, renderScaleY } = panZoomParams;
-
-  // ctx.resetTransform();
-  // ctx.scale(renderScaleY, renderScaleY);
-  // ctx.translate(panX, panY);
 
   if (state.turtles.length === 0) return;
+
+  const { panX, panY, scaleX, scaleY } = panZoomParams;
 
   ctx.beginPath();
 
@@ -40,8 +37,8 @@ export function renderCanvas(state, panZoomParams, canvas, ctx) {
     for (const polyline of turtle.path) {
       for (let i = 0; i < polyline.length; i++) {
         let [x, y] = polyline[i];
-        x = panZoomParams.panX + x * panZoomParams.renderScaleX
-        y = -panZoomParams.panY + y * panZoomParams.renderScaleY
+        x = panX + x * scaleX;
+        y = -panY + y * scaleY;
         if (i === 0) ctx.moveTo(x, -y);
         else ctx.lineTo(x, -y);
       }
@@ -58,8 +55,8 @@ function renderTurtleCanvas(state, panZoomParams, canvas, ctx) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
   ctx.arc(
-    panZoomParams.panX + state.turtlePos[0] * panZoomParams.renderScaleX, 
-    panZoomParams.panY + state.turtlePos[1] * panZoomParams.renderScaleY, 
+    panZoomParams.panX + state.turtlePos[0] * panZoomParams.scaleX, 
+    panZoomParams.panY + state.turtlePos[1] * panZoomParams.scaleY, 
     7, 
     0, 
     2 * Math.PI
@@ -78,8 +75,8 @@ function renderTurtleCanvas(state, panZoomParams, canvas, ctx) {
 function addPanZoom(canvas) {
 
   const panZoomParams = {
-    renderScaleX: 1,
-    renderScaleY: 1,
+    scaleX: 1,
+    scaleY: 1,
     panX: 0,
     panY: 0,
     mouseX: 0,
@@ -100,8 +97,8 @@ function addPanZoom(canvas) {
 
     const ZOOM_SPEED = 0.0005;
 
-    panZoomParams.renderScaleX *= 1 + (-e.deltaY * ZOOM_SPEED);
-    panZoomParams.renderScaleY *= 1 + (-e.deltaY * ZOOM_SPEED);
+    panZoomParams.scaleX *= 1 + (-e.deltaY * ZOOM_SPEED);
+    panZoomParams.scaleY *= 1 + (-e.deltaY * ZOOM_SPEED);
 
 
     panZoomParams.panX += (panZoomParams.mouseX * resRatioY - panZoomParams.panX) * (e.deltaY * ZOOM_SPEED);
