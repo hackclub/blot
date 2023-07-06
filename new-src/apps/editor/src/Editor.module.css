@@ -1,0 +1,16 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.inner {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    position: relative;
+}
+
+.editor {
+    flex: 1;
+}

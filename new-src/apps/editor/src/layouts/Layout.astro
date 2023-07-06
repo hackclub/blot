@@ -11,7 +11,7 @@ const { title } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Haxidraw editor!">
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
@@ -44,10 +44,12 @@ body {
     font-family: var(--font-body);
     font-size: var(--font-0);
     min-height: 100vh;
+    margin: 0;
 }
 
 * {
     font-family: inherit;
+    box-sizing: border-box;
 }
 
 h1, h2, h3, h4, h5, h6, p, pre {

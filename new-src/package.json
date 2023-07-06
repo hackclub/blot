@@ -19,5 +19,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "resolutions": {
+    "@rollup/browser@^3.26.0": "patch:@rollup/browser@npm%3A3.26.2#./.yarn/patches/@rollup-browser-npm-3.26.2-ec96fc6979.patch"
+  }
 }

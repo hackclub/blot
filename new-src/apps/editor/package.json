@@ -19,11 +19,22 @@
     "@codemirror/language": "^6.8.0",
     "@codemirror/state": "^6.2.1",
     "@codemirror/view": "^6.14.0",
+    "@preact/compat": "^17.1.2",
     "@prefresh/vite": "^2.4.1",
     "@rollup/browser": "^3.26.0",
     "astro": "^2.7.3",
+    "classnames": "^2.3.2",
     "codemirror": "^6.0.1",
+    "nanoid": "^4.0.2",
     "niue": "^0.2.0",
     "preact": "^10.6.5"
+  },
+  "devDependencies": {
+    "@types/carbon__icons-react": "^11.20.0",
+    "@types/w3c-web-serial": "^1.0.3"
+  },
+  "overrides": {
+    "react": "npm:@preact/compat@latest",
+    "react-dom": "npm:@preact/compat@latest"
   }
 }

@@ -1,7 +1,11 @@
-import Button from "../ui/Button";
+import CodeMirror from "./CodeMirror";
+import cx from "classnames";
+import styles from "./Editor.module.css";
 
-export default function Editor() {
+export default function Editor(props: { className?: string }) {
     return (
-        <Button variant="primary">hi!</Button>
-    );
+        <div class={cx(styles.root, props.className)}>
+            <CodeMirror className={styles.cm} />
+        </div>
+    )
 }
