@@ -31,7 +31,11 @@ var gpuEnabled = false;
 var shaders, device, commandEncoder, renderPipeline, renderPassDescriptor, vertexBuffer, vertices, vertexBuffers, passEncoder;
 
 export function init(state) {
-  const r = () => render(view(state), document.body);
+  const r = () => {
+    render(view(state), document.body);
+    renderCanvas(state);
+  };
+
   const execute = () => {
     const code = editor.state.doc.toString();   
     runCode(code, state).then(() => r());
@@ -44,29 +48,33 @@ export function init(state) {
   const root = document.querySelector(".root");
   canvas = document.getElementById("view");
   
-  gpu = canvas.getContext("webgpu") 
+  // gpu = canvas.getContext("webgpu") 
 
-  if (gpu === null) {
-  gl = null//canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-  if (gl === null) {
+//   if (gpu === null) {
+//   gl = null//canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+//   if (gl === null) {
+//     console.log("Canvas initialized");
+//     ctx = canvas.getContext("2d");
+//     ctx.imageSmoothingEnabled = false;
+//   } else {
+//     state.panX -= canvas.width/2;
+//     state.panY += canvas.height/2;
+//     console.log("WebGL initialized");
+//     glEnabled = true;
+//     initGl();
+//   }
+// } else {
+//   state.panX -= canvas.width/2;
+//   state.panY -= canvas.height/2;
+//   initGpu();
+//   gpuEnabled = true;
+//   renderGpu(state);
+//   console.log("WebGPU initialized");
+// }
+
     console.log("Canvas initialized");
     ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;
-  } else {
-    state.panX -= canvas.width/2;
-    state.panY += canvas.height/2;
-    console.log("WebGL initialized");
-    glEnabled = true;
-    initGl();
-  }
-} else {
-  state.panX -= canvas.width/2;
-  state.panY -= canvas.height/2;
-  initGpu();
-  gpuEnabled = true;
-  renderGpu(state);
-  console.log("WebGPU initialized");
-}
   boundRect = canvas.getBoundingClientRect();
   resRatioX = canvas.width / canvas.offsetWidth;
   resRatioY = canvas.height / canvas.offsetHeight;
@@ -103,14 +111,14 @@ export function init(state) {
     state.scaleX *= 1 + (-e.deltaY * 0.0001);
     state.scaleY *= 1 + (-e.deltaY * 0.0001);
     console.log(resRatioX, resRatioY)
-    if (glEnabled | gpuEnabled) {
+    if (glEnabled || gpuEnabled) {
       state.panX += (state.mouseX * resRatioX - state.panX - canvas.width/2) * (e.deltaY * 0.0001);
       state.panY += (state.mouseY * resRatioY - state.panY - canvas.height/2) * (e.deltaY * 0.0001);
     } else {
       state.panX += (state.mouseX * resRatioY - state.panX) * (e.deltaY * 0.0001);
       state.panY += (state.mouseY * resRatioX - state.panY) * (e.deltaY * 0.0001);
     }
-    renderCanvas(state)
+    // renderCanvas(state)
   })
 
   canvas.addEventListener('mouseup', () => state.drag = false);
@@ -123,7 +131,7 @@ export function init(state) {
     if (!state.drag) return;
     state.panX += e.movementX * ((glEnabled | gpuEnabled) ? resRatioX : resRatioX);
     state.panY += e.movementY * ((glEnabled | gpuEnabled) ? resRatioY : resRatioY);
-    renderCanvas(state)
+    // renderCanvas(state)
   })
 
   window.addEventListener("resize", () => {
@@ -154,7 +162,7 @@ export function init(state) {
       e.preventDefault();
       const code = editor.state.doc.toString();
       downloadText(`${state.filename}.js`, code);
-      renderCanvas(state)
+      // renderCanvas(state)
     }
   })
 
@@ -170,7 +178,7 @@ export function init(state) {
   listener("click", ".run-trigger", () => {
     const code = editor.state.doc.toString();   
     runCode(code, state).then(() => r());
-    renderCanvas(state);
+    // renderCanvas(state);
   });
 
 
@@ -200,6 +208,13 @@ export function init(state) {
         .then(async (port) => {
           console.log("connecting");
           state.haxidraw = await createHaxidraw(port);
+
+
+          state.haxidraw.goTo = async (x, y) => {
+            await state.haxidraw.goTo(x*scaleX, y*scaleY);
+            state.turtlePos = [x, y];
+          } 
+
           console.log(state.haxidraw);
           r();
         })
@@ -211,7 +226,7 @@ export function init(state) {
       await state.haxidraw.port.close();
       state.haxidraw = null;
       state.turtlePos = [0, 0];
-      renderCanvas(state);
+      // renderCanvas(state);
       r();
     }
 
@@ -269,8 +284,10 @@ async function automaticallyConnect(state) {
 }
 
 export function renderCanvas(state) {
-  if (glEnabled) return renderGl(state);
-  if (gpuEnabled) return renderGpu(state);
+  if (!ctx) return;
+  // if (glEnabled) return renderGl(state);
+  // if (gpuEnabled) return renderGpu(state);
+
   renderTurtleCanvas(state);
   if (state.turtles.length === 0) return;
   state.turtles.forEach(turtle => {
