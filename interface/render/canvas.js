@@ -8,6 +8,7 @@ export function initCanvas(state) {
   ctx.imageSmoothingEnabled = false;
   // ctx.translate(0.5, 0.5);
 
+  // add resize observer
 
   const r = () => {
     renderCanvas(state, panZoomParams, canvas, ctx);
@@ -51,12 +52,13 @@ function renderTurtleCanvas(state, panZoomParams, canvas, ctx) {
   );
   ctx.strokeStyle = "white";
   ctx.stroke();
-  ctx.strokeStyle = "black";
-  ctx.lineWidth = 1;
-  ctx.lineJoin = "round";
-  ctx.lineCap = "round";
   ctx.fillStyle = "rgba(150, 255, 0, 1)";
   ctx.fill();
+
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 1.5;
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
 }
 
 function addPanZoom(canvas) {
@@ -114,7 +116,7 @@ function addPanZoom(canvas) {
     boundRect = canvas.getBoundingClientRect();
     canvas.width = boundRect.width;
     canvas.height = boundRect.height;
-    
+
     resRatioX = canvas.width / canvas.offsetWidth;
     resRatioY = canvas.height / canvas.offsetHeight;
   });
