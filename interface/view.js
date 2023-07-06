@@ -53,8 +53,20 @@ const commandLine = state => html`
 export function svgViewer (state, resRatioX, resRatioY) {
   return html`
     <div class="svg-container">
-      <canvas height="200px" class="canvas-viewer" style="border: 1px solid red"></canvas>
-      <svg class="svg-viewer" style = "transform:scale(1, -1)">
+      <canvas 
+        style="
+          height: 50%; 
+          width: 100%;
+          border-bottom: 1px solid red;
+        " 
+        class="canvas-viewer">
+        </canvas>
+      <svg 
+        class="svg-viewer" 
+        style="
+          transform:scale(1, -1); 
+          height: 50%;
+        ">
         <g class="transform-group">
           <circle fill="orange" r="0.3" cx="0" cy="0"/>
           ${state.turtles.map(x => drawPath(x.path, state, resRatioX, resRatioY))}

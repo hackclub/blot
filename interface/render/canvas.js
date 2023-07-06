@@ -6,6 +6,7 @@ export function initCanvas(state) {
   const panZoomParams = addPanZoom(canvas);
   const ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = false;
+  // ctx.translate(0.5, 0.5);
 
 
   const r = () => {
@@ -14,9 +15,11 @@ export function initCanvas(state) {
   };
 
   requestAnimationFrame(r);
+
+  return { panZoomParams, ctx, canvas }
 }
 
-function renderCanvas(state, panZoomParams, canvas, ctx) {
+export function renderCanvas(state, panZoomParams, canvas, ctx) {
 
   renderTurtleCanvas(state, panZoomParams, canvas, ctx);
 
@@ -49,6 +52,9 @@ function renderTurtleCanvas(state, panZoomParams, canvas, ctx) {
   ctx.strokeStyle = "white";
   ctx.stroke();
   ctx.strokeStyle = "black";
+  ctx.lineWidth = 1;
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
   ctx.fillStyle = "rgba(150, 255, 0, 1)";
   ctx.fill();
 }
@@ -65,6 +71,9 @@ function addPanZoom(canvas) {
   }
 
   let boundRect = canvas.getBoundingClientRect();
+  canvas.width = boundRect.width;
+  canvas.height = boundRect.height;
+  
   let resRatioX = canvas.width / canvas.offsetWidth;
   let resRatioY = canvas.height / canvas.offsetHeight;
 
@@ -73,12 +82,14 @@ function addPanZoom(canvas) {
   canvas.addEventListener("wheel", e => {
     e.preventDefault();
 
-    panZoomParams.renderScaleX *= 1 + (-e.deltaY * 0.0005);
-    panZoomParams.renderScaleY *= 1 + (-e.deltaY * 0.0005);
+    const ZOOM_SPEED = 0.0005;
+
+    panZoomParams.renderScaleX *= 1 + (-e.deltaY * ZOOM_SPEED);
+    panZoomParams.renderScaleY *= 1 + (-e.deltaY * ZOOM_SPEED);
 
 
-    panZoomParams.panX += (panZoomParams.mouseX * resRatioY - panZoomParams.panX) * (e.deltaY * 0.0001);
-    panZoomParams.panY += (panZoomParams.mouseY * resRatioX - panZoomParams.panY) * (e.deltaY * 0.0001);
+    panZoomParams.panX += (panZoomParams.mouseX * resRatioY - panZoomParams.panX) * (e.deltaY * ZOOM_SPEED);
+    panZoomParams.panY += (panZoomParams.mouseY * resRatioX - panZoomParams.panY) * (e.deltaY * ZOOM_SPEED);
   })
 
   canvas.addEventListener('mousedown', () => {

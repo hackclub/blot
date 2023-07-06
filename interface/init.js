@@ -19,12 +19,14 @@ import { indentWithTab } from "@codemirror/commands";
 
 import { createHaxidraw } from "./haxidraw/createHaxidraw.js";
 
-import { initCanvas } from "./render/canvas.js";
+import { initCanvas, renderCanvas } from "./render/canvas.js";
 
 
 export function init(state) {
   const r = () => {
     render(view(state), document.body);
+
+    // could render canvas here
   };
 
   const execute = () => {
@@ -39,7 +41,6 @@ export function init(state) {
   initCanvas(state);
   
   const root = document.querySelector(".root");
-  // canvas = document.getElementById("view");
   
   const panZoom = addPanZoom(root.querySelector("svg"));
 
@@ -47,8 +48,6 @@ export function init(state) {
    x: [-5, 5],
    y: [-5, 5]
   });
-
-
 
   const editorContainer = document.querySelector(".dictionary");
 
