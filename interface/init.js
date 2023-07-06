@@ -28,7 +28,7 @@ export function init(state) {
   const r = () => requestAnimationFrame(() => {
     render(view(state), document.body);
 
-    // if (state.renderCanvas) state.renderCanvas(state);
+    if (state.renderCanvas && state.renderMethod === "canvas") state.renderCanvas(state);
   });
 
   const execute = () => {
