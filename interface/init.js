@@ -19,15 +19,17 @@ import { indentWithTab } from "@codemirror/commands";
 
 import { createHaxidraw } from "./haxidraw/createHaxidraw.js";
 
-import { initCanvas, renderCanvas } from "./render/canvas.js";
+import { initCanvas } from "./render/canvas.js";
 
 
 export function init(state) {
-  const r = () => {
+  render(view(state), document.body);
+
+  const r = () => requestAnimationFrame(() => {
     render(view(state), document.body);
 
-    // could render canvas here
-  };
+    // if (state.renderCanvas) state.renderCanvas(state);
+  });
 
   const execute = () => {
     const code = editor.state.doc.toString();   
@@ -36,9 +38,8 @@ export function init(state) {
 
   state.execute = execute;
   state.render = r;
-  r();
 
-  // initCanvas(state);
+  state.renderCanvas = initCanvas(state).renderCanvas;
   
   const root = document.querySelector(".root");
   

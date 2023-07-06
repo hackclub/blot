@@ -21,4 +21,5 @@ export const GLOBAL_STATE = {
   topScope: {},
   haxidraw: null,
   filename: title,
+  renderMethod: "canvas" // svg | canvas
 }

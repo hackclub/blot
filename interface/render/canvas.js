@@ -3,7 +3,11 @@
 export function initCanvas(state) {
   const canvas = document.querySelector(".canvas-viewer");
 
-  const panZoomParams = addPanZoom(canvas);
+  const panZoomParams = addPanZoom(canvas, () => {
+    // renderCanvas(state)
+    return requestAnimationFrame(() => renderCanvas(state));
+  });
+
   const ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = false;
   canvas.style.imageRendering = 'pixelated';
@@ -12,67 +16,70 @@ export function initCanvas(state) {
 
   // add resize observer
 
-  const r = () => {
-    renderCanvas(state, panZoomParams, canvas, ctx);
-    requestAnimationFrame(r);
-  };
+  // const r = () => {
+  //   renderCanvas(state);
+  //   requestAnimationFrame(r);
+  // };
 
-  requestAnimationFrame(r);
+  // requestAnimationFrame(r);
 
-  return { panZoomParams, ctx, canvas }
-}
-
-export function renderCanvas(state, panZoomParams, canvas, ctx) {
-
-  renderTurtleCanvas(state, panZoomParams, canvas, ctx);
+  return { panZoomParams, canvas, renderCanvas }
 
 
-  if (state.turtles.length === 0) return;
+  function renderCanvas(state) {
 
-  const { panX, panY, scaleX, scaleY } = panZoomParams;
+    renderTurtleCanvas(state);
 
-  ctx.beginPath();
 
-  state.turtles.forEach(turtle => {
-    for (const polyline of turtle.path) {
-      for (let i = 0; i < polyline.length; i++) {
-        let [x, y] = polyline[i];
-        x = panX + x * scaleX;
-        y = -panY + y * scaleY;
-        if (i === 0) ctx.moveTo(x, -y);
-        else ctx.lineTo(x, -y);
+    if (state.turtles.length === 0) return;
+
+    const { panX, panY, scaleX, scaleY } = panZoomParams;
+
+    ctx.beginPath();
+
+    state.turtles.forEach(turtle => {
+      for (const polyline of turtle.path) {
+        for (let i = 0; i < polyline.length; i++) {
+          let [x, y] = polyline[i];
+          x = panX + x * scaleX;
+          y = -panY + y * scaleY;
+          if (i === 0) ctx.moveTo(x, -y);
+          else ctx.lineTo(x, -y);
+        }
       }
-    }
-  })
+    })
 
-  ctx.stroke();
+    ctx.stroke();
 
 
+  }
+
+  function renderTurtleCanvas(state) {
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.arc(
+      panZoomParams.panX + state.turtlePos[0] * panZoomParams.scaleX, 
+      panZoomParams.panY + state.turtlePos[1] * panZoomParams.scaleY, 
+      7, 
+      0, 
+      2 * Math.PI
+    );
+    ctx.strokeStyle = "white";
+    ctx.stroke();
+    ctx.fillStyle = "#ffa500";
+    ctx.fill();
+
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+  }
 }
 
-function renderTurtleCanvas(state, panZoomParams, canvas, ctx) {
-  
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  ctx.arc(
-    panZoomParams.panX + state.turtlePos[0] * panZoomParams.scaleX, 
-    panZoomParams.panY + state.turtlePos[1] * panZoomParams.scaleY, 
-    7, 
-    0, 
-    2 * Math.PI
-  );
-  ctx.strokeStyle = "white";
-  ctx.stroke();
-  ctx.fillStyle = "rgba(150, 255, 0, 1)";
-  ctx.fill();
 
-  ctx.strokeStyle = "black";
-  ctx.lineWidth = 1.5;
-  ctx.lineJoin = "round";
-  ctx.lineCap = "round";
-}
 
-function addPanZoom(canvas) {
+function addPanZoom(canvas, render) {
 
   const panZoomParams = {
     scaleX: 1,
@@ -103,6 +110,8 @@ function addPanZoom(canvas) {
 
     panZoomParams.panX += (panZoomParams.mouseX * resRatioY - panZoomParams.panX) * (e.deltaY * ZOOM_SPEED);
     panZoomParams.panY += (panZoomParams.mouseY * resRatioX - panZoomParams.panY) * (e.deltaY * ZOOM_SPEED);
+    
+    render();
   })
 
   canvas.addEventListener('mousedown', () => {
@@ -121,6 +130,8 @@ function addPanZoom(canvas) {
     if (!drag) return;
     panZoomParams.panX += e.movementX * resRatioX;
     panZoomParams.panY += e.movementY * resRatioY;
+
+    render();
   })
 
   window.addEventListener("resize", () => {
@@ -130,6 +141,8 @@ function addPanZoom(canvas) {
 
     resRatioX = canvas.width / canvas.offsetWidth;
     resRatioY = canvas.height / canvas.offsetHeight;
+
+    render();
   });
 
   return panZoomParams;

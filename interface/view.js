@@ -51,26 +51,41 @@ const commandLine = state => html`
 `
 
 export function svgViewer (state) {
+  const makeStyle = obj => Object
+    .entries(obj)
+    .reduce((acc, cur) => {
+      const [ key, value ] = cur;
+      return acc + `${key}:${value};`
+    }, "");
+
+  const styles = {
+    "canvas": {
+      "width": "100%",
+      "height": state.renderMethod === "canvas" ? "100%" : "0%",
+    },
+    "svg": {
+      "transform": "scale(1, -1)",
+      "height": state.renderMethod === "svg" ? "100%" : "0%",
+    }
+  }
+
+  for (const key in styles) {
+    styles[key] = makeStyle(styles[key]);
+  };
+
   return html`
     <div class="svg-container">
       <canvas 
-        style="
-          height: 0%; 
-          width: 100%;
-          border-bottom: 1px solid red;
-        " 
+        style=${styles["canvas"]} 
         class="canvas-viewer">
         </canvas>
       <svg 
         class="svg-viewer" 
-        style="
-          transform:scale(1, -1); 
-          height: 100%;
-        ">
+        style=${styles["svg"]}>
         <g class="transform-group">
           <circle fill="orange" r="0.3" cx="0" cy="0"/>
-          ${state.turtles.map(x => drawPath(x.path))}
-          ${state.turtles.map(x => drawTurtleDirection(x))}
+          ${state.renderMethod === "svg" ? state.turtles.map(x => drawPath(x.path)) : ""}
+          ${state.renderMethod === "svg" ? state.turtles.map(x => drawTurtleDirection(x)) : ""}
         </g>
       </svg>
     </div>
