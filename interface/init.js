@@ -20,6 +20,7 @@ import { indentWithTab } from "@codemirror/commands";
 import { createHaxidraw } from "./haxidraw/createHaxidraw.js";
 
 
+
 export function init(state) {
   const r = () => {
     render(view(state), document.body);
@@ -122,7 +123,9 @@ export function init(state) {
   listener("click", ".connect-trigger", async () => {
     if (!navigator.serial) {
       alert(
-        "Your browser doesn't seem to support the Web Serial API, which is required for the Haxidraw editor to connect to the machine. Chrome Version 89 or above is the recommended browser."
+        "Your browser doesn't seem to support the Web Serial API," 
+        + "which is required for the Haxidraw editor to connect to the machine." 
+        + "Chrome Version 89 or above is the recommended browser."
       ) 
     }
     if (!state.haxidraw) { // connect
