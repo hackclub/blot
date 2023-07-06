@@ -13,7 +13,7 @@ export function view(state) {
         <div class="dictionary"></div>
 
         <div class="right-panel">
-          ${viewer(state)}
+          ${svgViewer(state)}
           ${commandLine(state)}
         </div>
       </div>
@@ -50,6 +50,59 @@ const commandLine = state => html`
   </div>
 `
 
+export function svgViewer (state, resRatioX, resRatioY) {
+  return html`
+    <div class="svg-container">
+      <canvas 
+        style="
+          height: 0%; 
+          width: 100%;
+          border-bottom: 1px solid red;
+        " 
+        class="canvas-viewer">
+        </canvas>
+      <svg 
+        class="svg-viewer" 
+        style="
+          transform:scale(1, -1); 
+          height: 100%;
+        ">
+        <g class="transform-group">
+          <circle fill="orange" r="0.3" cx="0" cy="0"/>
+          ${state.turtles.map(x => drawPath(x.path, state, resRatioX, resRatioY))}
+          ${state.turtles.map(x => drawTurtleDirection(x))}
+        </g>
+      </svg>
+    </div>
+  `
+}
+
+function drawPath(path, state, resRatioX, resRatioY) {
+  let d = "";
+  path.forEach(polyline => {
+    polyline.forEach((pt, i) => {
+      let [ x, y ] = pt;
+
+      if (i === 0) d += `M ${x} ${y}`;
+      else d += `L ${x} ${y}`;
+    })
+  })
+
+  return svg`
+    <path d="${d}" stroke="black" stroke-width="2px" fill="none" vector-effect="non-scaling-stroke"/>
+  `
+}
+
+function drawTurtleDirection(turtle) {
+  return true ? "" : html`
+    <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location[0]}px, ${turtle.location[1]}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
+  `
+}
+
+// const viewer = () => html`
+//   <canvas width="1200" height="900" id="view"></canvas>
+// `
+
 /*const drawWorkarea = state => html`
   <rect 
     width=${state.machineWidth} 
@@ -63,38 +116,3 @@ const commandLine = state => html`
     style="scale: ${state.scaleX} ${state.scaleY};"/>
 `*/
 
-export function svgViewer (state, canvas) {
-  return `
-  <div class="svg-container">
-    <svg class="svg-viewer" style = "transform:scale(1, -1)">
-      <g class="transform-group">
-        ${state.turtles.map(x => drawPath(x.path, state, canvas))}
-        ${state.turtles.map(x => drawTurtleDirection(x))}
-      </g>
-    </svg>
-  </div>`}
-
-const viewer = () => html`
-  <canvas width="1200" height="1000" id="view"></canvas>
-  `
-
-
-function drawPath(path, state, canvas) {
-  let d = "";
-  path.forEach(polyline => {
-    polyline.forEach((pt, i) => {
-      let [ x, y ] = pt;
-      if (i === 0) d += `M ${x * state.renderScaleX + state.panX} ${y * state.renderScaleY - state.panY + canvas.height*0.75}`
-      else d += `L ${x * state.renderScaleX + state.panX} ${y * state.renderScaleY - state.panY + canvas.height*0.75}`
-    })
-  })
-  return `
-    <path d="${d}" stroke="black" stroke-width="2px" fill="none" vector-effect="non-scaling-stroke"/>
-  `
-}
-
-function drawTurtleDirection(turtle) {
-  return true ? "" : `
-    <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location[0]}px, ${turtle.location[1]}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
-  `
-}
