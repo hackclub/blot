@@ -73,7 +73,7 @@ function addPanZoom(canvas) {
   let boundRect = canvas.getBoundingClientRect();
   canvas.width = boundRect.width;
   canvas.height = boundRect.height;
-  
+
   let resRatioX = canvas.width / canvas.offsetWidth;
   let resRatioY = canvas.height / canvas.offsetHeight;
 
@@ -112,6 +112,9 @@ function addPanZoom(canvas) {
 
   window.addEventListener("resize", () => {
     boundRect = canvas.getBoundingClientRect();
+    canvas.width = boundRect.width;
+    canvas.height = boundRect.height;
+    
     resRatioX = canvas.width / canvas.offsetWidth;
     resRatioY = canvas.height / canvas.offsetHeight;
   });
