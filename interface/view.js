@@ -53,6 +53,7 @@ const commandLine = state => html`
 export function svgViewer (state, resRatioX, resRatioY) {
   return html`
     <div class="svg-container">
+      <canvas height="200px" class="canvas-viewer" style="border: 1px solid red"></canvas>
       <svg class="svg-viewer" style = "transform:scale(1, -1)">
         <g class="transform-group">
           <circle fill="orange" r="0.3" cx="0" cy="0"/>

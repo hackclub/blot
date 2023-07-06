@@ -19,6 +19,7 @@ import { indentWithTab } from "@codemirror/commands";
 
 import { createHaxidraw } from "./haxidraw/createHaxidraw.js";
 
+import { initCanvas } from "./render/canvas.js";
 
 
 export function init(state) {
@@ -34,6 +35,8 @@ export function init(state) {
   state.execute = execute;
   state.render = r;
   r();
+
+  initCanvas(state);
   
   const root = document.querySelector(".root");
   // canvas = document.getElementById("view");
