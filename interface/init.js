@@ -38,7 +38,7 @@ export function init(state) {
   state.render = r;
   r();
 
-  initCanvas(state);
+  // initCanvas(state);
   
   const root = document.querySelector(".root");
   

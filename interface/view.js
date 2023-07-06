@@ -55,7 +55,7 @@ export function svgViewer (state, resRatioX, resRatioY) {
     <div class="svg-container">
       <canvas 
         style="
-          height: 50%; 
+          height: 0%; 
           width: 100%;
           border-bottom: 1px solid red;
         " 
@@ -65,7 +65,7 @@ export function svgViewer (state, resRatioX, resRatioY) {
         class="svg-viewer" 
         style="
           transform:scale(1, -1); 
-          height: 50%;
+          height: 100%;
         ">
         <g class="transform-group">
           <circle fill="orange" r="0.3" cx="0" cy="0"/>
