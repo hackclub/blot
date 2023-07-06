@@ -1,5 +1,13 @@
 
 var ctx;
+// var gl;
+// var gpu;
+// var canvas;
+// var boundRect;
+// var resRatioX;
+// var resRatioY;
+// var glEnabled = false;
+// var gpuEnabled = false;
 
 export function initCanvas(state) {
   console.log("Canvas initialized");

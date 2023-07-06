@@ -19,15 +19,6 @@ import { indentWithTab } from "@codemirror/commands";
 
 import { createHaxidraw } from "./haxidraw/createHaxidraw.js";
 
-// var gl;
-// var gpu;
-// var canvas;
-// var boundRect;
-// var resRatioX;
-// var resRatioY;
-// var glEnabled = false;
-// var gpuEnabled = false;
-
 
 export function init(state) {
   const r = () => {
@@ -181,7 +172,7 @@ export function init(state) {
 
   listener("click", ".export-trigger", () => {
     // TODO: reimplement
-    
+
     // document.body.insertAdjacentHTML("beforeend", `${svgViewer(state, resRatioX, resRatioY)}`);
     // let svg = document.getElementsByClassName("svg-viewer")[0];
     // const svgString = new XMLSerializer().serializeToString(svg);
@@ -215,39 +206,4 @@ async function automaticallyConnect(state) {
   })
 
 }
-
-function addPanZoom2() { // TODO finish
-
-  // const canvas =
-
-  canvas.addEventListener("wheel", e => {
-    e.preventDefault();
-
-    state.renderScaleX *= 1 + (-e.deltaY * 0.0001);
-    state.renderScaleY *= 1 + (-e.deltaY * 0.0001);
-
-    if (glEnabled || gpuEnabled) {
-      state.panX += (state.mouseX * resRatioX - state.panX - canvas.width/2) * (e.deltaY * 0.0001);
-      state.panY += (state.mouseY * resRatioY - state.panY - canvas.height/2) * (e.deltaY * 0.0001);
-    } else {
-      state.panX += (state.mouseX * resRatioY - state.panX) * (e.deltaY * 0.0001);
-      state.panY += (state.mouseY * resRatioX - state.panY) * (e.deltaY * 0.0001);
-    }
-  })
-
-  canvas.addEventListener('mouseup', () => state.drag = false);
-  canvas.addEventListener('mousedown', () => state.drag = true);
-
-  canvas.addEventListener("mousemove", e => {
-    e.preventDefault();
-    state.mouseX = Math.floor((e.clientX - boundRect.left));
-    state.mouseY = Math.floor((e.clientY - boundRect.top));
-    if (!state.drag) return;
-    state.panX += e.movementX * ((glEnabled | gpuEnabled) ? resRatioX : resRatioX);
-    state.panY += e.movementY * ((glEnabled | gpuEnabled) ? resRatioY : resRatioY);
-    // renderCanvas(state)
-  })
-
-}
-
 

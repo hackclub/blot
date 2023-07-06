@@ -1,3 +1,13 @@
+
+// var gl;
+// var gpu;
+// var canvas;
+// var boundRect;
+// var resRatioX;
+// var resRatioY;
+// var glEnabled = false;
+// var gpuEnabled = false;
+
 // WebGPU stuff
 var shaders, device, commandEncoder, renderPipeline, renderPassDescriptor, vertexBuffer, vertices, vertexBuffers, passEncoder;
 

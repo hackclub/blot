@@ -6,7 +6,16 @@
 
 
 export function addCanvasPanZoom(state) {
-  
+
+  // renderScaleX: 1,
+  // renderScaleY: 1,
+  // panX: 0,
+  // panY: 0,
+  // mouseX: 0,
+  // mouseY: 0,
+
+  // const canvas =
+
   canvas.addEventListener("wheel", e => {
     e.preventDefault();
 

@@ -1,4 +1,13 @@
 
+// var gl;
+// var gpu;
+// var canvas;
+// var boundRect;
+// var resRatioX;
+// var resRatioY;
+// var glEnabled = false;
+// var gpuEnabled = false;
+
 function initGl() {
   gl.viewport(0, 0, canvas.width, canvas.height);
   var vertexShader = gl.createShader(gl.VERTEX_SHADER);

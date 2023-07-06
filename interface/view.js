@@ -50,19 +50,6 @@ const commandLine = state => html`
   </div>
 `
 
-/*const drawWorkarea = state => html`
-  <rect 
-    width=${state.machineWidth} 
-    height=${state.machineHeight} 
-    x="0" 
-    y="0"
-    fill="none"
-    stroke="grey"
-    stroke-width="3"
-    vector-effect="non-scaling-stroke"
-    style="scale: ${state.scaleX} ${state.scaleY};"/>
-`*/
-
 export function svgViewer (state, resRatioX, resRatioY) {
   return html`
     <div class="svg-container">
@@ -77,19 +64,11 @@ export function svgViewer (state, resRatioX, resRatioY) {
   `
 }
 
-const viewer = () => html`
-  <canvas width="1200" height="900" id="view"></canvas>
-  `
-
-
 function drawPath(path, state, resRatioX, resRatioY) {
   let d = "";
   path.forEach(polyline => {
     polyline.forEach((pt, i) => {
       let [ x, y ] = pt;
-
-      // if (i === 0) d += `M ${state.panX + x * state.renderScaleX } ${state.panY + y * state.renderScaleY}`
-      // else d += `L ${state.panX + x * state.renderScaleX } ${state.panY + y * state.renderScaleY}`
 
       if (i === 0) d += `M ${x} ${y}`;
       else d += `L ${x} ${y}`;
@@ -101,8 +80,25 @@ function drawPath(path, state, resRatioX, resRatioY) {
   `
 }
 
-function drawTurtleDirection(turtle) {
-  return true ? "" : html`
-    <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location[0]}px, ${turtle.location[1]}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
-  `
-}
+// function drawTurtleDirection(turtle) {
+//   return true ? "" : html`
+//     <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location[0]}px, ${turtle.location[1]}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
+//   `
+// }
+
+// const viewer = () => html`
+//   <canvas width="1200" height="900" id="view"></canvas>
+// `
+
+/*const drawWorkarea = state => html`
+  <rect 
+    width=${state.machineWidth} 
+    height=${state.machineHeight} 
+    x="0" 
+    y="0"
+    fill="none"
+    stroke="grey"
+    stroke-width="3"
+    vector-effect="non-scaling-stroke"
+    style="scale: ${state.scaleX} ${state.scaleY};"/>
+`*/
