@@ -6,6 +6,8 @@ export function initCanvas(state) {
   const panZoomParams = addPanZoom(canvas);
   const ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = false;
+  canvas.style.imageRendering = 'pixelated';
+  canvas.style.imageRendering = 'crisp-edges';
   // ctx.translate(0.5, 0.5);
 
   // add resize observer
@@ -24,6 +26,12 @@ export function renderCanvas(state, panZoomParams, canvas, ctx) {
 
   renderTurtleCanvas(state, panZoomParams, canvas, ctx);
 
+  const { panX, panY, renderScaleX, renderScaleY } = panZoomParams;
+
+  // ctx.resetTransform();
+  // ctx.scale(renderScaleY, renderScaleY);
+  // ctx.translate(panX, panY);
+
   if (state.turtles.length === 0) return;
 
   ctx.beginPath();
@@ -40,10 +48,13 @@ export function renderCanvas(state, panZoomParams, canvas, ctx) {
     }
   })
 
-  ctx.stroke()
+  ctx.stroke();
+
+
 }
 
 function renderTurtleCanvas(state, panZoomParams, canvas, ctx) {
+  
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
   ctx.arc(
