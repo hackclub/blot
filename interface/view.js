@@ -63,12 +63,12 @@ const commandLine = state => html`
     style="scale: ${state.scaleX} ${state.scaleY};"/>
 `*/
 
-export function svgViewer (state, resRatioX, resRatioY) {
+export function svgViewer (state, canvas) {
   return `
   <div class="svg-container">
     <svg class="svg-viewer" style = "transform:scale(1, -1)">
       <g class="transform-group">
-        ${state.turtles.map(x => drawPath(x.path, state, resRatioX, resRatioY))}
+        ${state.turtles.map(x => drawPath(x.path, state, canvas))}
         ${state.turtles.map(x => drawTurtleDirection(x))}
       </g>
     </svg>
@@ -79,13 +79,13 @@ const viewer = () => html`
   `
 
 
-function drawPath(path, state) {
+function drawPath(path, state, canvas) {
   let d = "";
   path.forEach(polyline => {
     polyline.forEach((pt, i) => {
       let [ x, y ] = pt;
-      if (i === 0) d += `M ${x * state.renderScaleX} ${y}`
-      else d += `L ${x * state.renderScaleX} ${y}}`
+      if (i === 0) d += `M ${x * state.renderScaleX + state.panX} ${y * state.renderScaleY - state.panY + canvas.height*0.75}`
+      else d += `L ${x * state.renderScaleX + state.panX} ${y * state.renderScaleY - state.panY + canvas.height*0.75}`
     })
   })
   return `

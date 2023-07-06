@@ -236,7 +236,7 @@ export function init(state) {
   });
 
   listener("click", ".export-trigger", () => {
-    document.body.insertAdjacentHTML("beforeend", `${svgViewer(state, resRatioX, resRatioY)}`);
+    document.body.insertAdjacentHTML("beforeend", `${svgViewer(state, canvas)}`);
     let svg = document.getElementsByClassName("svg-viewer")[0];
     const svgString = new XMLSerializer().serializeToString(svg);
     downloadText(`${state.filename}.svg`,svgString);
