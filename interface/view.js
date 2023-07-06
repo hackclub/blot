@@ -75,17 +75,17 @@ export function svgViewer (state, resRatioX, resRatioY) {
   </div>`}
 
 const viewer = () => html`
-  <canvas width="1200" height="900" id="view"></canvas>
+  <canvas width="1200" height="1000" id="view"></canvas>
   `
 
 
-function drawPath(path, state, resRatioX, resRatioY) {
+function drawPath(path, state) {
   let d = "";
   path.forEach(polyline => {
     polyline.forEach((pt, i) => {
       let [ x, y ] = pt;
-      if (i === 0) d += `M ${state.panX + x * state.renderScaleX } ${state.panY + y * state.renderScaleY}`
-      else d += `L ${state.panX + x * state.renderScaleX } ${state.panY + y * state.renderScaleY}`
+      if (i === 0) d += `M ${x * state.renderScaleX} ${y}`
+      else d += `L ${x * state.renderScaleX} ${y}}`
     })
   })
   return `

@@ -171,6 +171,7 @@ export function init(state) {
   listener("click", ".run-trigger", () => {
     const code = editor.state.doc.toString();   
     runCode(code, state).then(() => r());
+    state.turtlePos = [0, 0];
     renderCanvas(state);
   });
 
@@ -190,6 +191,8 @@ export function init(state) {
   });
 
   listener("click", ".connect-trigger", async () => {
+    state.turtlePos = [0, 0];
+    renderCanvas(state);
     if (!navigator.serial) {
       alert(
         "🚨 Your browser doesn't seem to support the Web Serial API, which is required for the Haxidraw editor to connect to the machine. Chrome Version 89 or above is the recommended browser."
@@ -211,8 +214,6 @@ export function init(state) {
       console.log("disconnecting");
       await state.haxidraw.port.close();
       state.haxidraw = null;
-      state.turtlePos = [0, 0];
-      renderCanvas(state);
       r();
     }
 
@@ -291,7 +292,7 @@ export function renderCanvas(state) {
 function renderTurtleCanvas(state) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
-  ctx.arc(state.panX + state.turtlePos[0] * state.renderScaleX, state.panY + state.turtlePos[1] * state.renderScaleY, 7, 0, 2 * Math.PI);
+  ctx.arc(state.panX + state.turtlePos[0] * state.renderScaleX, state.panY - state.turtlePos[1] * state.renderScaleY, 7, 0, 2 * Math.PI);
   ctx.strokeStyle = "white";
   ctx.stroke();
   ctx.strokeStyle = "black";
