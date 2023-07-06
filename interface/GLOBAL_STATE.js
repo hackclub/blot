@@ -15,12 +15,10 @@ export const GLOBAL_STATE = {
   machineHeight: 1,
   scaleX: 1,
   scaleY: 1,
-  turtlePos: [0, 0],
-  drag: false,
+  turtlePos: [ 0, 0 ],
   logs: [],
   codemirror: null,
   topScope: {},
   haxidraw: null,
   filename: title,
-  servo: null,
 }

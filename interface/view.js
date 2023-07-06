@@ -80,11 +80,11 @@ function drawPath(path, state, resRatioX, resRatioY) {
   `
 }
 
-// function drawTurtleDirection(turtle) {
-//   return true ? "" : html`
-//     <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location[0]}px, ${turtle.location[1]}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
-//   `
-// }
+function drawTurtleDirection(turtle) {
+  return true ? "" : html`
+    <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location[0]}px, ${turtle.location[1]}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
+  `
+}
 
 // const viewer = () => html`
 //   <canvas width="1200" height="900" id="view"></canvas>
