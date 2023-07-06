@@ -1,30 +1,15 @@
 const leafLength = 5;
 const leafW = 1.3;
 
-const edge = createTurtle();
-
-const max = 200;
-for (let i = 0; i < max; i++) {
-  const t = i/(max-1);
-  const x = t*leafLength;
-  
-  let s = (t-1/3)/(2/3);
-  let ss = s**2;
-  
-  let y = t < 1/3
-    ? Math.sin(t*Math.PI*3/2)
-    : (Math.sin((t-4)*Math.PI*3/2)/2 +0.5) * (1-ss) + (1-t) * (ss);
-  
-  let ya = leafW*y;
-  let yb = leafW*y;
-  
-  edge.goto([ x, ya ]);
-}
+const edge = createTurtle()
+  .forward(leafLength)
+  .resample(.01)
+  .warp(bezierEasing(0, [0.4, 2.29], [0.52, 0.31], 0));
 
 function veins() {
   const lines = createTurtle();
 
-  let littleLinesMax = 82;
+  let littleLinesMax = 61;
   for (let i = 4; i < littleLinesMax-5; i++) {
     
     const t = i/(littleLinesMax-1);
@@ -45,10 +30,7 @@ function veins() {
 
     if (r < 0.01) continue;
 
-    const warper = createTurtle()
-      .left(90)
-      .arc(144, r)
-      .scale([1, 0.1], [0, 0]);
+    const warper = bezierEasing(0, [0.28, y/4], [0.58, y/8], 0);
     
     line
       .forward(r)

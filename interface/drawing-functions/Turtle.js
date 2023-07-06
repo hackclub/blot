@@ -8,6 +8,7 @@ import { trimPolylines } from "./trimPolylines.js";
 import { filterPolylines } from "./filterPolylines.js";
 import { breakPolylines } from "./breakPolylines.js";
 import { filterBreakPolylines } from "./filterBreakPolylines.js";
+import { mergePolylines } from "./mergePolylines.js";
 
 export class Turtle {
   constructor(start = [ 0, 0 ]) {
@@ -169,6 +170,12 @@ export class Turtle {
     return this;
   }
 
+  merge(threshold = 0.01) {
+    this.path = mergePolylines(this.path, threshold);
+
+    return this;
+  }
+
   copy() {
     const newPath = JSON.parse(JSON.stringify(this.path));
     const t = new Turtle();
@@ -206,7 +213,7 @@ export class Turtle {
     return this;
   }
 
-  warp(fn, baseAngle = 0) {
+  warp(fn, baseAngle = null) { // TODO: if baseAngle is undefined then normal, if fn, pass normal, if number use number
 
     if (fn instanceof Turtle) {
       const ogTurtle = fn;
@@ -219,7 +226,16 @@ export class Turtle {
 
     tValues.forEach((t, i) => {
       const pt = this.path.flat()[i];
-      const angle = this.getAngle(t) + baseAngle;
+      
+      let angle = baseAngle;
+      if (angle === null) {
+        angle = this.getAngle(t);
+      } else if (typeof angle === "function") {
+        angle = angle(this.getAngle(t));
+      } else if (typeof angle === "number") {
+        angle = angle;
+      }
+
       // const normal = this.getNormal(t);
 
       const y = fn(t);
@@ -365,26 +381,45 @@ function iteratePath(turtle, fn) {
   const toRemove = new Set();
   const toBreak = new Set();
 
+  const tValues = tValuesForPoints(path);
+
+  let ptIndex = 0;
+
+  let newPts = {};
   for (let i = 0; i < path.length; i++){
     for (let j = 0; j < path[i].length; j++){
       const pt = path[i][j];
-      const newPt = fn(pt, j, path[i]);
+
+      const newPt = fn(pt, tValues[ptIndex]);
+
       if (newPt === "BREAK") {
         toBreak.add(`${i},${j}`);
       } else if (newPt === "REMOVE") {
         toRemove.add(`${i},${j}`);
       } else if (Array.isArray(newPt)) {
-        const [ newX, newY ] = newPt;
-        path[i][j] = [ newX, newY ]; 
+        // const [ newX, newY ] = newPt;
+        // path[i][j] = [ newX, newY ]; 
+        newPts[ptIndex] = newPt;
       }
+
+      ptIndex++;
     }
   }
+
+  path.flat().forEach((pt, i) => {
+    if (i in newPts) {
+      pt[0] = newPts[i][0];
+      pt[1] = newPts[i][1];
+    }
+  })
 
   filterBreakPolylines(
     path, 
     (i, j, arr) => toRemove.has(`${i},${j}`), 
     (i, j, arr) => toBreak.has(`${i},${j}`)
   );
+
+  turtle.path = path.filter(pl => pl.length > 1);
 
   return turtle;
 }

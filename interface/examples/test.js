@@ -1,8 +1,18 @@
 const t = new Turtle();
 
-t.forward(5);
-t.originate();
-t.scale(1);
-t.rotate(34);
+const warper = createCubicBez(
+  [0, 0],
+  [.5, 1],
+  [.5, 1],
+  [1, 0]
+)
+
+t
+  .forward(5)
+  .resample(.01)
+  .warp(t => warper(t)[1])
+  
+
 
 drawTurtles(t);
+

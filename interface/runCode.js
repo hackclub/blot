@@ -3,6 +3,14 @@ import { Turtle } from "./drawing-functions/Turtle.js";
 import { noise } from "./drawing-functions/noise.js";
 import { rand, setRandSeed, randInRange, randIntInRange } from "./drawing-functions/rand.js";
 import { displace } from "./drawing-functions/displace.js";
+// import { createCubicBez } from "./drawing-functions/createCubicBez.js";
+// import { makeCubicShaper } from "./drawing-functions/makeCubicShaper.js";
+// import { bezierEasing } from "./drawing-functions/bezierEasing.js";
+// import { bezierEasing as be } from "./drawing-functions/bezierEasing2.js";
+import { bezierEasing } from "./drawing-functions/bezierEasing3.js";
+import { isPointInPolyline, inside } from "./drawing-functions/isPointInPolyline.js";
+import { renderCanvas } from "./init.js";
+import { render } from 'lit-html';
 
 const drawingFunctions = {
   Turtle,
@@ -14,10 +22,15 @@ const drawingFunctions = {
   setRandSeed,
   randInRange, 
   randIntInRange,
-  displace,
+  // displace,
+  bezierEasing,
+  isPointInPolyline,
+  inside,
   lerp(start, end, t) {
     return (1 - t) * start + t * end;
   }
+  // softmax
+  // softmin
 }
 
 let intervals = [];
@@ -159,7 +172,8 @@ export async function runMachineHelper(state, [scaleX, scaleY]) {
       }
       
       await state.haxidraw.goTo(x*scaleX, y*scaleY);
-
+      state.turtlePos = [x, y];
+      renderCanvas(state);
     }
 
   }
@@ -167,4 +181,5 @@ export async function runMachineHelper(state, [scaleX, scaleY]) {
   await state.haxidraw.servo(1000);
   await delay(200);
   await state.haxidraw.goTo(0, 0);
+  state.turtlePos = [0, 0];
 }

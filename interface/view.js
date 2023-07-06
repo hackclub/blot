@@ -52,7 +52,7 @@ const commandLine = state => html`
   </div>
 `
 
-const drawWorkarea = state => html`
+/*const drawWorkarea = state => html`
   <rect 
     width=${state.machineWidth} 
     height=${state.machineHeight} 
@@ -63,37 +63,40 @@ const drawWorkarea = state => html`
     stroke-width="3"
     vector-effect="non-scaling-stroke"
     style="scale: ${state.scaleX} ${state.scaleY};"/>
-`
+`*/
 
-const viewer = state => html`
+export function svgViewer (state, canvas) {
+  return `
   <div class="svg-container">
-    <svg class="svg-viewer">
+    <svg class="svg-viewer" style = "transform:scale(1, -1)">
       <g class="transform-group">
-        <circle cx="0" cy="0" r="0.1" fill="orange"/>
-        ${state.turtles.map(x => drawPath(x.path))}
+        ${state.turtles.map(x => drawPath(x.path, state, canvas))}
         ${state.turtles.map(x => drawTurtleDirection(x))}
       </g>
     </svg>
-  </div>
-`
+  </div>`}
+
+const viewer = () => html`
+  <canvas width="1200" height="1000" id="view"></canvas>
+  `
 
 
-function drawPath(path) {
+function drawPath(path, state, canvas) {
   let d = "";
   path.forEach(polyline => {
     polyline.forEach((pt, i) => {
       let [ x, y ] = pt;
-      if (i === 0) d += `M ${x} ${y}`
-      else d += `L ${x} ${y}`
+      if (i === 0) d += `M ${x * state.renderScaleX + state.panX} ${y * state.renderScaleY - state.panY + canvas.height*0.75}`
+      else d += `L ${x * state.renderScaleX + state.panX} ${y * state.renderScaleY - state.panY + canvas.height*0.75}`
     })
   })
-  return svg`
+  return `
     <path d="${d}" stroke="black" stroke-width="2px" fill="none" vector-effect="non-scaling-stroke"/>
   `
 }
 
 function drawTurtleDirection(turtle) {
-  return false ? "" : svg`
+  return true ? "" : `
     <polygon points="0,0 0.5,-0.5 0.5,0.5" style="fill: orange; transform-origin:.5 0; transform: translate(${turtle.location[0]}px, ${turtle.location[1]}px) scale(.25, .25) rotate(${180 + turtle.angle}deg);" />
   `
 }

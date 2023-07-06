@@ -10,7 +10,6 @@ await fetch('/examples/examples.json')
     examplesArr = data.examples;
   })
   .catch(error => {
-    // Handle any errors that occurred during the fetch
     console.error('Error:', error);
   });
 
@@ -29,10 +28,19 @@ export const GLOBAL_STATE = {
   machineHeight: 1,
   scaleX: 1,
   scaleY: 1,
+  renderScaleX: 89,
+  renderScaleY: 89,
+  panX: 0,
+  panY: 0,
+  mouseX: 0,
+  mouseY: 0,
+  turtlePos: [0, 0],
+  drag: false,
   logs: [],
   codemirror: null,
   topScope: {},
   haxidraw: null,
   examples: examplesArr,
-  filename: title
+  filename: title,
+  servo: null,
 }
