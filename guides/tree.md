@@ -291,3 +291,8 @@ drawTurtles(
 
 And that's our tree!
 
+There is much to discover playing around in the parameter space. Some come out looking quite realistic.
+
+![Screen Shot 2023-07-06 at 4 47 23 PM](https://github.com/hackclub/haxidraw/assets/27078897/8d00c3b5-8d93-4e98-9b24-75ee00a85a87)
+
+
