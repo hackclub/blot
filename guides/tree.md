@@ -1,5 +1,7 @@
 # let's draw a tree
 
+> You can follow along in this editor: https://editor.haxidraw.hackclub.com/
+
 We're going to use recursion and abstract scribbles to make a tree that looks like this.
 
 ![Screen Shot 2023-07-06 at 11 20 07 PM](https://github.com/hackclub/haxidraw/assets/27078897/b2b3b319-1b0f-4c0e-bf78-d8323ab577d4)
