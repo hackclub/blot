@@ -10,6 +10,7 @@ This Turborepo includes the following packages/apps:
 
 - `docs`: a [Next.js](https://nextjs.org/) app
 - `editor`: an Astro/Preact app
+- `haxidraw-client`: a TypeScript library allowing you to interface with the Haxidraw device - also includes the Turtle library
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
