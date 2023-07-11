@@ -1,5 +1,7 @@
-import { getStore } from "./state";
+import { getStore, patchStore } from "./state.ts";
 import { rollup } from "@rollup/browser";
+import { Turtle as BaseTurtle, Point } from "haxidraw-client";
+import * as drawingUtils from "haxidraw-client/utils";
 
 let intervals: number[] = [];
 let timeouts: number[] = [];
@@ -72,12 +74,11 @@ async function getBundle(): Promise<string> {
 
 export default async function runCode() {
     const AsyncFunction = Object.getPrototypeOf(async function () { }).constructor;
-    // const state = getStore();
     const code = await getBundle();
 
     intervals.forEach(clearInterval);
     timeouts.forEach(clearTimeout);
-    loops.forEach((x, i) => {
+    loops.forEach((_, i) => {
         loops[i] = false;
     });
 
@@ -107,12 +108,34 @@ export default async function runCode() {
         }
     };
 
+    const turtles: Turtle[] = [];
+    let turtlePos: Point = [0, 0];
+
+    class Turtle extends BaseTurtle {
+        constructor() {
+            super();
+            turtles.push(this);
+        }
+        goto([x, y]: Point): this {
+            turtlePos = [x, y];
+            return super.goto([x, y]);
+        }
+    }
+
     // inject items into global scope, or replace existing properties with our own
     const customGlobal = {
         setTimeout: patchedTimeout,
         setInterval: patchedInterval,
         loop,
-        sleep
+        sleep,
+        // drawing functions
+        Turtle,
+        ...drawingUtils,
+        lerp(start: number, end: number, t: number) {
+            return (1 - t) * start + t * end;
+        },
+        // compat - not actually necessary
+        drawTurtles: function noop() {}
     };
 
     const globalProxy = new Proxy(window, {
@@ -140,4 +163,9 @@ export default async function runCode() {
     await f(
       ...values
     );
+
+    patchStore({
+        turtles,
+        turtlePos
+    });
 }

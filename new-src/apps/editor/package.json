@@ -13,7 +13,6 @@
   "dependencies": {
     "@astrojs/preact": "^2.2.1",
     "@astrojs/vercel": "^3.6.0",
-    "@carbon/icons-react": "^11.21.0",
     "@codemirror/commands": "^6.2.4",
     "@codemirror/lang-javascript": "^6.1.9",
     "@codemirror/language": "^6.8.0",
@@ -25,6 +24,7 @@
     "astro": "^2.7.3",
     "classnames": "^2.3.2",
     "codemirror": "^6.0.1",
+    "haxidraw-client": "*",
     "nanoid": "^4.0.2",
     "niue": "^0.2.0",
     "preact": "^10.6.5"

@@ -1,6 +1,7 @@
 import type { EditorState } from "@codemirror/state";
 import { createState } from "niue";
-import { createCMState, deserializeCMState } from "../components/CodeMirror";
+import { createCMState, deserializeCMState } from "../components/CodeMirror.tsx";
+import type { Haxidraw, Turtle, Point } from "haxidraw-client";
 
 export type CodeState = {
     content: string,
@@ -8,15 +9,14 @@ export type CodeState = {
 };
 
 export type GlobalState = {
-    code: CodeState
+    code: CodeState,
+    inst: Haxidraw | null,
+    turtles: Turtle[],
+    turtlePos: Point | null
 };
 
 export const makeNewState = (): GlobalState => {    
-    const initialContent = `// welcome to modular things!
-
-// if you have some things, plug them in
-// and head to the devices panel to pair
-// them and see API docs
+    const initialContent = `// welcome to ~~modular things~~haxidraw!
 
 // this is a fun little demo showing
 // some of the capabilities of the editor
@@ -39,7 +39,10 @@ uRender(viewEl, div);
         code: {
             content: initialContent,
             cmState: createCMState(initialContent)
-        }
+        },
+        inst: null,
+        turtles: [],
+        turtlePos: null
     };
 };
 
@@ -68,10 +71,13 @@ export function loadSerializedState(state: SerializedGlobalState) {
     // dispatchCMResetState();
 }
 
-const deserializeState = (state: SerializedGlobalState): Partial<GlobalState> => {
+const deserializeState = (state: SerializedGlobalState): GlobalState => {
     const code = deserializeCode(state.code);
     return {
-        code
+        code,
+        inst: null,
+        turtles: [],
+        turtlePos: null
     };
 }
 

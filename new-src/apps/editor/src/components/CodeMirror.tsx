@@ -7,8 +7,8 @@ import { indentWithTab } from "@codemirror/commands";
 import { useCallback, useEffect, useState } from "preact/hooks";
 import cx from "classnames";
 import styles from "./CodeMirror.module.css";
-import { getStore, useStore } from "../lib/state";
-import { dispatchEditorChange } from "../lib/events";
+import { getStore, useStore } from "../lib/state.ts";
+import { dispatchEditorChange } from "../lib/events.ts";
 
 // this is a terrible hack but strange bugs are about this one
 //@ts-expect-error

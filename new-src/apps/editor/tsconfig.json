@@ -4,6 +4,8 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     "lib": ["ES2015"],
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true
     // "paths": {
     //   "@/*": ["./src/*"]
     // }

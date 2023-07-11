@@ -1,9 +1,12 @@
 import { useEffect } from "preact/hooks";
-import download from "../lib/download";
-import runCode from "../lib/run";
-import { loadSerializedState, makeNewState, patchStore, serializeState, useStore } from "../lib/state";
+import download from "../lib/download.ts";
+import runCode from "../lib/run.ts";
+import { loadSerializedState, makeNewState, patchStore, serializeState, useStore } from "../lib/state.ts";
 import styles from "./Toolbar.module.css";
-import Button from "../ui/Button";
+import Button from "../ui/Button.tsx";
+import cx from "classnames";
+// import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
+import PlugIcon from "../ui/PlugIcon.tsx";
 
 export default function Toolbar() {
     return (
@@ -13,6 +16,7 @@ export default function Toolbar() {
             <DownloadButton />
             <NewButton />
             <OpenButton />
+            <MachineControls />
         </div>
     );
 }
@@ -20,11 +24,11 @@ export default function Toolbar() {
 function RunButton() {
     // keyboard shortcut - shift+enter
     useEffect(() => {
-        function handleKeyDown(e: KeyboardEvent) {
+        async function handleKeyDown(e: KeyboardEvent) {
             if(e.shiftKey && e.key === "Enter") {
                 e.preventDefault();
                 e.stopPropagation();
-                runCode();
+                await runCode();
             }
         }
         window.addEventListener("keydown", handleKeyDown);
@@ -76,4 +80,31 @@ function OpenButton() {
             input.click();
         }}>open</Button>
     );
+}
+
+function MachineControls() {
+    const { inst } = useStore(["inst"]);
+
+    return (
+        <div class={styles.right}>
+            {inst ? (
+                <>
+                    <Button>
+                        <PlugIcon className={cx(styles.icon, styles.connectedIcon)} />
+                        <span>disconnect...</span>
+                    </Button>
+                    {/* separator */}
+                    <div class={styles.separator} />
+                    <Button>
+                        run machine
+                    </Button>
+                </>
+            ) : (
+                <Button>
+                    <PlugIcon className={cx(styles.icon, styles.disconnectedIcon)} />
+                    <span>connect to machine...</span>
+                </Button>
+            )}
+        </div>
+    )
 }

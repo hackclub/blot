@@ -1,6 +1,6 @@
 import { useEffect } from "preact/hooks";
-import { useStore, serializeState, getStore } from "../lib/state";
-import { useOnEditorChange } from "../lib/events";
+import { useStore, serializeState, getStore } from "../lib/state.ts";
+import { useOnEditorChange } from "../lib/events.ts";
 
 function backup() {
     const backup = serializeState(getStore());

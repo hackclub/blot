@@ -1,4 +1,4 @@
-import CodeMirror from "./CodeMirror";
+import CodeMirror from "./CodeMirror.tsx";
 import cx from "classnames";
 import styles from "./Editor.module.css";
 

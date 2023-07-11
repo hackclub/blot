@@ -1,8 +1,8 @@
-import AutoBackup from "./components/AutoBackup";
-import CompatWarning from "./components/CompatWarning";
-import Sidebar from "./components/Sidebar";
-import Toolbar from "./components/Toolbar";
-import InnerEditor from "./components/Editor";
+import AutoBackup from "./components/AutoBackup.tsx";
+import CompatWarning from "./components/CompatWarning.tsx";
+import Preview from "./components/Preview.tsx";
+import Toolbar from "./components/Toolbar.tsx";
+import InnerEditor from "./components/Editor.tsx";
 import styles from "./Editor.module.css";
 
 export default function Editor() {
@@ -13,7 +13,7 @@ export default function Editor() {
                 <Toolbar />
                 <div class={styles.inner}>
                     <InnerEditor className={styles.editor} />
-                    <Sidebar />
+                    <Preview className={styles.preview} />
                 </div>
             </div>
             <CompatWarning />

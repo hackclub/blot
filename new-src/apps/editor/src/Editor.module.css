@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    overflow-y: hidden;
 }
 
 .inner {
@@ -13,4 +14,9 @@
 
 .editor {
     flex: 1;
+}
+
+.preview {
+    width: min(800px, max(400px, 50%));
+    border-left: 1px solid rgba(0, 0, 0, 0.25);
 }

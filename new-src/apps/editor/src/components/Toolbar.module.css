@@ -6,17 +6,50 @@
     align-items: center;
 }
 
-.root > button {
+.root button {
     border: none;
     background-color: transparent;
     color: inherit;
 }
 
-.root > button:hover {
+.root button:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
 .heading {
     font-size: 1.1rem;
     padding: 0 0.25rem;
+}
+
+.right {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+}
+
+.right * {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+}
+
+.icon {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.disconnectedIcon * {
+    fill: red;
+}
+
+.connectedIcon * {
+    fill: green;
+}
+
+.separator {
+    width: 1px;
+    margin: 0.25rem 0.125rem;
+    background-color: rgba(255, 255, 255, 0.2);
 }
