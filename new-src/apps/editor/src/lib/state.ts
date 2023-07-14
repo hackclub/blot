@@ -8,11 +8,24 @@ export type CodeState = {
     cmState: EditorState
 };
 
+export type CodePosition = {
+    line: number,
+    column: number
+}
+
+export type ErrorState = {
+    stack: CodePosition[],
+    code: string,
+    name: string,
+    message: string
+};
+
 export type GlobalState = {
     code: CodeState,
     inst: Haxidraw | null,
     turtles: Turtle[],
-    turtlePos: Point | null
+    turtlePos: Point | null,
+    error: ErrorState | null
 };
 
 export const makeNewState = (): GlobalState => {    
@@ -42,7 +55,8 @@ uRender(viewEl, div);
         },
         inst: null,
         turtles: [],
-        turtlePos: null
+        turtlePos: null,
+        error: null
     };
 };
 
@@ -53,6 +67,7 @@ export type SerializedCodeState = {
 
 export type SerializedGlobalState = {
     code: SerializedCodeState,
+    error: ErrorState | null,
     formatVersion: 0
 };
 
@@ -62,6 +77,7 @@ export const serializeState = (state: GlobalState): SerializedGlobalState => {
             content: state.code.content,
             cmState: state.code.cmState.toJSON()
         },
+        error: state.error,
         formatVersion: 0
     };
 }
@@ -77,7 +93,8 @@ const deserializeState = (state: SerializedGlobalState): GlobalState => {
         code,
         inst: null,
         turtles: [],
-        turtlePos: null
+        turtlePos: null,
+        error: state.error
     };
 }
 

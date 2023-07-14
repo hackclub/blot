@@ -7,6 +7,9 @@ import Button from "../ui/Button.tsx";
 import cx from "classnames";
 // import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
 import PlugIcon from "../ui/PlugIcon.tsx";
+import { connect, disconnect } from "../lib/machine.ts";
+import BrightnessContrastIcon from "../ui/BrightnessContrastIcon.tsx";
+import { Theme, setColorTheme, theme } from "../ui/colorTheme.ts";
 
 export default function Toolbar() {
     return (
@@ -17,6 +20,7 @@ export default function Toolbar() {
             <NewButton />
             <OpenButton />
             <MachineControls />
+            <ThemeButton />
         </div>
     );
 }
@@ -89,7 +93,7 @@ function MachineControls() {
         <div class={styles.right}>
             {inst ? (
                 <>
-                    <Button>
+                    <Button onClick={disconnect}>
                         <PlugIcon className={cx(styles.icon, styles.connectedIcon)} />
                         <span>disconnect...</span>
                     </Button>
@@ -100,11 +104,21 @@ function MachineControls() {
                     </Button>
                 </>
             ) : (
-                <Button>
+                <Button onClick={connect}>
                     <PlugIcon className={cx(styles.icon, styles.disconnectedIcon)} />
                     <span>connect to machine...</span>
                 </Button>
             )}
         </div>
+    );
+}
+
+function ThemeButton() {
+    return (
+        <Button icon onClick={() => {
+            setColorTheme(theme === Theme.Dark ? Theme.Light : Theme.Dark)
+        }}>
+            <BrightnessContrastIcon />
+        </Button>
     )
 }

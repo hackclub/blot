@@ -26,10 +26,10 @@
 .secondary:hover, .icon:hover {
     filter: brightness(0.9);
 }
-.icon {
+/* .icon {
     background-color: var(--muted);
     padding: 0.25rem;
-}
+} */
 
 .button:disabled {
     cursor: not-allowed;
@@ -59,6 +59,19 @@
 
 .accent:not(:disabled):hover {
     background: var(--accent-dark);
+}
+
+.icon {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon svg {
+    width: 1.25rem;
+    fill: currentColor;
+    display: inline;
 }
 
 @keyframes shimmer {

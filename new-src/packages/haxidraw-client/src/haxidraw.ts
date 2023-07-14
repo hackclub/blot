@@ -8,7 +8,9 @@ export class Haxidraw {
     constructor() {}
 
     async init(rawPort: SerialPort) {
+        console.log("creating web serial port haxidraw");
         this.port = await createWebSerialPort(rawPort);
+        console.log("done");
         this.rawPort = rawPort;
     }
 

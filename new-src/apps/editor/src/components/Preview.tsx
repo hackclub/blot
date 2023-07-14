@@ -4,11 +4,12 @@ import { getStore, useStore } from "../lib/state.ts";
 import cx from "classnames";
 
 const panZoomParams = {
-    panX: 400,
-    panY: 400,
-    scaleX: 200,
-    scaleY: 200
+    panX: 200,
+    panY: 200,
+    scale: 100
 };
+
+let dpr = typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1;
 
 export default function Preview(props: { className?: string }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -16,17 +17,23 @@ export default function Preview(props: { className?: string }) {
 
     const redraw = useCallback(() => {
         const canvas = canvasRef.current;
-        const { turtlePos } = getStore();
+        const { turtlePos, turtles } = getStore();
+        console.log(turtlePos, turtles);
         if(!canvas || !turtlePos) return;
+
+        // we want to only work in virtual pixels, and just deal with device pixels in rendering
+        const width = canvas.width / dpr;
+        const height = canvas.height / dpr;
         
         // turtle canvas
-        const ctx = canvasRef.current.getContext("2d")!;
+        const ctx = canvas.getContext("2d")!;
+        ctx.scale(dpr, dpr); // handles most high dpi stuff for us (see https://web.dev/canvas-hidipi/)
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, width, height);
         ctx.beginPath();
         ctx.arc(
-          panZoomParams.panX + turtlePos[0] * panZoomParams.scaleX, 
-          panZoomParams.panY + turtlePos[1] * panZoomParams.scaleY, 
+          panZoomParams.panX + turtlePos[0] * panZoomParams.scale, 
+          panZoomParams.panY + turtlePos[1] * panZoomParams.scale, 
           7, 
           0, 
           2 * Math.PI
@@ -37,13 +44,13 @@ export default function Preview(props: { className?: string }) {
         ctx.fill();
     
         ctx.strokeStyle = "black";
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 1.5;
         ctx.lineJoin = "round";
         ctx.lineCap = "round";
 
         // turtle path
-        if(turtles.length === 0) return;
-        const { panX, panY, scaleX, scaleY } = panZoomParams;
+        // if(turtles.length === 0) return;
+        const { panX, panY, scale } = panZoomParams;
 
         ctx.beginPath();
     
@@ -51,8 +58,8 @@ export default function Preview(props: { className?: string }) {
           for (const polyline of turtle.path) {
             for (let i = 0; i < polyline.length; i++) {
               let [x, y] = polyline[i];
-              x = panX + x * scaleX;
-              y = -panY + y * scaleY;
+              x = panX + x * scale;
+              y = -panY + y * scale;
               if (i === 0) ctx.moveTo(x, -y);
               else ctx.lineTo(x, -y);
             }
@@ -60,13 +67,15 @@ export default function Preview(props: { className?: string }) {
         })
     
         ctx.stroke();
-    }, [canvasRef.current, turtles]);
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0); // reset the transform matrix so we can set scale with a new dpr later
+    }, [canvasRef.current]);
 
     const onResize = useCallback(() => {
         const canvas = canvasRef.current;
         if(!canvas) return;
         // resize canvas, taking the pixel density of the screen into account
-        const dpr = window.devicePixelRatio || 1;
+        dpr = window.devicePixelRatio || 1;
         canvas.width = canvas.clientWidth * dpr;
         canvas.height = canvas.clientHeight * dpr;
         redraw();
@@ -86,67 +95,57 @@ export default function Preview(props: { className?: string }) {
         ctx.imageSmoothingEnabled = false;
     }, [canvasRef.current]);
 
-    useEffect(redraw, [turtles, canvasRef.current]);
+    useEffect(() => {
+        onResize();
+        redraw();
+    }, [turtles, canvasRef.current]);
 
     // controls
 
     useEffect(() => {
         if(!canvasRef.current) return;
-
-        let mouseX = 0;
-        let mouseY = 0;
+        const canvas = canvasRef.current;
 
         const onWheel = (e: WheelEvent) => {
             e.preventDefault();
 
-            const ZOOM_SPEED = 0.0005;
+            const ZOOM_SPEED = 0.02;
+            const MIN_ZOOM = 10;
+            const MAX_ZOOM = 1000;
 
-            const scaleChange = 1 + (-e.deltaY * ZOOM_SPEED);
-
-            panZoomParams.scaleX *= scaleChange;
-            panZoomParams.scaleY *= scaleChange;        
-
-            const canvasMousePos = [
-                mouseX * window.devicePixelRatio,
-                mouseY * window.devicePixelRatio
-            ];
-
-            panZoomParams.panX -= (canvasMousePos[0] - panZoomParams.panX) * (scaleChange - 1);
-            panZoomParams.panY -= (canvasMousePos[1] - panZoomParams.panY) * (scaleChange - 1);            
+            const { panX, panY, scale } = panZoomParams;
+            
+            const newScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, scale + e.deltaY * -ZOOM_SPEED));
+            
+            const br = canvas.getBoundingClientRect();
+            const fixedPoint = { x: e.clientX - br.left, y: e.clientY - br.top };
+            panZoomParams.panX = fixedPoint.x + (newScale / scale) * (panX - fixedPoint.x);
+            panZoomParams.panY = fixedPoint.y + (newScale / scale) * (panY - fixedPoint.y);
+            panZoomParams.scale = newScale;
 
             redraw();
         };
 
         const onMouseMove = (e: MouseEvent) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-
             if(e.buttons !== 1) return;
             e.preventDefault();
 
-            const [dx, dy] = [
-                e.movementX * window.devicePixelRatio,
-                e.movementY * window.devicePixelRatio
-            ];
-
-            panZoomParams.panX += dx;
-            panZoomParams.panY += dy;
+            panZoomParams.panX += e.movementX;
+            panZoomParams.panY += e.movementY;
 
             redraw();
         };
 
-        canvasRef.current.addEventListener("wheel", onWheel);
-        canvasRef.current.addEventListener("mousemove", onMouseMove);
+        canvas.addEventListener("wheel", onWheel);
+        canvas.addEventListener("mousemove", onMouseMove);
 
         return () => {
-            canvasRef.current!.removeEventListener("wheel", onWheel);
-            canvasRef.current!.removeEventListener("mousemove", onMouseMove);
+            canvas.removeEventListener("wheel", onWheel);
+            canvas.removeEventListener("mousemove", onMouseMove);
         };
-    })
+    }, [canvasRef.current, redraw]);
 
     return (
-        <div className={cx(styles.root, props.className)}>
-            <canvas ref={canvasRef} />
-        </div>
+        <canvas ref={canvasRef} className={cx(styles.root, props.className)} />
     )
 }

@@ -28,7 +28,7 @@
         "lint": "dts lint",
         "prepare": "dts build",
         "size": "size-limit",
-        "start": "dts watch --entry ./src/index.ts --entry ./src/utils.ts",
+        "dev": "dts watch --entry ./src/index.ts --entry ./src/utils.ts",
         "test": "dts test"
     },
     "jest": {

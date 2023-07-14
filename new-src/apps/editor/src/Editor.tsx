@@ -4,6 +4,7 @@ import Preview from "./components/Preview.tsx";
 import Toolbar from "./components/Toolbar.tsx";
 import InnerEditor from "./components/Editor.tsx";
 import styles from "./Editor.module.css";
+import Error from "./components/Error.tsx";
 
 export default function Editor() {
     return (
@@ -13,7 +14,10 @@ export default function Editor() {
                 <Toolbar />
                 <div class={styles.inner}>
                     <InnerEditor className={styles.editor} />
-                    <Preview className={styles.preview} />
+                    <div class={styles.right}>
+                        <Preview />
+                        <Error />
+                    </div>
                 </div>
             </div>
             <CompatWarning />

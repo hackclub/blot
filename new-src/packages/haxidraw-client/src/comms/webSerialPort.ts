@@ -21,12 +21,14 @@ export class WebSerialPort implements HXSerialPort {
     constructor() {}
 
     async init(rawPort: SerialPort) {
+        console.log("initing web serial port");
         this.#buffer = await createWebSerialBuffer(rawPort);
 
-        this.#loopInterval = window.setInterval(() => this.#loop(), 0);
+        this.#loopInterval = window.setTimeout(() => this.#loop(), 0);
     }
 
     async #loop() {
+        console.log("loop run");
         let msg: number[] = [];
         while(this.#buffer.available()) {
             const byte = this.#buffer.read()!;
@@ -47,6 +49,8 @@ export class WebSerialPort implements HXSerialPort {
                 msg = [];
             }
         }
+
+        this.#loopInterval = window.setTimeout(() => this.#loop(), 0);
     }
 
     on(msg: string, func: MsgHandler) {
@@ -112,7 +116,9 @@ function unpack(bytes: number[]) {
 }
 
 export async function createWebSerialPort(rawPort: SerialPort) {
+    console.log("wsb creating wsp");
     const port = new WebSerialPort();
+    console.log("wsb initing wsp");
     await port.init(rawPort);
     return port;
 }

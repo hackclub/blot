@@ -14,7 +14,19 @@ export default defineConfig({
     plugins: [prefresh()],
     ssr: {
       noExternal: ["niue"]
+    },
+    esbuild: {
+      target: "es2020"
+    },
+    optimizeDeps: {
+      esbuildOptions: {
+        target: "es2020"
+      }
+    },
+    build: {
+      target: "es2020"
     }
+
     // resolve: {
     //   alias: {
     //     // preact

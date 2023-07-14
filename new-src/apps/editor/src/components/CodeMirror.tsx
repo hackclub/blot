@@ -7,8 +7,10 @@ import { indentWithTab } from "@codemirror/commands";
 import { useCallback, useEffect, useState } from "preact/hooks";
 import cx from "classnames";
 import styles from "./CodeMirror.module.css";
-import { getStore, useStore } from "../lib/state.ts";
+import { CodePosition, getStore, useStore } from "../lib/state.ts";
 import { dispatchEditorChange } from "../lib/events.ts";
+import { themeExtension, useCMTheme } from "./cmTheme.ts";
+import { createEvent } from "niue";
 
 // this is a terrible hack but strange bugs are about this one
 //@ts-expect-error
@@ -40,17 +42,48 @@ const cmExtensions = [
       code.content = v.state.doc.toString();
       dispatchEditorChange();
     }
-  })
+  }),
+  themeExtension()
 ];
 
 export const createCMState = (content: string) => EditorState.create({ extensions: cmExtensions, doc: content });
 
 export const deserializeCMState = (state: any) => EditorState.fromJSON(state, { extensions: cmExtensions });
 
+export const [useOnJumpTo, dispatchJumpTo] = createEvent<CodePosition>();
 
 export default function CodeMirror({ className }: { className?: string }) {
   const [view, setView] = useState<EditorView>();
-  const { code: codeState } = useStore(["code"]);
+  const { code: codeState, error } = useStore(["code", "error"]);
+  const [errorLine, setErrorLine] = useState<number | undefined>();
+  const [lineDOMIndex, setLineDOMIndex] = useState<number | undefined>();
+  useCMTheme(view);
+
+  const updateLineDOMIndex = useCallback((errorLine: number | undefined) => {
+    if(errorLine === undefined) {
+      setLineDOMIndex(undefined);
+      return;
+    }
+    // search through to find the index of line with innertext equal to the line
+    const cmLineGutters = document.querySelectorAll(`.${styles.cmWrapper} .cm-lineNumbers > .cm-gutterElement`); // Get all the line gutters
+    if(cmLineGutters.length === 0) {
+      // cm hasn't rendered yet
+      setTimeout(updateLineDOMIndex, 1, errorLine);
+    }
+    // Find the gutter that matches the line number and is not hidden
+    for (let i = 0; i < cmLineGutters.length; i++) {
+      const cmLineGutter = cmLineGutters[i] as HTMLElement;
+      const innerNumber = cmLineGutter.innerText;
+      const height = cmLineGutter.style.height;
+      if (Number(innerNumber) === errorLine + 1 && height !== "0px") {
+        setLineDOMIndex(i);
+        return;
+      }
+    }
+    setLineDOMIndex(undefined);
+  }, [view, setLineDOMIndex]);
+
+  useEffect(() => updateLineDOMIndex(errorLine), [errorLine, updateLineDOMIndex]);
 
   const updateCMState = useCallback(() => {
     if(!view) return;
@@ -58,6 +91,28 @@ export default function CodeMirror({ className }: { className?: string }) {
   }, [view, codeState]);
 
   useEffect(updateCMState, [view, codeState]);
+
+  useOnJumpTo((pos) => {
+    if(!view) return;
+    const offset = view.state.doc.line(pos.line).from + pos.column;
+    view.dispatch({
+      selection: {
+        anchor: offset,
+        head: offset
+      },
+      effects: EditorView.scrollIntoView(offset, {
+        y: "center"
+      })
+    });
+    // focus the editor
+    view.focus();
+  }, [view]);
+
+  useEffect(() => {
+    if(!error) { setErrorLine(undefined); setLineDOMIndex(undefined); return; }
+    const { line } = error.stack[0];
+    setErrorLine(line);
+  }, [error]);
 
   const editorRef = useCallback((node: HTMLDivElement | null) => {
     if(!node) return;
@@ -71,5 +126,36 @@ export default function CodeMirror({ className }: { className?: string }) {
     setView(view);
   }, []);
 
-  return <div class={cx(styles.cmWrapper, className)} ref={editorRef} />;
+  useEffect(() => {
+    const scrollHandler = () => {
+      if(!errorLine) return;
+      updateLineDOMIndex(errorLine);
+    };
+    const el = view?.dom.querySelector(".cm-scroller");
+    if(!el) return;
+    el.addEventListener("scroll", scrollHandler);
+    return () => el.removeEventListener("scroll", scrollHandler);
+  }, [errorLine]);
+
+  return (
+    <>
+      {errorLine !== undefined && (
+        <style>{`.${styles.cmWrapper} .cm-lineNumbers > .cm-gutterElement:nth-child(${lineDOMIndex})::before {
+  content: "";
+  background-color: rgba(255, 0, 0, 0.3);
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  /*margin-top: calc(19.6px - 1rem - 2px);
+  bottom: -2px;*/
+}
+.${styles.cmWrapper} .cm-lineNumbers > .cm-gutterElement:nth-child(${lineDOMIndex}) {
+  position: relative;
+}`}</style>
+      )}
+      <div class={cx(styles.cmWrapper, className)} ref={editorRef} />
+    </>
+  );
 }

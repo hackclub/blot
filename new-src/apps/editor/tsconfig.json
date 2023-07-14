@@ -5,7 +5,8 @@
     "jsxImportSource": "preact",
     "lib": ["ES2015"],
     "moduleResolution": "NodeNext",
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "target": "ES2020",
     // "paths": {
     //   "@/*": ["./src/*"]
     // }
