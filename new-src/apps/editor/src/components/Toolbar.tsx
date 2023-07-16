@@ -42,20 +42,20 @@ function RunButton() {
     }, []);
 
     return (
-        <Button onClick={() => runCode()}>run (shift+enter)</Button>
+        <Button variant="ghost" onClick={() => runCode()}>run (shift+enter)</Button>
     );
 }
 
 function DownloadButton() {
     const state = useStore();
     return (
-        <Button onClick={() => download("project.mtjson", JSON.stringify(serializeState(state)))}>download</Button>
+        <Button variant="ghost" onClick={() => download("project.mtjson", JSON.stringify(serializeState(state)))}>download</Button>
     );
 }
 
 function NewButton() {
     return (
-        <Button onClick={() => {
+        <Button variant="ghost" onClick={() => {
             patchStore({
                 ...makeNewState()
             })
@@ -65,7 +65,7 @@ function NewButton() {
 
 function OpenButton() {
     return (
-        <Button onClick={() => {
+        <Button variant="ghost" onClick={() => {
             const input = document.createElement("input");
             input.type = "file";
             input.accept = ".mtjson";
@@ -93,18 +93,18 @@ function MachineControls() {
         <div class={styles.right}>
             {inst ? (
                 <>
-                    <Button onClick={disconnect}>
+                    <Button variant="ghost" onClick={disconnect}>
                         <PlugIcon className={cx(styles.icon, styles.connectedIcon)} />
                         <span>disconnect...</span>
                     </Button>
                     {/* separator */}
                     <div class={styles.separator} />
-                    <Button>
+                    <Button variant="ghost">
                         run machine
                     </Button>
                 </>
             ) : (
-                <Button onClick={connect}>
+                <Button variant="ghost" onClick={connect}>
                     <PlugIcon className={cx(styles.icon, styles.disconnectedIcon)} />
                     <span>connect to machine...</span>
                 </Button>
@@ -115,7 +115,7 @@ function MachineControls() {
 
 function ThemeButton() {
     return (
-        <Button icon onClick={() => {
+        <Button variant="ghost" icon aria-label="toggle theme" onClick={() => {
             setColorTheme(theme === Theme.Dark ? Theme.Light : Theme.Dark)
         }}>
             <BrightnessContrastIcon />

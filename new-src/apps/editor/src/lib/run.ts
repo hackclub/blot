@@ -1,4 +1,6 @@
-import { ErrorState, getStore, patchStore } from "./state.ts";
+// haxidraw code runtime environment
+
+import { CodePosition, ErrorState, getStore, patchStore } from "./state.ts";
 import { RollupError, rollup } from "@rollup/browser";
 import { Turtle as BaseTurtle, Point } from "haxidraw-client";
 import * as drawingUtils from "haxidraw-client/utils";
@@ -73,8 +75,35 @@ async function getBundle(): Promise<string> {
     return bundle.output[0].code;
 }
 
+const getPosFromStackLine = (line: string): CodePosition | undefined => {
+    const match = line.match(/:(\d+):(\d+)(?![^\n]*:)/gm);
+    if(match) {
+        const groups = match[0].match(/:(\d+):(\d+)/);
+        if(!groups) return;
+        return { line: Number(groups[1]) - 2, column: Number(groups[2]) };
+    } else return;
+};
+
+const AsyncFunction = Object.getPrototypeOf(async function () { }).constructor;
+const sleep = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
+
+const getActualFirstStackLine = (lines: string[]) => {
+    let i = 0; while(!["<anonymous>", "AsyncFunction"].find(e => lines[i].includes(e))) i++;
+    return i;
+};
+
+function decodeUnicodeBase64(base64: string) {
+    const binString = atob(base64);
+    const bytes = Uint8Array.from(binString, m => m.codePointAt(0)!);
+    return new TextDecoder().decode(bytes);
+}
+
+const getSourceMapConsumer = (code: string) => {
+    const sourcemap = JSON.parse(decodeUnicodeBase64(code.match(/\/\/# sourceMappingURL=data:application\/json;charset=utf-8;base64,([A-Za-z0-9+\/=]+)/)![1]));
+    return new SourceMapConsumer(sourcemap);    
+};
+
 export default async function runCode() {
-    const AsyncFunction = Object.getPrototypeOf(async function () { }).constructor;
     const turtles: Turtle[] = [];
     let turtlePos: Point = [0, 0];
     let errorState: ErrorState | null = null;
@@ -87,8 +116,6 @@ export default async function runCode() {
         const err = (caught as RollupError).cause as RollupError;
         if(!err || !err.loc) throw err;
         // rollup error - probably a syntax error
-
-        console.log(err.loc);
 
         errorState = {
             stack: [{
@@ -108,7 +135,7 @@ export default async function runCode() {
         
         return;
     }
-    console.log(code);
+    console.debug(code);
 
     intervals.forEach(clearInterval);
     timeouts.forEach(clearTimeout);
@@ -127,8 +154,6 @@ export default async function runCode() {
         timeouts.push(timeout);
         return timeout;
     };
-
-    const sleep = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
     const loop = async (fn: (...args: any) => any, minterval = 0) => {
         let n = loops.length;
@@ -153,6 +178,35 @@ export default async function runCode() {
         }
     }
 
+    const smc = getSourceMapConsumer(code);
+
+    const baseLogger = (type: "log" | "error" | "warn", ...args: [any, ...any[]]) => {
+        console[type](...args);
+    
+        // get code location
+        const stackLines = new Error().stack!.split("\n");
+        const mappedPos = getPosFromStackLine(stackLines[getActualFirstStackLine(stackLines)]); // zeroth is line in baselogger, first is call to baseLogger, second is call to actual log function (although getActual gets the first one from the actual eval'ed function so we don't need to worry about this)
+        const pos = mappedPos && smc.originalPositionFor(mappedPos);
+        
+        patchStore({
+            console: [
+                ...getStore().console,
+                {
+                    type,
+                    pos,
+                    time: Number(new Date()),
+                    values: args
+                }
+            ]
+        });
+    };
+    
+    const hConsole = {
+        log: (...args: [any, ...any[]]) => baseLogger("log", ...args),
+        error: (...args: [any, ...any[]]) => baseLogger("error", ...args),
+        warn: (...args: [any, ...any[]]) => baseLogger("warn", ...args)
+    };    
+
     // inject items into global scope, or replace existing properties with our own
     const customGlobal = {
         setTimeout: patchedTimeout,
@@ -161,6 +215,7 @@ export default async function runCode() {
         sleep,
         // drawing functions
         Turtle,
+        console: hConsole,
         ...drawingUtils,
         lerp(start: number, end: number, t: number) {
             return (1 - t) * start + t * end;
@@ -193,38 +248,27 @@ export default async function runCode() {
 
     console.log(f, f.toString());
 
+    patchStore({
+        console: []
+    });
+
     try {
         await f(
-        ...values
+            ...values
         );
     } catch(err: any) {
         // extract actual position from sourcemap
-        function decodeUnicodeBase64(base64: string) {
-            const binString = atob(base64);
-            const bytes = Uint8Array.from(binString, m => m.codePointAt(0)!);
-            return new TextDecoder().decode(bytes);
-        }
-        const sourcemap = JSON.parse(decodeUnicodeBase64(code.match(/\/\/# sourceMappingURL=data:application\/json;charset=utf-8;base64,([A-Za-z0-9+\/=]+)/)![1]));
-        console.log(sourcemap);
-        const smc = new SourceMapConsumer(sourcemap);
-        console.log(err);
         // stack trace parsing time
         const stackLines: string[] = err.stack.split("\n");
-        let i = 0;
-        while(!stackLines[i].includes("run.ts")) i++; // todo: check in build
+        let i = getActualFirstStackLine(stackLines);
         let positions: FindPosition[] = [];
         do {
             const line = stackLines[i];
-            const match = line.match(/:(\d+):(\d+)(?![^\n]*:)/gm);
-            console.log(line, match);
-            if(match) {
-                const groups = match[0].match(/:(\d+):(\d+)/);
-                if(!groups) break;
-                positions.push({ line: Number(groups[1]) - 2, column: Number(groups[2]) });
-            } else break;
+            const pos = getPosFromStackLine(line);
+            if(!pos) break;
+            positions.push(pos);
             i++;
         } while(i < stackLines.length && [0, 1 /* iife call */, 2 /* AsyncFunction call */].map(n => stackLines[i + n]).every(l => l && l.includes("run.ts")));
-        console.log(positions);
         const mapped = positions.map(smc.originalPositionFor.bind(smc));
         errorState = {
             stack: mapped,

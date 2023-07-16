@@ -5,6 +5,7 @@ import Toolbar from "./components/Toolbar.tsx";
 import InnerEditor from "./components/Editor.tsx";
 import styles from "./Editor.module.css";
 import Error from "./components/Error.tsx";
+import Console from "./components/Console.tsx";
 
 export default function Editor() {
     return (
@@ -16,6 +17,7 @@ export default function Editor() {
                     <InnerEditor className={styles.editor} />
                     <div class={styles.right}>
                         <Preview />
+                        <Console />
                         <Error />
                     </div>
                 </div>

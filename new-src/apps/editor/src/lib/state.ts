@@ -20,12 +20,20 @@ export type ErrorState = {
     message: string
 };
 
+export type ConsoleMessage = {
+    values: [any, ...any[]],
+    type: "log" | "error" | "warn",
+    time: number,
+    pos?: CodePosition
+};
+
 export type GlobalState = {
     code: CodeState,
     inst: Haxidraw | null,
     turtles: Turtle[],
     turtlePos: Point | null,
-    error: ErrorState | null
+    error: ErrorState | null,
+    console: ConsoleMessage[]
 };
 
 export const makeNewState = (): GlobalState => {    
@@ -56,7 +64,8 @@ uRender(viewEl, div);
         inst: null,
         turtles: [],
         turtlePos: null,
-        error: null
+        error: null,
+        console: []
     };
 };
 
@@ -94,7 +103,8 @@ const deserializeState = (state: SerializedGlobalState): GlobalState => {
         inst: null,
         turtles: [],
         turtlePos: null,
-        error: state.error
+        error: state.error,
+        console: []
     };
 }
 

@@ -16,7 +16,6 @@ const Snippet = ({ pos, code, message }: { pos: CodePosition, code: string, mess
     const cmRef = useCallback((node: HTMLDivElement | null) => {
         if(!node) return;
 
-        console.log(view);
         if(node.children[0]) {
             // destroy existing view
             //@ts-expect-error

@@ -61,6 +61,16 @@
     background: var(--accent-dark);
 }
 
+.ghost {
+    border: none;
+    background-color: transparent;
+    color: inherit;
+}
+
+.ghost:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 .icon {
     padding: 8px;
     display: flex;

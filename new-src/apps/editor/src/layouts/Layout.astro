@@ -1,4 +1,6 @@
 ---
+import "../ui/theme.css";
+
 export interface Props {
 	title: string;
 }
@@ -17,81 +19,6 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<style is:global>
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:ital@0;1&display=swap');
-
-:root {
-    --primary: #33e;
-    --text: #000;
-    --background: #fff;
-    --muted: #e5e5e5;
-    --accent: #f0f;
-    --accent-dark: #900090;
-    --font-body: "Atkinson Hyperlegible", sans-serif;
-    --font-mono: "JetBrains Mono", monospace;
-
-    --font-0: 1rem;
-    --font-1: 1.125rem;
-    --font-2: 1.25rem;
-    --font-3: 1.5rem;
-    --font-4: 2rem;
-    --font-5: 3rem;
-    --font-6: 4rem;
-    --font-7: 6rem;
-}
-
-body {
-    font-family: var(--font-body);
-    font-size: var(--font-0);
-    min-height: 100vh;
-    margin: 0;
-}
-
-body[data-theme=Dark] {
-    --background: #292d30;
-    --text: #fff;
-    background-color: var(--background);
-}
-
-* {
-    font-family: inherit;
-    box-sizing: border-box;
-}
-
-h1, h2, h3, h4, h5, h6, p, pre {
-    margin: 0;
-}
-
-h1 {
-    font-size: var(--font-4);
-}
-
-h2 {
-    font-size: var(--font-3);
-}
-
-h3 {
-    font-size: var(--font-2);
-}
-
-h4 {
-    font-size: var(--font-1);
-}
-
-h5 {
-    font-size: var(--font-0);
-    color: var(--primary);
-}
-
-h6 {
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-pre, code {
-    font-family: var(--font-mono);
-}
-		</style>
 		<slot />
 	</body>
 </html>

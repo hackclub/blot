@@ -13,12 +13,11 @@ let dpr = typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1;
 
 export default function Preview(props: { className?: string }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const { turtles } = useStore(["turtles"]);
+    const { turtles, console } = useStore(["turtles", "console"]);
 
     const redraw = useCallback(() => {
         const canvas = canvasRef.current;
         const { turtlePos, turtles } = getStore();
-        console.log(turtlePos, turtles);
         if(!canvas || !turtlePos) return;
 
         // we want to only work in virtual pixels, and just deal with device pixels in rendering
@@ -97,8 +96,7 @@ export default function Preview(props: { className?: string }) {
 
     useEffect(() => {
         onResize();
-        redraw();
-    }, [turtles, canvasRef.current]);
+    }, [turtles, canvasRef.current, console, onResize]);
 
     // controls
 

@@ -103,6 +103,10 @@ body[data-theme=Dark] .context {
     gap: 0.25rem;
 }
 
+body[data-theme=Light] .jumpTo {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
 .jumpTo svg {
     width: 1rem;
     fill: currentColor;
