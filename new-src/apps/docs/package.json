@@ -1,6 +1,7 @@
 {
   "name": "haxidraw-docs",
   "version": "0.0.1",
+  "private": true,
   "description": "Documentation for the Haxidraw",
   "scripts": {
     "dev": "next dev",
@@ -26,6 +27,8 @@
   },
   "devDependencies": {
     "@types/node": "18.11.10",
+    "@types/react": "18.2.14",
+    "tsconfig": "*",
     "typescript": "^4.9.3"
   }
 }
