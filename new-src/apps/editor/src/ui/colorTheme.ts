@@ -28,7 +28,6 @@ export function setColorTheme(newTheme: Theme) {
         theme = newTheme;
         dispatchThemeChange();
         // store to localstorage
-        console.log("setting theme to", theme);
         localStorage.setItem("colorTheme", newTheme.toString());
         updateBodyTheme();
     }

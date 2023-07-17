@@ -1,4 +1,5 @@
-import { intsToBytes } from "./comms/converters";
+import { Point } from "./types";
+import { floatsToBytes, intsToBytes } from "./comms/converters";
 import { WebSerialPort, createWebSerialPort } from "./comms/webSerialPort";
 
 export class Haxidraw {
@@ -8,15 +9,16 @@ export class Haxidraw {
     constructor() {}
 
     async init(rawPort: SerialPort) {
-        console.log("creating web serial port haxidraw");
         this.port = await createWebSerialPort(rawPort);
-        console.log("done");
         this.rawPort = rawPort;
     }
 
     async servo(angle: number) {
-        const bytes = intsToBytes([angle]);
-        await this.port.send("servo", bytes);
+        await this.port.send("servo", intsToBytes([angle]));
+    }
+
+    async goTo(...point: Point) {
+        await this.port.send("go", floatsToBytes(point))
     }
 
     close() {

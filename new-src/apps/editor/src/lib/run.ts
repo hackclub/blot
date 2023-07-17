@@ -85,7 +85,7 @@ const getPosFromStackLine = (line: string): CodePosition | undefined => {
 };
 
 const AsyncFunction = Object.getPrototypeOf(async function () { }).constructor;
-const sleep = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
+export const sleep = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
 const getActualFirstStackLine = (lines: string[]) => {
     let i = 0; while(!["<anonymous>", "AsyncFunction"].find(e => lines[i].includes(e))) i++;

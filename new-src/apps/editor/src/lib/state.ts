@@ -33,7 +33,8 @@ export type GlobalState = {
     turtles: Turtle[],
     turtlePos: Point | null,
     error: ErrorState | null,
-    console: ConsoleMessage[]
+    console: ConsoleMessage[],
+    running: boolean
 };
 
 export const makeNewState = (): GlobalState => {    
@@ -65,7 +66,8 @@ uRender(viewEl, div);
         turtles: [],
         turtlePos: null,
         error: null,
-        console: []
+        console: [],
+        running: false
     };
 };
 
@@ -93,7 +95,15 @@ export const serializeState = (state: GlobalState): SerializedGlobalState => {
 
 export function loadSerializedState(state: SerializedGlobalState) {
     patchStore(deserializeState(state));
-    // dispatchCMResetState();
+}
+
+export function loadCodeFromString(code: string) {
+    patchStore({
+        code: {
+            content: code,
+            cmState: createCMState(code)
+        }
+    });
 }
 
 const deserializeState = (state: SerializedGlobalState): GlobalState => {
@@ -104,7 +114,8 @@ const deserializeState = (state: SerializedGlobalState): GlobalState => {
         turtles: [],
         turtlePos: null,
         error: state.error,
-        console: []
+        console: [],
+        running: false
     };
 }
 

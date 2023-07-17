@@ -1,13 +1,13 @@
 import { useEffect } from "preact/hooks";
 import download from "../lib/download.ts";
 import runCode from "../lib/run.ts";
-import { loadSerializedState, makeNewState, patchStore, serializeState, useStore } from "../lib/state.ts";
+import { loadCodeFromString, loadSerializedState, makeNewState, patchStore, serializeState, useStore } from "../lib/state.ts";
 import styles from "./Toolbar.module.css";
 import Button from "../ui/Button.tsx";
 import cx from "classnames";
 // import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
 import PlugIcon from "../ui/PlugIcon.tsx";
-import { connect, disconnect } from "../lib/machine.ts";
+import { connect, disconnect, runMachine, tryAutoConnect } from "../lib/machine.ts";
 import BrightnessContrastIcon from "../ui/BrightnessContrastIcon.tsx";
 import { Theme, setColorTheme, theme } from "../ui/colorTheme.ts";
 
@@ -49,7 +49,7 @@ function RunButton() {
 function DownloadButton() {
     const state = useStore();
     return (
-        <Button variant="ghost" onClick={() => download("project.mtjson", JSON.stringify(serializeState(state)))}>download</Button>
+        <Button variant="ghost" onClick={() => download("project.js", state.code.content)}>download</Button>
     );
 }
 
@@ -68,14 +68,14 @@ function OpenButton() {
         <Button variant="ghost" onClick={() => {
             const input = document.createElement("input");
             input.type = "file";
-            input.accept = ".mtjson";
+            input.accept = ".js";
             input.onchange = () => {
                 if(input.files?.length) {
                     const file = input.files[0];
                     const reader = new FileReader();
                     reader.onload = () => {
                         if(typeof reader.result === "string") {
-                            loadSerializedState(JSON.parse(reader.result));
+                            loadCodeFromString(reader.result);
                         }
                     }
                     reader.readAsText(file);
@@ -87,7 +87,11 @@ function OpenButton() {
 }
 
 function MachineControls() {
-    const { inst } = useStore(["inst"]);
+    const { inst, running } = useStore(["inst", "running"]);
+
+    useEffect(() => {
+        tryAutoConnect();
+    }, []);
 
     return (
         <div class={styles.right}>
@@ -99,7 +103,7 @@ function MachineControls() {
                     </Button>
                     {/* separator */}
                     <div class={styles.separator} />
-                    <Button variant="ghost">
+                    <Button variant="ghost" loading={running} onClick={runMachine}>
                         run machine
                     </Button>
                 </>

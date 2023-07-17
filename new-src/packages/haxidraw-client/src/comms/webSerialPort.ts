@@ -1,5 +1,6 @@
-import { WebSerialBuffer, createWebSerialBuffer } from "./webSerialBuffer";
+import { WebSerialDispatcher, createWebSerialDispatcher } from "./webSerialDispatcher";
 import * as cobs from "./cobs";
+import { C, I, _, pipe } from "../pipe";
 
 const TERMINATOR = 0x0A;
 
@@ -12,45 +13,41 @@ interface HXSerialPort {
 }
 
 export class WebSerialPort implements HXSerialPort {
-    #buffer: WebSerialBuffer = null!;
+    #dispatcher: WebSerialDispatcher = null!;
     #msgHandlers: Record<string, MsgHandler> = {};
     #msgResolves: Record<string, (payload: number[]) => void> = {};
     #msgCount = 0;
-    #loopInterval: number = null!;
 
     constructor() {}
 
     async init(rawPort: SerialPort) {
-        console.log("initing web serial port");
-        this.#buffer = await createWebSerialBuffer(rawPort);
-
-        this.#loopInterval = window.setTimeout(() => this.#loop(), 0);
-    }
-
-    async #loop() {
-        console.log("loop run");
         let msg: number[] = [];
-        while(this.#buffer.available()) {
-            const byte = this.#buffer.read()!;
-            msg.push(byte);
+        this.#dispatcher = await createWebSerialDispatcher(rawPort, async data => {
+            for(const byte of data) {
+                msg.push(byte);
 
-            if(byte === TERMINATOR) {
-                const data = unpack(msg);
+                if(byte === TERMINATOR) {
+                    const data = unpack(msg);
 
-                if(data.msg === "ack") {
-                    this.#msgResolves[data.msgCount](data.payload);
-                } else if(data.msg in this.#msgHandlers) {
-                    this.#msgHandlers[data.msg](data.payload);
-                    this.#buffer.write(cobs.encode(pack("ack", new Uint8Array(0), data.msgCount)));
-                } else {
-                    console.warn("Unknown message", data.msg);
+                    if(data.msg === "ack") {
+                        this.#msgResolves[data.msgCount](data.payload);
+                    } else if(data.msg in this.#msgHandlers) {
+                        this.#msgHandlers[data.msg](data.payload);
+                        // await this.#dispatcher.write(Uint8Array.from(cobs.encode(pack("ack", new Uint8Array(0), data.msgCount))));
+                        await pipe(
+                            I(pack("ack", new Uint8Array(0), data.msgCount)),
+                            cobs.encode,
+                            d => Uint8Array.from(d),
+                            d => this.#dispatcher.write(d)
+                        )();
+                    } else {
+                        console.warn("Unknown message", data.msg);
+                    }
+
+                    msg = [];
                 }
-
-                msg = [];
             }
-        }
-
-        this.#loopInterval = window.setTimeout(() => this.#loop(), 0);
+        });
     }
 
     on(msg: string, func: MsgHandler) {
@@ -71,19 +68,18 @@ export class WebSerialPort implements HXSerialPort {
             }
         });
 
-        this.#buffer.write(packedMsg);
+        this.#dispatcher.write(Uint8Array.from(packedMsg));
         this.#msgCount = (this.#msgCount + 1) % 9;
 
         return promise;
     }
 
     async close() {
-        window.clearInterval(this.#loopInterval);
-        await this.#buffer.close();
+        await this.#dispatcher.close();
     }
 }
 
-function pack(msg: string, payload: Uint8Array, msgCount: number) {
+function pack(msg: string, payload: Uint8Array | number[], msgCount: number) {
     const buffer: number[] = [];
 
     if(msg.length > 255) throw new Error("Message too long");
@@ -94,7 +90,8 @@ function pack(msg: string, payload: Uint8Array, msgCount: number) {
     payload.forEach(byte => buffer.push(byte));
     buffer.push(msgCount);
 
-    return new Uint8Array(buffer);
+    // return new Uint8Array(buffer);
+    return buffer;
 }
 
 function unpack(bytes: number[]) {
@@ -116,9 +113,7 @@ function unpack(bytes: number[]) {
 }
 
 export async function createWebSerialPort(rawPort: SerialPort) {
-    console.log("wsb creating wsp");
     const port = new WebSerialPort();
-    console.log("wsb initing wsp");
     await port.init(rawPort);
     return port;
 }

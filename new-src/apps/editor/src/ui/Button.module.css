@@ -26,10 +26,6 @@
 .secondary:hover, .icon:hover {
     filter: brightness(0.9);
 }
-/* .icon {
-    background-color: var(--muted);
-    padding: 0.25rem;
-} */
 
 .button:disabled {
     cursor: not-allowed;
@@ -46,10 +42,6 @@
         transparent 33%
     );
     background-size: 1200px 100%;
-}
-
-.button:not(:disabled):hover {
-    /* background: var(--bg-btn-inactive-dark); */
 }
 
 

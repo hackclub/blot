@@ -25,4 +25,5 @@
 }
 .right > *:first-child {
     flex: 1;
+    overflow-x: auto; /* fix resizing the canvas */
 }
