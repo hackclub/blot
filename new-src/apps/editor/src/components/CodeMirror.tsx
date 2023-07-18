@@ -9,8 +9,9 @@ import cx from "classnames";
 import styles from "./CodeMirror.module.css";
 import { CodePosition, getStore, useStore } from "../lib/state.ts";
 import { dispatchEditorChange } from "../lib/events.ts";
-import { themeExtension, useCMTheme } from "./cmTheme.ts";
+import { themeExtension, useCMTheme } from "../lib/cmTheme.ts";
 import { createEvent } from "niue";
+import { useVimMode, vimModeExtension } from "../lib/cmVimMode.ts";
 
 // this is a terrible hack but strange bugs are about this one
 //@ts-expect-error
@@ -43,7 +44,8 @@ const cmExtensions = [
       dispatchEditorChange();
     }
   }),
-  themeExtension()
+  themeExtension(),
+  vimModeExtension()
 ];
 
 export const createCMState = (content: string) => EditorState.create({ extensions: cmExtensions, doc: content });
@@ -58,6 +60,7 @@ export default function CodeMirror({ className }: { className?: string }) {
   const [errorLine, setErrorLine] = useState<number | undefined>();
   const [lineDOMIndex, setLineDOMIndex] = useState<number | undefined>();
   useCMTheme(view);
+  useVimMode(view);
 
   const updateLineDOMIndex = useCallback((errorLine: number | undefined) => {
     if(errorLine === undefined) {

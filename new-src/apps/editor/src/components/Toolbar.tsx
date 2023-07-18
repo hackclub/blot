@@ -1,4 +1,4 @@
-import { useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import download from "../lib/download.ts";
 import runCode from "../lib/run.ts";
 import { loadCodeFromString, loadSerializedState, makeNewState, patchStore, serializeState, useStore } from "../lib/state.ts";
@@ -9,7 +9,9 @@ import cx from "classnames";
 import PlugIcon from "../ui/PlugIcon.tsx";
 import { connect, disconnect, runMachine, tryAutoConnect } from "../lib/machine.ts";
 import BrightnessContrastIcon from "../ui/BrightnessContrastIcon.tsx";
-import { Theme, setColorTheme, theme } from "../ui/colorTheme.ts";
+import { Theme, patchSettings, useSettings } from "../lib/settings.ts";
+import SettingsIcon from "../ui/SettingsIcon.tsx";
+import KeyboardIcon from "../ui/KeyboardIcon.tsx";
 
 export default function Toolbar() {
     return (
@@ -20,7 +22,7 @@ export default function Toolbar() {
             <NewButton />
             <OpenButton />
             <MachineControls />
-            <ThemeButton />
+            <SettingsButton />
         </div>
     );
 }
@@ -117,12 +119,52 @@ function MachineControls() {
     );
 }
 
-function ThemeButton() {
+function SettingsButton() {
+    const { theme, vimMode } = useSettings(["theme", "vimMode"]);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    useEffect(() => {
+        if(!dropdownOpen) return;  
+        // make it so when you click anywhere else the dialog closes
+        function handleClick(e: MouseEvent) {
+            const target = e.target as HTMLElement;
+            if(!target.closest(`.${styles.settingsWrapper}`)) {
+                setDropdownOpen(false);
+            }
+        }
+
+        window.addEventListener("click", handleClick);
+        return () => {
+            window.removeEventListener("click", handleClick);
+        };
+    }, [dropdownOpen]);
+
     return (
-        <Button variant="ghost" icon aria-label="toggle theme" onClick={() => {
-            setColorTheme(theme === Theme.Dark ? Theme.Light : Theme.Dark)
-        }}>
-            <BrightnessContrastIcon />
-        </Button>
+        <div class={styles.settingsWrapper}>
+            <Button variant="ghost" icon aria-label="show settings menu" aria-expanded={dropdownOpen} onClick={() => {
+                setDropdownOpen(!dropdownOpen);
+
+            }}>
+                <SettingsIcon />
+            </Button>
+            {dropdownOpen && (
+                <div class={styles.settingsDropdown}>
+                    <Button variant="ghost" onClick={() => {
+                        patchSettings({ theme: theme === Theme.Dark ? Theme.Light : Theme.Dark });
+                        setDropdownOpen(false);
+                    }}>
+                        <BrightnessContrastIcon className={styles.icon} />
+                        <span>toggle theme</span>
+                    </Button>
+                    <Button variant="ghost" onClick={() => {
+                        patchSettings({ vimMode: !vimMode });
+                        setDropdownOpen(false);
+                    }}>
+                        <KeyboardIcon className={styles.icon} />
+                        <span>{vimMode ? "disable" : "enable"} vim mode</span>
+                    </Button>
+                </div>
+            )}
+        </div>
     )
 }

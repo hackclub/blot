@@ -20,6 +20,7 @@
     "@codemirror/view": "^6.14.0",
     "@preact/compat": "^17.1.2",
     "@prefresh/vite": "^2.4.1",
+    "@replit/codemirror-vim": "^6.0.14",
     "@rollup/browser": "^3.26.0",
     "astro": "^2.7.3",
     "classnames": "^2.3.2",

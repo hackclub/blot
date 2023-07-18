@@ -5,7 +5,7 @@ import { EditorView } from "codemirror";
 import { EditorState } from "@codemirror/state";
 import { javascript } from "@codemirror/lang-javascript";
 import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language";
-import { themeExtension, useCMTheme } from "./cmTheme.ts";
+import { themeExtension, useCMTheme } from "../lib/cmTheme.ts";
 import JumpLinkIcon from "../ui/JumpLinkIcon.tsx";
 import { dispatchJumpTo } from "./CodeMirror.tsx";
 
