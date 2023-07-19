@@ -103,39 +103,68 @@ const getSourceMapConsumer = (code: string) => {
     return new SourceMapConsumer(sourcemap);    
 };
 
-export default async function runCode() {
-    const turtles: Turtle[] = [];
-    let turtlePos: Point = [0, 0];
-    let errorState: ErrorState | null = null;
+let origBundle: string | null = null;
+let bundle: string | null = null;
+let smc: SourceMapConsumer | null = null;
 
-    let code: string;
+async function build() {
+    console.log("full rebuild");
     try {
-        code = await getBundle();
+        origBundle = bundle = await getBundle();
+        smc = getSourceMapConsumer(bundle!);
+        return true;
     } catch(caught: any) {
         if(caught.name !== "RollupError" || !caught.cause) throw caught;
         const err = (caught as RollupError).cause as RollupError;
         if(!err || !err.loc) throw err;
         // rollup error - probably a syntax error
 
-        errorState = {
-            stack: [{
-                line: err.loc.line,
-                column: err.loc.column
-            }],
-            code: getStore().code.content,
-            name: err.name ?? caught.name,
-            message: err.message.replace(/\((\d+):(\d+)(?![^\n]*:)\)/gm, "").trim()
-        };
-
         patchStore({
-            turtles,
-            turtlePos,
-            error: errorState
+            turtles: [],
+            turtlePos: [0, 0],
+            error: {
+                stack: [{
+                    line: err.loc.line,
+                    column: err.loc.column
+                }],
+                code: getStore().code.content,
+                name: err.name ?? caught.name,
+                message: err.message.replace(/\((\d+):(\d+)(?![^\n]*:)\)/gm, "").trim()
+            }
         });
-        
-        return;
+
+        return false;
     }
-    console.debug(code);
+}
+
+export const manualChangeSinceLiveUpdate = {
+    value: false
+};
+
+const lineColToStringPos = (str: string, line: number, col: number) => {
+    return str.split("\n").slice(0, line - 1).map(l => l.length).reduce((a, c) => a + 1 + c, -1) + col + 1;
+}
+
+export async function liveUpdateBundle(from: CodePosition, to: CodePosition, replaceWith: string) {
+    if(manualChangeSinceLiveUpdate.value || !origBundle) { await build(); return; }
+    console.log("attempting live update");
+
+    const bundlePos = [from, to]
+        .map(p => ({ ...p, source: "index.js" }))
+        .map(p => smc!.generatedPositionFor(p))
+        .map(p => lineColToStringPos(origBundle!, p.line, p.column));
+
+    bundle = origBundle!.slice(0, bundlePos[0]) + replaceWith + origBundle!.slice(bundlePos[1]);
+    console.log(bundle);
+}
+
+export default async function runCode(cached: boolean = false) {
+    const turtles: Turtle[] = [];
+    let turtlePos: Point = [0, 0];
+    let errorState: ErrorState | null = null;
+
+    if(!cached && !(await build())) return;
+    // console.debug(bundle);
 
     intervals.forEach(clearInterval);
     timeouts.forEach(clearTimeout);
@@ -178,16 +207,14 @@ export default async function runCode() {
         }
     }
 
-    const smc = getSourceMapConsumer(code);
-
     const baseLogger = (type: "log" | "error" | "warn", ...args: [any, ...any[]]) => {
         console[type](...args);
     
         // get code location
         const stackLines = new Error().stack!.split("\n");
         const mappedPos = getPosFromStackLine(stackLines[getActualFirstStackLine(stackLines)]); // zeroth is line in baselogger, first is call to baseLogger, second is call to actual log function (although getActual gets the first one from the actual eval'ed function so we don't need to worry about this)
-        const pos = mappedPos && smc.originalPositionFor(mappedPos);
-        
+        const pos = mappedPos && smc!.originalPositionFor(mappedPos);
+
         patchStore({
             console: [
                 ...getStore().console,
@@ -243,10 +270,10 @@ export default async function runCode() {
   
     const f = new AsyncFunction(
       ...names,
-      "await (async " + code.slice(1)
+      "await (async " + bundle!.slice(1)
     );
 
-    console.log(f, f.toString());
+    // console.log(f, f.toString());
 
     patchStore({
         console: []
@@ -269,7 +296,7 @@ export default async function runCode() {
             positions.push(pos);
             i++;
         } while(i < stackLines.length && [0, 1 /* iife call */, 2 /* AsyncFunction call */].map(n => stackLines[i + n]).every(l => l && l.includes("run.ts")));
-        const mapped = positions.map(smc.originalPositionFor.bind(smc));
+        const mapped = positions.map(smc!.originalPositionFor.bind(smc));
         errorState = {
             stack: mapped,
             code: getStore().code.content,

@@ -32,7 +32,7 @@ export default function Preview(props: { className?: string }) {
         ctx.beginPath();
         ctx.arc(
           panZoomParams.panX + turtlePos[0] * panZoomParams.scale, 
-          panZoomParams.panY + turtlePos[1] * panZoomParams.scale, 
+          panZoomParams.panY + (-1 * turtlePos[1]) * panZoomParams.scale, 
           7, 
           0, 
           2 * Math.PI

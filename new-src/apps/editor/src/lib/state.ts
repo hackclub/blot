@@ -38,24 +38,14 @@ export type GlobalState = {
 };
 
 export const makeNewState = (): GlobalState => {    
-    const initialContent = `// welcome to ~~modular things~~haxidraw!
+    const initialContent = `// welcome to haxidraw!
 
-// this is a fun little demo showing
-// some of the capabilities of the editor
+const t = new Turtle();
 
-import { html, render as uRender } from "https://cdn.skypack.dev/uhtml/async";
-
-const div = html\`
-<div>hello, world!</div>
-<button onclick=\${async () => {
-    // you can use ES imports!
-    const { default: confetti } = await import("https://cdn.skypack.dev/canvas-confetti");
-    confetti();
-}}>celebrate!</button>
-\';
-
-uRender(viewEl, div);
-;`
+for(let i = 0; i < 72; i++) {
+    t.forward(5);
+    t.left(85);
+}`
 
     return {
         code: {

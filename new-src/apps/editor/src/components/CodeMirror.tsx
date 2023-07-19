@@ -9,9 +9,11 @@ import cx from "classnames";
 import styles from "./CodeMirror.module.css";
 import { CodePosition, getStore, useStore } from "../lib/state.ts";
 import { dispatchEditorChange } from "../lib/events.ts";
-import { themeExtension, useCMTheme } from "../lib/cmTheme.ts";
+import { themeExtension, useCMTheme } from "../lib/codemirror/cmTheme.ts";
 import { createEvent } from "niue";
-import { useVimMode, vimModeExtension } from "../lib/cmVimMode.ts";
+import { useVimMode, vimModeExtension } from "../lib/codemirror/cmVimMode.ts";
+import { numberScrubbingPlugin } from "../lib/codemirror/numberScrubbing.ts";
+import { manualChangeSinceLiveUpdate } from "../lib/run.js";
 
 // this is a terrible hack but strange bugs are about this one
 //@ts-expect-error
@@ -28,7 +30,11 @@ const theme = EditorView.theme({
     fontFamily: "var(--font-mono)",
     fontSize: "14px"
   }
-})
+});
+
+export const liveUpdating = {
+  value: false
+};
 
 const cmExtensions = [
   autocompleteRemoved,
@@ -41,11 +47,13 @@ const cmExtensions = [
     code.cmState = v.state;
     if(v.docChanged) {
       code.content = v.state.doc.toString();
+      if(!liveUpdating.value) manualChangeSinceLiveUpdate.value = true;
       dispatchEditorChange();
     }
   }),
   themeExtension(),
-  vimModeExtension()
+  vimModeExtension(),
+  numberScrubbingPlugin
 ];
 
 export const createCMState = (content: string) => EditorState.create({ extensions: cmExtensions, doc: content });

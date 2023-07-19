@@ -1,5 +1,5 @@
 import { Compartment } from "@codemirror/state";
-import { getSettings, useSettings } from "./settings.ts";
+import { getSettings, useSettings } from "../settings.ts";
 import { vim } from "@replit/codemirror-vim";
 import type { EditorView } from "@codemirror/view";
 import { useEffect } from "preact/hooks";
