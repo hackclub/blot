@@ -44,12 +44,14 @@ export type GlobalState = {
 export const makeNewState = (): GlobalState => {    
     const initialContent = `// welcome to haxidraw!
 
-const t = new Turtle();
+const t = createTurtle();
 
 for(let i = 0; i < 72; i++) {
     t.forward(5);
     t.left(85);
-}`
+}
+
+drawTurtles(t);`;
 
     return {
         code: {
