@@ -239,6 +239,14 @@ export default async function runCode(cached: boolean = false) {
         },
         drawTurtles: (...turtlesToDraw: Turtle[]) => {
             turtlesToDraw.forEach(t => turtles.push(t));
+        },
+        setDocDimensions(w, h) {
+            patchStore({
+                docDimensions: {
+                    width: w,
+                    height: h
+                }
+            })
         }
     };
 
