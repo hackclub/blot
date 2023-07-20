@@ -8,6 +8,7 @@
   - `setDocumentDimensions(w, h)`
 - console for controlling machine
 - svg drag and drop
+- jarring when opening and closing warning panel
 
 # MAYBE
 - better console logging

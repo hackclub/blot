@@ -34,6 +34,10 @@ export type GlobalState = {
     turtlePos: Point | null,
     error: ErrorState | null,
     console: ConsoleMessage[],
+    docDimensions: {
+        width: number,
+        height: number
+    },
     running: boolean
 };
 
@@ -57,7 +61,11 @@ for(let i = 0; i < 72; i++) {
         turtlePos: null,
         error: null,
         console: [],
-        running: false
+        running: false,
+        docDimensions: {
+            width: 10,
+            height: 20,
+        }
     };
 };
 
@@ -105,7 +113,11 @@ const deserializeState = (state: SerializedGlobalState): GlobalState => {
         turtlePos: null,
         error: state.error,
         console: [],
-        running: false
+        running: false,
+        docDimensions: {
+            width: 10,
+            height: 20,
+        }
     };
 }
 
