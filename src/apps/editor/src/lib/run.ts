@@ -2,7 +2,7 @@
 
 import { CodePosition, ErrorState, getStore, patchStore } from "./state.ts";
 import { RollupError, rollup } from "@rollup/browser";
-import { Turtle as BaseTurtle, Point } from "haxidraw-client";
+import { Turtle, Point } from "haxidraw-client";
 import * as drawingUtils from "haxidraw-client/utils";
 import { type FindPosition, SourceMapConsumer } from "source-map-js";
 
@@ -196,17 +196,6 @@ export default async function runCode(cached: boolean = false) {
         }
     };
 
-    class Turtle extends BaseTurtle {
-        constructor() {
-            super();
-            turtles.push(this);
-        }
-        goto([x, y]: Point): this {
-            turtlePos = [x, y];
-            return super.goto([x, y]);
-        }
-    }
-
     const baseLogger = (type: "log" | "error" | "warn", ...args: [any, ...any[]]) => {
         console[type](...args);
     
@@ -242,13 +231,15 @@ export default async function runCode(cached: boolean = false) {
         sleep,
         // drawing functions
         Turtle,
+        createTurtle: (pt) => new Turtle(pt),
         console: hConsole,
         ...drawingUtils,
         lerp(start: number, end: number, t: number) {
             return (1 - t) * start + t * end;
         },
-        // compat - not actually necessary
-        drawTurtles: function noop() {}
+        drawTurtles: (...turtlesToDraw: Turtle[]) => {
+            turtlesToDraw.forEach(t => turtles.push(t));
+        }
     };
 
     const globalProxy = new Proxy(window, {
@@ -305,9 +296,11 @@ export default async function runCode(cached: boolean = false) {
         };
     }
 
+
+
     patchStore({
         turtles,
-        turtlePos,
+        turtlePos: turtles.at(-1).position,
         error: errorState
     });
 }

@@ -11,13 +11,13 @@ import type { Point, Polyline } from "./types";
 
 export class Turtle {
     drawing: boolean;
-    location: Point;
+    position: Point;
     angle: number;
     path: Polyline[];
 
     constructor(start: Point = [0, 0]) {
         this.drawing = true;
-        this.location = [...start];
+        this.position = [...start];
         this.angle = 0;
         this.path = [[start]];
     }
@@ -25,7 +25,7 @@ export class Turtle {
     up() {
         if (!this.drawing) return this;
         this.drawing = false;
-        this.path.push([[...this.location]]);
+        this.path.push([[...this.position]]);
         return this;
     }
 
@@ -37,7 +37,7 @@ export class Turtle {
     goto([x, y]: Point) {
         const lastPath = this.path.at(-1)!;
         if (this.drawing) {
-            const [lastX, lastY] = this.location;
+            const [lastX, lastY] = this.position;
             const dist = Math.sqrt((x - lastX) ** 2 + (y - lastY) ** 2);
             if (dist < 0.0001) return this;
             lastPath.push([x, y]);
@@ -45,13 +45,13 @@ export class Turtle {
             if (lastPath.length === 1) lastPath[0] = [x, y];
         }
 
-        this.location = [x, y];
+        this.position = [x, y];
 
         return this;
     }
 
     forward(distance: number) {
-        const last = this.location;
+        const last = this.position;
         const a = (this.angle / 180) * Math.PI;
         const x = last[0] + distance * Math.cos(a);
         const y = last[1] + distance * Math.sin(a);
@@ -102,7 +102,7 @@ export class Turtle {
     }
 
     translate(to: Point, origin: Point) {
-        this.location = translate(this.location, to, origin);
+        this.position = translate(this.position, to, origin);
 
         iteratePath(this, (pt) => translate(pt, to, origin));
         return this;
@@ -111,7 +111,7 @@ export class Turtle {
     rotate(angle: number, origin: Point) {
         if (!origin) origin = this.cc;
 
-        this.location = rotate(this.location, angle, origin);
+        this.position = rotate(this.position, angle, origin);
 
         iteratePath(this, (pt) => rotate(pt, angle, origin));
         return this;
@@ -120,7 +120,7 @@ export class Turtle {
     scale(factor: number, origin: Point) {
         if (!origin) origin = this.cc;
 
-        this.location = scale(this.location, factor, origin);
+        this.position = scale(this.position, factor, origin);
 
         iteratePath(this, (pt) => scale(pt, factor, origin));
         return this;

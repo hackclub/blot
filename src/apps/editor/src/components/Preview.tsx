@@ -107,14 +107,16 @@ export default function Preview(props: { className?: string }) {
         const onWheel = (e: WheelEvent) => {
             e.preventDefault();
 
-            const ZOOM_SPEED = 0.02;
+            const ZOOM_SPEED = 0.0005;
             const MIN_ZOOM = 10;
             const MAX_ZOOM = 1000;
 
             const { panX, panY, scale } = panZoomParams;
             
-            const newScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, scale + e.deltaY * -ZOOM_SPEED));
-            
+            // const newScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, scale + e.deltaY * -ZOOM_SPEED));
+            const newScale = scale + scale*(-e.deltaY * ZOOM_SPEED);
+
+
             const br = canvas.getBoundingClientRect();
             const fixedPoint = { x: e.clientX - br.left, y: e.clientY - br.top };
             panZoomParams.panX = fixedPoint.x + (newScale / scale) * (panX - fixedPoint.x);
