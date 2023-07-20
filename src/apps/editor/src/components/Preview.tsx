@@ -2,6 +2,8 @@ import { useRef, useEffect, useCallback } from "preact/hooks";
 import styles from "./Preview.module.css";
 import { getStore, useStore } from "../lib/state.ts";
 import cx from "classnames";
+import Button from "../ui/Button.js";
+import CenterToFitIcon from "../ui/CenterToFitIcon.js";
 
 const panZoomParams = {
     panX: 200,
@@ -17,7 +19,6 @@ export default function Preview(props: { className?: string }) {
     const { turtles, console: consoleMsgs } = useStore(["turtles", "console"]);
 
     const redraw = useCallback(() => {
-
         const canvas = canvasRef.current;
         const { turtlePos, turtles, docDimensions } = getStore();
         if(!canvas || !turtlePos) return;
@@ -174,10 +175,33 @@ export default function Preview(props: { className?: string }) {
         };
     }, [canvasRef.current, mousePosRef.current, redraw]);
 
+    const centerView = useCallback(() => {
+        const { docDimensions } = getStore();
+
+        const canvas = canvasRef.current;
+        if(!canvas) return;
+
+        const br = canvas.getBoundingClientRect();
+        panZoomParams.scale = Math.min(
+            (br.width - 20) / docDimensions.width,
+            (br.height - 20) / docDimensions.height
+        );
+
+        panZoomParams.panX = br.width / 2 - (docDimensions.width * panZoomParams.scale) / 2;
+        panZoomParams.panY = br.height / 2 - (docDimensions.height * panZoomParams.scale) / 2;
+
+        redraw();
+    }, [canvasRef.current]);
+
+    useEffect(centerView, [canvasRef.current]);
+
     return (
         <div class={styles.root}>
             <canvas ref={canvasRef} className={cx(styles.canvas, props.className)} />
             <div class={styles.mousePosition} ref={mousePosRef} />
+            <Button class={styles.centerButton} variant="ghost" icon aria-label="center document in view" onClick={centerView}>
+                <CenterToFitIcon />
+            </Button>
         </div>
     )
 }

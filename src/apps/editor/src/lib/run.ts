@@ -231,7 +231,7 @@ export default async function runCode(cached: boolean = false) {
         sleep,
         // drawing functions
         Turtle,
-        createTurtle: (pt) => new Turtle(pt),
+        createTurtle: (pt: Point) => new Turtle(pt),
         console: hConsole,
         ...drawingUtils,
         lerp(start: number, end: number, t: number) {
@@ -240,7 +240,7 @@ export default async function runCode(cached: boolean = false) {
         drawTurtles: (...turtlesToDraw: Turtle[]) => {
             turtlesToDraw.forEach(t => turtles.push(t));
         },
-        setDocDimensions(w, h) {
+        setDocDimensions(w: number, h: number) {
             patchStore({
                 docDimensions: {
                     width: w,
