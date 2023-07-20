@@ -13,6 +13,7 @@ let dpr = typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1;
 
 export default function Preview(props: { className?: string }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const mousePosRef = useRef<HTMLDivElement>(null);
     const { turtles, console: consoleMsgs } = useStore(["turtles", "console"]);
 
     const redraw = useCallback(() => {
@@ -141,6 +142,19 @@ export default function Preview(props: { className?: string }) {
         };
 
         const onMouseMove = (e: MouseEvent) => {
+            // update mousepos
+            const mousePos = mousePosRef.current;
+            if(mousePos) {
+                // convert mouse pos to virtual coords (accounting for zoom, scale)
+                const { panX, panY, scale } = panZoomParams;
+                const br = canvas.getBoundingClientRect();
+                const x = (e.clientX - br.left) / dpr;
+                const y = (e.clientY - br.top) / dpr;
+                const addPadding = (s: string) => s.startsWith("-") ? s : " " + s;
+                mousePos.textContent = `${addPadding(((x - panX) / scale).toFixed(1))}mm, ${addPadding(((y - panY) / scale).toFixed(1))}mm`;
+
+            }
+
             if(e.buttons !== 1) return;
             e.preventDefault();
 
@@ -157,9 +171,12 @@ export default function Preview(props: { className?: string }) {
             canvas.removeEventListener("wheel", onWheel);
             canvas.removeEventListener("mousemove", onMouseMove);
         };
-    }, [canvasRef.current, redraw]);
+    }, [canvasRef.current, mousePosRef.current, redraw]);
 
     return (
-        <canvas ref={canvasRef} className={cx(styles.root, props.className)} />
+        <div class={styles.root}>
+            <canvas ref={canvasRef} className={cx(styles.canvas, props.className)} />
+            <div class={styles.mousePosition} ref={mousePosRef} />
+        </div>
     )
 }
