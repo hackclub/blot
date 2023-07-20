@@ -21,6 +21,8 @@ export default function Toolbar() {
             <DownloadButton />
             <NewButton />
             <OpenButton />
+            <DownloadSVG />
+            <CenterSVG />
             <MachineControls />
             <SettingsButton />
         </div>
@@ -62,6 +64,22 @@ function NewButton() {
                 ...makeNewState()
             })
         }}>new</Button>
+    )
+}
+
+function DownloadSVG() {
+    return (
+        <Button variant="ghost" onClick={() => {
+            console.log("download")
+        }}>download svg</Button>
+    )
+}
+
+function CenterSVG() {
+    return (
+        <Button variant="ghost" onClick={() => {
+            console.log("center")
+        }}>center</Button>
     )
 }
 

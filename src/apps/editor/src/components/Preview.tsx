@@ -13,11 +13,12 @@ let dpr = typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1;
 
 export default function Preview(props: { className?: string }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const { turtles, console } = useStore(["turtles", "console"]);
+    const { turtles, console: consoleMsgs } = useStore(["turtles", "console"]);
 
     const redraw = useCallback(() => {
+
         const canvas = canvasRef.current;
-        const { turtlePos, turtles } = getStore();
+        const { turtlePos, turtles, docDimensions } = getStore();
         if(!canvas || !turtlePos) return;
 
         // we want to only work in virtual pixels, and just deal with device pixels in rendering
@@ -41,6 +42,19 @@ export default function Preview(props: { className?: string }) {
         ctx.stroke();
         ctx.fillStyle = "#ffa500";
         ctx.fill();
+
+        // draw document
+
+        ctx.strokeStyle = "#3333ee";
+        ctx.lineWidth = 1.5;
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+
+        const { width: w, height: h} = docDimensions;
+
+        ctx.strokeRect(panZoomParams.panX, panZoomParams.panY, w*panZoomParams.scale, h*panZoomParams.scale);
+
+        // draw turtles
     
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1.5;
@@ -96,7 +110,7 @@ export default function Preview(props: { className?: string }) {
 
     useEffect(() => {
         onResize();
-    }, [turtles, canvasRef.current, console, onResize]);
+    }, [turtles, canvasRef.current, consoleMsgs, onResize]);
 
     // controls
 
