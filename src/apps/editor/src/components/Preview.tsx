@@ -148,18 +148,19 @@ export default function Preview(props: { className?: string }) {
                 // convert mouse pos to virtual coords (accounting for zoom, scale)
                 const { panX, panY, scale } = panZoomParams;
                 const br = canvas.getBoundingClientRect();
-                const x = (e.clientX - br.left) / dpr;
-                const y = (e.clientY - br.top) / dpr;
+                let x = (e.clientX - br.left);
+                x = (x - panX) / scale;
+                let y = (e.clientY - br.top);
+                y = (y - panY) / scale;
                 const addPadding = (s: string) => s.startsWith("-") ? s : " " + s;
-                mousePos.textContent = `${addPadding(((x - panX) / scale).toFixed(1))}mm, ${addPadding(((y - panY) / scale).toFixed(1))}mm`;
-
+                mousePos.textContent = `${addPadding(x.toFixed(1))}mm, ${addPadding(y.toFixed(1))}mm`;
             }
 
             if(e.buttons !== 1) return;
             e.preventDefault();
 
-            panZoomParams.panX += e.movementX;
-            panZoomParams.panY += e.movementY;
+            panZoomParams.panX += (e.movementX);
+            panZoomParams.panY += (e.movementY);
 
             redraw();
         };
