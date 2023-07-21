@@ -7,7 +7,7 @@
 - console for controlling machine
 - file naming
 - jarring when opening and closing warning panel
-- move incompatable browser to when you connect machine
+- move incompatible browser to when you connect machine
 - make download menu with js, svg
 - add examples tab
 
