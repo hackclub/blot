@@ -2,6 +2,8 @@ import { useRef, useEffect, useCallback } from "preact/hooks";
 import styles from "./Preview.module.css";
 import { getStore, useStore } from "../lib/state.ts";
 import cx from "classnames";
+import CenterToFitIcon from "../ui/CenterToFitIcon.tsx";
+import Button from "../ui/Button.tsx";
 
 const panZoomParams = {
     panX: 200,
@@ -16,80 +18,80 @@ export default function Preview(props: { className?: string }) {
     const mousePosRef = useRef<HTMLDivElement>(null);
     const { turtles, console: consoleMsgs, error } = useStore(["turtles", "console", "error"]);
 
-    const redraw = () => {
-
-        const canvas = canvasRef.current;
-        const { turtlePos, turtles, docDimensions } = getStore();
-        if(!canvas || !turtlePos) return;
-
-        // we want to only work in virtual pixels, and just deal with device pixels in rendering
-        const width = canvas.width / dpr;
-        const height = canvas.height / dpr;
-        
-        // turtle canvas
-        const ctx = canvas.getContext("2d")!;
-        ctx.scale(dpr, dpr); // handles most high dpi stuff for us (see https://web.dev/canvas-hidipi/)
-
-        ctx.clearRect(0, 0, width, height);
-        ctx.beginPath();
-        ctx.arc(
-          panZoomParams.panX + turtlePos[0] * panZoomParams.scale, 
-          panZoomParams.panY + (-1 * turtlePos[1]) * panZoomParams.scale, 
-          7, 
-          0, 
-          2 * Math.PI
-        );
-        ctx.strokeStyle = "white";
-        ctx.stroke();
-        ctx.fillStyle = "#ffa500";
-        ctx.fill();
-
-        // draw document
-
-        ctx.strokeStyle = "#3333ee";
-        ctx.lineWidth = 1.5;
-        ctx.lineJoin = "round";
-        ctx.lineCap = "round";
-
-        const { width: w, height: h} = docDimensions;
-
-        ctx.strokeRect(panZoomParams.panX, panZoomParams.panY, w*panZoomParams.scale, h*panZoomParams.scale);
-
-        // draw turtles
-    
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 1.5;
-        ctx.lineJoin = "round";
-        ctx.lineCap = "round";
-
-        // turtle path
-        // if(turtles.length === 0) return;
-        const { panX, panY, scale } = panZoomParams;
-
-        ctx.beginPath();
-    
-        turtles.forEach(turtle => {
-          for (const polyline of turtle.path) {
-            for (let i = 0; i < polyline.length; i++) {
-              let [x, y] = polyline[i];
-              x = panX + x * scale;
-              y = -panY + y * scale;
-              if (i === 0) ctx.moveTo(x, -y);
-              else ctx.lineTo(x, -y);
-            }
-          }
-        })
-    
-        ctx.stroke();
-
-        ctx.setTransform(1, 0, 0, 1, 0, 0); // reset the transform matrix so we can set scale with a new dpr later
-        
-        requestAnimationFrame(redraw);
-    }
-
     useEffect(() => {
-       requestAnimationFrame(redraw);
-    });
+        const redraw = () => {
+
+            const canvas = canvasRef.current;
+            const { turtlePos, turtles, docDimensions } = getStore();
+            if(!canvas || !turtlePos) return;
+
+            // we want to only work in virtual pixels, and just deal with device pixels in rendering
+            const width = canvas.width / dpr;
+            const height = canvas.height / dpr;
+
+            // turtle canvas
+            const ctx = canvas.getContext("2d")!;
+            ctx.scale(dpr, dpr); // handles most high dpi stuff for us (see https://web.dev/canvas-hidipi/)
+
+            ctx.clearRect(0, 0, width, height);
+            ctx.beginPath();
+            ctx.arc(
+                panZoomParams.panX + turtlePos[0] * panZoomParams.scale,
+                panZoomParams.panY + (-1 * turtlePos[1]) * panZoomParams.scale,
+                7,
+                0,
+                2 * Math.PI
+            );
+            ctx.strokeStyle = "white";
+            ctx.stroke();
+            ctx.fillStyle = "#ffa500";
+            ctx.fill();
+
+            // draw document
+
+            ctx.strokeStyle = "#3333ee";
+            ctx.lineWidth = 1.5;
+            ctx.lineJoin = "round";
+            ctx.lineCap = "round";
+
+            const { width: w, height: h} = docDimensions;
+
+            ctx.strokeRect(panZoomParams.panX, panZoomParams.panY, w*panZoomParams.scale, h*panZoomParams.scale);
+
+            // draw turtles
+
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 1.5;
+            ctx.lineJoin = "round";
+            ctx.lineCap = "round";
+
+            // turtle path
+            // if(turtles.length === 0) return;
+            const { panX, panY, scale } = panZoomParams;
+
+            ctx.beginPath();
+
+            turtles.forEach(turtle => {
+                for (const polyline of turtle.path) {
+                    for (let i = 0; i < polyline.length; i++) {
+                        let [x, y] = polyline[i];
+                        x = panX + x * scale;
+                        y = -panY + y * scale;
+                        if (i === 0) ctx.moveTo(x, -y);
+                        else ctx.lineTo(x, -y);
+                    }
+                }
+            })
+
+            ctx.stroke();
+
+            ctx.setTransform(1, 0, 0, 1, 0, 0); // reset the transform matrix so we can set scale with a new dpr later
+
+            requestAnimationFrame(redraw);
+        }
+
+        requestAnimationFrame(redraw);
+    }, []);
 
     // useCallback(redraw, [canvasRef.current]);
 
@@ -181,12 +183,33 @@ export default function Preview(props: { className?: string }) {
             canvas.removeEventListener("wheel", onWheel);
             canvas.removeEventListener("mousemove", onMouseMove);
         };
-    }, [canvasRef.current, mousePosRef.current, redraw]);
+    }, [canvasRef.current, mousePosRef.current]);
+
+    const centerView = useCallback(() => {
+        const { docDimensions } = getStore();
+
+        const canvas = canvasRef.current;
+        if(!canvas) return;
+
+        const br = canvas.getBoundingClientRect();
+        panZoomParams.scale = Math.min(
+            (br.width - 20) / docDimensions.width,
+            (br.height - 20) / docDimensions.height
+        );
+
+        panZoomParams.panX = br.width / 2 - (docDimensions.width * panZoomParams.scale) / 2;
+        panZoomParams.panY = br.height / 2 - (docDimensions.height * panZoomParams.scale) / 2;
+    }, [canvasRef.current]);
+
+    useEffect(centerView, [canvasRef.current]);
 
     return (
         <div class={styles.root}>
             <canvas ref={canvasRef} className={cx(styles.canvas, props.className)} />
             <div class={styles.mousePosition} ref={mousePosRef} />
+            <Button class={styles.centerButton} variant="ghost" icon aria-label="center document in view" onClick={centerView}>
+                <CenterToFitIcon />
+            </Button>
         </div>
     )
 }
