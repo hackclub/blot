@@ -96,7 +96,7 @@ drawTurtles(t);`;
 };
 
 export const serializeState = (state: GlobalState): SerializedGlobalState => {
-    console.log(state);
+    // console.log(state);
     return {
         code: {
             content: state.code.content,
