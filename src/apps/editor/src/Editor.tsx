@@ -7,6 +7,7 @@ import styles from "./Editor.module.css";
 import Error from "./components/Error.tsx";
 import Console from "./components/Console.tsx";
 import GlobalStateDebugger from "./components/GlobalStateDebugger.tsx";
+import DropBox from "./components/DropBox.tsx";
 
 export default function Editor() {
     return (
@@ -25,6 +26,7 @@ export default function Editor() {
                 </div>
             </div>
             <CompatWarning />
+            <DropBox />
         </>
     );
 }

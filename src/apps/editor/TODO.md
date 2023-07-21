@@ -2,7 +2,7 @@
 
 - bezier widget
 - display sense of scale
-  - show mouse position
+  - [x] show mouse position
   - add grid
 - console for controlling machine
 - drag and drop
