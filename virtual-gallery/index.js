@@ -7,7 +7,7 @@ const ctx = maze2D.getContext("2d");
 const w = maze2D.width;
 const h = maze2D.width;
 
-const n = 24;
+const n = 18;
 
 const state = {
   width: n,
