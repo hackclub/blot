@@ -7,7 +7,7 @@ import { indentWithTab } from "@codemirror/commands";
 import { useCallback, useEffect, useState } from "preact/hooks";
 import cx from "classnames";
 import styles from "./CodeMirror.module.css";
-import { CodePosition, getStore, useStore } from "../lib/state.ts";
+import { CodePosition, getStore, useStore, patchStore } from "../lib/state.ts";
 import { dispatchEditorChange } from "../lib/events.ts";
 import { themeExtension, useCMTheme } from "../lib/codemirror/cmTheme.ts";
 import { createEvent } from "niue";
@@ -63,8 +63,7 @@ export const deserializeCMState = (state: any) => EditorState.fromJSON(state, { 
 export const [useOnJumpTo, dispatchJumpTo] = createEvent<CodePosition>();
 
 export default function CodeMirror({ className }: { className?: string }) {
-  const [view, setView] = useState<EditorView>();
-  const { code: codeState, error } = useStore(["code", "error"]);
+  const { code: codeState, error, view } = useStore(["code", "error", "view"]);
   const [errorLine, setErrorLine] = useState<number | undefined>();
   const [lineDOMIndex, setLineDOMIndex] = useState<number | undefined>();
   useCMTheme(view);
@@ -134,7 +133,8 @@ export default function CodeMirror({ className }: { className?: string }) {
 
     //@ts-expect-error
     node.children[0]["view"] = view;
-    setView(view);
+
+    patchStore({ view });
   }, []);
 
   useEffect(() => {

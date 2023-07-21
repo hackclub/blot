@@ -19,7 +19,7 @@ export class Turtle {
         this.drawing = true;
         this.position = [...start];
         this.angle = 0;
-        this.path = [[start]];
+        this.path = [[[...start]]];
     }
 
     up() {

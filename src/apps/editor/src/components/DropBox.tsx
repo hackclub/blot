@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "preact/hooks";
-import { getStore, useStore } from "../lib/state.ts";
+import { getStore, useStore, loadCodeFromString } from "../lib/state.ts";
 
 export default function DropBox() {
     const elRef = useRef<HTMLDivElement>(null);
@@ -8,12 +8,8 @@ export default function DropBox() {
 
     useEffect(() => {
         // Make sure the ref is defined
-                const state = getStore();
-        console.log(state);
-        
+
         if (elRef.current) {
-            console.log("init ref");
-            console.log(code);
             addDragDrop(document.body);
         }
 
@@ -63,7 +59,9 @@ export default function DropBox() {
 
         const droparea = elRef.current;
 
-          window.addEventListener("drop", function(evt) {    
+          window.addEventListener("drop", function(evt) {  
+            const { view } = getStore();
+
             let dt = evt.dataTransfer;
             let files = dt.files;
 
@@ -81,19 +79,14 @@ export default function DropBox() {
                 let text = reader.result;
 
                 if (extension === "js") {
-                  const end = code.cmState.doc.toString().length;
-                  // console.log(code.cmState);
-                  code.cmState.doc.dispatch({
-                    changes: { from: 0, to: end, insert: text }
-                  });
+                  loadCodeFromString(text);
                 } else if (extension === "svg") {
                   text = text.replaceAll("\n", "");
 
                   const newLines = 
-                  `const t = new Turtle();\n`
-                  + `t.fromSVG(String.raw\`${text}\`);\n`
+                  `const importedSVG = new Turtle().fromSVG(String.raw\`${text}\`);\n`
 
-                  state.codemirror.dispatch({
+                  view.dispatch({
                     changes: { from: 0, insert: newLines }
                   });
                 } else {

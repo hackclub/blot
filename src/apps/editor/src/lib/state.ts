@@ -1,4 +1,4 @@
-import type { EditorState } from "@codemirror/state";
+import type { EditorState, EditorView } from "@codemirror/state";
 import { createState } from "niue";
 import { createCMState, deserializeCMState } from "../components/CodeMirror.tsx";
 import type { Haxidraw, Turtle, Point } from "haxidraw-client";
@@ -38,7 +38,8 @@ export type GlobalState = {
         width: number,
         height: number
     },
-    running: boolean
+    running: boolean,
+    view: EditorView | null,
 };
 
 export const makeNewState = (): GlobalState => {    
@@ -67,7 +68,8 @@ drawTurtles(t);`;
         docDimensions: {
             width: 10,
             height: 20,
-        }
+        },
+        view: null
     };
 };
 
@@ -119,7 +121,8 @@ const deserializeState = (state: SerializedGlobalState): GlobalState => {
         docDimensions: {
             width: 10,
             height: 20,
-        }
+        },
+        view: null
     };
 }
 
