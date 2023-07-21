@@ -63,7 +63,7 @@ function NewButton() {
                 ...makeNewState()
             })
         }}>new</Button>
-    )
+    );
 }
 
 function DownloadSVG() {
@@ -106,7 +106,7 @@ function DownloadSVG() {
             `
             download("anon.svg", svg);
         }}>download svg</Button>
-    )
+    );
 }
 
 function OpenButton() {

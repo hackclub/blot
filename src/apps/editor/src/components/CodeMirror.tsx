@@ -7,7 +7,7 @@ import { indentWithTab } from "@codemirror/commands";
 import { useCallback, useEffect, useState } from "preact/hooks";
 import cx from "classnames";
 import styles from "./CodeMirror.module.css";
-import { CodePosition, getStore, useStore, patchStore } from "../lib/state.ts";
+import { CodePosition, getStore, patchStore, useStore } from "../lib/state.ts";
 import { dispatchEditorChange } from "../lib/events.ts";
 import { themeExtension, useCMTheme } from "../lib/codemirror/cmTheme.ts";
 import { createEvent } from "niue";
@@ -63,9 +63,20 @@ export const deserializeCMState = (state: any) => EditorState.fromJSON(state, { 
 export const [useOnJumpTo, dispatchJumpTo] = createEvent<CodePosition>();
 
 export default function CodeMirror({ className }: { className?: string }) {
-  const { code: codeState, error, view } = useStore(["code", "error", "view"]);
+  const { code: codeState, error } = useStore(["code", "error"]);
+  const [view, setView] = useState<EditorView>();
   const [errorLine, setErrorLine] = useState<number | undefined>();
   const [lineDOMIndex, setLineDOMIndex] = useState<number | undefined>();
+
+  useEffect(() => {
+    if(!view) return;
+    view.setState(codeState.cmState);
+  }, [view, codeState]);
+
+  useEffect(() => {
+    patchStore({ view });
+  }, [view]);
+
   useCMTheme(view);
   useVimMode(view);
 
@@ -94,13 +105,6 @@ export default function CodeMirror({ className }: { className?: string }) {
   }, [view, setLineDOMIndex]);
 
   useEffect(() => updateLineDOMIndex(errorLine), [errorLine, updateLineDOMIndex]);
-
-  const updateCMState = useCallback(() => {
-    if(!view) return;
-    view.setState(codeState.cmState);
-  }, [view, codeState]);
-
-  useEffect(updateCMState, [view, codeState]);
 
   useOnJumpTo((pos) => {
     if(!view) return;
@@ -134,7 +138,7 @@ export default function CodeMirror({ className }: { className?: string }) {
     //@ts-expect-error
     node.children[0]["view"] = view;
 
-    patchStore({ view });
+    setView(view);
   }, []);
 
   useEffect(() => {

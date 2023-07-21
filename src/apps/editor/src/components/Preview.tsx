@@ -14,7 +14,7 @@ let dpr = typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1;
 export default function Preview(props: { className?: string }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const mousePosRef = useRef<HTMLDivElement>(null);
-    const { turtles, console: consoleMsgs } = useStore(["turtles", "console"]);
+    const { turtles, console: consoleMsgs, error } = useStore(["turtles", "console", "error"]);
 
     const redraw = () => {
 
@@ -118,8 +118,9 @@ export default function Preview(props: { className?: string }) {
     }, [canvasRef.current]);
 
     useEffect(() => {
+        console.log("aaaaaa", turtles);
         onResize();
-    }, [turtles, canvasRef.current, consoleMsgs, onResize]);
+    }, [turtles, canvasRef.current, consoleMsgs, error, onResize]);
 
     // controls
 
