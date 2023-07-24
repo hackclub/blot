@@ -1,0 +1,12 @@
+{
+    "configurations": [
+    {
+        "type": "firefox",
+        "request": "attach",
+        "name": "Attach",
+        "url": "localhost:3000",
+        "webRoot": "${workspaceFolder}/apps/editor",
+        "enableCRAWorkaround": true
+    }
+    ]
+}

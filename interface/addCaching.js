@@ -17,7 +17,7 @@ export function addCaching(state) {
 
   if (file) {
     let file_url = file;
-    if (!file.startsWith("http"))
+    if (!file.startsWith("http")) file_url = `examples/${file}`;
       // file_url = isProduction
       //   ? `https://raw.githubusercontent.com/modular-things/modular-things/main/examples/${file}`
       //   : `examples/${file}`;

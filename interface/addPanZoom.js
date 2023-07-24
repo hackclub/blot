@@ -60,8 +60,8 @@ export function addPanZoom(el) {
     let xs = (e.offsetX - pointX) / scale;
     let ys = (e.offsetY - pointY) / scale;
 
-    if (Math.sign(e.deltaY) < 0) scale *= 1.03;
-    else scale /= 1.03;
+    if (Math.sign(e.deltaY) < 0) scale *= 1.05;
+    else scale /= 1.05;
 
     pointX = e.offsetX - xs * scale;
     pointY = e.offsetY - ys * scale;

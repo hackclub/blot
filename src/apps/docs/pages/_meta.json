@@ -1,0 +1,20 @@
+{
+  "index": "Introduction",
+  "another": {
+    "display": "hidden"
+  },
+  "assembly": "Assembly",
+  "operation": "Editor",
+  "troubleshooting": "Troubleshooting",
+  "about": {
+    "title": "About",
+    "type": "page",
+    "display": "hidden"
+  },
+  "editor": {
+    "title": "Editor ↗",
+    "type": "page",
+    "href": "https://editor.haxidraw.hackclub.com",
+    "newWindow": true
+  }
+}

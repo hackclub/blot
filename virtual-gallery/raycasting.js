@@ -25,7 +25,7 @@ export function raycastMap(state, el) {
   const SCREEN_HEIGHT = bb.height;
   const TICK = 30;
   const CELL_SIZE = 8;
-  const FOV = toRadians(60);
+  const FOV = toRadians(80);
 
   const COLORS = {
     floor: "#b5b5b5", // "#ff6361"
@@ -42,7 +42,7 @@ export function raycastMap(state, el) {
   const context = canvas.getContext("2d");
 
   function clearScreen() {
-    context.fillStyle = "red";
+    context.fillStyle = COLORS["wall"];
     context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
   }
 
@@ -51,26 +51,32 @@ export function raycastMap(state, el) {
     const player = getPlayer();
 
     const cellSize = scale * CELL_SIZE;
+
     map.forEach((row, y) => {
-      row.forEach((cell, x) => {
+      row.forEach((cell, x) => 
+      {
+        context.fillStyle = '#000000';
+        context.fillRect(
+          posX + x * cellSize,
+          posY + y * cellSize,
+          cellSize,
+          cellSize
+        );
         if (cell) {
-          context.fillStyle = "grey";
-          context.fillRect(
-            posX + x * cellSize,
-            posY + y * cellSize,
-            cellSize,
-            cellSize
-          );
+          context.fillStyle = "#3355ff";
+        } else {
+          context.fillStyle ="#dddddd";
         }
+
+        context.fillRect(
+          posX + x * cellSize,
+          posY + y * cellSize,
+          cellSize - 1,
+          cellSize - 1
+        );
       });
     });
-    context.fillStyle = "blue";
-    context.fillRect(
-      posX + player.x * scale - 10 / 2,
-      posY + player.y * scale - 10 / 2,
-      10,
-      10
-    );
+
 
     context.strokeStyle = "blue";
     context.beginPath();
@@ -93,6 +99,16 @@ export function raycastMap(state, el) {
       context.closePath();
       context.stroke();
     });
+    context.fillStyle = "#000000";
+    context.fillRect(
+      posX + player.x * scale - 5 / 2,
+      posY + player.y * scale - 5 / 2,
+      5,
+      5
+    );
+
+    context.font = "30px Monospace";
+    context.fillText(state.lastX + "," + state.lastY, 10, 220); 
   }
 
   function toRadians(deg) {
@@ -146,6 +162,8 @@ export function raycastMap(state, el) {
       angle,
       distance: distance(player.x, player.y, nextX, nextY),
       vertical: true,
+      x: (nextX / CELL_SIZE) + (state.lastX),
+      y: (nextY / CELL_SIZE) - (state.lastY),
     };
   }
 
@@ -185,6 +203,8 @@ export function raycastMap(state, el) {
       angle,
       distance: distance(player.x, player.y, nextX, nextY),
       vertical: false,
+      x: (nextX / CELL_SIZE) + (state.lastX),
+      y: (nextY / CELL_SIZE) - (state.lastY),
     };
   }
 
@@ -213,45 +233,98 @@ export function raycastMap(state, el) {
     });
   }
 
+  function fogCurve(distance) {
+    return Math.pow(1.06, (distance - 40)) - 1
+  }
+
+  function hash(x, y) {
+    return Math.abs((Math.floor(x + y)) % images.length);
+  }
+
+
+let imageNames = [];
+let images = [];
+fetch('http://localhost:5500/gallery/README.md')
+  .then(response => response.text())
+  .then(text => {
+    const lines = text.split('\n');
+    imageNames = lines.filter(line => line.includes('.png')).map(line => line.replace("![](","").replace(")",""));
+    for (let i = 0; i < imageNames.length; i++) {
+      const img = new Image();
+      img.src = `http://localhost:5500/gallery/${imageNames[i]}`;
+      images.push(img);
+  }
+  console.log(images);
+  });
+
+
+
+/*var fogCanvas = document.createElement('canvas'), ctx = fogCanvas.getContext('2d'), grd = ctx.createLinearGradient(0, (SCREEN_HEIGHT/2) + 20, 0, (SCREEN_HEIGHT/2) + 50);
+fogCanvas.width = 700;
+fogCanvas.height = 700;
+grd.addColorStop(1,"rgba(50,50,50,0)");
+grd.addColorStop(0,"black");
+*/
   function renderScene(rays) {
     const player = getPlayer();
 
+    for (let y = 0; y < SCREEN_HEIGHT; y++) {
+      let brightness = 4*((y-20) - SCREEN_HEIGHT*0.5)
+      context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
+      context.fillRect(
+        1,
+        y,
+        SCREEN_WIDTH,
+        1
+      );
+    }
     rays.forEach((ray, i) => {
       const distance = fixFishEye(ray.distance, ray.angle, player.angle);
+      const hashed = hash(ray.x, ray.y);
+
+      const hitposX = ray.x - Math.floor(ray.x);
+      const hitposY = ray.y - Math.floor(ray.y);
+
       const wallHeight = ((CELL_SIZE * 5) / distance) * 100;
-
-      context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
-      context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
-      
-      context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;      
-      context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
-
       context.fillStyle = COLORS.floor;
-      context.fillRect(
+      /*context.fillRect(
         i,
-        SCREEN_HEIGHT / 2 + wallHeight / 2,
+        0,
         1,
-        SCREEN_HEIGHT / 2 - wallHeight / 2
-      );
-      context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;      
-      context.fillRect(
-        i,
-        SCREEN_HEIGHT / 2 + wallHeight / 2,
-        1,
-        SCREEN_HEIGHT / 2 - wallHeight / 2
-      );
+        SCREEN_HEIGHT
+      );*/
+      //context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
+      //context.fillStyle = `rgba(${[0, 100, 200][hashed]}, 255, 255, 255)`
+      //context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
 
-      context.fillStyle = COLORS.ceiling;
-      context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
+      let brightness = ray.vertical ? 100 : 150
+      context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
+      context.fillRect( i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
+
+      const selectedImg = images[hashed];
+      context.drawImage(selectedImg,
+        (ray.vertical ? hitposY : hitposX) * selectedImg.width, 0, 1, selectedImg.height,
+        i, (SCREEN_HEIGHT / 2) - (wallHeight / 2), 1, wallHeight);
+
+       // context.fillStyle = COLORS.floor;
+       //context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2, 1, SCREEN_HEIGHT);
+
+      context.fillStyle = `rgba(0, 0, 0, ${distance/60})`;      
+      context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
+
+      /*context.fillStyle = grd;
+      context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2 - 1, 1, SCREEN_HEIGHT / 2 + wallHeight / 2 + 50);
+      
+     /*context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;    
+      context.fillRect(
+        i,
+        (SCREEN_HEIGHT / 2 + wallHeight / 2) - 1,
+        1,
+        (SCREEN_HEIGHT / 2 - wallHeight / 2)
+      );*/
+      
+      //context.fillStyle = `rgba(120, 120, 120, ${fogCurve(distance)})`;
     });
-  }
-
-  function reshapeArray(arr, width) {
-    let result = [];
-    for(let i = 0; i < arr.length; i += width) {
-        result.push(arr.slice(i, i + width));
-    }
-    return result;
   }
 
   function gameLoop() {
@@ -263,4 +336,12 @@ export function raycastMap(state, el) {
 
   setInterval(gameLoop, TICK);
 
+}
+
+export function reshapeArray(arr, width) {
+  let result = [];
+  for(let i = 0; i < arr.length; i += width) {
+      result.push(arr.slice(i, i + width));
+  }
+  return result;
 }

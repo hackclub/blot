@@ -1,13 +1,15 @@
 import { render } from "lit-html";
 import { createListener } from "./createListener.js";
-import { addPanZoom } from "./addPanZoom.js";
 import { view } from "./view.js";
-import { runCode } from "./runCode.js";
+import { svgViewer } from "./view.js";
+import { runCode, runMachineHelper } from "./runCode.js";
 import { runCommand } from "./runCommand.js";
 import { addCaching } from "./addCaching.js";
 import { addDropUpload } from "./addDropUpload.js";
 import { addNumberDragging } from "./addNumberDragging.js";
 import { downloadText } from "./download.js";
+
+import { addPanZoom } from "./addPanZoom.js";
 
 import { EditorView, basicSetup } from "codemirror"
 import { keymap } from "@codemirror/view";
@@ -17,9 +19,18 @@ import { indentWithTab } from "@codemirror/commands";
 
 import { createHaxidraw } from "./haxidraw/createHaxidraw.js";
 
-export function init(state) {
+import { initCanvas } from "./render/canvas.js";
 
-  const r = () => render(view(state), document.body);
+
+export function init(state) {
+  render(view(state), document.body);
+
+  const r = () => requestAnimationFrame(() => {
+    render(view(state), document.body);
+
+    if (state.renderCanvas && state.renderMethod === "canvas") state.renderCanvas(state);
+  });
+
   const execute = () => {
     const code = editor.state.doc.toString();   
     runCode(code, state).then(() => r());
@@ -27,15 +38,16 @@ export function init(state) {
 
   state.execute = execute;
   state.render = r;
-  r();
+
+  state.renderCanvas = initCanvas(state).renderCanvas;
   
   const root = document.querySelector(".root");
-
+  
   const panZoom = addPanZoom(root.querySelector("svg"));
 
   panZoom.setScaleXY({
-    x: [0, state.machineWidth],
-    y: [0, state.machineHeight]
+   x: [-5, 5],
+   y: [-5, 5]
   });
 
   const editorContainer = document.querySelector(".dictionary");
@@ -74,6 +86,12 @@ export function init(state) {
       runCode(code, state).then(() => r());
       e.preventDefault();
     }
+
+    if (e.ctrlKey && e.key === 's') {
+      e.preventDefault();
+      const code = editor.state.doc.toString();
+      downloadText(`${state.filename}.js`, code);
+    }
   })
 
   const listener = createListener(root);
@@ -90,10 +108,29 @@ export function init(state) {
     runCode(code, state).then(() => r());
   });
 
+
+  listener("click", ".run-machine-trigger", () => {
+    const runMachine = () => runMachineHelper(state, [state.scaleX, state.scaleY]);
+
+    const code = editor.state.doc.toString();   
+    runCode(code, state).then(() => {
+      r();
+      if (!state.haxidraw) {
+        console.log("not connected");
+        return;
+      }
+      runMachine();
+    });
+  });
+
   listener("click", ".connect-trigger", async () => {
+    state.turtlePos = [0, 0];
+    if (state.renderCanvas && state.renderMethod === "canvas") state.renderCanvas(state);
     if (!navigator.serial) {
       alert(
-        "🚨 Your browser doesn't seem to support the Web Serial API, which is required for the Haxidraw editor to connect to the machine. Chrome Version 89 or above is the recommended browser."
+        "Your browser doesn't seem to support the Web Serial API," 
+        + "which is required for the Haxidraw editor to connect to the machine." 
+        + "Chrome Version 89 or above is the recommended browser."
       ) 
     }
     if (!state.haxidraw) { // connect
@@ -102,6 +139,13 @@ export function init(state) {
         .then(async (port) => {
           console.log("connecting");
           state.haxidraw = await createHaxidraw(port);
+
+
+          // state.haxidraw.goto = async (x, y) => {
+          //   await state.haxidraw.goto(x*state.scaleX, y*state.scaleY);
+          //   state.turtlePos = [x, y];
+          // } 
+
           console.log(state.haxidraw);
           r();
         })
@@ -122,17 +166,40 @@ export function init(state) {
     downloadText(`${state.filename}.js`, code);
   });
 
+ 
   listener("click", ".filename-trigger", () => {
     let newName = prompt("Please provide a new filename.", state.filename);
     // if (newName !== null) newName = newName.replaceAll(/\s/g, "-");
-    if (newName !== "" && newName !== null) state.filename = newName;
+    if (newName !== "" && newName !== null) {
+      state.filename = newName;
+      localStorage.setItem('filename', newName);
+    }
     r();
   });
 
+  listener("click", ".export-trigger", () => {
+
+    // TODO: reimplement
+
+    // document.body.insertAdjacentHTML("beforeend", `${svgViewer(state, resRatioX, resRatioY)}`);
+    // let svg = document.getElementsByClassName("svg-viewer")[0];
+    // const svgString = new XMLSerializer().serializeToString(svg);
+    // downloadText(`${state.filename}.svg`,svgString);
+    // svg.remove();
+  });
+
+
   automaticallyConnect(state);
 
-}
 
+  const search = window.location.search;
+  const run = new URLSearchParams(search).get("run");
+  if (run === "true") {
+    const code = editor.state.doc.toString();   
+    runCode(code, state).then(() => r());
+  }
+
+}
 
 async function automaticallyConnect(state) {
   const ports = await navigator.serial.getPorts();
@@ -147,7 +214,3 @@ async function automaticallyConnect(state) {
   })
 
 }
-
-
-
-

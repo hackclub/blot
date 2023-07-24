@@ -1,0 +1,1 @@
+This code is taken from the repo https://github.com/nornagon/flatten-svg/ - unfortunately the way the build is packaged doesn't work well with our compiler setup, but including the files directly bypasses that.

@@ -56,8 +56,16 @@ export async function createWebSerialPort(rawPort) {
     packedMsg = cobs.encode(packedMsg);
 
     const promise = new Promise((resolve, reject) => {
-      msgPromises[msgCount] = resolve;
-    })
+      const timeout = setTimeout(() => {
+        console.log("No response received for msg:", msgCount);
+        resolve();
+      }, 5000);
+      msgPromises[msgCount] = () => {
+        clearTimeout(timeout);
+        resolve();
+      };
+      
+    });
 
     console.log("sending", { 
       msg, 

@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-#define SPU 400
+#define SPU 80 // 20 teeth pulley, 16 microstep, 2mm a tooth belt, 16*200 microsteps per turn  == (16*200)/(20*2) == 80
 #define PIN_SERVO D4
 
 Servo servo;
@@ -170,7 +170,7 @@ bool triggerEvent(String event, uint8_t* payload, int payloadLength, uint8_t msg
 }
 
 const int arrayLength = 7; // + length;
-static uint8_t byteArray[arrayLength];
+uint8_t byteArray[arrayLength];
 
 void sendAck(uint8_t msgCount, uint8_t* reply, uint8_t length) {
   // Serial.println("SEND ACK");
@@ -311,6 +311,7 @@ String byteArrayToString(byte arr[], int length) {
 
 /* ------------------------------------------------------------------------ */
 
+#define EPSILON 0.01
 
 void goTo(float x, float y) {
 
@@ -340,15 +341,13 @@ void goTo(float x, float y) {
   float motor2Step = 0;
 
   // Loop until both motors reach their target steps
-  int count = 0;
-  while (abs(motor1Step) < abs(motor1Target) || abs(motor2Step) < abs(motor2Target)) {
-    if (count > 1000000) break;
-    count++;
+  while (abs(motor1Target - motor1Step) > EPSILON || abs(motor2Target - motor2Step) > EPSILON) {
+
 
     unsigned long currentTime = micros();
 
     // Motor 1
-    if (abs(motor1Step) < abs(motor1Target) && currentTime - motor1PrevStepTime >= motor1StepInterval) {
+    if (abs(motor1Target - motor1Step) > EPSILON && ((currentTime - motor1PrevStepTime) >= motor1StepInterval)) {
       digitalWrite(motor1StepPin, HIGH);
       delayMicroseconds(1);
       digitalWrite(motor1StepPin, LOW);
@@ -359,7 +358,7 @@ void goTo(float x, float y) {
     }
 
     // Motor 2
-    if (abs(motor2Step) < abs(motor2Target) && currentTime - motor2PrevStepTime >= motor2StepInterval) {
+    if (abs(motor2Target - motor2Step) > EPSILON && ((currentTime - motor2PrevStepTime) >= motor2StepInterval)) {
       digitalWrite(motor2StepPin, HIGH);
       delayMicroseconds(1);
       digitalWrite(motor2StepPin, LOW);
