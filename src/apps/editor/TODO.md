@@ -10,6 +10,7 @@
 - move incompatible browser to when you connect machine
 - make download menu with js, svg
 - add examples tab
+- rendering optimization - meet perf of previous editor
 
 # MAYBE
 - better console logging
