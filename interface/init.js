@@ -125,7 +125,7 @@ export function init(state) {
 
   listener("click", ".connect-trigger", async () => {
     state.turtlePos = [0, 0];
-    renderCanvas(state);
+    if (state.renderCanvas && state.renderMethod === "canvas") state.renderCanvas(state);
     if (!navigator.serial) {
       alert(
         "Your browser doesn't seem to support the Web Serial API," 
