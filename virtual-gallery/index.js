@@ -225,7 +225,6 @@ window.addEventListener("keydown", e => {
 
   state.lastX = Math.floor(state.globalX);
   state.lastY = Math.floor(state.globalY);
-  drawMaze(state);
 })
 
 window.addEventListener("mousemove", e => {
@@ -290,24 +289,20 @@ function findClosestIndex(target, arr) {
 }
 
 function movePlayer(dx, dy) {
-  dy = Math.round(dy * 1000000) / 1000000
-  dx = Math.round(dx * 1000000) / 1000000
+  dx = Math.round(dx * 1000000) / 1000000;
+  dy = Math.round(dy * 1000000) / 1000000;
   const newX = state.playerX + dx;
   const newY = state.playerY - dy;
-
-  const width = state.width;
-  const halfWidth = (width-1)/2;
 
   let moveableX = true;
   let moveableY = true;
 
+  let reshapedMaze = reshapeArray(state.mazeData, state.width);
 
-  let fill_dx = reshapeArray(state.mazeData, state.width)[Math.floor(state.playerY)][Math.floor(newX)]
-
+  let fill_dx = reshapedMaze[Math.floor(state.playerY)][Math.floor(newX)]
   if (fill_dx) moveableX = false;
-  let fill_dy = reshapeArray(state.mazeData, state.width)[Math.floor(newY)][Math.floor(state.playerX)]
+  let fill_dy = reshapedMaze[Math.floor(newY)][Math.floor(state.playerX)]
   if (fill_dy) moveableY = false;
-
 
   if (moveableX) {state.playerX += dx; state.globalX += dx}
   if (moveableY) {state.playerY -= dy; state.globalY += dy}
