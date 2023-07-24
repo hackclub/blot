@@ -96,7 +96,6 @@ drawTurtles(t);`;
 };
 
 export const serializeState = (state: GlobalState): SerializedGlobalState => {
-    // console.log(state);
     return {
         code: {
             content: state.code.content,
@@ -132,7 +131,6 @@ const deserializeState = (state: SerializedGlobalState): GlobalState => ({
     turtles: state.turtles?.map(t => {
         t = { ...t };
         Object.setPrototypeOf(t, Turtle.prototype);
-        console.log(t);
         return t;
     }) ?? []
 });

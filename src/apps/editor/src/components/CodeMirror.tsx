@@ -1,7 +1,7 @@
 import { EditorView, basicSetup } from "codemirror";
 import { keymap, ViewUpdate } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
-import { EditorState } from "@codemirror/state";
+import { EditorState, Transaction } from "@codemirror/state";
 import { indentUnit } from "@codemirror/language";
 import { indentWithTab } from "@codemirror/commands";
 import { useCallback, useEffect, useState } from "preact/hooks";
@@ -27,10 +27,6 @@ const theme = EditorView.theme({
     }
 });
 
-export const liveUpdating = {
-    value: false
-};
-
 const cmExtensions = [
     autocompleteRemoved,
     javascript(),
@@ -42,7 +38,7 @@ const cmExtensions = [
         code.cmState = v.state;
         if (v.docChanged) {
             code.content = v.state.doc.toString();
-            if (!liveUpdating.value) manualChangeSinceLiveUpdate.value = true;
+            if (v.transactions.find(t => t.annotation(Transaction.userEvent) !== undefined)) manualChangeSinceLiveUpdate.value = true;
             dispatchEditorChange();
         }
     }),

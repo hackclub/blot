@@ -160,7 +160,6 @@ export async function liveUpdateBundle(from: CodePosition, to: CodePosition, rep
 
 export default async function runCode(cached: boolean = false) {
     const turtles: Turtle[] = [];
-    let turtlePos: Point = [0, 0];
     let errorState: ErrorState | null = null;
 
     if(!cached && !(await build())) return;
