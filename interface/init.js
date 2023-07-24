@@ -141,8 +141,8 @@ export function init(state) {
           state.haxidraw = await createHaxidraw(port);
 
 
-          state.haxidraw.goTo = async (x, y) => {
-            await state.haxidraw.goTo(x*scaleX, y*scaleY);
+          state.haxidraw.goto = async (x, y) => {
+            await state.haxidraw.goto(x*state.scaleX, y*state.scaleY);
             state.turtlePos = [x, y];
           } 
 
