@@ -74,8 +74,7 @@ const newState: Omit<GlobalState, "code"> = {
     view: null
 };
 
-export const makeNewState = (): GlobalState => {    
-    const initialContent = `// welcome to haxidraw!
+export const makeNewState = (initialContent: string = `// welcome to haxidraw!
 
 const t = createTurtle();
 
@@ -84,8 +83,7 @@ for(let i = 0; i < 72; i++) {
     t.left(85);
 }
 
-drawTurtles(t);`;
-
+drawTurtles(t);`): GlobalState => {
     return {
         code: {
             content: initialContent,
@@ -137,4 +135,7 @@ const deserializeState = (state: SerializedGlobalState): GlobalState => ({
 
 const backup = typeof window !== "undefined" && localStorage.getItem("backup");
 
-export const [useStore, patchStore, getStore] = createState<GlobalState>(backup ? deserializeState(JSON.parse(backup)) : makeNewState());
+const legacyEditorCode = typeof window !== "undefined" && localStorage.getItem("cache") && `// imported from old editor (${localStorage.getItem("filename")}.js)
+${localStorage.getItem("cache")}`;
+
+export const [useStore, patchStore, getStore] = createState<GlobalState>(backup ? deserializeState(JSON.parse(backup)) : legacyEditorCode ? makeNewState(legacyEditorCode) : makeNewState());
