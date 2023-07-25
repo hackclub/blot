@@ -108,7 +108,7 @@ let bundle: string | null = null;
 let smc: SourceMapConsumer | null = null;
 
 async function build() {
-    console.log("full rebuild");
+    // console.log("full rebuild");
     try {
         origBundle = bundle = await getBundle();
         smc = getSourceMapConsumer(bundle!);
@@ -147,7 +147,7 @@ const lineColToStringPos = (str: string, line: number, col: number) => {
 
 export async function liveUpdateBundle(from: CodePosition, to: CodePosition, replaceWith: string) {
     if(manualChangeSinceLiveUpdate.value || !origBundle) { await build(); return; }
-    console.log("attempting live update");
+    // console.log("attempting live update");
 
     const bundlePos = [from, to]
         .map(p => ({ ...p, source: "index.js" }))
@@ -155,12 +155,11 @@ export async function liveUpdateBundle(from: CodePosition, to: CodePosition, rep
         .map(p => lineColToStringPos(origBundle!, p.line, p.column));
 
     bundle = origBundle!.slice(0, bundlePos[0]) + replaceWith + origBundle!.slice(bundlePos[1]);
-    console.log(bundle);
+    // console.log(bundle);
 }
 
 export default async function runCode(cached: boolean = false) {
     const turtles: Turtle[] = [];
-    let turtlePos: Point = [0, 0];
     let errorState: ErrorState | null = null;
 
     if(!cached && !(await build())) return;
@@ -231,7 +230,7 @@ export default async function runCode(cached: boolean = false) {
         sleep,
         // drawing functions
         Turtle,
-        createTurtle: (pt) => new Turtle(pt),
+        createTurtle: (pt: Point) => new Turtle(pt),
         console: hConsole,
         ...drawingUtils,
         lerp(start: number, end: number, t: number) {
@@ -240,7 +239,7 @@ export default async function runCode(cached: boolean = false) {
         drawTurtles: (...turtlesToDraw: Turtle[]) => {
             turtlesToDraw.forEach(t => turtles.push(t));
         },
-        setDocDimensions(w, h) {
+        setDocDimensions(w: number, h: number) {
             patchStore({
                 docDimensions: {
                     width: w,
@@ -308,7 +307,7 @@ export default async function runCode(cached: boolean = false) {
 
     patchStore({
         turtles,
-        turtlePos: turtles.at(-1).position,
+        turtlePos: turtles.at(-1)?.position ?? [0, 0],
         error: errorState
     });
 }

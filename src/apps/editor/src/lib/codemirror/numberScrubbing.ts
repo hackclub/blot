@@ -4,7 +4,6 @@ import { Decoration, DecorationSet, EditorView, ViewPlugin, ViewUpdate } from "@
 import type { TreeCursor, SyntaxNode } from "@lezer/common";
 import runCode, { liveUpdateBundle, manualChangeSinceLiveUpdate } from "../run.js";
 import type { CodePosition } from "../state.js";
-import { liveUpdating } from "../../components/CodeMirror.js";
 
 function numberScrubbers(view: EditorView): DecorationSet {
     const decos: Range<Decoration>[] = [];
@@ -54,7 +53,6 @@ export const numberScrubbingPlugin = ViewPlugin.fromClass(class {
         if(!val && old) {
             // rebuild
             runCode();
-            liveUpdating.value = false;
         }
     }
     from: number = 0;
@@ -103,8 +101,6 @@ export const numberScrubbingPlugin = ViewPlugin.fromClass(class {
 
             e.preventDefault();
             e.stopPropagation();
-
-            liveUpdating.value = true;
 
             this.num += this.sigfigs ? e.movementX * 10**(-1 * this.sigfigs) : e.movementX;
             const newValue = this.num.toFixed(this.sigfigs);

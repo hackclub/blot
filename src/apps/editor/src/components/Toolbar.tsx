@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import download from "../lib/download.ts";
 import runCode from "../lib/run.ts";
-import { loadCodeFromString, loadSerializedState, makeNewState, patchStore, serializeState, useStore } from "../lib/state.ts";
+import { loadCodeFromString, loadSerializedState, makeNewState, patchStore, serializeState, useStore, getStore } from "../lib/state.ts";
 import styles from "./Toolbar.module.css";
 import Button from "../ui/Button.tsx";
 import cx from "classnames";
@@ -21,6 +21,7 @@ export default function Toolbar() {
             <DownloadButton />
             <NewButton />
             <OpenButton />
+            <DownloadSVG />
             <MachineControls />
             <SettingsButton />
         </div>
@@ -62,7 +63,50 @@ function NewButton() {
                 ...makeNewState()
             })
         }}>new</Button>
-    )
+    );
+}
+
+function DownloadSVG() {
+    return (
+        <Button variant="ghost" onClick={() => {
+            const { turtles, docDimensions } = getStore();
+
+            const turtleToPathData = t => {
+                let d = "";
+
+                t.path.forEach(pl => pl.forEach((pt, i) => {
+                    const [ x, y ] = pt;
+                    if (i === 0) d += `M ${x} ${y}`;
+                    else d += `L ${x} ${y}`
+                }))
+
+                return d;
+            }
+
+            const turtleToPath = t => {
+                const d = turtleToPathData(t);
+
+                return `<path 
+                    d="${d}" 
+                    stroke-width="0.25" 
+                    stroke="black" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, -1);"
+                    />`
+            }
+
+            const paths = turtles.map(turtleToPath);
+            
+            const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${docDimensions.width} ${docDimensions.height}" width="${docDimensions.width}mm" height="${docDimensions.height}mm">
+                    ${paths.join("\n")}
+                </svg>
+            `
+            download("anon.svg", svg);
+        }}>download svg</Button>
+    );
 }
 
 function OpenButton() {

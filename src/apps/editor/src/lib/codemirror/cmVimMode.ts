@@ -7,7 +7,7 @@ import { useEffect } from "preact/hooks";
 const vimModeCompartment = new Compartment();
 export const vimModeExtension = () => vimModeCompartment.of(getSettings().vimMode ? vim() : []);
 
-export function useVimMode(view: EditorView | undefined) {
+export function useVimMode(view: EditorView | undefined | null) {
     const { vimMode } = useSettings(["vimMode"]);
 
     useEffect(() => {
