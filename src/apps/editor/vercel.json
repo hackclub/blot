@@ -1,5 +1,5 @@
 {
-  "installCommand": null,
+  "installCommand": "echo 'no install command specified'",
   "buildCommand": "yarn set version berry && yarn plugin import workspace-tools && yarn config set nodeLinker node-modules && yarn install && yarn build",
   "framework": "astro",
   "ignoreCommand": "npx turbo-ignore",
