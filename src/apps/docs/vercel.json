@@ -2,7 +2,9 @@
   "installCommand": "echo 'install noop'",
   "buildCommand": "../../vercel-build.sh",
   "framework": "nextjs",
+  "ignoreCommand": "npx turbo-ignore",
   "env": {
-    "FORCE_BUILDER_TAG": "canary"
+    "FORCE_BUILDER_TAG": "canary",
+    "VERCEL_FORCE_NO_BUILD_CACHE": "1"
   }
 }
