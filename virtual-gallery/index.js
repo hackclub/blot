@@ -15,10 +15,10 @@ const state = {
   orientation: "north",
   angle: 0,
   mazeData: genMatrix(n, n),
-  playerX: n/2,
-  playerY: n/2,
-  globalX: 0,
-  globalY: 0,
+  playerX: n/2 + 0.01,
+  playerY: n/2 + 0.01,
+  globalX: 0.01,
+  globalY: 0.01,
   lastX: 0,
   lastY: 0,
 }
@@ -230,7 +230,7 @@ window.addEventListener("keydown", e => {
 
 window.addEventListener("mousemove", e => {
   if (document.pointerLockElement === maze2D) {
-    state.angle += event.movementX * 0.07;
+    state.angle += event.movementX * 0.01;//0.07;
   }
   drawMaze(state);
 })
