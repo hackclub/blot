@@ -22,6 +22,14 @@
         var video = document.querySelector("#videoElement");
         var canvas = document.querySelector("#canvasElement");
         var context = canvas.getContext('2d');
+        const pt = { x: 0, y: 0};
+
+        window.addEventListener("message", function(event) {
+          console.log("received", event);
+            if (event.data === "pt") {
+                event.source.postMessage(pt, event.origin);
+            }
+        }, false);
 
         if (navigator.mediaDevices.getUserMedia) {       
             navigator.mediaDevices.getUserMedia({video: true})
@@ -47,7 +55,8 @@
                     filterPixels(imageData, {r, g, b}, m);
 
                     const {x, y} = getCenterOfNonWhitePixels(imageData)
-                    console.log(x, y);
+                    pt.x = x;
+                    pt.y = y;
                     context.putImageData(imageData, 0, 0);
                     if (x !== 0 && y !== 0) drawCircle(context, x, y, 10)
                     setTimeout(loop, 1000 / 30); // drawing at 30fps
@@ -127,11 +136,13 @@
       }
 
       function drawCircle(context, x, y, radius) {
-    context.beginPath();
-    context.arc(x, y, radius, 0, 2 * Math.PI, false);
-    context.fillStyle = 'red';
-    context.fill();
-}
+          context.beginPath();
+          context.arc(x, y, radius, 0, 2 * Math.PI, false);
+          context.fillStyle = 'red';
+          context.fill();
+      }
+
+
     </script>
 </body>
 </html>

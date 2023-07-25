@@ -3,6 +3,12 @@ import { reshapeArray } from "./raycasting.js";
 
 const imageFilter = window.open("./camera-filter.html", "_blank");
 
+window.addEventListener("message", function(event) {
+    console.log(event.data);
+}, false);
+
+setTimeout(() => imageFilter.postMessage("pt", "*"), 3000);
+
 const maze2D = document.querySelector(".maze-2d");
 const ctx = maze2D.getContext("2d");
 
