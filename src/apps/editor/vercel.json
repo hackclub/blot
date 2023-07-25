@@ -1,6 +1,6 @@
 {
-  "installCommand": "echo 'install noop'",
-  "buildCommand": "../../vercel-build.sh",
+  "installCommand": "../../vercel-install.sh",
+  "buildCommand": "cd .. && yarn build && cd apps/docs",
   "framework": "astro",
   "ignoreCommand": "npx turbo-ignore",
   "env": {
