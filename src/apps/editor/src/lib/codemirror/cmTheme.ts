@@ -9,7 +9,7 @@ const getCMThemeExtension = (theme: Theme) => theme === Theme.Dark ? basicDark :
 const themeCompartment = new Compartment();
 export const themeExtension = () => themeCompartment.of(getCMThemeExtension(getSettings().theme));
 
-export function useCMTheme(view: EditorView | undefined) {
+export function useCMTheme(view: EditorView | undefined | null) {
     const { theme } = useSettings(["theme"]);
 
     useEffect(() => {

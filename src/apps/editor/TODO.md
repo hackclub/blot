@@ -2,13 +2,15 @@
 
 - bezier widget
 - display sense of scale
-  - show mouse position
+  - [x] show mouse position
   - add grid
-- render svg document dimensions
-  - `setDocumentDimensions(w, h)`
 - console for controlling machine
-- svg drag and drop
+- file naming
 - jarring when opening and closing warning panel
+- move incompatible browser to when you connect machine
+- make download menu with js, svg
+- add examples tab
+- rendering optimization - meet perf of previous editor
 
 # MAYBE
 - better console logging
@@ -18,3 +20,9 @@
 - add `drawTurtles` back
 - `createTurtle`
 - zooming
+- render svg document dimensions
+  - `setDocumentDimensions(w, h)`
+- drag and drop
+  - svg
+  - js
+- download svg
