@@ -1,3 +1,9 @@
 {
-  "github": { "silent": true }
+  "installCommand": "echo 'install noop'",
+  "buildCommand": "../../vercel-build.sh",
+  "framework": "nextjs",
+  "ignoreCommand": "npx turbo-ignore",
+  "env": {
+    "FORCE_BUILDER_TAG": "canary"
+  }
 }
