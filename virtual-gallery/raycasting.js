@@ -244,14 +244,14 @@ export function raycastMap(state, el) {
 
 let imageNames = [];
 let images = [];
-fetch('http://localhost:5500/gallery/README.md')
+fetch('./gallery/README.md')
   .then(response => response.text())
   .then(text => {
     const lines = text.split('\n');
     imageNames = lines.filter(line => line.includes('.png')).map(line => line.replace("![](","").replace(")",""));
     for (let i = 0; i < imageNames.length; i++) {
       const img = new Image();
-      img.src = `http://localhost:5500/gallery/${imageNames[i]}`;
+      img.src = `./gallery/${imageNames[i]}`;
       images.push(img);
   }
   console.log(images);

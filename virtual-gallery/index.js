@@ -1,6 +1,8 @@
 import { raycastMap } from "./raycasting.js";
 import { reshapeArray } from "./raycasting.js";
 
+const imageFilter = window.open("./camera-filter.html", "_blank");
+
 const maze2D = document.querySelector(".maze-2d");
 const ctx = maze2D.getContext("2d");
 
