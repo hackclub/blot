@@ -1,10 +1,11 @@
 {
   "installCommand": "../../vercel-install.sh",
-  "buildCommand": "cd .. && yarn build && cd apps/docs",
+  "buildCommand": "cd .. && yarn build",
   "framework": "nextjs",
   "ignoreCommand": "npx turbo-ignore",
   "env": {
     "FORCE_BUILDER_TAG": "canary",
-    "VERCEL_FORCE_NO_BUILD_CACHE": "1"
+    "VERCEL_FORCE_NO_BUILD_CACHE": "1",
+    "TURBO_FORCE": "true"
   }
 }
