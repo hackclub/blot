@@ -1,4 +1,4 @@
-# Haxidraw
+# Haxidraw (WIP please use v2 if building now)
 
 <img width="500" alt="drawing machine with a turtle illustration" src="https://cloud-g6sk6by5j-hack-club-bot.vercel.app/0screenshot_2023-04-06_at_1.50.17_pm.png" align="right" />
 
@@ -12,7 +12,7 @@ The [full model can be found here](https://cad.onshape.com/documents/63bea8a7de5
 
 ## BOM
 
-### 3D Printed Parts
+### 3D Printed Parts (THIS SECTION IS WIP)
 
 The 3D printed parts are found in [`/stls`](./stls) if you are able to print them yourself. The quantity of each part is listed in the name as such `name_x${QUANTITY}`.
 
