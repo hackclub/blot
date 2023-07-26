@@ -8,7 +8,7 @@ We're also working with some researchers at MIT to make digital fabrication mach
 
 ## Model
 
-The [full model can be found here](https://cad.onshape.com/documents/63bea8a7de5a67f20db27d22/w/8d3bc6b2e7a16d7a1133b3b5/e/b415f757fff520875b42c91b?renderMode=0&uiState=643ecd204eaa6208ded4c597).
+The [full model can be found here](https://cad.onshape.com/documents/af09de9bffe7f672aed55b3c/w/426f68ba7060d6a050d82ff3/e/2e27d30f226961cad11c5d26).
 
 ## BOM
 
