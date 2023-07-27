@@ -16,17 +16,17 @@ The [full model can be found here](https://cad.onshape.com/documents/63bea8a7de5
 
 The 3D printed parts are found in [`/stls`](./stls) if you are able to print them yourself. The quantity of each part is listed in the name as such `name_x${QUANTITY}`.
 
-| Part           | Quantity | Image                                                                                                                      | notes                                      |
-| -------------- | -------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
-| Belt clamp     | 1        | <img alt="b" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/5screen_shot_2023-05-17_at_20.22.06.png" width="200" /> |                                            |
-| Foot           | 2        | <img alt="f" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/3screen_shot_2023-05-17_at_20.22.47.png" width="200" /> | laser cut, peel off the film if applicable |
-| Motor bracket  | 2        | <img alt="m" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/1screen_shot_2023-05-17_at_20.23.34.png" width="200" /> |                                            |
-| Belt clamp cap | 2        | <img alt="c" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/7screen_shot_2023-05-17_at_20.21.54.png" width="200" /> |                                            |
-| Carriage       | 1        | <img alt="c" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/0screen_shot_2023-05-17_at_20.22.32.png" width="200" /> |                                            |
-| Idler front    | 1        | <img alt="i" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/2screen_shot_2023-05-17_at_20.22.58.png" width="200" /> |                                            |
-| Pen holder     | 1        | <img alt="p" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/4screen_shot_2023-05-17_at_20.23.42.png" width="200" /> |                                            |
-| Printed rail   | 1        | <img alt="r" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/6screen_shot_2023-05-17_at_20.23.52.png" width="200" /> |                                            |
-
+| Part             | Quantity | Image                                                                                                                      | notes                                      |
+| ---------------- | -------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Belt clip       | 1        | <img alt="belt clip" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/3beltclip.png" width="200" /> 				   |                                            |
+| Foot             | 2        | <img alt="foot" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/6feet.png" width="200" /> 						   | 											|
+| Motor bracket    | 2        | <img alt="motor bracket" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/7motorbracket.png" width="200" /> 		   |                                            |
+| Carriage         | 1        | <img alt="carriage" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/5carriage.png" width="200" /> 				   |                                            |
+| Idler front      | 1        | <img alt="idler front" src="https://cloud-4kyr0v6gn-hack-club-bot.vercel.app/0idlerfront.png" width="200" /> 			   |                                            |
+| Pen holder       | 1        | <img alt="pen holder" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/1penholder.png" width="200" /> 				   |                                            |
+| Printed rail     | 1        | <img alt="rail" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/2printedrail.png" width="200" /> 					   |                                            |
+| PCB Mount 	   | 1 		  | <img alt="mount" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/0pcbmount.png"									   |											|
+| Management Spacer| 1 		  | <img alt "spacer" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/4cablespacer.png"								   |											|
 ### Electronics
 
 | Part                           | Quantity | Notes                                           |
