@@ -28,14 +28,7 @@ export const GLOBAL_STATE = {
   machineHeight: 1,
   scaleX: 1,
   scaleY: 1,
-  renderScaleX: 89,
-  renderScaleY: 89,
-  panX: 0,
-  panY: 0,
-  mouseX: 0,
-  mouseY: 0,
-  turtlePos: [0, 0],
-  drag: false,
+  turtlePos: [ 0, 0 ],
   logs: [],
   codemirror: null,
   topScope: {},
@@ -43,4 +36,5 @@ export const GLOBAL_STATE = {
   examples: examplesArr,
   filename: title,
   servo: null,
+  renderMethod: "canvas" // svg | canvas
 }

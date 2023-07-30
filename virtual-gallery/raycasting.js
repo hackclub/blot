@@ -242,29 +242,42 @@ export function raycastMap(state, el) {
   }
 
 
-  // Once there's an API for user images, it should be pretty easy to request and cache new images once their hash comes up.
-  // This is just a placeholder for now
-const image1 = new Image();
-image1.src = 'https://assets.hackclub.com/icon-rounded.png';
+let imageNames = [];
+let images = [];
+fetch('./gallery/README.md')
+  .then(response => response.text())
+  .then(text => {
+    const lines = text.split('\n');
+    imageNames = lines.filter(line => line.includes('.png')).map(line => line.replace("![](","").replace(")",""));
+    for (let i = 0; i < imageNames.length; i++) {
+      const img = new Image();
+      img.src = `./gallery/${imageNames[i]}`;
+      images.push(img);
+  }
+  console.log(images);
+  });
 
-const image2 = new Image();
-image2.src = 'https://assets.hackclub.com/hack-club-bank-light.png';
-
-const image3 = new Image();
-image3.src = 'https://assets.hackclub.com/hack-club-bank-dark.png';
-
-let images = [image1, image2, image3]
 
 
-var fogCanvas = document.createElement('canvas'), ctx = fogCanvas.getContext('2d'), grd = ctx.createLinearGradient(0, (SCREEN_HEIGHT/2) + 20, 0, (SCREEN_HEIGHT/2) + 50);
+/*var fogCanvas = document.createElement('canvas'), ctx = fogCanvas.getContext('2d'), grd = ctx.createLinearGradient(0, (SCREEN_HEIGHT/2) + 20, 0, (SCREEN_HEIGHT/2) + 50);
 fogCanvas.width = 700;
 fogCanvas.height = 700;
 grd.addColorStop(1,"rgba(50,50,50,0)");
 grd.addColorStop(0,"black");
-
+*/
   function renderScene(rays) {
     const player = getPlayer();
 
+    for (let y = 0; y < SCREEN_HEIGHT; y++) {
+      let brightness = 4*((y-20) - SCREEN_HEIGHT*0.5)
+      context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
+      context.fillRect(
+        1,
+        y,
+        SCREEN_WIDTH,
+        1
+      );
+    }
     rays.forEach((ray, i) => {
       const distance = fixFishEye(ray.distance, ray.angle, player.angle);
       const hashed = hash(ray.x, ray.y);
@@ -273,32 +286,33 @@ grd.addColorStop(0,"black");
       const hitposY = ray.y - Math.floor(ray.y);
 
       const wallHeight = ((CELL_SIZE * 5) / distance) * 100;
-
-      //context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
-      //context.fillStyle = `rgba(${[0, 100, 200][hashed]}, 255, 255, 255)`
-      //context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
       context.fillStyle = COLORS.floor;
-      context.fillRect(
+      /*context.fillRect(
         i,
         0,
         1,
         SCREEN_HEIGHT
-      );
- 
-      context.drawImage(images[hashed],
-        (ray.vertical ? hitposY : hitposX) * 512, 0, 1, 512,
+      );*/
+      //context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
+      //context.fillStyle = `rgba(${[0, 100, 200][hashed]}, 255, 255, 255)`
+      //context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
+
+      let brightness = ray.vertical ? 100 : 150
+      context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
+      context.fillRect( i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
+
+      const selectedImg = images[hashed];
+      context.drawImage(selectedImg,
+        (ray.vertical ? hitposY : hitposX) * selectedImg.width, 0, 1, selectedImg.height,
         i, (SCREEN_HEIGHT / 2) - (wallHeight / 2), 1, wallHeight);
-        
-        context.fillStyle = `rgba(0, 0, 0, ${ray.vertical ? 0.1 : 0})`;   
-        context.fillRect( i, 0, 1, SCREEN_HEIGHT);
 
-        context.fillStyle = COLORS.floor;
-        context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2, 1, SCREEN_HEIGHT);
+       // context.fillStyle = COLORS.floor;
+       //context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2, 1, SCREEN_HEIGHT);
 
-      context.fillStyle = `rgba(0, 0, 0, ${distance/80})`;      
+      context.fillStyle = `rgba(0, 0, 0, ${distance/60})`;      
       context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
 
-      context.fillStyle = grd;
+      /*context.fillStyle = grd;
       context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2 - 1, 1, SCREEN_HEIGHT / 2 + wallHeight / 2 + 50);
       
      /*context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;    

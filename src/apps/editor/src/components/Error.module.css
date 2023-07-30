@@ -1,0 +1,114 @@
+.root {
+    padding: 1rem;
+    border-top: 3px solid red;
+    background-color: rgba(255, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+}
+
+.stack .context {
+    font-size: 0.7rem;
+}
+
+.stackLabel {
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.name {
+    font-family: var(--font-mono);
+    font-weight: bold;
+    color: red;
+}
+
+.snippet {
+    font-family: var(--font-mono);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: white;
+    display: flex;
+    position: relative;
+}
+
+body[data-theme=Dark] .snippet {
+    background-color: rgba(50, 50, 50, 1);
+    color: white;
+}
+
+.snippet > :first-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    flex: 0;
+    padding-right: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.snippet > :first-child > :first-child {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+body[data-theme=Dark] .snippet > :first-child > :first-child {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.message {
+    font-family: var(--font-body);
+    padding: 0.125rem 0.25rem;
+    margin-left: 0.25rem;
+    background-color: rgb(255, 67, 67);
+    border-radius: 0.25rem;
+    color: white;
+}
+
+.arrow {
+    color: rgb(255, 67, 67);
+}
+
+.context {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 0.8rem;
+}
+
+body[data-theme=Dark] .context {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.cm > div {
+    background-color: unset;
+}
+
+.jumpTo {
+    background-color: rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 0; right: 0;
+    display: flex;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    border-radius: 0 0.25rem;
+    padding: 0.125rem 0.25rem;
+    cursor: pointer;
+    border: 0;
+    color: inherit;
+    gap: 0.25rem;
+}
+
+body[data-theme=Light] .jumpTo {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.jumpTo svg {
+    width: 1rem;
+    fill: currentColor;
+    transform: rotate(270deg);
+}

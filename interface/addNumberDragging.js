@@ -2,7 +2,6 @@
 import {
     createListener
 } from "./createListener.js";
-import { renderCanvas } from "./init.js";
 
 const isDigit = ch => /[0-9]/i.test(ch) || ch === ".";
 
@@ -159,7 +158,6 @@ export function addNumberDragging(el, state) {
         selectedText = newValue;
 
         state.execute();
-        renderCanvas(state);
         pauseEvent(e);
     });
 
