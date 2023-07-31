@@ -1,9 +1,6 @@
-
 export function raycastMap(state, el) {
-
   const getMap = () => reshapeArray(state.mazeData, state.width);
   const getPlayer = () => {
-
     // const angle = {
     //   "north": 270,
     //   "east": 180,
@@ -12,12 +9,12 @@ export function raycastMap(state, el) {
     // }[state.orientation];
 
     return {
-      x: state.playerX*CELL_SIZE,
-      y: state.playerY*CELL_SIZE,
-      angle: toRadians(state.angle-90),
+      x: state.playerX * CELL_SIZE,
+      y: state.playerY * CELL_SIZE,
+      angle: toRadians(state.angle - 90),
       speed: 0,
-    }
-  }
+    };
+  };
 
   const bb = el.getBoundingClientRect();
 
@@ -53,9 +50,8 @@ export function raycastMap(state, el) {
     const cellSize = scale * CELL_SIZE;
 
     map.forEach((row, y) => {
-      row.forEach((cell, x) => 
-      {
-        context.fillStyle = '#000000';
+      row.forEach((cell, x) => {
+        context.fillStyle = "#000000";
         context.fillRect(
           posX + x * cellSize,
           posY + y * cellSize,
@@ -65,7 +61,7 @@ export function raycastMap(state, el) {
         if (cell) {
           context.fillStyle = "#3355ff";
         } else {
-          context.fillStyle ="#dddddd";
+          context.fillStyle = "#dddddd";
         }
 
         context.fillRect(
@@ -76,7 +72,6 @@ export function raycastMap(state, el) {
         );
       });
     });
-
 
     context.strokeStyle = "blue";
     context.beginPath();
@@ -108,7 +103,7 @@ export function raycastMap(state, el) {
     );
 
     context.font = "30px Monospace";
-    context.fillText(state.lastX + "," + state.lastY, 10, 220); 
+    context.fillText(state.lastX + "," + state.lastY, 10, 220);
   }
 
   function toRadians(deg) {
@@ -162,8 +157,8 @@ export function raycastMap(state, el) {
       angle,
       distance: distance(player.x, player.y, nextX, nextY),
       vertical: true,
-      x: (nextX / CELL_SIZE) + (state.lastX),
-      y: (nextY / CELL_SIZE) - (state.lastY),
+      x: nextX / CELL_SIZE + state.lastX,
+      y: nextY / CELL_SIZE - state.lastY,
     };
   }
 
@@ -203,8 +198,8 @@ export function raycastMap(state, el) {
       angle,
       distance: distance(player.x, player.y, nextX, nextY),
       vertical: false,
-      x: (nextX / CELL_SIZE) + (state.lastX),
-      y: (nextY / CELL_SIZE) - (state.lastY),
+      x: nextX / CELL_SIZE + state.lastX,
+      y: nextY / CELL_SIZE - state.lastY,
     };
   }
 
@@ -234,52 +229,138 @@ export function raycastMap(state, el) {
   }
 
   function fogCurve(distance) {
-    return Math.pow(1.06, (distance - 40)) - 1
+    return Math.pow(1.06, distance - 40) - 1;
   }
 
   function hash(x, y) {
-    return Math.abs((Math.floor(x + y)) % images.length);
+    // return Math.abs(Math.floor(x + y) % images.length);
+    return Math.abs(Math.floor(3 * Math.floor(x) + 5 * Math.floor(y)) % images.length)
   }
 
-
-let imageNames = [];
-let images = [];
-fetch('./gallery/README.md')
-  .then(response => response.text())
-  .then(text => {
-    const lines = text.split('\n');
-    imageNames = lines.filter(line => line.includes('.png')).map(line => line.replace("![](","").replace(")",""));
-    for (let i = 0; i < imageNames.length; i++) {
-      const img = new Image();
-      img.src = `./gallery/${imageNames[i]}`;
-      images.push(img);
+  function getDist(x1, y1, x2, y2) {
+    return Math.sqrt((x1 - y1) ** 2 + (x2 - y2) ** 2);
   }
-  console.log(images);
+
+  const imageWidth = 700
+  const imageHeight = 700
+  const scalingFactor = 0.85
+
+  let imageNames = [];
+  let images = [];
+  fetch("./gallery/README.md")
+    .then((response) => response.text())
+    .then((text) => {
+      const lines = text.split("\n");
+      imageNames = lines
+        .filter((line) => line.includes(".png"))
+        .map((line) => line.replace("![](", "").replace(")", ""));
+      for (let i = 0; i < imageNames.length; i++) {
+        const img = new Image();
+        img.src = `./gallery/${imageNames[i]}`;
+        img.onload = () => {
+          const imageCanvas = document.createElement('canvas')
+          imageCanvas.width = imageWidth
+          imageCanvas.height = imageHeight
+          const imageCanvasCtx = imageCanvas.getContext('2d')
+          const ratio = img.height/img.width
+          if (img.width > img.height) {
+            img.width = scalingFactor * imageCanvas.width
+            img.height = ratio * img.width
+          }  else {
+            img.height = scalingFactor * imageCanvas.height
+            img.width = 1/ratio * img.height 
+          }
+          
+          const dx = (imageCanvas.width - img.width)/2
+          const dy = (imageCanvas.height - img.height)/2
+
+          imageCanvasCtx.drawImage(img, dx, dy, img.width, img.height)
+
+          imageCanvasCtx.lineWidth = 5
+          imageCanvasCtx.strokeRect(dx, dy, img.width, img.height)
+
+          images.push(imageCanvas)
+        }
+        // images.push(img);
+      }
+    });
+  const splatImg = new Image();
+  splatImg.src = "./2.png";
+
+  function fireTomato() {
+    let p = getPlayer();
+    let splatRay = castRay(p.angle);
+    let splatPos =
+      `${Math.floor(splatRay.x + 0.1)},${Math.floor(splatRay.y + 0.1)}`
+
+    const tomatoCanvas = document.createElement('canvas')
+
+    tomatoCanvas.width = splatImg.width * 2
+    tomatoCanvas.height = splatImg.height * 2
+
+    const tomatoCtx = tomatoCanvas.getContext('2d')
+
+    tomatoCtx.translate(tomatoCanvas.width/2, tomatoCanvas.height/2)
+    tomatoCtx.rotate(Math.random() * 2 * Math.PI)
+    tomatoCtx.drawImage(splatImg, 0, 0)
+
+    // const x = splatRay.x - Math.floor(splatRay.x)
+    const x = Math.random()
+
+    const tomato = {
+      // Normalized
+      x,
+      y: 0.4 + 0.6 * Math.random(),
+      scale: 0.5 + 0.5 * Math.random(),
+      rotation: Math.random() * 2 * Math.PI,
+      img: tomatoCanvas
+    }
+    
+    const currentTomatoes = state.splattedTiles[splatPos]
+    
+    if (!currentTomatoes) state.splattedTiles[splatPos] = [tomato]
+    else currentTomatoes.push(tomato)
+
+    state.score++;
+  }
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key == " ") fireTomato()
   });
 
-
-
-/*var fogCanvas = document.createElement('canvas'), ctx = fogCanvas.getContext('2d'), grd = ctx.createLinearGradient(0, (SCREEN_HEIGHT/2) + 20, 0, (SCREEN_HEIGHT/2) + 50);
+  /*var fogCanvas = document.createElement('canvas'), ctx = fogCanvas.getContext('2d'), grd = ctx.createLinearGradient(0, (SCREEN_HEIGHT/2) + 20, 0, (SCREEN_HEIGHT/2) + 50);
 fogCanvas.width = 700;
 fogCanvas.height = 700;
 grd.addColorStop(1,"rgba(50,50,50,0)");
 grd.addColorStop(0,"black");
 */
+  
+
+  let last = null
+  let fps = 0
+  let count = 0
+
+
   function renderScene(rays) {
+    const now = performance.now()
+    if (last) {
+      count++
+      fps = 1000/(now - last)
+    }
+    last = now
+    
+    
     const player = getPlayer();
 
     for (let y = 0; y < SCREEN_HEIGHT; y++) {
-      let brightness = 4*((y-20) - SCREEN_HEIGHT*0.5)
+      let brightness = 4 * (y - 20 - SCREEN_HEIGHT * 0.5);
       context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
-      context.fillRect(
-        1,
-        y,
-        SCREEN_WIDTH,
-        1
-      );
+      context.fillRect(1, y, SCREEN_WIDTH, 1);
     }
     rays.forEach((ray, i) => {
       const distance = fixFishEye(ray.distance, ray.angle, player.angle);
+      let tomatoes = state.splattedTiles[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] ?? []
+      //console.log([Math.floor(ray.x), Math.floor(ray.y)]+"")
       const hashed = hash(ray.x, ray.y);
 
       const hitposX = ray.x - Math.floor(ray.x);
@@ -297,19 +378,46 @@ grd.addColorStop(0,"black");
       //context.fillStyle = `rgba(${[0, 100, 200][hashed]}, 255, 255, 255)`
       //context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
 
-      let brightness = ray.vertical ? 100 : 150
+      let brightness = ray.vertical ? 100 : 150;
       context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
-      context.fillRect( i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
-
+      context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
       const selectedImg = images[hashed];
-      context.drawImage(selectedImg,
-        (ray.vertical ? hitposY : hitposX) * selectedImg.width, 0, 1, selectedImg.height,
-        i, (SCREEN_HEIGHT / 2) - (wallHeight / 2), 1, wallHeight);
+      if (selectedImg) {
+        context.fillStyle = `rgba(255, 255, 255, 0.2)`;
+        context.drawImage(
+          selectedImg,
+          (ray.vertical ? hitposY : hitposX) * selectedImg.width,
+          0,
+          1,
+          selectedImg.height,
+          i,
+          SCREEN_HEIGHT / 2 - wallHeight / 2,
+          1,
+          wallHeight
+        );
+      }
 
-       // context.fillStyle = COLORS.floor;
-       //context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2, 1, SCREEN_HEIGHT);
+      for (const tomato of tomatoes) {
+        //context.globalAlpha = 0.8;
+        // context.drawImage()
+        const tomatoImg = tomato.img
+        context.drawImage(
+          tomatoImg,
+          (ray.vertical ? hitposY : hitposX) * tomatoImg.width * tomato.scale * 5 - tomato.x * 600,
+          -tomato.y * 600,
+          1,
+          tomatoImg.height * tomato.scale * 5,
+          i,
+          SCREEN_HEIGHT / 2 - wallHeight / 2,
+          1,
+          wallHeight
+        );
+      }
 
-      context.fillStyle = `rgba(0, 0, 0, ${distance/60})`;      
+      // context.fillStyle = COLORS.floor;
+      //context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2, 1, SCREEN_HEIGHT);
+
+      context.fillStyle = `rgba(0, 0, 0, ${distance / 60})`;
       context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
 
       /*context.fillStyle = grd;
@@ -322,9 +430,16 @@ grd.addColorStop(0,"black");
         1,
         (SCREEN_HEIGHT / 2 - wallHeight / 2)
       );*/
-      
+
       //context.fillStyle = `rgba(120, 120, 120, ${fogCurve(distance)})`;
     });
+    // context.fillStyle = `rgba(0, 0, 0, 1)`;
+    // context.font = "30px Monospace";
+    // context.fillText("Art destroyed: " + state.score, 10, 400);
+
+    // context.fillStyle = `rgba(0, 0, 0, 1)`;
+    // context.font = "30px Monospace";
+    // context.fillText(`FPS: ${Math.floor(fps)}`, 10, 450)
   }
 
   function gameLoop() {
@@ -332,16 +447,20 @@ grd.addColorStop(0,"black");
     const rays = getRays();
     renderScene(rays);
     renderMinimap(0, 0, 1, rays);
+
   }
 
   setInterval(gameLoop, TICK);
 
+  return {
+    fireTomato
+  }
 }
 
 export function reshapeArray(arr, width) {
   let result = [];
-  for(let i = 0; i < arr.length; i += width) {
-      result.push(arr.slice(i, i + width));
+  for (let i = 0; i < arr.length; i += width) {
+    result.push(arr.slice(i, i + width));
   }
   return result;
 }

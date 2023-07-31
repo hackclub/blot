@@ -3,11 +3,11 @@ import { reshapeArray } from "./raycasting.js";
 
 const imageFilter = window.open("./camera-filter.html", "_blank");
 
-window.addEventListener("message", function(event) {
-    console.log(event.data);
-}, false);
+window.addEventListener('beforeunload', () => {
+  imageFilter.close()
+})
 
-setTimeout(() => imageFilter.postMessage("pt", "*"), 3000);
+setInterval(() => imageFilter.postMessage("pt", "*"), 10);
 
 const maze2D = document.querySelector(".maze-2d");
 const ctx = maze2D.getContext("2d");
@@ -23,13 +23,18 @@ const state = {
   orientation: "north",
   angle: 0,
   mazeData: genMatrix(n, n),
-  playerX: n/2,
-  playerY: n/2,
-  globalX: 0,
-  globalY: 0,
+  playerX: n/2 + 0.01,
+  playerY: n/2 + 0.01,
+  globalX: 0 + 0.01,
+  globalY: 0 + 0.01,
   lastX: 0,
   lastY: 0,
+  splattedTiles: {},
+  score: 0
 }
+
+let trackerX = 0
+let trackerY = 0
 
 const width = state.width;
 const height = state.height;
@@ -208,31 +213,6 @@ window.addEventListener("keydown", e => {
 
   if (branch) branch();
 
-  state.globalX = Math.round(state.globalX * 10000) / 10000;
-  state.globalY = Math.round(state.globalY * 10000) / 10000;
-
-  if (Math.floor(state.globalX) > state.lastX) {
-    moveEast({ width, halfWidth, mazeData });
-    state.playerX = n/2;
-  }
-
-  if (Math.floor(state.globalX) < state.lastX) {
-    moveWest({ width, halfWidth, mazeData });
-    state.playerX = n/2 + 1;
-  }
-
-  if (Math.floor(state.globalY) < state.lastY) {
-    moveSouth({ width, halfWidth, mazeData });
-    state.playerY = n/2 - 1;
-  }
-
-  if (Math.floor(state.globalY) > state.lastY) {
-    moveNorth({ width, halfWidth, mazeData });
-    state.playerY = n/2;
-  }
-
-  state.lastX = Math.floor(state.globalX);
-  state.lastY = Math.floor(state.globalY);
 })
 
 window.addEventListener("mousemove", e => {
@@ -253,7 +233,46 @@ function get1DIndex(width, x, y) {
 
 const raycast = document.querySelector(".raycast");
 
-raycastMap(state, raycast);
+const { fireTomato } = raycastMap(state, raycast);
+
+let lastTrackerX, lastTrackerY
+
+let justFiredTomato = false
+
+window.addEventListener("message", function(event) {
+  const [{x, y}, hg, hl, vg, vl] = event.data
+  console.log(x, y)
+  trackerX = (x / 640)
+  trackerY = (y / 480)
+
+  if (x === 0 && y === 0 && Math.abs(lastTrackerX - 0.5) < 0.5 && Math.abs(lastTrackerY - 0.5) < 0.5) {
+    if (!justFiredTomato) {
+      justFiredTomato = true
+      fireTomato()
+    }
+    return
+  }
+
+  justFiredTomato = false
+
+  lastTrackerX = trackerX
+  lastTrackerY = trackerY
+
+  let r = 0.02
+  if (vg) state.angle += 1
+  else if (vl) state.angle -= 1
+  if (hg) {
+    let dx = Math.sin((state.angle+0)/180*Math.PI)*r;
+    let dy = Math.cos(state.angle/180*Math.PI)*r;
+    movePlayer(dx, dy);
+  }
+  else if (hl) {
+      let dx = Math.sin((state.angle+180)/180*Math.PI)*r;
+      let dy = Math.cos((state.angle+180)/180*Math.PI)*r;
+      movePlayer(dx, dy);
+  }
+  
+}, false);
 
 
 function moveNorth({ width, halfWidth, mazeData }) {
@@ -297,19 +316,50 @@ function findClosestIndex(target, arr) {
 }
 
 function movePlayer(dx, dy) {
+  const { width, height, orientation, mazeData } = state;
+  const maze = mazeData;
+
+  state.globalX = Math.round(state.globalX * 10000) / 10000;
+  state.globalY = Math.round(state.globalY * 10000) / 10000;
+
+  if (Math.floor(state.globalX) > state.lastX) {
+    moveEast({ width, halfWidth, mazeData });
+    state.playerX = n/2;
+  }
+
+  if (Math.floor(state.globalX) < state.lastX) {
+    moveWest({ width, halfWidth, mazeData });
+    state.playerX = n/2 + 1;
+  }
+
+  if (Math.floor(state.globalY) < state.lastY) {
+    moveSouth({ width, halfWidth, mazeData });
+    state.playerY = n/2 - 1;
+  }
+
+  if (Math.floor(state.globalY) > state.lastY) {
+    moveNorth({ width, halfWidth, mazeData });
+    state.playerY = n/2;
+  }
+
+  state.lastX = Math.floor(state.globalX);
+  state.lastY = Math.floor(state.globalY);
+
   dx = Math.round(dx * 1000000) / 1000000;
   dy = Math.round(dy * 1000000) / 1000000;
-  const newX = state.playerX + dx;
-  const newY = state.playerY - dy;
+  const newEpsX = Math.floor(state.playerX + dx * 5);
+  const newEpsY = Math.floor(state.playerY - dy * 5);
+  const newX = Math.floor(state.playerX + dx);
+  const newY = Math.floor(state.playerY - dy);
 
   let moveableX = true;
   let moveableY = true;
 
   let reshapedMaze = reshapeArray(state.mazeData, state.width);
 
-  let fill_dx = reshapedMaze[Math.floor(state.playerY)][Math.floor(newX)]
+  let fill_dx = reshapedMaze[Math.floor(state.playerY)][newX] || reshapedMaze[Math.floor(state.playerY)][newEpsX]
   if (fill_dx) moveableX = false;
-  let fill_dy = reshapedMaze[Math.floor(newY)][Math.floor(state.playerX)]
+  let fill_dy = reshapedMaze[newY][Math.floor(state.playerX)] || reshapedMaze[newEpsY][Math.floor(state.playerX)]
   if (fill_dy) moveableY = false;
 
   if (moveableX) {state.playerX += dx; state.globalX += dx}
