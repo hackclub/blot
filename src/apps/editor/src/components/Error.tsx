@@ -98,7 +98,14 @@ export default function Error() {
     return (
         <div class={styles.root}>
             <span class={styles.name}>{error.name}</span>
-            <Snippet pos={error.stack[0]} code={error.code} message={error.message} />
+            {error.stack?.[0].line !== null ? (
+                <Snippet pos={error.stack[0]} code={error.code} message={error.message} />
+            ) : (
+                <>
+                    <span>{error.message}</span>
+                    <span>something went wrong getting the error snippet. report this as a bug on GitHub.</span>
+                </>
+            )}
             {error.stack.length > 1 && (
                 <details>
                     <summary class={styles.stackLabel}>stack trace</summary>

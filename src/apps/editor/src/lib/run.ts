@@ -294,7 +294,16 @@ export default async function runCode(cached: boolean = false) {
             positions.push(pos);
             i++;
         } while(i < stackLines.length && [0, 1 /* iife call */, 2 /* AsyncFunction call */].map(n => stackLines[i + n]).every(l => l && l.includes("run.ts")));
-        const mapped = positions.map(smc!.originalPositionFor.bind(smc));
+        const mapPosition = (position: FindPosition) => {
+            const mapped = smc!.originalPositionFor(position);
+            if(mapped.line === null) {
+                // sometimes it fails to map for some reason, try incrementing the column
+                console.warn("failed to map source position, incrementing column as workaround");
+                return smc!.originalPositionFor({ ...position, column: position.column + 1 });
+            }
+            return mapped;
+        }
+        const mapped = positions.map(mapPosition);
         errorState = {
             stack: mapped,
             code: getStore().code.content,

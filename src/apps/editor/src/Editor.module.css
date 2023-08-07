@@ -27,3 +27,10 @@
     flex: 1;
     overflow-x: auto; /* fix resizing the canvas */
 }
+
+.bezierTest {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 99;
+}
