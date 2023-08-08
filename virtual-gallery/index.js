@@ -1,8 +1,3 @@
-import { Turtle } from "../interface/drawing-functions/Turtle.js";
-import { noise } from "../interface/drawing-functions/noise.js";
-import { rand, setRandSeed, randInRange, randIntInRange } from "../interface/drawing-functions/rand.js";
-import { bezierEasing } from "../interface/drawing-functions/bezierEasing.js";
-import { isPointInPolyline, inside } from "../interface/drawing-functions/isPointInPolyline.js";
 /*const imageFilter = window.open("./camera-filter.html", "_blank");
 
 window.addEventListener('beforeunload', () => {
@@ -14,6 +9,8 @@ setInterval(() => imageFilter.postMessage("pt", "*"), 10);
 
 const maze2D = document.querySelector(".maze-2d");
 const ctx = maze2D.getContext("2d");
+
+const worker = new Worker("./worker.js", { type: "module" });
 
 const w = maze2D.width;
 const h = maze2D.width;
@@ -58,9 +55,6 @@ const imageHeight = 700
 
 const scalingFactor = 0.85
 
-let intervals = [];
-let timeouts = [];
-let loops = [];
 
 const SCREEN_WIDTH = bb.width;
 const SCREEN_HEIGHT = bb.height;
@@ -79,127 +73,6 @@ const yWidth = h/height;
 const getMap = () => reshapeArray(state.mazeData, state.width);
 
 drawMaze(state);
-
-const drawingFunctions = {
-  Turtle,
-  createTurtle(start = [0, 0]) {
-    return new Turtle(start);
-  },
-  noise,
-  rand,
-  setRandSeed,
-  randInRange, 
-  randIntInRange,
-  bezierEasing,
-  isPointInPolyline,
-  inside,
-  lerp(start, end, t) {
-    return (1 - t) * start + t * end;
-  }
-  }
-  
-  function runCode(code, state) {
-    const ast = acorn.parse(code, { ecmaVersion: "latest" });
-    const topScopeInserts = [];
-  
-    ast.body.forEach(statement => {
-      const { type } = statement;
-  
-      if (type === "VariableDeclaration") {
-        statement.declarations.forEach(x => {
-          topScopeInserts.push(x.id.name);
-        })
-      }
-  
-      if (type === "FunctionDeclaration") {
-        topScopeInserts.push(statement.id.name);
-      }
-  
-    })
-  
-    topScopeInserts.forEach(name => {
-      code += `\n;topScope["${name}"] = ${name};`
-    });
-  
-    intervals.forEach(clearInterval);
-    timeouts.forEach(clearTimeout);
-  
-    loops.forEach((x, i) => { loops[i] = false });
-  
-    const patchedInterval = (callback, time, ...args) => {
-      const interval = setInterval(callback, time, ...args);
-      intervals.push(interval);
-      return interval;
-    }
-  
-    const patchedTimeout = (callback, time, ...args) => {
-      const timeout = setTimeout(callback, time, ...args);
-      timeouts.push(timeout);
-      return timeout;
-    }
-  
-  
-    const loop = (fn, minterval = 0) => {
-      let n = loops.length;
-      loops.push(true);
-      while (loops[n]) {
-        const date = new Date();
-        const start = date.getTime();
-        fn();
-        const elapsed = (date.getTime()) - start;
-        if (elapsed < minterval) delay(minterval - elapsed);
-      }
-    }
-  
-    let _log = console.log;
-    let _warn = console.warn;
-    let _error = console.error;
-  
-    state.turtles = [];
-  
-    const haxidraw = state.haxidraw;
-  
-    const clear = () => {
-      state.turtles = [];
-    }
-    const topScope = { haxidraw, clear };
-  
-    const args = {
-      ...drawingFunctions,
-      drawTurtles: (...turtles) => {
-        state.turtles.push(...turtles);
-      },
-      ...topScope,
-      topScope,
-      setInterval: patchedInterval,
-      setTimeout: patchedTimeout,
-      loop,
-      console: {
-        log: (...args) => {
-          _log(...args)
-          state.logs.push(...args);
-        },
-        warn: (...args) => {
-          _warn(...args)
-          state.logs.push(...args);
-        },
-        error: (...args) => {
-          _error(...args)
-          state.logs.push(...args);
-        }
-      },
-    }
-  
-    const names = Object.keys(args);
-    const values = Object.values(args);
-  
-    const AsyncFunction = (async function () { }).constructor;
-    const f = new AsyncFunction(...names, code);
-  
-    f(...values);
-  
-    state.topScope = topScope;
-  }1
 
 const getPlayer = () => {
   // const angle = {
@@ -361,10 +234,16 @@ function getDist(x1, y1, x2, y2) {
   return Math.sqrt((x1 - y1) ** 2 + (x2 - y2) ** 2);
 }
 
-function genImage(code, img, imgCtx, seed) {
-  runCode(`setRandSeed(${seed});` + code, state)
-  return renderCanvas(state.turtles, img, imgCtx)
+function genImage(code, x, y) {
+  let seed = hash(x, y);
+  worker.postMessage({code: `setRandSeed(${seed});` + code, state: JSON.stringify(state), x: x, y: y});
 }
+
+worker.onmessage = (e) => {
+  const { turtles, x, y } = e.data;
+  state.turtles = turtles;
+  addImage(x, y);
+};
 
 function movePlayer(dx, dy) {
   const { width, height, orientation, mazeData } = state;
@@ -609,9 +488,8 @@ let lastTrackerX, lastTrackerY
 
 let justFiredTomato = false
 
-
-function addImage(source, images, i, x, y) {
-  source = imageSrcs[hash(x, y) % imageSrcs.length]
+function addImage(x, y) {
+  let source = imageSrcs[hash(x, y) % imageSrcs.length]
   const img = document.createElement("canvas");
   img.width = 700;
   img.height = 700;
@@ -631,7 +509,7 @@ function addImage(source, images, i, x, y) {
     
     const dx = (imageCanvas.width - img.width)/2
     const dy = (imageCanvas.height - img.height)/2
-    genImage(source, img, imgCtx, hash(x, y));
+    renderCanvas(state.turtles, img, imgCtx);
     imageCanvasCtx.drawImage(img, dx, dy, img.width, img.height)
     imageCanvasCtx.lineWidth = 5
     imageCanvasCtx.strokeRect(dx, dy, img.width, img.height)
@@ -941,7 +819,10 @@ grd.addColorStop(0,"black");
       //const selectedImg = images[hashed];
       const selectedImg = state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`]
       if (selectedImg == undefined) {
-        addImage(imageSrcs[hashed], images, hashed, Math.floor(ray.x), Math.floor(ray.y))
+        //addImage(imageSrcs[hashed], images, hashed, Math.floor(ray.x), Math.floor(ray.y))
+        state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] = new Image()
+        genImage(imageSrcs[hashed], Math.floor(ray.x), Math.floor(ray.y))
+        console.log(Math.floor(ray.x), Math.floor(ray.y))
       }
       if (selectedImg) {
         context.fillStyle = `rgba(255, 255, 255, 0.2)`;

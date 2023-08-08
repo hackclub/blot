@@ -1,7 +1,7 @@
 const screenWidth = 4
 const screenHeight = 2
-const dx = 0.002
-const dy = 0.002
+const dx = 0.01
+const dy = 0.01
 
 const t = new Turtle()
 
@@ -174,6 +174,12 @@ class World {
 }
 
 function drawPixel(x, y, w, h, brightness) {
+    x += 1
+    y += 0.5
+    x *= 50
+    y *= -50
+    w *= 50
+    h *= 50
   t.up()
   t.goto([x, y])
   t.down()
