@@ -1,1 +1,1 @@
-let t=new Turtle();for(let i of eval(`'A'`+`.replace(/[AB]/g,c=>c=='A'?'-BF+AFA+FB-':'+AF-BFB-FA+')`.repeat(3))){try{eval(i=='F'?`t.forward(9)`:`t.left(${i}87+rand()*10)`)}catch{}}drawTurtles(t)
+let t=new Turtle();for(let i of eval(`'A'`+`.replace(/[AB]/g,c=>c=='A'?'-BF+AFA+FB-':'+AF-BFB-FA+')`.repeat(5))){try{eval(i=='F'?`t.forward(9)`:`t.left(${i}90+rand()*100)`)}catch{}}drawTurtles(t)

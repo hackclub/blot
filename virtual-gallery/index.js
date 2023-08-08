@@ -20,12 +20,24 @@ const h = maze2D.width;
 
 const n = 18;
 
+const canvas = document.querySelector(".raycast");
+
+let trackerX = 0
+let trackerY = 0
+
+let src;
+
+let images = []
+let imageSrcs = []
+
+const bb = canvas.getBoundingClientRect();
+
 const state = {
   width: n,
   height: n,
   orientation: "north",
   angle: 0,
-  mazeData: genMatrix(n, n),
+  mazeData: [],
   playerX: n/2 + 0.01,
   playerY: n/2 + 0.01,
   globalX: 0 + 0.01,
@@ -38,19 +50,17 @@ const state = {
   turtles: [],
 }
 
-const canvas = document.querySelector(".raycast");
-
-let trackerX = 0
-let trackerY = 0
-
-let src;
-
-let images = []
-
 const width = state.width;
 const height = state.height;
 
-const bb = canvas.getBoundingClientRect();
+const imageWidth = 700
+const imageHeight = 700
+
+const scalingFactor = 0.85
+
+let intervals = [];
+let timeouts = [];
+let loops = [];
 
 const SCREEN_WIDTH = bb.width;
 const SCREEN_HEIGHT = bb.height;
@@ -65,11 +75,131 @@ state.mazeData[i] = 0;
 const xWidth = w/width;
 const yWidth = h/height;
 
-let imageSrcs = []
 
 const getMap = () => reshapeArray(state.mazeData, state.width);
 
 drawMaze(state);
+
+const drawingFunctions = {
+  Turtle,
+  createTurtle(start = [0, 0]) {
+    return new Turtle(start);
+  },
+  noise,
+  rand,
+  setRandSeed,
+  randInRange, 
+  randIntInRange,
+  bezierEasing,
+  isPointInPolyline,
+  inside,
+  lerp(start, end, t) {
+    return (1 - t) * start + t * end;
+  }
+  }
+  
+  function runCode(code, state) {
+    const ast = acorn.parse(code, { ecmaVersion: "latest" });
+    const topScopeInserts = [];
+  
+    ast.body.forEach(statement => {
+      const { type } = statement;
+  
+      if (type === "VariableDeclaration") {
+        statement.declarations.forEach(x => {
+          topScopeInserts.push(x.id.name);
+        })
+      }
+  
+      if (type === "FunctionDeclaration") {
+        topScopeInserts.push(statement.id.name);
+      }
+  
+    })
+  
+    topScopeInserts.forEach(name => {
+      code += `\n;topScope["${name}"] = ${name};`
+    });
+  
+    intervals.forEach(clearInterval);
+    timeouts.forEach(clearTimeout);
+  
+    loops.forEach((x, i) => { loops[i] = false });
+  
+    const patchedInterval = (callback, time, ...args) => {
+      const interval = setInterval(callback, time, ...args);
+      intervals.push(interval);
+      return interval;
+    }
+  
+    const patchedTimeout = (callback, time, ...args) => {
+      const timeout = setTimeout(callback, time, ...args);
+      timeouts.push(timeout);
+      return timeout;
+    }
+  
+  
+    const loop = (fn, minterval = 0) => {
+      let n = loops.length;
+      loops.push(true);
+      while (loops[n]) {
+        const date = new Date();
+        const start = date.getTime();
+        fn();
+        const elapsed = (date.getTime()) - start;
+        if (elapsed < minterval) delay(minterval - elapsed);
+      }
+    }
+  
+    let _log = console.log;
+    let _warn = console.warn;
+    let _error = console.error;
+  
+    state.turtles = [];
+  
+    const haxidraw = state.haxidraw;
+  
+    const clear = () => {
+      state.turtles = [];
+    }
+    const topScope = { haxidraw, clear };
+  
+    const args = {
+      ...drawingFunctions,
+      drawTurtles: (...turtles) => {
+        state.turtles.push(...turtles);
+      },
+      ...topScope,
+      topScope,
+      setInterval: patchedInterval,
+      setTimeout: patchedTimeout,
+      loop,
+      console: {
+        log: (...args) => {
+          _log(...args)
+          state.logs.push(...args);
+        },
+        warn: (...args) => {
+          _warn(...args)
+          state.logs.push(...args);
+        },
+        error: (...args) => {
+          _error(...args)
+          state.logs.push(...args);
+        }
+      },
+    }
+  
+    const names = Object.keys(args);
+    const values = Object.values(args);
+  
+    const AsyncFunction = (async function () { }).constructor;
+    const f = new AsyncFunction(...names, code);
+  
+    f(...values);
+  
+    state.topScope = topScope;
+  }1
 
 const getPlayer = () => {
   // const angle = {
@@ -224,7 +354,7 @@ function fogCurve(distance) {
 
 function hash(x, y) {
   // return Math.abs(Math.floor(x + y) % images.length);
-  return Math.abs(Math.floor(3 * Math.floor(x) + 5 * Math.floor(y)) % images.length)
+  return Math.abs(Math.floor(3 * Math.floor(x) + 5 * Math.floor(y)))
 }
 
 function getDist(x1, y1, x2, y2) {
@@ -398,7 +528,7 @@ function genRow(x, y, length) {
   let row = [];
   for(let i = -n/2; i < length/2; i++) {
     row.push(pseudoRandom(x + i, y) < 0 ? 1 : 0);
-    addImage(src, images, hash(x+i, y), x+i, y)
+    //addImage(0, 0, hash(x+i, y), x+i, y)
   }
   return row;
 }
@@ -409,7 +539,7 @@ function genColumn(x, y, length) {
   let column = [];
   for(let i = -n/2; i < length/2; i++) {
     column.push(pseudoRandom(x, y - i) < 0 ? 1 : 0);
-    addImage(src, images, hash(x, y-i), x, y-i)
+    //addImage(0, 0, hash(x, y-i), x, y-i)
   }
   return column;
 }
@@ -418,6 +548,7 @@ function genMatrix(width, height) {
   let matrix = []
   for(let i = 0; i < height * width; i++) {
     matrix.push(pseudoRandom((i % width) - n/2, Math.floor(i / width) - n/2 + 1) < 0 ? 1 : 0 );
+    //addImage(0, 0, hash((i % width) - n/2, Math.floor(i / width) - n/2 + 1), (i % width) - n/2, Math.floor(i / width) - n/2 + 1)
   }
   return matrix
 }
@@ -480,6 +611,7 @@ let justFiredTomato = false
 
 
 function addImage(source, images, i, x, y) {
+  source = imageSrcs[hash(x, y) % imageSrcs.length]
   const img = document.createElement("canvas");
   img.width = 700;
   img.height = 700;
@@ -499,22 +631,14 @@ function addImage(source, images, i, x, y) {
     
     const dx = (imageCanvas.width - img.width)/2
     const dy = (imageCanvas.height - img.height)/2
-    genImage(source, img, imgCtx, i);
+    genImage(source, img, imgCtx, hash(x, y));
     imageCanvasCtx.drawImage(img, dx, dy, img.width, img.height)
     imageCanvasCtx.lineWidth = 5
     imageCanvasCtx.strokeRect(dx, dy, img.width, img.height)
 
     //images.push(imageCanvas)
-    state.imageMap[""+x+","+y] = imageCanvas
+    state.imageMap[`${x},${y}`] = imageCanvas
 }
-
-const imageWidth = 700
-const imageHeight = 700
-const scalingFactor = 0.85
-
-let intervals = [];
-let timeouts = [];
-let loops = [];  
 
 
 function renderCanvas(turtles, cvs, ctx) {
@@ -539,131 +663,6 @@ function renderCanvas(turtles, cvs, ctx) {
   ctx.stroke();
   return [cvs, ctx]
 }
-
-
-
-const drawingFunctions = {
-Turtle,
-createTurtle(start = [0, 0]) {
-  return new Turtle(start);
-},
-noise,
-rand,
-setRandSeed,
-randInRange, 
-randIntInRange,
-bezierEasing,
-isPointInPolyline,
-inside,
-lerp(start, end, t) {
-  return (1 - t) * start + t * end;
-}
-}
-
-function runCode(code, state) {
-  const ast = acorn.parse(code, { ecmaVersion: "latest" });
-  const topScopeInserts = [];
-
-  ast.body.forEach(statement => {
-    const { type } = statement;
-
-    if (type === "VariableDeclaration") {
-      statement.declarations.forEach(x => {
-        topScopeInserts.push(x.id.name);
-      })
-    }
-
-    if (type === "FunctionDeclaration") {
-      topScopeInserts.push(statement.id.name);
-    }
-
-  })
-
-  topScopeInserts.forEach(name => {
-    code += `\n;topScope["${name}"] = ${name};`
-  });
-
-  intervals.forEach(clearInterval);
-  timeouts.forEach(clearTimeout);
-
-  loops.forEach((x, i) => { loops[i] = false });
-
-  const patchedInterval = (callback, time, ...args) => {
-    const interval = setInterval(callback, time, ...args);
-    intervals.push(interval);
-    return interval;
-  }
-
-  const patchedTimeout = (callback, time, ...args) => {
-    const timeout = setTimeout(callback, time, ...args);
-    timeouts.push(timeout);
-    return timeout;
-  }
-
-
-  const loop = (fn, minterval = 0) => {
-    let n = loops.length;
-    loops.push(true);
-    while (loops[n]) {
-      const date = new Date();
-      const start = date.getTime();
-      fn();
-      const elapsed = (date.getTime()) - start;
-      if (elapsed < minterval) delay(minterval - elapsed);
-    }
-  }
-
-  let _log = console.log;
-  let _warn = console.warn;
-  let _error = console.error;
-
-  state.turtles = [];
-
-  const haxidraw = state.haxidraw;
-
-  const clear = () => {
-    state.turtles = [];
-  }
-  const topScope = { haxidraw, clear };
-
-  const args = {
-    ...drawingFunctions,
-    drawTurtles: (...turtles) => {
-      state.turtles.push(...turtles);
-    },
-    ...topScope,
-    topScope,
-    setInterval: patchedInterval,
-    setTimeout: patchedTimeout,
-    loop,
-    console: {
-      log: (...args) => {
-        _log(...args)
-        state.logs.push(...args);
-      },
-      warn: (...args) => {
-        _warn(...args)
-        state.logs.push(...args);
-      },
-      error: (...args) => {
-        _error(...args)
-        state.logs.push(...args);
-      }
-    },
-  }
-
-  const names = Object.keys(args);
-  const values = Object.values(args);
-
-  const AsyncFunction = (async function () { }).constructor;
-  const f = new AsyncFunction(...names, code);
-
-  f(...values);
-
-  state.topScope = topScope;
-}
-
-
 
 function moveNorth({ width, halfWidth, mazeData }) {
   insertRow(mazeData, width, 0, genRow(state.globalX, state.globalY + (n/2) - 1, width));
@@ -836,12 +835,13 @@ function findClosestIndex(target, arr) {
         src = fileRead(`./gallery/${imageNames[i]}`)
         imageSrcs.push(src)
       }
-      for (let i = 0; i < n; i++) {
+      /*for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
           addImage(imageSrcs[Math.floor(Math.random() * imageSrcs.length)], images, hash(i, j), i, j)
         }
-      }
+      }*/
     });
+
   const splatImg = new Image();
   splatImg.src = "./altSplat.png";
 
@@ -900,7 +900,6 @@ grd.addColorStop(0,"black");
 
 
   function renderScene(rays) {
-    console.log(state.imageMap)
     const now = performance.now()
     if (last) {
       count++
@@ -919,7 +918,7 @@ grd.addColorStop(0,"black");
     rays.forEach((ray, i) => {
       const distance = fixFishEye(ray.distance, ray.angle, player.angle);
       let tomatoes = state.splattedTiles[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] ?? []
-      const hashed = hash(ray.x, ray.y);
+      const hashed = hash(ray.x, ray.y) % imageSrcs.length;
 
       const hitposX = ray.x - Math.floor(ray.x);
       const hitposY = ray.y - Math.floor(ray.y);
@@ -941,6 +940,9 @@ grd.addColorStop(0,"black");
       context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
       //const selectedImg = images[hashed];
       const selectedImg = state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`]
+      if (selectedImg == undefined) {
+        addImage(imageSrcs[hashed], images, hashed, Math.floor(ray.x), Math.floor(ray.y))
+      }
       if (selectedImg) {
         context.fillStyle = `rgba(255, 255, 255, 0.2)`;
         context.drawImage(
@@ -1009,7 +1011,9 @@ grd.addColorStop(0,"black");
 
   }
 
-  setInterval(gameLoop, TICK);
+state.mazeData = genMatrix(n, n);
+
+setInterval(gameLoop, TICK);
 
   return {
     fireTomato
