@@ -1,4 +1,4 @@
-import { flattenSVG } from "flatten-svg";
+//import { flattenSVG } from "./flatten-svg";
 import { displace } from "./displace.js";
 import { resample } from "./resample.js";
 import { interpolatePolylines } from "./interpolatePolylines.js";

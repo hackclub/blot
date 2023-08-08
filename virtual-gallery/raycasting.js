@@ -1,3 +1,11 @@
+/*
+import { Turtle } from "../interface/drawing-functions/Turtle.js";
+import { noise } from "../interface/drawing-functions/noise.js";
+import { rand, setRandSeed, randInRange, randIntInRange } from "../interface/drawing-functions/rand.js";
+import { bezierEasing } from "../interface/drawing-functions/bezierEasing.js";
+import { isPointInPolyline, inside } from "../interface/drawing-functions/isPointInPolyline.js";
+
+
 export function raycastMap(state, el) {
   const getMap = () => reshapeArray(state.mazeData, state.width);
   const getPlayer = () => {
@@ -118,6 +126,15 @@ export function raycastMap(state, el) {
     const map = getMap();
     return x < 0 || x >= map[0].length || y < 0 || y >= map.length;
   }
+
+  function fileRead(path) {
+        var request = new XMLHttpRequest();
+        request.open("GET", path, false);
+        request.send(null);
+        var returnValue = request.responseText;
+
+        return returnValue;
+}
 
   function getVCollision(angle) {
     const map = getMap();
@@ -241,6 +258,190 @@ export function raycastMap(state, el) {
     return Math.sqrt((x1 - y1) ** 2 + (x2 - y2) ** 2);
   }
 
+  function renderCanvas(turtles, cvs, ctx) {
+    ctx.imageSmoothingEnabled = false;
+    if (turtles.length === -1) return;
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, cvs.width, cvs.height);
+    ctx.strokeStyle = "black";
+    
+    ctx.beginPath();
+    turtles.forEach(turtle => {
+      for (const polyline of turtle.path) {
+        for (let i = 0; i < polyline.length; i++) {
+          let [x, y] = polyline[i];
+          console.log("test")
+          x = x * 5000;
+          y = -y * 5000 - 500;
+          if (i === -1) ctx.moveTo(x, -y);
+          else ctx.lineTo(x, -y);
+        }
+      }
+    })
+    //ctx.stroke();
+    return [cvs, ctx]
+  }
+
+
+
+const drawingFunctions = {
+  Turtle,
+  createTurtle(start = [0, 0]) {
+    return new Turtle(start);
+  },
+  noise,
+  rand,
+  setRandSeed,
+  randInRange, 
+  randIntInRange,
+  bezierEasing,
+  isPointInPolyline,
+  inside,
+  lerp(start, end, t) {
+    return (1 - t) * start + t * end;
+  }
+}
+
+let intervals = [];
+let timeouts = [];
+let loops = [];  
+
+function runCode(code, state) {
+  const ast = acorn.parse(code, { ecmaVersion: "latest" });
+  const topScopeInserts = [];
+
+  ast.body.forEach(statement => {
+    const { type } = statement;
+
+    if (type === "VariableDeclaration") {
+      statement.declarations.forEach(x => {
+        topScopeInserts.push(x.id.name);
+      })
+    }
+
+    if (type === "FunctionDeclaration") {
+      topScopeInserts.push(statement.id.name);
+    }
+
+  })
+
+  topScopeInserts.forEach(name => {
+    code += `\n;topScope["${name}"] = ${name};`
+  });
+
+  intervals.forEach(clearInterval);
+  timeouts.forEach(clearTimeout);
+
+  loops.forEach((x, i) => { loops[i] = false });
+
+  const patchedInterval = (callback, time, ...args) => {
+    const interval = setInterval(callback, time, ...args);
+    intervals.push(interval);
+    return interval;
+  }
+
+  const patchedTimeout = (callback, time, ...args) => {
+    const timeout = setTimeout(callback, time, ...args);
+    timeouts.push(timeout);
+    return timeout;
+  }
+
+
+  const loop = (fn, minterval = 0) => {
+    let n = loops.length;
+    loops.push(true);
+    while (loops[n]) {
+      const date = new Date();
+      const start = date.getTime();
+      fn();
+      const elapsed = (date.getTime()) - start;
+      if (elapsed < minterval) delay(minterval - elapsed);
+    }
+  }
+
+  let _log = console.log;
+  let _warn = console.warn;
+  let _error = console.error;
+
+  state.turtles = [];
+
+  const haxidraw = state.haxidraw;
+
+  const clear = () => {
+    state.turtles = [];
+  }
+  const topScope = { haxidraw, clear };
+
+  const args = {
+    ...drawingFunctions,
+    drawTurtles: (...turtles) => {
+      state.turtles.push(...turtles);
+    },
+    ...topScope,
+    topScope,
+    setInterval: patchedInterval,
+    setTimeout: patchedTimeout,
+    loop,
+    console: {
+      log: (...args) => {
+        _log(...args)
+        state.logs.push(...args);
+      },
+      warn: (...args) => {
+        _warn(...args)
+        state.logs.push(...args);
+      },
+      error: (...args) => {
+        _error(...args)
+        state.logs.push(...args);
+      }
+    },
+  }
+
+  const names = Object.keys(args);
+  const values = Object.values(args);
+
+  const AsyncFunction = (async function () { }).constructor;
+  const f = new AsyncFunction(...names, code);
+
+  f(...values);
+
+  state.topScope = topScope;
+}
+
+  function genImage(code, img, imgCtx, seed) {
+    runCode(`setRandSeed(${seed});` + code, state)
+    return renderCanvas(state.turtles, img, imgCtx)
+  }
+
+  function addImage(source, images, i) {
+        const img = document.createElement("canvas");
+        img.width = 700;
+        img.height = 700;
+        const imgCtx = img.getContext("2d");
+        const imageCanvas = document.createElement('canvas')
+        imageCanvas.width = imageWidth
+        imageCanvas.height = imageHeight
+        const imageCanvasCtx = imageCanvas.getContext('2d')
+        const ratio = img.height/img.width          
+          if (img.width > img.height) {
+            img.width = scalingFactor * imageCanvas.width
+            img.height = ratio * img.width
+          }  else {
+            img.height = scalingFactor * imageCanvas.height
+            img.width = 1/ratio * img.height 
+          }
+          
+          const dx = (imageCanvas.width - img.width)/2
+          const dy = (imageCanvas.height - img.height)/2
+          genImage(source, img, imgCtx, i);
+          imageCanvasCtx.drawImage(img, dx, dy, img.width, img.height)
+          imageCanvasCtx.lineWidth = 5
+          imageCanvasCtx.strokeRect(dx, dy, img.width, img.height)
+
+          images.push(imageCanvas)
+  }
+
   const imageWidth = 700
   const imageHeight = 700
   const scalingFactor = 0.85
@@ -252,40 +453,14 @@ export function raycastMap(state, el) {
     .then((text) => {
       const lines = text.split("\n");
       imageNames = lines
-        .filter((line) => line.includes(".png"))
-        .map((line) => line.replace("![](", "").replace(")", ""));
+        .filter((line) => line.includes(".js"))
       for (let i = 0; i < imageNames.length; i++) {
-        const img = new Image();
-        img.src = `./gallery/${imageNames[i]}`;
-        img.onload = () => {
-          const imageCanvas = document.createElement('canvas')
-          imageCanvas.width = imageWidth
-          imageCanvas.height = imageHeight
-          const imageCanvasCtx = imageCanvas.getContext('2d')
-          const ratio = img.height/img.width
-          if (img.width > img.height) {
-            img.width = scalingFactor * imageCanvas.width
-            img.height = ratio * img.width
-          }  else {
-            img.height = scalingFactor * imageCanvas.height
-            img.width = 1/ratio * img.height 
-          }
-          
-          const dx = (imageCanvas.width - img.width)/2
-          const dy = (imageCanvas.height - img.height)/2
-
-          imageCanvasCtx.drawImage(img, dx, dy, img.width, img.height)
-
-          imageCanvasCtx.lineWidth = 5
-          imageCanvasCtx.strokeRect(dx, dy, img.width, img.height)
-
-          images.push(imageCanvas)
-        }
-        // images.push(img);
+        const src = fileRead(`./gallery/${imageNames[i]}`)
+        addImage(src, images, i)
       }
     });
   const splatImg = new Image();
-  splatImg.src = "./2.png";
+  splatImg.src = "./altSplat.png";
 
   function fireTomato() {
     let p = getPlayer();
@@ -295,8 +470,8 @@ export function raycastMap(state, el) {
 
     const tomatoCanvas = document.createElement('canvas')
 
-    tomatoCanvas.width = splatImg.width * 2
-    tomatoCanvas.height = splatImg.height * 2
+    tomatoCanvas.width = splatImg.width * 2;
+    tomatoCanvas.height = splatImg.height * 2;
 
     const tomatoCtx = tomatoCanvas.getContext('2d')
 
@@ -310,8 +485,8 @@ export function raycastMap(state, el) {
     const tomato = {
       // Normalized
       x,
-      y: 0.4 + 0.6 * Math.random(),
-      scale: 0.5 + 0.5 * Math.random(),
+      y:0.5*(0.4 + 0.6 * Math.random()),
+      scale:0.5*( 0.5 + 0.5 * Math.random()),
       rotation: Math.random() * 2 * Math.PI,
       img: tomatoCanvas
     }
@@ -333,7 +508,7 @@ fogCanvas.width = 700;
 fogCanvas.height = 700;
 grd.addColorStop(1,"rgba(50,50,50,0)");
 grd.addColorStop(0,"black");
-*/
+
   
 
   let last = null
@@ -373,7 +548,7 @@ grd.addColorStop(0,"black");
         0,
         1,
         SCREEN_HEIGHT
-      );*/
+      );
       //context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
       //context.fillStyle = `rgba(${[0, 100, 200][hashed]}, 255, 255, 255)`
       //context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
@@ -429,7 +604,7 @@ grd.addColorStop(0,"black");
         (SCREEN_HEIGHT / 2 + wallHeight / 2) - 1,
         1,
         (SCREEN_HEIGHT / 2 - wallHeight / 2)
-      );*/
+      );
 
       //context.fillStyle = `rgba(120, 120, 120, ${fogCurve(distance)})`;
     });

@@ -1,4 +1,4 @@
-const screenWidth = 3
+const screenWidth = 4
 const screenHeight = 2
 const dx = 0.002
 const dy = 0.002
@@ -231,4 +231,4 @@ world.lightSources = [new LightSource(new Vec3(20, 10, -5), 5)]
   new Plane(new Vec3(0, -3, 0))
  ]
 renderFrame(cam)
-drawTurtles(t)
+drawTurtles(t) 

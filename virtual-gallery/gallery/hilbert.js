@@ -1,0 +1,1 @@
+let t=new Turtle();for(let i of eval(`'A'`+`.replace(/[AB]/g,c=>c=='A'?'-BF+AFA+FB-':'+AF-BFB-FA+')`.repeat(3))){try{eval(i=='F'?`t.forward(9)`:`t.left(${i}87+rand()*10)`)}catch{}}drawTurtles(t)
