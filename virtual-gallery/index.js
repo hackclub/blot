@@ -23,6 +23,7 @@ let trackerX = 0
 let trackerY = 0
 
 let src;
+let t = 0;
 
 let images = []
 let imageSrcs = []
@@ -89,6 +90,31 @@ const getPlayer = () => {
     speed: 0,
   };
 };
+
+let loadingImages = []
+
+function genLoadingImages() {
+  for (let i = 0; i < 21; i++) {
+    let img = document.createElement("canvas");
+    img.width = 700;
+    img.height = 700;
+    let ctx = img.getContext("2d");
+    ctx.fillStyle = "white";
+    ctx.fillRect(700 * 0.15/2, 700 * 0.15/2, img.width * 0.85, img.height * 0.85);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    let offset = 700 * 0.15/2;
+    ctx.rect(offset, offset, img.width * 0.85, img.height * 0.85);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(350, 350, 150, 0, (i/10) * Math.PI);
+    ctx.stroke();
+    loadingImages.push(img);
+  }
+}
+
+genLoadingImages();
 
 function toRadians(deg) {
   return (deg * Math.PI) / 180;
@@ -526,6 +552,11 @@ function addImage(x, y) {
     state.imageMap[`${x},${y}`] = imageCanvas
 }
 
+const panZoomParams = {
+  panX: 200,
+  panY: 200,
+  scale: 100
+};
 
 function renderCanvas(turtles, cvs, ctx) {
   ctx.imageSmoothingEnabled = false;
@@ -539,8 +570,8 @@ function renderCanvas(turtles, cvs, ctx) {
     for (const polyline of turtle.path) {
       for (let i = 0; i < polyline.length; i++) {
         let [x, y] = polyline[i];
-      x = x * 5;
-        y = -y * 5 - 500;
+      x = x * 100;
+        y = y * 100 - 500;
         if (i === -1) ctx.moveTo(x, -y);
         else ctx.lineTo(x, -y);
       }
@@ -781,6 +812,9 @@ grd.addColorStop(0,"black");
   let count = 0
 
   function renderScene(rays) {
+    t += 0.1
+    t %= loadingImages.length
+    
     const now = performance.now()
     if (last) {
       count++
@@ -819,12 +853,15 @@ grd.addColorStop(0,"black");
       let brightness = ray.vertical ? 100 : 150;
       context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
       context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
-      const selectedImg = state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`]
+      let selectedImg = state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`]
       if (selectedImg == undefined && imageSrcs.length > 0) {
-        state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] = new Image()
+        state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] = 0
         genImage(imageSrcs[hashed], Math.floor(ray.x), Math.floor(ray.y))
+      }      
+      if (state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] == 0) {
+        selectedImg = loadingImages[Math.floor(t)]
       }
-      if (selectedImg) {
+
         context.fillStyle = `rgba(255, 255, 255, 0.2)`;
         context.drawImage(
           selectedImg,
@@ -837,7 +874,7 @@ grd.addColorStop(0,"black");
           1,
           wallHeight
         );
-      }
+      
 
       for (const tomato of tomatoes) {
         //context.globalAlpha = 0.8;
