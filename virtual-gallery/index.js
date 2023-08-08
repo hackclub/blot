@@ -227,7 +227,16 @@ function fogCurve(distance) {
 
 function hash(x, y) {
   // return Math.abs(Math.floor(x + y) % images.length);
-  return Math.abs(Math.floor(3 * Math.floor(x) + 5 * Math.floor(y)))
+  //return Math.abs(Math.floor(3 * Math.floor(x) + 5 * Math.floor(y)))
+   let str = `${x},${y}`;
+    let hash = 0;
+    for (let i = 0, len = str.length; i < len; i++) {
+        let chr = str.charCodeAt(i);
+        hash = (hash << 5) - hash + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash
+
 }
 
 function getDist(x1, y1, x2, y2) {
@@ -407,7 +416,6 @@ function genRow(x, y, length) {
   let row = [];
   for(let i = -n/2; i < length/2; i++) {
     row.push(pseudoRandom(x + i, y) < 0 ? 1 : 0);
-    //addImage(0, 0, hash(x+i, y), x+i, y)
   }
   return row;
 }
@@ -418,7 +426,6 @@ function genColumn(x, y, length) {
   let column = [];
   for(let i = -n/2; i < length/2; i++) {
     column.push(pseudoRandom(x, y - i) < 0 ? 1 : 0);
-    //addImage(0, 0, hash(x, y-i), x, y-i)
   }
   return column;
 }
@@ -426,8 +433,10 @@ function genColumn(x, y, length) {
 function genMatrix(width, height) {
   let matrix = []
   for(let i = 0; i < height * width; i++) {
-    matrix.push(pseudoRandom((i % width) - n/2, Math.floor(i / width) - n/2 + 1) < 0 ? 1 : 0 );
-    //addImage(0, 0, hash((i % width) - n/2, Math.floor(i / width) - n/2 + 1), (i % width) - n/2, Math.floor(i / width) - n/2 + 1)
+    let x = i % width - n/2;
+    let y = Math.floor(i / width) - n/2 + 1;
+    let filled = pseudoRandom(x, y) < 0 ? 1 : 0;
+    matrix.push(filled);
   }
   return matrix
 }
@@ -489,7 +498,6 @@ let lastTrackerX, lastTrackerY
 let justFiredTomato = false
 
 function addImage(x, y) {
-  let source = imageSrcs[hash(x, y) % imageSrcs.length]
   const img = document.createElement("canvas");
   img.width = 700;
   img.height = 700;
@@ -713,11 +721,7 @@ function findClosestIndex(target, arr) {
         src = fileRead(`./gallery/${imageNames[i]}`)
         imageSrcs.push(src)
       }
-      /*for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-          addImage(imageSrcs[Math.floor(Math.random() * imageSrcs.length)], images, hash(i, j), i, j)
-        }
-      }*/
+
     });
 
   const splatImg = new Image();
@@ -776,7 +780,6 @@ grd.addColorStop(0,"black");
   let fps = 0
   let count = 0
 
-
   function renderScene(rays) {
     const now = performance.now()
     if (last) {
@@ -816,13 +819,10 @@ grd.addColorStop(0,"black");
       let brightness = ray.vertical ? 100 : 150;
       context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
       context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
-      //const selectedImg = images[hashed];
       const selectedImg = state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`]
-      if (selectedImg == undefined) {
-        //addImage(imageSrcs[hashed], images, hashed, Math.floor(ray.x), Math.floor(ray.y))
+      if (selectedImg == undefined && imageSrcs.length > 0) {
         state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] = new Image()
         genImage(imageSrcs[hashed], Math.floor(ray.x), Math.floor(ray.y))
-        console.log(Math.floor(ray.x), Math.floor(ray.y))
       }
       if (selectedImg) {
         context.fillStyle = `rgba(255, 255, 255, 0.2)`;

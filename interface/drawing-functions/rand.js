@@ -1,11 +1,8 @@
 let jsr = 69;
 
 export function rand() {
-  const max = 4294967295;
-  jsr ^= (jsr<<17);
-  jsr ^= (jsr>>>13);
-  jsr ^= (jsr<<5);
-  return (jsr>>>0)/max;
+  var x = Math.sin(jsr++) * 10000;
+  return x - Math.floor(x);
 }
 
 export function setRandSeed(number) {
