@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import styles from "./BezierEditor.module.css";
 import cx from "classnames";
 import ScalableCanvas, {
@@ -6,11 +6,13 @@ import ScalableCanvas, {
     ScalableCanvasHandle
 } from "./ScalableCanvas.tsx";
 import type { Point } from "haxidraw-client";
+import scalableCanvas from "./ScalableCanvas.tsx";
 
-type BezierPoints = {
+export type BezierPoints = {
+    yStart: number;
     p0: Point;
     p1: Point;
-    end: Point;
+    yEnd: number;
 };
 
 const BE_WIDTH = 200;
@@ -24,49 +26,39 @@ type CursorMapFn = (x: number, y: number) => MapItem | undefined;
 
 export default function BezierEditor(props: {
     className?: string;
-    width: number;
-    height: number;
+    initialValue?: BezierPoints;
+    onChange?: (value: BezierPoints) => void;
 }) {
-    const bezierPoints = useRef<BezierPoints>({
-        p0: [3, 2],
-        p1: [5, 4],
-        end: [7, 2]
+    const bezierPoints = useRef<BezierPoints>(props.initialValue ?? {
+        yStart: 0,
+        p0: [0.3, 0.2],
+        p1: [0.5, 0.4],
+        yEnd: 0.2
     });
     const scalableCanvasRef = useRef<ScalableCanvasHandle>(null);
     const cursorMap = useRef<CursorMapFn[]>([]);
+    const currentlyDraggingRef = useRef<false | MapItem>(false);
     
-    useEffect(() => {
-        if(!scalableCanvasRef.current) return;
-        const canvas = scalableCanvasRef.current.canvas;
-        if(!canvas) return;
-        
-        let currentlyDragging: false | MapItem = false;
-
-        const listener = (e: MouseEvent) => {
-            if (!scalableCanvasRef.current || !scalableCanvasRef.current.canvas)
-                return;
-            if (currentlyDragging) {
-                if (e.buttons === 1) {
-                    currentlyDragging.onDrag(e);
-                    scalableCanvasRef.current.canvas!.style.cursor = currentlyDragging.cursor ?? "";
-                    return;
-                }
-                currentlyDragging = false;
+    const canvasOnMouseMove = useCallback((e: MouseEvent) => {
+        if (!scalableCanvasRef.current || !scalableCanvasRef.current.canvas)
+            return;
+        if (currentlyDraggingRef.current) {
+            if (e.buttons === 1) {
+                currentlyDraggingRef.current.onDrag(e);
+                scalableCanvasRef.current.canvas!.style.cursor = currentlyDraggingRef.current.cursor ?? "";
+                return true;
             }
-            const mapItem = cursorMap.current.reduce<ReturnType<CursorMapFn>>((prev, fn) => prev ?? fn(e.offsetX, e.offsetY), undefined);
-            scalableCanvasRef.current.canvas!.style.cursor = mapItem?.cursor ?? "";
-            
-            if (e.buttons === 1 && mapItem) {
-                currentlyDragging = mapItem;
-                currentlyDragging.onDrag(e);
-            }
-        };
+            currentlyDraggingRef.current = false;
+        }
+        const mapItem = cursorMap.current.reduce<ReturnType<CursorMapFn>>((prev, fn) => prev ?? fn(e.offsetX, e.offsetY), undefined);
+        scalableCanvasRef.current.canvas!.style.cursor = mapItem?.cursor ?? "";
 
-        canvas.addEventListener("mousemove", listener);
-        return () => {
-            canvas.removeEventListener("mousemove", listener);
-        };
-    }, [scalableCanvasRef.current?.canvas]);
+        if (e.buttons === 1 && mapItem) {
+            currentlyDraggingRef.current = mapItem;
+            currentlyDraggingRef.current.onDrag(e);
+            return true;
+        }
+    }, [scalableCanvasRef.current]);
 
     const redrawFn: RedrawFn = useCallback((canvas, ctx, panZoomParams) => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -84,12 +76,32 @@ export default function BezierEditor(props: {
             (panZoomParams.panX + p[0] * panZoomParams.scale),
             (panZoomParams.panY + p[1] * panZoomParams.scale)
         ];
+        const mpStart = mapPoint([0, bezierPoints.current.yStart]);
+        const mp0 = mapPoint(bezierPoints.current.p0);
+        const mp1 = mapPoint(bezierPoints.current.p1);
+        const mpEnd = mapPoint([1, bezierPoints.current.yEnd]);
+        ctx.moveTo(...mpStart);
         ctx.bezierCurveTo(
-            ...mapPoint(bezierPoints.current.p0),
-            ...mapPoint(bezierPoints.current.p1),
-            ...mapPoint(bezierPoints.current.end)
+            ...mp0,
+            ...mp1,
+            ...mpEnd
         );
         ctx.stroke();
+
+        // draw coordinate grid (centered on (0, 0), mapped ofc)
+        const oldStroke = ctx.strokeStyle;
+        ctx.strokeStyle = "#ccc";
+        const mOrigin = mapPoint([0, 0]);
+        ctx.beginPath();
+        ctx.moveTo(mOrigin[0], 0);
+        ctx.lineTo(mOrigin[0], canvas.height);
+        ctx.moveTo(0, mOrigin[1]);
+        ctx.lineTo(canvas.width, mOrigin[1]);
+        const mEndAxis = mapPoint([1, 0]);
+        ctx.moveTo(mEndAxis[0], 0);
+        ctx.lineTo(mEndAxis[0], canvas.height);
+        ctx.stroke();
+        ctx.strokeStyle = oldStroke;
 
         const drawHandle = (x: number, y: number, radius: number, pointKey: keyof BezierPoints) => {
             ctx.beginPath();
@@ -106,7 +118,14 @@ export default function BezierEditor(props: {
                             (e.offsetX - panZoomParams.panX) / panZoomParams.scale,
                             (e.offsetY - panZoomParams.panY) / panZoomParams.scale
                         ];
-                        bezierPoints.current[pointKey] = newPoint;
+                        if(typeof bezierPoints.current[pointKey] === "number") {
+                            //@ts-expect-error
+                            bezierPoints.current[pointKey] = newPoint[1];
+                        } else {
+                            //@ts-expect-error
+                            bezierPoints.current[pointKey] = newPoint;
+                        }
+                        props.onChange?.(bezierPoints.current);
                         scalableCanvasRef.current?.requestRedraw();
                         // const dx = e.movementX / panZoomParams.scale;
                         // const dy = e.movementY / panZoomParams.scale;
@@ -122,25 +141,28 @@ export default function BezierEditor(props: {
         // draw dashed line from [0, 0] to p0
         ctx.setLineDash([5, 5]);
         ctx.beginPath();
-        ctx.moveTo(...mapPoint([0, 0]));
-        ctx.lineTo(...mapPoint(bezierPoints.current.p0));
+        ctx.moveTo(...mpStart);
+        ctx.lineTo(...mp0);
         ctx.stroke();
         // from end to p1
         ctx.beginPath();
-        ctx.moveTo(...mapPoint(bezierPoints.current.end));
-        ctx.lineTo(...mapPoint(bezierPoints.current.p1));
+        ctx.moveTo(...mpEnd);
+        ctx.lineTo(...mp1);
         ctx.stroke();
         ctx.setLineDash([]);
 
         // drawCircle(...mapPoint([0, 0]), 5);
-        drawHandle(...mapPoint(bezierPoints.current.p0), 8, "p0");
-        drawHandle(...mapPoint(bezierPoints.current.p1), 8, "p1");
+        drawHandle(...mp0, 8, "p0");
+        drawHandle(...mp1, 8, "p1");
         ctx.fillStyle = "#00ff00aa";
-        drawHandle(...mapPoint(bezierPoints.current.end), 8, "end");
+        drawHandle(...mpStart, 8, "yStart");
+        drawHandle(...mpEnd, 8, "yEnd");
 
 
         ctx.setTransform(1, 0, 0, 1, 0, 0);
     }, []);
+
+    console.log("yeag", canvasOnMouseMove, scalableCanvasRef.current);
 
     return (
         <div className={cx(styles.root, props.className)}>
@@ -148,14 +170,16 @@ export default function BezierEditor(props: {
             <div className={styles.canvasRoot}>
                 <ScalableCanvas
                     ref={scalableCanvasRef}
-                    disablePan={true}
-                    zoomFixedPointOverride={[0, BE_HEIGHT / 2]}
+                    // disablePan={true}
+                    // zoomFixedPointOverride={[0, BE_HEIGHT / 2]}
                     initialPanZoom={{
-                        panX: 0,
+                        panX: 10,
                         panY: BE_HEIGHT / 2,
-                        scale: BE_WIDTH / 10 // 10mm default width of viewport
+                        scale: BE_WIDTH / 1.2 // 1mm default width of viewport
                     }}
                     redrawFn={redrawFn}
+                    hideUnits={true}
+                    onMouseMove={canvasOnMouseMove}
                 ></ScalableCanvas>
             </div>
         </div>

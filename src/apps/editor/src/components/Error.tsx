@@ -95,10 +95,12 @@ export default function Error() {
 
     if(!error) return null;
 
+    const l = error.stack?.[0]?.line;
+
     return (
         <div class={styles.root}>
             <span class={styles.name}>{error.name}</span>
-            {error.stack?.[0].line !== null ? (
+            {(l !== null && l !== undefined) ? (
                 <Snippet pos={error.stack[0]} code={error.code} message={error.message} />
             ) : (
                 <>

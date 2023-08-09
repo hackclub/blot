@@ -15,6 +15,7 @@ import { useVimMode, vimModeExtension } from "../lib/codemirror/cmVimMode.ts";
 import { numberScrubbingPlugin } from "../lib/codemirror/numberScrubbing.ts";
 import { manualChangeSinceLiveUpdate } from "../lib/run.js";
 import { errorIndicatorPlugin, setErrorPos } from "../lib/codemirror/errorIndicator.js";
+import { widgetsPlugin } from "../lib/codemirror/widgets.tsx";
 
 // this is a terrible hack but strange bugs are about this one
 //@ts-expect-error
@@ -45,7 +46,8 @@ const cmExtensions = [
     themeExtension(),
     vimModeExtension(),
     numberScrubbingPlugin,
-    errorIndicatorPlugin()
+    errorIndicatorPlugin(),
+    widgetsPlugin
 ];
 
 export const createCMState = (content: string) =>

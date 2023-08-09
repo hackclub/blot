@@ -284,16 +284,23 @@ export default async function runCode(cached: boolean = false) {
     } catch(err: any) {
         // extract actual position from sourcemap
         // stack trace parsing time
-        const stackLines: string[] = err.stack.split("\n");
-        let i = getActualFirstStackLine(stackLines);
+        const stackLines: string[] = err.stack?.split("\n") ?? [];
+        let i = stackLines.length === 0 ? 0 : getActualFirstStackLine(stackLines);
         let positions: FindPosition[] = [];
-        do {
+        while(i < stackLines.length && [0, 1 /* iife call */].map(n => stackLines[i + n]).every(l => l && (l.includes("AsyncFunction") || l.includes("eval at ")))) {
             const line = stackLines[i];
             const pos = getPosFromStackLine(line);
             if(!pos) break;
             positions.push(pos);
             i++;
-        } while(i < stackLines.length && [0, 1 /* iife call */, 2 /* AsyncFunction call */].map(n => stackLines[i + n]).every(l => l && l.includes("run.ts")));
+        }
+        // do {
+        //     const line = stackLines[i];
+        //     const pos = getPosFromStackLine(line);
+        //     if(!pos) break;
+        //     positions.push(pos);
+        //     i++;
+        // } while(i < stackLines.length && [0, 1 /* iife call */, 2 /* AsyncFunction call */].map(n => stackLines[i + n]).every(l => l && l.includes("run.ts")));
         const mapPosition = (position: FindPosition) => {
             const mapped = smc!.originalPositionFor(position);
             if(mapped.line === null) {

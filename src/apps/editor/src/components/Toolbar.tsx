@@ -12,6 +12,7 @@ import BrightnessContrastIcon from "../ui/BrightnessContrastIcon.tsx";
 import { Theme, patchSettings, useSettings } from "../lib/settings.ts";
 import SettingsIcon from "../ui/SettingsIcon.tsx";
 import KeyboardIcon from "../ui/KeyboardIcon.tsx";
+import downloadPng from "../lib/downloadPng.js";
 
 export default function Toolbar() {
     return (
@@ -22,6 +23,7 @@ export default function Toolbar() {
             <NewButton />
             <OpenButton />
             <DownloadSVG />
+            <DownloadPNG />
             <MachineControls />
             <SettingsButton />
         </div>
@@ -106,6 +108,12 @@ function DownloadSVG() {
             `
             download("anon.svg", svg);
         }}>download svg</Button>
+    );
+}
+
+function DownloadPNG() {
+    return (
+        <Button variant="ghost" onClick={downloadPng}>download png</Button>
     );
 }
 

@@ -22,13 +22,15 @@ export type ScalableCanvasHandle = {
 
 export type RedrawFn = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, panZoomParams: PanZoomParams) => void;
 
-function ScalableCanvas({ redrawFn, children, className, disablePan, zoomFixedPointOverride, initialPanZoom }: {
+function ScalableCanvas({ redrawFn, children, className, disablePan, zoomFixedPointOverride, initialPanZoom, hideUnits, onMouseMove: userOnMouseMove }: {
     redrawFn: RedrawFn,
     children?: ComponentChildren,
     className?: string,
     disablePan?: boolean,
     zoomFixedPointOverride?: Point,
-    initialPanZoom?: PanZoomParams
+    initialPanZoom?: PanZoomParams,
+    hideUnits?: boolean,
+    onMouseMove?: (e: MouseEvent) => (boolean | undefined)
 }, ref: any) {
     const panZoomParams = useRef<PanZoomParams>(initialPanZoom ?? {
         panX: 200,
@@ -81,7 +83,7 @@ function ScalableCanvas({ redrawFn, children, className, disablePan, zoomFixedPo
             requestRedraw(canvasRef.current);
         },
         panZoomParams: panZoomParams.current,
-        canvas: canvasRef.current
+        get canvas() { return canvasRef.current; }
     }), [canvasRef.current]);
 
     useEffect(() => {
@@ -124,7 +126,7 @@ function ScalableCanvas({ redrawFn, children, className, disablePan, zoomFixedPo
             let y = e.clientY - br.top;
             y = (y - panY) / scale;
             const addPadding = (s: string) => (s.startsWith("-") ? s : " " + s);
-            mousePos.textContent = `${addPadding(x.toFixed(1))}mm, ${addPadding(y.toFixed(1))}mm`;
+            mousePos.textContent = `${addPadding(x.toFixed(1))}${hideUnits ? "" : "mm"}, ${addPadding(y.toFixed(1))}${hideUnits ? "" : "mm"}`;
         }
 
         const onWheel = (e: WheelEvent) => {
@@ -156,7 +158,7 @@ function ScalableCanvas({ redrawFn, children, className, disablePan, zoomFixedPo
         const onMouseMove = (e: MouseEvent) => {
             updateMousePos(e);
 
-            if(e.buttons !== 1 || disablePan) return;
+            if(userOnMouseMove?.(e) || e.buttons !== 1 || disablePan) return;
             e.preventDefault();
 
             panZoomParams.current.panX += e.movementX;
@@ -172,7 +174,7 @@ function ScalableCanvas({ redrawFn, children, className, disablePan, zoomFixedPo
             canvas.removeEventListener("wheel", onWheel);
             canvas.removeEventListener("mousemove", onMouseMove);
         };
-    }, [canvasRef.current, mousePosRef.current]);
+    }, [canvasRef.current, mousePosRef.current, userOnMouseMove]);
 
 
     return (
