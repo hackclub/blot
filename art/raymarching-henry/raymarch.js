@@ -1,7 +1,7 @@
 const screenWidth = 4
 const screenHeight = 2
-const dx = 0.01
-const dy = 0.01
+const dx = 0.1
+const dy = 0.1
 
 const t = new Turtle()
 

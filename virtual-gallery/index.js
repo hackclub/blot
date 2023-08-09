@@ -10,7 +10,7 @@ setInterval(() => imageFilter.postMessage("pt", "*"), 10);
 const maze2D = document.querySelector(".maze-2d");
 const ctx = maze2D.getContext("2d");
 
-const worker = new Worker("./worker.js", { type: "module" });
+let worker = initWorker();
 
 const w = maze2D.width;
 const h = maze2D.width;
@@ -25,8 +25,12 @@ let trackerY = 0
 let src;
 let t = 0;
 
-let images = []
-let imageSrcs = []
+let currentWorker = {
+  x: 0,
+  y: 0,
+  startTime: Date.now(),
+  finished: true,
+}
 
 const bb = canvas.getBoundingClientRect();
 
@@ -70,6 +74,7 @@ state.mazeData[i] = 0;
 const xWidth = w/width;
 const yWidth = h/height;
 
+let imageTimes = []
 
 const getMap = () => reshapeArray(state.mazeData, state.width);
 
@@ -134,7 +139,6 @@ function fileRead(path) {
       request.open("GET", path, false);
       request.send(null);
       var returnValue = request.responseText;
-
       return returnValue;
 }
 
@@ -259,26 +263,43 @@ function hash(x, y) {
     for (let i = 0, len = str.length; i < len; i++) {
         let chr = str.charCodeAt(i);
         hash = (hash << 5) - hash + chr;
-        hash |= 0; // Convert to 32bit integer
+        hash |= 0;
     }
-    return hash
+    return Math.abs((hash) ^ (hash >>> 1));
 
 }
 
-function getDist(x1, y1, x2, y2) {
-  return Math.sqrt((x1 - y1) ** 2 + (x2 - y2) ** 2);
+function initWorker() {
+  let worker = new Worker("./worker.js", { type: "module" });
+  worker.onmessage = (e) => {
+    const { turtles, x, y } = e.data;
+    state.turtles = turtles;
+    currentWorker.finished = true;
+    addImage(x, y);
+  };
+  return worker
 }
+
+function resetWorker() {
+  worker.terminate();
+  worker = initWorker();
+  currentWorker.finished = true;
+  currentWorker.startTime = Date.now();
+}
+
+setInterval(() => {
+  if (Date.now() - currentWorker.startTime > 1000) {
+    resetWorker();
+  }
+}, 100);
 
 function genImage(code, x, y) {
   let seed = hash(x, y);
+  currentWorker.startTime = Date.now();
   worker.postMessage({code: `setRandSeed(${seed});` + code, state: JSON.stringify(state), x: x, y: y});
+  currentWorker.finished = false;
+  imageTimes[`${x},${y}`] = Date.now()
 }
-
-worker.onmessage = (e) => {
-  const { turtles, x, y } = e.data;
-  state.turtles = turtles;
-  addImage(x, y);
-};
 
 function movePlayer(dx, dy) {
   const { width, height, orientation, mazeData } = state;
@@ -741,8 +762,41 @@ function findClosestIndex(target, arr) {
   return closestIndex;
 }
 
-  let imageNames = [];
-  fetch("./gallery/README.md")
+  let images = []
+
+  fetch("../art/list.json")
+  .then((response) => response.text())
+  .then((text) => {
+      let list = JSON.parse(text)
+      for (let artwork of list) {
+        let src = fileRead(`../art/${artwork.directory}/${artwork.source}`)
+        let snapshots = []
+        for (let snapshot of artwork.snapshots) {
+          let img = document.createElement("canvas");
+          img.width = 700;
+          img.height = 700;
+          let ctx = img.getContext("2d");
+          ctx.fillStyle = "white";
+          ctx.fillRect(700 * 0.15/2, 700 * 0.15/2, img.width * 0.85, img.height * 0.85);
+          ctx.strokeStyle = "black";
+          ctx.lineWidth = 5;
+          let offset = 700 * 0.15/2;
+          let snapshotImg = new Image();
+          snapshotImg.src = `../art/${artwork.directory}/snapshots/${snapshot}`
+          snapshotImg.onload = () => {
+            ctx.drawImage(snapshotImg, 0.15 * 700/2, 0.15 * 700/2, 0.85 * 700, 0.85 * 700)
+            ctx.beginPath();
+            ctx.rect(offset, offset, img.width * 0.85, img.height * 0.85);
+            ctx.stroke();
+          }
+          snapshots.push(img)
+        }
+        images.push([src, snapshots, artwork.directory])
+      }
+    }
+  );
+
+/*  fetch("./gallery/README.md")
     .then((response) => response.text())
     .then((text) => {
       const lines = text.split("\n");
@@ -753,7 +807,7 @@ function findClosestIndex(target, arr) {
         imageSrcs.push(src)
       }
 
-    });
+    });*/
 
   const splatImg = new Image();
   splatImg.src = "./altSplat.png";
@@ -799,13 +853,10 @@ function findClosestIndex(target, arr) {
     if (e.key == " ") fireTomato()
   });
 
-  /*var fogCanvas = document.createElement('canvas'), ctx = fogCanvas.getContext('2d'), grd = ctx.createLinearGradient(0, (SCREEN_HEIGHT/2) + 20, 0, (SCREEN_HEIGHT/2) + 50);
-fogCanvas.width = 700;
-fogCanvas.height = 700;
-grd.addColorStop(1,"rgba(50,50,50,0)");
-grd.addColorStop(0,"black");
-*/
-  
+  function rand(jsr) {
+    var x = Math.sin(1000 * jsr++) * 10000;
+    return x - Math.floor(x);
+  }  
 
   let last = null
   let fps = 0
@@ -831,35 +882,35 @@ grd.addColorStop(0,"black");
       context.fillRect(1, y, SCREEN_WIDTH, 1);
     }
     rays.forEach((ray, i) => {
+      if (Math.random() < 0.0001) console.log((hash(Math.floor(ray.x), Math.floor(ray.y))))
       const distance = fixFishEye(ray.distance, ray.angle, player.angle);
       let tomatoes = state.splattedTiles[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] ?? []
-      const hashed = hash(ray.x, ray.y) % imageSrcs.length;
+      const hashed = hash(ray.x, ray.y) % images.length;
 
       const hitposX = ray.x - Math.floor(ray.x);
       const hitposY = ray.y - Math.floor(ray.y);
 
       const wallHeight = ((CELL_SIZE * 5) / distance) * 100;
       context.fillStyle = COLORS.floor;
-      /*context.fillRect(
-        i,
-        0,
-        1,
-        SCREEN_HEIGHT
-      );*/
-      //context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
-      //context.fillStyle = `rgba(${[0, 100, 200][hashed]}, 255, 255, 255)`
-      //context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
 
       let brightness = ray.vertical ? 100 : 150;
       context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
       context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
       let selectedImg = state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`]
-      if (selectedImg == undefined && imageSrcs.length > 0) {
-        state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] = 0
-        genImage(imageSrcs[hashed], Math.floor(ray.x), Math.floor(ray.y))
-      }      
+
+      if (selectedImg == undefined && images.length > 0) {
+          if (currentWorker.finished) {
+            state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] = 0
+            genImage(images[hashed][0], Math.floor(ray.x), Math.floor(ray.y))
+          } else {
+        let artwork = images[hash(Math.floor(ray.x), Math.floor(ray.y)) % images.length]
+        selectedImg = artwork[1][hash(Math.floor(ray.x), Math.floor(ray.y)) % artwork[1].length]
+          }
+      }
+
       if (state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] == 0) {
-        selectedImg = loadingImages[Math.floor(t)]
+        let artwork = images[hash(Math.floor(ray.x), Math.floor(ray.y)) % images.length]
+        selectedImg = artwork[1][hash(Math.floor(ray.x), Math.floor(ray.y)) % artwork[1].length]
       }
 
         context.fillStyle = `rgba(255, 255, 255, 0.2)`;
