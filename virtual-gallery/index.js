@@ -256,8 +256,6 @@ function fogCurve(distance) {
 }
 
 function hash(x, y) {
-  // return Math.abs(Math.floor(x + y) % images.length);
-  //return Math.abs(Math.floor(3 * Math.floor(x) + 5 * Math.floor(y)))
    let str = `${x},${y}`;
     let hash = 0;
     for (let i = 0, len = str.length; i < len; i++) {
@@ -265,7 +263,7 @@ function hash(x, y) {
         hash = (hash << 5) - hash + chr;
         hash |= 0;
     }
-    return Math.abs((hash) ^ (hash >>> 1));
+    return Math.abs((`hash`) ^ (hash >>> 1));
 
 }
 
