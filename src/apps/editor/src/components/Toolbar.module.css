@@ -24,14 +24,6 @@
     gap: 0.125rem;
 }
 
-.settingsDropdown > * {
-    min-width: max-content;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
 .icon {
     display: inline-block;
     width: 1.25rem;
@@ -53,22 +45,6 @@
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-.settingsWrapper {
+.dropdownWrapper {
     position: relative;
-}
-
-.settingsDropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: var(--primary);
-    color: white;
-    border-radius: 0.25rem;
-    /* box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2); */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 1;
-    padding: 0.25rem;
-
-    display: flex;
-    flex-direction: column;
 }

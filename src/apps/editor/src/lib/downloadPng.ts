@@ -31,4 +31,4 @@ export default async function downloadPng() {
 
     const blob = await canvas.convertToBlob();
     download("haxidraw.png", blob);
-}y
+}

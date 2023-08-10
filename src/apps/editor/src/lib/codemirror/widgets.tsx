@@ -126,7 +126,9 @@ function widgets(view: EditorView): DecorationSet {
             from, to,
             enter(cur: TreeCursor) {
                 if(cur.name !== "CallExpression") return;
-                const fnVar = cur.node.getChild("VariableName");
+                let fnVar = cur.node.getChild("VariableName");
+                if(fnVar === null) fnVar = cur.node.getChild("MemberExpression").getChild("PropertyName");
+                if(fnVar === null) return;
                 const fnName = view.state.doc.sliceString(fnVar.from, fnVar.to);
                 if(fnName !== "bezierEasing") return;
                 console.log(cur.node.toString());
