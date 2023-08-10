@@ -5,7 +5,6 @@ import { EditorState, Transaction } from "@codemirror/state";
 import { indentUnit } from "@codemirror/language";
 import { indentWithTab } from "@codemirror/commands";
 import { useCallback, useEffect, useState } from "preact/hooks";
-import cx from "classnames";
 import styles from "./CodeMirror.module.css";
 import { CodePosition, getStore, patchStore, useStore } from "../lib/state.ts";
 import { dispatchEditorChange } from "../lib/events.ts";
@@ -51,8 +50,8 @@ const cmExtensions = [
 export const createCMState = (content: string) =>
     EditorState.create({ extensions: cmExtensions, doc: content });
 
-export const deserializeCMState = (state: any) =>
-    EditorState.fromJSON(state, { extensions: cmExtensions });
+// export const deserializeCMState = (state: any) =>
+//     EditorState.fromJSON(state, { extensions: cmExtensions });
 
 export const [useOnJumpTo, dispatchJumpTo] = createEvent<CodePosition>();
 
@@ -66,8 +65,8 @@ export default function CodeMirror({ className }: { className?: string }) {
     }, [view, codeState]);
 
     useEffect(() => {
-        patchStore({ view });
-    }, [view]);
+      patchStore({ view });
+    });
 
     useCMTheme(view);
     useVimMode(view);
@@ -112,7 +111,7 @@ export default function CodeMirror({ className }: { className?: string }) {
 
     return (
         <>
-            <div class={cx(styles.cmWrapper, className)} ref={editorRef} />
+            <div class={`${styles.cmWrapper} ${className}`} ref={editorRef} />
         </>
     );
 }

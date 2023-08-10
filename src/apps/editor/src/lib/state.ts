@@ -1,17 +1,14 @@
 import type { EditorState } from "@codemirror/state";
 import { createState } from "niue";
-import { createCMState, deserializeCMState } from "../components/CodeMirror.tsx";
+import { createCMState } from "../components/CodeMirror.tsx";
 import { type Haxidraw, Turtle, type Point } from "haxidraw-client";
 import type { EditorView } from "@codemirror/view";
+
+// state types
 
 export type CodeState = {
     content: string,
     cmState: EditorState
-};
-
-export type SerializedCodeState = {
-    content: string,
-    cmState: any
 };
 
 export type CodePosition = {
@@ -48,17 +45,7 @@ export type GlobalState = {
     view: EditorView | null
 };
 
-type SerializedTurtle = {
-    [k in keyof Turtle]: Turtle[k]
-};
-
-export type SerializedGlobalState = {
-    code: SerializedCodeState,
-    console: ConsoleMessage[],
-    error: ErrorState | null,
-    turtles: SerializedTurtle[],
-    turtlePos: Point | null
-};
+// setting/initializing state
 
 const newState: Omit<GlobalState, "code"> = {
     inst: null,
@@ -68,22 +55,38 @@ const newState: Omit<GlobalState, "code"> = {
     console: [],
     running: false,
     docDimensions: {
-        width: 10,
-        height: 20,
+        width: 125,
+        height: 125,
     },
     view: null
 };
 
-export const makeNewState = (initialContent: string = `// welcome to haxidraw!
+const defaultProgram = `
+// welcome to haxidraw!
 
-const t = createTurtle();
+const width = 125;
+const height = 125;
 
-for(let i = 0; i < 72; i++) {
-    t.forward(5);
-    t.left(85);
+setDocDimensions(width, height);
+
+const testTurtle = createTurtle();
+
+for (let i = 0; i < 86; i++) {
+    testTurtle.forward(i);
+    testTurtle.left(91);
 }
 
-drawTurtles(t);`): GlobalState => {
+testTurtle.translate(
+  [width/2, height/2], 
+  testTurtle.cc
+);
+
+drawTurtles(
+    testTurtle
+);
+`.trim();
+
+export const makeNewState = (initialContent: string = defaultProgram): GlobalState => {
     return {
         code: {
             content: initialContent,
@@ -92,23 +95,6 @@ drawTurtles(t);`): GlobalState => {
         ...newState
     };
 };
-
-export const serializeState = (state: GlobalState): SerializedGlobalState => {
-    return {
-        code: {
-            content: state.code.content,
-            cmState: state.code.cmState.toJSON()
-        },
-        error: state.error,
-        console: state.console,
-        turtles: state.turtles,
-        turtlePos: state.turtlePos
-    };
-}
-
-export function loadSerializedState(state: SerializedGlobalState) {
-    patchStore(deserializeState(state));
-}
 
 export function loadCodeFromString(code: string) {
     patchStore({
@@ -119,23 +105,19 @@ export function loadCodeFromString(code: string) {
     });
 }
 
-const deserializeState = (state: SerializedGlobalState): GlobalState => ({
-    ...newState,
-    ...state,
-    code: {
-        content: state.code.content,
-        cmState: deserializeCMState(state.code.cmState)
-    },
-    turtles: state.turtles?.map(t => {
-        t = { ...t };
-        Object.setPrototypeOf(t, Turtle.prototype);
-        return t;
-    }) ?? []
-});
+const backup = localStorage.getItem("cache");
 
-const backup = typeof window !== "undefined" && localStorage.getItem("backup");
+export const [useStore, patchStore, getStore] = createState<GlobalState>(
+    backup ? makeNewState(backup) : makeNewState()
+);
 
-const legacyEditorCode = typeof window !== "undefined" && localStorage.getItem("cache") && `// imported from old editor (${localStorage.getItem("filename")}.js)
-${localStorage.getItem("cache")}`;
 
-export const [useStore, patchStore, getStore] = createState<GlobalState>(backup ? deserializeState(JSON.parse(backup)) : legacyEditorCode ? makeNewState(legacyEditorCode) : makeNewState());
+
+
+
+
+
+
+
+
+

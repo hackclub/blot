@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import download from "../lib/download.ts";
 import runCode from "../lib/run.ts";
-import { loadCodeFromString, loadSerializedState, makeNewState, patchStore, serializeState, useStore, getStore } from "../lib/state.ts";
+import { loadCodeFromString, makeNewState, patchStore, useStore, getStore } from "../lib/state.ts";
 import styles from "./Toolbar.module.css";
 import Button from "../ui/Button.tsx";
 import cx from "classnames";

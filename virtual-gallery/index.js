@@ -1,10 +1,13 @@
-/*const imageFilter = window.open("./camera-filter.html", "_blank");
+/*
+
+const imageFilter = window.open("./camera-filter.html", "_blank");
 
 window.addEventListener('beforeunload', () => {
   imageFilter.close()
 })
 
 setInterval(() => imageFilter.postMessage("pt", "*"), 10);
+
 */
 
 const maze2D = document.querySelector(".maze-2d");

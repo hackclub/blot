@@ -1,17 +1,16 @@
 import { useEffect } from "preact/hooks";
-import { useStore, serializeState, getStore } from "../lib/state.ts";
 import { useOnEditorChange } from "../lib/events.ts";
+import { getStore, useStore } from "../lib/state.ts";
 
-function backup() {
-    const backup = serializeState(getStore());
-    localStorage.setItem("backup", JSON.stringify(backup));
+const backup = () => {
+  const { view } = getStore();
+
+  const code = view.state.doc.toString();
+  localStorage.setItem("cache", code);
 }
 
 export default function AutoBackup() {
-    useStore();
+  useOnEditorChange(backup, []);
 
-    useOnEditorChange(backup, []);
-    useEffect(backup);
-
-    return null;
+  return null;
 }

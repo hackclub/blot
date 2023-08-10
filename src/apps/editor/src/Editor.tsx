@@ -26,7 +26,7 @@ export default function Editor() {
                 </div>
             </div>
             <CompatWarning />
-            {/*<DropBox />*/}
+            <DropBox />
         </>
     );
 }

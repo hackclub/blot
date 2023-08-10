@@ -1,11 +1,126 @@
 import { useRef, useEffect, useCallback } from "preact/hooks";
 import styles from "./Preview.module.css";
 import { getStore, useStore } from "../lib/state.ts";
-import cx from "classnames";
 import CenterToFitIcon from "../ui/CenterToFitIcon.tsx";
 import Button from "../ui/Button.tsx";
 import type { Point } from "haxidraw-client";
 import lineclip from "../lib/lineclip.ts";
+
+import { createListener } from "../lib/createListener.js";
+
+export default function Preview(props: { className?: string }) {
+    const { turtles, docDimensions } = useStore(["turtles", "docDimensions"]);
+
+    useEffect(init, []);
+
+    useEffect(() => {
+      const canvas = document.querySelector(".main-canvas");
+      requestRedraw(canvas);
+    }, [ turtles, docDimensions ]);
+
+    return (
+        <div class={styles.root}>
+            <canvas class={`${styles.canvas} ${props.className} main-canvas`} />
+            <div class={`${styles.mousePosition} mouse-position`} />
+            <Button class={`${styles.centerButton} center-view-trigger`} variant="ghost" icon aria-label="center document in view">
+                <CenterToFitIcon/>
+            </Button>
+        </div>
+    )
+}
+
+
+function init() {
+
+  const canvas = document.querySelector(".main-canvas");
+
+  const bodyListener = createListener(document.body);
+  const canvasListener = createListener(canvas);
+
+
+  canvasListener("wheel", "", (e: WheelEvent) => {
+
+    e.preventDefault();
+
+    const ZOOM_SPEED = 0.0005;
+
+    const { panX, panY, scale } = panZoomParams;
+    
+    // const newScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, scale + e.deltaY * -ZOOM_SPEED));
+    const newScale = scale + scale*(-e.deltaY * ZOOM_SPEED);
+
+
+    const br = canvas.getBoundingClientRect();
+    const fixedPoint = { x: e.clientX - br.left, y: e.clientY - br.top };
+    panZoomParams.panX = fixedPoint.x + (newScale / scale) * (panX - fixedPoint.x);
+    panZoomParams.panY = fixedPoint.y + (newScale / scale) * (panY - fixedPoint.y);
+    panZoomParams.scale = newScale;
+
+    requestRedraw(canvas);
+  }, { passive: false })
+
+  canvasListener("mousemove", "", (e: MouseEvent) => {
+
+    // update mousepos
+    const mousePos = document.querySelector(".mouse-position"); // mousePosRef.current;
+
+    if (mousePos) {
+      // convert mouse pos to virtual coords (accounting for zoom, scale)
+      const { panX, panY, scale } = panZoomParams;
+      const br = canvas.getBoundingClientRect();
+      let x = (e.clientX - br.left);
+      x = (x - panX) / scale;
+      let y = (e.clientY - br.top);
+      y = (y - panY) / scale;
+      const addPadding = (s: string) => s.startsWith("-") ? s : " " + s;
+      mousePos.textContent = `${addPadding(x.toFixed(1))}mm, ${addPadding(y.toFixed(1))}mm`;
+    }
+
+    if (e.buttons !== 1) return;
+    e.preventDefault();
+
+    panZoomParams.panX += (e.movementX);
+    panZoomParams.panY += (e.movementY);
+
+    requestRedraw(canvas);
+  });
+
+  bodyListener("click", "", (e) => {
+
+    // check if contained in element with this selector string
+
+    if (!e.target.closest(".center-view-trigger")) return;
+
+    const { docDimensions } = getStore();
+
+    if(!canvas) return;
+
+    const br = canvas.getBoundingClientRect();
+    panZoomParams.scale = Math.min(
+        (br.width - 20) / docDimensions.width,
+        (br.height - 20) / docDimensions.height
+    );
+
+    panZoomParams.panX = br.width / 2 - (docDimensions.width * panZoomParams.scale) / 2;
+    panZoomParams.panY = br.height / 2 + (docDimensions.height * panZoomParams.scale) / 2;
+
+    requestRedraw(canvas);
+  })
+
+  const resizeObserver = new ResizeObserver(entries => {
+      const { width, height } = entries[0].contentRect;
+      dpr = window.devicePixelRatio || 1;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      setCtxProperties(); // setting width/height clears ctx state
+
+      requestRedraw(canvas);
+  });
+
+  resizeObserver.observe(canvas);
+}
+
+// drawing function
 
 const panZoomParams = {
     panX: 200,
@@ -15,21 +130,11 @@ const panZoomParams = {
 
 let dpr = typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1;
 
-let redrawRequested = false;
-let runRedrawAfter = false;
-
 const requestRedraw = (canvas: HTMLCanvasElement) => {
-    if(redrawRequested) {
-        runRedrawAfter = true;
-        return;
-    }
-    redrawRequested = true;
-    runRedrawAfter = false;
-    requestAnimationFrame(() => {
-        _redraw(canvas);
-        redrawRequested = false;
-        if(runRedrawAfter) requestRedraw(canvas);
-    })
+
+  requestAnimationFrame(() => {
+    _redraw(canvas);
+  })
 };
 
 let _ctx: CanvasRenderingContext2D | null = null;
@@ -78,7 +183,7 @@ const _redraw = (canvas: HTMLCanvasElement) => {
 
     ctx.strokeStyle = "#3333ee";
 
-    ctx.strokeRect(dpr * panZoomParams.panX, dpr * panZoomParams.panY, dpr * docW * panZoomParams.scale, dpr * docH * panZoomParams.scale);
+    ctx.strokeRect(dpr * panZoomParams.panX, dpr * panZoomParams.panY, dpr * docW * panZoomParams.scale, -dpr * docH * panZoomParams.scale);
 
     // draw turtles
 
@@ -108,118 +213,5 @@ const _redraw = (canvas: HTMLCanvasElement) => {
     ctx.stroke();
 };
 
-export default function Preview(props: { className?: string }) {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const mousePosRef = useRef<HTMLDivElement>(null);
-    const { turtles } = useStore(["turtles"]);
-
-    useEffect(() => { canvasRef.current && requestRedraw(canvasRef.current); }, [turtles, canvasRef.current]);
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if(!canvas) return;
-
-        const resizeObserver = new ResizeObserver(entries => {
-            const { width, height } = entries[0].contentRect;
-            dpr = window.devicePixelRatio || 1;
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
-            setCtxProperties(); // setting width/height clears ctx state
-
-            requestRedraw(canvas);
-        });
-
-        resizeObserver.observe(canvas);
-        return () => resizeObserver.disconnect();
-    }, [canvasRef.current]);
-
-    // controls
-
-    useEffect(() => {
-        if(!canvasRef.current) return;
-        const canvas = canvasRef.current;
-        _ctx = null;
-
-        const onWheel = (e: WheelEvent) => {
-            e.preventDefault();
-
-            const ZOOM_SPEED = 0.0005;
-
-            const { panX, panY, scale } = panZoomParams;
-            
-            // const newScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, scale + e.deltaY * -ZOOM_SPEED));
-            const newScale = scale + scale*(-e.deltaY * ZOOM_SPEED);
 
 
-            const br = canvas.getBoundingClientRect();
-            const fixedPoint = { x: e.clientX - br.left, y: e.clientY - br.top };
-            panZoomParams.panX = fixedPoint.x + (newScale / scale) * (panX - fixedPoint.x);
-            panZoomParams.panY = fixedPoint.y + (newScale / scale) * (panY - fixedPoint.y);
-            panZoomParams.scale = newScale;
-
-            requestRedraw(canvas);
-        };
-
-        const onMouseMove = (e: MouseEvent) => {
-            // update mousepos
-            const mousePos = mousePosRef.current;
-            if(mousePos) {
-                // convert mouse pos to virtual coords (accounting for zoom, scale)
-                const { panX, panY, scale } = panZoomParams;
-                const br = canvas.getBoundingClientRect();
-                let x = (e.clientX - br.left);
-                x = (x - panX) / scale;
-                let y = (e.clientY - br.top);
-                y = (y - panY) / scale;
-                const addPadding = (s: string) => s.startsWith("-") ? s : " " + s;
-                mousePos.textContent = `${addPadding(x.toFixed(1))}mm, ${addPadding(y.toFixed(1))}mm`;
-            }
-
-            if(e.buttons !== 1) return;
-            e.preventDefault();
-
-            panZoomParams.panX += (e.movementX);
-            panZoomParams.panY += (e.movementY);
-
-            requestRedraw(canvas);
-        };
-
-        canvas.addEventListener("wheel", onWheel);
-        canvas.addEventListener("mousemove", onMouseMove);
-
-        return () => {
-            canvas.removeEventListener("wheel", onWheel);
-            canvas.removeEventListener("mousemove", onMouseMove);
-        };
-    }, [canvasRef.current, mousePosRef.current]);
-
-    const centerView = useCallback(() => {
-        const { docDimensions } = getStore();
-
-        const canvas = canvasRef.current;
-        if(!canvas) return;
-
-        const br = canvas.getBoundingClientRect();
-        panZoomParams.scale = Math.min(
-            (br.width - 20) / docDimensions.width,
-            (br.height - 20) / docDimensions.height
-        );
-
-        panZoomParams.panX = br.width / 2 - (docDimensions.width * panZoomParams.scale) / 2;
-        panZoomParams.panY = br.height / 2 - (docDimensions.height * panZoomParams.scale) / 2;
-
-        requestRedraw(canvas);
-    }, [canvasRef.current]);
-
-    useEffect(centerView, [canvasRef.current]);
-
-    return (
-        <div class={styles.root}>
-            <canvas ref={canvasRef} className={cx(styles.canvas, props.className)} />
-            <div class={styles.mousePosition} ref={mousePosRef} />
-            <Button class={styles.centerButton} variant="ghost" icon aria-label="center document in view" onClick={centerView}>
-                <CenterToFitIcon />
-            </Button>
-        </div>
-    )
-}
