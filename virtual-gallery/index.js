@@ -889,7 +889,7 @@ function findClosestIndex(target, arr) {
       if (selectedImg == undefined && images.length > 0) {
           if (currentWorker.finished) {
             state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] = 0
-            genImage(images[hashed][0], Math.floor(ray.x), Math.floor(ray.y))
+            genImage(images[hash(Math.floor(ray.x), Math.floor(ray.y)) % images.length][0], Math.floor(ray.x), Math.floor(ray.y))
           } else {
         let artwork = images[hash(Math.floor(ray.x), Math.floor(ray.y)) % images.length]
         selectedImg = artwork[1][hash(Math.floor(ray.x), Math.floor(ray.y)) % artwork[1].length]
