@@ -8,7 +8,7 @@ genStart[w/2] = 1
 
 t.goto([0, 0])
 
-let rule = toBits(Math.floor(rand() * 255), 8)
+let rule = toBits(Math.floor(Math.random() * 255), 8)
 let allGens = [genStart]
 
 function toBits(num, overhead) {

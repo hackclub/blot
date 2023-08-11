@@ -35,8 +35,10 @@ export function trimPolylines(polylines, t1, t2) {
     }
 
     // Modify the polylines array
-    polylines.splice(endPolylineIndex + 1);
-    polylines[endPolylineIndex].splice(endIndex + 1);
+    if (endPolylineIndex != undefined) {
+        polylines.splice(endPolylineIndex + 1);
+        polylines[endPolylineIndex].splice(endIndex + 1);
+    }
     polylines.splice(0, startPolylineIndex);
     polylines[0].splice(0, startIndex - 1);
 }

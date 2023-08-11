@@ -28,7 +28,7 @@ const drawingFunctions = {
     }
     }
     
-    function runCode(code, state) {
+function runCode(code, state) {
       const ast = acorn.parse(code, { ecmaVersion: "latest" });
       const topScopeInserts = [];
     

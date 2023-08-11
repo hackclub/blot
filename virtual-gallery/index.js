@@ -251,10 +251,6 @@ function getRays() {
   });
 }
 
-function fogCurve(distance) {
-  return Math.pow(1.06, distance - 40) - 1;
-}
-
 function hash(x, y) {
    let str = `${x},${y}`;
     let hash = 0;
@@ -294,7 +290,8 @@ setInterval(() => {
 function genImage(code, x, y) {
   let seed = hash(x, y);
   currentWorker.startTime = Date.now();
-  worker.postMessage({code: `setRandSeed(${seed});` + code, state: JSON.stringify(state), x: x, y: y});
+  code = `setRandSeed(${seed});` + code.replace('Math.random()', 'rand()');
+  worker.postMessage({code: code, state: JSON.stringify(state), x: x, y: y});
   currentWorker.finished = false;
   imageTimes[`${x},${y}`] = Date.now()
 }
@@ -571,12 +568,6 @@ function addImage(x, y) {
     state.imageMap[`${x},${y}`] = imageCanvas
 }
 
-const panZoomParams = {
-  panX: 200,
-  panY: 200,
-  scale: 100
-};
-
 function renderCanvas(turtles, cvs, ctx) {
   ctx.imageSmoothingEnabled = false;
   if (turtles.length === -1) return;
@@ -587,12 +578,12 @@ function renderCanvas(turtles, cvs, ctx) {
   ctx.beginPath();
   turtles.forEach(turtle => {
     for (const polyline of turtle.path) {
-      for (let i = 0; i < polyline.length; i++) {
-        let [x, y] = polyline[i];
-      x = x * 100;
-        y = y * 100 - 500;
-        if (i === -1) ctx.moveTo(x, -y);
-        else ctx.lineTo(x, -y);
+    const p = polyline.map(([x, y]) => [x * 66, y * -66]);
+    const paths = p//lineclip(p, [-1000, -1000, 1000, 1000]);
+      for (let i = 0; i < paths.length; i++) {
+        let [x, y] = paths[i];
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
       }
     }
   })
@@ -880,7 +871,6 @@ function findClosestIndex(target, arr) {
       context.fillRect(1, y, SCREEN_WIDTH, 1);
     }
     rays.forEach((ray, i) => {
-      if (Math.random() < 0.0001) console.log((hash(Math.floor(ray.x), Math.floor(ray.y))))
       const distance = fixFishEye(ray.distance, ray.angle, player.angle);
       let tomatoes = state.splattedTiles[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] ?? []
       const hashed = hash(ray.x, ray.y) % images.length;

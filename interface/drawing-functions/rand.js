@@ -2,7 +2,7 @@ let jsr = 69;
 
 export function rand() {
   var x = Math.sin(1000 * jsr++) * 10000;
-  return x - Math.floor(x);
+  return Math.abs(x - Math.floor(x));
 }
 
 export function setRandSeed(number) {
