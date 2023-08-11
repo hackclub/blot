@@ -7,6 +7,7 @@
 `10 PRINT CHR$(205.5+RND(1)); : GOTO 10`
 From just that one line, the following intricate pattern is be created:
 ![](https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png =400x300)
+
 There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for ***Haxidraw***. (This tutorial works fine if you don't have one!)
 
 A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
@@ -15,11 +16,11 @@ A Haxidraw is a small drawing robot that can be programed from a browser. You se
 Here are some examples of art people have made with Haxidraw:
 
 
-![landscape.png](https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true)
+![](https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true =400x300)
 
-![roots.png](https://github.com/hackclub/haxidraw/blob/main/art/roots-kai/snapshots/roots.png?raw=true)
+![](https://github.com/hackclub/haxidraw/blob/main/art/roots-kai/snapshots/roots.png?raw=true =400x300)
 
-![tidalFlats.png](https://github.com/hackclub/haxidraw/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true)
+![](https://github.com/hackclub/haxidraw/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true =400x300)
 
 Now, let's take another look at the original 10PRINT artwork that we'll try to replicate.
 
@@ -32,7 +33,7 @@ On a high level, here's our strategy:
 
 This looks like:
 
-![https://cloud-eeo1n3h1p-hack-club-bot.vercel.app/0image.png](https://cloud-eeo1n3h1p-hack-club-bot.vercel.app/0image.png)
+![](https://cloud-eeo1n3h1p-hack-club-bot.vercel.app/0image.png =400x300)
 
 So, let's start making something! Boot up the editor at [editor.haxidraw.hackclub.com](https://editor.haxidraw.hackclub.com/). On the left side of the screen, you write code. On the other side, you can see a preview of what you're building. At any point, press "**Run Code**" at the top to see what you've made so far.
 
@@ -77,7 +78,7 @@ Raise the pen, but this time, start out a bit to the right of `x, y`. Lower the 
 ```
 Visually, this looks like:
 
-![https://cloud-3xbhxnc09-hack-club-bot.vercel.app/0image.png](https://cloud-3xbhxnc09-hack-club-bot.vercel.app/0image.png)
+![](https://cloud-3xbhxnc09-hack-club-bot.vercel.app/0image.png =400x300)
 
 We've finished the drawing function, but we still need to call it. To run some code repeatedly, we use a `for` loop. We move across each row, left to right. At each grid cell, we call the `draw` function to draw the random slash. Once we hit the end of a row, we return to the start.
 
@@ -107,7 +108,7 @@ And, lastly, let's draw this to the screen! This is done simply by calling the f
 `drawTurtles(t);`
 
 And, you're done! If all went well, you should be seeing something like the below art:
-![https://cloud-e0wpk8chk-hack-club-bot.vercel.app/0image.png](https://cloud-e0wpk8chk-hack-club-bot.vercel.app/0image.png)
+![](https://cloud-e0wpk8chk-hack-club-bot.vercel.app/0image.png =400x300)
 
 Great job! You can still go farther with this, if you want. 
 - See what happens if you change the probability in our `draw` function from `0.5` to something else
