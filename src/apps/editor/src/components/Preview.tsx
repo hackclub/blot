@@ -166,18 +166,20 @@ const _redraw = (canvas: HTMLCanvasElement) => {
     const ctx = getCtx(canvas);
 
     ctx.clearRect(0, 0, width, height);
-    ctx.beginPath();
-    ctx.arc(
-        dpr * (panZoomParams.panX + turtlePos[0] * panZoomParams.scale),
-        dpr * (panZoomParams.panY + (-1 * turtlePos[1]) * panZoomParams.scale),
-        dpr * 7,
-        0,
-        2 * Math.PI
-    );
-    ctx.strokeStyle = "white";
-    ctx.stroke();
-    ctx.fillStyle = "#ffa500";
-    ctx.fill();
+
+    // DRAW TURTLE
+    // ctx.beginPath();
+    // ctx.arc(
+    //     dpr * (panZoomParams.panX + turtlePos[0] * panZoomParams.scale),
+    //     dpr * (panZoomParams.panY + (-1 * turtlePos[1]) * panZoomParams.scale),
+    //     dpr * 7,
+    //     0,
+    //     2 * Math.PI
+    // );
+    // ctx.strokeStyle = "white";
+    // ctx.stroke();
+    // ctx.fillStyle = "#ffa500";
+    // ctx.fill();
 
     // draw document
 
