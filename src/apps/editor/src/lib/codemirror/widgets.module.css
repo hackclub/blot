@@ -26,3 +26,13 @@
     left: 0;
     z-index: 9999;
 }
+
+.bezierWidgetHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bezierWidgetHeader button {
+    padding: 2px;
+}

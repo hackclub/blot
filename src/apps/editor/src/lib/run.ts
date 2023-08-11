@@ -5,13 +5,13 @@ import { RollupError, rollup } from "@rollup/browser";
 import { Turtle, Point } from "haxidraw-client";
 import * as drawingUtils from "haxidraw-client/utils";
 import { type FindPosition, SourceMapConsumer } from "source-map-js";
+import { EditorState } from "@codemirror/state";
 
 let intervals: number[] = [];
 let timeouts: number[] = [];
 let loops: boolean[] = [];
 
 // https://stackoverflow.com/a/62507199
-// what a beautiful solution to this problem
 const resolvePath = (path: string) => (
     path.split("/")
         .reduce<string[]>((a, v) => {
@@ -103,15 +103,21 @@ const getSourceMapConsumer = (code: string) => {
     return new SourceMapConsumer(sourcemap);    
 };
 
-let origBundle: string | null = null;
-let bundle: string | null = null;
-let smc: SourceMapConsumer | null = null;
+type ObjectRef<T> = {
+    value: T
+};
 
-async function build() {
+// these three values are used by liveUpdate.ts
+export let bundleState: ObjectRef<EditorState | null> = { value: null };
+export let bundle: ObjectRef<string | null> = { value: null };
+export let smc: SourceMapConsumer | null = null;
+
+export async function build() {
     // console.log("full rebuild");
     try {
-        origBundle = bundle = await getBundle();
-        smc = getSourceMapConsumer(bundle!);
+        bundle.value = await getBundle();
+        bundleState.value = EditorState.create({ doc: bundle.value }); // using EditorState for change tracking
+        smc = getSourceMapConsumer(bundle.value);
         return true;
     } catch(caught: any) {
         if(caught.name !== "RollupError" || !caught.cause) throw caught;
@@ -135,27 +141,6 @@ async function build() {
 
         return false;
     }
-}
-
-export const manualChangeSinceLiveUpdate = {
-    value: false
-};
-
-const lineColToStringPos = (str: string, line: number, col: number) => {
-    return str.split("\n").slice(0, line - 1).map(l => l.length).reduce((a, c) => a + 1 + c, -1) + col + 1;
-}
-
-export async function liveUpdateBundle(from: CodePosition, to: CodePosition, replaceWith: string) {
-    if(manualChangeSinceLiveUpdate.value || !origBundle) { await build(); return; }
-    // console.log("attempting live update");
-
-    const bundlePos = [from, to]
-        .map(p => ({ ...p, source: "index.js" }))
-        .map(p => smc!.generatedPositionFor(p))
-        .map(p => lineColToStringPos(origBundle!, p.line, p.column));
-
-    bundle = origBundle!.slice(0, bundlePos[0]) + replaceWith + origBundle!.slice(bundlePos[1]);
-    // console.log(bundle);
 }
 
 export default async function runCode(cached: boolean = false) {
@@ -265,11 +250,20 @@ export default async function runCode(cached: boolean = false) {
   
     const names = Object.keys(args);
     const values = Object.values(args);
-  
-    const f = new AsyncFunction(
-      ...names,
-      "await (async " + bundle!.slice(1)
-    );
+
+    let f;
+
+    try {
+        f = new AsyncFunction(
+            ...names,
+            "await (async " + bundle.value!.slice(1)
+        );
+    } catch(err) {
+        // normally this would have been caught by rollup's syntax checking
+        // probably an issue happened during live update, and the syntax became invalid
+        debugger;
+        throw err;
+    }
 
     // console.log(f, f.toString());
 
@@ -294,13 +288,6 @@ export default async function runCode(cached: boolean = false) {
             positions.push(pos);
             i++;
         }
-        // do {
-        //     const line = stackLines[i];
-        //     const pos = getPosFromStackLine(line);
-        //     if(!pos) break;
-        //     positions.push(pos);
-        //     i++;
-        // } while(i < stackLines.length && [0, 1 /* iife call */, 2 /* AsyncFunction call */].map(n => stackLines[i + n]).every(l => l && l.includes("run.ts")));
         const mapPosition = (position: FindPosition) => {
             const mapped = smc!.originalPositionFor(position);
             if(mapped.line === null) {
@@ -318,8 +305,6 @@ export default async function runCode(cached: boolean = false) {
             message: err.message
         };
     }
-
-
 
     patchStore({
         turtles,

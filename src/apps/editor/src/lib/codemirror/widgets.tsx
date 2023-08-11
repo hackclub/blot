@@ -5,21 +5,29 @@ import { syntaxTree } from "@codemirror/language";
 import type { SyntaxNode, TreeCursor } from "@lezer/common";
 import ThreeDCurveManualIcon from "../../ui/3DCurveManualIcon.tsx";
 import styles from "./widgets.module.css";
-import { useCallback, useMemo, useState } from "preact/hooks";
-import type { Point } from "haxidraw-client";
+import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
 import { createEvent } from "niue";
 import BezierEditor, { BezierPoints } from "../../components/BezierEditor.tsx";
+import { nodeIsNumber } from "./utils.js";
+import Button from "../../ui/Button.js";
+import CloseIcon from "../../ui/CloseIcon.js";
+import type { LiveUpdateSpan } from "./liveUpdate.js";
+import { createSpan, createUpdate, dispatchLiveUpdates, runLiveUpdates } from "./liveUpdate.js";
 
-const makeWidget = <T extends {}>(component: ComponentType<{ view: EditorView, props: T }>) =>
+const makeWidget = <T extends {}>(component: ComponentType<{ view: EditorView, props: T }>, eq?: (a: T, b: T) => boolean) =>
     class extends WidgetType {
         props: T;
+        id: number
 
         constructor(props: T) {
             super();
             this.props = props;
+            this.id = Math.random()
         }
 
         override eq(other: this) {
+            if(eq) return eq(this.props, other.props);
+
             for (const key in this.props) {
                 if (this.props[key] !== other.props[key]) return false;
             }
@@ -31,21 +39,28 @@ const makeWidget = <T extends {}>(component: ComponentType<{ view: EditorView, p
 
         toDOM(view: EditorView): HTMLElement {
             const container = document.createElement("span");
+            console.log("render", (this.props as unknown as BezierProps).yStart.from, this.id);
             render(h(component, { props: this.props, view }), container);
             return container;
         }
 
         override updateDOM(container: HTMLElement, view: EditorView) {
-            // render(h(component, { props: this.props, view }), container);
+            console.log("dom update!", (this.props as unknown as BezierProps).yStart.from, this.id);
+            render(h(component, { props: this.props, view }), container);
             return true;
         }
     };
 
+
+type DocRange = {
+    from: number,
+    to: number
+};
 type BezierProps = {
-    yStart: SyntaxNode,
-    p0: [SyntaxNode, SyntaxNode],
-    p1: [SyntaxNode, SyntaxNode],
-    yEnd: SyntaxNode
+    yStart: DocRange,
+    p0: [DocRange, DocRange],
+    p1: [DocRange, DocRange],
+    yEnd: DocRange
 };
 
 enum PopupSide {
@@ -55,8 +70,19 @@ enum PopupSide {
 
 const [useOnCloseBezierWidget, dispatchCloseBezierWidget] = createEvent<null>();
 
+const trimZerosFromEnd = (str: string) => str.replace(/\.?0+$/, "");
+
 const bezierWidget = makeWidget<BezierProps>(({ view, props }) => {
     const [popupSide, setPopupSide] = useState<PopupSide | null>(null);
+    const liveUpdateSpans = useMemo<LiveUpdateSpan[]>(() => Object.values(props).flat().map(node => createSpan(node.from, node.to, view)), []);
+
+    useEffect(() => {
+        // just update the to/from props of the span - on rebuild the spans will be invalidated
+        Object.values(props).flat().forEach((node, i) => {
+            liveUpdateSpans[i].from = node.from;
+            liveUpdateSpans[i].to = node.to;
+        });
+    }, [props]);
 
     useOnCloseBezierWidget(() => {
         setPopupSide(null);
@@ -64,13 +90,7 @@ const bezierWidget = makeWidget<BezierProps>(({ view, props }) => {
 
     const bezierOnChange = useCallback((value: BezierPoints) => {
         const vf = Object.values(value).flat();
-        view.dispatch({
-            changes: Object.values(props).flat().map((node, i) => ({
-                from: node.from,
-                to: node.to,
-                insert: vf[i].toString()
-            }))
-        });
+        dispatchLiveUpdates(vf.map((v, i) => createUpdate(liveUpdateSpans[i], trimZerosFromEnd(v.toFixed(3)))), view).then(runLiveUpdates);
     }, []);
 
     const bezierInitialValue = useMemo<BezierPoints>(() => {
@@ -89,7 +109,14 @@ const bezierWidget = makeWidget<BezierProps>(({ view, props }) => {
                 <div className={styles.bezierWidgetPopup} style={{
                     top: popupSide === PopupSide.Top ? "0" : "100%",
                 }}>
-                    <BezierEditor initialValue={bezierInitialValue} onChange={bezierOnChange} />
+                    <BezierEditor initialValue={bezierInitialValue} onChange={bezierOnChange}>
+                        <div class={styles.bezierWidgetHeader}>
+                            <h3>edit bezier</h3>
+                            <Button variant="ghost" icon aria-label="close" onClick={() => setPopupSide(null)}>
+                                <CloseIcon />
+                            </Button>
+                        </div>
+                    </BezierEditor>
                 </div>
             )}
             <button className={styles.bezierWidgetBtn} onClick={e => {
@@ -107,6 +134,13 @@ const bezierWidget = makeWidget<BezierProps>(({ view, props }) => {
             </button>
         </span>
     )
+}, (a, b) => {
+    return a.yStart.from === b.yStart.from &&
+        a.p0[0].from === b.p0[0].from &&
+        a.p0[1].from === b.p0[1].from &&
+        a.p1[0].from === b.p1[0].from &&
+        a.p1[1].from === b.p1[1].from &&
+        a.yEnd.from === b.yEnd.from;
 });
 
 const getNodeChildren = (node: SyntaxNode): SyntaxNode[] => {
@@ -131,27 +165,32 @@ function widgets(view: EditorView): DecorationSet {
                 if(fnVar === null) return;
                 const fnName = view.state.doc.sliceString(fnVar.from, fnVar.to);
                 if(fnName !== "bezierEasing") return;
-                console.log(cur.node.toString());
                 const args = getNodeChildren(cur.node.getChild("ArgList")).filter(n => !["(", ")", ","].includes(n.name));
                 const props = {} as BezierProps;
                 // check for valid calls with only literal values
                 if(args.length !== 4) return;
+
                 props.yStart = args[0];
-                if(props.yStart.name !== "Number") return;
+                if(!nodeIsNumber(props.yStart, view)) return;
+
                 const p0Arr = args[1];
                 if(p0Arr.name !== "ArrayExpression") return;
+
                 const p0ArrChildren = getNodeChildren(p0Arr);
                 if(p0ArrChildren.length !== 5) return;
                 props.p0 = [p0ArrChildren[1], p0ArrChildren[3]];
-                if(props.p0[0].name !== "Number" || props.p0[1].name !== "Number") return;
+                if(props.p0.find(n => !nodeIsNumber(n, view))) return;
+
                 const p1Arr = args[2];
                 if(p1Arr.name !== "ArrayExpression") return;
+
                 const p1ArrChildren = getNodeChildren(p1Arr);
                 if(p1ArrChildren.length !== 5) return;
                 props.p1 = [p1ArrChildren[1], p1ArrChildren[3]];
-                if(props.p1[0].name !== "Number" || props.p1[1].name !== "Number") return;
+                if(props.p1.find(n => !nodeIsNumber(n, view))) return;
+
                 props.yEnd = args[3];
-                if(props.yEnd.name !== "Number") return;
+                if(!nodeIsNumber(props.yEnd, view)) return;
 
                 const deco = Decoration.replace({
                     widget: new bezierWidget(props)

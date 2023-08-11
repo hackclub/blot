@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { useCallback, useRef } from "preact/hooks";
 import styles from "./BezierEditor.module.css";
 import cx from "classnames";
 import ScalableCanvas, {
@@ -6,7 +6,7 @@ import ScalableCanvas, {
     ScalableCanvasHandle
 } from "./ScalableCanvas.tsx";
 import type { Point } from "haxidraw-client";
-import scalableCanvas from "./ScalableCanvas.tsx";
+import type { ComponentChildren } from "preact";
 
 export type BezierPoints = {
     yStart: number;
@@ -25,9 +25,10 @@ type MapItem = {
 type CursorMapFn = (x: number, y: number) => MapItem | undefined;
 
 export default function BezierEditor(props: {
-    className?: string;
-    initialValue?: BezierPoints;
-    onChange?: (value: BezierPoints) => void;
+    className?: string,
+    initialValue?: BezierPoints,
+    onChange?: (value: BezierPoints) => void,
+    children?: ComponentChildren
 }) {
     const bezierPoints = useRef<BezierPoints>(props.initialValue ?? {
         yStart: 0,
@@ -162,11 +163,9 @@ export default function BezierEditor(props: {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
     }, []);
 
-    console.log("yeag", canvasOnMouseMove, scalableCanvasRef.current);
-
     return (
         <div className={cx(styles.root, props.className)}>
-            <h3>edit bezier</h3>
+            {props.children}
             <div className={styles.canvasRoot}>
                 <ScalableCanvas
                     ref={scalableCanvasRef}

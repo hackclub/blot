@@ -7,7 +7,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import { themeExtension, useCMTheme } from "../lib/codemirror/cmTheme.ts";
 import JumpLinkIcon from "../ui/JumpLinkIcon.tsx";
-import { dispatchJumpTo } from "./CodeMirror.tsx";
+import { dispatchJumpTo } from "../lib/codemirror/state.js";
 
 const Snippet = ({ pos, code, message }: { pos: CodePosition, code: string, message?: string }) => {
     const view = useRef<EditorView>();
