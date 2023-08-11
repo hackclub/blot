@@ -24,7 +24,7 @@ function makeBranch(turtle) {
 
     for (let i = 0; i < n; i++) {
         const curl = randInRange(-5, 5);
-        turtle.right(-curl);
+        turtle.left(curl);
         turtle.forward(length);
     }
 
@@ -49,7 +49,7 @@ Let's put this logic in a new function, `thicken`, which takes in the branch's t
 function makeBranch(turtle) {
     ...
 
-    thicken(turtle, 0.8)
+    thicken(turtle)
 
     return turtle;
 }
@@ -59,7 +59,7 @@ function thicknessAt(t) {
   return 1-smoothstep(-1.3, 0.9, t)
 }
 
-function thicken(turtle, thickness) {
+function thicken(turtle) {
   const left = [];
   const right = [];
 
@@ -67,7 +67,7 @@ function thicken(turtle, thickness) {
     // getAngle() returns degrees, convert to radians
     const angleAtPoint = turtle.getAngle(t)/180 * Math.PI;
 
-    const thickness = thicknessAt(t, startingTime)
+    const thickness = thicknessAt(t)
 
     const leftAngle = angleAtPoint - Math.PI/2
     const rightAngle = angleAtPoint + Math.PI/2
@@ -144,17 +144,14 @@ function makeBranch(turtle, length, startingT) {
 
         // moddedAngle and moddedAngle + 360 are equivalent; which
         // one is numerically closer determines which way to turn.
-        const closer = Math.min(moddedAngle - angle, moddedAngle + 360 - angle);
+        const closerDiff = Math.min(moddedAngle - angle, moddedAngle + 360 - angle);
+        const curl = closerDiff / 20; // Scale down
 
-        const diff = closer;
-        const curl = diff / 20; // Scale down
-
-        const a = curl;
-        turtle.right(-a);
+        turtle.left(curl);
         turtle.forward(length);
     }
 
-    thicken(turtle, 0.8, startingT);
+    thicken(turtle, startingT);
 
     return turtle;
 }
@@ -194,7 +191,7 @@ function makeBranch() {
             const pt = turtle.interpolate(time);
             const curAngleDeg = turtle.getAngle(time),
                 curAngleRad = curAngleDeg/180 * Math.PI
-            const parentThickness = thicknessAt(time, startingT)
+            const parentThickness = thicknessAt(time + startingT)
 
             // Turn either left or right 90 degrees
             const a = (Math.random() > 0.5 ? 1 : -1) * 90
@@ -207,7 +204,7 @@ function makeBranch() {
             newBranch.setAngle(curAngleDeg);
 
             newBranch.right(a);
-            makeBranch(newBranch, length*(1-time)*.90, time); // Recur
+            makeBranch(newBranch, length*(1-time)*.90, time + startingT); // Recur
 
             turtles.push(newBranch) // Add to turtles array for drawing
         }
@@ -228,7 +225,7 @@ This should produce something like:
 Finally, let's add some texture by drawing rungs/"rings" throughout the path of each branch. Each ring consists of an initially straight line from `leftPoint` to `rightPoint`, where we then add noise to the line by adjusting individual points. We want the line to be more noisy towards the center and less so towards the ends, so we can again use `smoothstep`! This requires rewriting how `thicken` works, so the whole function with these edits made is shown below:
 
 ```js
-function thicken() {
+function thicken(turtle, startingTime) {
     const nRings = 200;
     const ringStepT = 1 / (nRings - 1);
     let nextRingT = ringStepT;
@@ -287,10 +284,11 @@ function thicken() {
             ring.iteratePath((ringPoint, ringT) => {
                 const normal = ring.getNormal(ringT);
 
+                // Smoothstep so more noisy in middle, less at edges
                 const s =
                     0.9 *
                     smoothstep(-0.1, 0.4, 0.5 - Math.abs(ringT - 0.5)) *
-                    o;
+                    thickness;
                 const noiseMag = 2 * (noise([2 * ringT, ringSeed]) - 0.5) * s;
 
                 ringPoint[0] += normalX * noiseMag;
