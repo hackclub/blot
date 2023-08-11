@@ -13,6 +13,7 @@ There's even a book named after this program: [10print.org](https://10print.org/
 A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
 
 ![drawing machine with a turtle illustration](https://haxidraw.hackclub.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdrawing-machine.726ff526.png&w=3840&q=75)![https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png](https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png)
+
 Here are some examples of art people have made with Haxidraw:
 
 
