@@ -5,8 +5,11 @@
 
 "10PRINT" is one of the oldest and most well-known examples of generative art. It was originally created for the Commodore 64 in BASIC, and the code looked like this:
 `10 PRINT CHR$(205.5+RND(1)); : GOTO 10`
-From just that one line, the following intricate pattern is be created:
+From just that one line, the following intricate pattern is created:
+
+
 ![](https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png)
+
 
 There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for ***Haxidraw***. (This tutorial works fine if you don't have one!)
 
