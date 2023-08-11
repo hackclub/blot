@@ -50,6 +50,17 @@ const state = {
   imageMap: {},
   score: 0,
   turtles: [],
+  heldKeys: {
+    KeyW: false,
+    KeyA: false,
+    KeyS: false,
+    KeyD: false,
+
+    ArrowUp: false,
+    ArrowLeft: false,
+    ArrowDown: false,
+    ArrowRight: false,
+  }
 }
 
 const width = state.width;
@@ -296,57 +307,6 @@ function genImage(code, x, y) {
   imageTimes[`${x},${y}`] = Date.now()
 }
 
-function movePlayer(dx, dy) {
-  const { width, height, orientation, mazeData } = state;
-  const maze = mazeData;
-
-  state.globalX = Math.round(state.globalX * 10000) / 10000;
-  state.globalY = Math.round(state.globalY * 10000) / 10000;
-
-  if (Math.floor(state.globalX) > state.lastX) {
-    moveEast({ width, halfWidth, mazeData });
-    state.playerX = n/2;
-  }
-
-  if (Math.floor(state.globalX) < state.lastX) {
-    moveWest({ width, halfWidth, mazeData });
-    state.playerX = n/2 + 1;
-  }
-
-  if (Math.floor(state.globalY) < state.lastY) {
-    moveSouth({ width, halfWidth, mazeData });
-    state.playerY = n/2 - 1;
-  }
-
-  if (Math.floor(state.globalY) > state.lastY) {
-    moveNorth({ width, halfWidth, mazeData });
-    state.playerY = n/2;
-  }
-
-  state.lastX = Math.floor(state.globalX);
-  state.lastY = Math.floor(state.globalY);
-
-  dx = Math.round(dx * 1000000) / 1000000;
-  dy = Math.round(dy * 1000000) / 1000000;
-  const newEpsX = Math.floor(state.playerX + dx * 5);
-  const newEpsY = Math.floor(state.playerY - dy * 5);
-  const newX = Math.floor(state.playerX + dx);
-  const newY = Math.floor(state.playerY - dy);
-
-  let moveableX = true;
-  let moveableY = true;
-
-  let reshapedMaze = reshapeArray(state.mazeData, state.width);
-
-  let fill_dx = reshapedMaze[Math.floor(state.playerY)][newX] || reshapedMaze[Math.floor(state.playerY)][newEpsX]
-  if (fill_dx) moveableX = false;
-  let fill_dy = reshapedMaze[newY][Math.floor(state.playerX)] || reshapedMaze[newEpsY][Math.floor(state.playerX)]
-  if (fill_dy) moveableY = false;
-
-  if (moveableX) {state.playerX += dx; state.globalX += dx}
-  if (moveableY) {state.playerY -= dy; state.globalY += dy}
-}
-
 function drawMaze(state) {
 
   const { width, height, orientation, mazeData } = state;
@@ -484,38 +444,17 @@ function genMatrix(width, height) {
 }
 
 window.addEventListener("keydown", e => {
-  const { width, height, orientation, mazeData } = state;
+  const { heldKeys } = state
 
-  const halfWidth = (width-1)/2;
-
-  const r = 0.05;
-  let dx, dy;
-  const branch = {
-    KeyW() {
-      dx = Math.sin((state.angle+0)/180*Math.PI)*r;
-      dy = Math.cos(state.angle/180*Math.PI)*r;
-      movePlayer(dx, dy);
-    },
-    KeyA() {
-      dx = Math.sin((state.angle+270)/180*Math.PI)*r;
-      dy = Math.cos((state.angle+270)/180*Math.PI)*r;
-      movePlayer(dx, dy);
-    },
-    KeyS() {
-      dx = Math.sin((state.angle+180)/180*Math.PI)*r;
-      dy = Math.cos((state.angle+180)/180*Math.PI)*r;
-      movePlayer(dx, dy);
-    },
-    KeyD() {
-      dx = Math.sin((state.angle+90)/180*Math.PI)*r;
-      dy = Math.cos((state.angle+90)/180*Math.PI)*r;
-      movePlayer(dx, dy);
-    }
-  }[event.code];
-
-  if (branch) branch();
-
+  if (e.code in heldKeys) heldKeys[e.code] = true
 })
+
+window.addEventListener("keyup", e => {
+  const { heldKeys } = state
+
+  if (e.code in heldKeys) heldKeys[e.code] = false
+})
+
 
 window.addEventListener("mousemove", e => {
   if (document.pointerLockElement === maze2D) {
@@ -533,7 +472,7 @@ function get1DIndex(width, x, y) {
 }
 
 
-const { fireTomato } = raycastMap(state);
+const { fireTomato, movePlayer } = raycastMap(state);
 
 let lastTrackerX, lastTrackerY
 
@@ -960,20 +899,101 @@ function findClosestIndex(target, arr) {
     // context.fillText(`FPS: ${Math.floor(fps)}`, 10, 450)
   }
 
+  function movePlayer(dx, dy) {
+    const { width, height, orientation, mazeData } = state;
+    const maze = mazeData;
+
+    state.globalX = Math.round(state.globalX * 10000) / 10000;
+    state.globalY = Math.round(state.globalY * 10000) / 10000;
+
+    if (Math.floor(state.globalX) > state.lastX) {
+      moveEast({ width, halfWidth, mazeData });
+      state.playerX = n/2;
+    }
+
+    if (Math.floor(state.globalX) < state.lastX) {
+      moveWest({ width, halfWidth, mazeData });
+      state.playerX = n/2 + 1;
+    }
+
+    if (Math.floor(state.globalY) < state.lastY) {
+      moveSouth({ width, halfWidth, mazeData });
+      state.playerY = n/2 - 1;
+    }
+
+    if (Math.floor(state.globalY) > state.lastY) {
+      moveNorth({ width, halfWidth, mazeData });
+      state.playerY = n/2;
+    }
+
+    state.lastX = Math.floor(state.globalX);
+    state.lastY = Math.floor(state.globalY);
+
+    dx = Math.round(dx * 1000000) / 1000000;
+    dy = Math.round(dy * 1000000) / 1000000;
+    const newEpsX = Math.floor(state.playerX + dx * 5);
+    const newEpsY = Math.floor(state.playerY - dy * 5);
+    const newX = Math.floor(state.playerX + dx);
+    const newY = Math.floor(state.playerY - dy);
+
+    let moveableX = true;
+    let moveableY = true;
+
+    let reshapedMaze = reshapeArray(state.mazeData, state.width);
+
+    let fill_dx = reshapedMaze[Math.floor(state.playerY)][newX] || reshapedMaze[Math.floor(state.playerY)][newEpsX]
+    if (fill_dx) moveableX = false;
+    let fill_dy = reshapedMaze[newY][Math.floor(state.playerX)] || reshapedMaze[newEpsY][Math.floor(state.playerX)]
+    if (fill_dy) moveableY = false;
+
+    if (moveableX) {state.playerX += dx; state.globalX += dx}
+    if (moveableY) {state.playerY -= dy; state.globalY += dy}
+  }
+
+  function handleInput() {
+    const { heldKeys } = state;
+
+    const r = 0.05;
+
+    let dx = 0,
+      dy = 0;
+
+    const towardsAngleDeg = relativeAngle => {
+      const rad = toRadians(state.angle + relativeAngle)
+      dx += Math.sin(rad)
+      dy += Math.cos(rad)
+    }
+
+    if (heldKeys.KeyW || heldKeys.ArrowUp)    towardsAngleDeg(0)
+    if (heldKeys.KeyA || heldKeys.ArrowLeft)  towardsAngleDeg(270)
+    if (heldKeys.KeyS || heldKeys.ArrowDown)  towardsAngleDeg(180)
+    if (heldKeys.KeyD || heldKeys.ArrowRight) towardsAngleDeg(90)
+  
+    if (dx !== 0 || dy !== 0) {
+      const mag = Math.hypot(dx, dy)
+      dx = dx/mag * r
+      dy = dy/mag * r
+
+      movePlayer(dx, dy)
+    }
+  }
+
   function gameLoop() {
     clearScreen();
+    handleInput()
     const rays = getRays();
     renderScene(rays);
     renderMinimap(0, 0, 1, rays);
 
   }
 
-state.mazeData = genMatrix(n, n);
+  state.mazeData = genMatrix(n, n);
 
-setInterval(gameLoop, TICK);
+  setInterval(gameLoop, TICK);
 
   return {
-    fireTomato
+    fireTomato,
+    movePlayer
   }
 }
 
