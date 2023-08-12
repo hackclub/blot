@@ -57,6 +57,16 @@
     position: relative;
 }
 
+.dropdownEntry {
+    cursor: default;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.dropdownEntry:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 .settingsDropdown {
     position: absolute;
     top: 100%;

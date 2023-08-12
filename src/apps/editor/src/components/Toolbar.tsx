@@ -26,16 +26,27 @@ export default function Toolbar() {
             <OpenButton />
             <div 
                 style={{
-                    position: "relative"
+                    position: "relative",
+                    cursor: "default",
+                    width: "min-width"
                 }}
                 onMouseEnter={() => setHidden(false)}
                 onMouseLeave={() => setHidden(true)}>
-                <div>download</div>
                 <div style={{
-                    display: hidden ? "" : "",
-                    position: "absolute"
+                    padding: "5px"
+                }}>download</div>
+                <div style={{
+                    display: hidden ? "none" : "",
+                    position: "absolute",
+                    background: "var(--primary)",
+                    "z-index": 9999,
+                    width: "100%",
+                    top: "100%",
+                    padding: "5px",
+                    "border-radius": "5px"
+
                 }}>
-                    <DownloadButton />
+                    <DownloadButton/>
                     <DownloadSVG />
                     <DownloadPNG />
                 </div>
@@ -73,7 +84,7 @@ function RunButton() {
 function DownloadButton() {
     const state = useStore();
     return (
-        <Button variant="ghost" onClick={() => download("project.js", state.code.content)}>download js</Button>
+        <div class={styles.dropdownEntry} onClick={() => download("project.js", state.code.content)}>js</div>
     );
 }
 
@@ -89,7 +100,7 @@ function NewButton() {
 
 function DownloadSVG() {
     return (
-        <Button variant="ghost" onClick={() => {
+        <div class={styles.dropdownEntry} onClick={() => {
             const { turtles, docDimensions } = getStore();
 
             const turtleToPathData = t => {
@@ -126,13 +137,13 @@ function DownloadSVG() {
                 </svg>
             `
             download("anon.svg", svg);
-        }}>download svg</Button>
+        }}>svg</div>
     );
 }
 
 function DownloadPNG() {
     return (
-        <Button variant="ghost" onClick={() => {
+        <div class={styles.dropdownEntry} onClick={() => {
             const { turtles, docDimensions } = getStore();
 
             const turtleToPathData = t => {
@@ -199,7 +210,7 @@ function DownloadPNG() {
 
             // Set the Image source to the SVG data URL
             img.src = svgDataUrl;
-        }}>download png</Button>
+        }}>png</div>
     );
 }
 
