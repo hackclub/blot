@@ -8,5 +8,30 @@
     "directory": "raymarching-henry",
     "snapshots" : ["raymarching1.png"],
     "source": "raymarch.js"
+  },
+  {
+    "directory": "hilbert-golf-henry",
+    "snapshots" : ["hilbert-golf.png"],
+    "source": "index.js"
+  },
+  {
+    "directory": "landscape-henry",
+    "snapshots" : ["landscape.png"],
+    "source": "index.js"
+  },
+  {
+    "directory": "leaf-leo",
+    "snapshots" : ["leaf.png"],
+    "source": "index.js"
+  },
+  { 
+    "directory": "roots-kai",
+    "snapshots" : ["roots.png"],
+    "source": "index.js"
+  },
+  {
+    "directory": "tree-leo",
+    "snapshots" : ["tree.png"],
+    "source": "index.js"
   }
 ]

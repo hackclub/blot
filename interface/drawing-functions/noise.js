@@ -6,7 +6,6 @@ let PERLIN_ZWRAPB = 8;
 let PERLIN_ZWRAP = 1<<PERLIN_ZWRAPB;
 let PERLIN_SIZE = 4095;
 
-
 let scaled_cosine = function(i) {
   return 0.5*(1.0-Math.cos(i*Math.PI));
 };
