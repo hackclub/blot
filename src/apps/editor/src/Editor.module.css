@@ -13,17 +13,30 @@
 }
 
 .editor {
-    flex: 1;
-    min-width: 0;
+    /*flex: 1;*/
+    width: 50%;
 }
 
 .right {
-    width: min(800px, max(400px, 50%));
+    /*width: min(800px, max(400px, 50%));*/
+    /*min-width: 200px;*/
     border-left: 1px solid rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 .right > *:first-child {
     flex: 1;
     overflow-x: auto; /* fix resizing the canvas */
+}
+
+.divider {
+    width: 0.25rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.25);
+    cursor: ew-resize;
+}
+
+.divider:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-color: rgba(0, 0, 0, 0);
 }

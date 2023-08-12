@@ -7,14 +7,38 @@ import styles from "./Editor.module.css";
 import Error from "./components/Error.tsx";
 import Console from "./components/Console.tsx";
 import GlobalStateDebugger from "./components/GlobalStateDebugger.tsx";
-import DropBox from "./components/DropBox.tsx";
+import { useEffect, useState } from "preact/hooks";
 
 import { useEffect } from "preact/hooks";
 import { init } from "./lib/init.js";
 
 export default function Editor() {
 
+
     useEffect(init, []);
+
+    const [editorPercentWidth, setEditorPercentWidth] = useState(50);
+    const [resizing, setResizing] = useState(false);
+
+    useEffect(() => {
+        if(!resizing) return;
+
+        const listener = (e: MouseEvent) => {
+            if(e.buttons === 0) {
+                setResizing(false);
+                return;
+            }
+            setEditorPercentWidth(e.clientX / window.innerWidth * 100);
+        };
+
+        document.addEventListener("mousemove", listener);
+        document.addEventListener("mouseup", listener);
+
+        return () => {
+            document.removeEventListener("mousemove", listener);
+            document.removeEventListener("mouseup", listener);
+        };
+    }, [resizing]);
 
     return (
         <>
@@ -23,7 +47,9 @@ export default function Editor() {
             <div class={styles.root}>
                 <Toolbar />
                 <div class={styles.inner}>
+                    <style>{`.${styles.editor} { width: ${editorPercentWidth}%; }`}</style>
                     <InnerEditor className={styles.editor} />
+                    <div class={styles.divider} onMouseDown={() => setResizing(true)} />
                     <div class={styles.right}>
                         <Preview />
                         <Console />

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "preact/hooks";
 import { patchStore, useStore } from "../lib/state.ts"
-import { dispatchJumpTo } from "./CodeMirror.tsx";
 import styles from "./Console.module.css";
 import cx from "classnames";
 import Button from "../ui/Button.tsx";
 import TrashCanIcon from "../ui/TrashCanIcon.tsx";
+import { dispatchJumpTo } from "../lib/codemirror/state.js";
 
 export default function Console() {
     const { console } = useStore(["console"]);

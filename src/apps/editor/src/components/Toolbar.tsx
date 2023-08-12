@@ -5,13 +5,15 @@ import { loadCodeFromString, makeNewState, patchStore, useStore, getStore } from
 import styles from "./Toolbar.module.css";
 import Button from "../ui/Button.tsx";
 import cx from "classnames";
-// import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
 import PlugIcon from "../ui/PlugIcon.tsx";
 import { connect, disconnect, runMachine, tryAutoConnect } from "../lib/machine.ts";
 import BrightnessContrastIcon from "../ui/BrightnessContrastIcon.tsx";
 import { Theme, patchSettings, useSettings } from "../lib/settings.ts";
 import SettingsIcon from "../ui/SettingsIcon.tsx";
 import KeyboardIcon from "../ui/KeyboardIcon.tsx";
+import downloadPng from "../lib/downloadPng.js";
+import Dropdown from "../ui/Dropdown.js";
+import downloadSvg from "../lib/downloadSvg.js";
 
 export default function Toolbar() {
     const { connected } = useStore(["connected"]);
@@ -54,8 +56,19 @@ function RunButton() {
 
 function DownloadButton() {
     const state = useStore();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const s = (f: (...a: any[]) => any) => () => (f(), setDropdownOpen(false));
+
     return (
-        <Button variant="ghost" onClick={() => download("project.js", state.code.content)}>download</Button>
+        <div class={styles.dropdownWrapper}>
+            <Button variant="ghost" onClick={() => setDropdownOpen(v => !v)}>download</Button>
+            <Dropdown open={dropdownOpen} onClose={() => setDropdownOpen(false)}>
+                <Button variant="ghost" onClick={s(() => download("project.js", state.code.content))}>download code</Button>
+                <Button variant="ghost" onClick={s(downloadSvg)}>download svg</Button>
+                <Button variant="ghost" onClick={s(downloadPng)}>download png</Button>
+            </Dropdown>
+        </div>
     );
 }
 
@@ -72,42 +85,6 @@ function NewButton() {
 function DownloadSVG() {
     return (
         <Button variant="ghost" onClick={() => {
-            const { turtles, docDimensions } = getStore();
-
-            const turtleToPathData = t => {
-                let d = "";
-
-                t.path.forEach(pl => pl.forEach((pt, i) => {
-                    const [ x, y ] = pt;
-                    if (i === 0) d += `M ${x} ${y}`;
-                    else d += `L ${x} ${y}`
-                }))
-
-                return d;
-            }
-
-            const turtleToPath = t => {
-                const d = turtleToPathData(t);
-
-                return `<path 
-                    d="${d}" 
-                    stroke-width="0.25" 
-                    stroke="black" 
-                    fill="none" 
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    style="transform: scale(1, -1);"
-                    />`
-            }
-
-            const paths = turtles.map(turtleToPath);
-            
-            const svg = `
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${docDimensions.width} ${docDimensions.height}" width="${docDimensions.width}mm" height="${docDimensions.height}mm">
-                    ${paths.join("\n")}
-                </svg>
-            `
-            download("anon.svg", svg);
         }}>download svg</Button>
     );
 }
@@ -172,48 +149,30 @@ function SettingsButton() {
     const { theme, vimMode } = useSettings(["theme", "vimMode"]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    useEffect(() => {
-        if(!dropdownOpen) return;  
-        // make it so when you click anywhere else the dialog closes
-        function handleClick(e: MouseEvent) {
-            const target = e.target as HTMLElement;
-            if(!target.closest(`.${styles.settingsWrapper}`)) {
-                setDropdownOpen(false);
-            }
-        }
-
-        window.addEventListener("click", handleClick);
-        return () => {
-            window.removeEventListener("click", handleClick);
-        };
-    }, [dropdownOpen]);
-
     return (
-        <div class={styles.settingsWrapper}>
+        <div class={styles.dropdownWrapper}>
             <Button variant="ghost" icon aria-label="show settings menu" aria-expanded={dropdownOpen} onClick={() => {
                 setDropdownOpen(!dropdownOpen);
 
             }}>
                 <SettingsIcon />
             </Button>
-            {dropdownOpen && (
-                <div class={styles.settingsDropdown}>
-                    <Button variant="ghost" onClick={() => {
-                        patchSettings({ theme: theme === Theme.Dark ? Theme.Light : Theme.Dark });
-                        setDropdownOpen(false);
-                    }}>
-                        <BrightnessContrastIcon className={styles.icon} />
-                        <span>toggle theme</span>
-                    </Button>
-                    <Button variant="ghost" onClick={() => {
-                        patchSettings({ vimMode: !vimMode });
-                        setDropdownOpen(false);
-                    }}>
-                        <KeyboardIcon className={styles.icon} />
-                        <span>{vimMode ? "disable" : "enable"} vim mode</span>
-                    </Button>
-                </div>
-            )}
+            <Dropdown open={dropdownOpen} onClose={() => setDropdownOpen(false)}>
+                <Button variant="ghost" onClick={() => {
+                    patchSettings({ theme: theme === Theme.Dark ? Theme.Light : Theme.Dark });
+                    setDropdownOpen(false);
+                }}>
+                    <BrightnessContrastIcon className={styles.icon} />
+                    <span>toggle theme</span>
+                </Button>
+                <Button variant="ghost" onClick={() => {
+                    patchSettings({ vimMode: !vimMode });
+                    setDropdownOpen(false);
+                }}>
+                    <KeyboardIcon className={styles.icon} />
+                    <span>{vimMode ? "disable" : "enable"} vim mode</span>
+                </Button>
+            </Dropdown>
         </div>
     )
 }

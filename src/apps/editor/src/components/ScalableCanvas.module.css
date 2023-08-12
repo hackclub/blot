@@ -1,0 +1,33 @@
+.root {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    color: var(--text);
+}
+
+.canvas {
+    width: 100%;
+    height: 100%;
+    image-rendering: crisp-edges;
+    overflow-x: auto; /* fix resizing the canvas */
+}
+
+body[data-theme=Dark] .canvas {
+    filter: invert(1);
+}
+
+.mousePosition {
+    border-top-left-radius: 0.25rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.125rem 0.25rem;
+    background-color: rgba(var(--primary-rgb), 0.3);
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    white-space: pre;
+    color: var(--text);
+}
+
+.mousePosition:empty { display: none; }

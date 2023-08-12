@@ -1,0 +1,21 @@
+.canvasRoot {
+    width: 200px;
+    height: 200px;
+}
+
+.root {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+    border-radius: 0.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.root > *:not(.canvasRoot) {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+}
+
+.root h3 {
+    font-size: 1.1rem;
+}
