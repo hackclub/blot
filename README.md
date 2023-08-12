@@ -13,7 +13,9 @@ The editor can be found [here](https://haxidraw.hackclub.dev/).
 
 Functions availabe in the editor are available [here](https://github.com/hackclub/haxidraw/tree/main/interface#functions-available-in-editor).
 
-Outdated assembly docs are available here.
+The virtual maze is here.
+
+Outdated assembly docs are available [here](https://haxidraw-docs.hackclub.dev/).
 
 
 # Getting Involved
