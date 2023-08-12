@@ -12,7 +12,6 @@ import { themeExtension, useCMTheme } from "../lib/codemirror/cmTheme.ts";
 import { createEvent } from "niue";
 import { useVimMode, vimModeExtension } from "../lib/codemirror/cmVimMode.ts";
 import { numberScrubbingPlugin } from "../lib/codemirror/numberScrubbing.ts";
-import { manualChangeSinceLiveUpdate } from "../lib/run.js";
 import { errorIndicatorPlugin, setErrorPos } from "../lib/codemirror/errorIndicator.js";
 
 // this is a terrible hack but strange bugs are about this one
@@ -37,7 +36,6 @@ const cmExtensions = [
         code.cmState = v.state;
         if (v.docChanged) {
             code.content = v.state.doc.toString();
-            if (v.transactions.find(t => t.annotation(Transaction.userEvent) !== undefined)) manualChangeSinceLiveUpdate.value = true;
             dispatchEditorChange();
         }
     }),

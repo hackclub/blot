@@ -9,6 +9,8 @@ import Console from "./components/Console.tsx";
 import GlobalStateDebugger from "./components/GlobalStateDebugger.tsx";
 import { useEffect, useState } from "preact/hooks";
 
+import DropBox from "./components/DropBox.js";
+
 import { useEffect } from "preact/hooks";
 import { init } from "./lib/init.js";
 
