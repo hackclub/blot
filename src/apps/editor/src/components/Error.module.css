@@ -40,7 +40,6 @@
     background-color: white;
     display: flex;
     position: relative;
-    overflow-x: auto;
 }
 
 body[data-theme=Dark] .snippet {

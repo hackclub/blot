@@ -7,7 +7,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import { themeExtension, useCMTheme } from "../lib/codemirror/cmTheme.ts";
 import JumpLinkIcon from "../ui/JumpLinkIcon.tsx";
-import { dispatchJumpTo } from "../lib/codemirror/state.js";
+import { dispatchJumpTo } from "./CodeMirror.tsx";
 
 const Snippet = ({ pos, code, message }: { pos: CodePosition, code: string, message?: string }) => {
     const view = useRef<EditorView>();
@@ -95,19 +95,10 @@ export default function Error() {
 
     if(!error) return null;
 
-    const l = error.stack?.[0]?.line;
-
     return (
         <div class={styles.root}>
             <span class={styles.name}>{error.name}</span>
-            {(l !== null && l !== undefined) ? (
-                <Snippet pos={error.stack[0]} code={error.code} message={error.message} />
-            ) : (
-                <>
-                    <span>{error.message}</span>
-                    <span>something went wrong getting the error snippet. report this as a bug on GitHub.</span>
-                </>
-            )}
+            <Snippet pos={error.stack[0]} code={error.code} message={error.message} />
             {error.stack.length > 1 && (
                 <details>
                     <summary class={styles.stackLabel}>stack trace</summary>
