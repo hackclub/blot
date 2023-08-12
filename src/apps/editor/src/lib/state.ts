@@ -33,6 +33,7 @@ export type ConsoleMessage = {
 export type GlobalState = {
     code: CodeState,
     inst: Haxidraw | null,
+    connected: boolean,
     turtles: Turtle[],
     turtlePos: Point | null,
     error: ErrorState | null,
@@ -49,6 +50,7 @@ export type GlobalState = {
 
 const newState: Omit<GlobalState, "code"> = {
     inst: null,
+    connected: false,
     turtles: [],
     turtlePos: null,
     error: null,

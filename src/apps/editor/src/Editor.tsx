@@ -9,7 +9,13 @@ import Console from "./components/Console.tsx";
 import GlobalStateDebugger from "./components/GlobalStateDebugger.tsx";
 import DropBox from "./components/DropBox.tsx";
 
+import { useEffect } from "preact/hooks";
+import { init } from "./lib/init.js";
+
 export default function Editor() {
+
+    useEffect(init, []);
+
     return (
         <>
             <AutoBackup /> {/* doesn't render anything */}

@@ -14,6 +14,7 @@ import SettingsIcon from "../ui/SettingsIcon.tsx";
 import KeyboardIcon from "../ui/KeyboardIcon.tsx";
 
 export default function Toolbar() {
+    const { connected } = useStore(["connected"]);
     return (
         <div class={styles.root}>
             <h1 class={styles.heading}>Haxidraw</h1>
@@ -22,7 +23,9 @@ export default function Toolbar() {
             <NewButton />
             <OpenButton />
             <DownloadSVG />
-            <MachineControls />
+            <Button variant="ghost" class="connect-trigger">{connected ? "disconnect from" : "connect to"} machine</Button>
+            {connected && <Button variant="ghost" class="run-machine-trigger">run machine</Button>}
+            {/*<MachineControls />*/}
             <SettingsButton />
         </div>
     );
@@ -137,6 +140,8 @@ function MachineControls() {
 
     useEffect(() => {
         tryAutoConnect();
+
+        // connect here, set inst
     }, []);
 
     return (
