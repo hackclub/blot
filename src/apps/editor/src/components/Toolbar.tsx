@@ -15,15 +15,32 @@ import KeyboardIcon from "../ui/KeyboardIcon.tsx";
 
 export default function Toolbar() {
     const { connected } = useStore(["connected"]);
+
+    const [hidden, setHidden] = useState(true);
+
     return (
         <div class={styles.root}>
             <h1 class={styles.heading}>Haxidraw</h1>
             <RunButton />
             <NewButton />
             <OpenButton />
-            <DownloadButton />
-            <DownloadSVG />
-            <DownloadPNG />
+            <div 
+                style={{
+                    position: "relative"
+                }}
+                onMouseEnter={() => setHidden(false)}
+                onMouseLeave={() => setHidden(true)}>
+                <div>download</div>
+                <div style={{
+                    display: hidden ? "" : "",
+                    position: "absolute"
+                }}>
+                    <DownloadButton />
+                    <DownloadSVG />
+                    <DownloadPNG />
+                </div>
+            </div>
+
             <Button variant="ghost" class="connect-trigger">{connected ? "disconnect from" : "connect to"} machine</Button>
             {connected && <Button variant="ghost" class="run-machine-trigger">run machine</Button>}
             {/*<MachineControls />*/}
