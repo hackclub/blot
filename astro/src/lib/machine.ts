@@ -1,4 +1,4 @@
-import { Point, createHaxidraw } from "haxidraw-client";
+import { Point, createHaxidraw } from "./drawingToolkit/index.js";
 import { getStore, patchStore } from "./state.ts";
 import { sleep } from "./run.ts";
 

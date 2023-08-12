@@ -3,7 +3,7 @@ import styles from "./Preview.module.css";
 import { getStore, useStore } from "../lib/state.ts";
 import CenterToFitIcon from "../ui/CenterToFitIcon.tsx";
 import Button from "../ui/Button.tsx";
-import type { Point } from "haxidraw-client";
+import type { Point } from "../lib/drawingToolkit/index.js";
 import lineclip from "../lib/lineclip.ts";
 
 import { createListener } from "../lib/createListener.js";

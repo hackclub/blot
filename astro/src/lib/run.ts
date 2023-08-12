@@ -2,8 +2,8 @@
 
 import { CodePosition, ErrorState, getStore, patchStore } from "./state.ts";
 import { RollupError, rollup } from "@rollup/browser";
-import { Turtle, Point } from "haxidraw-client";
-import * as drawingUtils from "haxidraw-client/utils";
+import { Turtle, Point } from "./drawingToolkit/index.js";
+import * as drawingUtils from "./drawingToolkit/utils.js";
 import { type FindPosition, SourceMapConsumer } from "source-map-js";
 
 let intervals: number[] = [];

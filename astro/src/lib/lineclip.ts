@@ -3,7 +3,7 @@
 // Cohen-Sutherland line clippign algorithm, adapted to efficiently
 // handle polylines rather than just segments
 
-import type { Point } from "haxidraw-client";
+import type { Point } from "./drawingToolkit/index.js";
 
 type BBox = [number, number, number, number];
 
