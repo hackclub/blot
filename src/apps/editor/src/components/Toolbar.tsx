@@ -19,10 +19,11 @@ export default function Toolbar() {
         <div class={styles.root}>
             <h1 class={styles.heading}>Haxidraw</h1>
             <RunButton />
-            <DownloadButton />
             <NewButton />
             <OpenButton />
+            <DownloadButton />
             <DownloadSVG />
+            <DownloadPNG />
             <Button variant="ghost" class="connect-trigger">{connected ? "disconnect from" : "connect to"} machine</Button>
             {connected && <Button variant="ghost" class="run-machine-trigger">run machine</Button>}
             {/*<MachineControls />*/}
@@ -55,7 +56,7 @@ function RunButton() {
 function DownloadButton() {
     const state = useStore();
     return (
-        <Button variant="ghost" onClick={() => download("project.js", state.code.content)}>download</Button>
+        <Button variant="ghost" onClick={() => download("project.js", state.code.content)}>download js</Button>
     );
 }
 
@@ -96,7 +97,7 @@ function DownloadSVG() {
                     fill="none" 
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    style="transform: scale(1, -1);"
+                    style="transform: scale(1, 1);"
                     />`
             }
 
@@ -109,6 +110,79 @@ function DownloadSVG() {
             `
             download("anon.svg", svg);
         }}>download svg</Button>
+    );
+}
+
+function DownloadPNG() {
+    return (
+        <Button variant="ghost" onClick={() => {
+            const { turtles, docDimensions } = getStore();
+
+            const turtleToPathData = t => {
+                let d = "";
+
+                t.path.forEach(pl => pl.forEach((pt, i) => {
+                    const [ x, y ] = pt;
+                    if (i === 0) d += `M ${x} ${y}`;
+                    else d += `L ${x} ${y}`
+                }))
+
+                return d;
+            }
+
+            const turtleToPath = t => {
+                const d = turtleToPathData(t);
+
+                return `<path 
+                    d="${d}" 
+                    stroke-width="0.25" 
+                    stroke="black" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />`
+            }
+
+            const paths = turtles.map(turtleToPath);
+            
+            const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${docDimensions.width} ${docDimensions.height}" width="${docDimensions.width}mm" height="${docDimensions.height}mm">
+                    ${paths.join("\n")}
+                </svg>
+            `
+
+            // Create a new Image element
+            const img = new Image();
+            img.onload = function () {
+              // Create a temporary canvas
+              const canvas = document.createElement('canvas');
+              canvas.width = img.width;
+              canvas.height = img.height;
+              
+              // Draw the image on the canvas
+              const context = canvas.getContext('2d');
+              context.drawImage(img, 0, 0);
+              
+              // Convert canvas to PNG data URL
+              const pngDataUrl = canvas.toDataURL('image/png');
+              
+              // Create a download link
+              const downloadLink = document.createElement('a');
+              downloadLink.href = pngDataUrl;
+              downloadLink.download = 'image.png';
+              downloadLink.textContent = 'Download PNG';
+              
+              // Simulate a click on the download link
+              downloadLink.click();
+            };
+
+            // Convert SVG to data URL
+            const svgDataUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+
+            // Set the Image source to the SVG data URL
+            img.src = svgDataUrl;
+        }}>download png</Button>
     );
 }
 
