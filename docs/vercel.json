@@ -1,0 +1,10 @@
+{
+  "installCommand": "../../vercel-install.sh",
+  "buildCommand": "cd .. && yarn build",
+  "framework": "nextjs",
+  "env": {
+    "FORCE_BUILDER_TAG": "canary",
+    "VERCEL_FORCE_NO_BUILD_CACHE": "1",
+    "TURBO_FORCE": "true"
+  }
+}

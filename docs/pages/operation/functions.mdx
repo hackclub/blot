@@ -1,0 +1,48 @@
+## Turtle Commmands:
+
+### up and down 
+``turtle.up()``  <br />
+``turtle.down()``
+
+these commands are used to move the pen up or down off the drawing surface. the machine will not draw while the pen is up, and will draw when the pen is down. 
+- *example: ``t.up()``*
+- *example: ``t.down()``*
+---
+### goTo
+``turtle.goTo(x, y)``
+
+this command is used to move the pen head to a particular position. keep in mind, if the pen is down, it will go to this position with the pen still down.
+consider using up() before moving the pen. 
+
+- *example: ``t.goTo(1,1)``*
+---
+### forward
+
+``forward(distance)``
+
+this command is used to move the pen forward. "forward" is dependent on the angle set using ``setAngle``. 
+- *example: ``t.forward(3)``*
+---
+```
+  
+
+
+  arc(angle, radius)
+
+  setAngle(theta)
+
+  right(theta)
+
+  left(theta)
+
+  translate(x, y, origin)
+
+  rotate(angle, origin)
+
+  scale(factor, origin)
+
+  fromSVG(svgString)
+```
+
+You can drag in SVG's, and the interface will generate a turtle for it. Keep in mind that SVG's are often imported far too large, and will need to be scaled and translated.
+

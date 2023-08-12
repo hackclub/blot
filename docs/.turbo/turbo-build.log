@@ -1,0 +1,47 @@
+- info Linting and checking validity of types...
+- error ESLint must be installed in order to run during builds: yarn add --dev eslint
+- info Creating an optimized production build...
+(node:50135) [MODULE_NOT_FOUND] Error: @types/react tried to access prop-types, but it isn't declared in its dependencies; this makes the require call ambiguous and unsound.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:50135) [MODULE_NOT_FOUND] Error: @types/react tried to access scheduler, but it isn't declared in its dependencies; this makes the require call ambiguous and unsound.
+(node:50135) [MODULE_NOT_FOUND] Error: @types/node tried to access events. While this module is usually interpreted as a Node builtin, your resolver is running inside a non-Node resolution context where such builtins are ignored. Since events isn't otherwise declared in @types/node's dependencies, this makes the require call ambiguous and unsound.
+(node:50135) [MODULE_NOT_FOUND] Error: nextra tried to access @types/mdast, but it isn't declared in its dependencies; this makes the require call ambiguous and unsound.
+(node:50135) [MODULE_NOT_FOUND] Error: @mdx-js/mdx tried to access @types/hast, but it isn't declared in its dependencies; this makes the require call ambiguous and unsound.
+(node:50135) [MODULE_NOT_FOUND] Error: @mdx-js/mdx tried to access @types/estree, but it isn't declared in its dependencies; this makes the require call ambiguous and unsound.
+(node:50135) [MODULE_NOT_FOUND] Error: @mdx-js/mdx tried to access source-map, but it isn't declared in its dependencies; this makes the require call ambiguous and unsound.
+(node:50135) [MODULE_NOT_FOUND] Error: rehype-pretty-code tried to access unified, but it isn't declared in its dependencies; this makes the require call ambiguous and unsound.
+Warning: For production Image Optimization with Next.js, the optional 'sharp' package is strongly recommended. Run 'yarn add sharp', and Next.js will use it automatically for Image Optimization.
+Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
+- info Compiled successfully
+- info Collecting page data...
+- info Generating static pages (0/16)
+- info Generating static pages (4/16)
+- info Generating static pages (8/16)
+- info Generating static pages (12/16)
+- info Generating static pages (16/16)
+- info Finalizing page optimization...
+
+Route (pages)                              Size     First Load JS
+┌ ○ /                                      2.78 kB         171 kB
+├ ○ /404                                   183 B            79 kB
+├ ○ /assembly/bill-of-materials            6.35 kB         174 kB
+├ ○ /assembly/parts/belt-tensioner         3.66 kB         172 kB
+├ ○ /assembly/parts/calibration            1.72 kB         170 kB
+├ ○ /assembly/parts/carriage               3.71 kB         172 kB
+├ ○ /assembly/parts/electronics            2.79 kB         171 kB
+├ ○ /assembly/parts/firmware (305 ms)      4.92 kB         173 kB
+├ ○ /assembly/parts/front-idler            3.26 kB         171 kB
+├ ○ /assembly/parts/motors-and-feet        3.91 kB         172 kB
+├ ○ /assembly/parts/pen-holder             2.92 kB         171 kB
+├ ○ /operation                             1.8 kB          170 kB
+├ ○ /operation/functions                   1.71 kB         170 kB
+├ ○ /operation/write-and-run-code          1.66 kB         170 kB
+└ ○ /troubleshooting                       1.97 kB         170 kB
++ First Load JS shared by all              78.8 kB
+  ├ chunks/framework-b365b3c742f0462e.js   45.2 kB
+  ├ chunks/main-0c5f457b14e82d07.js        32.5 kB
+  ├ chunks/pages/_app-583e050b51bb8fbe.js  195 B
+  └ chunks/webpack-38cee4c0e358b1a3.js     862 B
+
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+
