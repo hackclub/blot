@@ -1,3 +1,7 @@
+.cmWrapper {
+    height: 100%;
+}
+
 .cmWrapper > * {
     height: 100%;
     width: 100%;
