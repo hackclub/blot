@@ -91,7 +91,7 @@ We then check if the state matches, and if it does, follow the rule defined:
 }
 ```
 
-### Now, how should we draw this?
+Now, how should we draw this?
 Since the Haxidraw can't directly render pixels, we'll have to be a *bit* more creative with how we do this.
 
 By using the following rendering method, we can some visually interesting results:
@@ -99,16 +99,21 @@ By using the following rendering method, we can some visually interesting result
 - Draw a line to any above pixel if it's filled
 
 <img src="https://cloud-r14rh28dk-hack-club-bot.vercel.app/0image.png" width="512"/>
-### Here's that in code:
+
+Here's that in code:
+
 ```
 function drawGen(arr, gen) {
   prevGen = allGens[gen]
 ```
+
 `y` is negative because we're drawing top to bottom:
+
 ```
   let y = -gen
   for (let x = 0; x < arr.length; x++) {
 ```
+
 If there's a 1 at this position, do the drawing procedure:
 ```
     if (arr[x]) {
