@@ -16,8 +16,8 @@ A Haxidraw is a small drawing robot that can be programed from a browser. You se
 <img src="https://cloud-imp7l9zfa-hack-club-bot.vercel.app/0232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg" width="512px">
 
 <img src="https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png" width="512px">
-Here are some examples of art people have made with Haxidraw:
 
+Here are some examples of art people have made with Haxidraw:
 
 <img src="https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true" width="512px">
 
@@ -87,6 +87,7 @@ for (let i = 0; i < 10; i++) {
 
 ```
 <img src="https://cloud-ivwz75d5q-hack-club-bot.vercel.app/0image.png" width="512px">
+
 The lines don't quite reach the edge of the screen, though. Try changing `gridCellSize` until it fits.
 
 <img src="https://cloud-3n0g15soa-hack-club-bot.vercel.app/0image.png" width="512px">
@@ -116,9 +117,11 @@ function drawSlash(x, y, width, height) {
 Good work!
 
 <img src="https://cloud-hu9gaiddg-hack-club-bot.vercel.app/0image.png" width="512px">
+
 If we change 0.5 to something lower, we see more of one type of line than another.
 
 <img src="https://cloud-bjalbh40g-hack-club-bot.vercel.app/0image.png" width="512px">
+
 # Further experimentation
 - Try making the grid more dense, while keeping it the same size on the screen
 - Change the line to something else
