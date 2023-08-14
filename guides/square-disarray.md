@@ -137,12 +137,14 @@ for (let i = 0; i < 10; i++) {
 }
 ```
 
+![Screen Shot 2023-08-14 at 1 46 25 PM](https://github.com/hackclub/haxidraw/assets/27078897/8f64548c-08dc-4709-85a8-cd941baf8438)
+
 Scale the randomness with the x location.
 
 ```js
 t.translate([ 
-  randInRange(-1, 1) *i/6, 
-  randInRange(-1, 1) *i/6 
+  randInRange(-1, 1) * i/6, 
+  randInRange(-1, 1) * i/6 
 ])
 ```
 
