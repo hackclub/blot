@@ -50,9 +50,16 @@ function addBarResizing(setWidth) {
     const listen = createListener(document.body);
 
     let clicked = false;
+    let bar : HTMLDivElement | null = null;
 
-    listen("mousedown", ".resize-trigger", () => {
+    listen("mousedown", ".resize-trigger", (e) => {
         clicked = true;
+        bar = e.target;
+
+        if (bar === null) return;
+
+        bar.style.width = "8px";
+        bar.style.background = "black";
     });
 
     listen("mousemove", "", (e) => {
@@ -67,12 +74,28 @@ function addBarResizing(setWidth) {
     });
 
     listen("mouseup", "", () => {
+
+        if (bar !== null) {
+            bar.style.width = "";
+            bar.style.background = "";
+        }
+
+
         clicked = false;
+        bar = null;
+
     });
 
     document.addEventListener("mouseleave", () => {
-        console.log("mouse leave")
+        
+        if (bar !== null) {
+            bar.style.width = "";
+            bar.style.background = "";
+        }
+
+
         clicked = false;
+        bar = null;
     })
 }
 
