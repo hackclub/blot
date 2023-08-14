@@ -6,20 +6,21 @@
 10 PRINT CHR$(205.5+RND(1)); : GOTO 10
 ```
 From just that one line, the following intricate pattern is be created:
-![](https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png =400x300)
+<img src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png"  width="512px">
 There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for ***Haxidraw***. (This tutorial works fine if you don't have one!)
 
 A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
 
-![drawing machine with a turtle illustration](https://haxidraw.hackclub.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdrawing-machine.726ff526.png&w=3840&q=75)![https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png](https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png)
+<img src="https://haxidraw.hackclub.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdrawing-machine.726ff526.png" width="512px">
+<img src="https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png" width="512px">
 Here are some examples of art people have made with Haxidraw:
 
 
-![landscape.png](https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true)
+<img src="https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true" width="512px">
 
-![roots.png](https://github.com/hackclub/haxidraw/blob/main/art/roots-kai/snapshots/roots.png?raw=true)
+<img src="https://github.com/hackclub/haxidraw/blob/main/art/roots-kai/snapshots/roots.png?raw=true" width="512px">
 
-![tidalFlats.png](https://github.com/hackclub/haxidraw/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true)
+<img src="https://github.com/hackclub/haxidraw/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true" width="512px">
 
 The artwork seems to be a grid of slashes. Some slashes point to to the top-right, others point to the bottom-right. Overall, the distribution seems to be about 50/50. If you look closely, you might notice that the slashes are just plain text: "/" or "\\". In fact, the Commodore program just prints a random sequence of characters to the screen, left to right. The challenge is, in the Haxidraw editor, you can't write symbols directly to the screen - we'll have to draw the slashes as lines.
 
@@ -44,8 +45,8 @@ When we call this function, you should see a small slash in a corner of the scre
 ```
 drawSlash(0, 0, 10, 10);
 ```
+<img src="https://cloud-8v0w01f9r-hack-club-bot.vercel.app/0image.png" width="512px">
 
-![https://cloud-8v0w01f9r-hack-club-bot.vercel.app/0image.png](https://cloud-8v0w01f9r-hack-club-bot.vercel.app/0image.png)
 We can draw more by using a `for` loop.
 
 ```js
@@ -60,7 +61,7 @@ You'll still only see one, because they all overlap. We can draw more by moving 
 drawSlash(0 + i, 0, 12, 12);
 ```
 
-![https://cloud-q034t1mck-hack-club-bot.vercel.app/0image.png](https://cloud-q034t1mck-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-q034t1mck-hack-club-bot.vercel.app/0image.png" width="512px">
 
 That's a start, but they're too close together. We want them to be evenly spaced out in a grid.
 
@@ -70,8 +71,8 @@ for (let i = 0; i < 10; i++) {
   drawSlash(i * gridCellSize, 0, 12, 12);
 }
 ```
+<img src="https://cloud-gx75sdvws-hack-club-bot.vercel.app/0image.png" width="512px">
 
-![https://cloud-gx75sdvws-hack-club-bot.vercel.app/0image.png](https://cloud-gx75sdvws-hack-club-bot.vercel.app/0image.png)
 Now, let's do the same, but on the `y` axis.
 ```js
 const gridCellSize = 12;
@@ -82,14 +83,14 @@ for (let i = 0; i < 10; i++) {
 }
 
 ```
-![https://cloud-ivwz75d5q-hack-club-bot.vercel.app/0image.png](https://cloud-ivwz75d5q-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-ivwz75d5q-hack-club-bot.vercel.app/0image.png" width="512px">
 The lines don't quite reach the edge of the screen, though. Try changing `gridCellSize` until it fits.
 
-![https://cloud-3n0g15soa-hack-club-bot.vercel.app/0image.png](https://cloud-3n0g15soa-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-3n0g15soa-hack-club-bot.vercel.app/0image.png" width="512px">
 
 We're getting close, but all the lines still face in the same direction. Going back to `drawSlash`, try flipping the lines we draw horizontally, making them face the other way.
 
-![https://cloud-7ho7ggvxw-hack-club-bot.vercel.app/0image.png](https://cloud-7ho7ggvxw-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-7ho7ggvxw-hack-club-bot.vercel.app/0image.png" width="512px">
 
 In the original 10PRINT artwork, the lines can face in either direction randomly. By calling the `rand()` function built into Haxidraw, we can randomly swap between the two line styles.
 
@@ -111,7 +112,7 @@ function drawSlash(x, y, width, height) {
 ```
 Good work!
 
-![https://cloud-hu9gaiddg-hack-club-bot.vercel.app/0image.png](https://cloud-hu9gaiddg-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-hu9gaiddg-hack-club-bot.vercel.app/0image.png" width="512px">
 If we change 0.5 to something lower, we see more of one type of line than another.
 
 ![https://cloud-bjalbh40g-hack-club-bot.vercel.app/0image.png](https://cloud-bjalbh40g-hack-club-bot.vercel.app/0image.png)
