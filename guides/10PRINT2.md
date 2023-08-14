@@ -11,7 +11,8 @@ There's even a book named after this program: [10print.org](https://10print.org/
 
 A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
 
-<img src="https://haxidraw.hackclub.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdrawing-machine.726ff526.png" width="512px">
+<img src="https://cloud-imp7l9zfa-hack-club-bot.vercel.app/0232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg" width="512px">
+
 <img src="https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png" width="512px">
 Here are some examples of art people have made with Haxidraw:
 
@@ -115,7 +116,7 @@ Good work!
 <img src="https://cloud-hu9gaiddg-hack-club-bot.vercel.app/0image.png" width="512px">
 If we change 0.5 to something lower, we see more of one type of line than another.
 
-![https://cloud-bjalbh40g-hack-club-bot.vercel.app/0image.png](https://cloud-bjalbh40g-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-bjalbh40g-hack-club-bot.vercel.app/0image.png" width="512px">
 # Further experimentation
 - Try making the grid more dense, while keeping it the same size on the screen
 - Change the line to something else
