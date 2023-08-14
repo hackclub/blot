@@ -6,7 +6,9 @@
 10 PRINT CHR$(205.5+RND(1)); : GOTO 10
 ```
 From just that one line, the following intricate pattern is be created:
+
 <img src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png"  width="512px">
+
 There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for ***Haxidraw***. (This tutorial works fine if you don't have one!)
 
 A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
