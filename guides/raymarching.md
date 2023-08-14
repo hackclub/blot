@@ -3,14 +3,16 @@
 
 The goal of this guide will be to simulate 3D environments, with realistic lighting and shadows. By the end, you should have something like this:
 
-![https://cloud-4kaqtq8oi-hack-club-bot.vercel.app/0image.png](https://cloud-4kaqtq8oi-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-4kaqtq8oi-hack-club-bot.vercel.app/0image.png" width="512"/>
+
 Let's start by thinking about how vision works in real life. Light rays come from sources such as the sun, bounce around, and eventually, some of them arrive at our eyes. We could simulate each ray coming from the light source, but this would be really slow. Most light rays miss our eyes, resulting in many redundant calculations. A better approach is to simulate the process of vision in reverse:
 
 - Shoot light rays from the camera
 - Find where and what they hit
 - From there, cast them in the direction of a light source, to see if they're in a shadow
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Ray_trace_diagram.svg/2560px-Ray_trace_diagram.svg.png)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Ray_trace_diagram.svg/2560px-Ray_trace_diagram.svg.png" width="512"/>
+
 The next obvious problem is exactly how to determine if each ray actually hits any objects in the scene. In typical ray tracing, this is done with defined intersection functions for each object: That function directly determines where a given ray will intersect some surface. To render objects with complex geometry, you often have to break those objects down into smaller building blocks for which you already know an intersection function. The problem is, this can be quite slow.
 
 Luckily, an alternative exists. In ray marching, there's no need to have an intersection function. Instead, we can use something called a Signed Distance Field, or SDF. This, instead of directly telling us if a given ray will intersect an object, simply tells us how far the ray is from the closest point of that object. From there, we can use the following algorithm:
@@ -19,7 +21,8 @@ Luckily, an alternative exists. In ray marching, there's no need to have an inte
 - Move the ray forwards by that distance, as we know that that's the farthest it can go without having a chance of hitting anything
 - If the new minimum distance is below some low threshold, the ray has probably hit some object. Otherwise, repeat this sequence of steps until it does hit something.
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Visualization_of_SDF_ray_marching_algorithm.png/2560px-Visualization_of_SDF_ray_marching_algorithm.png)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Visualization_of_SDF_ray_marching_algorithm.png/2560px-Visualization_of_SDF_ray_marching_algorithm.png" width="512"/>
+
 Then, once we've hit an object, we should cast a ray at each light source. If the ray hits some object on its way to a light source, then it should be a shadow. Otherwise, it's illuminated.
 
 We can then do a few more calculations to determine exactly how dark it should be shaded, and then finally we draw it to the screen.
@@ -96,7 +99,7 @@ class Sphere {
 
 Visually, in 2D, the Signed Distance Field looks like this:
 
-![Signed Distance Fields Part 2: Solid geometry - Shader Fun](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fshaderfun.files.wordpress.com%2F2018%2F03%2Fcirclewithdistances.png%3Fw%3D636&f=1&nofb=1&ipt=d185737f54167c01ed257f47d0f229de70340ec2cc42b040b107f0f6c668de1b&ipo=images)
+<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fshaderfun.files.wordpress.com%2F2018%2F03%2Fcirclewithdistances.png%3Fw%3D636&f=1&nofb=1&ipt=d185737f54167c01ed257f47d0f229de70340ec2cc42b040b107f0f6c668de1b&ipo=images" width="512"/>
 
 Next, here's a cube:
 
@@ -256,11 +259,12 @@ The ray marches along, returning false if it collides with something other than 
 
 ### There's one more utility function we'll want:
 To shade objects later, we're going to need a way to find their [normal vectors](https://en.wikipedia.org/wiki/Normal_(geometry)). A normal is a vector pointing directly away from some surface.
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Surface_normals.svg/1920px-Surface_normals.svg.png)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Surface_normals.svg/1920px-Surface_normals.svg.png" width="512"/>
+
 Because we already know the SDF of a given object, this is actually quite easy. The normal is simply an arrow pointing along the gradient of our signed distance field. 
 
 To imagine this, take the diagram below, and reverse the direction of the arrows. Each arrow points in the direction of the SDF gradient. Each arrow is effectively the normal vector to that point in 3D space, relative to the SDF.
-![undefined](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Gradient2.svg/2560px-Gradient2.svg.png)To find these arrows, we'll just need to determine the local "slope" of the SDF - if you know calculus, we're basically taking the derivative in 3D. We'll determine how the SDF changes in response to a really small nudge in the x, y, and z directions. We then subtract that from the SDF at our start position, giving us the rate of change in each direction. Finally, we normalize this, to get the normal vector.
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Gradient2.svg/2560px-Gradient2.svg.png" width="512"/>To find these arrows, we'll just need to determine the local "slope" of the SDF - if you know calculus, we're basically taking the derivative in 3D. We'll determine how the SDF changes in response to a really small nudge in the x, y, and z directions. We then subtract that from the SDF at our start position, giving us the rate of change in each direction. Finally, we normalize this, to get the normal vector.
 
 ```
 function computeNormal(pos, obj) {
@@ -291,7 +295,9 @@ This is the function that enables the camera to "look" in the direction of a giv
 Conceptually, you can think of it like this:
 - For a given pixel, match it to a point in 3D space. The x and y of the pixel in the screen will correspond to a physical x and y point on a plane in front of the camera. We then cast the ray in that direction, and render it to the screen depending on what it hits:
 
-![Viewport schema witch pixels, eye E and target T, viewport center C](https://upload.wikimedia.org/wikipedia/commons/b/b2/RaysViewportSchema.png)Here's it in code:
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/RaysViewportSchema.png" width="512"/>
+
+Here's it in code:
 ```
     getRay(x, y, world) {
       let ray = new Ray(this.pos, new Vec3(x, y, this.fov))
@@ -320,13 +326,13 @@ And that's the camera object!
 ### So, how do we draw this to the screen?
 This whole time, we haven't done much Haxidraw-specific code at all. To actually draw the output, we'll need a way of representing a pixel as a turtle path. To do this, we can use a process called [dithering.](https://en.wikipedia.org/wiki/Dither) Let's take a closer look at the original image, to see how this is used:
 
-![https://cloud-5v54vbcnl-hack-club-bot.vercel.app/0image.png](https://cloud-5v54vbcnl-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-5v54vbcnl-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 Each "*pixel*" is just a set of lines. Darker pixels have 2 lines, and white pixels have none. Zooming out far enough, this gives the illusion of smooth gradients.
 
 Because we only have 3 possible discrete brightness levels, we have to use some randomness to give the illusion of a wider range of colors from farther away. For example, although there appear to be various shades of grey in the below image, each pixel is actually only black or white. The value is determined probabilistically, where pixels that should be shaded darker have a higher probability of being black.
 
-![Random Dithering](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgraphicsacademy.com%2Fi1_davidrandom.png&f=1&nofb=1&ipt=a8b0442647a81cc1726e4b948d9004fadeb10fdd0a9e9eb7de79befd8b83da28&ipo=images)
+<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fgraphicsacademy.com%2Fi1_davidrandom.png&f=1&nofb=1&ipt=a8b0442647a81cc1726e4b948d9004fadeb10fdd0a9e9eb7de79befd8b83da28&ipo=images" width="512"/>
 
 Here's what that looks like in the code:
 - We go to the x and y values of the pixel.
@@ -383,7 +389,7 @@ If there was a shadow, we can leave the brightness at zero - no light is hitting
 
 If the vector from the light to the hit point and the normal of the surface are parallel, then the hit point is very directly illuminated. On the other hand, if the two vectors are perpendicular, then we shouldn't shade the point very brightly. We can use the dot product to determine exactly how parallel or perpendicular these vectors actually are.
 
-![https://cloud-prkn4o0zj-hack-club-bot.vercel.app/0untitled_1_.png](https://cloud-prkn4o0zj-hack-club-bot.vercel.app/0untitled_1_.png)
+<img src="https://cloud-prkn4o0zj-hack-club-bot.vercel.app/0untitled_1_.png" width="512"/>
 
 ```
           let norm = (computeNormal(rayPos, hitObj))
@@ -435,12 +441,13 @@ drawTurtles(t)
 
 Great job! If all went well, you should have a working 3D renderer for the Haxidraw. It's capable of rendering any shape with a defined SDF, so there are plenty of possibilities to explore. Here are a few scenes I've created with the engine:
 
-![https://cloud-8vr3j0wiq-hack-club-bot.vercel.app/0image.png](https://cloud-8vr3j0wiq-hack-club-bot.vercel.app/0image.png)
-![https://cloud-5ewdcrd1t-hack-club-bot.vercel.app/0image.png](https://cloud-5ewdcrd1t-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-8vr3j0wiq-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cloud-5ewdcrd1t-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 The result of an interesting graphical glitch:
 
-![https://cloud-hx649z5vl-hack-club-bot.vercel.app/0image.png](https://cloud-hx649z5vl-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-hx649z5vl-hack-club-bot.vercel.app/0image.png" width="512"/>
+
 And there are plenty more possibilities! In fact, the engine as provided in this guide is quite minimal, and there are plenty of changes that can be made to make it more advanced. Here are a few ideas:
 - Add reflections: This can be done by casting another ray from the hit position into the surroundings, and adding the color of the object it hits to the original object.
 
