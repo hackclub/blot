@@ -55,7 +55,7 @@ export const createCMState = (content: string) =>
 
 export const [useOnJumpTo, dispatchJumpTo] = createEvent<CodePosition>();
 
-export default function CodeMirror({ className }: { className?: string }) {
+export default function CodeMirror() {
     const { code: codeState, error } = useStore(["code", "error"]);
     const [view, setView] = useState<EditorView>();
 
@@ -111,7 +111,7 @@ export default function CodeMirror({ className }: { className?: string }) {
 
     return (
         <>
-            <div class={`${styles.cmWrapper} ${className}`} ref={editorRef} />
+            <div class={styles.cmWrapper} ref={editorRef} />
         </>
     );
 }
