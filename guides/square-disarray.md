@@ -1,6 +1,6 @@
 # Square Disarray
 
-Let's draw this
+Let's something like draw this:
 
 ![Screen Shot 2023-08-14 at 1 19 02 PM](https://github.com/hackclub/haxidraw/assets/27078897/bcaf04e7-a00e-4f98-aaed-01eeebf2c79c)
 
