@@ -160,7 +160,7 @@ And that's our piece!
 
 - Can you adjust transformations based on x and y?
 - Can you add scale to the transformations?
-
+- Can you change the rectangle sizes?
 
 
 
