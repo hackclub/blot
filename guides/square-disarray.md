@@ -4,7 +4,7 @@
 
 Let's something like draw this:
 
-![Screen Shot 2023-08-14 at 1 19 02 PM](https://github.com/hackclub/haxidraw/assets/27078897/bcaf04e7-a00e-4f98-aaed-01eeebf2c79c)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/bcaf04e7-a00e-4f98-aaed-01eeebf2c79c" width="512"/>
 
 
 # Setting Up Workarea
@@ -57,7 +57,7 @@ shapes.translate([width/2, height/2], shapes.cc);
 // ...
 ```
 
-![Screen Shot 2023-08-14 at 1 27 00 PM](https://github.com/hackclub/haxidraw/assets/27078897/6a9b273c-391e-4ee7-9036-114524589d09)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/6a9b273c-391e-4ee7-9036-114524589d09" width="512"/>
 
 # Make a Grid
 
@@ -72,7 +72,7 @@ for (let i = 0; i < gridWidth; i++) {
 }
 ```
 
-![Screen Shot 2023-08-14 at 1 32 52 PM](https://github.com/hackclub/haxidraw/assets/27078897/df700565-f80b-434b-ae92-1b6a4ecbc36b)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/df700565-f80b-434b-ae92-1b6a4ecbc36b" width="512"/>
 
 We can't see any change because they are on top of eachother! Space them out.
 
@@ -84,7 +84,7 @@ for (let i = 0; i < 3; i++) {
 }
 ```
 
-![Screen Shot 2023-08-14 at 1 34 51 PM](https://github.com/hackclub/haxidraw/assets/27078897/367f376f-a903-44ec-8e31-db7e8090782b)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/367f376f-a903-44ec-8e31-db7e8090782b" width="512"/>
 
 If we want the spacing to be perfect, each square should move by the width of a square.
 
@@ -97,7 +97,7 @@ for (let i = 0; i < 3; i++) {
 }
 ```
 
-![Screen Shot 2023-08-14 at 1 36 33 PM](https://github.com/hackclub/haxidraw/assets/27078897/4e9e02da-20e3-4b83-ba27-5e384163148f)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/4e9e02da-20e3-4b83-ba27-5e384163148f" width="512"/>
 
 To make it a grid add another loop.
 
@@ -113,11 +113,11 @@ for (let i = 0; i < 3; i++) {
 }
 ```
 
-![Screen Shot 2023-08-14 at 1 41 35 PM](https://github.com/hackclub/haxidraw/assets/27078897/9b0fea0d-2b04-492b-9c3e-018bde669099)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/9b0fea0d-2b04-492b-9c3e-018bde669099" width="512"/>
 
 Increase the loop range for a bigger grid.
 
-![Screen Shot 2023-08-14 at 1 42 43 PM](https://github.com/hackclub/haxidraw/assets/27078897/5408832c-2125-47af-9e84-0dd88c2fab67)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/5408832c-2125-47af-9e84-0dd88c2fab67" width="512"/>
 
 # Add Some Disarray
 
@@ -137,7 +137,7 @@ for (let i = 0; i < 10; i++) {
 }
 ```
 
-![Screen Shot 2023-08-14 at 1 46 25 PM](https://github.com/hackclub/haxidraw/assets/27078897/8f64548c-08dc-4709-85a8-cd941baf8438)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/8f64548c-08dc-4709-85a8-cd941baf8438" width="512"/>
 
 Scale the randomness with the x location.
 
@@ -148,7 +148,7 @@ t.translate([
 ])
 ```
 
-![Screen Shot 2023-08-14 at 1 47 06 PM](https://github.com/hackclub/haxidraw/assets/27078897/fb392a9b-4ec8-4eec-9f1f-035d67c4ea50)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/fb392a9b-4ec8-4eec-9f1f-035d67c4ea50" width="512"/>
 
 Now rotate each square in a similar manner.
 
@@ -156,7 +156,7 @@ Now rotate each square in a similar manner.
 t.rotate(randInRange(-1, 1)*2*i);
 ```
 
-![Screen Shot 2023-08-14 at 1 48 35 PM](https://github.com/hackclub/haxidraw/assets/27078897/1a0902f1-084d-4651-a188-c1dbe6995289)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/1a0902f1-084d-4651-a188-c1dbe6995289" width="512"/>
 
 And that's our piece!
 
@@ -165,6 +165,3 @@ And that's our piece!
 - Can you adjust transformations based on x and y?
 - Can you add scale to the transformations?
 - Can you change the rectangle sizes?
-
-
-

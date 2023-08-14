@@ -2,7 +2,7 @@
 
 Here's the cover to Joy Division's first album. The actual album is based on [real data](https://blogs.scientificamerican.com/sa-visual/pop-culture-pulsar-origin-story-of-joy-division-s-unknown-pleasures-album-cover-video/), but we'll try to make a simpler version.
 
-![2000ish Albums: Joy Division, "Unknown Pleasures"](https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F4.bp.blogspot.com%2F-PkgzZc0jsVE%2FUMqYzFOzNLI%2FAAAAAAAAA3A%2FbCOqig095Lk%2Fs1600%2Fjoy_division-unknown_pleasures.jpg&f=1&nofb=1&ipt=966d8be0c759bd539613c5eaa7b35acc898bd99a43d050df6c9df643367314dc&ipo=images)
+<img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F4.bp.blogspot.com%2F-PkgzZc0jsVE%2FUMqYzFOzNLI%2FAAAAAAAAA3A%2FbCOqig095Lk%2Fs1600%2Fjoy_division-unknown_pleasures.jpg&f=1&nofb=1&ipt=966d8be0c759bd539613c5eaa7b35acc898bd99a43d050df6c9df643367314dc&ipo=images" width="512"/>
 
 First, let's start by noticing what we see in the image. It seems to be composed of several horizontal lines, each vertically distorted randomly. More specifically, the distortion closer to the center is more extreme, while it's flattened farther out. There's also another, smaller amount of random distortion evenly distributed across each line.
 
@@ -107,5 +107,4 @@ The occlusion works best when `dx` is really low.
 
 And that's it, you're done! When drawing the final image, you should see something like this:
 
-![https://cloud-osfrnfrf2-hack-club-bot.vercel.app/0image.png](https://cloud-osfrnfrf2-hack-club-bot.vercel.app/0image.png)
-
+<img src="https://cloud-osfrnfrf2-hack-club-bot.vercel.app/0image.png" width="512"/>

@@ -5,13 +5,15 @@
 
 Through extremely simple rules, complex patterns can be created.
 
-![https://cloud-oz9juilm9-hack-club-bot.vercel.app/0image.png](https://cloud-oz9juilm9-hack-club-bot.vercel.app/0image.png)
-![](https://cloud-eci1vxr8d-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-oz9juilm9-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cloud-eci1vxr8d-hack-club-bot.vercel.app/0image.png" width="512"/>
+
 The rules behind Elementary Cellular Automata, or ECA, are very simple.
 
 First, set up a strip of cells, with each one having a state of either one or zero. This is the first generation. Then, start iterating through the next generation. Depending on the 3 cells above, we either set this new cell as alive or dead. This is best explained in the gif below:
 
-![](https://upload.wikimedia.org/wikipedia/commons/e/e2/One-d-cellular-automate-rule-30.gif)
+<img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/One-d-cellular-automate-rule-30.gif" width="512"/>
+
 The rules for when to set the new cell as a one or a zero are specified by a rule code. For example, here's how to interpret rule 30:
 
 First, convert 30 into binary digits:
@@ -96,7 +98,7 @@ By using the following rendering method, we can some visually interesting result
 - For each pixel rendered, check the 3 pixels above
 - Draw a line to any above pixel if it's filled
 
-![https://cloud-r14rh28dk-hack-club-bot.vercel.app/0image.png](https://cloud-r14rh28dk-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-r14rh28dk-hack-club-bot.vercel.app/0image.png" width="512"/>
 ### Here's that in code:
 ```
 function drawGen(arr, gen) {
@@ -145,4 +147,6 @@ drawTurtles(t)
 
 Great job! There are plenty of variations on ECAs that you can explore. Here's a few more drawings done with the code, by setting only the center pixel as a one:
 
-![https://cloud-alkz1n9h6-hack-club-bot.vercel.app/0image.png](https://cloud-alkz1n9h6-hack-club-bot.vercel.app/0image.png)![https://cloud-1w9qj075i-hack-club-bot.vercel.app/0image.png](https://cloud-1w9qj075i-hack-club-bot.vercel.app/0image.png)![https://cloud-ioqpd12zd-hack-club-bot.vercel.app/0image.png](https://cloud-ioqpd12zd-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-alkz1n9h6-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cloud-1w9qj075i-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cloud-ioqpd12zd-hack-club-bot.vercel.app/0image.png" width="512"/>

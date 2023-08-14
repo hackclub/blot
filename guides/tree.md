@@ -4,15 +4,15 @@
 
 We're going to use abstract scribbles to make a tree that looks like this.
 
-![Screen Shot 2023-07-06 at 11 20 07 PM](https://github.com/hackclub/haxidraw/assets/27078897/b2b3b319-1b0f-4c0e-bf78-d8323ab577d4)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/b2b3b319-1b0f-4c0e-bf78-d8323ab577d4" width="512"/>
 
 ## the trunk
 
-![Screen Shot 2023-07-06 at 11 37 39 PM](https://github.com/hackclub/haxidraw/assets/27078897/4b0b06ea-4f71-4468-8f92-ed147507aa0e)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/4b0b06ea-4f71-4468-8f92-ed147507aa0e" width="512"/>
 
 Let's look at that a bit closer.
 
-![Screen Shot 2023-07-06 at 11 39 29 PM](https://github.com/hackclub/haxidraw/assets/27078897/5f3fac4c-7b52-4cdb-9230-5f9c85fa0070)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/5f3fac4c-7b52-4cdb-9230-5f9c85fa0070" width="512"/>
 
 To start the trunk let's draw some lines.
 
@@ -40,7 +40,7 @@ renderTurtles(
 )
 ```
 
-![Screen Shot 2023-07-06 at 11 40 45 PM](https://github.com/hackclub/haxidraw/assets/27078897/5a6e291a-177f-44b5-913d-e7a2f92c77ff)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/5a6e291a-177f-44b5-913d-e7a2f92c77ff" width="512"/>
 
 Now let's reach for the secret ingredient, perlin noise.
 
@@ -55,7 +55,7 @@ trunkLine
   })
 ```
 
-![Screen Shot 2023-07-06 at 11 43 34 PM](https://github.com/hackclub/haxidraw/assets/27078897/8c7fd1fa-3572-4348-8a94-65710bdff7ef)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/8c7fd1fa-3572-4348-8a94-65710bdff7ef" width="512"/>
 
 We add a few more lines and make a gradient by filtering more out to the right.
 
@@ -69,7 +69,7 @@ We add a few more lines and make a gradient by filtering more out to the right.
 })
 ```
 
-![Screen Shot 2023-07-06 at 11 47 19 PM](https://github.com/hackclub/haxidraw/assets/27078897/17dee286-c4a2-4bf3-9103-158060bc17c2)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/17dee286-c4a2-4bf3-9103-158060bc17c2" width="512"/>
 
 Keep the first and last line solid.
 
@@ -84,7 +84,7 @@ Keep the first and last line solid.
 })
 ```
 
-![Screen Shot 2023-07-06 at 11 50 18 PM](https://github.com/hackclub/haxidraw/assets/27078897/05b38a49-9fe4-4fb7-9d11-d0c1ce484924)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/05b38a49-9fe4-4fb7-9d11-d0c1ce484924" width="512"/>
 
 Fade the trunk out towards the leaves.
 
@@ -100,7 +100,7 @@ Fade the trunk out towards the leaves.
 })
 ```
 
-![Screen Shot 2023-07-06 at 11 50 35 PM](https://github.com/hackclub/haxidraw/assets/27078897/bdaaa4c4-07c3-42bc-bfca-dad7bd1f218d)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/bdaaa4c4-07c3-42bc-bfca-dad7bd1f218d" width="512"/>
 
 Then a little y-displacement so the bottom isn't unnatural looking
 
@@ -111,17 +111,17 @@ const trunkLine = createTurtle([
 ]);
 ```
 
-![Screen Shot 2023-07-06 at 11 50 51 PM](https://github.com/hackclub/haxidraw/assets/27078897/e2575e9c-61c3-473e-bbb2-ab46d4f740da)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/e2575e9c-61c3-473e-bbb2-ab46d4f740da" width="512"/>
 
 Bump up the number of lines and that's our trunk!
 
-![Screen Shot 2023-07-06 at 11 52 11 PM](https://github.com/hackclub/haxidraw/assets/27078897/8ae5e540-f33c-4bdd-939e-7be79484411d)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/8ae5e540-f33c-4bdd-939e-7be79484411d" width="512"/>
 
 ## the leaves
 
 Now let's draw those leaves. This is going to be a random walk through a perturbed signed distance field for a circle.
 
-![Screen Shot 2023-07-06 at 11 53 02 PM](https://github.com/hackclub/haxidraw/assets/27078897/549bbf17-3681-446d-8e78-664805379a84)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/549bbf17-3681-446d-8e78-664805379a84" width="512"/>
 
 We'll start with a random walk.
 
@@ -143,7 +143,7 @@ drawTurtles(
 )
 ```
 
-![Screen Shot 2023-07-06 at 11 54 29 PM](https://github.com/hackclub/haxidraw/assets/27078897/f98e2f48-3785-4449-b936-dc5e637bdff5)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/f98e2f48-3785-4449-b936-dc5e637bdff5" width="512"/>
 
 We want this walk to stay in a circle though. What we'll do is define an equation for the distance from some circle. If we step outside (the distance becomes positive) then take a step back towards the circle. Signed distance fields are very powerful tools, which are rewardingly worth exploring.
 
@@ -191,7 +191,7 @@ function circleSDF([x, y], start, r) {
 }
 ```
 
-![Screen Shot 2023-07-07 at 12 03 44 AM](https://github.com/hackclub/haxidraw/assets/27078897/d05973d5-b50a-496e-a72f-5bf7fd80351b)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/d05973d5-b50a-496e-a72f-5bf7fd80351b" width="512"/>
 
 Break up the lines to make them look like abstract scribbles.
 
@@ -227,7 +227,7 @@ for (let i = 0; i < 10000; i++) {
 }
 ```
 
-![Screen Shot 2023-07-07 at 12 05 52 AM](https://github.com/hackclub/haxidraw/assets/27078897/a36c8e40-0db8-4059-94ac-94c40b8e1e54)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/a36c8e40-0db8-4059-94ac-94c40b8e1e54" width="512"/>
 
 Now we can shape the circle by scaling it and adding noise.
 
@@ -245,7 +245,7 @@ function circleSDF([x, y], start, r) {
 }
 ```
 
-![Screen Shot 2023-07-07 at 12 09 57 AM](https://github.com/hackclub/haxidraw/assets/27078897/2f976eca-3987-4477-a187-4ef9c24591c4)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/2f976eca-3987-4477-a187-4ef9c24591c4" width="512"/>
 
 Let's add a little noise to the shading too.
 
@@ -257,7 +257,7 @@ if (rand() < +0.6 + noise([endX*18.7, endY*1.34])/1.8) {
 }
 ```
 
-![Screen Shot 2023-07-07 at 12 11 32 AM](https://github.com/hackclub/haxidraw/assets/27078897/df03817e-4fd7-4188-ab0c-0e555b9b64db)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/df03817e-4fd7-4188-ab0c-0e555b9b64db" width="512"/>
 
 Now let's bump down the step and up the iteration count and we get something like this. Here are a few parameters and approximately what they were adjusted to.
 
@@ -269,7 +269,7 @@ i < 100000
 const r = randInRange(0.4,2.1);
 ```
 
-![Screen Shot 2023-07-07 at 12 19 18 AM](https://github.com/hackclub/haxidraw/assets/27078897/5285d821-7c04-4e25-aca1-f9c210f08498)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/5285d821-7c04-4e25-aca1-f9c210f08498" width="512"/>
 
 We can put this together with the trunk with some minor adjustments.
 
@@ -286,13 +286,11 @@ drawTurtles(
 );
 ```
 
-![Screen Shot 2023-07-07 at 12 20 51 AM](https://github.com/hackclub/haxidraw/assets/27078897/114d17dc-b5a3-43ab-baf6-0e1dfee2d959)
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/114d17dc-b5a3-43ab-baf6-0e1dfee2d959" width="512"/>
 
 
 And that's our tree!
 
 There is much to discover playing around in the parameter space. Some come out looking quite realistic.
 
-![Screen Shot 2023-07-06 at 4 47 23 PM](https://github.com/hackclub/haxidraw/assets/27078897/8d00c3b5-8d93-4e98-9b24-75ee00a85a87)
-
-
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/8d00c3b5-8d93-4e98-9b24-75ee00a85a87" width="512"/>

@@ -3,7 +3,8 @@
 ### This guide is based on a tutorial on *[generativeartistry](https://generativeartistry.com/tutorials/triangular-mesh/)* by [maxwellito](https://maxwellito.com/)
 ---
 
-![https://cloud-fxnwjivpd-hack-club-bot.vercel.app/0image__1_.png](https://cloud-fxnwjivpd-hack-club-bot.vercel.app/0image__1_.png)
+<img src="https://cloud-fxnwjivpd-hack-club-bot.vercel.app/0image__1_.png" width="512"/>
+
 We'll build the above mesh like this:
 
 - First, generate a grid of points, where every other line is slightly offset

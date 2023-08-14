@@ -1,7 +1,7 @@
 # Draw a landscape in Haxidraw with noise
 ### (Intermediate, ~45 min, by Henry Bass)
 
-![https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png](https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 This is an explainer on how to create art like the image above in the [Haxidraw editor](https://haxidraw.hackclub.dev/). It assumes some knowledge of programming in JavaScript and how Haxidraw works, but nothing beyond that.
 
@@ -13,20 +13,20 @@ This is an explainer on how to create art like the image above in the [Haxidraw 
 
 ## Creating a height-map
 To try and create realistic terrain, we should first look at the real thing. Here's a map of some hills in Canada:
-![](https://cloud-g5b83d93q-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-g5b83d93q-hack-club-bot.vercel.app/0image.png" width="512"/>
 Notice that, although the terrain is complex, it looks somewhat random. There's also seemingly random detail at both large and small scales, from massive hills to small bumps.
 
 To replicate this in code, a technique is used called Fractal Noise. A reasonable first step would be to start out with pure randomness.
 
 Here's an image made up of large pixels of completely random brightness:
-![](https://cloud-fgexi20ng-hack-club-bot.vercel.app/0test.png)
+<img src="https://cloud-fgexi20ng-hack-club-bot.vercel.app/0test.png" width="512"/>
 Real terrain, of course, isn't made up of large squares. To get closer to the real thing, we can blur this image to make it smoother.
 
-![](https://cloud-i3ygpagk6-hack-club-bot.vercel.app/0test1.png)
+<img src="https://cloud-i3ygpagk6-hack-club-bot.vercel.app/0test1.png" width="512"/>
 
 This is much closer, but it's missing an essential aspect: Detail. Hills on a large scale resemble our image, but that resemblance breaks when we look closer. Conveniently though, the detail at both large and small scales looks pretty similar. So to capture this, we can try adding together our random noise on different scales. Each time, we decrease the amplitude of the noise and the blur radius ("Sigma"), while increasing the frequency.
 
-![https://cloud-oidzg4hcv-hack-club-bot.vercel.app/0untitled_drawing__5_.png](https://cloud-oidzg4hcv-hack-club-bot.vercel.app/0untitled_drawing__5_.png)
+<img src="https://cloud-oidzg4hcv-hack-club-bot.vercel.app/0untitled_drawing__5_.png" width="512"/>
 That looks a lot closer! As a note, the amount we change the frequency, amplitude, and blur with respect to each octave is arbitrary, and tweaking those functions can lead to interesting variations of our noise. The name of this technique is: *Fractal Noise*.
 
 In fact, the Haxidraw editor actually has a function for fractal noise built in!
@@ -80,7 +80,7 @@ Using `drawTurtles(t)` at the end, we can visualize the path.
 You may notice that there's a straight line between the start and end of each path. This is because the pen is still down when we start a new line, and it can be solved by simply raising the pen if we're going to the first point of a new line.
 
  If all goes well, you should see many rough lines, that look something like this:
-![https://cloud-2d1gm9q2d-hack-club-bot.vercel.app/0image.png](https://cloud-2d1gm9q2d-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-2d1gm9q2d-hack-club-bot.vercel.app/0image.png" width="512"/>
 To give the appearance that we're looking at this from the side, we can divide the y value by 2 or 3 in each `goto` command. This will shrink the terrain vertically, but leave the hill height the same.
 
 This is starting to look like mountains! If we want to make these look more like islands instead, we'd need to cut off the noise below a given height, and replace it with flat-looking water. By returning `Math.max(height, sea_level)`  in our `getHeight` function, only the larger of the two values will be returned. This means we'll see a line at sea level whenever the noise height is below it.
@@ -96,7 +96,7 @@ sea_level = default_wave_height + (
 ````
 Of course, for this code, you'd need to set actual values to all the variables mentioned. By now, you'll probably have something that looks like this:
 
-![https://cloud-nngt3uf5z-hack-club-bot.vercel.app/0image.png](https://cloud-nngt3uf5z-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-nngt3uf5z-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 Most of the hard work is done by now! But, you might be noticing a big problem with how this all looks, especially with high enough mountains. We can see through the terrain in some places! Because we're just 2D drawing lines that *look* 3D, paths in "front" of others won't block paths that are "behind". To solve this, we need something called **occlusion**.
 
@@ -121,7 +121,7 @@ Now, for each point, we can check if we're below the previous maximum y value, w
 `dx` has to be lowered a lot after this, because otherwise there's a lot of obvious artifacts. 
 
 Once that's implemented, the image will look more like this:
-![https://cloud-lp7dkev90-hack-club-bot.vercel.app/0image.png](https://cloud-lp7dkev90-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-lp7dkev90-hack-club-bot.vercel.app/0image.png" width="512"/>
 If you compare that to the image before occlusion, you'll see the difference. Now, we're almost done! The image still looks a bit too much like just noise, and we can go farther to make it look like real islands.
 
 ## Making it look nice
@@ -139,7 +139,7 @@ Trees generally grow a good distance above sea level, and they're pretty random 
 
 Then, we should only call this if `Math.random() > tree_prob && height * (y + perspective_offset) > tree_line`. We multiply by `(y + perspective_offset)` to cancel out the division back in the `getHeight` function, and ignore perspective.  With all this done, you'll have a nice looking landscape, generated 100% from code. Great job!
 
-![https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png](https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 ## More experimentation
 - Try tweaking all the parameters, and see if you can create different types of environments.
