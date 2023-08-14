@@ -8,31 +8,31 @@
 From just that one line, the following intricate pattern is created:
 
 
-![](https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png)
+<img src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png" width="512"/>
 
 
 There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for ***Haxidraw***. (This tutorial works fine if you don't have one!)
 
 A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
 
-![drawing machine with a turtle illustration](https://haxidraw.hackclub.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdrawing-machine.726ff526.png&w=3840&q=75)
+<img src="https://haxidraw.hackclub.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdrawing-machine.726ff526.png&w=3840&q=75" width="512"/>
 
 
-![https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png](https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 
 Here are some examples of art people have made with Haxidraw:
 
 
-![](https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true)
+<img src="https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true" width="512"/>
 
-![](https://github.com/hackclub/haxidraw/blob/main/art/roots-kai/snapshots/roots.png?raw=true)
+<img src="https://github.com/hackclub/haxidraw/blob/main/art/roots-kai/snapshots/roots.png?raw=true" width="512"/>
 
-![](https://github.com/hackclub/haxidraw/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true)
+<img src="https://github.com/hackclub/haxidraw/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true" width="512"/>
 
 Now, let's take another look at the original 10PRINT artwork that we'll try to replicate.
 
-![](https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png)
+<img src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png" width="512"/>
 
 The artwork seems to be a grid of slashes. Some slashes point to to the top-right, others point to the bottom-right. Overall, the distribution seems to be about 50/50. If you look closely, you might notice that the slashes are just plain text: "/" or "\\". In fact, the Commodore program just prints a random sequence of characters to the screen, left to right. The challenge is, in the Haxidraw editor, you can't write symbols directly to the screen - we'll have to draw the slashes as lines.
 
@@ -41,7 +41,7 @@ On a high level, here's our strategy:
 
 This looks like:
 
-![](https://cloud-eeo1n3h1p-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-eeo1n3h1p-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 So, let's start making something! Boot up the editor at [editor.haxidraw.hackclub.com](https://editor.haxidraw.hackclub.com/). On the left side of the screen, you write code. On the other side, you can see a preview of what you're building. At any point, press "**Run Code**" at the top to see what you've made so far.
 
@@ -86,7 +86,7 @@ Raise the pen, but this time, start out a bit to the right of `x, y`. Lower the 
 ```
 Visually, this looks like:
 
-![](https://cloud-3xbhxnc09-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-3xbhxnc09-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 We've finished the drawing function, but we still need to call it. To run some code repeatedly, we use a `for` loop. We move across each row, left to right. At each grid cell, we call the `draw` function to draw the random slash. Once we hit the end of a row, we return to the start.
 
@@ -116,7 +116,7 @@ And, lastly, let's draw this to the screen! This is done simply by calling the f
 `drawTurtles(t);`
 
 And, you're done! If all went well, you should be seeing something like the below art:
-![](https://cloud-e0wpk8chk-hack-club-bot.vercel.app/0image.png)
+<img src="https://cloud-e0wpk8chk-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 Great job! You can still go farther with this, if you want. 
 - See what happens if you change the probability in our `draw` function from `0.5` to something else
