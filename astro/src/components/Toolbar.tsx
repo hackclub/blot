@@ -22,7 +22,7 @@ export default function Toolbar() {
     return (
         <div class={styles.root}>
             <div style={{ display: "flex", "align-items": "center" }}>
-                <h1 class={styles.heading}>Haxidraw</h1>
+                <h1 class={styles.heading}>Blot</h1>
                 <RunButton />
                 <NewButton />
                 <OpenButton />

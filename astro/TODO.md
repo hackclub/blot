@@ -1,4 +1,19 @@
 
+
+- main page
+  - landing
+  - editor
+  - workshops
+    - open in editor
+  - gallery
+    - 3d maze
+    - 2d
+  - assembly
+  - how to submit art
+    - get in gallery
+    - get machine
+
+
 - download flipping
   - png
   - svg

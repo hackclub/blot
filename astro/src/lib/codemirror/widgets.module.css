@@ -1,0 +1,38 @@
+.bezierWidgetBtn {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 0.25rem;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    cursor: pointer;
+    padding: 0 0.25rem;
+    border: none;
+    font-size: 1em;
+}
+
+.bezierWidgetBtn svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+}
+
+.bezierWidget {
+    position: relative;
+}
+
+.bezierWidgetPopup {
+    position: absolute;
+    left: 0;
+    z-index: 9999;
+}
+
+.bezierWidgetHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bezierWidgetHeader button {
+    padding: 2px;
+}

@@ -9,7 +9,8 @@
 
 .heading {
     font-size: 1.1rem;
-    padding: 0 0.25rem;
+    padding: 0 0.5rem;
+    padding-right: 1rem;
 }
 
 .settingsDropdown > * {

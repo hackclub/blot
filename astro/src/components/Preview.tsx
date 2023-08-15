@@ -88,7 +88,6 @@ function init() {
   bodyListener("click", "", (e) => {
 
     // check if contained in element with this selector string
-
     if (!e.target.closest(".center-view-trigger")) return;
 
     const { docDimensions } = getStore();

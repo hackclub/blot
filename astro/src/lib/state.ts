@@ -1,6 +1,6 @@
 import type { EditorState } from "@codemirror/state";
 import { createState } from "niue";
-import { createCMState } from "../components/CodeMirror.tsx";
+import { createCMState } from "./codemirror/state.ts";
 import { type Haxidraw, Turtle, type Point } from "./drawingToolkit/index.js";
 import type { EditorView } from "@codemirror/view";
 
