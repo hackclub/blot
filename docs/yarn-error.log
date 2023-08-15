@@ -1,0 +1,58 @@
+Arguments: 
+  /usr/local/bin/node /Users/leomcelroy/.yarn/bin/yarn.js
+
+PATH: 
+  /Users/leomcelroy/.nimble/bin:/Users/leomcelroy/.bun/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Users/leomcelroy/.yarn/bin:/Users/leomcelroy/.config/yarn/global/node_modules/.bin:/Users/leomcelroy/.deno/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/opt/X11/bin
+
+Yarn version: 
+  1.22.15
+
+Node version: 
+  19.2.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: ENOSPC: no space left on device, copyfile '/Users/leomcelroy/Library/Caches/Yarn/v6/npm-d3-time-format-4.1.0-7ab5257a5041d11ecb4fe70a5c7d16a195bb408a-integrity/node_modules/d3-time-format/package.json' -> '/Users/leomcelroy/hackclub/drawing-thing/docs/node_modules/d3-time-format/package.json'
+
+npm manifest: 
+  {
+    "name": "haxidraw-docs",
+    "version": "0.0.1",
+    "private": true,
+    "description": "Documentation for the Haxidraw",
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/hackclub/haxidraw.git"
+    },
+    "author": "Hack Club",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/hackclub/haxidraw/issues"
+    },
+    "homepage": "https://github.com/hackclub/haxidraw#readme",
+    "dependencies": {
+      "next": "^13.0.6",
+      "nextra": "latest",
+      "nextra-theme-docs": "latest",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+      "@types/node": "18.11.10",
+      "@types/react": "18.2.14",
+      "typescript": "^4.9.3"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -12,6 +12,7 @@ import BrightnessContrastIcon from "../ui/BrightnessContrastIcon.tsx";
 import { Theme, patchSettings, useSettings } from "../lib/settings.ts";
 import SettingsIcon from "../ui/SettingsIcon.tsx";
 import KeyboardIcon from "../ui/KeyboardIcon.tsx";
+import GitHubIcon from "../ui/GitHubIcon.tsx";
 
 export default function Toolbar() {
     const { connected } = useStore(["connected"]);
@@ -20,44 +21,62 @@ export default function Toolbar() {
 
     return (
         <div class={styles.root}>
-            <h1 class={styles.heading}>Haxidraw</h1>
-            <RunButton />
-            <NewButton />
-            <OpenButton />
-            <div 
-                style={{
-                    position: "relative",
-                    cursor: "default",
-                    width: "min-width"
-                }}
-                onMouseEnter={() => setHidden(false)}
-                onMouseLeave={() => setHidden(true)}>
-                <div style={{
-                    padding: "5px"
-                }}>download</div>
-                <div style={{
-                    display: hidden ? "none" : "",
-                    position: "absolute",
-                    background: "var(--primary)",
-                    "z-index": 9999,
-                    width: "100%",
-                    top: "100%",
-                    padding: "5px",
-                    "border-radius": "5px"
+            <div style={{ display: "flex", "align-items": "center" }}>
+                <h1 class={styles.heading}>Blot</h1>
+                <RunButton />
+                <NewButton />
+                <OpenButton />
+                <div 
+                    style={{
+                        position: "relative",
+                        cursor: "default",
+                        width: "min-width"
+                    }}
+                    onMouseEnter={() => setHidden(false)}
+                    onMouseLeave={() => setHidden(true)}>
+                    <div style={{
+                        padding: "5px"
+                    }}>download</div>
+                    <div style={{
+                        display: hidden ? "none" : "",
+                        position: "absolute",
+                        background: "var(--primary)",
+                        "z-index": 9999,
+                        width: "100%",
+                        top: "100%",
+                        padding: "5px",
+                        "border-radius": "5px"
 
-                }}>
-                    <DownloadButton/>
-                    <DownloadSVG />
-                    <DownloadPNG />
+                    }}>
+                        <DownloadButton/>
+                        <DownloadSVG />
+                        <DownloadPNG />
+                    </div>
                 </div>
             </div>
 
-            <Button variant="ghost" class="connect-trigger">{connected ? "disconnect from" : "connect to"} machine</Button>
-            {connected && <Button variant="ghost" class="run-machine-trigger">run machine</Button>}
-            {/*<MachineControls />*/}
-            <SettingsButton />
+            <div style={{ display: "flex", "align-items": "center" }}>
+                <Button variant="ghost" class="connect-trigger">{connected ? "disconnect from" : "connect to"} machine</Button>
+                {connected && <Button variant="ghost" class="run-machine-trigger">run machine</Button>}
+                {/*<MachineControls />*/}
+                <GitHubLink/>
+                <SettingsButton />
+            </div>
+
         </div>
     );
+}
+
+function GitHubLink() {
+    return (
+        <Button variant="ghost">
+            <a style={{ all: "unset" }} href="https://github.com/hackclub/haxidraw/tree/main" target="_blank">
+                <div style={{ transform: "translate(0, 3.5px)" }}>
+                    <GitHubIcon className={styles.icon} />
+                </div>
+            </a>
+        </Button>
+    )
 }
 
 function RunButton() {
@@ -247,7 +266,7 @@ function MachineControls() {
     }, []);
 
     return (
-        <div class={styles.right}>
+        <div>
             {inst ? (
                 <>
                     <Button variant="ghost" onClick={disconnect}>

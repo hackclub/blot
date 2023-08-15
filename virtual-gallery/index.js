@@ -22,8 +22,8 @@ const n = 18;
 
 const canvas = document.querySelector(".raycast");
 
-let trackerX = 0
-let trackerY = 0
+let trackerX = 0;
+let trackerY = 0;
 
 let src;
 let t = 0;
@@ -33,7 +33,7 @@ let currentWorker = {
   y: 0,
   startTime: Date.now(),
   finished: true,
-}
+};
 
 const bb = canvas.getBoundingClientRect();
 
@@ -43,8 +43,8 @@ const state = {
   orientation: "north",
   angle: 0,
   mazeData: [],
-  playerX: n/2 + 0.01,
-  playerY: n/2 + 0.01,
+  playerX: n / 2 + 0.01,
+  playerY: n / 2 + 0.01,
   globalX: 0 + 0.01,
   globalY: 0 + 0.01,
   lastX: 0,
@@ -58,22 +58,20 @@ const state = {
     KeyA: false,
     KeyS: false,
     KeyD: false,
-
     ArrowUp: false,
     ArrowLeft: false,
     ArrowDown: false,
     ArrowRight: false,
-  }
-}
+  },
+};
 
 const width = state.width;
 const height = state.height;
 
-const imageWidth = 700
-const imageHeight = 700
+const imageWidth = 700;
+const imageHeight = 700;
 
-const scalingFactor = 0.85
-
+const scalingFactor = 0.85;
 
 const SCREEN_WIDTH = bb.width;
 const SCREEN_HEIGHT = bb.height;
@@ -81,27 +79,20 @@ const TICK = 30;
 const CELL_SIZE = 8;
 const FOV = toRadians(80);
 
-const halfWidth = (width-1)/2;
+const halfWidth = (width - 1) / 2;
 const i = get1DIndex(width, halfWidth, halfWidth);
 state.mazeData[i] = 0;
 
-const xWidth = w/width;
-const yWidth = h/height;
+const xWidth = w / width;
+const yWidth = h / height;
 
-let imageTimes = []
+let imageTimes = [];
 
 const getMap = () => reshapeArray(state.mazeData, state.width);
 
 drawMaze(state);
 
 const getPlayer = () => {
-  // const angle = {
-  //   "north": 270,
-  //   "east": 180,
-  //   "south": 90,
-  //   "west": 0,
-  // }[state.orientation];
-
   return {
     x: state.playerX * CELL_SIZE,
     y: state.playerY * CELL_SIZE,
@@ -110,7 +101,7 @@ const getPlayer = () => {
   };
 };
 
-let loadingImages = []
+let loadingImages = [];
 
 function genLoadingImages() {
   for (let i = 0; i < 21; i++) {
@@ -119,15 +110,20 @@ function genLoadingImages() {
     img.height = 700;
     let ctx = img.getContext("2d");
     ctx.fillStyle = "white";
-    ctx.fillRect(700 * 0.15/2, 700 * 0.15/2, img.width * 0.85, img.height * 0.85);
+    ctx.fillRect(
+      (700 * 0.15) / 2,
+      (700 * 0.15) / 2,
+      img.width * 0.85,
+      img.height * 0.85
+    );
     ctx.strokeStyle = "black";
     ctx.lineWidth = 5;
     ctx.beginPath();
-    let offset = 700 * 0.15/2;
+    let offset = (700 * 0.15) / 2;
     ctx.rect(offset, offset, img.width * 0.85, img.height * 0.85);
     ctx.stroke();
     ctx.beginPath();
-    ctx.arc(350, 350, 150, 0, (i/10) * Math.PI);
+    ctx.arc(350, 350, 150, 0, (i / 10) * Math.PI);
     ctx.stroke();
     loadingImages.push(img);
   }
@@ -149,11 +145,11 @@ function outOfMapBounds(x, y) {
 }
 
 function fileRead(path) {
-      var request = new XMLHttpRequest();
-      request.open("GET", path, false);
-      request.send(null);
-      var returnValue = request.responseText;
-      return returnValue;
+  var request = new XMLHttpRequest();
+  request.open("GET", path, false);
+  request.send(null);
+  var returnValue = request.responseText;
+  return returnValue;
 }
 
 function getVCollision(angle) {
@@ -266,15 +262,14 @@ function getRays() {
 }
 
 function hash(x, y) {
-   let str = `${x},${y}`;
-    let hash = 0;
-    for (let i = 0, len = str.length; i < len; i++) {
-        let chr = str.charCodeAt(i);
-        hash = (hash << 5) - hash + chr;
-        hash |= 0;
-    }
-    return Math.abs((`hash`) ^ (hash >>> 1));
-
+  let str = `${x},${y}`;
+  let hash = 0;
+  for (let i = 0, len = str.length; i < len; i++) {
+    let chr = str.charCodeAt(i);
+    hash = (hash << 5) - hash + chr;
+    hash |= 0;
+  }
+  return Math.abs(`hash` ^ (hash >>> 1));
 }
 
 function initWorker() {
@@ -285,7 +280,7 @@ function initWorker() {
     currentWorker.finished = true;
     addImage(x, y);
   };
-  return worker
+  return worker;
 }
 
 function resetWorker() {
@@ -304,32 +299,34 @@ setInterval(() => {
 function genImage(code, x, y) {
   let seed = hash(x, y);
   currentWorker.startTime = Date.now();
-  code = `setRandSeed(${seed});` + code.replace('Math.random()', 'rand()');
-  worker.postMessage({code: code, state: JSON.stringify(state), x: x, y: y});
+  code = `setRandSeed(${seed});` + code.replace("Math.random()", "rand()");
+  worker.postMessage({ code: code, state: JSON.stringify(state), x: x, y: y });
   currentWorker.finished = false;
-  imageTimes[`${x},${y}`] = Date.now()
+  imageTimes[`${x},${y}`] = Date.now();
 }
 
 function drawMaze(state) {
-
   const { width, height, orientation, mazeData } = state;
   const maze = mazeData;
 
   maze.forEach((cell, i) => {
     const { x, y } = getCoordinates(i, width);
     ctx.fillStyle = cell === 1 ? "black" : "white";
-    ctx.fillRect(x*xWidth, y*yWidth, xWidth, yWidth);
-  })
+    ctx.fillRect(x * xWidth, y * yWidth, xWidth, yWidth);
+  });
 
   ctx.fillStyle = "orange";
-  ctx.fillRect(width/2*xWidth-xWidth/4, height/2*yWidth-yWidth/4, xWidth/2, yWidth/2);
-
-
+  ctx.fillRect(
+    (width / 2) * xWidth - xWidth / 4,
+    (height / 2) * yWidth - yWidth / 4,
+    xWidth / 2,
+    yWidth / 2
+  );
 
   ctx.save();
-  const rx = width/2*xWidth;
-  const ry = height/2*yWidth;
-  const redRectWidth = xWidth/8;
+  const rx = (width / 2) * xWidth;
+  const ry = (height / 2) * yWidth;
+  const redRectWidth = xWidth / 8;
   const angle = state.angle;
   // const angle = {
   //   "north": 0,
@@ -338,12 +335,11 @@ function drawMaze(state) {
   //   "west": 90,
   // }[orientation];
   ctx.translate(rx, ry);
-  ctx.rotate(angle * Math.PI / 180); // in the screenshot I used angle = 20
+  ctx.rotate((angle * Math.PI) / 180); // in the screenshot I used angle = 20
   ctx.fillStyle = "red";
-  ctx.fillRect(-redRectWidth/2, -yWidth/2, redRectWidth, yWidth/2.2);
+  ctx.fillRect(-redRectWidth / 2, -yWidth / 2, redRectWidth, yWidth / 2.2);
   ctx.restore();
 }
-
 
 function getCoordinates(index, width) {
   const x = index % width;
@@ -354,7 +350,7 @@ function getCoordinates(index, width) {
 function insertRow(matrix, width, rowIndex, newRow) {
   // Calculate the index in the 1D array where the new row should start
   const insertIndex = rowIndex * width;
-  
+
   // Insert the new row into the 1D array
   for (let i = 0; i < newRow.length; i++) {
     matrix.splice(insertIndex + i, 0, newRow[i]);
@@ -379,7 +375,7 @@ function insertColumn(matrix, width, columnIndex, newColumn) {
   // Insert the new column into the 1D array
   for (let i = 0; i < newColumn.length; i++) {
     // Calculate the index in the 1D array where the new column element should be inserted
-    const insertIndex = (i * (width + 1)) + columnIndex;
+    const insertIndex = i * (width + 1) + columnIndex;
 
     // Insert the new column element
     matrix.splice(insertIndex, 0, newColumn[i]);
@@ -393,7 +389,7 @@ function removeColumn(matrix, width, columnIndex) {
   // We iterate backwards so that the removal of elements doesn't affect the indices of the elements yet to be removed
   for (let i = width - 1; i >= 0; i--) {
     // Calculate the index in the 1D array where the column element to be removed is located
-    const removeIndex = (i * width) + columnIndex;
+    const removeIndex = i * width + columnIndex;
 
     // Remove the column element
     matrix.splice(removeIndex, 1);
@@ -404,22 +400,20 @@ function removeColumn(matrix, width, columnIndex) {
 }
 
 function pseudoRandom(x, y) {
-  return ((Math.tan(x * y))*Math.cos(x)*Math.sin(y))
+  return Math.tan(x * y) * Math.cos(x) * Math.sin(y);
 }
 
 function randomVector(length, prob = 0.3) {
-  return new Array(length)
-    .fill(0)
-    .map(() => {
-      return Math.random() < prob ? 1 : 0;
-    });
+  return new Array(length).fill(0).map(() => {
+    return Math.random() < prob ? 1 : 0;
+  });
 }
 
 function genRow(x, y, length) {
   x = Math.floor(x);
   y = Math.floor(y);
   let row = [];
-  for(let i = -n/2; i < length/2; i++) {
+  for (let i = -n / 2; i < length / 2; i++) {
     row.push(pseudoRandom(x + i, y) < 0 ? 1 : 0);
   }
   return row;
@@ -429,42 +423,41 @@ function genColumn(x, y, length) {
   x = Math.floor(x);
   y = Math.floor(y);
   let column = [];
-  for(let i = -n/2; i < length/2; i++) {
+  for (let i = -n / 2; i < length / 2; i++) {
     column.push(pseudoRandom(x, y - i) < 0 ? 1 : 0);
   }
   return column;
 }
 
 function genMatrix(width, height) {
-  let matrix = []
-  for(let i = 0; i < height * width; i++) {
-    let x = i % width - n/2;
-    let y = Math.floor(i / width) - n/2 + 1;
+  let matrix = [];
+  for (let i = 0; i < height * width; i++) {
+    let x = (i % width) - n / 2;
+    let y = Math.floor(i / width) - n / 2 + 1;
     let filled = pseudoRandom(x, y) < 0 ? 1 : 0;
     matrix.push(filled);
   }
-  return matrix
+  return matrix;
 }
 
-window.addEventListener("keydown", e => {
-  const { heldKeys } = state
+window.addEventListener("keydown", (e) => {
+  const { heldKeys } = state;
 
-  if (e.code in heldKeys) heldKeys[e.code] = true
-})
+  if (e.code in heldKeys) heldKeys[e.code] = true;
+});
 
-window.addEventListener("keyup", e => {
-  const { heldKeys } = state
+window.addEventListener("keyup", (e) => {
+  const { heldKeys } = state;
 
-  if (e.code in heldKeys) heldKeys[e.code] = false
-})
+  if (e.code in heldKeys) heldKeys[e.code] = false;
+});
 
-
-window.addEventListener("mousemove", e => {
+window.addEventListener("mousemove", (e) => {
   if (document.pointerLockElement === maze2D) {
     state.angle += event.movementX * 0.07;
   }
   drawMaze(state);
-})
+});
 
 window.addEventListener("click", () => {
   maze2D.requestPointerLock();
@@ -474,40 +467,39 @@ function get1DIndex(width, x, y) {
   return y * width + x;
 }
 
-
 const { fireTomato, movePlayer } = raycastMap(state);
 
-let lastTrackerX, lastTrackerY
+let lastTrackerX, lastTrackerY;
 
-let justFiredTomato = false
+let justFiredTomato = false;
 
 function addImage(x, y) {
   const img = document.createElement("canvas");
   img.width = 700;
   img.height = 700;
   const imgCtx = img.getContext("2d");
-  const imageCanvas = document.createElement('canvas')
-  imageCanvas.width = imageWidth
-  imageCanvas.height = imageHeight
-  const imageCanvasCtx = imageCanvas.getContext('2d')
-  const ratio = img.height/img.width          
-    if (img.width > img.height) {
-      img.width = scalingFactor * imageCanvas.width
-      img.height = ratio * img.width
-    }  else {
-      img.height = scalingFactor * imageCanvas.height
-      img.width = 1/ratio * img.height 
-    }
-    
-    const dx = (imageCanvas.width - img.width)/2
-    const dy = (imageCanvas.height - img.height)/2
-    renderCanvas(state.turtles, img, imgCtx);
-    imageCanvasCtx.drawImage(img, dx, dy, img.width, img.height)
-    imageCanvasCtx.lineWidth = 5
-    imageCanvasCtx.strokeRect(dx, dy, img.width, img.height)
+  const imageCanvas = document.createElement("canvas");
+  imageCanvas.width = imageWidth;
+  imageCanvas.height = imageHeight;
+  const imageCanvasCtx = imageCanvas.getContext("2d");
+  const ratio = img.height / img.width;
+  if (img.width > img.height) {
+    img.width = scalingFactor * imageCanvas.width;
+    img.height = ratio * img.width;
+  } else {
+    img.height = scalingFactor * imageCanvas.height;
+    img.width = (1 / ratio) * img.height;
+  }
 
-    //images.push(imageCanvas)
-    state.imageMap[`${x},${y}`] = imageCanvas
+  const dx = (imageCanvas.width - img.width) / 2;
+  const dy = (imageCanvas.height - img.height) / 2;
+  renderCanvas(state.turtles, img, imgCtx);
+  imageCanvasCtx.drawImage(img, dx, dy, img.width, img.height);
+  imageCanvasCtx.lineWidth = 5;
+  imageCanvasCtx.strokeRect(dx, dy, img.width, img.height);
+
+  //images.push(imageCanvas)
+  state.imageMap[`${x},${y}`] = imageCanvas;
 }
 
 function renderCanvas(turtles, cvs, ctx) {
@@ -516,56 +508,73 @@ function renderCanvas(turtles, cvs, ctx) {
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, cvs.width, cvs.height);
   ctx.strokeStyle = "black";
-  
+
   ctx.beginPath();
-  turtles.forEach(turtle => {
+  turtles.forEach((turtle) => {
     for (const polyline of turtle.path) {
-    const p = polyline.map(([x, y]) => [x * 66, y * -66]);
-    const paths = p//lineclip(p, [-1000, -1000, 1000, 1000]);
+      const p = polyline.map(([x, y]) => [x * 66, y * -66]);
+      const paths = p; //lineclip(p, [-1000, -1000, 1000, 1000]);
       for (let i = 0; i < paths.length; i++) {
         let [x, y] = paths[i];
         if (i === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
     }
-  })
+  });
   ctx.stroke();
-  return [cvs, ctx]
+  return [cvs, ctx];
 }
 
-function moveNorth({ width, halfWidth, mazeData }) {
-  insertRow(mazeData, width, 0, genRow(state.globalX, state.globalY + (n/2) - 1, width));
+function moveNorth({ width, mazeData }) {
+  insertRow(
+    mazeData,
+    width,
+    0,
+    genRow(state.globalX, state.globalY + n / 2 - 1, width)
+  );
   removeRow(mazeData, width, width);
   return true;
 }
 
-function moveWest({ width, halfWidth, mazeData }) {
-  insertColumn(mazeData, height, 0, genColumn(state.globalX - (n/2), state.globalY - 1, width));
-  removeColumn(mazeData, width+1, width);
+function moveWest({ width, mazeData }) {
+  insertColumn(
+    mazeData,
+    height,
+    0,
+    genColumn(state.globalX - n / 2, state.globalY - 1, width)
+  );
+  removeColumn(mazeData, width + 1, width);
   return true;
 }
 
-function moveSouth({ width, halfWidth, mazeData }) {
-  insertRow(mazeData, width, width, genRow(state.globalX, state.globalY - (n/2), width));
+function moveSouth({ width, mazeData }) {
+  insertRow(
+    mazeData,
+    width,
+    width,
+    genRow(state.globalX, state.globalY - n / 2, width)
+  );
   removeRow(mazeData, width, 0);
   return true;
 }
 
-function moveEast({ width, halfWidth, mazeData }) {
-  insertColumn(mazeData, width, width, genColumn(state.globalX + (n/2) - 1, state.globalY - 1, width));
-  removeColumn(mazeData, width+1, 0);
+function moveEast({ width, mazeData }) {
+  insertColumn(
+    mazeData,
+    width,
+    width,
+    genColumn(state.globalX + n / 2 - 1, state.globalY - 1, width)
+  );
+  removeColumn(mazeData, width + 1, 0);
   return true;
 }
 
-
-
 export function raycastMap(state) {
-
   const COLORS = {
-    floor: "#b5b5b5", // "#ff6361"
-    ceiling: "#ffffff", // "#012975",
-    wall: "#013aa6", // "#58508d"
-    wallDark: "#063389", // "#003f5c"
+    floor: "#b5b5b5",
+    ceiling: "#ffffff",
+    wall: "#013aa6",
+    wallDark: "#063389",
     rays: "#ffa600",
   };
 
@@ -642,92 +651,92 @@ export function raycastMap(state) {
     context.fillText(state.lastX + "," + state.lastY, 10, 220);
   }
 
+  window.addEventListener(
+    "message",
+    function (event) {
+      const [{ x, y }, hg, hl, vg, vl] = event.data;
+      trackerX = x / 640;
+      trackerY = y / 480;
 
-
-window.addEventListener("message", function(event) {
-  const [{x, y}, hg, hl, vg, vl] = event.data
-  trackerX = (x / 640)
-  trackerY = (y / 480)
-
-  if (x === 0 && y === 0 && Math.abs(lastTrackerX - 0.5) < 0.5 && Math.abs(lastTrackerY - 0.5) < 0.5) {
-    if (!justFiredTomato) {
-      justFiredTomato = true
-      fireTomato()
-    }
-    return
-  }
-
-  justFiredTomato = false
-
-  lastTrackerX = trackerX
-  lastTrackerY = trackerY
-
-  let r = 0.02
-  if (vg) state.angle += 1
-  else if (vl) state.angle -= 1
-  if (hg) {
-    let dx = Math.sin((state.angle+0)/180*Math.PI)*r;
-    let dy = Math.cos(state.angle/180*Math.PI)*r;
-    movePlayer(dx, dy);
-  }
-  else if (hl) {
-      let dx = Math.sin((state.angle+180)/180*Math.PI)*r;
-      let dy = Math.cos((state.angle+180)/180*Math.PI)*r;
-      movePlayer(dx, dy);
-  }
-  
-}, false);
-
-function findClosestIndex(target, arr) {
-  let closestIndex = 0;
-  let closestDistance = Math.abs(arr[0] - target);
-  
-  for(let i = 1; i < arr.length; i++) {
-      let distance = Math.abs(arr[i] - target);
-      if(distance < closestDistance) {
-          closestDistance = distance;
-          closestIndex = i;
+      if (
+        x === 0 &&
+        y === 0 &&
+        Math.abs(lastTrackerX - 0.5) < 0.5 &&
+        Math.abs(lastTrackerY - 0.5) < 0.5
+      ) {
+        if (!justFiredTomato) {
+          justFiredTomato = true;
+          fireTomato();
+        }
+        return;
       }
-  }
 
-  return closestIndex;
-}
+      justFiredTomato = false;
 
-  let images = []
+      lastTrackerX = trackerX;
+      lastTrackerY = trackerY;
+
+      let r = 0.02;
+      if (vg) state.angle += 1;
+      else if (vl) state.angle -= 1;
+      if (hg) {
+        let dx = Math.sin(((state.angle + 0) / 180) * Math.PI) * r;
+        let dy = Math.cos((state.angle / 180) * Math.PI) * r;
+        movePlayer(dx, dy);
+      } else if (hl) {
+        let dx = Math.sin(((state.angle + 180) / 180) * Math.PI) * r;
+        let dy = Math.cos(((state.angle + 180) / 180) * Math.PI) * r;
+        movePlayer(dx, dy);
+      }
+    },
+    false
+  );
+
+  let images = [];
 
   fetch("../art/list.json")
-  .then((response) => response.text())
-  .then((text) => {
-      let list = JSON.parse(text)
+    .then((response) => response.text())
+    .then((text) => {
+      let list = JSON.parse(text);
       for (let artwork of list) {
-        let src = fileRead(`../art/${artwork.directory}/${artwork.source}`)
-        let snapshots = []
+        let src = fileRead(`../art/${artwork.directory}/${artwork.source}`);
+        let snapshots = [];
         for (let snapshot of artwork.snapshots) {
           let img = document.createElement("canvas");
           img.width = 700;
           img.height = 700;
           let ctx = img.getContext("2d");
           ctx.fillStyle = "white";
-          ctx.fillRect(700 * 0.15/2, 700 * 0.15/2, img.width * 0.85, img.height * 0.85);
+          ctx.fillRect(
+            (700 * 0.15) / 2,
+            (700 * 0.15) / 2,
+            img.width * 0.85,
+            img.height * 0.85
+          );
           ctx.strokeStyle = "black";
           ctx.lineWidth = 5;
-          let offset = 700 * 0.15/2;
+          let offset = (700 * 0.15) / 2;
           let snapshotImg = new Image();
-          snapshotImg.src = `../art/${artwork.directory}/snapshots/${snapshot}`
+          snapshotImg.src = `../art/${artwork.directory}/snapshots/${snapshot}`;
           snapshotImg.onload = () => {
-            ctx.drawImage(snapshotImg, 0.15 * 700/2, 0.15 * 700/2, 0.85 * 700, 0.85 * 700)
+            ctx.drawImage(
+              snapshotImg,
+              (0.15 * 700) / 2,
+              (0.15 * 700) / 2,
+              0.85 * 700,
+              0.85 * 700
+            );
             ctx.beginPath();
             ctx.rect(offset, offset, img.width * 0.85, img.height * 0.85);
             ctx.stroke();
-          }
-          snapshots.push(img)
+          };
+          snapshots.push(img);
         }
-        images.push([src, snapshots, artwork.directory])
+        images.push([src, snapshots, artwork.directory]);
       }
-    }
-  );
+    });
 
-/*  fetch("./gallery/README.md")
+  /*  fetch("./gallery/README.md")
     .then((response) => response.text())
     .then((text) => {
       const lines = text.split("\n");
@@ -746,65 +755,64 @@ function findClosestIndex(target, arr) {
   function fireTomato() {
     let p = getPlayer();
     let splatRay = castRay(p.angle);
-    let splatPos =
-      `${Math.floor(splatRay.x + 0.1)},${Math.floor(splatRay.y + 0.1)}`
+    let splatPos = `${Math.floor(splatRay.x + 0.1)},${Math.floor(
+      splatRay.y + 0.1
+    )}`;
 
-    const tomatoCanvas = document.createElement('canvas')
+    const tomatoCanvas = document.createElement("canvas");
 
     tomatoCanvas.width = splatImg.width * 2;
     tomatoCanvas.height = splatImg.height * 2;
 
-    const tomatoCtx = tomatoCanvas.getContext('2d')
+    const tomatoCtx = tomatoCanvas.getContext("2d");
 
-    tomatoCtx.translate(tomatoCanvas.width/2, tomatoCanvas.height/2)
-    tomatoCtx.rotate(Math.random() * 2 * Math.PI)
-    tomatoCtx.drawImage(splatImg, 0, 0)
+    tomatoCtx.translate(tomatoCanvas.width / 2, tomatoCanvas.height / 2);
+    tomatoCtx.rotate(Math.random() * 2 * Math.PI);
+    tomatoCtx.drawImage(splatImg, 0, 0);
 
     // const x = splatRay.x - Math.floor(splatRay.x)
-    const x = Math.random()
+    const x = Math.random();
 
     const tomato = {
       // Normalized
       x,
-      y:0.5*(0.4 + 0.6 * Math.random()),
-      scale:0.5*( 0.5 + 0.5 * Math.random()),
+      y: 0.5 * (0.4 + 0.6 * Math.random()),
+      scale: 0.5 * (0.5 + 0.5 * Math.random()),
       rotation: Math.random() * 2 * Math.PI,
-      img: tomatoCanvas
-    }
-    
-    const currentTomatoes = state.splattedTiles[splatPos]
-    
-    if (!currentTomatoes) state.splattedTiles[splatPos] = [tomato]
-    else currentTomatoes.push(tomato)
+      img: tomatoCanvas,
+    };
+
+    const currentTomatoes = state.splattedTiles[splatPos];
+
+    if (!currentTomatoes) state.splattedTiles[splatPos] = [tomato];
+    else currentTomatoes.push(tomato);
 
     state.score++;
   }
 
   window.addEventListener("keydown", (e) => {
-    if (e.key == " ") fireTomato()
+    if (e.key == " ") fireTomato();
   });
 
   function rand(jsr) {
     var x = Math.sin(1000 * jsr++) * 10000;
     return x - Math.floor(x);
-  }  
+  }
 
-  let last = null
-  let fps = 0
-  let count = 0
+  let last = null;
+  let count = 0;
 
   function renderScene(rays) {
-    t += 0.1
-    t %= loadingImages.length
-    
-    const now = performance.now()
+    t += 0.1;
+    t %= loadingImages.length;
+
+    const now = performance.now();
     if (last) {
-      count++
-      fps = 1000/(now - last)
+      count++;
+      fps = 1000 / (now - last);
     }
-    last = now
-    
-    
+    last = now;
+
     const player = getPlayer();
 
     for (let y = 0; y < SCREEN_HEIGHT; y++) {
@@ -814,7 +822,8 @@ function findClosestIndex(target, arr) {
     }
     rays.forEach((ray, i) => {
       const distance = fixFishEye(ray.distance, ray.angle, player.angle);
-      let tomatoes = state.splattedTiles[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] ?? []
+      let tomatoes =
+        state.splattedTiles[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] ?? [];
       const hashed = hash(ray.x, ray.y) % images.length;
 
       const hitposX = ray.x - Math.floor(ray.x);
@@ -826,44 +835,62 @@ function findClosestIndex(target, arr) {
       let brightness = ray.vertical ? 100 : 150;
       context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
       context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
-      let selectedImg = state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`]
+      let selectedImg =
+        state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`];
 
       if (selectedImg == undefined && images.length > 0) {
-          if (currentWorker.finished) {
-            state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] = 0
-            genImage(images[hash(Math.floor(ray.x), Math.floor(ray.y)) % images.length][0], Math.floor(ray.x), Math.floor(ray.y))
-          } else {
-        let artwork = images[hash(Math.floor(ray.x), Math.floor(ray.y)) % images.length]
-        selectedImg = artwork[1][hash(Math.floor(ray.x), Math.floor(ray.y)) % artwork[1].length]
-          }
+        if (currentWorker.finished) {
+          state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] = 0;
+          genImage(
+            images[
+              hash(Math.floor(ray.x), Math.floor(ray.y)) % images.length
+            ][0],
+            Math.floor(ray.x),
+            Math.floor(ray.y)
+          );
+        } else {
+          let artwork =
+            images[hash(Math.floor(ray.x), Math.floor(ray.y)) % images.length];
+          selectedImg =
+            artwork[1][
+              hash(Math.floor(ray.x), Math.floor(ray.y)) % artwork[1].length
+            ];
+        }
       }
 
       if (state.imageMap[`${Math.floor(ray.x)},${Math.floor(ray.y)}`] == 0) {
-        let artwork = images[hash(Math.floor(ray.x), Math.floor(ray.y)) % images.length]
-        selectedImg = artwork[1][hash(Math.floor(ray.x), Math.floor(ray.y)) % artwork[1].length]
+        let artwork =
+          images[hash(Math.floor(ray.x), Math.floor(ray.y)) % images.length];
+        selectedImg =
+          artwork[1][
+            hash(Math.floor(ray.x), Math.floor(ray.y)) % artwork[1].length
+          ];
       }
 
-        context.fillStyle = `rgba(255, 255, 255, 0.2)`;
-        context.drawImage(
-          selectedImg,
-          (ray.vertical ? hitposY : hitposX) * selectedImg.width,
-          0,
-          1,
-          selectedImg.height,
-          i,
-          SCREEN_HEIGHT / 2 - wallHeight / 2,
-          1,
-          wallHeight
-        );
-      
+      context.fillStyle = `rgba(255, 255, 255, 0.2)`;
+      context.drawImage(
+        selectedImg,
+        (ray.vertical ? hitposY : hitposX) * selectedImg.width,
+        0,
+        1,
+        selectedImg.height,
+        i,
+        SCREEN_HEIGHT / 2 - wallHeight / 2,
+        1,
+        wallHeight
+      );
 
       for (const tomato of tomatoes) {
         //context.globalAlpha = 0.8;
         // context.drawImage()
-        const tomatoImg = tomato.img
+        const tomatoImg = tomato.img;
         context.drawImage(
           tomatoImg,
-          (ray.vertical ? hitposY : hitposX) * tomatoImg.width * tomato.scale * 5 - tomato.x * 600,
+          (ray.vertical ? hitposY : hitposX) *
+            tomatoImg.width *
+            tomato.scale *
+            5 -
+            tomato.x * 600,
           -tomato.y * 600,
           1,
           tomatoImg.height * tomato.scale * 5,
@@ -874,24 +901,8 @@ function findClosestIndex(target, arr) {
         );
       }
 
-      // context.fillStyle = COLORS.floor;
-      //context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2, 1, SCREEN_HEIGHT);
-
       context.fillStyle = `rgba(0, 0, 0, ${distance / 60})`;
       context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 + wallHeight / 2);
-
-      /*context.fillStyle = grd;
-      context.fillRect(i, SCREEN_HEIGHT / 2 + wallHeight / 2 - 1, 1, SCREEN_HEIGHT / 2 + wallHeight / 2 + 50);
-      
-     /*context.fillStyle = `rgba(0, 0, 0, ${distance/150})`;    
-      context.fillRect(
-        i,
-        (SCREEN_HEIGHT / 2 + wallHeight / 2) - 1,
-        1,
-        (SCREEN_HEIGHT / 2 - wallHeight / 2)
-      );*/
-
-      //context.fillStyle = `rgba(120, 120, 120, ${fogCurve(distance)})`;
     });
     // context.fillStyle = `rgba(0, 0, 0, 1)`;
     // context.font = "30px Monospace";
@@ -911,22 +922,22 @@ function findClosestIndex(target, arr) {
 
     if (Math.floor(state.globalX) > state.lastX) {
       moveEast({ width, halfWidth, mazeData });
-      state.playerX = n/2;
+      state.playerX = n / 2;
     }
 
     if (Math.floor(state.globalX) < state.lastX) {
       moveWest({ width, halfWidth, mazeData });
-      state.playerX = n/2 + 1;
+      state.playerX = n / 2 + 1;
     }
 
     if (Math.floor(state.globalY) < state.lastY) {
       moveSouth({ width, halfWidth, mazeData });
-      state.playerY = n/2 - 1;
+      state.playerY = n / 2 - 1;
     }
 
     if (Math.floor(state.globalY) > state.lastY) {
       moveNorth({ width, halfWidth, mazeData });
-      state.playerY = n/2;
+      state.playerY = n / 2;
     }
 
     state.lastX = Math.floor(state.globalX);
@@ -944,13 +955,23 @@ function findClosestIndex(target, arr) {
 
     let reshapedMaze = reshapeArray(state.mazeData, state.width);
 
-    let fill_dx = reshapedMaze[Math.floor(state.playerY)][newX] || reshapedMaze[Math.floor(state.playerY)][newEpsX]
+    let fill_dx =
+      reshapedMaze[Math.floor(state.playerY)][newX] ||
+      reshapedMaze[Math.floor(state.playerY)][newEpsX];
     if (fill_dx) moveableX = false;
-    let fill_dy = reshapedMaze[newY][Math.floor(state.playerX)] || reshapedMaze[newEpsY][Math.floor(state.playerX)]
+    let fill_dy =
+      reshapedMaze[newY][Math.floor(state.playerX)] ||
+      reshapedMaze[newEpsY][Math.floor(state.playerX)];
     if (fill_dy) moveableY = false;
 
-    if (moveableX) {state.playerX += dx; state.globalX += dx}
-    if (moveableY) {state.playerY -= dy; state.globalY += dy}
+    if (moveableX) {
+      state.playerX += dx;
+      state.globalX += dx;
+    }
+    if (moveableY) {
+      state.playerY -= dy;
+      state.globalY += dy;
+    }
   }
 
   function handleInput() {
@@ -961,33 +982,32 @@ function findClosestIndex(target, arr) {
     let dx = 0,
       dy = 0;
 
-    const towardsAngleDeg = relativeAngle => {
-      const rad = toRadians(state.angle + relativeAngle)
-      dx += Math.sin(rad)
-      dy += Math.cos(rad)
-    }
+    const towardsAngleDeg = (relativeAngle) => {
+      const rad = toRadians(state.angle + relativeAngle);
+      dx += Math.sin(rad);
+      dy += Math.cos(rad);
+    };
 
-    if (heldKeys.KeyW || heldKeys.ArrowUp)    towardsAngleDeg(0)
-    if (heldKeys.KeyA || heldKeys.ArrowLeft)  towardsAngleDeg(270)
-    if (heldKeys.KeyS || heldKeys.ArrowDown)  towardsAngleDeg(180)
-    if (heldKeys.KeyD || heldKeys.ArrowRight) towardsAngleDeg(90)
-  
+    if (heldKeys.KeyW || heldKeys.ArrowUp) towardsAngleDeg(0);
+    if (heldKeys.KeyA || heldKeys.ArrowLeft) towardsAngleDeg(270);
+    if (heldKeys.KeyS || heldKeys.ArrowDown) towardsAngleDeg(180);
+    if (heldKeys.KeyD || heldKeys.ArrowRight) towardsAngleDeg(90);
+
     if (dx !== 0 || dy !== 0) {
-      const mag = Math.hypot(dx, dy)
-      dx = dx/mag * r
-      dy = dy/mag * r
+      const mag = Math.hypot(dx, dy);
+      dx = (dx / mag) * r;
+      dy = (dy / mag) * r;
 
-      movePlayer(dx, dy)
+      movePlayer(dx, dy);
     }
   }
 
   function gameLoop() {
     clearScreen();
-    handleInput()
+    handleInput();
     const rays = getRays();
     renderScene(rays);
     renderMinimap(0, 0, 1, rays);
-
   }
 
   state.mazeData = genMatrix(n, n);
@@ -996,8 +1016,8 @@ function findClosestIndex(target, arr) {
 
   return {
     fireTomato,
-    movePlayer
-  }
+    movePlayer,
+  };
 }
 
 export function reshapeArray(arr, width) {

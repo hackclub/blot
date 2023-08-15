@@ -20,15 +20,15 @@ t.right(90);
 const turtles = [t];
 
 function makeBranch(turtle) {
-    const n = 185;
+  const n = 185;
 
-    for (let i = 0; i < n; i++) {
-        const curl = randInRange(-5, 5);
-        turtle.left(curl);
-        turtle.forward(length);
-    }
+  for (let i = 0; i < n; i++) {
+    const curl = randInRange(-5, 5);
+    turtle.left(curl);
+    turtle.forward(length);
+  }
 
-    return turtle;
+  return turtle;
 }
 
 makeBranch(t);
@@ -124,36 +124,36 @@ Let's add this logic to `makeBranch`:
 ```js
 // Mods angle to be from -180 - 180 degrees
 function modAngleDeg(angle) {
-    angle = Math.sign(angle) * (Math.abs(angle) % 360);
-    if (angle > 180) return 180 - angle;
-    else return angle;
+  angle = Math.sign(angle) * (Math.abs(angle) % 360);
+  if (angle > 180) return 180 - angle;
+  else return angle;
 }
 
 function makeBranch(turtle, length, startingT) {
-    const n = 185;
+  const n = 185;
 
-    for (let i = 0; i < n; i++) {
-        const time = i / (n - 1); // Scale i to be from 0-1. The "time" of the step
-        const stdev = 200; // High standard deviation, we don't want the branch to be straight
-        const average = -90; // Downwards
-        const targetAngle = gaussianRandom(average, stdev); // Like Math.random(), but biased towards `average`
+  for (let i = 0; i < n; i++) {
+    const time = i / (n - 1); // Scale i to be from 0-1. The "time" of the step
+    const stdev = 200; // High standard deviation, we don't want the branch to be straight
+    const average = -90; // Downwards
+    const targetAngle = gaussianRandom(average, stdev); // Like Math.random(), but biased towards `average`
 
-        const angle = turtle.angle; // Current angle
+    const angle = turtle.angle; // Current angle
 
-        const moddedAngle = modAngleDeg(targetAngle); // Mod target angle to be from -180 - 180
+    const moddedAngle = modAngleDeg(targetAngle); // Mod target angle to be from -180 - 180
 
-        // moddedAngle and moddedAngle + 360 are equivalent; which
-        // one is numerically closer determines which way to turn.
-        const closerDiff = Math.min(moddedAngle - angle, moddedAngle + 360 - angle);
-        const curl = closerDiff / 20; // Scale down
+    // moddedAngle and moddedAngle + 360 are equivalent; which
+    // one is numerically closer determines which way to turn.
+    const closerDiff = Math.min(moddedAngle - angle, moddedAngle + 360 - angle);
+    const curl = closerDiff / 20; // Scale down
 
-        turtle.left(curl);
-        turtle.forward(length);
-    }
+    turtle.left(curl);
+    turtle.forward(length);
+  }
 
-    thicken(turtle, startingT);
+  thicken(turtle, startingT);
 
-    return turtle;
+  return turtle;
 }
 ```
 
@@ -163,11 +163,11 @@ To randomly sample an angle that is on average close to some "target" but can so
 // https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
 // Standard Normal variate using Box-Muller transform.
 function gaussianRandom(mean = 0, stdev = 1) {
-    const u = 1 - Math.random(); // Converting [0,1) to (0,1]
-    const v = Math.random();
-    const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-    // Transform to the desired mean and standard deviation:
-    return z * stdev + mean;
+  const u = 1 - Math.random(); // Converting [0,1) to (0,1]
+  const v = Math.random();
+  const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+  // Transform to the desired mean and standard deviation:
+  return z * stdev + mean;
 }
 ```
 
@@ -226,80 +226,78 @@ Finally, let's add some texture by drawing rungs/"rings" throughout the path of 
 
 ```js
 function thicken(turtle, startingTime) {
-    const nRings = 200;
-    const ringStepT = 1 / (nRings - 1);
-    let nextRingT = ringStepT;
+  const nRings = 200;
+  const ringStepT = 1 / (nRings - 1);
+  let nextRingT = ringStepT;
 
-    const left = [];
-    const right = [];
+  const left = [];
+  const right = [];
 
-    turtle.iteratePath((pt, t) => {
-        /* Thicken line at point, as before */
+  turtle.iteratePath((pt, t) => {
+    /* Thicken line at point, as before */
 
-        // getAngle() returns degrees, convert to radians
-        const angleAtPoint = (turtle.getAngle(t) / 180) * Math.PI;
+    // getAngle() returns degrees, convert to radians
+    const angleAtPoint = (turtle.getAngle(t) / 180) * Math.PI;
 
-        const thickness = thicknessAt(t, startingTime);
+    const thickness = thicknessAt(t, startingTime);
 
-        const leftAngle = angleAtPoint - Math.PI / 2;
-        const rightAngle = angleAtPoint + Math.PI / 2;
+    const leftAngle = angleAtPoint - Math.PI / 2;
+    const rightAngle = angleAtPoint + Math.PI / 2;
 
-        const leftPoint = [
-            pt[0] + thickness * Math.cos(leftAngle),
-            pt[1] + thickness * Math.sin(leftAngle),
-        ];
+    const leftPoint = [
+      pt[0] + thickness * Math.cos(leftAngle),
+      pt[1] + thickness * Math.sin(leftAngle),
+    ];
 
-        const rightPoint = [
-            pt[0] + thickness * Math.cos(rightAngle),
-            pt[1] + thickness * Math.sin(rightAngle),
-        ];
+    const rightPoint = [
+      pt[0] + thickness * Math.cos(rightAngle),
+      pt[1] + thickness * Math.sin(rightAngle),
+    ];
 
-        left.push(leftPoint);
-        right.push(rightPoint);
+    left.push(leftPoint);
+    right.push(rightPoint);
 
-        /* But, every ringStepT, draw a ring from left to right */
-        if (t >= nextRingT) {
-            nextRingT += ringStepT;
+    /* But, every ringStepT, draw a ring from left to right */
+    if (t >= nextRingT) {
+      nextRingT += ringStepT;
 
-            /* Draw ring */
-            // Start ring at leftPoint, draw straight line to rightPoint, then add noise
+      /* Draw ring */
+      // Start ring at leftPoint, draw straight line to rightPoint, then add noise
 
-            const deltaX = rightPoint[0] - leftPoint[0];
-            const deltaY = rightPoint[1] - leftPoint[1];
+      const deltaX = rightPoint[0] - leftPoint[0];
+      const deltaY = rightPoint[1] - leftPoint[1];
 
-            const ring = new Turtle(leftPoint)
-                .setAngle((Math.atan2(deltaY, deltaX) / Math.PI) * 180)
-                .forward(Math.sqrt(deltaX * deltaX + deltaY * deltaY)) // Straight line from left to right
-                .resample(0.01); // Resample so we can modulate individual points
+      const ring = new Turtle(leftPoint)
+        .setAngle((Math.atan2(deltaY, deltaX) / Math.PI) * 180)
+        .forward(Math.sqrt(deltaX * deltaX + deltaY * deltaY)) // Straight line from left to right
+        .resample(0.01); // Resample so we can modulate individual points
 
-            // Seed for noise
-            const ringSeed = 1;
+      // Seed for noise
+      const ringSeed = 1;
 
-            // Take normal vector of straight line by perpendicularizing the line (<x, y> -> <-y, x>)
-            const normalMag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const normalX = -deltaY / normalMag;
-            const normalY = deltaX / normalMag;
+      // Take normal vector of straight line by perpendicularizing the line (<x, y> -> <-y, x>)
+      const normalMag = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      const normalX = -deltaY / normalMag;
+      const normalY = deltaX / normalMag;
 
-            // Add noise
-            ring.iteratePath((ringPoint, ringT) => {
-                const normal = ring.getNormal(ringT);
+      // Add noise
+      ring.iteratePath((ringPoint, ringT) => {
+        const normal = ring.getNormal(ringT);
 
-                // Smoothstep so more noisy in middle, less at edges
-                const s =
-                    0.9 *
-                    smoothstep(-0.1, 0.4, 0.5 - Math.abs(ringT - 0.5)) *
-                    thickness;
-                const noiseMag = 2 * (noise([2 * ringT, ringSeed]) - 0.5) * s;
+        // Smoothstep so more noisy in middle, less at edges
+        const s =
+          0.9 * smoothstep(-0.1, 0.4, 0.5 - Math.abs(ringT - 0.5)) * thickness;
+        const noiseMag = 2 * (noise([2 * ringT, ringSeed]) - 0.5) * s;
 
-                ringPoint[0] += normalX * noiseMag;
-                ringPoint[1] += normalY * noiseMag;
-            });
+        ringPoint[0] += normalX * noiseMag;
+        ringPoint[1] += normalY * noiseMag;
+      });
 
-            turtles.push(ring);
-        }
-    });
+      turtles.push(ring);
+    }
+  });
 
-    turtle.path = [left, right];
+  turtle.path = [left, right];
 }
 ```
 
@@ -309,8 +307,8 @@ You should now be able to produce something like the screenshot below:
 
 That's it! But you can still add a lot of features from here, if you're up to it:
 
--   For instance, one thing to add would be occlusion, so each branch can be assigned a z-index and cover other ones, so many more branches can be rendered without being too busy
--   Or, you could make the texturing more interesting by varying `ringSeed` for different branches or different regions
--   You could render multiple initial branches/roots at the start, and generate random parameters for each one in an interesting pattern
--   Add some logic so the branches stay within the Haxidraw bed/document always, and curl away from the edges if they get too close
--   Generate a texture for the background
+- For instance, one thing to add would be occlusion, so each branch can be assigned a z-index and cover other ones, so many more branches can be rendered without being too busy
+- Or, you could make the texturing more interesting by varying `ringSeed` for different branches or different regions
+- You could render multiple initial branches/roots at the start, and generate random parameters for each one in an interesting pattern
+- Add some logic so the branches stay within the Haxidraw bed/document always, and curl away from the edges if they get too close
+- Generate a texture for the background

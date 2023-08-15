@@ -31,10 +31,10 @@ while rval:
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
 
     for c in cnts:
-        x,y,w,h = cv2.boundingRect(c)
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0,0,255), 2)
+        x, y, w, h = cv2.boundingRect(c)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
     if (len(cnts) > 0):
-        c = max(cnts, key = cv2.contourArea)
+        c = max(cnts, key=cv2.contourArea)
         b = cv2.boundingRect(c)
         x, y = b[0] / 640, b[1] / 480
         currTime = time.time()
@@ -45,8 +45,10 @@ while rval:
                 pyautogui.moveTo(2256 - x * 2256, y * 1504, 0, _pause=False)
             else:
                 pyautogui.moveTo(2256/2, 1504/2, dt, _pause=False)
-            if (x < 0.2): pyautogui.press('s', _pause=False)
-            if (y > 0.8): pyautogui.press('w', _pause=False)
+            if (x < 0.2):
+                pyautogui.press('s', _pause=False)
+            if (y > 0.8):
+                pyautogui.press('w', _pause=False)
     cv2.imshow("preview", frame)
     cv2.imshow("preview2", mask)
     rval, frame = vc.read()

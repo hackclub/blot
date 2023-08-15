@@ -1,17 +1,16 @@
 // Import the necessary Three.js classes
-import { 
-  Scene, 
-  PerspectiveCamera, 
-  WebGLRenderer, 
-  BoxGeometry, 
-  MeshBasicMaterial, 
-  PointLight, 
+import {
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+  BoxGeometry,
+  MeshBasicMaterial,
+  PointLight,
   MeshStandardMaterial,
   Mesh,
-  Vector3
-} from 'three';
-import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
-
+  Vector3,
+} from "three";
+import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 
 // Define the size of the maze
 const MAZE_SIZE = 10;
@@ -22,23 +21,26 @@ const player = {
   z: 0,
   width: 0.5,
   depth: 0.5,
-  height: 0.5
+  height: 0.5,
 };
-
-
 
 // Create a scene
 const scene = new Scene();
 
 const geometry = new BoxGeometry(player.width, player.depth, player.height);
 // Change to MeshStandardMaterial
-const material = new MeshStandardMaterial({ color: 0xFFA500 });
+const material = new MeshStandardMaterial({ color: 0xffa500 });
 const cube = new Mesh(geometry, material);
 cube.position.set(player.x, player.y, player.z);
 scene.add(cube);
 
 // Create a camera
-const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 camera.position.set(player.x, player.y, MAZE_SIZE);
 
 // Create a light
@@ -53,14 +55,16 @@ const bb = renderTarget.getBoundingClientRect();
 renderer.setSize(bb.width, bb.height);
 renderTarget.appendChild(renderer.domElement);
 
-
 // Create a 2D array to represent the maze
-let maze = new Array(MAZE_SIZE).fill(false).map(() => new Array(MAZE_SIZE).fill(false));
+let maze = new Array(MAZE_SIZE)
+  .fill(false)
+  .map(() => new Array(MAZE_SIZE).fill(false));
 
 // Randomly fill the maze with walls
 for (let i = 0; i < MAZE_SIZE; i++) {
   for (let j = 0; j < MAZE_SIZE; j++) {
-    if (Math.random() < 0.3) { // 30% chance of a wall
+    if (Math.random() < 0.3) {
+      // 30% chance of a wall
       maze[i][j] = true;
     }
   }
@@ -81,25 +85,28 @@ for (let i = 0; i < MAZE_SIZE; i++) {
 }
 
 // Listen for keydown event
-document.addEventListener('keydown', (event) => {
-  switch (event.code) {
-    case 'KeyW':
-      player.y += .1;
-      break;
-    case 'KeyA':
-      player.x -= .1;
-      break;
-    case 'KeyS':
-      player.y -= .1;
-      break;
-    case 'KeyD':
-      player.x += .1;
-      break;
-  }
-}, false);
+document.addEventListener(
+  "keydown",
+  (event) => {
+    switch (event.code) {
+      case "KeyW":
+        player.y += 0.1;
+        break;
+      case "KeyA":
+        player.x -= 0.1;
+        break;
+      case "KeyS":
+        player.y -= 0.1;
+        break;
+      case "KeyD":
+        player.x += 0.1;
+        break;
+    }
+  },
+  false
+);
 
 window.addEventListener("resize", onWindowResize());
-    
 
 function onWindowResize() {
   const bb = renderTarget.getBoundingClientRect();
@@ -111,7 +118,6 @@ function onWindowResize() {
 
 // Update camera and controls each frame
 function animate() {
-
   requestAnimationFrame(animate);
 
   // Move the camera
@@ -128,22 +134,23 @@ function animate() {
 animate();
 
 function cubesIntersect(cube1, cube2) {
-    // Calculate the half widths, depths, and heights
-    const halfWidth1 = cube1.width / 2;
-    const halfDepth1 = cube1.depth / 2;
-    const halfHeight1 = cube1.height / 2;
+  // Calculate the half widths, depths, and heights
+  const halfWidth1 = cube1.width / 2;
+  const halfDepth1 = cube1.depth / 2;
+  const halfHeight1 = cube1.height / 2;
 
-    const halfWidth2 = cube2.width / 2;
-    const halfDepth2 = cube2.depth / 2;
-    const halfHeight2 = cube2.height / 2;
+  const halfWidth2 = cube2.width / 2;
+  const halfDepth2 = cube2.depth / 2;
+  const halfHeight2 = cube2.height / 2;
 
-    // Check for intersection
-    if (Math.abs(cube1.x - cube2.x) < (halfWidth1 + halfWidth2) &&
-        Math.abs(cube1.y - cube2.y) < (halfHeight1 + halfHeight2) &&
-        Math.abs(cube1.z - cube2.z) < (halfDepth1 + halfDepth2)) {
-        return true;
-    }
+  // Check for intersection
+  if (
+    Math.abs(cube1.x - cube2.x) < halfWidth1 + halfWidth2 &&
+    Math.abs(cube1.y - cube2.y) < halfHeight1 + halfHeight2 &&
+    Math.abs(cube1.z - cube2.z) < halfDepth1 + halfDepth2
+  ) {
+    return true;
+  }
 
-    return false;
+  return false;
 }
-

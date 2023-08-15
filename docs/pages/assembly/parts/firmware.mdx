@@ -1,0 +1,64 @@
+import HImg from "/components/HImg";
+import imgFirmwareBootButton from "./img/firmware-boot-button.jpg";
+import imgFirmwareDisk from "./img/firmware-disk.png";
+import imgFirmwareBoardsManager from "./img/firmware-boards-manager.png";
+import imgFirmwareSelectBoard from "./img/firmware-select-board.png";
+import imgFirmwareSerialPort from "./img/firmware-serial-port.png";
+import imgFirmwareUpload from "./img/firmware-upload.png";
+
+# Firmware
+
+You'll need a computer with the Arduino IDE installed, as well as the control board and a USB-C cable. After following these steps, you'll be set up to use your motor control board to interface with your new drawing machine.
+
+## Hardware setup
+
+Hold the `B` (BOOT) button on the XIAO board and plug it in to your computer.
+
+<HImg src={imgFirmwareBootButton} />
+
+The "RPI-RP2" disk should show up on your computer if the above step was successful.
+
+<HImg src={imgFirmwareDisk} alt="disk in macos finder" />
+
+## Software setup
+
+> You'll need to have the latest version of the Arduino IDE installed. [Install it here.](https://www.arduino.cc/en/software/)
+
+1. Open the Arduino IDE.
+2. Add the Seeed Studio XIAO RP2040 board package to your IDE.
+> - On macOS: Navigate to **Arduino IDE** > **Preferences** > **Settings**
+> - On Windows/Linux: Navigate to **File** > **Preferences** > **Settings**
+
+and add the following URLs to the **Additional Board Manager URLs** field:
+```
+https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+https://raw.githubusercontent.com/qbolsee/ArduinoCore-fab-sam/master/json/package_Fab_SAM_index.json
+```
+
+4. Navigate to **Tools** > **Board** > **Boards Manager**, and search for "rp2040". Install the latest version of "Raspberry Pi Pico/RP2040" (author Earle F. Philhower, III).
+
+<HImg src={imgFirmwareBoardsManager} alt="rp2040 in boards manager" />
+
+5. Now that you have the board package installed, you can upload the firmware to the board. Select your board and port in **Tools** > **Board** and find "**Seeed Studio XIAO RP2040**.
+
+<HImg src={imgFirmwareSelectBoard} alt="select board" />
+
+To select the port, go to **Tools** > **Port** and select the serial port name of the connected board.
+
+<HImg src={imgFirmwareSerialPort} alt="select serial port" />
+
+> Then, install the following libraries via Arduino's library manager:
+>
+> - FlashStorage_SAMD (by Cristian Maglie, Khoi Hoang)
+> - AccelStepper (by Mike McCauley)
+> - osap (by Jake Robert Read)
+
+6. Copy the Arduino code from [`motor-control-board/firmware`](https://github.com/hackclub/haxidraw/blob/main/motor-control-board/firmware/firmware.ino) into your IDE and upload to your board.
+
+> On Linux? You may need to add your user to the `dialout` group to be able to upload to the board. Run `sudo usermod -a -G dialout $USER` in a terminal, then reboot.
+
+<HImg src={imgFirmwareUpload} alt="Upload firmware to board" />
+
+> Now you can use the Haxidraw editor (https://editor.haxidraw.hackclub.com) to control the machine.
+
+> * Things not working quite right? check out [troubleshooting](/troubleshooting) *

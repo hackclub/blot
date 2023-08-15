@@ -1,20 +1,36 @@
 
 
+- main page
+  - landing
+  - editor
+  - workshops
+    - open in editor
+  - gallery
+    - 3d maze
+    - 2d
+  - assembly
+  - how to submit art
+    - get in gallery
+    - get machine
+
+
+- download flipping
+  - png
+  - svg
 - bezier widget
-- display sense of scale
-  - [x] show mouse position
-  - add grid
 - console for controlling machine
+  - run machine -> stop machine
 - file naming
-- jarring when opening and closing warning panel
 - move incompatible browser to when you connect machine
-- make download menu with js, svg
 - add examples tab
-- rendering optimization - meet perf of previous editor
 
 # MAYBE
 - better console logging
 - infinite loops
+
+- display sense of scale
+  - [x] show mouse position
+  - add grid
 
 # DONE
 - add `drawTurtles` back
@@ -26,3 +42,6 @@
   - svg
   - js
 - download svg
+- jarring when opening and closing warning panel
+- rendering optimization - meet perf of previous editor
+- make download menu with js, svg

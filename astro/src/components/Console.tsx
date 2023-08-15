@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "preact/hooks";
 import { patchStore, useStore } from "../lib/state.ts"
-import { dispatchJumpTo } from "./CodeMirror.tsx";
+import { dispatchJumpTo } from "../lib/codemirror/state.js";
 import styles from "./Console.module.css";
 import cx from "classnames";
 import Button from "../ui/Button.tsx";
