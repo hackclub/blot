@@ -38,7 +38,7 @@ That looks a lot closer! As a note, the amount we change the frequency, amplitud
 
 In fact, the Haxidraw editor actually has a function for fractal noise built in!
 
-```
+```js
 // y and z are optional
 noise(
   [
@@ -61,7 +61,7 @@ First, we can initialize a new Turtle with `const t = new Turtle()`.
 
 Then, iterate over all the points within some area, such as 0 < y < 15 and 0 < x < 10, moving by a small value `dx` and `dy` each time.
 
-```
+```js
 const dx = Some small number
 const dy = Vertical spacing between lines
 const noise_x_scale = How horizontally stretched the noise is
@@ -98,7 +98,7 @@ This is starting to look like mountains! If we want to make these look more like
 
 That water still looks a bit boring, though! Trigonometric functions like `Math.sin()` and `Math.cos()` are great for creating wave-like patterns. If we add the sine of the x value to the sea level, the water will be higher and lower in a wave-like pattern. Going further, by offsetting the input to the sine function by another wave, such as the cosine of the y value, the waves will sway side to side depending on how far up in the image they are. If you're not following along with why this works, try tweaking constants and scaling the waves in various ways to gain an intuition for what each part of the code contributes to the output.
 
-```
+```js
 sea_level = default_wave_height + (
 	wave_height *
 	Math.sin(
@@ -150,7 +150,8 @@ We're really close to a complete image, but there's a one more thing we can add 
 
 Trees generally grow a good distance above sea level, and they're pretty random in height. Luckily for us, trees can be easily approximated as straight lines from far enough away. Simply create a `drawTree(x, y)` function, that creates a vertical line like this:
 
-```size = tree_size * Math.random() + (size/2)
+```js
+size = tree_size * Math.random() + (size/2)
   t.goto([x, y])
   t.goto([x, y+size])
   t.up()
@@ -172,7 +173,7 @@ Then, we should only call this if `Math.random() > tree_prob && height * (y + pe
 
 I've avoided giving away too much code, as it's more fun to work through some of the potential problems yourself, but if you get stuck somewhere along the guide, you can reference this:
 
-```
+```js
 const t = new Turtle()
 
 const dx = 0.005
