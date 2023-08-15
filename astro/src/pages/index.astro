@@ -96,8 +96,19 @@
     background: #f2f2f1;
 /*    background: #ffbb1d5c;*/
     display: flex;
+    flex-direction: column;
     align-items: center;
     position: relative;
+    justify-content: space-around;
+  }
+
+  .banner-upper {
+
+  }
+
+  .banner-lower {
+    display: flex;
+    align-items: center;
   }
 
   .blot-bot {
@@ -105,12 +116,12 @@
   }
 
   .blot-title {
-    position: absolute;
-    left: 0px;
-    top: 1rem;
+/*    position: absolute;*/
+/*    left: 0px;*/
+/*    top: 1rem;*/
     font-size: 4rem;
     font-family: "Tilt Prism",cursive;
-    width: 100%;
+/*    width: 100%;*/
     text-align: center;
   }
 
@@ -121,6 +132,8 @@
     font-weight: 400;
     letter-spacing: 0.009em;
     line-height: 1.25;
+    align-self: baseline;
+    padding-top: 5rem;
   }
 
   .banner-text a {
@@ -170,17 +183,24 @@
   </div>
 
   <div class="banner">
-    <div class="blot-title">Blot, a plotter bot from Hack Club</div>
-    <img class="blot-bot" src="/blot-bot-clear.png"/>
-    <div class="banner-text">
-      <div>
-        Blot is a robot, but it is also an art project. It is a <a href="youshipweship.com">"You Ship, We Ship"</a> project from Hack Club. We're creating an <a href="3dmaze">art gallery</a>. It's an endlessly explorable space filled with <a href="2dgallery">your art programs</a>. When you <a href="howtosubmit">submit your art</a> to the gallery we will send you a <a href="resourcesonmachine">drawing machine</a> to turn that art into a real physical piece.
-      </div>
-      <br/>
-      <div>
-        Together we'll practice the art of programming, dive into digital fabrication, and <a href="linktomuseumexhibit">build something amazing together</a>.
+
+    <div class="banner-upper">
+      <div class="blot-title">Blot, a plotter bot from Hack Club</div>
+    </div>
+
+    <div class="banner-lower">
+      <img class="blot-bot" style="min-width: 60%" src="/blot-bot-clear.png"/>
+      <div class="banner-text">
+        <div>
+          Blot is a robot, but it is also an art project. It is a <a href="youshipweship.com">"You Ship, We Ship"</a> project from Hack Club. We're creating an <a href="3dmaze">art gallery</a>. It's an endlessly explorable space filled with <a href="2dgallery">your art programs</a>. When you <a href="howtosubmit">submit your art</a> to the gallery we will send you a <a href="resourcesonmachine">drawing machine</a> to turn that art into a real physical piece.
+        </div>
+        <br/>
+        <div>
+          Together we'll practice the art of programming, dive into digital fabrication, and <a href="linktomuseumexhibit">build something amazing together</a>.
+        </div>
       </div>
     </div>
+
   </div>
 
   <div class="footer">
