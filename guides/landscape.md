@@ -16,13 +16,16 @@ This is an explainer on how to create art like the image above in the [Haxidraw 
 ## Creating a height-map
 
 To try and create realistic terrain, we should first look at the real thing. Here's a map of some hills in Canada:
+
 <img src="https://cloud-g5b83d93q-hack-club-bot.vercel.app/0image.png" width="512"/>
 Notice that, although the terrain is complex, it looks somewhat random. There's also seemingly random detail at both large and small scales, from massive hills to small bumps.
 
 To replicate this in code, a technique is used called Fractal Noise. A reasonable first step would be to start out with pure randomness.
 
 Here's an image made up of large pixels of completely random brightness:
+
 <img src="https://cloud-fgexi20ng-hack-club-bot.vercel.app/0test.png" width="512"/>
+
 Real terrain, of course, isn't made up of large squares. To get closer to the real thing, we can blur this image to make it smoother.
 
 <img src="https://cloud-i3ygpagk6-hack-club-bot.vercel.app/0test1.png" width="512"/>
@@ -30,6 +33,7 @@ Real terrain, of course, isn't made up of large squares. To get closer to the re
 This is much closer, but it's missing an essential aspect: Detail. Hills on a large scale resemble our image, but that resemblance breaks when we look closer. Conveniently though, the detail at both large and small scales looks pretty similar. So to capture this, we can try adding together our random noise on different scales. Each time, we decrease the amplitude of the noise and the blur radius ("Sigma"), while increasing the frequency.
 
 <img src="https://cloud-oidzg4hcv-hack-club-bot.vercel.app/0untitled_drawing__5_.png" width="512"/>
+
 That looks a lot closer! As a note, the amount we change the frequency, amplitude, and blur with respect to each octave is arbitrary, and tweaking those functions can lead to interesting variations of our noise. The name of this technique is: *Fractal Noise*.
 
 In fact, the Haxidraw editor actually has a function for fractal noise built in!
@@ -85,7 +89,9 @@ Using `drawTurtles(t)` at the end, we can visualize the path.
 You may notice that there's a straight line between the start and end of each path. This is because the pen is still down when we start a new line, and it can be solved by simply raising the pen if we're going to the first point of a new line.
 
 If all goes well, you should see many rough lines, that look something like this:
+
 <img src="https://cloud-2d1gm9q2d-hack-club-bot.vercel.app/0image.png" width="512"/>
+
 To give the appearance that we're looking at this from the side, we can divide the y value by 2 or 3 in each `goto` command. This will shrink the terrain vertically, but leave the hill height the same.
 
 This is starting to look like mountains! If we want to make these look more like islands instead, we'd need to cut off the noise below a given height, and replace it with flat-looking water. By returning `Math.max(height, sea_level)` in our `getHeight` function, only the larger of the two values will be returned. This means we'll see a line at sea level whenever the noise height is below it.
@@ -131,7 +137,9 @@ Now, for each point, we can check if we're below the previous maximum y value, w
 `dx` has to be lowered a lot after this, because otherwise there's a lot of obvious artifacts.
 
 Once that's implemented, the image will look more like this:
+
 <img src="https://cloud-lp7dkev90-hack-club-bot.vercel.app/0image.png" width="512"/>
+
 If you compare that to the image before occlusion, you'll see the difference. Now, we're almost done! The image still looks a bit too much like just noise, and we can go farther to make it look like real islands.
 
 ## Making it look nice
