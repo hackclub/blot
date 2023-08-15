@@ -1,6 +1,7 @@
 # Draw a triangle mesh in Haxidraw
 
-### This guide is based on a tutorial on *[generativeartistry](https://generativeartistry.com/tutorials/triangular-mesh/)* by [maxwellito](https://maxwellito.com/)
+### This guide is based on a tutorial on _[generativeartistry](https://generativeartistry.com/tutorials/triangular-mesh/)_ by [maxwellito](https://maxwellito.com/)
+
 ---
 
 <img src="https://cloud-fxnwjivpd-hack-club-bot.vercel.app/0image__1_.png" width="512"/>
@@ -33,7 +34,9 @@ for(var y = gap / 2; y <= size; y+= gap) {
   for(var x = gap / 4; x <= size; x+= gap) {
     dot = {x: x + (odd ? gap/2 : 0), y: y};
 ```
+
 Then, use the built-in haxidraw noise function to offset the points again, this time randomly. Also, add an offset on the x axis if we're drawing an odd-numbered line.
+
 ```
     let n = noise([x * 0.1, y * 0.1])
     line.push({
@@ -59,6 +62,7 @@ function drawTriangle(pointA, pointB, pointC) {
 ```
 
 Now, to draw the whole mesh, we can iterate through the points, drawing triangles at every 3 points next to each other in 2D.
+
 ```
 var dotLine;
 odd = true;

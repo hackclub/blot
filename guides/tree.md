@@ -22,22 +22,19 @@ let trunk = createTurtle();
 // notice this pattern of using t which is 0 to 1
 let iMax = 3; // the number of lines
 for (let i = 0; i < iMax; i++) {
-  const t = i/(iMax-1);
-  const x = t*0.6; // this factor sets the spacing
-  const trunkLine = createTurtle([ x, 0 ]);
+  const t = i / (iMax - 1);
+  const x = t * 0.6; // this factor sets the spacing
+  const trunkLine = createTurtle([x, 0]);
   trunkLine.left(90);
 
-  trunkLine
-    .forward(2.8)
+  trunkLine.forward(2.8);
 
   trunk.join(trunkLine);
 }
 
 // ...
 
-renderTurtles(
-  trunk
-)
+renderTurtles(trunk);
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/5a6e291a-177f-44b5-913d-e7a2f92c77ff" height="512"/>
@@ -49,10 +46,10 @@ trunkLine
   .forward(2.8)
   .resample(0.02) // we resample so we have points to move
   .iteratePath((pt, tValue) => {
-    const [ x, y ] = pt;
-    pt[0] += noise(y*1.8)*-0.3; // shake them up a little
-    pt[0] += Math.sin(y*0.05);  // give a little curve
-  })
+    const [x, y] = pt;
+    pt[0] += noise(y * 1.8) * -0.3; // shake them up a little
+    pt[0] += Math.sin(y * 0.05); // give a little curve
+  });
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/8c7fd1fa-3572-4348-8a94-65710bdff7ef" height="512"/>
@@ -105,10 +102,7 @@ Fade the trunk out towards the leaves.
 Then a little y-displacement so the bottom isn't unnatural looking
 
 ```js
-const trunkLine = createTurtle([
-  x, 
-  0 + noise(i)*0.3
-]);
+const trunkLine = createTurtle([x, 0 + noise(i) * 0.3]);
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/e2575e9c-61c3-473e-bbb2-ab46d4f740da" height="512"/>
@@ -126,21 +120,18 @@ Now let's draw those leaves. This is going to be a random walk through a perturb
 We'll start with a random walk.
 
 ```js
-
 const randomWalk = createTurtle();
 
 const step = 0.05;
 for (let i = 0; i < 1000; i++) {
-  let angle = randInRange(-1, 1)*17;
+  let angle = randInRange(-1, 1) * 17;
   randomWalk.right(angle);
-  randomWalk.forward(step)
+  randomWalk.forward(step);
 
-  const [ endX, endY ] = randomWalk.end;
+  const [endX, endY] = randomWalk.end;
 }
 
-drawTurtles(
-  randomWalk
-)
+drawTurtles(randomWalk);
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/f98e2f48-3785-4449-b936-dc5e637bdff5" height="512"/>
@@ -148,7 +139,6 @@ drawTurtles(
 We want this walk to stay in a circle though. What we'll do is define an equation for the distance from some circle. If we step outside (the distance becomes positive) then take a step back towards the circle. Signed distance fields are very powerful tools, which are rewardingly worth exploring.
 
 ```js
-
 let startPt = [0, 0];
 
 const r = 2;
@@ -158,22 +148,23 @@ const randomWalk = createTurtle(startPt);
 
 const step = 0.05;
 for (let i = 0; i < 1000; i++) {
-  let angle = randInRange(-1, 1)*17;
+  let angle = randInRange(-1, 1) * 17;
   randomWalk.right(angle);
-  randomWalk.forward(step)
+  randomWalk.forward(step);
 
-  const [ endX, endY ] = randomWalk.end;
+  const [endX, endY] = randomWalk.end;
   const distance = sdf(endX, endY); // how far are we from the circle
-  if (distance > 0) { // are we outside
-    const up = sdf(endX, endY+step);
-    const down = sdf(endX, endY-step);
-    const right = sdf(endX+step, endY);
-    const left = sdf(endX-step, endY);
-    const gradX = (right - left)/(2*step);
-    const gradY = (up - down)/(2*step);
+  if (distance > 0) {
+    // are we outside
+    const up = sdf(endX, endY + step);
+    const down = sdf(endX, endY - step);
+    const right = sdf(endX + step, endY);
+    const left = sdf(endX - step, endY);
+    const gradX = (right - left) / (2 * step);
+    const gradY = (up - down) / (2 * step);
 
-    let a = Math.atan2(gradY, gradX)/Math.PI*180;
-    a += randInRange(-1, 1)*102;
+    let a = (Math.atan2(gradY, gradX) / Math.PI) * 180;
+    a += randInRange(-1, 1) * 102;
     a += 180;
     randomWalk.setAngle(a);
     randomWalk.forward(step);
@@ -187,7 +178,7 @@ function circleSDF([x, y], start, r) {
   dx -= start[0];
   dy -= start[1];
 
-  return Math.sqrt(dx * dx + dy * dy)-r;
+  return Math.sqrt(dx * dx + dy * dy) - r;
 }
 ```
 
@@ -198,22 +189,23 @@ Break up the lines to make them look like abstract scribbles.
 ```js
 const step = 0.05;
 for (let i = 0; i < 10000; i++) {
-  let angle = randInRange(-1, 1)*17;
+  let angle = randInRange(-1, 1) * 17;
   randomWalk.right(angle);
-  randomWalk.forward(step)
+  randomWalk.forward(step);
 
-  const [ endX, endY ] = randomWalk.end;
+  const [endX, endY] = randomWalk.end;
   const distance = sdf(endX, endY); // how far are we from the circle
-  if (distance > 0) { // are we outside
-    const up = sdf(endX, endY+step);
-    const down = sdf(endX, endY-step);
-    const right = sdf(endX+step, endY);
-    const left = sdf(endX-step, endY);
-    const gradX = (right - left)/(2*step);
-    const gradY = (up - down)/(2*step);
+  if (distance > 0) {
+    // are we outside
+    const up = sdf(endX, endY + step);
+    const down = sdf(endX, endY - step);
+    const right = sdf(endX + step, endY);
+    const left = sdf(endX - step, endY);
+    const gradX = (right - left) / (2 * step);
+    const gradY = (up - down) / (2 * step);
 
-    let a = Math.atan2(gradY, gradX)/Math.PI*180;
-    a += randInRange(-1, 1)*101; // try adjusting this direction scale
+    let a = (Math.atan2(gradY, gradX) / Math.PI) * 180;
+    a += randInRange(-1, 1) * 101; // try adjusting this direction scale
     a += 180;
     randomWalk.setAngle(a);
     randomWalk.forward(step);
@@ -233,15 +225,18 @@ Now we can shape the circle by scaling it and adding noise.
 
 ```js
 function circleSDF([x, y], start, r) {
-  let dx = 0.57*x;
-  let dy = 0.48*y;
+  let dx = 0.57 * x;
+  let dy = 0.48 * y;
 
   dx -= start[0];
   dy -= start[1];
 
-  return Math.sqrt(dx * dx + dy * dy)-r
-    + noise([x, y], { octaves: 1})*1.1
-    + noise([x*0.010, y*0.01], { octaves: 1})*0.53
+  return (
+    Math.sqrt(dx * dx + dy * dy) -
+    r +
+    noise([x, y], { octaves: 1 }) * 1.1 +
+    noise([x * 0.01, y * 0.01], { octaves: 1 }) * 0.53
+  );
 }
 ```
 
@@ -250,7 +245,7 @@ function circleSDF([x, y], start, r) {
 Let's add a little noise to the shading too.
 
 ```js
-if (rand() < +0.6 + noise([endX*18.7, endY*1.34])/1.8) {
+if (rand() < +0.6 + noise([endX * 18.7, endY * 1.34]) / 1.8) {
   randomWalk.up();
 } else {
   randomWalk.down();
@@ -262,11 +257,11 @@ if (rand() < +0.6 + noise([endX*18.7, endY*1.34])/1.8) {
 Now let's bump down the step and up the iteration count and we get something like this. Here are a few parameters and approximately what they were adjusted to.
 
 ```js
-let step = 0.03
+let step = 0.03;
 
-i < 100000
+i < 100000;
 
-const r = randInRange(0.4,2.1);
+const r = randInRange(0.4, 2.1);
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/5285d821-7c04-4e25-aca1-f9c210f08498" height="512"/>
@@ -276,18 +271,12 @@ We can put this together with the trunk with some minor adjustments.
 ```js
 let startPt = trunk.ct;
 
-randomWalk
-  .rotate(randInRange(-5, 5))
-  .translate([-0.1, -0.6])
+randomWalk.rotate(randInRange(-5, 5)).translate([-0.1, -0.6]);
 
-drawTurtles(
-  randomWalk, 
-  trunk
-);
+drawTurtles(randomWalk, trunk);
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/114d17dc-b5a3-43ab-baf6-0e1dfee2d959" height="512"/>
-
 
 And that's our tree!
 
