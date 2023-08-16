@@ -1,16 +1,16 @@
-import { Turtle } from "../interface/drawing-functions/Turtle.js";
-import { noise } from "../interface/drawing-functions/noise.js";
+import { Turtle } from "./drawing-functions/Turtle.js";
+import { noise } from "./drawing-functions/noise.js";
 import {
   rand,
   setRandSeed,
   randInRange,
   randIntInRange,
-} from "../interface/drawing-functions/rand.js";
-import { bezierEasing } from "../interface/drawing-functions/bezierEasing.js";
+} from "./drawing-functions/rand.js";
+import { bezierEasing } from "./drawing-functions/bezierEasing.js";
 import {
   isPointInPolyline,
   inside,
-} from "../interface/drawing-functions/isPointInPolyline.js";
+} from "./drawing-functions/isPointInPolyline.js";
 
 import * as acorn from "https://esm.sh/acorn@8.8.1";
 
