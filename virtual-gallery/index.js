@@ -694,12 +694,17 @@ export function raycastMap(state) {
 
   let images = [];
 
-  fetch("../art/list.json")
+  const options = {
+    mode: 'no-cors'
+  };
+
+  fetch("http://haxidraw-art.hackclub.dev/list.json")
     .then((response) => response.text())
     .then((text) => {
+      console.log(text);
       let list = JSON.parse(text);
       for (let artwork of list) {
-        let src = fileRead(`../art/${artwork.directory}/${artwork.source}`);
+        let src = fileRead(`http://haxidraw-art.hackclub.dev/art/${artwork.directory}/${artwork.source}`);
         let snapshots = [];
         for (let snapshot of artwork.snapshots) {
           let img = document.createElement("canvas");
