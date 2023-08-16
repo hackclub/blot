@@ -806,13 +806,6 @@ export function raycastMap(state) {
     t += 0.1;
     t %= loadingImages.length;
 
-    const now = performance.now();
-    if (last) {
-      count++;
-      fps = 1000 / (now - last);
-    }
-    last = now;
-
     const player = getPlayer();
 
     for (let y = 0; y < SCREEN_HEIGHT; y++) {
