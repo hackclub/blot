@@ -698,13 +698,13 @@ export function raycastMap(state) {
     mode: 'no-cors'
   };
 
-  fetch("http://haxidraw-art.hackclub.dev/list.json")
+  fetch("http://haxidraw.hackclub.dev/art/list.json")
     .then((response) => response.text())
     .then((text) => {
       console.log(text);
       let list = JSON.parse(text);
       for (let artwork of list) {
-        let src = fileRead(`http://haxidraw-art.hackclub.dev/art/${artwork.directory}/${artwork.source}`);
+        let src = fileRead(`http://haxidraw.hackclub.dev/art/${artwork.directory}/${artwork.source}`);
         let snapshots = [];
         for (let snapshot of artwork.snapshots) {
           let img = document.createElement("canvas");
