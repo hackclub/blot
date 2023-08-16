@@ -1,4 +1,4 @@
-import { createEvent } from "niue";
+import { createEvent } from 'niue'
 
 // used for auto backup, dispatched on every change to editor content
-export const [useOnEditorChange, dispatchEditorChange] = createEvent<void>();
+export const [useOnEditorChange, dispatchEditorChange] = createEvent<void>()

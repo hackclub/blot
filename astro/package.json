@@ -8,9 +8,11 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format": "prettier --ignore-path ./.prettierignore --write ."
   },
   "dependencies": {
+    "@astrojs/mdx": "^0.19.7",
     "@astrojs/preact": "^2.2.1",
     "@astrojs/vercel": "^3.6.0",
     "@codemirror/commands": "^6.2.4",
@@ -36,6 +38,7 @@
     "@astrojs/node": "^5.3.0",
     "@types/w3c-web-serial": "^1.0.3",
     "prettier": "^3.0.0",
+    "prettier-plugin-astro": "^0.11.1",
     "typescript": "^5.1.6"
   },
   "overrides": {

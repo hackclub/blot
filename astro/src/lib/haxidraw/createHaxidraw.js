@@ -1,16 +1,16 @@
-import { createWebSerialPort } from "./createWebSerialPort.js";
-import { floatsToBytes, uint16ToBytes, intsToBytes } from "./converters.js";
+import { createWebSerialPort } from './createWebSerialPort.js'
+import { floatsToBytes, uint16ToBytes, intsToBytes } from './converters.js'
 
 export async function createHaxidraw(rawPort) {
-  const port = await createWebSerialPort(rawPort);
+  const port = await createWebSerialPort(rawPort)
 
   async function goto(x, y) {
-    const bytes = floatsToBytes([ x, y ]);
-    await port.send("go", bytes);
+    const bytes = floatsToBytes([x, y])
+    await port.send('go', bytes)
   }
 
   // async function setAccel(val) {
-  //   const bytes = floatsToBytes([ val ]);    
+  //   const bytes = floatsToBytes([ val ]);
   //   await port.send("accel", bytes);
   // }
 
@@ -20,8 +20,8 @@ export async function createHaxidraw(rawPort) {
   // }
 
   async function servo(angle) {
-    const bytes = intsToBytes([ angle ]);
-    await port.send("servo", bytes);
+    const bytes = intsToBytes([angle])
+    await port.send('servo', bytes)
   }
 
   return {
@@ -32,4 +32,3 @@ export async function createHaxidraw(rawPort) {
     servo
   }
 }
-

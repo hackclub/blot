@@ -1,0 +1,157 @@
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+            
+    :root {
+        --primary: #33e;
+        --primary-rgb: 51, 51, 238;
+        --text: #000;
+        --text-rgb: 0, 0, 0;
+        --background: #fff;
+        --background-rgb: 255, 255, 255;
+        --muted: #e5e5e5;
+        --muted-rgb: 229, 229, 229;
+        --accent: #f0f;
+        --accent-rgb: 255, 0, 255;
+        --accent-dark: #900090;
+        --accent-dark-rgb: 144, 0, 144;
+        --font-body: "Atkinson Hyperlegible", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+        --font-0: 1rem;
+        --font-1: 1.125rem;
+        --font-2: 1.25rem;
+        --font-3: 1.5rem;
+        --font-4: 2rem;
+        --font-5: 3rem;
+        --font-6: 4rem;
+        --font-7: 6rem;
+    }
+  
+    html, body {
+      margin: 0px;
+      font-family: var(--font-body);
+      background-color: #fff;
+    }
+  
+    .toolbar {
+      background: var(--primary);
+      color: white;
+      padding: .1rem;
+      display: flex;
+      justify-content: space-between
+    }
+  
+    .toolbar-right {
+      display: flex;
+    }
+  
+    .toolbar-item {
+      all: unset;
+      cursor: pointer;
+      padding: .5rem;
+      border-radius: .2rem;
+    }
+  
+    .toolbar-item:hover {
+      background: #4d82e3;
+    }
+  
+    .toolbar-item:visited {
+      all: unset;
+    }
+  
+    .blot {
+      display: flex;
+      align-items: center;
+      padding-left: .5rem;
+    }
+  
+    .container {
+      font-family: var(--font-body);
+      font-size: 2rem;
+      max-width: 60vw;
+      margin: 2rem auto;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      flex-flow: column wrap;
+    }
+  
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 50%);
+      grid-template-rows: repeat(8, 25rem);
+      grid-gap: 30px;
+    }
+
+    .card {
+      width: 100%;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--primary);
+      padding: 10px;
+      text-align: center;
+      font-family: var(--font);
+    }
+
+    .card img {
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+      width: 100%;
+      height: 80%;
+      border-radius: 2px;
+      object-fit: cover;
+    }
+
+    .cardImg:hover, .cardImg:focus {
+      transform: scale(101%);
+    }
+
+    .artTitle {
+        font-size: 20px;
+        font-weight: bold;
+        color: var(--text);
+    }
+
+  </style>
+  
+  
+  <div class="toolbar">
+    <div class="blot">Blot</div>
+    <div class="toolbar-right">
+      <a class="toolbar-item" href="/editor">editor</a>
+      <a class="toolbar-item" href="/workshops">workshops</a>
+      <a class="toolbar-item" href="/gallery">gallery</a>
+      <a class="toolbar-item" href="/assembly">assembly</a>
+    </div>
+  </div>
+  
+  <div class="container">
+    <h1>Gallery</h1>
+  <div class="gallery">
+      <figure class="card">
+        <h1 class="artTitle">Leaf, Leo</h1>
+        <a href="https://www.google.com">
+        <img class="cardImg" src="https://github.com/hackclub/haxidraw/blob/main/art/leaf-leo/snapshots/leaf.png?raw=true">
+        </a>
+      </figure>
+      <figure class="card">
+        <h1 class="artTitle">Leaf, Leo</h1>
+        <a href="https://www.google.com">
+        <img class="cardImg" src="https://github.com/hackclub/haxidraw/blob/main/art/leaf-leo/snapshots/leaf.png?raw=true">
+        </a>
+      </figure>
+      <figure class="card">
+        <h1 class="artTitle">Leaf, Leo</h1>
+        <a href="https://www.google.com">
+        <img class="cardImg" src="https://github.com/hackclub/haxidraw/blob/main/art/leaf-leo/snapshots/leaf.png?raw=true">
+        </a>
+      </figure>
+      <figure class="card">
+        <h1 class="artTitle">Leaf, Leo</h1>
+        <a href="https://www.google.com">
+        <img class="cardImg" src="https://github.com/hackclub/haxidraw/blob/main/art/leaf-leo/snapshots/leaf.png?raw=true">
+        </a>
+      </figure>
+  </div>
+  </div>
