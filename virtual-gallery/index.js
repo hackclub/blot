@@ -722,7 +722,7 @@ export function raycastMap(state) {
           ctx.lineWidth = 5;
           let offset = (700 * 0.15) / 2;
           let snapshotImg = new Image();
-          snapshotImg.src = `../art/${artwork.directory}/snapshots/${snapshot}`;
+          snapshotImg.src = `http://haxidraw.hackclub.dev/art/${artwork.directory}/snapshots/${snapshot}`;
           snapshotImg.onload = () => {
             ctx.drawImage(
               snapshotImg,
