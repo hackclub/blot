@@ -16,7 +16,7 @@ function veins() {
     const x0 = t*leafLength;
     const y0 = 0;
 
-    y = edge.interpolate(t+0.1)[1];
+    let y = edge.interpolate(t+0.1)[1];
     
     const line = createTurtle([ x0, y0 ]);
 
@@ -76,15 +76,9 @@ t.iteratePath(pt => {
   return [x, y]
 });
 
-t.translate([58, -60])
+t.translate([125/2, 125/2], t.cc)
 t.scale(17.2)
 
-const workarea = createTurtle()
-  .forward(5*25.4)
-  .right(90)
-  .forward(4.8*25.4)
-
 drawTurtles(
-  t,
-  workarea
+  t
 );
