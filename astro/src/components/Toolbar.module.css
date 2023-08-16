@@ -1,73 +1,73 @@
 .root {
-    display: flex;
-    background-color: var(--primary);
-    color: white;
-    padding: 0.25rem 0.5rem;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  background-color: var(--primary);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .heading {
-    font-size: 1.1rem;
-    padding: 0 0.5rem;
-    padding-right: 1rem;
+  font-size: 1.1rem;
+  padding: 0 0.5rem;
+  padding-right: 1rem;
 }
 
 .settingsDropdown > * {
-    min-width: max-content;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  min-width: max-content;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .icon {
-    display: inline-block;
-    width: 1.25rem;
-    height: 1.25rem;
-    fill: currentColor;
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
 }
 
 .disconnectedIcon * {
-    fill: red;
+  fill: red;
 }
 
 .connectedIcon * {
-    fill: lightgreen;
+  fill: lightgreen;
 }
 
 .separator {
-    width: 1px;
-    margin: 0.25rem 0.125rem;
-    background-color: rgba(255, 255, 255, 0.2);
+  width: 1px;
+  margin: 0.25rem 0.125rem;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .settingsWrapper {
-    position: relative;
+  position: relative;
 }
 
 .dropdownEntry {
-    cursor: default;
-    padding: 5px;
-    border-radius: 5px;
+  cursor: default;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .dropdownEntry:hover {
-    background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .settingsDropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: var(--primary);
-    color: white;
-    border-radius: 0.25rem;
-    /* box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2); */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 1;
-    padding: 0.25rem;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 0.25rem;
+  /* box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2); */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1;
+  padding: 0.25rem;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }

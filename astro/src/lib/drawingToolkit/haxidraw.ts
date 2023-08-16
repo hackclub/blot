@@ -1,33 +1,33 @@
-import { Point } from "./types";
-import { floatsToBytes, intsToBytes } from "./comms/converters";
-import { WebSerialPort, createWebSerialPort } from "./comms/webSerialPort";
+import { Point } from './types'
+import { floatsToBytes, intsToBytes } from './comms/converters'
+import { WebSerialPort, createWebSerialPort } from './comms/webSerialPort'
 
 export class Haxidraw {
-    port: WebSerialPort = null!;
-    rawPort: SerialPort = null!;
+  port: WebSerialPort = null!
+  rawPort: SerialPort = null!
 
-    constructor() {}
+  constructor() {}
 
-    async init(rawPort: SerialPort) {
-        this.port = await createWebSerialPort(rawPort);
-        this.rawPort = rawPort;
-    }
+  async init(rawPort: SerialPort) {
+    this.port = await createWebSerialPort(rawPort)
+    this.rawPort = rawPort
+  }
 
-    async servo(angle: number) {
-        await this.port.send("servo", intsToBytes([angle]));
-    }
+  async servo(angle: number) {
+    await this.port.send('servo', intsToBytes([angle]))
+  }
 
-    async goTo(...point: Point) {
-        await this.port.send("go", floatsToBytes(point))
-    }
+  async goTo(...point: Point) {
+    await this.port.send('go', floatsToBytes(point))
+  }
 
-    close() {
-        return this.port.close();
-    }
+  close() {
+    return this.port.close()
+  }
 }
 
 export async function createHaxidraw(rawPort: SerialPort) {
-    const haxidraw = new Haxidraw();
-    await haxidraw.init(rawPort);
-    return haxidraw;
+  const haxidraw = new Haxidraw()
+  await haxidraw.init(rawPort)
+  return haxidraw
 }
