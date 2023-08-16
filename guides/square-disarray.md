@@ -1,6 +1,6 @@
 # Square Disarray
 
-> You can follow along in [this editor](https://haxidraw.hackclub.dev/).
+> You can follow along in [this editor](https://haxidraw.hackclub.dev/editor).
 
 Let's something like draw this:
 
