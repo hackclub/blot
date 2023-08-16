@@ -71,7 +71,7 @@ function init() {
       let x = (e.clientX - br.left);
       x = (x - panX) / scale;
       let y = (e.clientY - br.top);
-      y = (y - panY) / scale;
+      y = -(y - panY) / scale;
       const addPadding = (s: string) => s.startsWith("-") ? s : " " + s;
       mousePos.textContent = `${addPadding(x.toFixed(1))}mm, ${addPadding(y.toFixed(1))}mm`;
     }
