@@ -1,4 +1,6 @@
-
+---
+const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res => res.json())
+---
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
             
@@ -130,67 +132,19 @@
       <a class="toolbar-item" href="/assembly">assembly</a>
     </div>
   </div>
-
-  <script>
-    // fetch images from a github repo, and add them to the gallery
-    const gallery = document.getElementsByClassName('gallery')[0];
-    fetch("https://haxidraw-art.hackclub.dev/list.json").then(res => res.json()).then(data => {
-      data.forEach(item => {
-          let dir = item.directory;
-          let snapshot = item.snapshots[0];
-
-          let img = document.createElement('img');
-          img.src = `https://haxidraw-art.hackclub.dev/${dir}/snapshots/${snapshot}`;
-
-          img.classList.add('cardImg');
-
-          let card = document.createElement('figure');
-          card.classList.add('card');
-
-
-          let title = document.createElement('h1');
-          title.classList.add('artTitle');
-          title.innerText = dir;
-
-          let link = document.createElement('a');
-          
-          link.href = `https://github.com/hackclub/haxidraw/tree/main/astro/public/art/${dir}`;
-         
-          card.appendChild(title);
-          link.appendChild(img);
-          card.appendChild(link);
-          gallery!.appendChild(card);
-      })
-    })
-
-  </script>
   
   <div class="container">
     <h1>Gallery</h1>
   <div class="gallery">
-      <figure class="card">
-        <h1 class="artTitle">Leaf, Leo</h1>
-        <a href="https://www.google.com">
-        <img class="cardImg" src="https://user-images.githubusercontent.com/27078897/250635645-9ce96217-bc5e-49cc-87b2-178681188eb3.png">
-        </a>
-      </figure>
-      <figure class="card">
-        <h1 class="artTitle">Mesh, Henry</h1>
-        <a href="https://www.google.com">
-        <img class="cardImg" src="https://camo.githubusercontent.com/1bb180d6689a5afd740a78f01a21bbdc326350ff11a927dc9ba9d459e193c94f/68747470733a2f2f636c6f75642d66786e776a697670642d6861636b2d636c75622d626f742e76657263656c2e6170702f30696d6167655f5f315f2e706e67">
-        </a>
-      </figure>
-      <figure class="card">
-        <h1 class="artTitle">Raymarching 3, Henry</h1>
-        <a href="https://www.google.com">
-        <img class="cardImg" src="https://camo.githubusercontent.com/168338af5a15991123f063ada96e589c7729c8c7d40e78f79ca7044bd6fdfc00/68747470733a2f2f636c6f75642d68783634397a35766c2d6861636b2d636c75622d626f742e76657263656c2e6170702f30696d6167652e706e67">
-        </a>
-      </figure>
-      <figure class="card">
-        <h1 class="artTitle">Leaf, Leo</h1>
-        <a href="https://www.google.com">
-        <img class="cardImg" src="https://user-images.githubusercontent.com/27078897/250635645-9ce96217-bc5e-49cc-87b2-178681188eb3.png">
-        </a>
-      </figure>
+    {
+          data.map(item => (
+              <figure class="card">
+                <a href={`https://github.com/hackclub/haxidraw/tree/main/astro/public/art/${item.directory}`}>
+                  <img src={`https://haxidraw-art.hackclub.dev/${item.directory}/snapshots/${item.snapshots[0]}`} />
+                </a>
+                <h1 class="artTitle">{item.directory.replace("-", ", ")}</h1>
+              </figure>
+          ))
+    }
   </div>
   </div>
