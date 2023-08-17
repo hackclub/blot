@@ -1,9 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import { getCollection } from 'astro:content';
+import { marked } from "marked";
+
+const workshops = (await getCollection("workshops", ({ data }) => data))
 ---
 
 <Layout>
-  <style>
+  <style is:global>
     .container {
       font-family: var(--font-body);
       max-width: 60vw;
@@ -40,6 +44,10 @@ import Layout from '../layouts/Layout.astro'
       transform: scale(101%);
     }
 
+    .card > a {
+      color: inherit;
+    }
+
     .card img {
       border-bottom: 1px solid var(--primary);
       width: 100%;
@@ -55,6 +63,10 @@ import Layout from '../layouts/Layout.astro'
       padding: 0.5rem 1rem;
     }
 
+    .card .content h2 {
+      color: black;
+    }
+
     .card .content *:not(h2) {
       font-size: 0.995rem;
       margin-top: 0;
@@ -65,66 +77,19 @@ import Layout from '../layouts/Layout.astro'
     <h1>Workshops</h1>
     <p>Don't see one? Make your <a href="/editor">own</a>!</p>
     <div class="gallery">
+        {workshops.map((workshop, idx) => (
+          <div class="card">
+          <a href={`/workshop/${workshop.slug}`}>
 
-        <img
-          src="https://www.seekingoutside.com/wp-content/uploads/2018/12/Screen-Shot-2018-12-11-at-3.40.46-AM-480x670.png"
-        />
-        <div class="content">
-          <h2>Cubic disarray</h2>
-          <p>
-            Let's try to recreate this in the Haxidraw editor. A good first step
-            to reverse engineering any artwork is to break it down into the
-            obvious components. There's a grid of squares, and the squares
-            closer to the bottom seem to be rotated more and more.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <img
-          src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png"
-        />
-        <div class="content">
-          <h2>10PRINT</h2>
-          <p>
-            "10PRINT" is one of the oldest and most well-known examples of
-            generative art. It was originally created for the Commodore 64 in
-            BASIC, and the code looked like this: `10 PRINT CHR$(205.5+RND(1));
-            : GOTO 10` From just that one line, the following intricate pattern
-            is created:
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <img
-          src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F4.bp.blogspot.com%2F-PkgzZc0jsVE%2FUMqYzFOzNLI%2FAAAAAAAAA3A%2FbCOqig095Lk%2Fs1600%2Fjoy_division-unknown_pleasures.jpg&f=1&nofb=1&ipt=966d8be0c759bd539613c5eaa7b35acc898bd99a43d050df6c9df643367314dc&ipo=images"
-        />
-        <div class="content">
-          <h2>Joy Division</h2>
-          <p>
-            Let's try to recreate this in the Haxidraw editor. A good first step
-            to reverse engineering any artwork is to break it down into the
-            obvious components. There's a grid of squares, and the squares
-            closer to the bottom seem to be rotated more and more.
-          </p>
-        </div>
-      </div>
-      <div class="card">
-        <img
-          src="https://cloud-4kaqtq8oi-hack-club-bot.vercel.app/0image.png"
-        />
-        <div class="content">
-          <h2>Raymarching</h2>
-          <p>
-            Let's start by thinking about how vision works in real life. Light
-            rays come from sources such as the sun, bounce around, and
-            eventually, some of them arrive at our eyes. We could simulate each
-            ray coming from the light source, but this would be really slow.
-            Most light rays miss our eyes, resulting in many redundant
-            calculations. A better approach is to simulate the process of vision
-            in reverse:
-          </p>
-        </div>
-      </div>
+              <img src={workshop.data.thumbnail}/>
+              <div class="content">
+                <h2>{workshop.data.title}</h2>
+                <div set:html={marked.parse(workshop.data.description)}/>
+              </div>
+          </a>
+
+          </div>
+        ))}
     </div>
   </div>
 </Layout>

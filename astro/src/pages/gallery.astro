@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 ---
 
+<Layout>
 <style>
   .container {
     font-family: var(--font-body);
@@ -52,16 +53,6 @@ import Layout from '../layouts/Layout.astro'
   }
 </style>
 
-<div class="toolbar">
-  <div class="blot">Blot</div>
-  <div class="toolbar-right">
-    <a class="toolbar-item" href="/editor">editor</a>
-    <a class="toolbar-item" href="/workshops">workshops</a>
-    <a class="toolbar-item" href="/gallery">gallery</a>
-    <a class="toolbar-item" href="/assembly">assembly</a>
-  </div>
-</div>
-
 <div class="container">
   <h1>Gallery</h1>
   <div class="gallery">
@@ -103,3 +94,4 @@ import Layout from '../layouts/Layout.astro'
     </figure>
   </div>
 </div>
+</Layout> 

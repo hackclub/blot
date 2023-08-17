@@ -8,6 +8,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "sync": "astro sync",
     "astro": "astro",
     "format": "prettier --ignore-path ./.prettierignore --write . --plugin=prettier-plugin-astro"
   },
