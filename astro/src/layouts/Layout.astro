@@ -1,24 +1,174 @@
 ---
-import "../ui/theme.css";
+import '../ui/theme.css'
 
 export interface Props {
-	title: string;
+  title: string
 }
 
-const { title } = Astro.props;
+const { title } = Astro.props
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Haxidraw editor!">
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Haxidraw editor!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <style is:global>
+      @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+      :root {
+        --primary: #33e;
+        --primary-rgb: 51, 51, 238;
+        --text: #000;
+        --text-rgb: 0, 0, 0;
+        --background: #fff;
+        --background-rgb: 255, 255, 255;
+        --muted: #e5e5e5;
+        --muted-rgb: 229, 229, 229;
+        --accent: #f0f;
+        --accent-rgb: 255, 0, 255;
+        --accent-dark: #900090;
+        --accent-dark-rgb: 144, 0, 144;
+        --font-body: 'Atkinson Hyperlegible', sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+        --font-0: 1rem;
+        --font-1: 1.125rem;
+        --font-2: 1.25rem;
+        --font-3: 1.5rem;
+        --font-4: 2rem;
+        --font-5: 3rem;
+        --font-6: 4rem;
+        --font-7: 6rem;
+      }
+
+      a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: all 0.1s;
+      }
+
+      a:hover {
+        background-color: rgba(51, 51, 238, 0.8);
+        color: white;
+      }
+
+      .nostyle {
+        color: white;
+      }
+
+      html,
+      body {
+        margin: 0px;
+        font-family: var(--font-body);
+      }
+
+      .toolbar {
+        background: var(--primary);
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        min-height: 2.5rem;
+      }
+
+      .toolbar-right {
+        display: flex;
+      }
+
+      .toolbar-item {
+        all: unset;
+        cursor: pointer;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        height: 100%;
+        width: fit-content;
+        border-radius: 0.2rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .toolbar-item:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .toolbar-item:visited {
+        all: unset;
+      }
+
+      .blot {
+        display: flex;
+        align-items: center;
+        padding-left: 0.5rem;
+      }
+
+      .footer {
+        height: 2rem;
+        display: flex;
+        justify-content: flex-end;
+        background: #c5c5c5;
+      }
+
+      .footer-item:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="toolbar">
+        <div class="blot">
+          <a href="/" class="nostyle">
+            <i class="fa-solid fa-splotch" style="padding-right: 10px"></i>
+             Blot
+          </a>
+        </div>
+        <div class="toolbar-right">
+          <a class="toolbar-item" href="/editor">
+            <i class="fa-solid fa-pen-nib" style="padding-right: .5rem"></i>
+             editor
+          </a>
+          <a class="toolbar-item" href="/workshops">
+            <i class="fa-solid fa-laptop-file" style="padding-right: .5rem"></i>
+             workshops
+          </a>
+
+          <a class="toolbar-item" href="/gallery">
+            <i class="fa-solid fa-palette" style="padding-right: .5rem"></i>
+             gallery
+          </a>
+
+          <a class="toolbar-item" href="https://haxidraw.hackclub.dev">
+            <i class="fa-solid fa-arrows-to-dot" style="padding-right: .5rem"
+            ></i>
+             assembly
+          </a>
+        </div>
+      </div>
+      <slot />
+      <footer class="footer">
+        <a class="toolbar-item footer-item" href="https://hackclub.com">
+          <img
+            src="/hackclub.png"
+            style="height: 51%;
+    padding-right: 7px;
+    filter: grayscale(1) contrast(200%);"
+          />
+           Hack Club
+        </a>
+        <a
+          class="toolbar-item footer-item"
+          href="https://github.com/hackclub/haxidraw/tree/main">
+          <i class="fa-brands fa-github" style="padding-right: .5rem"></i>
+           GitHub
+        </a>
+      </footer>
+    </main>
+  </body>
 </html>

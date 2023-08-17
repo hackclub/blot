@@ -1,3 +1,9 @@
+---
+title: Raymarching
+description: >
+    The goal of this guide will be to simulate 3D environments, with realistic lighting and shadows. By the end, you should have something like this...
+---
+
 # Raymarching in Haxidraw
 
 ### (Henry Bass, Advanced, 1hr)

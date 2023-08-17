@@ -94,7 +94,6 @@ function addDragDrop() {
     droparea.classList.remove('hidden')
     pauseEvent(evt)
   })
-
   ;['mouseout'].forEach(trigger =>
     window.addEventListener(trigger, function (evt) {
       droparea.classList.add('hidden')

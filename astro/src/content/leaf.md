@@ -1,3 +1,8 @@
+---
+title: How to draw a leaf
+description: Let's learn how to draw a leaf that looks likes this.
+---
+
 # How to draw a leaf
 
 > You can follow along in this editor: https://editor.haxidraw.hackclub.com/

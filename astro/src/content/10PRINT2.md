@@ -1,4 +1,10 @@
-﻿_This tutorial is aimed at beginners, but it works best if you have a little prior programming experience._
+﻿---
+title: 10PRINT2
+description: >
+  "10PRINT" is one of the oldest and most well-known examples of generative art. It was originally created for the Commodore 64 in BASIC, and the code looked like this: `10 PRINT CHR$(205.5+RND(1)); : GOTO 10`.
+---
+
+_This tutorial is aimed at beginners, but it works best if you have a little prior programming experience._
 
 "10PRINT" is one of the oldest and most well-known examples of generative art. It was originally created for the Commodore 64 in BASIC, and the code looked like this:
 

@@ -1,3 +1,9 @@
+---
+title: Joy Division
+description: >
+  Here's the cover to Joy Division's first album. The actual album is based on [real data](https://blogs.scientificamerican.com/sa-visual/pop-culture-pulsar-origin-story-of-joy-division-s-unknown-pleasures-album-cover-video/), but we'll try to make a simpler version.
+---
+
 # Joy Division Album Cover
 
 Here's the cover to Joy Division's first album. The actual album is based on [real data](https://blogs.scientificamerican.com/sa-visual/pop-culture-pulsar-origin-story-of-joy-division-s-unknown-pleasures-album-cover-video/), but we'll try to make a simpler version.

@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --ignore-path ./.prettierignore --write ."
+    "format": "prettier --ignore-path ./.prettierignore --write . --plugin=prettier-plugin-astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^0.19.7",

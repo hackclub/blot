@@ -1,3 +1,10 @@
+---
+title: Draw a triangle mesh
+description: >
+  This guide is based on a tutorial on _[generativeartistry](https://generativeartistry.com/tutorials/triangular-mesh/)_ by [maxwellito](https://maxwellito.com/)
+---
+
+
 # Draw a triangle mesh in Haxidraw
 
 ### This guide is based on a tutorial on _[generativeartistry](https://generativeartistry.com/tutorials/triangular-mesh/)_ by [maxwellito](https://maxwellito.com/)

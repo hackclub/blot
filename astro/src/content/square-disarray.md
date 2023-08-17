@@ -1,3 +1,8 @@
+---
+title: Square Disarray
+description: Let's draw an (dis)array of squares! Let's start by centering the drawing we'll make in the document.
+---
+
 # Square Disarray
 
 > You can follow along in [this editor](https://haxidraw.hackclub.dev/).

@@ -1,293 +1,232 @@
+---
+import Layout from '../layouts/Layout.astro'
+---
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<Layout>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
+    :root {
+      --primary: #33e;
+      --primary-rgb: 51, 51, 238;
+      --text: #000;
+      --text-rgb: 0, 0, 0;
+      --background: #fff;
+      --background-rgb: 255, 255, 255;
+      --muted: #e5e5e5;
+      --muted-rgb: 229, 229, 229;
+      --accent: #f0f;
+      --accent-rgb: 255, 0, 255;
+      --accent-dark: #900090;
+      --accent-dark-rgb: 144, 0, 144;
+      --font-body: 'Atkinson Hyperlegible', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-0: 1rem;
+      --font-1: 1.125rem;
+      --font-2: 1.25rem;
+      --font-3: 1.5rem;
+      --font-4: 2rem;
+      --font-5: 3rem;
+      --font-6: 4rem;
+      --font-7: 6rem;
+    }
 
-  :root {
-    --primary: #33e;
-    --primary-rgb: 51, 51, 238;
-    --text: #000;
-    --text-rgb: 0, 0, 0;
-    --background: #fff;
-    --background-rgb: 255, 255, 255;
-    --muted: #e5e5e5;
-    --muted-rgb: 229, 229, 229;
-    --accent: #f0f;
-    --accent-rgb: 255, 0, 255;
-    --accent-dark: #900090;
-    --accent-dark-rgb: 144, 0, 144;
-    --font-body: "Atkinson Hyperlegible", sans-serif;
-    --font-mono: "JetBrains Mono", monospace;
-    --font-0: 1rem;
-    --font-1: 1.125rem;
-    --font-2: 1.25rem;
-    --font-3: 1.5rem;
-    --font-4: 2rem;
-    --font-5: 3rem;
-    --font-6: 4rem;
-    --font-7: 6rem;
-  }
+    html,
+    body {
+      margin: 0px;
+      font-family: var(--font-body);
+    }
 
-  html, body {
-    margin: 0px;
-    font-family: var(--font-body);
-  }
+    main {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+    .banner {
+      flex: 1;
+      background: #f2f2f100;
+      /*    background: #ffbb1d5c;*/
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      justify-content: space-around;
+    }
 
-  main {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-  }
+    .banner-upper {
+    }
 
-  .toolbar {
-    background: var(--primary);
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    min-height: 2.5rem;
-  }
+    .banner-lower {
+      display: flex;
+      align-items: center;
+    }
 
-  .toolbar-right {
-    display: flex;
-  }
+    .blot-bot {
+      width: 70%;
+    }
 
-  .toolbar-item {
-    all: unset;
-    cursor: pointer;
-    padding-left: .5rem;
-    padding-right: .5rem;
-    height: 100%;
-    width: fit-content;
-    border-radius: .2rem;
-    display: flex;
-    align-items: center;
-  }
+    .blot-title {
+      /*    position: absolute;*/
+      /*    left: 0px;*/
+      /*    top: 1rem;*/
+      font-size: 4rem;
+      font-family: 'Tilt Prism', cursive;
+      /*    width: 100%;*/
+      text-align: center;
+    }
 
-  .toolbar-item:hover {
-    background: rgba(255,255,255,0.2); 
-  }
+    .banner-text {
+      font-family:
+        'Phantom Sans',
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        sans-serif;
+      font-size: 1.2rem;
+      padding-right: 5rem;
+      font-weight: 400;
+      letter-spacing: 0.009em;
+      line-height: 1.5;
+      align-self: baseline;
+      padding-top: 5rem;
+    }
 
-  .toolbar-item:visited {
-    all: unset;
-  }
+    .banner-text a {
+      box-sizing: border-box;
+      margin: 0;
+      min-width: 0;
+      color: #ec3750;
+      -webkit-text-decoration: underline;
+      text-decoration: underline;
+      text-underline-position: under;
+    }
 
-  .blot {
-    display: flex;
-    align-items: center;
-    padding-left: .5rem;
-  }
+    .banner-text a:hover {
+      text-decoration-style: wavy;
+    }
 
-  .footer {
-    height: 2rem;
-    display: flex;
-    justify-content: flex-end;
-    background: #c5c5c5;
-  }
+    canvas {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      z-index: -1;
+    }
+  </style>
 
-  .footer-item:hover {
-    background: rgba(0,0,0,0.2); 
-  }
-
-  .banner {
-    flex: 1;
-    background: #f2f2f100;
-/*    background: #ffbb1d5c;*/
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    justify-content: space-around;
-  }
-
-  .banner-upper {
-
-  }
-
-  .banner-lower {
-    display: flex;
-    align-items: center;
-  }
-
-  .blot-bot {
-    width: 70%;
-  }
-
-  .blot-title {
-/*    position: absolute;*/
-/*    left: 0px;*/
-/*    top: 1rem;*/
-    font-size: 4rem;
-    font-family: "Tilt Prism",cursive;
-/*    width: 100%;*/
-    text-align: center;
-  }
-
-  .banner-text {
-    font-family: "Phantom Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    font-size: 1.2rem;
-    padding-right: 5rem;
-    font-weight: 400;
-    letter-spacing: 0.009em;
-    line-height: 1.5;
-    align-self: baseline;
-    padding-top: 5rem;
-  }
-
-  .banner-text a {
-    box-sizing: border-box;
-    margin: 0;
-    min-width: 0;
-    color: #ec3750;
-    -webkit-text-decoration: underline;
-    text-decoration: underline;
-    text-underline-position: under;
-  }
-
-  .banner-text a:hover {
-    text-decoration-style: wavy;
-  }
-
-  canvas {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: -1;
-  }
-
-</style>
-
-<main>
-  <div class="toolbar">
-    <div class="blot">
-      <i class="fa-solid fa-splotch" style="padding-right: 10px"></i>
-      Blot
-    </div>
-    <div class="toolbar-right">
-      <a class="toolbar-item" href="/editor">
-        <i class="fa-solid fa-pen-nib" style="padding-right: .5rem"></i>
-        editor
-      </a>
-      <a class="toolbar-item">
-        <i class="fa-solid fa-laptop-file" style="padding-right: .5rem"></i>
-        workshops
-      </a>
-
-      <a class="toolbar-item">
-        <i class="fa-solid fa-palette" style="padding-right: .5rem"></i>
-        gallery
-      </a>
-
-      <a class="toolbar-item">
-        <i class="fa-solid fa-arrows-to-dot" style="padding-right: .5rem"></i>
-        assembly
-      </a>
-    </div>
-  </div>
-  <canvas id = "canvas"></canvas>
+  <canvas id="canvas"></canvas>
 
   <script>
-    import lineclip from "../lib/lineclip.js";
-    import runCode from "../lib/run.js";
-    import { turtles } from "../lib/paths.js";
-    import { CodePosition, ErrorState, getStore, patchStore } from "../lib/state.ts";
+    import lineclip from '../lib/lineclip.js'
+    import runCode from '../lib/run.js'
+    import { turtles } from '../lib/paths.js'
+    import {
+      CodePosition,
+      ErrorState,
+      getStore,
+      patchStore
+    } from '../lib/state.ts'
 
-    const canvas : HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    ctx.strokeStyle = "#ddd";
+    const canvas: HTMLCanvasElement = document.getElementById(
+      'canvas'
+    ) as HTMLCanvasElement
+    const ctx = canvas.getContext('2d')
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    ctx.strokeStyle = '#ddd'
 
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-    const tIndex = Math.floor(Math.random() * turtles.length);
-    const turtle = turtles[tIndex];
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    })
+    const tIndex = Math.floor(Math.random() * turtles.length)
+    const turtle = turtles[tIndex]
 
-    let polyline = turtle.path[0];
+    let polyline = turtle.path[0]
 
-    const config = [{scale:7, xoff: 0, yoff:0, lineStart: 10, lineEnd: polyline.length - 15},
-                    {scale:10, xoff: 5, yoff:-48, lineStart: 1, lineEnd: polyline.length}]
-                  [tIndex];
-    
-    const paths = polyline.map(([x, y]) => [(x + config.xoff) * config.scale, (y + config.yoff) * config.scale]);
-    let i = config.lineStart + 1;
-    let j = config.lineStart + 1;
+    const config = [
+      {
+        scale: 7,
+        xoff: 0,
+        yoff: 0,
+        lineStart: 10,
+        lineEnd: polyline.length - 15
+      },
+      { scale: 10, xoff: 5, yoff: -48, lineStart: 1, lineEnd: polyline.length }
+    ][tIndex]
+
+    const paths = polyline.map(([x, y]) => [
+      (x + config.xoff) * config.scale,
+      (y + config.yoff) * config.scale
+    ])
+    let i = config.lineStart + 1
+    let j = config.lineStart + 1
 
     function lerp(x1, x2, t) {
-      return x1 + (x2 - x1) * t;
+      return x1 + (x2 - x1) * t
     }
 
     function dist(x1, y1, x2, y2) {
-      return Math.sqrt((x1-x2)**2 + (y1-y2)**2);
+      return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
     }
 
     function draw() {
-      if (i >= config.lineEnd - 1) return;
+      if (i >= config.lineEnd - 1) return
       i += 10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
       j = Math.floor(i)
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      let [x, y] = paths[j];
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      let [x, y] = paths[j]
       // increase i a bit if we're out of the screen
-      if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) i += 1;
-      if (j === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(lerp(paths[j-1][0], x, i - j), lerp(paths[j-1][1], y, i - j));
+      if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) i += 1
+      if (j === 0) ctx.moveTo(x, y)
+      else
+        ctx.lineTo(
+          lerp(paths[j - 1][0], x, i - j),
+          lerp(paths[j - 1][1], y, i - j)
+        )
       ctx.stroke()
     }
 
-    setInterval(
-      () => {draw(i)}
-    , 10);
+    setInterval(() => {
+      draw(i)
+    }, 10)
   </script>
 
   <div class="banner">
-
     <div class="banner-upper">
       <div class="blot-title">Blot, a plotter bot from Hack Club</div>
     </div>
 
     <div class="banner-lower">
-      <img class="blot-bot" style="min-width: 60%" src="/blot-bot-clear.png"/>
+      <img class="blot-bot" style="min-width: 60%" src="/blot-bot-clear.png" />
       <div class="banner-text">
         <div>
-          Blot is a <a href="youshipweship.com">"You Ship, We Ship"</a> project from Hack Club. It's both a robot and an art project.
+          Blot is a <a href="youshipweship.com">"You Ship, We Ship"</a> project
+          from Hack Club. It's both a robot and an art project.
         </div>
 
-        <br/>
+        <br />
 
         <div>
-          We're creating an <a href="3dmaze">art gallery</a>. It's an endlessly explorable space filled with <a href="2dgallery">your art programs</a>. When you <a href="howtosubmit">submit your art</a> to the gallery we will send you a <a href="resourcesonmachine">drawing machine</a> to turn that art into a real physical piece.
+          We're creating an <a href="3dmaze">art gallery</a>. It's an endlessly
+          explorable space filled with <a href="2dgallery">your art programs</a
+          >. When you <a href="howtosubmit">submit your art</a> to the gallery
+          we will send you a <a href="resourcesonmachine">drawing machine</a> to
+          turn that art into a real physical piece.
         </div>
 
-        <br/>
+        <br />
 
         <div>
-          Together we'll practice the art of programming, dive into digital fabrication, and <a href="linktomuseumexhibit">build something amazing together</a>.
+          Together we'll practice the art of programming, dive into digital
+          fabrication, and <a href="linktomuseumexhibit"
+            >build something amazing together</a
+          >.
         </div>
       </div>
     </div>
-
   </div>
-
-  <div class="footer">
-    <a class="toolbar-item footer-item" href="https://hackclub.com">
-      <img 
-        src="/hackclub.png"
-        style="height: 51%;
-    padding-right: 7px;
-    filter: grayscale(1) contrast(200%);"/>
-      Hack Club
-    </a>
-    <a class="toolbar-item footer-item" href="https://github.com/hackclub/haxidraw/tree/main">
-      <i class="fa-brands fa-github" style="padding-right: .5rem"></i>
-      GitHub
-    </a>
-  </div>
-</main>
-
-
-
-
+</Layout>

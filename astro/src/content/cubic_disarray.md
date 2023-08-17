@@ -1,3 +1,10 @@
+---
+title: Cubic Disarray
+description: >
+  **_Georg Nees_** was a pioneer of digital art, responsible for interesting works like Cubic Disarray.
+---
+
+
 # Cubic Disarray
 
 **_Georg Nees_** was a pioneer of digital art, responsible for interesting works like Cubic Disarray.

@@ -1,3 +1,9 @@
+---
+title: 10PRINT
+description: >
+  "10PRINT" is one of the oldest and most well-known examples of generative art. It was originally created for the Commodore 64 in BASIC, and the code looked like this: `10 PRINT CHR$(205.5+RND(1)); : GOTO 10`
+---
+
 # 10PRINT
 
 ## Beginner, 25min

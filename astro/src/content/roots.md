@@ -1,3 +1,9 @@
+---
+title: Roots 
+description: >
+  We can first start by drawing a simple random walk, where during each step we (randomly) turn the turtle by a few degrees and then inch it forward. We'll later make this recursive, so let's put the logic in its own function `makeBranch`. The first branch will start at the center, so we also define the width and height of the document (in millimeters, as visualized as the blue rectangle) at the top as constants. We want the branch to start facing the bottom of the page, so we also rotate the turtle 90 degrees when creating it:
+---
+
 # Roots in Haxidraw
 
 (Written by @profsucrose, if you have any issues or questions)
