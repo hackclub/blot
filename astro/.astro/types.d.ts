@@ -190,16 +190,93 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		
-	};
-
-	type DataEntryMap = {
-		"images": {
+		"workshops": {
+"10PRINT.md": {
+	id: "10PRINT.md";
+  slug: "10print";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
+"10PRINT2.md": {
+	id: "10PRINT2.md";
+  slug: "10print2";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
+"cubic_disarray.md": {
+	id: "cubic_disarray.md";
+  slug: "cubic_disarray";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
+"eca.md": {
+	id: "eca.md";
+  slug: "eca";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
+"joydivision.md": {
+	id: "joydivision.md";
+  slug: "joydivision";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
+"landscape.md": {
+	id: "landscape.md";
+  slug: "landscape";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
+"leaf.md": {
+	id: "leaf.md";
+  slug: "leaf";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
+"mesh.md": {
+	id: "mesh.md";
+  slug: "mesh";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
+"raymarching.md": {
+	id: "raymarching.md";
+  slug: "raymarching";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
+"roots.md": {
+	id: "roots.md";
+  slug: "roots";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
+"square-disarray.md": {
+	id: "square-disarray.md";
+  slug: "square-disarray";
+  body: string;
+  collection: "workshops";
+  data: InferEntrySchema<"workshops">
+} & { render(): Render[".md"] };
 };
 
 	};
 
+	type DataEntryMap = {
+		
+	};
+
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	type ContentConfig = never;
+	type ContentConfig = typeof import("../src/content/config.js");
 }
