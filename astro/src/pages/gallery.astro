@@ -133,14 +133,35 @@
 
   <script>
     // fetch images from a github repo, and add them to the gallery
-    const gallery = document.querySelector('.gallery');
-    fetch("https://raw.githubusercontent.com/hackclub/haxidraw/7bbbdc25265a55088978e3fb557b65c8d80594b9/astro/public/art/list.json", {
-  headers: {
-    'mode':'cors'
-  }
-}).then(res => res.json()).then(data => {
-        alert(data);
-    });
+    const gallery = document.getElementsByClassName('gallery')[0];
+    fetch("https://haxidraw-art.hackclub.dev/list.json").then(res => res.json()).then(data => {
+      data.forEach(item => {
+          let dir = item.directory;
+          let snapshot = item.snapshots[0];
+
+          let img = document.createElement('img');
+          img.src = `https://haxidraw-art.hackclub.dev/${dir}/snapshots/${snapshot}`;
+
+          img.classList.add('cardImg');
+
+          let card = document.createElement('figure');
+          card.classList.add('card');
+
+
+          let title = document.createElement('h1');
+          title.classList.add('artTitle');
+          title.innerText = dir;
+
+          let link = document.createElement('a');
+          
+          link.href = `https://github.com/hackclub/haxidraw/tree/main/astro/public/art/${dir}`;
+         
+          card.appendChild(title);
+          link.appendChild(img);
+          card.appendChild(link);
+          gallery!.appendChild(card);
+      })
+    })
 
   </script>
   
