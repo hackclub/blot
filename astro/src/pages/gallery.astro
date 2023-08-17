@@ -161,8 +161,8 @@ const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res
 
     .card img {
       box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
-      max-width: 100%;
-      max-height: 100%;
+      width: 19rem;
+      height: 19rem;
       border-radius: 2px;
       object-fit: cover;
     }
@@ -233,7 +233,7 @@ const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res
                 <a href={`https://github.com/hackclub/haxidraw/tree/main/astro/public/art/${item.directory}`}>
                   <img src={`https://haxidraw-art.hackclub.dev/${item.directory}/snapshots/${item.snapshots[0]}`} />
                 </a>
-                <h1 class="artTitle">{item.directory.replace("-", ", ")}</h1>
+                <h1 class="artTitle">{item.directory.replaceAll("-", ", ")}</h1>
               </figure>
           ))
     }
