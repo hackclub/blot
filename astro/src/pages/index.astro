@@ -80,6 +80,12 @@
     padding-left: .5rem;
   }
 
+  .blot a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
   .footer {
     height: 2rem;
     display: flex;
@@ -162,8 +168,10 @@
 <main>
   <div class="toolbar">
     <div class="blot">
+      <a href="/">
       <i class="fa-solid fa-splotch" style="padding-right: 10px"></i>
       Blot
+    </a>
     </div>
     <div class="toolbar-right">
       <a class="toolbar-item" href="/editor">
@@ -175,7 +183,7 @@
         workshops
       </a>
 
-      <a class="toolbar-item">
+      <a class="toolbar-item" href="/gallery">
         <i class="fa-solid fa-palette" style="padding-right: .5rem"></i>
         gallery
       </a>
@@ -208,8 +216,8 @@
 
     let polyline = turtle.path[0];
 
-    const config = [{scale:7, xoff: 0, yoff:0, lineStart: 10, lineEnd: polyline.length - 15},
-                    {scale:10, xoff: 5, yoff:-48, lineStart: 1, lineEnd: polyline.length}]
+    const config = [{scale:7, xoff: 10, yoff:10, lineStart: 10, lineEnd: polyline.length - 15},
+                    {scale:12, xoff:3, yoff:-30, lineStart: 1, lineEnd: polyline.length}]
                   [tIndex];
     
     const paths = polyline.map(([x, y]) => [(x + config.xoff) * config.scale, (y + config.yoff) * config.scale]);

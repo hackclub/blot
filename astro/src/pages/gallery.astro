@@ -1,8 +1,10 @@
 ---
 const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res => res.json())
 ---
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
             
     :root {
     --primary: #33e;
@@ -37,6 +39,9 @@ const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res
   main {
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
   }
 
   .toolbar {
@@ -76,6 +81,58 @@ const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res
     align-items: center;
     padding-left: .5rem;
   }
+
+  .blot a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .footer {
+    height: 2rem;
+    display: flex;
+    justify-content: flex-end;
+    background: #c5c5c5;
+  }
+
+  .footer-item:hover {
+    background: rgba(0,0,0,0.2); 
+  }
+
+  .banner {
+    flex: 1;
+    background: #f2f2f100;
+/*    background: #ffbb1d5c;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    justify-content: space-around;
+  }
+
+  .banner-upper {
+
+  }
+
+  .banner-lower {
+    display: flex;
+    align-items: center;
+  }
+
+  .blot-bot {
+    width: 70%;
+  }
+
+  .blot-title {
+/*    position: absolute;*/
+/*    left: 0px;*/
+/*    top: 1rem;*/
+    font-size: 4rem;
+    font-family: "Tilt Prism",cursive;
+/*    width: 100%;*/
+    text-align: center;
+  }
+
 
   
     .container {
@@ -120,21 +177,55 @@ const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res
         color: var(--text);
     }
 
+    .decoratedLink {
+      box-sizing: border-box;
+      margin: 0;
+      min-width: 0;
+      color: #33e;
+      -webkit-text-decoration: underline;
+      text-decoration: underline;
+      text-underline-position: under;
+    }
+
+    .decoratedLink:hover {
+      text-decoration-style: wavy;
+    }
+
   </style>
   
   
   <div class="toolbar">
-    <div class="blot">Blot</div>
+    <div class="blot">
+      <a href="/">
+      <i class="fa-solid fa-splotch" style="padding-right: 10px"></i>
+      Blot
+    </a>
+    </div>
     <div class="toolbar-right">
-      <a class="toolbar-item" href="/editor">editor</a>
-      <a class="toolbar-item" href="/workshops">workshops</a>
-      <a class="toolbar-item" href="/gallery">gallery</a>
-      <a class="toolbar-item" href="/assembly">assembly</a>
+      <a class="toolbar-item" href="/editor">
+        <i class="fa-solid fa-pen-nib" style="padding-right: .5rem"></i>
+        editor
+      </a>
+      <a class="toolbar-item">
+        <i class="fa-solid fa-laptop-file" style="padding-right: .5rem"></i>
+        workshops
+      </a>
+
+      <a class="toolbar-item" href="/gallery">
+        <i class="fa-solid fa-palette" style="padding-right: .5rem"></i>
+        gallery
+      </a>
+
+      <a class="toolbar-item">
+        <i class="fa-solid fa-arrows-to-dot" style="padding-right: .5rem"></i>
+        assembly
+      </a>
     </div>
   </div>
   
   <div class="container">
-    <h1>Gallery</h1>
+    <h2>Gallery</h2>
+    <p>Upload your art <a class = "decoratedLink" href="https://github.com/hackclub/haxidraw/tree/main/astro/public/art">here</a></p>
   <div class="gallery">
     {
           data.map(item => (
