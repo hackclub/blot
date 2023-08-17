@@ -3,102 +3,107 @@
     @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
             
     :root {
-        --primary: #33e;
-        --primary-rgb: 51, 51, 238;
-        --text: #000;
-        --text-rgb: 0, 0, 0;
-        --background: #fff;
-        --background-rgb: 255, 255, 255;
-        --muted: #e5e5e5;
-        --muted-rgb: 229, 229, 229;
-        --accent: #f0f;
-        --accent-rgb: 255, 0, 255;
-        --accent-dark: #900090;
-        --accent-dark-rgb: 144, 0, 144;
-        --font-body: "Atkinson Hyperlegible", sans-serif;
-        --font-mono: "JetBrains Mono", monospace;
-        --font-0: 1rem;
-        --font-1: 1.125rem;
-        --font-2: 1.25rem;
-        --font-3: 1.5rem;
-        --font-4: 2rem;
-        --font-5: 3rem;
-        --font-6: 4rem;
-        --font-7: 6rem;
-    }
-  
-    html, body {
-      margin: 0px;
-      font-family: var(--font-body);
-      background-color: #fff;
-    }
-  
-    .toolbar {
-      background: var(--primary);
-      color: white;
-      padding: .1rem;
-      display: flex;
-      justify-content: space-between
-    }
-  
-    .toolbar-right {
-      display: flex;
-    }
-  
-    .toolbar-item {
-      all: unset;
-      cursor: pointer;
-      padding: .5rem;
-      border-radius: .2rem;
-    }
-  
-    .toolbar-item:hover {
-      background: #4d82e3;
-    }
-  
-    .toolbar-item:visited {
-      all: unset;
-    }
-  
-    .blot {
-      display: flex;
-      align-items: center;
-      padding-left: .5rem;
-    }
+    --primary: #33e;
+    --primary-rgb: 51, 51, 238;
+    --text: #000;
+    --text-rgb: 0, 0, 0;
+    --background: #fff;
+    --background-rgb: 255, 255, 255;
+    --muted: #e5e5e5;
+    --muted-rgb: 229, 229, 229;
+    --accent: #f0f;
+    --accent-rgb: 255, 0, 255;
+    --accent-dark: #900090;
+    --accent-dark-rgb: 144, 0, 144;
+    --font-body: "Atkinson Hyperlegible", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --font-0: 1rem;
+    --font-1: 1.125rem;
+    --font-2: 1.25rem;
+    --font-3: 1.5rem;
+    --font-4: 2rem;
+    --font-5: 3rem;
+    --font-6: 4rem;
+    --font-7: 6rem;
+  }
+
+  html, body {
+    margin: 0px;
+    font-family: var(--font-body);
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .toolbar {
+    background: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    min-height: 2.5rem;
+  }
+
+  .toolbar-right {
+    display: flex;
+  }
+
+  .toolbar-item {
+    all: unset;
+    cursor: pointer;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    height: 100%;
+    width: fit-content;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .toolbar-item:hover {
+    background: rgba(255,255,255,0.1); 
+  }
+
+  .toolbar-item:visited {
+    all: unset;
+  }
+
+  .blot {
+    display: flex;
+    align-items: center;
+    padding-left: .5rem;
+  }
+
   
     .container {
       font-family: var(--font-body);
       font-size: 2rem;
       max-width: 60vw;
       margin: 2rem auto;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      flex-flow: column wrap;
     }
   
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(2, 50%);
-      grid-template-rows: repeat(8, 25rem);
-      grid-gap: 30px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .card {
-      width: 100%;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
       border: 1px solid var(--primary);
       padding: 10px;
-      text-align: center;
       font-family: var(--font);
+      max-width: 33%;
+      max-height: 35%;
     }
 
     .card img {
       box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
-      width: 100%;
-      height: 80%;
+      max-width: 100%;
+      max-height: 100%;
       border-radius: 2px;
       object-fit: cover;
     }
@@ -125,6 +130,19 @@
       <a class="toolbar-item" href="/assembly">assembly</a>
     </div>
   </div>
+
+  <script>
+    // fetch images from a github repo, and add them to the gallery
+    const gallery = document.querySelector('.gallery');
+    fetch("https://raw.githubusercontent.com/hackclub/haxidraw/7bbbdc25265a55088978e3fb557b65c8d80594b9/astro/public/art/list.json", {
+  headers: {
+    'mode':'cors'
+  }
+}).then(res => res.json()).then(data => {
+        alert(data);
+    });
+
+  </script>
   
   <div class="container">
     <h1>Gallery</h1>
@@ -132,25 +150,25 @@
       <figure class="card">
         <h1 class="artTitle">Leaf, Leo</h1>
         <a href="https://www.google.com">
-        <img class="cardImg" src="https://github.com/hackclub/haxidraw/blob/main/art/leaf-leo/snapshots/leaf.png?raw=true">
+        <img class="cardImg" src="https://user-images.githubusercontent.com/27078897/250635645-9ce96217-bc5e-49cc-87b2-178681188eb3.png">
+        </a>
+      </figure>
+      <figure class="card">
+        <h1 class="artTitle">Mesh, Henry</h1>
+        <a href="https://www.google.com">
+        <img class="cardImg" src="https://camo.githubusercontent.com/1bb180d6689a5afd740a78f01a21bbdc326350ff11a927dc9ba9d459e193c94f/68747470733a2f2f636c6f75642d66786e776a697670642d6861636b2d636c75622d626f742e76657263656c2e6170702f30696d6167655f5f315f2e706e67">
+        </a>
+      </figure>
+      <figure class="card">
+        <h1 class="artTitle">Raymarching 3, Henry</h1>
+        <a href="https://www.google.com">
+        <img class="cardImg" src="https://camo.githubusercontent.com/168338af5a15991123f063ada96e589c7729c8c7d40e78f79ca7044bd6fdfc00/68747470733a2f2f636c6f75642d68783634397a35766c2d6861636b2d636c75622d626f742e76657263656c2e6170702f30696d6167652e706e67">
         </a>
       </figure>
       <figure class="card">
         <h1 class="artTitle">Leaf, Leo</h1>
         <a href="https://www.google.com">
-        <img class="cardImg" src="https://github.com/hackclub/haxidraw/blob/main/art/leaf-leo/snapshots/leaf.png?raw=true">
-        </a>
-      </figure>
-      <figure class="card">
-        <h1 class="artTitle">Leaf, Leo</h1>
-        <a href="https://www.google.com">
-        <img class="cardImg" src="https://github.com/hackclub/haxidraw/blob/main/art/leaf-leo/snapshots/leaf.png?raw=true">
-        </a>
-      </figure>
-      <figure class="card">
-        <h1 class="artTitle">Leaf, Leo</h1>
-        <a href="https://www.google.com">
-        <img class="cardImg" src="https://github.com/hackclub/haxidraw/blob/main/art/leaf-leo/snapshots/leaf.png?raw=true">
+        <img class="cardImg" src="https://user-images.githubusercontent.com/27078897/250635645-9ce96217-bc5e-49cc-87b2-178681188eb3.png">
         </a>
       </figure>
   </div>
