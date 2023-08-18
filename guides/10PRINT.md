@@ -20,11 +20,11 @@ A Haxidraw is a small drawing robot that can be programed from a browser. You se
 
 Here are some examples of art people have made with Haxidraw:
 
-<img src="https://github.com/hackclub/haxidraw/blob/main/astro/public/art/landscape-henry/snapshots/landscape.png?raw=true" width="512"/>
+<img src="https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true" width="512"/>
 
-<img src="https://github.com/hackclub/haxidraw/blob/main/astro/public/art/roots-kai/snapshots/roots.png?raw=true" width="512"/>
+<img src="https://github.com/hackclub/haxidraw/blob/main/art/roots-kai/snapshots/roots.png?raw=true" width="512"/>
 
-<img src="https://github.com/hackclub/haxidraw/blob/main/astro/public/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true" width="512"/>
+<img src="https://github.com/hackclub/haxidraw/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true" width="512"/>
 
 Now, let's take another look at the original 10PRINT artwork that we'll try to replicate.
 
