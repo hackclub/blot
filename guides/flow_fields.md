@@ -1,4 +1,5 @@
 # Flow Fields
+
 <img src="https://cloud-130z460un-hack-club-bot.vercel.app/0image__2_.png" width=512px>
 
 Let's take a shot at creating some natural looking patterns in the Haxidraw editor. To create images that feel like they flow, a good start would be thinking about how actual fluids work. 
@@ -80,6 +81,7 @@ this.y += Math.sin(this.y);
 ```
 
 That... doesn't look great.
+
 <img src="https://cloud-16d5nm8vj-hack-club-bot.vercel.app/0image.png" width=512px>
 
 Perhaps we just need more detail. Let's change the step size of the particles down to 0.1 like so:
