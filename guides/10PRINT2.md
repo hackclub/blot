@@ -20,11 +20,11 @@ A Haxidraw is a small drawing robot that can be programed from a browser. You se
 
 Here are some examples of art people have made with Haxidraw:
 
-<img src="https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true" width="512px">
+<img src="https://github.com/hackclub/haxidraw/blob/main/astro/public/art/landscape-henry/snapshots/landscape.png?raw=true" width="512px">
 
-<img src="https://github.com/hackclub/haxidraw/blob/main/art/roots-kai/snapshots/roots.png?raw=true" width="512px">
+<img src="https://github.com/hackclub/haxidraw/blob/main/astro/public/art/roots-kai/snapshots/roots.png?raw=true" width="512px">
 
-<img src="https://github.com/hackclub/haxidraw/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true" width="512px">
+<img src="https://github.com/hackclub/haxidraw/blob/main/astro/public/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true" width="512px">
 
 The artwork seems to be a grid of slashes. Some slashes point to to the top-right, others point to the bottom-right. Overall, the distribution seems to be about 50/50. If you look closely, you might notice that the slashes are just plain text: "/" or "\\". In fact, the Commodore program just prints a random sequence of characters to the screen, left to right. The challenge is, in the Haxidraw editor, you can't write symbols directly to the screen - we'll have to draw the slashes as lines.
 
