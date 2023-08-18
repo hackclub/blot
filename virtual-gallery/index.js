@@ -698,13 +698,13 @@ export function raycastMap(state) {
     mode: 'no-cors'
   };
 
-  fetch("http://haxidraw.hackclub.dev/art/list.json")
+  fetch("https://haxidraw-art.hackclub.dev/list.json")
     .then((response) => response.text())
     .then((text) => {
       console.log(text);
       let list = JSON.parse(text);
       for (let artwork of list) {
-        let src = fileRead(`http://haxidraw.hackclub.dev/art/${artwork.directory}/${artwork.source}`);
+        let src = fileRead(`https://haxidraw-art.hackclub.dev/${artwork.directory}/${artwork.source}`);
         let snapshots = [];
         for (let snapshot of artwork.snapshots) {
           let img = document.createElement("canvas");
@@ -722,7 +722,7 @@ export function raycastMap(state) {
           ctx.lineWidth = 5;
           let offset = (700 * 0.15) / 2;
           let snapshotImg = new Image();
-          snapshotImg.src = `../art/${artwork.directory}/snapshots/${snapshot}`;
+          snapshotImg.src = `https://haxidraw-art.hackclub.dev/${artwork.directory}/snapshots/${snapshot}`;
           snapshotImg.onload = () => {
             ctx.drawImage(
               snapshotImg,

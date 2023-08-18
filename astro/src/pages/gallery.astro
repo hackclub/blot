@@ -191,6 +191,47 @@ const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res
       text-decoration-style: wavy;
     }
 
+    .mazeBanner {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      float: center;
+      color: var(--text);
+      border: 1px solid var(--primary);
+      padding: 10px;
+      width: 50%;
+      margin: auto;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+      animation: shrinkShadow 0.5s forwards;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .mazeBanner:hover {
+      border: 2px solid var(--primary);
+      animation: expandShadow 0.5s forwards;
+    }
+
+    @keyframes expandShadow {
+      from {
+        box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.1), 0px 0px 2px 0px rgba(255, 20, 20, 0.333);
+      } to {
+        box-shadow: 10px 10px 0 0px #33e5, -10px -10px 2px 0px rgba(255, 20, 20, 0.333);
+        transform: rotate3d(1, 1, 0, 20deg);
+      }
+    }
+
+      @keyframes shrinkShadow {
+      from {
+        box-shadow: 10px 10px 0 0px #33e5, -10px -10px 2px 0px rgba(255, 20, 20, 0.333);
+        transform: rotate3d(1, 1, 0, 20deg);
+      } to {
+        box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.1), 0px 0px 2px 0px rgba(255, 20, 20, 0.333);
+      }
+    }
   </style>
   
   
@@ -224,10 +265,14 @@ const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res
   </div>
   
   <div class="container">
+    <a href="https://haxidraw-3dgallery.hackclub.dev/">
+      <p class="mazeBanner">Explore this in 3D</p>
+    </a>
     <h2>Gallery</h2>
     <p>Upload your art <a class = "decoratedLink" href="https://github.com/hackclub/haxidraw/tree/main/astro/public/art">here</a></p>
   <div class="gallery">
     {
+          // @ts-ignore
           data.map(item => (
               <figure class="card">
                 <a href={`https://github.com/hackclub/haxidraw/tree/main/astro/public/art/${item.directory}`}>
