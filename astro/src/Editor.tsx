@@ -47,7 +47,20 @@ export default function Editor() {
               <a class={styles.helpSectionTab}>workshop</a>
               <a class={styles.helpSectionTab}>toolkit</a>
               <a class={styles.helpSectionTab} onClick={() => {
-                setHelpHeight(helpHeight === INIT_HELP_HEIGHT ? 0 : INIT_HELP_HEIGHT);
+                const close = helpHeight === INIT_HELP_HEIGHT;
+
+                let count = 0;
+                const intervalId = setInterval(() => {
+                  if (count === INIT_HELP_HEIGHT) clearInterval(intervalId);
+
+                  setHelpHeight(
+                    helpHeight 
+                    + (close ? -1 : 1)*count
+                  )
+
+                  count++;
+                }, 15);
+
               }}>{ helpHeight === INIT_HELP_HEIGHT ? "close" : "open"}</a>
             </div>
             <div class={styles.helpSection} style={{ height: `${helpHeight}%` }}>
