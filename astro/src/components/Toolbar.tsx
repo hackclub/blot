@@ -121,7 +121,6 @@ function RunButton() {
     <Button
       variant="ghost"
       onClick={() => {
-        alert(JSON.stringify(getStore().turtles[0]))
         runCode()
       }}>
       run (shift+enter)
