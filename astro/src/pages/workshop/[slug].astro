@@ -1,0 +1,48 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, getEntry } from "astro:content";
+import { marked } from "marked";
+
+export async function getStaticPaths() {
+    const workshops = await getCollection("workshops", ({ data }) => data);
+    return workshops.map(workshop => ({
+        params: { slug: workshop.slug }
+    }));
+}
+
+const { slug } = Astro.params;
+const data = await getEntry("workshops", slug);
+const rendered = await data.render();
+const Content = rendered.Content;
+---
+
+<Layout>
+    <style is:global>
+        .container {
+            font-family: var(--font-body);
+            max-width: 60vw;
+            margin: 3rem auto;
+            font-size: 1.5rem;
+        }
+
+        .markdown {
+            line-height: 1.6;
+        }
+
+        .markdown p {
+            margin: 1.5rem 0;
+        }
+
+        .markdown pre {
+            padding: 0.5rem 1rem;
+            font-size: 1.1rem;
+        }
+    </style>
+
+    <div class="container">
+        <div class="markdown">
+            <p><a href="/workshops">&larr; Other workshops</a></p>
+            <Content />
+        </div>
+    </div>
+</Layout>
