@@ -1,3 +1,7 @@
+---
+
+---
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
@@ -203,7 +207,41 @@
     import lineclip from "../lib/lineclip.js";
     import runCode from "../lib/run.js";
     import { turtles } from "../lib/paths.js";
-    import { CodePosition, ErrorState, getStore, patchStore } from "../lib/state.ts";
+
+    import { runTextReturnTurtles } from "../lib/runTextReturnTurtles.ts";
+
+
+    const username = "hackclub";
+    const repository = "haxidraw";
+    const pathToFile = "art/square-disarray-leo/index.js";
+    const branch = "main"; // Replace with the desired branch name
+
+    const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`;
+
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to retrieve file. Status code: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(fileData => {
+        // Extract the content of the file
+        const content = fileData.content;
+
+        // Decode the base64-encoded content
+        const decodedContent = atob(content);
+
+        // Print the content of the file
+        // console.log(decodedContent);
+
+        const turtles = runTextReturnTurtles(decodedContent);
+
+        console.log(turtles);
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
     const canvas : HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
