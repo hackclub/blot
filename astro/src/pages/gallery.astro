@@ -1,0 +1,286 @@
+---
+const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res => res.json())
+---
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
+            
+    :root {
+    --primary: #33e;
+    --primary-rgb: 51, 51, 238;
+    --text: #000;
+    --text-rgb: 0, 0, 0;
+    --background: #fff;
+    --background-rgb: 255, 255, 255;
+    --muted: #e5e5e5;
+    --muted-rgb: 229, 229, 229;
+    --accent: #f0f;
+    --accent-rgb: 255, 0, 255;
+    --accent-dark: #900090;
+    --accent-dark-rgb: 144, 0, 144;
+    --font-body: "Atkinson Hyperlegible", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --font-0: 1rem;
+    --font-1: 1.125rem;
+    --font-2: 1.25rem;
+    --font-3: 1.5rem;
+    --font-4: 2rem;
+    --font-5: 3rem;
+    --font-6: 4rem;
+    --font-7: 6rem;
+  }
+
+  html, body {
+    margin: 0px;
+    font-family: var(--font-body);
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  .toolbar {
+    background: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    min-height: 2.5rem;
+  }
+
+  .toolbar-right {
+    display: flex;
+  }
+
+  .toolbar-item {
+    all: unset;
+    cursor: pointer;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    height: 100%;
+    width: fit-content;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .toolbar-item:hover {
+    background: rgba(255,255,255,0.1); 
+  }
+
+  .toolbar-item:visited {
+    all: unset;
+  }
+
+  .blot {
+    display: flex;
+    align-items: center;
+    padding-left: .5rem;
+  }
+
+  .blot a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .footer {
+    height: 2rem;
+    display: flex;
+    justify-content: flex-end;
+    background: #c5c5c5;
+  }
+
+  .footer-item:hover {
+    background: rgba(0,0,0,0.2); 
+  }
+
+  .banner {
+    flex: 1;
+    background: #f2f2f100;
+/*    background: #ffbb1d5c;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    justify-content: space-around;
+  }
+
+  .banner-upper {
+
+  }
+
+  .banner-lower {
+    display: flex;
+    align-items: center;
+  }
+
+  .blot-bot {
+    width: 70%;
+  }
+
+  .blot-title {
+/*    position: absolute;*/
+/*    left: 0px;*/
+/*    top: 1rem;*/
+    font-size: 4rem;
+    font-family: "Tilt Prism",cursive;
+/*    width: 100%;*/
+    text-align: center;
+  }
+
+
+  
+    .container {
+      font-family: var(--font-body);
+      font-size: 2rem;
+      max-width: 60vw;
+      margin: 2rem auto;
+    }
+  
+    .gallery {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--primary);
+      padding: 10px;
+      font-family: var(--font);
+      max-width: 33%;
+      max-height: 35%;
+    }
+
+    .card img {
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+      width: 19rem;
+      height: 19rem;
+      border-radius: 2px;
+      object-fit: cover;
+    }
+
+    .cardImg:hover, .cardImg:focus {
+      transform: scale(101%);
+    }
+
+    .artTitle {
+        font-size: 20px;
+        font-weight: bold;
+        color: var(--text);
+    }
+
+    .decoratedLink {
+      box-sizing: border-box;
+      margin: 0;
+      min-width: 0;
+      color: #33e;
+      -webkit-text-decoration: underline;
+      text-decoration: underline;
+      text-underline-position: under;
+    }
+
+    .decoratedLink:hover {
+      text-decoration-style: wavy;
+    }
+
+    .mazeBanner {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      float: center;
+      color: var(--text);
+      border: 1px solid var(--primary);
+      padding: 10px;
+      width: 50%;
+      margin: auto;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+      animation: shrinkShadow 0.5s forwards;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .mazeBanner:hover {
+      border: 2px solid var(--primary);
+      animation: expandShadow 0.5s forwards;
+    }
+
+    @keyframes expandShadow {
+      from {
+        box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.1), 0px 0px 2px 0px rgba(255, 20, 20, 0.333);
+      } to {
+        box-shadow: 10px 10px 0 0px #33e5, -10px -10px 2px 0px rgba(255, 20, 20, 0.333);
+        transform: rotate3d(1, 1, 0, 20deg);
+      }
+    }
+
+      @keyframes shrinkShadow {
+      from {
+        box-shadow: 10px 10px 0 0px #33e5, -10px -10px 2px 0px rgba(255, 20, 20, 0.333);
+        transform: rotate3d(1, 1, 0, 20deg);
+      } to {
+        box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.1), 0px 0px 2px 0px rgba(255, 20, 20, 0.333);
+      }
+    }
+  </style>
+  
+  
+  <div class="toolbar">
+    <div class="blot">
+      <a href="/">
+      <i class="fa-solid fa-splotch" style="padding-right: 10px"></i>
+      Blot
+    </a>
+    </div>
+    <div class="toolbar-right">
+      <a class="toolbar-item" href="/editor">
+        <i class="fa-solid fa-pen-nib" style="padding-right: .5rem"></i>
+        editor
+      </a>
+      <a class="toolbar-item">
+        <i class="fa-solid fa-laptop-file" style="padding-right: .5rem"></i>
+        workshops
+      </a>
+
+      <a class="toolbar-item" href="/gallery">
+        <i class="fa-solid fa-palette" style="padding-right: .5rem"></i>
+        gallery
+      </a>
+
+      <a class="toolbar-item">
+        <i class="fa-solid fa-arrows-to-dot" style="padding-right: .5rem"></i>
+        assembly
+      </a>
+    </div>
+  </div>
+  
+  <div class="container">
+    <a href="https://haxidraw-3dgallery.hackclub.dev/">
+      <p class="mazeBanner">Explore this in 3D</p>
+    </a>
+    <h2>Gallery</h2>
+    <p>Upload your art <a class = "decoratedLink" href="https://github.com/hackclub/haxidraw/tree/main/astro/public/art">here</a></p>
+  <div class="gallery">
+    {
+          // @ts-ignore
+          data.map(item => (
+              <figure class="card">
+                <a href={`https://github.com/hackclub/haxidraw/tree/main/astro/public/art/${item.directory}`}>
+                  <img src={`https://haxidraw-art.hackclub.dev/${item.directory}/snapshots/${item.snapshots[0]}`} />
+                </a>
+                <h1 class="artTitle">{item.directory.replaceAll("-", ", ")}</h1>
+              </figure>
+          ))
+    }
+  </div>
+  </div>

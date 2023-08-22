@@ -1,6 +1,6 @@
-import { initMachineControl } from "./machineControl.js";
+import { initMachineControl } from './machineControl.js'
 
 export function init() {
-  console.log("init");
-  initMachineControl();
+  console.log('init')
+  initMachineControl()
 }

@@ -62,13 +62,13 @@
     padding-right: .5rem;
     height: 100%;
     width: fit-content;
-    border-radius: .2rem;
+    border-radius: 5px;
     display: flex;
     align-items: center;
   }
 
   .toolbar-item:hover {
-    background: rgba(255,255,255,0.2); 
+    background: rgba(255,255,255,0.1); 
   }
 
   .toolbar-item:visited {
@@ -79,6 +79,12 @@
     display: flex;
     align-items: center;
     padding-left: .5rem;
+  }
+
+  .blot a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
   }
 
   .footer {
@@ -95,7 +101,7 @@
 
   .banner {
     flex: 1;
-    background: #f2f2f1;
+    background: #f2f2f100;
 /*    background: #ffbb1d5c;*/
     display: flex;
     flex-direction: column;
@@ -134,7 +140,7 @@
     padding-right: 5rem;
     font-weight: 400;
     letter-spacing: 0.009em;
-    line-height: 1.25;
+    line-height: 1.5;
     align-self: baseline;
     padding-top: 5rem;
   }
@@ -153,13 +159,22 @@
     text-decoration-style: wavy;
   }
 
-</style>
+  canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+  }
 
+</style>
 
 <main>
   <div class="toolbar">
     <div class="blot">
+      <a href="/">
       <i class="fa-solid fa-splotch" style="padding-right: 10px"></i>
+      BLOT
+    </a>
       BLOT
     </div>
     <div class="toolbar-right">
@@ -167,13 +182,12 @@
         <i class="fa-solid fa-pen-nib" style="padding-right: .5rem"></i>
         editor
       </a>
-
       <a class="toolbar-item">
         <i class="fa-solid fa-laptop-file" style="padding-right: .5rem"></i>
         workshops
       </a>
 
-      <a class="toolbar-item">
+      <a class="toolbar-item" href="/gallery">
         <i class="fa-solid fa-palette" style="padding-right: .5rem"></i>
         gallery
       </a>
@@ -184,6 +198,62 @@
       </a>
     </div>
   </div>
+  <canvas id = "canvas"></canvas>
+
+  <script>
+    import lineclip from "../lib/lineclip.js";
+    import runCode from "../lib/run.js";
+    import { turtles } from "../lib/paths.js";
+    import { CodePosition, ErrorState, getStore, patchStore } from "../lib/state.ts";
+
+    const canvas : HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+    const tIndex = Math.floor(Math.random() * turtles.length);
+    const turtle = turtles[tIndex];
+
+    let polyline = turtle.path[0];
+
+    const config = [{scale:7, xoff: 10, yoff:10, lineStart: 10, lineEnd: polyline.length - 15},
+                    {scale:12, xoff:3, yoff:-30, lineStart: 1, lineEnd: polyline.length}]
+                  [tIndex];
+    
+    const paths = polyline.map(([x, y]) => [(x + config.xoff) * config.scale, (y + config.yoff) * config.scale]);
+    let i = config.lineStart + 1;
+    let j = config.lineStart + 1;
+
+    function lerp(x1, x2, t) {
+      return x1 + (x2 - x1) * t;
+    }
+
+    function dist(x1, y1, x2, y2) {
+      return Math.sqrt((x1-x2)**2 + (y1-y2)**2);
+    }
+
+    function draw() {
+      ctx.strokeStyle = "#ddd";
+      if (i >= config.lineEnd - 1) return;
+      i += 10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
+      j = Math.floor(i)
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let [x, y] = paths[j];
+      // increase i a bit if we're out of the screen
+      if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) i += 1;
+      if (j === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(lerp(paths[j-1][0], x, i - j), lerp(paths[j-1][1], y, i - j));
+      ctx.stroke()
+    }
+
+    setInterval(
+      () => {draw(i)}
+    , 10);
+  </script>
 
   <div class="banner">
 
@@ -195,7 +265,7 @@
       <img class="blot-bot" src="/blot-bot-clear.png"/>
       <div class="banner-text">
         <div>
-          Blot is a <a href="youshipweship.com">"You Ship, We Ship"</a> project from Hack Club. It is a robot, but it is also an art project
+          Blot is a <a href="youshipweship.com">"You Ship, We Ship"</a> project from Hack Club. It's both a robot and an art project.
         </div>
 
         <br/>
