@@ -28,10 +28,106 @@ import CloseIcon from '../../ui/CloseIcon.tsx'
 
 // import BezierEditor, { BezierPoints } from "../../components/BezierEditor.tsx";
 
-type BezierPoints = any
-const BezierEditor = <div>test</div>
-// const ThreeDCurveManualIcon = <div>test</div>
-// const CloseIcon = <div>test</div>
+
+// const bezStyle = css`
+//     .bez-ctrl {
+//       background: white;
+//       transform: scale(1, -1);
+//       border: 1px solid black;
+//       border-radius: 3px;
+//     }
+
+// `
+
+const drawGrid = ({ xMin, xMax, xStep, yMin, yMax, yStep }) => {
+  const xLines = [];
+  for (let i = xMin; i <= xMax; i += xStep) {
+    xLines.push(<line x1={i} y1={yMin} x2={i} y2={yMax} />)
+  }
+
+  const yLines = [];
+  for (let i = yMin; i <= yMax; i += yStep) {
+    yLines.push(<line x1={xMin} y1={i} x2={xMax} y2={i} />)
+  }
+
+
+  return <>
+    <g stroke="lightgray" stroke-width="0.005">
+      {xLines}
+    </g>
+
+    <g stroke="lightgray" stroke-width="0.005">
+      {yLines}
+    </g>
+
+  </>
+}
+
+type BezierPoints = any;
+const BezierEditor = ({ initialValue, onChange }) => {
+    console.log(initialValue, onChange);
+
+    const { 
+        yStart, 
+        p0, 
+        p1, 
+        yEnd 
+    } = initialValue;
+
+    const [ p0x, p0y ] = p0;
+    const [ p1x, p1y ] = p1;
+
+
+    return (
+    <div>
+
+      <div 
+          style="
+              display: flex; 
+              align-items: center; 
+              justify-content: center; 
+              flex-direction: column; 
+              flex-direction:column;
+              background: lightgrey;
+              border: 2px solid black;
+              border-radius: 5px;
+              padding: 5px;">
+            <svg 
+                style="
+                    background: white;
+                    transform: scale(1, -1);
+                    border: 1px solid black;
+                    border-radius: 3px;
+                "
+                class="bez-ctrl" width="250" height="250" viewBox="0.05 -1.05 1.1 2.1" xmlns="http://www.w3.org/2000/svg">
+                {drawGrid({
+                  xMin: 0,
+                  xMax: 1,
+                  xStep: 0.1,
+                  yMin: -1,
+                  yMax: 1,
+                  yStep: 0.1,
+                })}
+                <path d={`M0,${yStart} C ${p0x},${p0y} ${p1x},${p1y} 1,${yEnd}`} stroke-width=".05px" stroke="black" fill="none"/>
+                <line x1="0" y1={`${yStart}`} x2={`${p0x}`} y2={`${p0y}`} stroke="black" stroke-width="0.01" stroke-dasharray="0.02,0.02" />
+                <line x1="1" y1={`${yEnd}`} x2={`${p1x}`} y2={`${p1y}`} stroke="black" stroke-width="0.01" stroke-dasharray="0.02,0.02" />
+
+                <circle class="bez-handle" cx="0" cy={`${yStart}`} r=".05" fill="red"/>
+                <circle class="bez-handle" cx={`${p0x}`} cy={`${p0y}`} r=".05" fill="red"/>
+                <circle class="bez-handle"  cx={`${p1x}`} cy={`${p1y}`} r=".05" fill="red"/>
+                <circle class="bez-handle"  cx="1" cy={`${yEnd}`} r=".05" fill="red"/>
+            </svg>
+
+            start: {yStart.toFixed(2)},
+            handle0: [{p0x.toFixed(1)},{p0y.toFixed(1)}],
+            handle1: [{p1x.toFixed(1)},{p1y.toFixed(1)}],
+            end: {yEnd.toFixed(2)}
+            <div>scale: x</div>
+            <input type="range" min="0" max="20" step="0.01"/>
+        </div>
+    </div>
+    )
+}
 
 const makeWidget = <T extends {}>(
   component: ComponentType<{ view: EditorView; props: T }>,
@@ -148,48 +244,33 @@ const bezierWidget = makeWidget<BezierProps>(
     }, [])
 
     return (
-      <span class={styles.bezierWidget}>
-        {popupSide !== null && (
-          <div
-            class={styles.bezierWidgetPopup}
-            style={{
-              top: popupSide === PopupSide.Top ? '0' : '100%'
-            }}>
-            <BezierEditor
-              initialValue={bezierInitialValue}
-              onChange={bezierOnChange}>
-              <div class={styles.bezierWidgetHeader}>
-                <h3>edit bezier</h3>
-                <Button
-                  variant="ghost"
-                  icon
-                  aria-label="close"
-                  onClick={() => setPopupSide(null)}>
-                  <CloseIcon />
-                </Button>
-              </div>
-            </BezierEditor>
-          </div>
-        )}
-        <button
-          class={styles.bezierWidgetBtn}
-          onClick={e => {
-            if (popupSide !== null) {
-              setPopupSide(null)
-              return
-            }
-            dispatchCloseBezierWidget(null) // close all bezier widgets that are open
-            // position the popup above the button if button is below the middle of the screen and vice versa
-            const buttonRect = e.currentTarget.getBoundingClientRect()
-            setPopupSide(
-              buttonRect.top > window.innerHeight / 2
-                ? PopupSide.Top
-                : PopupSide.Bottom
-            )
-          }}>
-          <ThreeDCurveManualIcon />
-          bezierEasing
-        </button>
+        <span class={styles.bezierWidget}>
+            {popupSide !== null && (
+                <div class={styles.bezierWidgetPopup} style={{
+                    top: popupSide === PopupSide.Top ? "0" : "100%",
+                }}>
+                    <BezierEditor initialValue={bezierInitialValue} onChange={bezierOnChange}></BezierEditor>
+                </div>
+            )}
+            <button
+              class={styles.bezierWidgetBtn}
+              onClick={e => {
+                if (popupSide !== null) {
+                  setPopupSide(null)
+                  return
+                }
+                dispatchCloseBezierWidget(null) // close all bezier widgets that are open
+                // position the popup above the button if button is below the middle of the screen and vice versa
+                const buttonRect = e.currentTarget.getBoundingClientRect()
+                setPopupSide(
+                  buttonRect.top > window.innerHeight / 2
+                    ? PopupSide.Top
+                    : PopupSide.Bottom
+                )
+              }}>
+              <ThreeDCurveManualIcon />
+              bezierEasing
+            </button>
       </span>
     )
   },

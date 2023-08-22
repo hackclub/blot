@@ -741,19 +741,6 @@ export function raycastMap(state) {
       }
     });
 
-  /*  fetch("./gallery/README.md")
-    .then((response) => response.text())
-    .then((text) => {
-      const lines = text.split("\n");
-      imageNames = lines
-        .filter((line) => line.includes(".js"))
-      for (let i = 0; i < imageNames.length; i++) {
-        src = fileRead(`./gallery/${imageNames[i]}`)
-        imageSrcs.push(src)
-      }
-
-    });*/
-
   const splatImg = new Image();
   splatImg.src = "./altSplat.png";
 
