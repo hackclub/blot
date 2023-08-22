@@ -1,0 +1,187 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { marked } from "marked";
+
+const workshops = await getCollection("workshops", ({ data }) => data);
+---
+
+<style is:global lang="scss">
+    #description {
+        flex: calc(50% - 14px);
+        flex-grow: 0;
+        font-family: var(--font-sans);
+        padding: 1rem;
+
+        h1 {
+            margin: 0;
+        }
+
+        input {
+            background-color: #eee;
+            border: none;
+            font-size: 1.5rem;
+            padding: 7px 14px;
+            width: 100%;
+            font-family: var(--font-sans);
+        }
+    }
+
+    #workshops {
+        display: flex;
+        max-width: 80vw;
+        margin: auto;
+        flex-wrap: wrap;
+        gap: 14px;
+        font-size: 1.5rem;
+        padding: 4rem 0;
+
+        .workshop {
+            border: 1px solid var(--primary);
+            flex: calc(50% - 14px);
+            flex-grow: 0;
+            font-family: var(--font-serif);
+            transition: all 0.1s;
+            text-decoration: none;
+            color: black;
+
+            &:hover {
+                transform: scale(102%);
+            }
+
+            .prose {
+                padding: 1rem 1.5rem;
+
+                a {
+                    color: var(--primary);
+                }
+
+                code {
+                    font-family: var(--font-mono);
+                }
+
+                h2 {
+                    font-family: var(--font-sans);
+                    margin: 0;
+                    color: black !important;
+                    text-decoration: none !important;
+                }
+
+                * {
+                    margin-top: 0;
+                }
+            }
+
+            img {
+                border-bottom: 1px solid var(--primary);
+                width: 100%;
+            }
+        }
+    }
+</style>
+
+<script>
+    import lineclip from "../lib/lineclip.js";
+    import runCode from "../lib/run.js";
+    import { turtles } from "../lib/paths.js";
+    import {
+        CodePosition,
+        ErrorState,
+        getStore,
+        patchStore
+    } from "../lib/state.ts";
+
+    const canvas: HTMLCanvasElement = document.getElementById(
+        "canvas"
+    ) as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+    const tIndex = Math.floor(Math.random() * turtles.length);
+    const turtle = turtles[tIndex];
+
+    let polyline = turtle.path[0];
+
+    const config = [
+        {
+            scale: 7,
+            xoff: 10,
+            yoff: 10,
+            lineStart: 10,
+            lineEnd: polyline.length - 15
+        },
+        {
+            scale: 12,
+            xoff: 3,
+            yoff: -30,
+            lineStart: 1,
+            lineEnd: polyline.length
+        }
+    ][tIndex];
+
+    const paths = polyline.map(([x, y]) => [
+        (x + config.xoff) * config.scale,
+        (y + config.yoff) * config.scale
+    ]);
+    let i = config.lineStart + 1;
+    let j = config.lineStart + 1;
+
+    function lerp(x1, x2, t) {
+        return x1 + (x2 - x1) * t;
+    }
+
+    function dist(x1, y1, x2, y2) {
+        return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+    }
+
+    function draw() {
+        ctx.strokeStyle = "#ddd";
+        if (i >= config.lineEnd - 1) return;
+        i +=
+            10 /
+            dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1]);
+        j = Math.floor(i);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let [x, y] = paths[j];
+        // increase i a bit if we're out of the screen
+        if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) i += 1;
+        if (j === 0) ctx.moveTo(x, y);
+        else
+            ctx.lineTo(
+                lerp(paths[j - 1][0], x, i - j),
+                lerp(paths[j - 1][1], y, i - j)
+            );
+        ctx.stroke();
+    }
+
+    setInterval(() => {
+        draw(i);
+    }, 10);
+</script>
+
+<Layout title="Blot | Workshops" description="Workshops">
+    <div id="description">
+        <h1>Workshops</h1>
+        <input placeholder="Search for a workshop" type="text" />
+    </div>
+    <div id="workshops">
+        {
+            workshops
+                .sort((a, b) => (a.data.pinned ? -1 : b.data.pinned ? 1 : 0))
+                .map(workshop => (
+                    <a class="workshop" href={`/workshops/${workshop.slug}`}>
+                        <img src={workshop.data.thumbnail} />
+                        <div class="prose">
+                            <h2>{workshop.slug}</h2>
+                            <div set:html={marked(workshop.data.description)} />
+                        </div>
+                    </a>
+                ))
+        }
+    </div>
+</Layout>
