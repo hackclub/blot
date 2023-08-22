@@ -44,7 +44,7 @@ const cmExtensions = [
         )
       )
         manualChangeSinceLiveUpdate.value = true
-      dispatchEditorChange()
+      dispatchEditorChange();
     }
   }),
   themeExtension(),

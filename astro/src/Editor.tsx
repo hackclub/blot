@@ -1,4 +1,3 @@
-import AutoBackup from './components/AutoBackup.tsx'
 import CompatWarning from './components/CompatWarning.tsx'
 import Preview from './components/Preview.tsx'
 import Toolbar from './components/Toolbar.tsx'
@@ -14,7 +13,10 @@ import { useEffect, useState } from 'preact/hooks'
 import { init } from './lib/init.js'
 
 export default function Editor() {
-  const [width, setWidth] = useState(50)
+  const [width, setWidth] = useState(50);
+
+  const INIT_HELP_HEIGHT = 40;
+  const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT);
 
   useEffect(() => {
     init()
@@ -23,21 +25,34 @@ export default function Editor() {
 
   return (
     <>
-      <AutoBackup /> {/* doesn't render anything */}
       <GlobalStateDebugger />
       <div class={styles.root}>
         <Toolbar />
         <div class={styles.inner}>
-          <div style={{ width: `${width}%` }}>
-            <CodeMirror />
+          <div style={{ width: `${width}%`, display: "flex", height: "100%", "flex-direction": "column" }}>
+            <div style={{ flex: 1, overflow: "scroll" }}>
+              <CodeMirror />
+            </div>
+            <div>
+              <Console />
+              <Error />
+            </div>
           </div>
           <div
             class={`${styles.vertBar} resize-trigger`}
             style={{ left: `${width}%` }}></div>
           <div class={styles.right} style={{ width: `${100 - width}%` }}>
             <Preview />
-            <Console />
-            <Error />
+            <div class={styles.helpSectionToolbar}>
+              <a class={styles.helpSectionTab}>workshop</a>
+              <a class={styles.helpSectionTab}>toolkit</a>
+              <a class={styles.helpSectionTab} onClick={() => {
+                setHelpHeight(helpHeight === INIT_HELP_HEIGHT ? 0 : INIT_HELP_HEIGHT);
+              }}>{ helpHeight === INIT_HELP_HEIGHT ? "close" : "open"}</a>
+            </div>
+            <div class={styles.helpSection} style={{ height: `${helpHeight}%` }}>
+              help goes here
+            </div>
           </div>
         </div>
       </div>
