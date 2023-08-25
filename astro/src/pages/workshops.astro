@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 // import { marked } from "marked";
 
 const marked = {
-  parse: () => "";
+  parse: () => "",
 }
 
 const workshops = (await getCollection("workshops", ({ data }) => data))
