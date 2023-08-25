@@ -51,12 +51,12 @@
 }
 
 .helpSectionTab {
-  padding: 5px;
-  margin: 4px;
+  padding: 3px 5px;
+  margin: 6px 4px;
   color: black;
   cursor: pointer;
   border-radius: 5px;
-  background: lightblue;
+  background: #f0f2f3;
 }
 
 .helpSectionTab:hover {
