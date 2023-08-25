@@ -1,7 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content';
-import { marked } from "marked";
+// import { marked } from "marked";
+
+const marked = {
+  parse: () => "",
+}
 
 const workshops = (await getCollection("workshops", ({ data }) => data))
 ---
