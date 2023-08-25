@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection, getEntry } from "astro:content";
-import { marked } from "marked";
+// import { marked } from "marked";
 
 export async function getStaticPaths() {
     const workshops = await getCollection("workshops", ({ data }) => data);
