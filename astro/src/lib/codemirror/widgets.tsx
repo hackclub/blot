@@ -7,11 +7,13 @@ import {
   WidgetType
 } from '@codemirror/view'
 import type { Range } from '@codemirror/state'
+
 import { h, type ComponentType, render } from 'preact'
+import { useState } from 'preact/hooks'
+
 import { syntaxTree } from '@codemirror/language'
 import type { SyntaxNode, TreeCursor } from '@lezer/common'
 import styles from './widgets.module.css'
-import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 import { createEvent } from 'niue'
 import { nodeIsNumber } from './utils.js'
 import Button from '../../ui/Button.js'
@@ -100,30 +102,27 @@ const trimZerosFromEnd = (str: string) => str.replace(/\.?0+$/, '')
 
 const bezierWidget = makeWidget<BezierProps>(
   ({ view, props }) => {
-    const [popupSide, setPopupSide] = useState<PopupSide | null>(null)
-    const liveUpdateSpans = useMemo<LiveUpdateSpan[]>(
-      () =>
+    const [popupSide, setPopupSide] = useState<PopupSide | null>(null);
+    
+    const createLiveUpdateSpans = () =>
         Object.values(props)
           .flat()
-          .map(node => createSpan(node.from, node.to, view)),
-      []
-    )
+          .map(node => createSpan(node.from, node.to, view));
 
-    useEffect(() => {
-      // just update the to/from props of the span - on rebuild the spans will be invalidated
-      Object.values(props)
-        .flat()
-        .forEach((node, i) => {
-          liveUpdateSpans[i].from = node.from
-          liveUpdateSpans[i].to = node.to
-        })
-    }, [props])
+    const liveUpdateSpans = createLiveUpdateSpans();
+
+    Object.values(props)
+      .flat()
+      .forEach((node, i) => {
+        liveUpdateSpans[i].from = node.from
+        liveUpdateSpans[i].to = node.to
+      })
 
     useOnCloseBezierWidget(() => {
       setPopupSide(null)
     }, [])
 
-    const bezierOnChange = useCallback((value: BezierPoints) => {
+    const bezierOnChange = (value: BezierPoints) => {
       const vf = Object.values(value).flat()
       dispatchLiveUpdates(
         vf.map((v, i) =>
@@ -131,18 +130,17 @@ const bezierWidget = makeWidget<BezierProps>(
         ),
         view
       ).then(runLiveUpdates)
-    }, [])
+    }
 
-    const bezierInitialValue = useMemo<BezierPoints>(() => {
-      const nodeToVal = (n: SyntaxNode) =>
+    const nodeToVal = (n: SyntaxNode) =>
         Number(view.state.sliceDoc(n.from, n.to))
-      return {
-        yStart: nodeToVal(props.yStart),
-        p0: [nodeToVal(props.p0[0]), nodeToVal(props.p0[1])],
-        p1: [nodeToVal(props.p1[0]), nodeToVal(props.p1[1])],
-        yEnd: nodeToVal(props.yEnd)
-      }
-    }, [])
+
+    const bezierInitialValue = {
+      yStart: nodeToVal(props.yStart),
+      p0: [nodeToVal(props.p0[0]), nodeToVal(props.p0[1])],
+      p1: [nodeToVal(props.p1[0]), nodeToVal(props.p1[1])],
+      yEnd: nodeToVal(props.yEnd)
+    }
 
     return (
         <span class={styles.bezierWidget}>

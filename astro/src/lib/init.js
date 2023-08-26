@@ -1,13 +1,16 @@
-import { initMachineControl } from './machineControl.js'
 
 import { useOnEditorChange } from './events.ts'
 import { getStore, useStore } from './state.ts'
 
+import { addBezierControl } from "./events/addBezierControl.js";
+import { addMachineControl } from './events/addMachineControl.js'
+
 export function init() {
   console.log('init')
-  initMachineControl()
 
   useOnEditorChange(backup);
+  addBezierControl();
+  addMachineControl();
 }
 
 

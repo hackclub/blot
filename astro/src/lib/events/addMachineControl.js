@@ -1,10 +1,9 @@
-import { createHaxidraw } from './haxidraw/createHaxidraw.js'
-import { createListener } from './createListener.js'
-import runCode from '../lib/run.ts'
+import { createHaxidraw } from '../haxidraw/createHaxidraw.js'
+import { createListener } from '../createListener.js'
+import runCode from '../run.ts'
+import { getStore, patchStore } from '../state.ts'
 
-import { getStore, patchStore } from '../lib/state.ts'
-
-export function initMachineControl() {
+export function addMachineControl() {
   let haxidraw
 
   const listener = createListener(document.body)

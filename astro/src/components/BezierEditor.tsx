@@ -1,7 +1,6 @@
-import { createListener } from "../lib/createListener.js";
-import { useEffect, useState } from 'preact/hooks'
-
-
+import { useState } from 'preact/hooks'
+import { addToRef } from "../lib/addToRef.js";
+import styles from './BezierEditor.module.css'
 
 export const BezierEditor = ({ initialValue, onChange }) => {
     const { 
@@ -31,6 +30,13 @@ export const BezierEditor = ({ initialValue, onChange }) => {
     }
 
     const change = () => {
+        set_yStartView(pointRef.yStartView);
+        set_p0xView(pointRef.p0xView);
+        set_p0yView(pointRef.p0yView);
+        set_p1xView(pointRef.p1xView);
+        set_p1yView(pointRef.p1yView);
+        set_yEndView(pointRef.yEndView);
+
         onChange({
             yStart: pointRef.yStartView,
             p0: [pointRef.p0xView, pointRef.p0yView],
@@ -40,99 +46,16 @@ export const BezierEditor = ({ initialValue, onChange }) => {
     }
 
 
-    const [scale, set_scale] = useState(1);
+    // const [scale, set_scale] = useState(1);
 
-    useEffect(() => {
-        const listen = createListener(document.body);
-
-        let draggedElement = null;
-        let svg = null;
-
-        listen("mousedown", ".bez-handle", (e) => {
-            draggedElement = e.target;
-            svg = draggedElement.ownerSVGElement;
-        })
-
-        listen("mousemove", ".bez-ctrl, .bez-ctrl *", e => {
-            if (draggedElement === null || svg === null) return;
-
-            let pt = svg.createSVGPoint();
-            pt.x = e.clientX;
-            pt.y = e.clientY;
-
-            // Transform the point from screen coordinates to SVG coordinates
-            let svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
-
-            let x = svgP.x;
-            let y = svgP.y;
-
-            x = Math.max(x, 0);
-            x = Math.min(x, 1);
-            y = Math.max(y, -1);
-            y = Math.min(y, 1);
-
-            if (draggedElement.classList.contains("start")) {
-
-                set_yStartView(y);
-                pointRef.yStartView = y;
-
-                change();
-            }
-
-            if (draggedElement.classList.contains("end")) {
-                set_yEndView(y);
-                pointRef.yEndView = y;
-                change();
-            }
-
-            if (draggedElement.classList.contains("h0")) {
-
-                set_p0xView(x);
-                set_p0yView(y);
-                pointRef.p0xView = x;
-                pointRef.p0yView = y;
-                change();
-            }
-
-            if (draggedElement.classList.contains("h1")) {
-
-                set_p1xView(x);
-                set_p1yView(y);
-                pointRef.p1xView = x;
-                pointRef.p1yView = y;
-                change();
-            }
-        })
-
-        listen("mouseup", "", () => {
-            draggedElement = null;
-            svg = null;
-        })
-    }, []);
-
+    const ref = addToRef({ change, pointRef });
 
     return (
-    <div>
 
-      <div 
-          style="
-              display: flex; 
-              align-items: center; 
-              justify-content: center; 
-              flex-direction: column; 
-              flex-direction:column;
-              background: lightgrey;
-              border: 2px solid black;
-              border-radius: 5px;
-              padding: 5px;">
+      <div class={styles.container}>
             <svg 
-                style="
-                    background: white;
-                    transform: scale(1, -1);
-                    border: 1px solid black;
-                    border-radius: 3px;
-                "
-                class="bez-ctrl" width="250" height="250" viewBox="0.05 -1.05 1.1 2.1" xmlns="http://www.w3.org/2000/svg">
+                ref={ref}
+                class={["bez-ctrl", styles.bezCtrl].join(" ")} width="250" height="250" viewBox="0.05 -1.05 1.1 2.1" xmlns="http://www.w3.org/2000/svg">
                 {drawGrid({
                   xMin: 0,
                   xMax: 1,
@@ -158,7 +81,6 @@ export const BezierEditor = ({ initialValue, onChange }) => {
             {/*<div>scale: {scale.toFixed(2)}</div>*/}
             {/*<input type="range" min="0" max="20" step="0.01" value={scale} onChange={(e) => set_scale(Number(e.target.value))}/>*/}
         </div>
-    </div>
     )
 }
 
@@ -185,14 +107,3 @@ function drawGrid({ xMin, xMax, xStep, yMin, yMax, yStep }) {
 
   </>
 }
-
-
-// const bezStyle = css`
-//     .bez-ctrl {
-//       background: white;
-//       transform: scale(1, -1);
-//       border: 1px solid black;
-//       border-radius: 3px;
-//     }
-
-// `

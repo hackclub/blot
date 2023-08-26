@@ -1,0 +1,19 @@
+
+.container {
+	display: flex; 
+	align-items: center; 
+	justify-content: center; 
+	flex-direction: column; 
+	flex-direction:column;
+	background: lightgrey;
+	border: 2px solid black;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.bezCtrl {
+	background: white;
+	transform: scale(1, -1);
+	border: 1px solid black;
+	border-radius: 3px;
+}
