@@ -2,5 +2,6 @@ package.json
 package-lock.json
 public/*
 .next/*
+.vercel/*
 */*/*.mdx
 */*/*/*.mdx
