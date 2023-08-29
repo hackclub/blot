@@ -1,187 +1,126 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { getCollection } from "astro:content";
-import { marked } from "marked";
+import Layout from '../layouts/Layout.astro'
+import { getCollection } from 'astro:content'
+import { marked } from 'marked'
 
-const workshops = await getCollection("workshops", ({ data }) => data);
+const workshops = await getCollection('workshops', ({ data }) => data)
 ---
 
 <style is:global lang="scss">
-    #description {
-        flex: calc(50% - 14px);
-        flex-grow: 0;
+  #container {
+    margin: 2rem auto;
+    width: 90vw;
+  }
+
+  #gallery {
+    padding: 1rem;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .framed {
+    flex: 50%;
+    font-family: var(--font-serif);
+    font-size: 0.995rem;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    padding: 2rem;
+    float: left;
+    max-width: 40vw;
+    margin-bottom: 1rem;
+    transition: all 0.1s;
+    z-index: 1;
+
+    .prose {
+      padding: 1rem;
+
+      code {
+        font-family: 'Fira Code', monospace;
+      }
+
+      h2 {
         font-family: var(--font-sans);
-        padding: 1rem;
-
-        h1 {
-            margin: 0;
-        }
-
-        input {
-            background-color: #eee;
-            border: none;
-            font-size: 1.5rem;
-            padding: 7px 14px;
-            width: 100%;
-            font-family: var(--font-sans);
-        }
+      }
     }
 
-    #workshops {
-        display: flex;
-        max-width: 80vw;
-        margin: auto;
-        flex-wrap: wrap;
-        gap: 14px;
-        font-size: 1.5rem;
-        padding: 4rem 0;
-
-        .workshop {
-            border: 1px solid var(--primary);
-            flex: calc(50% - 14px);
-            flex-grow: 0;
-            font-family: var(--font-serif);
-            transition: all 0.1s;
-            text-decoration: none;
-            color: black;
-
-            &:hover {
-                transform: scale(102%);
-            }
-
-            .prose {
-                padding: 1rem 1.5rem;
-
-                a {
-                    color: var(--primary);
-                }
-
-                code {
-                    font-family: var(--font-mono);
-                }
-
-                h2 {
-                    font-family: var(--font-sans);
-                    margin: 0;
-                    color: black !important;
-                    text-decoration: none !important;
-                }
-
-                * {
-                    margin-top: 0;
-                }
-            }
-
-            img {
-                border-bottom: 1px solid var(--primary);
-                width: 100%;
-            }
-        }
+    &:hover {
+      transform: scale(101%);
     }
+
+    .thumbnail {
+      width: 100%;
+    }
+
+    .top-left {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .top-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: rotate(90deg);
+    }
+
+    .bottom-left {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform: rotate(270deg);
+    }
+
+    .bottom-right {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      transform: rotate(180deg);
+    }
+  }
+
+  #content {
+    cursor: default;
+    font-size: 1.5rem;
+    font-family: var(--font-sans);
+
+    &:hover {
+      transform: none;
+    }
+  }
 </style>
 
-<script>
-    import lineclip from "../lib/lineclip.js";
-    import runCode from "../lib/run.js";
-    import { turtles } from "../lib/paths.js";
-    import {
-        CodePosition,
-        ErrorState,
-        getStore,
-        patchStore
-    } from "../lib/state.ts";
-
-    const canvas: HTMLCanvasElement = document.getElementById(
-        "canvas"
-    ) as HTMLCanvasElement;
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    window.addEventListener("resize", () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
-    const tIndex = Math.floor(Math.random() * turtles.length);
-    const turtle = turtles[tIndex];
-
-    let polyline = turtle.path[0];
-
-    const config = [
-        {
-            scale: 7,
-            xoff: 10,
-            yoff: 10,
-            lineStart: 10,
-            lineEnd: polyline.length - 15
-        },
-        {
-            scale: 12,
-            xoff: 3,
-            yoff: -30,
-            lineStart: 1,
-            lineEnd: polyline.length
-        }
-    ][tIndex];
-
-    const paths = polyline.map(([x, y]) => [
-        (x + config.xoff) * config.scale,
-        (y + config.yoff) * config.scale
-    ]);
-    let i = config.lineStart + 1;
-    let j = config.lineStart + 1;
-
-    function lerp(x1, x2, t) {
-        return x1 + (x2 - x1) * t;
-    }
-
-    function dist(x1, y1, x2, y2) {
-        return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
-    }
-
-    function draw() {
-        ctx.strokeStyle = "#ddd";
-        if (i >= config.lineEnd - 1) return;
-        i +=
-            10 /
-            dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1]);
-        j = Math.floor(i);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        let [x, y] = paths[j];
-        // increase i a bit if we're out of the screen
-        if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) i += 1;
-        if (j === 0) ctx.moveTo(x, y);
-        else
-            ctx.lineTo(
-                lerp(paths[j - 1][0], x, i - j),
-                lerp(paths[j - 1][1], y, i - j)
-            );
-        ctx.stroke();
-    }
-
-    setInterval(() => {
-        draw(i);
-    }, 10);
-</script>
-
-<Layout title="Blot | Workshops" description="Workshops">
-    <div id="description">
+<Layout title="Workshops" description="Workshops">
+  <div id="container">
+    <div id="gallery">
+      <div class="framed" id="content">
         <h1>Workshops</h1>
-        <input placeholder="Search for a workshop" type="text" />
+        <p>
+          One of the best ways to get involved is by building and testing one of
+          the machines. All you need is a 3D printer and a little bit of
+          hardware outlined in the bill of materials.
+        </p>
+      </div>
+      {
+        workshops
+          .sort((a, b) => (a.data.pinned ? -1 : b.data.pinned ? 1 : 0))
+          .map(workshop => (
+            <a class="framed" href={`/workshops/${workshop.slug}`}>
+              <img class="thumbnail" src={workshop.data.thumbnail} />
+              <div class="prose">
+                <h2 style={{ marginBottom: 0 }}>{workshop.slug}</h2>
+                <div set:html={marked(workshop.data.description)} />
+              </div>
+              <img class="top-left" src="/decorative-corner.png" />
+              <img class="top-right" src="/decorative-corner.png" />
+              <img class="bottom-left" src="/decorative-corner.png" />
+              <img class="bottom-right" src="/decorative-corner.png" />
+            </a>
+          ))
+      }
     </div>
-    <div id="workshops">
-        {
-            workshops
-                .sort((a, b) => (a.data.pinned ? -1 : b.data.pinned ? 1 : 0))
-                .map(workshop => (
-                    <a class="workshop" href={`/workshops/${workshop.slug}`}>
-                        <img src={workshop.data.thumbnail} />
-                        <div class="prose">
-                            <h2>{workshop.slug}</h2>
-                            <div set:html={marked(workshop.data.description)} />
-                        </div>
-                    </a>
-                ))
-        }
-    </div>
+  </div>
 </Layout>

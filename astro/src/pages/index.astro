@@ -1,30 +1,242 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from '../layouts/Layout.astro'
 ---
 
 <script>
-    // Basically in a nutshell: model of the model, maybe like a little diagram of special parts on it, little drawings here and there with links to the code,
+  import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
+  import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
+  import * as THREE from 'three'
+  import { runTextReturnTurtles } from '../lib/runTextReturnTurtles.ts'
+
+  const scene = new THREE.Scene()
+  scene.background = new THREE.Color(0xffffff)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  )
+
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true
+  })
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  document.body.appendChild(renderer.domElement)
+
+  const light = new THREE.DirectionalLight(0xffffff, 1)
+  light.position.set(0.5, 0, 1)
+  scene.add(light)
+
+  let objects = {}
+
+  const objLoader = new OBJLoader().setPath('/model/')
+  const mtlLoader = new MTLLoader().setPath('/model/')
+
+  camera.position.z = 0.37
+  camera.position.x = -0.2
+
+  mtlLoader.load('feet.mtl', function (materials) {
+    materials.preload()
+    objLoader.setMaterials(materials).load(
+      'feet.obj',
+      function (object) {
+        scene.add(object)
+        objects.feet = object
+      },
+      function (xhr) {},
+      function (error) {
+        console.log(error)
+      }
+    )
+  })
+
+  mtlLoader.load('carriage.mtl', function (materials) {
+    materials.preload()
+    objLoader.setMaterials(materials).load(
+      'carriage.obj',
+      function (object) {
+        scene.add(object)
+        objects.carriage = object
+      },
+      function (xhr) {},
+      function (error) {
+        console.log(error)
+      }
+    )
+  })
+
+  mtlLoader.load('arm.mtl', function (materials) {
+    materials.preload()
+    objLoader.setMaterials(materials).load(
+      'arm.obj',
+      function (object) {
+        scene.add(object)
+        objects.arm = object
+      },
+      function (xhr) {},
+      function (error) {
+        console.log(error)
+      }
+    )
+  })
+
+  mtlLoader.load('penholder.mtl', function (materials) {
+    materials.preload()
+    objLoader.setMaterials(materials).load(
+      'penholder.obj',
+      function (object) {
+        scene.add(object)
+        objects.penholder = object
+      },
+      function (xhr) {},
+      function (error) {
+        console.log(error)
+      }
+    )
+  })
+
+  const username = 'hackclub'
+  const repository = 'haxidraw'
+  const pathToFile = 'art/square-disarray-leo/index.js'
+  const branch = 'main'
+
+  const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`
+
+  fetch(apiUrl)
+    .then(response => {
+      if (!response.ok)
+        throw new Error(
+          `Failed to retrieve file. Status code: ${response.status}`
+        )
+      return response.json()
+    })
+    .then(fileData => {
+      // Extract the content of the file
+      const content = fileData.content
+
+      // Decode the base64-encoded content
+      const decodedContent = atob(content)
+
+      const turtle = runTextReturnTurtles(decodedContent)[0]
+
+      const canvas: HTMLCanvasElement = document.getElementById(
+        'canvas'
+      ) as HTMLCanvasElement
+      const ctx = canvas.getContext('2d')
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+      })
+
+      let polyline = turtle.path[0]
+      const config = {
+        scale: 12,
+        xoff: 10,
+        yoff: 10,
+        lineStart: 10,
+        lineEnd: polyline.length - 15
+      }
+
+      const paths = polyline.map(([x, y]: [number, number]) => [
+        (x + config.xoff) * config.scale,
+        (y + config.yoff) * config.scale
+      ])
+      let i = config.lineStart + 1
+      let j = config.lineStart + 1
+
+      function lerp(x1: number, x2: number, t: number) {
+        return x1 + (x2 - x1) * t
+      }
+
+      function dist(x1: number, y1: number, x2: number, y2: number) {
+        return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+      }
+
+      setInterval(() => {
+        ctx.strokeStyle = '#ddd'
+        if (i >= config.lineEnd - 1) return
+        i +=
+          10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
+        j = Math.floor(i)
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        let [x, y] = paths[j]
+        // increase i a bit if we're out of the screen
+        if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) i += 1
+        if (j === 0) ctx.moveTo(x, y)
+        else
+          ctx.lineTo(
+            lerp(paths[j - 1][0], x, i - j),
+            lerp(paths[j - 1][1], y, i - j)
+          )
+        ctx.stroke()
+      }, 10)
+
+      function animate() {
+        requestAnimationFrame(animate)
+        renderer.render(scene, camera)
+      }
+      animate()
+    })
+    .catch(error => {
+      console.error(error)
+    })
 </script>
 
 <style is:global lang="scss">
-    header {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 2rem 0;
+  header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
 
-        h1 {
-            margin: 0;
-            font-family: var(--font-serif);
-            font-size: 7rem;
-        }
+    h1 {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: 7rem;
     }
+  }
+
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  #canvas {
+    z-index: 1;
+  }
+
+  main {
+    position: relative;
+    z-index: 2;
+
+    h1 {
+      font-family: var(--font-sans);
+      font-size: 4rem;
+      text-align: center;
+      max-width: 50vw;
+      margin: auto;
+      letter-spacing: -2px;
+      text-shadow: 0 2px rgba(0, 0, 0, 0.2);
+      line-height: 1;
+      span {
+        color: var(--primary);
+      }
+    }
+  }
 </style>
 
 <Layout title="Blot" description="Blot out the world!">
-    <header>
-        <h1>blot</h1>
-        <div id="model"></div>
-    </header>
+  <header></header>
+  <canvas id="canvas"></canvas>
+  <main>
+    <h1>
+      <span>Blot</span> is the plotting tool that everyone can make art for.
+    </h1>
+  </main>
 </Layout>

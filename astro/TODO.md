@@ -1,6 +1,5 @@
-
-
 - main page
+
   - landing
   - editor
   - workshops
@@ -13,7 +12,6 @@
     - get in gallery
     - get machine
 
-
 - download flipping
   - png
   - svg
@@ -25,6 +23,7 @@
 - add examples tab
 
 # MAYBE
+
 - better console logging
 - infinite loops
 
@@ -33,6 +32,7 @@
   - add grid
 
 # DONE
+
 - add `drawTurtles` back
 - `createTurtle`
 - zooming

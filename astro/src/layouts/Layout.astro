@@ -1,6 +1,6 @@
 ---
 import '../ui/globals.scss'
-import Navbar from "../components/Navbar.astro";
+import Navbar from '../components/Navbar.astro'
 
 export interface Props {
   title: string | undefined
@@ -8,7 +8,7 @@ export interface Props {
 }
 
 let { title, description } = Astro.props
-title = title || 'Blot'
+title = `Blot | ${title}` || 'Blot'
 description = description || 'Blot editor!'
 ---
 
@@ -23,7 +23,7 @@ description = description || 'Blot editor!'
     <title>{title}</title>
   </head>
   <body>
-    <Navbar/>
+    <Navbar />
     <main>
       <slot />
     </main>

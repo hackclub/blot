@@ -1,5 +1,10 @@
 ---
-import Editor from "../Editor.tsx";
+import Layout from '../layouts/EditorLayout.astro'
+import Editor from '../Editor.tsx'
 ---
 
-<Editor client:load />
+<Layout title="Haxidraw">
+  <main>
+    <Editor client:load />
+  </main>
+</Layout>
