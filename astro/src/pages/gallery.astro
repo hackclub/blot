@@ -1,16 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro'
 
+const username = 'hackclub'
+const repository = 'haxidraw'
+const pathToFile = 'art/list.json'
+const branch = 'main'
+const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`
+
 let tries = 0
 let maxTries = 10
 let images
 while (!images && tries < maxTries) {
   tries++
-  const username = 'hackclub'
-  const repository = 'haxidraw'
-  const pathToFile = 'art/list.json'
-  const branch = 'main'
-  const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`
   const response = await fetch(apiUrl)
   const json = await response.json()
   console.log(json)
@@ -69,8 +70,6 @@ const random = (min: number, max: number) =>
   function dist(x1: number, y1: number, x2: number, y2: number) {
     return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
   }
-
-  console.log(toDraw)
 
   setInterval(() => {
     toDraw.map(({ ctx, color, paths, i, j, config, width, height }, idx) => {

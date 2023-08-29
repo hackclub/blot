@@ -6,10 +6,11 @@ import Layout from '../layouts/Layout.astro'
   import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
   import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
   import * as THREE from 'three'
-  import { runTextReturnTurtles } from '../lib/runTextReturnTurtles.ts'
+  import { turtles } from '../lib/paths.js'
 
+  // Set up scene
   const scene = new THREE.Scene()
-  scene.background = new THREE.Color(0xffffff)
+  scene.background = null
   const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
@@ -17,18 +18,21 @@ import Layout from '../layouts/Layout.astro'
     1000
   )
 
+  // Set up renderer
   const renderer = new THREE.WebGLRenderer({
-    antialias: true
+    antialias: true,
+    alpha: true
   })
   renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.domElement.style.zIndex = '999'
   document.body.appendChild(renderer.domElement)
 
-  const light = new THREE.DirectionalLight(0xffffff, 1)
+  // Set up light
+  const light = new THREE.DirectionalLight(0xffffff)
   light.position.set(0.5, 0, 1)
   scene.add(light)
 
-  let objects = {}
-
+  // Add the parts
   const objLoader = new OBJLoader().setPath('/model/')
   const mtlLoader = new MTLLoader().setPath('/model/')
 
@@ -95,109 +99,71 @@ import Layout from '../layouts/Layout.astro'
     )
   })
 
-  const username = 'hackclub'
-  const repository = 'haxidraw'
-  const pathToFile = 'art/square-disarray-leo/index.js'
-  const branch = 'main'
+  // Set up turtle
+  let width, height
+  const canvas = document.getElementById('canvas')
+  const ctx = canvas.getContext('2d')
+  ctx.strokeStyle = 'black'
+  width = canvas.width = window.innerWidth
+  height = canvas.height = window.innerHeight
 
-  const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`
+  const turtle = turtles[1]
+  let polyline = turtle.path[0]
+  const config = {
+    scale: 12,
+    xoff: 3,
+    yoff: 30,
+    lineStart: 1,
+    lineEnd: polyline.length
+  }
+  const paths = polyline.map(([x, y]) => [
+    (x + config.xoff) * config.scale,
+    (y + config.yoff) * config.scale
+  ])
+  let i = config.lineStart + 1
+  let j = config.lineStart + 1
 
-  fetch(apiUrl)
-    .then(response => {
-      if (!response.ok)
-        throw new Error(
-          `Failed to retrieve file. Status code: ${response.status}`
+  function lerp(x1: number, x2: number, t: number) {
+    return x1 + (x2 - x1) * t
+  }
+
+  function dist(x1: number, y1: number, x2: number, y2: number) {
+    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+  }
+
+  function moveTo() {}
+
+  function animate() {
+    requestAnimationFrame(animate)
+    /*
+    if (i < config.lineEnd - 1) {
+      i += 10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
+      j = Math.floor(i)
+      ctx.clearRect(0, 0, width, height)
+      let [x, y] = paths[j]
+      // increase i a bit if we're out of the screen
+      if (x < 0 || x > width || y < 0 || y > height) i++
+      if (j === 0) ctx.moveTo(x, y)
+      else
+        ctx.lineTo(
+          lerp(paths[j - 1][0], x, i - j),
+          lerp(paths[j - 1][1], y, i - j)
         )
-      return response.json()
-    })
-    .then(fileData => {
-      // Extract the content of the file
-      const content = fileData.content
+      ctx.stroke()
+    }
+    */
+    renderer.render(scene, camera)
+  }
 
-      // Decode the base64-encoded content
-      const decodedContent = atob(content)
-
-      const turtle = runTextReturnTurtles(decodedContent)[0]
-
-      const canvas: HTMLCanvasElement = document.getElementById(
-        'canvas'
-      ) as HTMLCanvasElement
-      const ctx = canvas.getContext('2d')
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-
-      window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
-      })
-
-      let polyline = turtle.path[0]
-      const config = {
-        scale: 12,
-        xoff: 10,
-        yoff: 10,
-        lineStart: 10,
-        lineEnd: polyline.length - 15
-      }
-
-      const paths = polyline.map(([x, y]: [number, number]) => [
-        (x + config.xoff) * config.scale,
-        (y + config.yoff) * config.scale
-      ])
-      let i = config.lineStart + 1
-      let j = config.lineStart + 1
-
-      function lerp(x1: number, x2: number, t: number) {
-        return x1 + (x2 - x1) * t
-      }
-
-      function dist(x1: number, y1: number, x2: number, y2: number) {
-        return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
-      }
-
-      setInterval(() => {
-        ctx.strokeStyle = '#ddd'
-        if (i >= config.lineEnd - 1) return
-        i +=
-          10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
-        j = Math.floor(i)
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        let [x, y] = paths[j]
-        // increase i a bit if we're out of the screen
-        if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) i += 1
-        if (j === 0) ctx.moveTo(x, y)
-        else
-          ctx.lineTo(
-            lerp(paths[j - 1][0], x, i - j),
-            lerp(paths[j - 1][1], y, i - j)
-          )
-        ctx.stroke()
-      }, 10)
-
-      function animate() {
-        requestAnimationFrame(animate)
-        renderer.render(scene, camera)
-      }
-      animate()
-    })
-    .catch(error => {
-      console.error(error)
-    })
+  animate()
 </script>
 
 <style is:global lang="scss">
-  header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem 0;
-
-    h1 {
-      margin: 0;
-      font-family: var(--font-sans);
-      font-size: 7rem;
-    }
+  body {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    min-height: 100vh;
   }
 
   canvas {
@@ -208,12 +174,13 @@ import Layout from '../layouts/Layout.astro'
   }
 
   #canvas {
-    z-index: 1;
+    overflow-y: hidden;
   }
 
   main {
     position: relative;
     z-index: 2;
+    padding: 1rem 0;
 
     h1 {
       font-family: var(--font-sans);
@@ -221,9 +188,9 @@ import Layout from '../layouts/Layout.astro'
       text-align: center;
       max-width: 50vw;
       margin: auto;
-      letter-spacing: -2px;
-      text-shadow: 0 2px rgba(0, 0, 0, 0.2);
       line-height: 1;
+      letter-spacing: -2px;
+
       span {
         color: var(--primary);
       }
@@ -232,7 +199,6 @@ import Layout from '../layouts/Layout.astro'
 </style>
 
 <Layout title="Blot" description="Blot out the world!">
-  <header></header>
   <canvas id="canvas"></canvas>
   <main>
     <h1>
