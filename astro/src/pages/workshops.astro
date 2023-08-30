@@ -10,8 +10,7 @@ async function workshopsFromGithub() {
 const workshops = await getCollection('workshops', ({ data }) => data)
 ---
 
-<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"
-></script>
+<script src="/masonry.min.js" type="module"></script>
 
 <script>
   import { turtles } from '../lib/paths.js'
@@ -76,6 +75,11 @@ const workshops = await getCollection('workshops', ({ data }) => data)
           lerp(paths[j - 1][1], y, i - j)
         )
       ctx.stroke()
+      // Draw circle
+      ctx.fillStyle = 'orange'
+      ctx.beginPath()
+      ctx.arc(x, y, 5, 0, 2 * Math.PI)
+      ctx.fill()
       toDraw[idx].i = i
       toDraw[idx].j = j
     })
