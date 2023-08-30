@@ -71,16 +71,15 @@ function init() {
 
     if (mousePos) {
       // convert mouse pos to virtual coords (accounting for zoom, scale)
-      const { panX, panY, scale } = panZoomParams
-      const br = canvas.getBoundingClientRect()
-      let x = e.clientX - br.left
-      x = (x - panX) / scale
-      let y = e.clientY - br.top
-      y = -(y - panY) / scale
-      const addPadding = (s: string) => (s.startsWith('-') ? s : ' ' + s)
-      mousePos.textContent = `${addPadding(x.toFixed(1))}mm, ${addPadding(
-        y.toFixed(1)
-      )}mm`
+
+      const { panX, panY, scale } = panZoomParams;
+      const br = canvas.getBoundingClientRect();
+      let x = (e.clientX - br.left);
+      x = (x - panX) / scale;
+      let y = (e.clientY - br.top);
+      y = -(y - panY) / scale;
+      const addPadding = (s: string) => s.startsWith("-") ? s : " " + s;
+      mousePos.textContent = `${addPadding(x.toFixed(1))}mm, ${addPadding(y.toFixed(1))}mm`;
     }
 
     if (e.buttons !== 1) return

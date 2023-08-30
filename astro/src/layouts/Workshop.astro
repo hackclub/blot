@@ -1,0 +1,79 @@
+---
+const {frontmatter: { title, content }} = Astro.props;
+---
+
+<style is:global>
+    @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+            
+  :root {
+    --primary: #33e;
+    --primary-rgb: 51, 51, 238;
+    --text: #000;
+    --text-rgb: 0, 0, 0;
+    --background: #fff;
+    --background-rgb: 255, 255, 255;
+    --muted: #e5e5e5;
+    --muted-rgb: 229, 229, 229;
+    --accent: #f0f;
+    --accent-rgb: 255, 0, 255;
+    --accent-dark: #900090;
+    --accent-dark-rgb: 144, 0, 144;
+    --font-body: "Atkinson Hyperlegible", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --font-0: 1rem;
+    --font-1: 1.125rem;
+    --font-2: 1.25rem;
+    --font-3: 1.5rem;
+    --font-4: 2rem;
+    --font-5: 3rem;
+    --font-6: 4rem;
+    --font-7: 6rem;
+  }
+
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.1s;
+  }
+
+  a:hover {
+    background-color: rgba(51, 51, 238, 0.8);
+    color: white;
+  }
+
+  html, body {
+    margin: 0px;
+    font-family: var(--font-body);
+  }
+
+  .container {
+    font-family: var(--font-body);
+    max-width: 60vw;
+    margin: 3rem auto;
+    font-size: 1.5rem;
+  }
+
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .markdown blockquote {
+    border-left: 2px solid var(--primary);
+    margin-left: 0;
+    padding-left: 7px;
+  }
+
+  .markdown pre {
+    padding: 2rem;
+    font-size: 0.995rem;
+    line-height: 1.6;
+  }
+</style>
+
+<div class="container">
+    <div class="markdown">
+        <slot/>
+    </div>
+</div>
