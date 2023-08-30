@@ -201,82 +201,159 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"workshops": {
+"10PRINT.md": {
+	id: "10PRINT.md";
+  slug: "10print";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "10PRINT.mdx": {
 	id: "10PRINT.mdx";
   slug: "10print";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
+"10PRINT2.md": {
+	id: "10PRINT2.md";
+  slug: "10print2";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "10PRINT2.mdx": {
 	id: "10PRINT2.mdx";
   slug: "10print2";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
+"cubic_disarray.md": {
+	id: "cubic_disarray.md";
+  slug: "cubic_disarray";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "cubic_disarray.mdx": {
 	id: "cubic_disarray.mdx";
   slug: "cubic_disarray";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
+"eca.md": {
+	id: "eca.md";
+  slug: "eca";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "eca.mdx": {
 	id: "eca.mdx";
   slug: "eca";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
+"joydivision.md": {
+	id: "joydivision.md";
+  slug: "joydivision";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "joydivision.mdx": {
 	id: "joydivision.mdx";
   slug: "joydivision";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
+"landscape.md": {
+	id: "landscape.md";
+  slug: "landscape";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "landscape.mdx": {
 	id: "landscape.mdx";
   slug: "landscape";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
+"leaf.md": {
+	id: "leaf.md";
+  slug: "leaf";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "leaf.mdx": {
 	id: "leaf.mdx";
   slug: "leaf";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
+"mesh.md": {
+	id: "mesh.md";
+  slug: "mesh";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "mesh.mdx": {
 	id: "mesh.mdx";
   slug: "mesh";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
+"raymarching.md": {
+	id: "raymarching.md";
+  slug: "raymarching";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "raymarching.mdx": {
 	id: "raymarching.mdx";
   slug: "raymarching";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
+"roots.md": {
+	id: "roots.md";
+  slug: "roots";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "roots.mdx": {
 	id: "roots.mdx";
   slug: "roots";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
+"square-disarray.md": {
+	id: "square-disarray.md";
+  slug: "square-disarray";
+  body: string;
+  collection: "workshops";
+  data: any
+} & { render(): Render[".md"] };
 "square-disarray.mdx": {
 	id: "square-disarray.mdx";
   slug: "square-disarray";
   body: string;
   collection: "workshops";
-  data: InferEntrySchema<"workshops">
+  data: any
 } & { render(): Render[".mdx"] };
 };
 
@@ -288,5 +365,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	type ContentConfig = typeof import("../src/content/config.js");
+	type ContentConfig = never;
 }
