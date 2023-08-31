@@ -1,5 +1,56 @@
-.root {
+.helpSection {
+  background: hsl(240, 85%, 97%);
+  color: black;
+  position: relative;
+}
+
+.helpSectionToolbar {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  transform: translate(0, -100%);
+  background: hsl(240, 85%, 97%);
+}
+
+.helpSectionTab {
+  padding: 3px 5px;
+  margin: 6px 4px;
+  color: black;
+  cursor: pointer;
+  border-radius: 5px;
+  background: #f0f2f3;
+}
+
+.helpSectionTab:hover {
+  opacity: .9;
+}
+
+.helpContent {
+  padding: 20px 20px 20px 30px;
+  overflow: scroll;
+  height: 100%;
+}
+
+.helpContent h1 {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 2.8em;
+  line-height: 1;
+}
+
+.helpContent p, .helpContent ul, .helpContent pre {
+  line-height: 1.5;
+}
+
+.helpContent h2 {
+  font-size: 1.75em;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.helpContent h3 {
+  margin-top: 30px;
+  font-size: 1.125em;
 }

@@ -9,26 +9,50 @@ import DropBox from './components/DropBox.tsx'
 import CodeMirror from './components/CodeMirror.tsx'
 
 import { createListener } from './lib/createListener.js'
-import { useEffect, useState } from 'preact/hooks'
+import {useEffect, useRef, useState} from 'preact/hooks'
 import { init } from './lib/init.js'
+import Help from "./components/Help.js";
+import preview from "@astrojs/node/preview.js";
 
 export default function Editor() {
   const [width, setWidth] = useState(50);
 
-  const INIT_HELP_HEIGHT = 40;
-  const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT);
-
   useEffect(() => {
     init()
     addBarResizing(setWidth)
+    addHelpResizing(setHelpHeight, editorContainer)
   }, [])
+
+  const INIT_HELP_HEIGHT = 40;
+  const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT);
+
+  const closeHelpPane = () => {
+    const closed = helpHeight <= 0
+
+      let count = 0;
+      const intervalId = setInterval(() => {
+
+        setHelpHeight(
+            helpHeight
+            + count
+        )
+
+        if ((helpHeight + count >= INIT_HELP_HEIGHT && closed)
+            || (helpHeight + count <= 0 && !closed)) clearInterval(intervalId)
+
+        count += (closed ? 1 : -1)
+      }, 15);
+
+  }
+
+  const editorContainer = useRef(null)
 
   return (
     <>
       <GlobalStateDebugger />
       <div class={styles.root}>
         <Toolbar />
-        <div class={styles.inner}>
+        <div class={styles.inner}  ref={editorContainer} >
           <div style={{ width: `${width}%`, display: "flex", height: "100%", "flex-direction": "column" }}>
             <div style={{ flex: 1, overflow: "scroll" }}>
               <CodeMirror />
@@ -39,33 +63,12 @@ export default function Editor() {
             </div>
           </div>
           <div
-            class={`${styles.vertBar} resize-trigger`}
+            class={`${styles.vertBar} resize-code-trigger`}
             style={{ left: `${width}%` }}></div>
           <div class={styles.right} style={{ width: `${100 - width}%` }}>
             <Preview />
-            <div class={styles.helpSectionToolbar}>
-              <a class={styles.helpSectionTab}>workshop</a>
-              <a class={styles.helpSectionTab}>toolkit</a>
-              <a class={styles.helpSectionTab} onClick={() => {
-                const close = helpHeight === INIT_HELP_HEIGHT;
-
-                let count = 0;
-                const intervalId = setInterval(() => {
-                  if (count === INIT_HELP_HEIGHT) clearInterval(intervalId);
-
-                  setHelpHeight(
-                    helpHeight 
-                    + (close ? -1 : 1)*count
-                  )
-
-                  count++;
-                }, 15);
-
-              }}>{ helpHeight === INIT_HELP_HEIGHT ? "close" : "open"}</a>
-            </div>
-            <div class={styles.helpSection} style={{ height: `${helpHeight}%` }}>
-              help goes here
-            </div>
+            <div class={`${styles.horizBar} resize-help-trigger`} style={{top: `${100 - helpHeight}%`, width: `${100 - width}%`}}></div>
+            <Help close={closeHelpPane} helpHeight={helpHeight} closed={helpHeight <= 0}/>
           </div>
         </div>
       </div>
@@ -81,7 +84,7 @@ function addBarResizing(setWidth) {
   let clicked = false
   let bar: HTMLDivElement | null = null
 
-  listen('mousedown', '.resize-trigger', e => {
+  listen('mousedown', '.resize-code-trigger', e => {
     clicked = true
     bar = e.target
 
@@ -115,6 +118,54 @@ function addBarResizing(setWidth) {
   document.addEventListener('mouseleave', () => {
     if (bar !== null) {
       bar.style.width = ''
+      bar.style.background = ''
+    }
+
+    clicked = false
+    bar = null
+  })
+}
+
+function addHelpResizing(setHeight, container) {
+  const listen = createListener(document.body)
+
+  let clicked = false
+  let bar: HTMLDivElement | null = null
+
+  listen('mousedown', '.resize-help-trigger', e => {
+    clicked = true
+    bar = e.target
+
+    if (bar === null) return
+
+    bar.style.height = '8px'
+    bar.style.background = 'black'
+  })
+
+  listen('mousemove', '', e => {
+    if (clicked) {
+      e.preventDefault()
+      let percent = 100 - ((e.clientY - container.current.offsetTop) / container.current.offsetHeight) * 100
+      percent = Math.min(percent, 100)
+      percent = Math.max(percent, 0)
+
+      setHeight(percent)
+    }
+  })
+
+  listen('mouseup', '', () => {
+    if (bar !== null) {
+      bar.style.height = ''
+      bar.style.background = ''
+    }
+
+    clicked = false
+    bar = null
+  })
+
+  document.addEventListener('mouseleave', () => {
+    if (bar !== null) {
+      bar.style.height = ''
       bar.style.background = ''
     }
 
