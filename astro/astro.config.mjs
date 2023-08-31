@@ -9,6 +9,9 @@ export default defineConfig({
   integrations: [preact({ compat: true })],
   output: 'server',
   adapter: vercel(),
+  markdown: {
+    shikiConfig: { theme: 'github-light' },
+  },
   vite: {
     plugins: [prefresh()],
     ssr: {

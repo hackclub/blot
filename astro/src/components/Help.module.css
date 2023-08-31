@@ -1,5 +1,5 @@
 .helpSection {
-  background: hsl(240, 85%, 97%);
+  background: rgba(var(--primary-rgb), 0.05);
   color: black;
   position: relative;
 }
@@ -10,24 +10,23 @@
   position: absolute;
   top: 0;
   transform: translate(0, -100%);
-  background: hsl(240, 85%, 97%);
+  background: rgba(var(--primary-rgb), 0.3);
+  border-radius: 0 10px 0 0;
+  overflow: clip;
 }
 
 .helpSectionTab {
-  padding: 3px 5px;
-  margin: 6px 4px;
+  padding: 6px 10px;
   color: black;
   cursor: pointer;
-  border-radius: 5px;
-  background: #f0f2f3;
 }
 
 .helpSectionTab:hover {
-  opacity: .9;
+  background: rgba(var(--primary-rgb), 0.2);
 }
 
 .helpContent {
-  padding: 20px 20px 20px 30px;
+  padding: 0 20px 20px 30px;
   overflow: scroll;
   height: 100%;
 }
@@ -53,4 +52,12 @@
 .helpContent h3 {
   margin-top: 30px;
   font-size: 1.125em;
+}
+
+.helpContent pre {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9em;
 }

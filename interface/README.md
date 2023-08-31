@@ -1,19 +1,9 @@
-# Interface to Haxidraw
-
-To run
-
-```
-yarn
-yarn dev
-```
----
-
-# Functions Available in Editor:
+## Functions Available in Editor
 
 ### Turtle
 
 Our main drawing primative is a turtle. It's a collection of polylines with an associated pen that has a location and direction. 
-```
+```js
 const t = new Turtle();
 
 // move turtle up and down
@@ -82,7 +72,7 @@ t.interpolate(tValue)
 ```
 
 To render a turtle use `drawTurtles` it is variadic (can take multiple turtles as arguments).
-```
+```js
 drawTurtles(...turtles)
 ```
 
@@ -90,7 +80,7 @@ You can drag in SVG's, and the interface will generate a turtle for it. Keep in 
 
 ### Randomness
 
-```
+```js
 rand()
 setRandSeed(seed: number)
 randInRange(min: number, max: number)
@@ -100,7 +90,7 @@ randIntInRange(min: number, max: number)
 
 Noise is one of the most powerful tools for making proceduarally generated natural looking things. It can be thought of as smooth randomness.
 
-```
+```js
 // y and z are optional
 noise(
   [ 
@@ -117,18 +107,18 @@ noise(
 
 Can be used like such
 
-```
+```js
 noise([ 2, 3 ])
 ```
 
 ### Utilities
 
-```
+```js
 // min: number, max: number, t: number (0 to 1)
 lerp(min, max, t)
 ```
 
-# Examples
+## Examples
 
 To find examples check [`/examples`](/examples).
 

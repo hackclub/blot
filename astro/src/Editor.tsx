@@ -41,7 +41,7 @@ export default function Editor() {
             || (helpHeight + count <= 0 && !closed)) clearInterval(intervalId)
 
         count += (closed ? 1 : -1)
-      }, 15);
+      }, 5);
 
   }
 
@@ -68,7 +68,7 @@ export default function Editor() {
           <div class={styles.right} style={{ width: `${100 - width}%` }}>
             <Preview />
             <div class={`${styles.horizBar} resize-help-trigger`} style={{top: `${100 - helpHeight}%`, width: `${100 - width}%`}}></div>
-            <Help close={closeHelpPane} helpHeight={helpHeight} closed={helpHeight <= 0}/>
+            <Help close={closeHelpPane} helpHeight={helpHeight} />
           </div>
         </div>
       </div>
