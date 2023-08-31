@@ -1,7 +1,7 @@
 import CompatWarning from './components/CompatWarning.tsx'
 import Preview from './components/Preview.tsx'
 import Toolbar from './components/Toolbar.tsx'
-import styles from './Editor.module.css'
+import styles from './Editor.module.scss'
 import Error from './components/Error.tsx'
 import Console from './components/Console.tsx'
 import GlobalStateDebugger from './components/GlobalStateDebugger.tsx'
@@ -12,11 +12,12 @@ import { createListener } from './lib/createListener.js'
 import { useEffect, useState } from 'preact/hooks'
 import { init } from './lib/init.js'
 
-export default function Editor() {
-  const [width, setWidth] = useState(50);
+export default function Editor({ children, title }) {
+  const [width, setWidth] = useState(50)
+  const [tab, setTab] = useState('workshop')
 
-  const INIT_HELP_HEIGHT = 40;
-  const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT);
+  const INIT_HELP_HEIGHT = 40
+  const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
 
   useEffect(() => {
     init()
@@ -29,8 +30,14 @@ export default function Editor() {
       <div class={styles.root}>
         <Toolbar />
         <div class={styles.inner}>
-          <div style={{ width: `${width}%`, display: "flex", height: "100%", "flex-direction": "column" }}>
-            <div style={{ flex: 1, overflow: "scroll" }}>
+          <div
+            style={{
+              'width': `${width}%`,
+              'display': 'flex',
+              'height': '100%',
+              'flex-direction': 'column'
+            }}>
+            <div style={{ flex: 1, overflow: 'scroll' }}>
               <CodeMirror />
             </div>
             <div>
@@ -44,27 +51,39 @@ export default function Editor() {
           <div class={styles.right} style={{ width: `${100 - width}%` }}>
             <Preview />
             <div class={styles.helpSectionToolbar}>
-              <a class={styles.helpSectionTab}>workshop</a>
-              <a class={styles.helpSectionTab}>toolkit</a>
-              <a class={styles.helpSectionTab} onClick={() => {
-                const close = helpHeight === INIT_HELP_HEIGHT;
+              <h1>{title}</h1>
+              <div style={{ display: 'flex' }}>
+                <a
+                  class={styles.helpSectionTab}
+                  onClick={() => setTab('workshop')}>
+                  workshop
+                </a>
+                <a
+                  class={styles.helpSectionTab}
+                  onClick={() => setTab('toolkit')}>
+                  toolkit
+                </a>
+                <a
+                  class={styles.helpSectionTab}
+                  onClick={() => {
+                    const close = helpHeight === INIT_HELP_HEIGHT
+                    let count = 0
+                    const intervalId = setInterval(() => {
+                      if (count === INIT_HELP_HEIGHT) clearInterval(intervalId)
 
-                let count = 0;
-                const intervalId = setInterval(() => {
-                  if (count === INIT_HELP_HEIGHT) clearInterval(intervalId);
+                      setHelpHeight(helpHeight + (close ? -1 : 1) * count)
 
-                  setHelpHeight(
-                    helpHeight 
-                    + (close ? -1 : 1)*count
-                  )
-
-                  count++;
-                }, 15);
-
-              }}>{ helpHeight === INIT_HELP_HEIGHT ? "close" : "open"}</a>
+                      count++
+                    }, 15)
+                  }}>
+                  {helpHeight === INIT_HELP_HEIGHT ? 'close' : 'open'}
+                </a>
+              </div>
             </div>
-            <div class={styles.helpSection} style={{ height: `${helpHeight}%` }}>
-              help goes here
+            <div
+              class={`${styles.helpSection} ${styles.prose}`}
+              style={{ height: `${helpHeight}%` }}>
+              {tab == 'workshop' ? children : 'hi'}
             </div>
           </div>
         </div>
@@ -88,7 +107,7 @@ function addBarResizing(setWidth) {
     if (bar === null) return
 
     bar.style.width = '8px'
-    bar.style.background = 'black'
+    bar.style.background = '#eee'
   })
 
   listen('mousemove', '', e => {

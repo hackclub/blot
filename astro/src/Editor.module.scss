@@ -25,7 +25,7 @@
 
 .vertBar {
   width: 1px;
-  background: grey;
+  background: #eee;
   position: absolute;
   top: 0px;
   height: 100%;
@@ -35,19 +35,59 @@
 
 .vertBar:hover {
   width: 8px;
-  background: black;
+  background: #eee;
   cursor: col-resize;
 }
 
 .helpSection {
-  background: var(--primary);
-  color: white;
+  overflow-y: auto;
+}
+
+.prose {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 1rem;
+  overflow-x: clip;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  img {
+    margin-bottom: 1.1rem;
+  }
+
+  a {
+    color: var(--primary);
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    font-size: 0.995rem;
+    font-family: var(--font-mono);
+  }
 }
 
 .helpSectionToolbar {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
   background: var(--primary);
+
+  h1 {
+    color: white;
+    font-size: inherit;
+    margin-left: 12px;
+  }
 }
 
 .helpSectionTab {
@@ -60,5 +100,5 @@
 }
 
 .helpSectionTab:hover {
-  opacity: .9;
+  opacity: 0.9;
 }

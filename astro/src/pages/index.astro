@@ -7,7 +7,8 @@ import Layout from '../layouts/Layout.astro'
   import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
   import * as THREE from 'three'
   import { turtles } from '../lib/paths.js'
-  import { object } from 'astro/zod'
+
+  const navHeight = document.querySelector('nav')?.offsetHeight
 
   let objects = {
     x: [],
@@ -29,7 +30,7 @@ import Layout from '../layouts/Layout.astro'
     antialias: true,
     alpha: true
   })
-  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setSize(window.innerWidth, window.innerHeight - navHeight)
   renderer.domElement.style.zIndex = '999'
   document.body.appendChild(renderer.domElement)
 
@@ -115,7 +116,7 @@ import Layout from '../layouts/Layout.astro'
   const ctx = canvas.getContext('2d')
   ctx.strokeStyle = 'black'
   width = canvas.width = window.innerWidth
-  height = canvas.height = window.innerHeight
+  height = canvas.height = window.innerHeight - navHeight
 
   const turtle = turtles[0]
   let polyline = turtle.path[0]
@@ -220,19 +221,9 @@ import Layout from '../layouts/Layout.astro'
 
   canvas {
     position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-  }
-
-  #canvas {
     z-index: 999;
-  }
-
-  main {
-    position: relative;
-    z-index: 2;
-    padding: 1rem 0;
+    bottom: 0;
+    left: 0;
   }
 
   h1 {
@@ -251,15 +242,10 @@ import Layout from '../layouts/Layout.astro'
 
 <Layout title="Blot" description="Blot out the world!">
   <canvas id="canvas"></canvas>
-  <!-- 
-    <main>
-        <section>
-            <h1>
-                <span>Blot</span> is the plotting tool that everyone can make
-                art for.
-            </h1>
-            <h1>Draw some art, get a <span>Blot</span>.</h1>
-        </section>
-    </main>
-    -->
+  <section>
+    <h1>
+      <span>Blot</span> is the plotting tool that everyone can make art for.
+    </h1>
+    <h1>Draw some art, get a <span>Blot</span>.</h1>
+  </section>
 </Layout>

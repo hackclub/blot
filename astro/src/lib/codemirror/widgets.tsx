@@ -28,9 +28,9 @@ import {
 import ThreeDCurveManualIcon from '../../ui/ThreeDCurveManualIcon.tsx'
 import CloseIcon from '../../ui/CloseIcon.tsx'
 
-import { BezierEditor } from "../../components/BezierEditor.tsx";
+import { BezierEditor } from '../../components/BezierEditor.tsx'
 
-type BezierPoints = any;
+type BezierPoints = any
 
 const makeWidget = <T extends {}>(
   component: ComponentType<{ view: EditorView; props: T }>,
@@ -102,14 +102,14 @@ const trimZerosFromEnd = (str: string) => str.replace(/\.?0+$/, '')
 
 const bezierWidget = makeWidget<BezierProps>(
   ({ view, props }) => {
-    const [popupSide, setPopupSide] = useState<PopupSide | null>(null);
-    
-    const createLiveUpdateSpans = () =>
-        Object.values(props)
-          .flat()
-          .map(node => createSpan(node.from, node.to, view));
+    const [popupSide, setPopupSide] = useState<PopupSide | null>(null)
 
-    const liveUpdateSpans = createLiveUpdateSpans();
+    const createLiveUpdateSpans = () =>
+      Object.values(props)
+        .flat()
+        .map(node => createSpan(node.from, node.to, view))
+
+    const liveUpdateSpans = createLiveUpdateSpans()
 
     Object.values(props)
       .flat()
@@ -133,7 +133,7 @@ const bezierWidget = makeWidget<BezierProps>(
     }
 
     const nodeToVal = (n: SyntaxNode) =>
-        Number(view.state.sliceDoc(n.from, n.to))
+      Number(view.state.sliceDoc(n.from, n.to))
 
     const bezierInitialValue = {
       yStart: nodeToVal(props.yStart),
@@ -143,33 +143,37 @@ const bezierWidget = makeWidget<BezierProps>(
     }
 
     return (
-        <span class={styles.bezierWidget}>
-            {popupSide !== null && (
-                <div class={styles.bezierWidgetPopup} style={{
-                    top: popupSide === PopupSide.Top ? "0" : "100%",
-                }}>
-                    <BezierEditor initialValue={bezierInitialValue} onChange={bezierOnChange}></BezierEditor>
-                </div>
-            )}
-            <button
-              class={styles.bezierWidgetBtn}
-              onClick={e => {
-                if (popupSide !== null) {
-                  setPopupSide(null)
-                  return
-                }
-                dispatchCloseBezierWidget(null) // close all bezier widgets that are open
-                // position the popup above the button if button is below the middle of the screen and vice versa
-                const buttonRect = e.currentTarget.getBoundingClientRect()
-                setPopupSide(
-                  buttonRect.top > window.innerHeight / 2
-                    ? PopupSide.Top
-                    : PopupSide.Bottom
-                )
-              }}>
-              <ThreeDCurveManualIcon />
-              bezierEasing
-            </button>
+      <span class={styles.bezierWidget}>
+        {popupSide !== null && (
+          <div
+            class={styles.bezierWidgetPopup}
+            style={{
+              top: popupSide === PopupSide.Top ? '0' : '100%'
+            }}>
+            <BezierEditor
+              initialValue={bezierInitialValue}
+              onChange={bezierOnChange}></BezierEditor>
+          </div>
+        )}
+        <button
+          class={styles.bezierWidgetBtn}
+          onClick={e => {
+            if (popupSide !== null) {
+              setPopupSide(null)
+              return
+            }
+            dispatchCloseBezierWidget(null) // close all bezier widgets that are open
+            // position the popup above the button if button is below the middle of the screen and vice versa
+            const buttonRect = e.currentTarget.getBoundingClientRect()
+            setPopupSide(
+              buttonRect.top > window.innerHeight / 2
+                ? PopupSide.Top
+                : PopupSide.Bottom
+            )
+          }}>
+          <ThreeDCurveManualIcon />
+          bezierEasing
+        </button>
       </span>
     )
   },

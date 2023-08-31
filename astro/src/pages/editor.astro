@@ -1,10 +1,28 @@
 ---
 import Layout from '../layouts/EditorLayout.astro'
 import Editor from '../Editor.tsx'
+import { getCollection, getEntry } from 'astro:content'
+
+export async function getStaticPaths() {
+  const workshops = await getCollection('workshops', ({ data }) => data)
+  return workshops.map(workshop => ({
+    params: { slug: workshop.slug }
+  }))
+}
+
+const slug = 'raymarching'
+const {
+  render,
+  data: { title, description, thumbnail, contributor }
+} = await getEntry('workshops', slug)
+const rendered = await render()
+const Content = rendered.Content
 ---
 
-<Layout title="Haxidraw">
+<Layout title="Editor" description="Editor">
   <main>
-    <Editor client:load />
+    <Editor client:load title={title}>
+      <Content />
+    </Editor>
   </main>
 </Layout>
