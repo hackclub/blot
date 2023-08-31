@@ -10,7 +10,7 @@
   position: absolute;
   top: 0;
   transform: translate(0, -100%);
-  background: rgba(var(--primary-rgb), 0.3);
+  background: rgba(var(--primary-rgb), 0.2);
   border-radius: 0 10px 0 0;
   overflow: clip;
 }
@@ -22,7 +22,7 @@
 }
 
 .helpSectionTab:hover {
-  background: rgba(var(--primary-rgb), 0.2);
+  background: rgba(var(--primary-rgb), 0.1);
 }
 
 .helpContent {
