@@ -37,8 +37,14 @@ export default function Editor() {
             + count
         )
 
-        if ((helpHeight + count >= INIT_HELP_HEIGHT && closed)
-            || (helpHeight + count <= 0 && !closed)) clearInterval(intervalId)
+        if (helpHeight + count >= INIT_HELP_HEIGHT && closed){
+          clearInterval(intervalId)
+        }
+
+        if (helpHeight + count <= 0 && !closed) {
+          setHelpHeight(0)
+          clearInterval(intervalId)
+        }
 
         count += (closed ? 1 : -1)
       }, 5);
