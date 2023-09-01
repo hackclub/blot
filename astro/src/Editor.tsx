@@ -7,21 +7,24 @@ import Console from './components/Console.tsx'
 import GlobalStateDebugger from './components/GlobalStateDebugger.tsx'
 import DropBox from './components/DropBox.tsx'
 import CodeMirror from './components/CodeMirror.tsx'
+import { marked } from 'marked'
 
 import { createListener } from './lib/createListener.js'
 import { useEffect, useState } from 'preact/hooks'
 import { init } from './lib/init.js'
+import { useSettings } from './lib/settings.ts'
 
-export default function Editor({ children, title }) {
+export default function Editor({ children, title, toolkit }) {
   const [width, setWidth] = useState(50)
   const [tab, setTab] = useState('workshop')
+  const { theme } = useSettings(['theme'])
 
   const INIT_HELP_HEIGHT = 40
   const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
 
   useEffect(() => {
     init()
-    addBarResizing(setWidth)
+    addBarResizing(setWidth, theme)
   }, [])
 
   return (
@@ -80,11 +83,22 @@ export default function Editor({ children, title }) {
                 </a>
               </div>
             </div>
-            <div
-              class={`${styles.helpSection} ${styles.prose}`}
-              style={{ height: `${helpHeight}%` }}>
-              {tab == 'workshop' ? children : 'hi'}
-            </div>
+            {tab == 'workshop' ? (
+              <div
+                class={styles.helpSection}
+                style={{ height: `${helpHeight}%` }}>
+                <div class={styles.prose}>{children}</div>
+              </div>
+            ) : (
+              <div
+                class={styles.helpSection}
+                style={{ height: `${helpHeight}%` }}>
+                <div
+                  class={styles.prose}
+                  dangerouslySetInnerHTML={{ __html: marked(toolkit) }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -94,7 +108,7 @@ export default function Editor({ children, title }) {
   )
 }
 
-function addBarResizing(setWidth) {
+function addBarResizing(setWidth, theme: number) {
   const listen = createListener(document.body)
 
   let clicked = false
@@ -107,7 +121,7 @@ function addBarResizing(setWidth) {
     if (bar === null) return
 
     bar.style.width = '8px'
-    bar.style.background = '#eee'
+    bar.style.background = theme === 1 ? '#404040' : '#eee'
   })
 
   listen('mousemove', '', e => {

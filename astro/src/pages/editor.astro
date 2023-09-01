@@ -1,13 +1,19 @@
 ---
 import Layout from '../layouts/EditorLayout.astro'
 import Editor from '../Editor.tsx'
-import { getCollection, getEntry } from 'astro:content'
+import { getEntry } from 'astro:content'
 
-export async function getStaticPaths() {
-  const workshops = await getCollection('workshops', ({ data }) => data)
-  return workshops.map(workshop => ({
-    params: { slug: workshop.slug }
-  }))
+const username = 'hackclub'
+const repository = 'haxidraw'
+const pathToFile = 'guides/toolkit/toolkit.md'
+const branch = 'leo-dev'
+const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`
+
+let toolkit = ''
+while (!toolkit.length) {
+  const response = await fetch(apiUrl)
+  const data = await response.json()
+  toolkit = atob(data.content)
 }
 
 const slug = 'raymarching'
@@ -21,7 +27,7 @@ const Content = rendered.Content
 
 <Layout title="Editor" description="Editor">
   <main>
-    <Editor client:load title={title}>
+    <Editor client:load title={title} toolkit={toolkit}>
       <Content />
     </Editor>
   </main>

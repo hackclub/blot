@@ -73,6 +73,7 @@ export default function Toolbar() {
               'display': hidden ? 'none' : '',
               'position': 'absolute',
               'background': 'var(--primary)',
+              'border': '1px solid rgba(255, 255, 255, 0.1)',
               'z-index': 9999,
               'width': '100%',
               'top': '100%',
@@ -365,60 +366,56 @@ function MachineControls() {
 
 function SettingsButton() {
   const { theme, vimMode } = useSettings(['theme', 'vimMode'])
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-
-  useEffect(() => {
-    if (!dropdownOpen) return
-    // make it so when you click anywhere else the dialog closes
-    function handleClick(e: MouseEvent) {
-      const target = e.target as HTMLElement
-      if (!target.closest(`.${styles.settingsWrapper}`)) {
-        setDropdownOpen(false)
-      }
-    }
-
-    window.addEventListener('click', handleClick)
-    return () => {
-      window.removeEventListener('click', handleClick)
-    }
-  }, [dropdownOpen])
+  const [hidden, setHidden] = useState(true)
 
   return (
-    <div class={styles.settingsWrapper}>
-      <Button
-        variant="ghost"
-        icon
-        aria-label="Show settings menu"
-        aria-expanded={dropdownOpen}
-        onClick={() => {
-          setDropdownOpen(!dropdownOpen)
+    <div
+      style={{
+        position: 'relative',
+        cursor: 'default',
+        width: 'min-width'
+      }}
+      onMouseEnter={() => setHidden(false)}
+      onMouseLeave={() => setHidden(true)}>
+      <div
+        style={{
+          padding: '5px'
         }}>
-        <SettingsIcon />
-      </Button>
-      {dropdownOpen && (
-        <div class={styles.settingsDropdown}>
-          <Button
-            variant="ghost"
-            onClick={() => {
-              patchSettings({
-                theme: theme === Theme.Dark ? Theme.Light : Theme.Dark
-              })
-              setDropdownOpen(false)
-            }}>
-            <BrightnessContrastIcon className={styles.icon} />
-            <span>toggle theme</span>
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => {
-              patchSettings({ vimMode: !vimMode })
-              setDropdownOpen(false)
-            }}>
-            <KeyboardIcon className={styles.icon} />
-            <span>{vimMode ? 'disable' : 'enable'} vim mode</span>
-          </Button>
-        </div>
-      )}
+        <SettingsIcon className={styles.icon} />
+      </div>
+      <div
+        style={{
+          'display': hidden ? 'none' : '',
+          'position': 'absolute',
+          'right': '0',
+          'background': 'var(--primary)',
+          'border': '1px solid rgba(255, 255, 255, 0.1)',
+          'z-index': 9999,
+          'width': '100%',
+          'padding': '5px',
+          'border-radius': '5px'
+        }}>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            patchSettings({
+              theme: theme === Theme.Dark ? Theme.Light : Theme.Dark
+            })
+            setHidden(false)
+          }}>
+          <BrightnessContrastIcon className={styles.icon} />
+          <span>toggle theme</span>
+        </Button>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            patchSettings({ vimMode: !vimMode })
+            setHidden(false)
+          }}>
+          <KeyboardIcon className={styles.icon} />
+          <span>{vimMode ? 'disable' : 'enable'} vim mode</span>
+        </Button>
+      </div>
     </div>
   )
 }

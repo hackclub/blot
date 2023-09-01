@@ -131,8 +131,8 @@ import Layout from '../layouts/Layout.astro'
     (x + config.xoff) * config.scale,
     (y + config.yoff) * config.scale
   ])
-  let i = config.lineStart + 1
-  let j = config.lineStart + 1
+  let i = config.lineStart
+  let j = config.lineStart
 
   function dist(x1: number, y1: number, x2: number, y2: number) {
     return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
@@ -183,6 +183,7 @@ import Layout from '../layouts/Layout.astro'
 
   function animate() {
     requestAnimationFrame(animate)
+    renderer.render(scene, camera)
     if (
       i < config.lineEnd - 1 &&
       objects.arm != undefined &&
@@ -205,14 +206,14 @@ import Layout from '../layouts/Layout.astro'
       ctx.stroke()
       moveTo(x, y)
     }
-    renderer.render(scene, camera)
   }
 
   animate()
 </script>
 
 <style is:global lang="scss">
-  body {
+  body,
+  html {
     background-size: 40px 40px;
     background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
       linear-gradient(to bottom, #ddd 1px, transparent 1px);
@@ -220,10 +221,12 @@ import Layout from '../layouts/Layout.astro'
   }
 
   canvas {
+    border-bottom: 1px dashed var(--primary);
     position: absolute;
     z-index: 999;
     bottom: 0;
     left: 0;
+    height: 100vh;
   }
 
   h1 {

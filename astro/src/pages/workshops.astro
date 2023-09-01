@@ -87,6 +87,14 @@ const workshops = await getCollection('workshops', ({ data }) => data)
 </script>
 
 <style is:global lang="scss">
+  body,
+  html {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    min-height: 100vh;
+  }
+
   canvas {
     z-index: 0;
     overflow-y: hidden;
@@ -129,6 +137,7 @@ const workshops = await getCollection('workshops', ({ data }) => data)
     }
 
     .prose {
+      background-color: white;
       padding: 1rem;
 
       a {
@@ -153,14 +162,20 @@ const workshops = await getCollection('workshops', ({ data }) => data)
 
   .framed:not(#content) {
     cursor: pointer;
-    transition: all 0.1s;
+    transition: all 0.2s;
+
+    .prose {
+      border: 2px dashed var(--primary);
+      border-top: none;
+    }
 
     &:hover {
-      transform: scale(101%);
+      transform: scale(101%) rotate(-0.5deg);
     }
 
     .thumbnail {
-      border-bottom: 2px dashed var(--primary);
+      background-color: white;
+      border: 2px dashed var(--primary);
       width: 100%;
     }
 

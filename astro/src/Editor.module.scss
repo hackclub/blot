@@ -31,12 +31,20 @@
   height: 100%;
   z-index: 10;
   transform: translate(-50%, 0);
-}
 
-.vertBar:hover {
-  width: 8px;
-  background: #eee;
-  cursor: col-resize;
+  &:hover {
+    width: 8px;
+    background: #eee;
+    cursor: col-resize;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background: #404040;
+
+    &:hover {
+      background: #404040;
+    }
+  }
 }
 
 .helpSection {
@@ -74,6 +82,14 @@
   code {
     font-size: 0.995rem;
     font-family: var(--font-mono);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: white;
+
+    a {
+      color: white;
+    }
   }
 }
 
