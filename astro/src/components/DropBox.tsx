@@ -36,6 +36,7 @@ export default function DropBox() {
                 left: 0px;
                 top: 0px;
                 display: flex;
+                z-index: 999;
             }
 
             .hidden {

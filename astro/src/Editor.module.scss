@@ -37,14 +37,6 @@
     background: #eee;
     cursor: col-resize;
   }
-
-  @media (prefers-color-scheme: dark) {
-    background: #404040;
-
-    &:hover {
-      background: #404040;
-    }
-  }
 }
 
 .helpSection {
@@ -83,14 +75,6 @@
     font-size: 0.995rem;
     font-family: var(--font-mono);
   }
-
-  @media (prefers-color-scheme: dark) {
-    color: white;
-
-    a {
-      color: white;
-    }
-  }
 }
 
 .helpSectionToolbar {
@@ -117,4 +101,22 @@
 
 .helpSectionTab:hover {
   opacity: 0.9;
+}
+
+body[data-theme='Dark'] {
+  .prose {
+    color: white;
+
+    a {
+      color: white;
+    }
+  }
+
+  .vertBar {
+    background: #404040;
+
+    &:hover {
+      background: #404040;
+    }
+  }
 }

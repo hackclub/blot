@@ -24,8 +24,8 @@ export default function Editor({ children, title, toolkit }) {
 
   useEffect(() => {
     init()
-    addBarResizing(setWidth, theme)
-  }, [])
+    addEditorResizing(setWidth, theme)
+  }, [theme])
 
   return (
     <>
@@ -54,7 +54,7 @@ export default function Editor({ children, title, toolkit }) {
           <div class={styles.right} style={{ width: `${100 - width}%` }}>
             <Preview />
             <div class={styles.helpSectionToolbar}>
-              <h1>{title}</h1>
+              <h1>{tab === 'workshop' ? title : 'Toolkit'}</h1>
               <div style={{ display: 'flex' }}>
                 <a
                   class={styles.helpSectionTab}
@@ -108,7 +108,7 @@ export default function Editor({ children, title, toolkit }) {
   )
 }
 
-function addBarResizing(setWidth, theme: number) {
+function addEditorResizing(setWidth) {
   const listen = createListener(document.body)
 
   let clicked = false

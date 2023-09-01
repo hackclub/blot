@@ -377,12 +377,9 @@ function SettingsButton() {
       }}
       onMouseEnter={() => setHidden(false)}
       onMouseLeave={() => setHidden(true)}>
-      <div
-        style={{
-          padding: '5px'
-        }}>
+      <Button variant="ghost">
         <SettingsIcon className={styles.icon} />
-      </div>
+      </Button>
       <div
         style={{
           'display': hidden ? 'none' : '',
@@ -391,7 +388,6 @@ function SettingsButton() {
           'background': 'var(--primary)',
           'border': '1px solid rgba(255, 255, 255, 0.1)',
           'z-index': 9999,
-          'width': '100%',
           'padding': '5px',
           'border-radius': '5px'
         }}>
@@ -411,7 +407,8 @@ function SettingsButton() {
           onClick={() => {
             patchSettings({ vimMode: !vimMode })
             setHidden(false)
-          }}>
+          }}
+          style={{ 'width': '100%', 'white-space': 'nowrap' }}>
           <KeyboardIcon className={styles.icon} />
           <span>{vimMode ? 'disable' : 'enable'} vim mode</span>
         </Button>
