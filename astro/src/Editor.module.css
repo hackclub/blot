@@ -39,26 +39,18 @@
   cursor: col-resize;
 }
 
-.helpSection {
-  background: var(--primary);
-  color: white;
+.horizBar {
+  height: 1px;
+  background: grey;
+  position: absolute;
+  right: 0px;
+  width: 100%;
+  z-index: 9;
+  transform: translate(0, -50%);
 }
 
-.helpSectionToolbar {
-  display: flex;
-  justify-content: flex-end;
-  background: var(--primary);
-}
-
-.helpSectionTab {
-  padding: 3px 5px;
-  margin: 6px 4px;
-  color: black;
-  cursor: pointer;
-  border-radius: 5px;
-  background: #f0f2f3;
-}
-
-.helpSectionTab:hover {
-  opacity: .9;
+.horizBar:hover {
+  height: 8px;
+  background: black;
+  cursor: row-resize;
 }

@@ -1,5 +1,63 @@
-.root {
+.helpSection {
+  background: rgba(var(--primary-rgb), 0.05);
+  color: black;
+  position: relative;
+}
+
+.helpSectionToolbar {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  transform: translate(0, -100%);
+  background: rgba(var(--primary-rgb), 0.2);
+  border-radius: 0 10px 0 0;
+  overflow: clip;
+}
+
+.helpSectionTab {
+  padding: 6px 10px;
+  color: black;
+  cursor: pointer;
+}
+
+.helpSectionTab:hover {
+  background: rgba(var(--primary-rgb), 0.1);
+}
+
+.helpContent {
+  padding: 0 20px 20px 20px;
+  overflow: scroll;
+  height: 100%;
+}
+
+.helpContent h1 {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 2.8em;
+  line-height: 1;
+}
+
+.helpContent p, .helpContent ul, .helpContent pre {
+  line-height: 1.5;
+}
+
+.helpContent h2 {
+  font-size: 1.75em;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.helpContent h3 {
+  margin-top: 30px;
+  font-size: 1.125em;
+}
+
+.helpContent pre {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9em;
 }
