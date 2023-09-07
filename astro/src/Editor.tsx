@@ -14,7 +14,7 @@ import { init } from './lib/init.js'
 import Help from "./components/Help.js";
 import preview from "@astrojs/node/preview.js";
 
-export default function Editor() {
+export default function Editor({tutorial}: {tutorial: string}) {
   const [width, setWidth] = useState(50);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export default function Editor() {
           <div class={styles.right} style={{ width: `${100 - width}%` }}>
             <Preview />
             <div class={`${styles.horizBar} resize-help-trigger`} style={{top: `${100 - helpHeight}%`, width: `${100 - width}%`}}></div>
-            <Help toggleClose={closeHelpPane} helpHeight={helpHeight} />
+            <Help toggleClose={closeHelpPane} helpHeight={helpHeight} workshopHTML={tutorial} />
           </div>
         </div>
       </div>

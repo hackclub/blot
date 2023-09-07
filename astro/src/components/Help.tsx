@@ -4,17 +4,19 @@ import {useState} from "preact/hooks";
 
 const html = compiledContent()
 
-export default function Help({toggleClose, helpHeight}: {toggleClose: () => void, helpHeight: number}) {
+export default function Help({toggleClose, helpHeight, workshopHTML}: {toggleClose: () => void, helpHeight: number, workshopHTML: string | undefined}) {
   const closed = helpHeight <= 0
   const [tab, setTab] = useState<"workshops" | "toolkit">("toolkit")
 
   return <>
     <div class={styles.helpSection} style={{ height: `${helpHeight}%` }}>
       <div class={styles.helpSectionToolbar}>
+        {workshopHTML &&
         <a className={styles.helpSectionTab} style={{backgroundColor: tab == "workshops" ? "rgba(var(--primary-rgb), 0.2)" : ""}} onClick={() => {
           setTab("workshops")
           if (closed) toggleClose()
         }}>Workshops</a>
+        }
         <a className={styles.helpSectionTab} style={{backgroundColor: tab == "toolkit" ? "rgba(var(--primary-rgb), 0.2)" : ""}} onClick={() => {
           setTab("toolkit")
           if (closed) toggleClose()
@@ -26,7 +28,7 @@ export default function Help({toggleClose, helpHeight}: {toggleClose: () => void
       }
 
       {tab === "workshops" &&
-          <div class={styles.helpContent}></div>
+          <div class={styles.helpContent} dangerouslySetInnerHTML={{__html: workshopHTML}}></div>
       }
     </div>
   </>

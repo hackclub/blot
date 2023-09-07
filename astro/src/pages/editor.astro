@@ -1,10 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Editor from '../Editor.tsx';
+
+const files = await Astro.glob('/../guides/*.md')
+
+const query = Astro.url.searchParams.get("tutorial")!
+
+let tutorial = undefined
+
+if (query)
+	files.map(file => {
+		if (file.file.endsWith(query + ".md")) tutorial = file.compiledContent()
+	})
+
 ---
 
 <Layout title="Haxidraw">
 	<main>
-		<Editor client:load />
+		<Editor tutorial={tutorial} client:load />
 	</main>
 </Layout>
