@@ -6,16 +6,16 @@ const html = compiledContent()
 
 export default function Help({toggleClose, helpHeight, workshopHTML}: {toggleClose: () => void, helpHeight: number, workshopHTML: string | undefined}) {
   const closed = helpHeight <= 0
-  const [tab, setTab] = useState<"workshops" | "toolkit">("toolkit")
+  const [tab, setTab] = useState<"workshop" | "toolkit">("toolkit")
 
   return <>
     <div class={styles.helpSection} style={{ height: `${helpHeight}%` }}>
       <div class={styles.helpSectionToolbar}>
         {workshopHTML &&
-        <a className={styles.helpSectionTab} style={{backgroundColor: tab == "workshops" ? "rgba(var(--primary-rgb), 0.2)" : ""}} onClick={() => {
-          setTab("workshops")
+        <a className={styles.helpSectionTab} style={{backgroundColor: tab == "workshop" ? "rgba(var(--primary-rgb), 0.2)" : ""}} onClick={() => {
+          setTab("workshop")
           if (closed) toggleClose()
-        }}>Workshops</a>
+        }}>Workshop</a>
         }
         <a className={styles.helpSectionTab} style={{backgroundColor: tab == "toolkit" ? "rgba(var(--primary-rgb), 0.2)" : ""}} onClick={() => {
           setTab("toolkit")
@@ -27,7 +27,7 @@ export default function Help({toggleClose, helpHeight, workshopHTML}: {toggleClo
       <div dangerouslySetInnerHTML={{__html: html}} class={styles.helpContent}></div>
       }
 
-      {tab === "workshops" &&
+      {tab === "workshop" &&
           <div class={styles.helpContent} dangerouslySetInnerHTML={{__html: workshopHTML}}></div>
       }
     </div>
