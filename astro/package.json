@@ -26,6 +26,7 @@
     "@prefresh/vite": "^2.4.1",
     "@replit/codemirror-vim": "^6.0.14",
     "@rollup/browser": "^3.26.0",
+    "@types/react": "^18.2.21",
     "astro": "^2.7.3",
     "classnames": "^2.3.2",
     "cm6-theme-basic-dark": "^0.2.0",

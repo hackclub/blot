@@ -43,40 +43,6 @@
   overflow-y: auto;
 }
 
-.prose {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin: 0 auto;
-  max-width: 100%;
-  padding: 1rem;
-  overflow-x: clip;
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  img {
-    margin-bottom: 1.1rem;
-  }
-
-  a {
-    color: var(--primary);
-  }
-
-  img {
-    max-width: 100%;
-  }
-
-  code {
-    font-size: 0.995rem;
-    font-family: var(--font-mono);
-  }
-}
-
 .helpSectionToolbar {
   display: flex;
   align-items: center;

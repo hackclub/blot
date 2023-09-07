@@ -14,6 +14,9 @@ export default defineConfig({
   ],
   output: 'server',
   adapter: vercel(),
+  markdown: {
+    shikiConfig: { theme: 'github-light' },
+  },
   vite: {
     plugins: [prefresh()],
     ssr: {

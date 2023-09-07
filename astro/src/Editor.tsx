@@ -10,9 +10,11 @@ import CodeMirror from './components/CodeMirror.tsx'
 import { marked } from 'marked'
 
 import { createListener } from './lib/createListener.js'
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { init } from './lib/init.js'
 import { useSettings } from './lib/settings.ts'
+import Help from './components/Help.js'
+import preview from '@astrojs/node/preview.js'
 
 export default function Editor({ children, title, toolkit }) {
   const [width, setWidth] = useState(50)
@@ -26,6 +28,34 @@ export default function Editor({ children, title, toolkit }) {
     init()
     addEditorResizing(setWidth, theme)
   }, [theme])
+
+  useEffect(() => {
+    init()
+    addEditorResizing(setWidth, theme)
+    addHelpResizing(setHelpHeight, editorContainer)
+  }, [])
+
+  const closeHelpPane = () => {
+    const closed = helpHeight <= 0
+
+    let count = 0
+    const intervalId = setInterval(() => {
+      setHelpHeight(helpHeight + count)
+
+      if (helpHeight + count >= INIT_HELP_HEIGHT && closed) {
+        clearInterval(intervalId)
+      }
+
+      if (helpHeight + count <= 0 && !closed) {
+        setHelpHeight(0)
+        clearInterval(intervalId)
+      }
+
+      count += closed ? 1 : -1
+    }, 5)
+  }
+
+  const editorContainer = useRef(null)
 
   return (
     <>
@@ -49,56 +79,17 @@ export default function Editor({ children, title, toolkit }) {
             </div>
           </div>
           <div
-            class={`${styles.vertBar} resize-trigger`}
+            class={`${styles.vertBar} resize-code-trigger`}
             style={{ left: `${width}%` }}></div>
           <div class={styles.right} style={{ width: `${100 - width}%` }}>
             <Preview />
-            <div class={styles.helpSectionToolbar}>
-              <h1>{tab === 'workshop' ? title : 'Toolkit'}</h1>
-              <div style={{ display: 'flex' }}>
-                <a
-                  class={styles.helpSectionTab}
-                  onClick={() => setTab('workshop')}>
-                  workshop
-                </a>
-                <a
-                  class={styles.helpSectionTab}
-                  onClick={() => setTab('toolkit')}>
-                  toolkit
-                </a>
-                <a
-                  class={styles.helpSectionTab}
-                  onClick={() => {
-                    const close = helpHeight === INIT_HELP_HEIGHT
-                    let count = 0
-                    const intervalId = setInterval(() => {
-                      if (count === INIT_HELP_HEIGHT) clearInterval(intervalId)
-
-                      setHelpHeight(helpHeight + (close ? -1 : 1) * count)
-
-                      count++
-                    }, 15)
-                  }}>
-                  {helpHeight === INIT_HELP_HEIGHT ? 'close' : 'open'}
-                </a>
-              </div>
-            </div>
-            {tab == 'workshop' ? (
-              <div
-                class={styles.helpSection}
-                style={{ height: `${helpHeight}%` }}>
-                <div class={styles.prose}>{children}</div>
-              </div>
-            ) : (
-              <div
-                class={styles.helpSection}
-                style={{ height: `${helpHeight}%` }}>
-                <div
-                  class={styles.prose}
-                  dangerouslySetInnerHTML={{ __html: marked(toolkit) }}
-                />
-              </div>
-            )}
+            <div
+              class={`${styles.horizBar} resize-help-trigger`}
+              style={{
+                top: `${100 - helpHeight}%`,
+                width: `${100 - width}%`
+              }}></div>
+            <Help toggleClose={closeHelpPane} helpHeight={helpHeight} />
           </div>
         </div>
       </div>
@@ -108,13 +99,13 @@ export default function Editor({ children, title, toolkit }) {
   )
 }
 
-function addEditorResizing(setWidth) {
+function addEditorResizing(setWidth, theme) {
   const listen = createListener(document.body)
 
   let clicked = false
   let bar: HTMLDivElement | null = null
 
-  listen('mousedown', '.resize-trigger', e => {
+  listen('mousedown', '.resize-code-trigger', e => {
     clicked = true
     bar = e.target
 
@@ -148,6 +139,58 @@ function addEditorResizing(setWidth) {
   document.addEventListener('mouseleave', () => {
     if (bar !== null) {
       bar.style.width = ''
+      bar.style.background = ''
+    }
+
+    clicked = false
+    bar = null
+  })
+}
+
+function addHelpResizing(setHeight, container) {
+  const listen = createListener(document.body)
+
+  let clicked = false
+  let bar: HTMLDivElement | null = null
+
+  listen('mousedown', '.resize-help-trigger', e => {
+    clicked = true
+    bar = e.target
+
+    if (bar === null) return
+
+    bar.style.height = '8px'
+    bar.style.background = 'black'
+  })
+
+  listen('mousemove', '', e => {
+    if (clicked) {
+      e.preventDefault()
+      let percent =
+        100 -
+        ((e.clientY - container.current.offsetTop) /
+          container.current.offsetHeight) *
+          100
+      percent = Math.min(percent, 100)
+      percent = Math.max(percent, 0)
+
+      setHeight(percent)
+    }
+  })
+
+  listen('mouseup', '', () => {
+    if (bar !== null) {
+      bar.style.height = ''
+      bar.style.background = ''
+    }
+
+    clicked = false
+    bar = null
+  })
+
+  document.addEventListener('mouseleave', () => {
+    if (bar !== null) {
+      bar.style.height = ''
       bar.style.background = ''
     }
 
