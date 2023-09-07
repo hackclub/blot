@@ -144,39 +144,112 @@ import Layout from "../layouts/Layout.astro";
     const range = (x1, y1, x2, y2, a) => lerp(x2, y2, invlerp(x1, y1, a));
 
     function moveTo(x: number, y: number) {
-        let mappedX = range(
-            0,
-            width,
-            -camera.position.z / config.scale,
-            camera.position.z / config.scale,
-            x
-        );
-        let xoff = range(
-            0,
-            width,
-            -camera.position.z / config.scale,
-            camera.position.z / config.scale,
-            config.xoff
-        );
-        let mappedY = range(
-            0,
-            height,
-            -camera.position.y / config.scale,
-            camera.position.y / config.scale,
-            y
-        );
-        let yoff = range(
-            0,
-            height,
-            -camera.position.y / config.scale,
-            camera.position.y / config.scale,
-            config.yoff
-        );
+        // let mappedX = range(
+        //     0,
+        //     width,
+        //     -camera.position.z / config.scale,
+        //     camera.position.z / config.scale,
+        //     x
+        // );
+        // let xoff = range(
+        //     0,
+        //     width,
+        //     -camera.position.z / config.scale,
+        //     camera.position.z / config.scale,
+        //     config.xoff
+        // );
+        // let mappedY = range(
+        //     0,
+        //     height,
+        //     -camera.position.y / config.scale,
+        //     camera.position.y / config.scale,
+        //     y
+        // );
+        // let yoff = range(
+        //     0,
+        //     height,
+        //     -camera.position.y / config.scale,
+        //     camera.position.y / config.scale,
+        //     config.yoff
+        // );
+
+        // const vFOV = camera.fov*Math.PI/180;
+        // const height = 2 * Math.tan(vFOV/2)*camera.position.z;
+        // const width = height * camera.aspect;
+
+        // console.log(camera.fov, x*height, y*width);
+
+        // objects.carriage.position.x = x*width+camera.position.x;
+        // objects.arm.position.x = x*width+camera.position.x;
+        // objects.penholder.position.x = x*width+camera.position.x;
+        // objects.arm.position.y = y*height-camera.position.y;
+        // objects.penholder.position.y = y*height-camera.position.y;
+
+        function screenToWorld(x, y, camera) {
+            // Convert to NDC (-1 to 1 for x and y)
+            const ndcX = (x / window.innerWidth) * 2 - 1;
+            const ndcY = -(y / window.innerHeight) * 2 + 1; // negative because y is flipped in screen coordinates
+
+            const nearPlaneZ = camera.near;
+            const farPlaneZ = camera.far;
+
+            const worldPos = new THREE.Vector3(ndcX, ndcY, 0.5); // z = 0.5 will map to a point in the middle of your near and far plane
+            worldPos.unproject(camera); // This transforms the point from NDC to world space
+
+            return worldPos;
+        }
+
+        // const worldPosition = screenToWorld(x, y, camera);
+
+        // objects.carriage.position.set(worldPosition.x, worldPosition.y, 0);
+        // objects.arm.position.set(worldPosition.x, worldPosition.y, 0);
+        // objects.penholder.position.set(worldPosition.x, worldPosition.y, 0);
+
+
+         const ndcX = (x / window.innerWidth) * 2 - 1;
+        const ndcY = -(y / window.innerHeight) * 2 + 1;
+
+        let mouse = new THREE.Vector2();
+        mouse.x = ndcX;
+        mouse.y = ndcY;
+
+
+
+        let raycaster = new THREE.Raycaster();
+
+        function updateModelPosition() {
+            raycaster.setFromCamera(mouse, camera);
+
+            const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+            let intersectionPoint = new THREE.Vector3();
+            
+            raycaster.ray.intersectPlane(planeZ, intersectionPoint);
+
+            console.log(intersectionPoint)
+
+            // x: .057 to -.071
+            //
+
+            objects.carriage.position.x = intersectionPoint.x;
+            objects.arm.position.x = intersectionPoint.x;
+            objects.penholder.position.x = intersectionPoint.x;
+            objects.arm.position.y = intersectionPoint.y;
+            objects.penholder.position.y = intersectionPoint.y;
+            // yourModel.position.z remains the same unless you want to change it
+        }
+
+        // updateModelPosition();
+
+        console.log(x, y);
+
+        const mappedX = lerp(.057, -.071, x);
+
         objects.carriage.position.x = mappedX;
         objects.arm.position.x = mappedX;
         objects.penholder.position.x = mappedX;
-        objects.arm.position.y = mappedY;
-        objects.penholder.position.y = mappedY;
+        // objects.arm.position.y = intersectionPoint.y;
+        // objects.penholder.position.y = intersectionPoint.y;
+
         objects.x.push(x);
         objects.y.push(y);
     }
@@ -211,11 +284,32 @@ import Layout from "../layouts/Layout.astro";
                     lerp(paths[j - 1][1], y, i - j)
                 );
             ctx.stroke();
-            moveTo(x, y);
+
+            // moveTo(x, y);
         }
     }
 
     animate();
+
+    function moveMachine(x, y) {
+
+    }
+
+    window.addEventListener("mousemove", e => {
+        let x = e.clientX/window.innerWidth;
+        // console.log(x);
+        // if (x < .2+.065) x = 0;
+        // else if (x > .8-.065) x = 1;
+        // else {
+        //     x = (x - (.2+.065))/(.6-.065*2);
+        // }
+
+        x = (x - (.2+.065))/(.6-.065*2);
+
+        let y = 1-e.clientY/window.innerHeight;
+        // x = x/window.innerWidth
+        moveTo(x, y); 
+    })
 </script>
 
 <style is:global lang="scss">
