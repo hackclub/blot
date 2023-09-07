@@ -1,3 +1,4 @@
+import { ReactNode } from 'preact/compat'
 import { compiledContent } from '../../../interface/README.md'
 import styles from './Help.module.scss'
 import { useState } from 'preact/hooks'
@@ -6,10 +7,12 @@ const html = compiledContent()
 
 export default function Help({
   toggleClose,
-  helpHeight
+  helpHeight,
+  children
 }: {
   toggleClose: () => void
   helpHeight: number
+  children: any
 }) {
   const closed = helpHeight <= 0
   const [tab, setTab] = useState<'workshops' | 'toolkit'>('toolkit')
@@ -51,7 +54,9 @@ export default function Help({
             dangerouslySetInnerHTML={{ __html: html }}
             class={styles.helpContent}></div>
         )}
-        {tab === 'workshops' && <div class={styles.helpContent}></div>}
+        {tab === 'workshops' && (
+          <div class={styles.helpContent}>{children}</div>
+        )}
       </div>
     </>
   )

@@ -27,12 +27,13 @@ export default function Editor({ children, title, toolkit }) {
   useEffect(() => {
     init()
     addEditorResizing(setWidth, theme)
+    addHelpResizing(setHelpHeight, editorContainer, theme)
   }, [theme])
 
   useEffect(() => {
     init()
     addEditorResizing(setWidth, theme)
-    addHelpResizing(setHelpHeight, editorContainer)
+    addHelpResizing(setHelpHeight, editorContainer, theme)
   }, [])
 
   const closeHelpPane = () => {
@@ -62,7 +63,7 @@ export default function Editor({ children, title, toolkit }) {
       <GlobalStateDebugger />
       <div class={styles.root}>
         <Toolbar />
-        <div class={styles.inner}>
+        <div class={styles.inner} ref={editorContainer}>
           <div
             style={{
               'width': `${width}%`,
@@ -89,7 +90,9 @@ export default function Editor({ children, title, toolkit }) {
                 top: `${100 - helpHeight}%`,
                 width: `${100 - width}%`
               }}></div>
-            <Help toggleClose={closeHelpPane} helpHeight={helpHeight} />
+            <Help toggleClose={closeHelpPane} helpHeight={helpHeight}>
+              {children}
+            </Help>
           </div>
         </div>
       </div>
@@ -147,7 +150,7 @@ function addEditorResizing(setWidth, theme) {
   })
 }
 
-function addHelpResizing(setHeight, container) {
+function addHelpResizing(setHeight, container, theme) {
   const listen = createListener(document.body)
 
   let clicked = false
@@ -160,7 +163,7 @@ function addHelpResizing(setHeight, container) {
     if (bar === null) return
 
     bar.style.height = '8px'
-    bar.style.background = 'black'
+    bar.style.background = theme === 1 ? '#404040' : '#eee'
   })
 
   listen('mousemove', '', e => {

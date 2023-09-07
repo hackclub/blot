@@ -371,20 +371,23 @@ function SettingsButton() {
   return (
     <div
       style={{
-        position: 'relative',
         cursor: 'default',
         width: 'min-width'
       }}
       onMouseEnter={() => setHidden(false)}
       onMouseLeave={() => setHidden(true)}>
       <Button variant="ghost">
-        <SettingsIcon className={styles.icon} />
+        <a style={{ all: 'unset' }}>
+          <div style={{ transform: 'translate(0, 3.5px)' }}>
+            <SettingsIcon className={styles.icon} />
+          </div>
+        </a>
       </Button>
       <div
         style={{
           'display': hidden ? 'none' : '',
           'position': 'absolute',
-          'right': '0',
+          'right': '5px',
           'background': 'var(--primary)',
           'border': '1px solid rgba(255, 255, 255, 0.1)',
           'z-index': 9999,
@@ -392,6 +395,7 @@ function SettingsButton() {
           'border-radius': '5px'
         }}>
         <Button
+          class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
             patchSettings({
@@ -403,12 +407,12 @@ function SettingsButton() {
           <span>toggle theme</span>
         </Button>
         <Button
+          class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
             patchSettings({ vimMode: !vimMode })
             setHidden(false)
-          }}
-          style={{ 'width': '100%', 'white-space': 'nowrap' }}>
+          }}>
           <KeyboardIcon className={styles.icon} />
           <span>{vimMode ? 'disable' : 'enable'} vim mode</span>
         </Button>

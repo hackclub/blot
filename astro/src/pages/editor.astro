@@ -1,34 +1,34 @@
 ---
-import Layout from "../layouts/EditorLayout.astro";
-import Editor from "../Editor.tsx";
-import { getEntry } from "astro:content";
+import Layout from '../layouts/EditorLayout.astro'
+import Editor from '../Editor.tsx'
+import { getEntry } from 'astro:content'
 
-const username = "hackclub";
-const repository = "haxidraw";
-const pathToFile = "guides/toolkit/toolkit.md";
-const branch = "leo-dev";
-const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`;
+const username = 'hackclub'
+const repository = 'haxidraw'
+const pathToFile = 'guides/toolkit/toolkit.md'
+const branch = 'leo-dev'
+const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`
 
-let toolkit = "";
+let toolkit = ''
 while (!toolkit.length) {
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    toolkit = atob(data.content);
+  const response = await fetch(apiUrl)
+  const data = await response.json()
+  toolkit = atob(data.content)
 }
 
-const slug = "landscape";
+const slug = 'landscape'
 const {
-    render,
-    data: { title, description, thumbnail, contributor }
-} = await getEntry("workshops", slug);
-const rendered = await render();
-const Content = rendered.Content;
+  render,
+  data: { title, description, thumbnail, contributor }
+} = await getEntry('workshops', slug)
+const rendered = await render()
+const Content = rendered.Content
 ---
 
 <Layout title="Editor" description="Editor">
-    <main>
-        <Editor client:load title={title} toolkit={toolkit}>
-            <Content />
-        </Editor>
-    </main>
+  <main>
+    <Editor client:load title={title} toolkit={toolkit}>
+      <Content />
+    </Editor>
+  </main>
 </Layout>

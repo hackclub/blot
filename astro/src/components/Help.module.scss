@@ -25,7 +25,6 @@
 }
 
 .helpContent {
-  border-top: 1px solid #ddd;
   font-family: var(--font-serif);
   font-size: 1.1rem;
   line-height: 1.6;
@@ -58,5 +57,25 @@
   code {
     font-size: 0.995rem;
     font-family: var(--font-mono);
+  }
+
+  hr {
+    background-color: rgba(0, 0, 0, 0.25);
+    height: 1px;
+    border: 0;
+  }
+}
+
+body[data-theme='Dark'] {
+  .helpContent {
+    color: white;
+
+    a {
+      color: white;
+    }
+
+    hr {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
   }
 }

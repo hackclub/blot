@@ -39,6 +39,22 @@
   }
 }
 
+.horizBar {
+  height: 1px;
+  background: #eee;
+  position: absolute;
+  right: 0px;
+  width: 100%;
+  z-index: 9;
+  transform: translate(0, -50%);
+
+  &:hover {
+    height: 8px;
+    background: #eee;
+    cursor: row-resize;
+  }
+}
+
 .helpSection {
   overflow-y: auto;
 }
@@ -78,7 +94,8 @@ body[data-theme='Dark'] {
     }
   }
 
-  .vertBar {
+  .vertBar,
+  .horizBar {
     background: #404040;
 
     &:hover {

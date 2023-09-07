@@ -58,6 +58,10 @@
   cursor: default;
   padding: 5px;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
 }
 
 .dropdownEntry:hover {
