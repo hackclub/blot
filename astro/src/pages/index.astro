@@ -26,7 +26,6 @@ import Layout from "../layouts/Layout.astro";
         0.1,
         1000
     );
-
     // Set up renderer
     const renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -52,7 +51,7 @@ import Layout from "../layouts/Layout.astro";
     camera.position.z = 0.3;
     camera.position.x = 0;
     camera.rotation.z = Math.PI;
-    camera.position.y = 0;
+    camera.position.y = -0.055;
 
     const p0 = addSphere({ 
       radius: .01, 
@@ -138,13 +137,15 @@ import Layout from "../layouts/Layout.astro";
       transform-origin: left top;
 
     `
-    texCanvas.width = 512;
-    texCanvas.height = 512;
+    const texCanvasWidth = 512;
+    const texCanvasHeight = 512*2;
+    texCanvas.width = texCanvasWidth;
+    texCanvas.height = texCanvasHeight;
 
     let ctx = texCanvas.getContext("2d");
 
     ctx.fillStyle = 'antiquewhite';
-    ctx.fillRect(0, 0, 512, 512);
+    ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight);
     // ctx.fillStyle = 'blue';
     // ctx.fillRect(128, 128, 256, 256);
 
@@ -168,7 +169,7 @@ import Layout from "../layouts/Layout.astro";
 
     const oneTurtle = testTurtles.length > 0 ? testTurtles[0] : null;
 
-    oneTurtle.translate([512/2, 512/2], oneTurtle.cc);
+    oneTurtle.translate([texCanvasWidth/2, texCanvasHeight/2], oneTurtle.cc);
 
     console.log(oneTurtle);
 
@@ -188,7 +189,7 @@ import Layout from "../layouts/Layout.astro";
     texture.needsUpdate = true;
     texture.minFilter = THREE.LinearFilter;
 
-    let geometry = new THREE.PlaneGeometry(.4, .4);
+    let geometry = new THREE.PlaneGeometry(.4, .8);
     let material = new THREE.MeshBasicMaterial({ map: texture });
 
     let plane = new THREE.Mesh(geometry, material);
