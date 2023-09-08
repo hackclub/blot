@@ -7,6 +7,8 @@ import Layout from "../layouts/Layout.astro";
     import { MTLLoader } from "three/addons/loaders/MTLLoader.js";
     import * as THREE from "three";
     import { turtles } from "../lib/paths.js";
+    import { runTextReturnTurtles } from "../lib/runTextReturnTurtles.ts";
+
 
     const navHeight = document.querySelector("nav")?.offsetHeight;
 
@@ -36,103 +38,181 @@ import Layout from "../layouts/Layout.astro";
 
     // Set up light
     const light = new THREE.DirectionalLight(0xffffff);
-    light.position.set(0.5, 0, 1);
+    light.position.set(-0.5, 0, 1);
     scene.add(light);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, .5);
+    scene.add(ambientLight);
+
 
     // Add the parts
     const objLoader = new OBJLoader().setPath("/model/");
     const mtlLoader = new MTLLoader().setPath("/model/");
 
     camera.position.z = 0.3;
-    camera.position.x = -0.2;
+    camera.position.x = 0;
     camera.rotation.z = Math.PI;
-    camera.position.y = -0.25;
+    camera.position.y = 0;
 
-    mtlLoader.load("feet.mtl", function (materials) {
-        materials.preload();
-        objLoader.setMaterials(materials).load(
-            "feet.obj",
-            function (object) {
-                scene.add(object);
-                objects.feet = object;
-            },
-            function (xhr) {},
-            function (error) {
-                console.log(error);
-            }
-        );
+    const p0 = addSphere({ 
+      radius: .01, 
+      color: "red", 
+      x: -0.1,
+      y: 0
     });
 
-    mtlLoader.load("carriage.mtl", function (materials) {
-        materials.preload();
-        objLoader.setMaterials(materials).load(
-            "carriage.obj",
-            function (object) {
-                scene.add(object);
-                objects.carriage = object;
-            },
-            function (xhr) {},
-            function (error) {
-                console.log(error);
-            }
-        );
+    const p1 = addSphere({ 
+      radius: .01, 
+      color: "red", 
+      x: 0.1,
+      y: 0
     });
 
-    mtlLoader.load("arm.mtl", function (materials) {
-        materials.preload();
-        objLoader.setMaterials(materials).load(
-            "arm.obj",
-            function (object) {
-                scene.add(object);
-                objects.arm = object;
-            },
-            function (xhr) {},
-            function (error) {
-                console.log(error);
-            }
-        );
+    const p2 = addSphere({ 
+      radius: .01, 
+      color: "red", 
+      x: -0.1,
+      y: -.15
     });
 
-    mtlLoader.load("penholder.mtl", function (materials) {
-        materials.preload();
-        objLoader.setMaterials(materials).load(
-            "penholder.obj",
-            function (object) {
-                scene.add(object);
-                objects.x.push(renderer.domElement.offsetWidth / 2);
-                objects.y.push(renderer.domElement.offsetHeight / 2);
-                objects.penholder = object;
-            },
-            function (xhr) {},
-            function (error) {
-                console.log(error);
-            }
-        );
+    const p3 = addSphere({ 
+      radius: .01, 
+      color: "red", 
+      x: .1,
+      y: -.15
     });
 
-    // Set up turtle
-    let width, height;
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
+    const penTip = addSphere({ 
+      radius: .005, 
+      color: "green", 
+      x: -0.25,
+      y: -0.3
+    });
+
+    [
+        "feet",
+        "carriage",
+        "arm",
+        "penholder"
+    ].map(addObj);
+
+    function addObj(name) {
+      mtlLoader.load(`${name}.mtl`, function (materials) {
+        materials.preload();
+        objLoader.setMaterials(materials).load(
+          `${name}.obj`,
+          function (object) {
+            scene.add(object);
+            objects[name] = object;
+
+            const boundingBox = new THREE.Box3().setFromObject(object);
+            const yOffset = boundingBox.min.y;
+            const xOffset = (boundingBox.min.x + boundingBox.max.x) / 2;
+            const zOffset = (boundingBox.min.z + boundingBox.max.z) / 2;
+
+            object.traverse(child => {
+              if (child instanceof THREE.Mesh) {
+                child.position.set(-xOffset, -yOffset, -zOffset);
+              }
+            })
+          },
+          function (xhr) {},
+          function (error) {
+            console.log(error);
+          }
+        );
+      });
+    }
+
+
+
+
+    let texCanvas = document.createElement("canvas");
+    // document.body.appendChild(texCanvas);
+    texCanvas.style = `
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 999999;
+      scale: .5;
+      transform-origin: left top;
+
+    `
+    texCanvas.width = 512;
+    texCanvas.height = 512;
+
+    let ctx = texCanvas.getContext("2d");
+
+    ctx.fillStyle = 'antiquewhite';
+    ctx.fillRect(0, 0, 512, 512);
+    // ctx.fillStyle = 'blue';
+    // ctx.fillRect(128, 128, 256, 256);
+
+
+    const testTurtles = runTextReturnTurtles(`
+      const t = createTurtle();
+
+      for (let i = 0; i < 300; i++) {
+        t.forward(i);
+        t.right(91);
+      }
+
+      drawTurtles(t);
+    `)
+
+    if (testTurtles.length > 1) {
+      const [first, ...rest] = testTurtles;
+
+      rest.forEach(t => first.join(rest));
+    } 
+
+    const oneTurtle = testTurtles.length > 0 ? testTurtles[0] : null;
+
+    oneTurtle.translate([512/2, 512/2], oneTurtle.cc);
+
+    console.log(oneTurtle);
+
+    ctx.beginPath();
+    oneTurtle.path.forEach(p => {
+      p.forEach((point, i) => {
+        if (i === 0) ctx.moveTo(...point);
+        else ctx.lineTo(...point);
+      })
+    })
     ctx.strokeStyle = "black";
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight - navHeight;
+    ctx.strokeWidth = 2;
+    ctx.stroke();
 
-    const turtle = turtles[0];
-    let polyline = turtle.path[0];
-    const config = {
-        scale: 5,
-        xoff: 70,
-        yoff: -10,
-        lineStart: 1,
-        lineEnd: polyline.length
-    };
-    const paths = polyline.map(([x, y]) => [
-        (x + config.xoff) * config.scale,
-        (y + config.yoff) * config.scale
-    ]);
-    let i = config.lineStart;
-    let j = config.lineStart;
+
+    let texture = new THREE.CanvasTexture(texCanvas);
+    texture.needsUpdate = true;
+    texture.minFilter = THREE.LinearFilter;
+
+    let geometry = new THREE.PlaneGeometry(.4, .4);
+    let material = new THREE.MeshBasicMaterial({ map: texture });
+
+    let plane = new THREE.Mesh(geometry, material);
+    plane.position.x = 0;
+    plane.position.y = 0;
+    plane.position.z = 0;
+    scene.add(plane);
+
+    renderer.domElement.addEventListener("mousemove", (e) => {
+      const { x, y } = getRelativePoint(e, renderer.domElement);
+      const point = getIntersectedPoint(
+        x, 
+        y, 
+        plane
+      );
+
+      if (point) {
+        penTip.position.x = point.x;
+        penTip.position.y = point.y;
+
+        moveMachine(point.x, point.y);
+      }
+
+    })
 
     function dist(x1: number, y1: number, x2: number, y2: number) {
         return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
@@ -143,173 +223,84 @@ import Layout from "../layouts/Layout.astro";
     const invlerp = (x, y, a) => clamp((a - x) / (y - x));
     const range = (x1, y1, x2, y2, a) => lerp(x2, y2, invlerp(x1, y1, a));
 
-    function moveTo(x: number, y: number) {
-        // let mappedX = range(
-        //     0,
-        //     width,
-        //     -camera.position.z / config.scale,
-        //     camera.position.z / config.scale,
-        //     x
-        // );
-        // let xoff = range(
-        //     0,
-        //     width,
-        //     -camera.position.z / config.scale,
-        //     camera.position.z / config.scale,
-        //     config.xoff
-        // );
-        // let mappedY = range(
-        //     0,
-        //     height,
-        //     -camera.position.y / config.scale,
-        //     camera.position.y / config.scale,
-        //     y
-        // );
-        // let yoff = range(
-        //     0,
-        //     height,
-        //     -camera.position.y / config.scale,
-        //     camera.position.y / config.scale,
-        //     config.yoff
-        // );
-
-        // const vFOV = camera.fov*Math.PI/180;
-        // const height = 2 * Math.tan(vFOV/2)*camera.position.z;
-        // const width = height * camera.aspect;
-
-        // console.log(camera.fov, x*height, y*width);
-
-        // objects.carriage.position.x = x*width+camera.position.x;
-        // objects.arm.position.x = x*width+camera.position.x;
-        // objects.penholder.position.x = x*width+camera.position.x;
-        // objects.arm.position.y = y*height-camera.position.y;
-        // objects.penholder.position.y = y*height-camera.position.y;
-
-        function screenToWorld(x, y, camera) {
-            // Convert to NDC (-1 to 1 for x and y)
-            const ndcX = (x / window.innerWidth) * 2 - 1;
-            const ndcY = -(y / window.innerHeight) * 2 + 1; // negative because y is flipped in screen coordinates
-
-            const nearPlaneZ = camera.near;
-            const farPlaneZ = camera.far;
-
-            const worldPos = new THREE.Vector3(ndcX, ndcY, 0.5); // z = 0.5 will map to a point in the middle of your near and far plane
-            worldPos.unproject(camera); // This transforms the point from NDC to world space
-
-            return worldPos;
-        }
-
-        // const worldPosition = screenToWorld(x, y, camera);
-
-        // objects.carriage.position.set(worldPosition.x, worldPosition.y, 0);
-        // objects.arm.position.set(worldPosition.x, worldPosition.y, 0);
-        // objects.penholder.position.set(worldPosition.x, worldPosition.y, 0);
-
-
-         const ndcX = (x / window.innerWidth) * 2 - 1;
-        const ndcY = -(y / window.innerHeight) * 2 + 1;
-
-        let mouse = new THREE.Vector2();
-        mouse.x = ndcX;
-        mouse.y = ndcY;
-
-
-
-        let raycaster = new THREE.Raycaster();
-
-        function updateModelPosition() {
-            raycaster.setFromCamera(mouse, camera);
-
-            const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-            let intersectionPoint = new THREE.Vector3();
-            
-            raycaster.ray.intersectPlane(planeZ, intersectionPoint);
-
-            console.log(intersectionPoint)
-
-            // x: .057 to -.071
-            //
-
-            objects.carriage.position.x = intersectionPoint.x;
-            objects.arm.position.x = intersectionPoint.x;
-            objects.penholder.position.x = intersectionPoint.x;
-            objects.arm.position.y = intersectionPoint.y;
-            objects.penholder.position.y = intersectionPoint.y;
-            // yourModel.position.z remains the same unless you want to change it
-        }
-
-        // updateModelPosition();
-
-        console.log(x, y);
-
-        const mappedX = lerp(.057, -.071, x);
-
-        objects.carriage.position.x = mappedX;
-        objects.arm.position.x = mappedX;
-        objects.penholder.position.x = mappedX;
-        // objects.arm.position.y = intersectionPoint.y;
-        // objects.penholder.position.y = intersectionPoint.y;
-
-        objects.x.push(x);
-        objects.y.push(y);
-    }
-
     function animate() {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-        if (
-            i < config.lineEnd - 1 &&
-            objects.arm != undefined &&
-            objects.penholder != undefined &&
-            objects.carriage != undefined &&
-            objects.feet != undefined
-        ) {
-            i +=
-                10 /
-                dist(
-                    paths[j - 1][0],
-                    paths[j - 1][1],
-                    paths[j][0],
-                    paths[j][1]
-                );
-            j = Math.floor(i);
-            ctx.clearRect(0, 0, width, height);
-            let [x, y] = paths[j];
-            // increase i a bit if we're out of the screen
-            if (x < 0 || x > width || y < 0 || y > height) i++;
-            if (j === 0) ctx.moveTo(x, y);
-            else
-                ctx.lineTo(
-                    lerp(paths[j - 1][0], x, i - j),
-                    lerp(paths[j - 1][1], y, i - j)
-                );
-            ctx.stroke();
-
-            // moveTo(x, y);
-        }
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
     }
 
     animate();
 
-    function moveMachine(x, y) {
+    function addSphere({ radius, color, x, y }) {
+      const sphereRadius = radius;
+      const sphereWidthSegments = 32;  // Number of segmented faces around the circumference of the sphere.
+      const sphereHeightSegments = 32; // Number of rows of faces from the sphere's top to bottom.
 
+      const sphereGeometry = new THREE.SphereGeometry(
+        sphereRadius, 
+        sphereWidthSegments, 
+        sphereHeightSegments
+      );
+
+      const sphereMaterial = new THREE.MeshBasicMaterial({ color }); // green color
+
+      const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+      scene.add(sphereMesh);
+
+      sphereMesh.position.x = x;
+      sphereMesh.position.y = y;
+
+      return sphereMesh;
     }
 
-    window.addEventListener("mousemove", e => {
-        let x = e.clientX/window.innerWidth;
-        // console.log(x);
-        // if (x < .2+.065) x = 0;
-        // else if (x > .8-.065) x = 1;
-        // else {
-        //     x = (x - (.2+.065))/(.6-.065*2);
-        // }
+    function getIntersectedPoint(x, y, targetObject) {
 
-        x = (x - (.2+.065))/(.6-.065*2);
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
 
-        let y = 1-e.clientY/window.innerHeight;
-        // x = x/window.innerWidth
-        moveTo(x, y); 
-    })
+      const rect = renderer.domElement.getBoundingClientRect();
+
+      // Update the mouse vector with passed x and y values
+      mouse.x = (x / rect.width) * 2 - 1;
+      mouse.y = - (y / rect.height) * 2 + 1;
+
+      // Update the picking ray with the camera and mouse position
+      raycaster.setFromCamera(mouse, camera);
+
+      // Calculate objects intersecting the picking ray
+      const intersects = raycaster.intersectObject(targetObject);
+
+      if (intersects.length > 0) {
+          return intersects[0].point; // This is the Vector3 representing the intersection point in 3D space
+      } else {
+          return null; // No intersection
+      }
+    }
+
+    function getRelativePoint(event, element) {
+      const rect = element.getBoundingClientRect();
+      
+      return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+      };
+    }
+
+    function moveMachine(x, y) {
+      if (Object.keys(objects).length < 4) return;
+      // console.log(x, y);
+
+      objects.penholder.position.x = x;
+      objects.penholder.position.y = y;
+      objects.penholder.position.z = 0.04;
+
+      objects.carriage.position.x = x;
+      objects.carriage.position.y = 0.03;
+      objects.carriage.position.z = 0.02;
+
+      objects.arm.position.x = x+0.02;
+      objects.arm.position.y = y+0.04;
+      objects.arm.position.z = 0.04;
+    }
 </script>
 
 <style is:global lang="scss">
@@ -319,15 +310,6 @@ import Layout from "../layouts/Layout.astro";
         background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
             linear-gradient(to bottom, #ddd 1px, transparent 1px);
         min-height: 100vh;
-    }
-
-    canvas {
-        border-bottom: 1px dashed var(--primary);
-        position: absolute;
-        z-index: 999;
-        bottom: 0;
-        left: 0;
-        height: 100vh;
     }
 
     h1 {
@@ -345,6 +327,6 @@ import Layout from "../layouts/Layout.astro";
 </style>
 
 <Layout title="Blot" description="Blot out the world!">
-    <canvas id="canvas"></canvas>
+    <!-- <canvas id="canvas"></canvas> -->
     <section></section>
 </Layout>
