@@ -33,7 +33,8 @@ import Layout from "../layouts/Layout.astro";
     });
     renderer.setSize(window.innerWidth, window.innerHeight - navHeight);
     renderer.domElement.style.zIndex = "999";
-    document.body.appendChild(renderer.domElement);
+    const threeContainer = document.querySelector(".three-js-container");
+    threeContainer.appendChild(renderer.domElement);
 
     // Set up light
     const light = new THREE.DirectionalLight(0xffffff);
@@ -199,7 +200,7 @@ import Layout from "../layouts/Layout.astro";
     scene.add(plane);
 
     renderer.domElement.addEventListener("mousemove", (e) => {
-      const { x, y } = getRelativePoint(e, renderer.domElement);
+      const { x, y } = getRelativePoint(e, threeContainer);
       const point = getIntersectedPoint(
         x, 
         y, 
@@ -230,6 +231,29 @@ import Layout from "../layouts/Layout.astro";
     }
 
     animate();
+
+    // Function to handle resizing
+    function onResize(entries) {
+      const bb = threeContainer.getBoundingClientRect();
+      for (let entry of entries) {
+        // For simplicity, using window dimensions, but you can use the container's dimensions
+        const width = bb.width;
+        const height = bb.height;
+        
+        // Update the camera's aspect ratio and projection matrix
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        
+        // Update the renderer's size
+        renderer.setSize(width, height);
+        
+        // Optional: re-render the scene
+        renderer.render(scene, camera);
+      }
+    }
+
+    const resizeObserver = new ResizeObserver(onResize);
+    resizeObserver.observe(threeContainer);
 
     function addSphere({ radius, color, x, y }) {
       const sphereRadius = radius;
@@ -311,6 +335,10 @@ import Layout from "../layouts/Layout.astro";
         background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
             linear-gradient(to bottom, #ddd 1px, transparent 1px);
         min-height: 100vh;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
     }
 
     h1 {
@@ -325,9 +353,15 @@ import Layout from "../layouts/Layout.astro";
             color: var(--primary);
         }
     }
+
+    .three-js-container {
+      width: 100%;
+      height: 100%;
+    }
 </style>
 
 <Layout title="Blot" description="Blot out the world!">
     <!-- <canvas id="canvas"></canvas> -->
     <section></section>
+    <div class="three-js-container"></div>
 </Layout>
