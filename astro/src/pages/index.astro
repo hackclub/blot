@@ -1,342 +1,265 @@
 ---
-
+import Layout from '../layouts/Layout.astro'
 ---
 
+<script>
+  import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
+  import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
+  import * as THREE from 'three'
+  import { turtles } from '../lib/paths.js'
+  import { object } from 'astro/zod'
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
-
-  :root {
-    --primary: #33e;
-    --primary-rgb: 51, 51, 238;
-    --text: #000;
-    --text-rgb: 0, 0, 0;
-    --background: #fff;
-    --background-rgb: 255, 255, 255;
-    --muted: #e5e5e5;
-    --muted-rgb: 229, 229, 229;
-    --accent: #f0f;
-    --accent-rgb: 255, 0, 255;
-    --accent-dark: #900090;
-    --accent-dark-rgb: 144, 0, 144;
-    --font-body: "Atkinson Hyperlegible", sans-serif;
-    --font-mono: "JetBrains Mono", monospace;
-    --font-0: 1rem;
-    --font-1: 1.125rem;
-    --font-2: 1.25rem;
-    --font-3: 1.5rem;
-    --font-4: 2rem;
-    --font-5: 3rem;
-    --font-6: 4rem;
-    --font-7: 6rem;
+  let objects = {
+    x: [],
+    y: []
   }
 
-  html, body {
-    margin: 0px;
-    font-family: var(--font-body);
+  // Set up scene
+  const scene = new THREE.Scene()
+  scene.background = null
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  )
+
+  // Set up renderer
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+  })
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.domElement.style.zIndex = '999'
+  document.body.appendChild(renderer.domElement)
+
+  // Set up light
+  const light = new THREE.DirectionalLight(0xffffff)
+  light.position.set(0.5, 0, 1)
+  scene.add(light)
+
+  // Add the parts
+  const objLoader = new OBJLoader().setPath('/model/')
+  const mtlLoader = new MTLLoader().setPath('/model/')
+
+  camera.position.z = 0.3
+  camera.position.x = -0.2
+  camera.rotation.z = Math.PI
+  camera.position.y = -0.25
+
+  mtlLoader.load('feet.mtl', function (materials) {
+    materials.preload()
+    objLoader.setMaterials(materials).load(
+      'feet.obj',
+      function (object) {
+        scene.add(object)
+        objects.feet = object
+      },
+      function (xhr) {},
+      function (error) {
+        console.log(error)
+      }
+    )
+  })
+
+  mtlLoader.load('carriage.mtl', function (materials) {
+    materials.preload()
+    objLoader.setMaterials(materials).load(
+      'carriage.obj',
+      function (object) {
+        scene.add(object)
+        objects.carriage = object
+      },
+      function (xhr) {},
+      function (error) {
+        console.log(error)
+      }
+    )
+  })
+
+  mtlLoader.load('arm.mtl', function (materials) {
+    materials.preload()
+    objLoader.setMaterials(materials).load(
+      'arm.obj',
+      function (object) {
+        scene.add(object)
+        objects.arm = object
+      },
+      function (xhr) {},
+      function (error) {
+        console.log(error)
+      }
+    )
+  })
+
+  mtlLoader.load('penholder.mtl', function (materials) {
+    materials.preload()
+    objLoader.setMaterials(materials).load(
+      'penholder.obj',
+      function (object) {
+        scene.add(object)
+        objects.x.push(renderer.domElement.offsetWidth / 2)
+        objects.y.push(renderer.domElement.offsetHeight / 2)
+        objects.penholder = object
+      },
+      function (xhr) {},
+      function (error) {
+        console.log(error)
+      }
+    )
+  })
+
+  // Set up turtle
+  let width, height
+  const canvas = document.getElementById('canvas')
+  const ctx = canvas.getContext('2d')
+  ctx.strokeStyle = 'black'
+  width = canvas.width = window.innerWidth
+  height = canvas.height = window.innerHeight
+
+  const turtle = turtles[0]
+  let polyline = turtle.path[0]
+  const config = {
+    scale: 5,
+    xoff: 70,
+    yoff: -10,
+    lineStart: 1,
+    lineEnd: polyline.length
+  }
+  const paths = polyline.map(([x, y]) => [
+    (x + config.xoff) * config.scale,
+    (y + config.yoff) * config.scale
+  ])
+  let i = config.lineStart + 1
+  let j = config.lineStart + 1
+
+  function dist(x1: number, y1: number, x2: number, y2: number) {
+    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
   }
 
-  main {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+  const lerp = (x, y, a) => x * (1 - a) + y * a
+  const clamp = (a, min = 0, max = 1) => Math.min(max, Math.max(min, a))
+  const invlerp = (x, y, a) => clamp((a - x) / (y - x))
+  const range = (x1, y1, x2, y2, a) => lerp(x2, y2, invlerp(x1, y1, a))
+
+  function moveTo(x: number, y: number) {
+    let mappedX = range(
+      0,
+      width,
+      -camera.position.z / config.scale,
+      camera.position.z / config.scale,
+      x
+    )
+    let xoff = range(
+      0,
+      width,
+      -camera.position.z / config.scale,
+      camera.position.z / config.scale,
+      config.xoff
+    )
+    let mappedY = range(
+      0,
+      height,
+      -camera.position.y / config.scale,
+      camera.position.y / config.scale,
+      y
+    )
+    let yoff = range(
+      0,
+      height,
+      -camera.position.y / config.scale,
+      camera.position.y / config.scale,
+      config.yoff
+    )
+    objects.carriage.position.x = mappedX
+    objects.arm.position.x = mappedX
+    objects.penholder.position.x = mappedX
+    objects.arm.position.y = mappedY
+    objects.penholder.position.y = mappedY
+    objects.x.push(x)
+    objects.y.push(y)
   }
 
-  .toolbar {
-    background: var(--primary);
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    height: 2.5rem;
-    min-height: 2.5rem;
+  function animate() {
+    requestAnimationFrame(animate)
+    if (
+      i < config.lineEnd - 1 &&
+      objects.arm != undefined &&
+      objects.penholder != undefined &&
+      objects.carriage != undefined &&
+      objects.feet != undefined
+    ) {
+      i += 10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
+      j = Math.floor(i)
+      ctx.clearRect(0, 0, width, height)
+      let [x, y] = paths[j]
+      // increase i a bit if we're out of the screen
+      if (x < 0 || x > width || y < 0 || y > height) i++
+      if (j === 0) ctx.moveTo(x, y)
+      else
+        ctx.lineTo(
+          lerp(paths[j - 1][0], x, i - j),
+          lerp(paths[j - 1][1], y, i - j)
+        )
+      ctx.stroke()
+      moveTo(x, y)
+    }
+    renderer.render(scene, camera)
   }
 
-  .toolbar-right {
-    display: flex;
-  }
+  animate()
+</script>
 
-  .toolbar-item {
-    all: unset;
-    cursor: pointer;
-    padding-left: .5rem;
-    padding-right: .5rem;
-    height: 100%;
-    width: fit-content;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-  }
-
-  .toolbar-item:hover {
-    background: rgba(255,255,255,0.1); 
-  }
-
-  .toolbar-item:visited {
-    all: unset;
-  }
-
-  .blot {
-    display: flex;
-    align-items: center;
-    padding-left: .5rem;
-  }
-
-  .blot a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .footer {
-    height: 2rem;
-    min-height: 2rem;
-    display: flex;
-    justify-content: flex-end;
-    background: #c5c5c5;
-  }
-
-  .footer-item:hover {
-    background: rgba(0,0,0,0.2); 
-  }
-
-  .banner {
-    flex: 1;
-    background: #f2f2f100;
-/*    background: #ffbb1d5c;*/
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    justify-content: space-around;
-  }
-
-  .banner-upper {
-
-  }
-
-  .banner-lower {
-    display: flex;
-    align-items: center;
-  }
-
-  .blot-bot {
-    max-height: 100%;
-    max-width: 60%;
-  }
-
-  .blot-title {
-/*    position: absolute;*/
-/*    left: 0px;*/
-/*    top: 1rem;*/
-    font-size: 4rem;
-    font-family: "Tilt Prism",cursive;
-/*    width: 100%;*/
-    text-align: center;
-  }
-
-  .banner-text {
-    font-family: "Phantom Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    font-size: 1.2rem;
-    padding-right: 5rem;
-    font-weight: 400;
-    letter-spacing: 0.009em;
-    line-height: 1.5;
-    align-self: baseline;
-    padding-top: 5rem;
-  }
-
-  .banner-text a {
-    box-sizing: border-box;
-    margin: 0;
-    min-width: 0;
-    color: #ec3750;
-    -webkit-text-decoration: underline;
-    text-decoration: underline;
-    text-underline-position: under;
-  }
-
-  .banner-text a:hover {
-    text-decoration-style: wavy;
+<style is:global lang="scss">
+  body {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    min-height: 100vh;
   }
 
   canvas {
     position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: -1;
+    top: 0;
+    left: 0;
+    z-index: 0;
   }
 
+  #canvas {
+    z-index: 999;
+  }
+
+  main {
+    position: relative;
+    z-index: 2;
+    padding: 1rem 0;
+  }
+
+  h1 {
+    font-family: var(--font-sans);
+    font-size: 4rem;
+    max-width: 50vw;
+    margin-inline: 4rem;
+    line-height: 1;
+    letter-spacing: -2px;
+
+    span {
+      color: var(--primary);
+    }
+  }
 </style>
 
-<main>
-  <div class="toolbar">
-    <div class="blot">
-      <a href="/">
-        <i class="fa-solid fa-splotch" style="padding-right: 10px"></i>
-        BLOT
-      </a>
-    </div>
-    <div class="toolbar-right">
-      <a class="toolbar-item" href="/editor">
-        <i class="fa-solid fa-pen-nib" style="padding-right: .5rem"></i>
-        editor
-      </a>
-      <a class="toolbar-item" href="/workshops">
-        <i class="fa-solid fa-laptop-file" style="padding-right: .5rem"></i>
-        workshops
-      </a>
-
-      <a class="toolbar-item" href="/gallery">
-        <i class="fa-solid fa-palette" style="padding-right: .5rem"></i>
-        gallery
-      </a>
-
-      <a class="toolbar-item">
-        <i class="fa-solid fa-arrows-to-dot" style="padding-right: .5rem"></i>
-        assembly
-      </a>
-    </div>
-  </div>
-  <canvas id = "canvas"></canvas>
-
-  <script>
-    import lineclip from "../lib/lineclip.js";
-    import runCode from "../lib/run.js";
-    import { turtles } from "../lib/paths.js";
-
-    import { runTextReturnTurtles } from "../lib/runTextReturnTurtles.ts";
-
-
-    const username = "hackclub";
-    const repository = "haxidraw";
-    const pathToFile = "art/square-disarray-leo/index.js";
-    const branch = "main"; // Replace with the desired branch name
-
-    const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`;
-
-    fetch(apiUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Failed to retrieve file. Status code: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(fileData => {
-        // Extract the content of the file
-        const content = fileData.content;
-
-        // Decode the base64-encoded content
-        const decodedContent = atob(content);
-
-        // Print the content of the file
-        // console.log(decodedContent);
-
-        const turtles = runTextReturnTurtles(decodedContent);
-
-        console.log(turtles);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
-    const canvas : HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-    const tIndex = Math.floor(Math.random() * turtles.length);
-    const turtle = turtles[tIndex];
-
-    let polyline = turtle.path[0];
-
-    const config = [{scale:7, xoff: 10, yoff:10, lineStart: 10, lineEnd: polyline.length - 15},
-                    {scale:12, xoff:3, yoff:-30, lineStart: 1, lineEnd: polyline.length}]
-                  [tIndex];
-    
-    const paths = polyline.map(([x, y]) => [(x + config.xoff) * config.scale, (y + config.yoff) * config.scale]);
-    let i = config.lineStart + 1;
-    let j = config.lineStart + 1;
-
-    function lerp(x1, x2, t) {
-      return x1 + (x2 - x1) * t;
-    }
-
-    function dist(x1, y1, x2, y2) {
-      return Math.sqrt((x1-x2)**2 + (y1-y2)**2);
-    }
-
-    function draw() {
-      ctx.strokeStyle = "#ddd";
-      if (i >= config.lineEnd - 1) return;
-      i += 10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
-      j = Math.floor(i)
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      let [x, y] = paths[j];
-      // increase i a bit if we're out of the screen
-      if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) i += 1;
-      if (j === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(lerp(paths[j-1][0], x, i - j), lerp(paths[j-1][1], y, i - j));
-      ctx.stroke()
-    }
-
-    setInterval(
-      () => {draw(i)}
-    , 10);
-  </script>
-
-  <div class="banner">
-
-    <div class="banner-upper">
-      <div class="blot-title">Blot, a plotter bot from Hack Club</div>
-    </div>
-
-    <div class="banner-lower">
-      <img class="blot-bot" src="/blot-bot-clear.png"/>
-      <div class="banner-text">
-        <div>
-          Blot is a <a href="youshipweship.com">"You Ship, We Ship"</a> project from Hack Club. It's both a robot and an art project.
-        </div>
-
-        <br/>
-
-        <div>
-          We're creating an <a href="3dmaze">art gallery</a>. It's an endlessly explorable space filled with <a href="2dgallery">your art programs</a>. When you <a href="howtosubmit">submit your art</a> to the gallery we will send you a <a href="resourcesonmachine">drawing machine</a> to turn that art into a real physical piece.
-        </div>
-
-        <br/>
-
-        <div>
-          Together we'll practice the art of programming, dive into digital fabrication, and <a href="linktomuseumexhibit">build something amazing together</a>.
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="footer">
-    <a class="toolbar-item footer-item" href="https://hackclub.com">
-      <img 
-        src="/hackclub.png"
-        style="height: 51%;
-    padding-right: 7px;
-    filter: grayscale(1) contrast(200%);"/>
-      Hack Club
-    </a>
-    <a class="toolbar-item footer-item" href="https://github.com/hackclub/haxidraw/tree/main">
-      <i class="fa-brands fa-github" style="padding-right: .5rem"></i>
-      GitHub
-    </a>
-  </div>
-</main>
-
-
-
-
+<Layout title="Blot" description="Blot out the world!">
+  <canvas id="canvas"></canvas>
+  <!-- 
+    <main>
+        <section>
+            <h1>
+                <span>Blot</span> is the plotting tool that everyone can make
+                art for.
+            </h1>
+            <h1>Draw some art, get a <span>Blot</span>.</h1>
+        </section>
+    </main>
+    -->
+</Layout>

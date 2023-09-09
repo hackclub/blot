@@ -68,4 +68,3 @@ Get the current position of all actuators.
 ### async getVelocity()
 
 Get the current velocity of all actuators.
-

@@ -10,11 +10,11 @@
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",
-    "format": "prettier --ignore-path ./.prettierignore --write ."
+    "format": "prettier --ignore-path ./.prettierignore --write . --plugin=prettier-plugin-astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^0.19.7",
-    "@astrojs/preact": "^2.2.1",
+    "@astrojs/preact": "^2.2.2",
     "@astrojs/vercel": "^3.6.0",
     "@codemirror/commands": "^6.2.4",
     "@codemirror/lang-javascript": "^6.1.9",
@@ -31,16 +31,20 @@
     "classnames": "^2.3.2",
     "cm6-theme-basic-dark": "^0.2.0",
     "codemirror": "^6.0.1",
+    "marked": "^7.0.4",
     "nanoid": "^4.0.2",
     "niue": "^0.2.0",
-    "preact": "^10.6.5",
-    "source-map-js": "^1.0.2"
+    "preact": "^10.17.1",
+    "source-map-js": "^1.0.2",
+    "three": "^0.155.0",
+    "vite": "^4.4.9"
   },
   "devDependencies": {
     "@astrojs/node": "^5.3.0",
     "@types/w3c-web-serial": "^1.0.3",
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.11.1",
+    "sass": "^1.66.1",
     "typescript": "^5.1.6"
   },
   "overrides": {

@@ -2,15 +2,19 @@
   display: flex;
   background-color: var(--primary);
   color: white;
-  padding: 0.25rem 0.5rem;
+  font-size: 1.1rem;
+  padding: 0.15rem 0.5rem;
   align-items: center;
   justify-content: space-between;
 }
 
 .heading {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   padding: 0 0.5rem;
   padding-right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .settingsDropdown > * {
