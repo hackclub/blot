@@ -10,7 +10,7 @@ export default defineConfig({
   output: 'hybrid',
   adapter: vercel(),
   markdown: {
-    shikiConfig: { theme: 'github-light' },
+    syntaxHighlight: "prism"
   },
   vite: {
     plugins: [prefresh()],
