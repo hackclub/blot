@@ -7,12 +7,7 @@ import mdx from '@astrojs/mdx'
 // https://astro.build/config
 export default defineConfig({
   site: 'https://editor.haxidraw.hackclub.com',
-  integrations: [
-    preact({
-      compat: true
-    })
-  ],
-  output: 'server',
+  output: 'hybrid',
   adapter: vercel(),
   markdown: {
     shikiConfig: { theme: 'github-light' },
@@ -34,8 +29,7 @@ export default defineConfig({
       target: 'es2020'
     }
   },
-  markdown: {
-    syntaxHighlight: 'prism'
-  },
-  integrations: [preact(), mdx()]
+  integrations: [preact({
+    compat: true
+  }), mdx()]
 })

@@ -15,13 +15,11 @@ import { useSettings } from './lib/settings.ts'
 import Help from './components/Help.js'
 import preview from '@astrojs/node/preview.js'
 
-export default function Editor({ children }) {
+export default function Editor({ tutorial }: {tutorial: any}) {
   const [width, setWidth] = useState(50)
   const [tab, setTab] = useState('workshop')
   const { theme } = useSettings(['theme'])
 
-export default function Editor({tutorial}: {tutorial: string}) {
-  const [width, setWidth] = useState(50);
   const INIT_HELP_HEIGHT = 40
   const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
 
@@ -91,9 +89,7 @@ export default function Editor({tutorial}: {tutorial: string}) {
                 top: `${100 - helpHeight}%`,
                 width: `${100 - width}%`
               }}></div>
-            <Help toggleClose={closeHelpPane} helpHeight={helpHeight}>
-              {children}
-            </Help>
+            <Help toggleClose={closeHelpPane} helpHeight={helpHeight} workshop={tutorial}/>
           </div>
         </div>
       </div>
