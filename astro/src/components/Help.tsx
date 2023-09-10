@@ -1,35 +1,65 @@
+import { ReactNode } from 'preact/compat'
 import { compiledContent } from '../../../interface/README.md'
-import styles from './Help.module.css'
-import {useState} from "preact/hooks";
+import styles from './Help.module.scss'
+import { useState } from 'preact/hooks'
 
 const html = compiledContent()
 
-export default function Help({toggleClose, helpHeight, workshopHTML}: {toggleClose: () => void, helpHeight: number, workshopHTML: string | undefined}) {
+export default function Help({
+  toggleClose,
+  helpHeight,
+  children
+}: {
+  toggleClose: () => void
+  helpHeight: number
+  children: any
+}) {
   const closed = helpHeight <= 0
   const [tab, setTab] = useState<"workshop" | "toolkit">("toolkit")
 
-  return <>
-    <div class={styles.helpSection} style={{ height: `${helpHeight}%` }}>
-      <div class={styles.helpSectionToolbar}>
-        {workshopHTML &&
-        <a className={styles.helpSectionTab} style={{backgroundColor: tab == "workshop" ? "rgba(var(--primary-rgb), 0.2)" : ""}} onClick={() => {
-          setTab("workshop")
-          if (closed) toggleClose()
-        }}>Workshop</a>
-        }
-        <a className={styles.helpSectionTab} style={{backgroundColor: tab == "toolkit" ? "rgba(var(--primary-rgb), 0.2)" : ""}} onClick={() => {
-          setTab("toolkit")
-          if (closed) toggleClose()
-        }}>Toolkit</a>
-        <a className={styles.helpSectionTab} onClick={toggleClose}>{closed ? "Open Help" : "Close Help"}</a>
+  return (
+    <>
+      <div class={styles.helpSection} style={{ height: `${helpHeight}%` }}>
+        <div class={styles.helpSectionToolbar}>
+          {children &&
+          <a
+            className={styles.helpSectionTab}
+            style={{
+              backgroundColor:
+                tab == 'workshop' ? 'rgba(var(--primary-rgb), 0.9)' : ''
+            }}
+            onClick={() => {
+              setTab('workshop')
+              if (closed) toggleClose()
+            }}>
+            Workshop
+          </a>
+          }
+          <a
+            className={styles.helpSectionTab}
+            style={{
+              backgroundColor:
+                tab == 'toolkit' ? 'rgba(var(--primary-rgb), 0.9)' : ''
+            }}
+            onClick={() => {
+              setTab('toolkit')
+              if (closed) toggleClose()
+            }}>
+            Toolkit
+          </a>
+          <a className={styles.helpSectionTab} onClick={toggleClose}>
+            {closed ? 'Open Help' : 'Close Help'}
+          </a>
+        </div>
+        {tab === 'toolkit' && (
+          <div
+            dangerouslySetInnerHTML={{ __html: html }}
+            class={styles.helpContent}></div>
+        )}
+        {tab === 'workshop' && (
+          <div class={styles.helpContent}>{children}</div>
+        )}
       </div>
-      {tab === "toolkit" &&
-      <div dangerouslySetInnerHTML={{__html: html}} class={styles.helpContent}></div>
-      }
-
-      {tab === "workshop" &&
-          <div class={styles.helpContent} dangerouslySetInnerHTML={{__html: workshopHTML}}></div>
-      }
-    </div>
-  </>
+    </>
+  )
 }

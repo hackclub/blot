@@ -36,6 +36,7 @@ export default function DropBox() {
                 left: 0px;
                 top: 0px;
                 display: flex;
+                z-index: 999;
             }
 
             .hidden {
@@ -94,7 +95,6 @@ function addDragDrop() {
     droparea.classList.remove('hidden')
     pauseEvent(evt)
   })
-
   ;['mouseout'].forEach(trigger =>
     window.addEventListener(trigger, function (evt) {
       droparea.classList.add('hidden')

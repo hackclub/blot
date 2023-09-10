@@ -1,286 +1,236 @@
 ---
-const data = await fetch("https://haxidraw-art.hackclub.dev/list.json").then(res => res.json())
+import Layout from '../layouts/Layout.astro'
+
+const username = 'hackclub'
+const repository = 'haxidraw'
+const pathToFile = 'art/list.json'
+const branch = 'main'
+const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`
+
+let tries = 0
+let maxTries = 10
+let images
+while (!images && tries < maxTries) {
+  tries++
+  const response = await fetch(apiUrl)
+  const json = await response.json()
+  images = JSON.parse(atob(json.content))
+}
+
+const random = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min)) + min
 ---
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
-            
-    :root {
-    --primary: #33e;
-    --primary-rgb: 51, 51, 238;
-    --text: #000;
-    --text-rgb: 0, 0, 0;
-    --background: #fff;
-    --background-rgb: 255, 255, 255;
-    --muted: #e5e5e5;
-    --muted-rgb: 229, 229, 229;
-    --accent: #f0f;
-    --accent-rgb: 255, 0, 255;
-    --accent-dark: #900090;
-    --accent-dark-rgb: 144, 0, 144;
-    --font-body: "Atkinson Hyperlegible", sans-serif;
-    --font-mono: "JetBrains Mono", monospace;
-    --font-0: 1rem;
-    --font-1: 1.125rem;
-    --font-2: 1.25rem;
-    --font-3: 1.5rem;
-    --font-4: 2rem;
-    --font-5: 3rem;
-    --font-6: 4rem;
-    --font-7: 6rem;
+<script src="/masonry.min.js" type="module"></script>
+
+<script>
+  import { turtles } from '../lib/paths.js'
+
+  window.onload = () => {
+    new Masonry(document.getElementById('gallery'), {
+      itemSelector: '.framed'
+    })
   }
 
-  html, body {
-    margin: 0px;
-    font-family: var(--font-body);
+  let toDraw = []
+  document.querySelectorAll('canvas').forEach(canvas => {
+    canvas.width = 200
+    canvas.height = document.getElementById('gallery').offsetHeight
+    const turtle = turtles[1]
+    let polyline = turtle.path[0]
+    const config = {
+      scale: 12,
+      xoff: 3,
+      yoff: -30,
+      lineStart: 1,
+      lineEnd: polyline.length
+    }
+    const paths = polyline.map(([x, y]) => [
+      (x + config.xoff) * config.scale,
+      (y + config.yoff) * config.scale
+    ])
+    toDraw.push({
+      ctx: canvas.getContext('2d'),
+      color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+      paths,
+      config,
+      width: canvas.width,
+      height: canvas.height,
+      i: config.lineStart + 1,
+      j: config.lineStart + 1
+    })
+  })
+
+  function lerp(x1: number, x2: number, t: number) {
+    return x1 + (x2 - x1) * t
   }
 
-  main {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+  function dist(x1: number, y1: number, x2: number, y2: number) {
+    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
   }
 
-  .toolbar {
-    background: var(--primary);
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    min-height: 2.5rem;
+  setInterval(() => {
+    toDraw.map(({ ctx, color, paths, i, j, config, width, height }, idx) => {
+      ctx.strokeStyle = '#ddd'
+      if (i >= config.lineEnd - 1) return
+      i += 10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
+      j = Math.floor(i)
+      ctx.clearRect(0, 0, width, height)
+      let [x, y] = paths[j]
+      // increase i a bit if we're out of the screen
+      if (x < 0 || x > width || y < 0 || y > height) i++
+      if (j === 0) ctx.moveTo(x, y)
+      else
+        ctx.lineTo(
+          lerp(paths[j - 1][0], x, i - j),
+          lerp(paths[j - 1][1], y, i - j)
+        )
+      ctx.stroke()
+      // Draw circle
+      ctx.fillStyle = 'orange'
+      ctx.beginPath()
+      ctx.arc(x, y, 5, 0, 2 * Math.PI)
+      ctx.fill()
+      toDraw[idx].i = i
+      toDraw[idx].j = j
+    })
+  }, 10)
+</script>
+
+<style is:global lang="scss">
+  body,
+  html {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    min-height: 100vh;
   }
 
-  .toolbar-right {
-    display: flex;
+  canvas {
+    z-index: 0;
+    overflow-y: hidden;
   }
 
-  .toolbar-item {
-    all: unset;
-    cursor: pointer;
-    padding-left: .5rem;
-    padding-right: .5rem;
-    height: 100%;
-    width: fit-content;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
+  #container {
+    margin: 2rem auto;
+    width: 90vw;
   }
 
-  .toolbar-item:hover {
-    background: rgba(255,255,255,0.1); 
-  }
-
-  .toolbar-item:visited {
-    all: unset;
-  }
-
-  .blot {
-    display: flex;
-    align-items: center;
-    padding-left: .5rem;
-  }
-
-  .blot a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .footer {
-    height: 2rem;
-    display: flex;
-    justify-content: flex-end;
-    background: #c5c5c5;
-  }
-
-  .footer-item:hover {
-    background: rgba(0,0,0,0.2); 
-  }
-
-  .banner {
-    flex: 1;
-    background: #f2f2f100;
-/*    background: #ffbb1d5c;*/
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  #gallery {
+    padding: 1rem;
     position: relative;
-    justify-content: space-around;
-  }
 
-  .banner-upper {
-
-  }
-
-  .banner-lower {
-    display: flex;
-    align-items: center;
-  }
-
-  .blot-bot {
-    width: 70%;
-  }
-
-  .blot-title {
-/*    position: absolute;*/
-/*    left: 0px;*/
-/*    top: 1rem;*/
-    font-size: 4rem;
-    font-family: "Tilt Prism",cursive;
-/*    width: 100%;*/
-    text-align: center;
-  }
-
-
-  
-    .container {
-      font-family: var(--font-body);
-      font-size: 2rem;
-      max-width: 60vw;
-      margin: 2rem auto;
+    &::after {
+      content: '';
+      display: block;
+      clear: both;
     }
-  
-    .gallery {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+  }
 
-    .card {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-      border: 1px solid var(--primary);
-      padding: 10px;
-      font-family: var(--font);
-      max-width: 33%;
-      max-height: 35%;
-    }
+  #content {
+    font-size: 1.5rem;
+    font-family: var(--font-sans);
+  }
 
-    .card img {
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
-      width: 19rem;
-      height: 19rem;
-      border-radius: 2px;
-      object-fit: cover;
-    }
+  .framed {
+    position: relative;
+    padding: 2rem;
+    float: left;
+    max-width: 40vw;
+    margin-bottom: 1rem;
+    z-index: 1;
+  }
 
-    .cardImg:hover, .cardImg:focus {
+  .framed:not(#content) {
+    cursor: pointer;
+    transition: all 0.1s;
+
+    &:hover {
       transform: scale(101%);
     }
 
-    .artTitle {
-        font-size: 20px;
-        font-weight: bold;
-        color: var(--text);
+    img {
+      max-width: 100%;
     }
 
-    .decoratedLink {
-      box-sizing: border-box;
-      margin: 0;
-      min-width: 0;
-      color: #33e;
-      -webkit-text-decoration: underline;
-      text-decoration: underline;
-      text-underline-position: under;
+    .thumbnail {
+      border: 2px dashed var(--primary);
     }
 
-    .decoratedLink:hover {
-      text-decoration-style: wavy;
+    .top-left {
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
-    .mazeBanner {
-      text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      float: center;
-      color: var(--text);
-      border: 1px solid var(--primary);
-      padding: 10px;
-      width: 50%;
-      margin: auto;
-      transform-style: preserve-3d;
-      transition: transform 0.5s ease;
-      animation: shrinkShadow 0.5s forwards;
+    .top-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: rotate(90deg);
     }
 
-    a {
-      text-decoration: none;
+    .bottom-left {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform: rotate(270deg);
     }
 
-    .mazeBanner:hover {
-      border: 2px solid var(--primary);
-      animation: expandShadow 0.5s forwards;
+    .bottom-right {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      transform: rotate(180deg);
     }
+  }
+</style>
 
-    @keyframes expandShadow {
-      from {
-        box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.1), 0px 0px 2px 0px rgba(255, 20, 20, 0.333);
-      } to {
-        box-shadow: 10px 10px 0 0px #33e5, -10px -10px 2px 0px rgba(255, 20, 20, 0.333);
-        transform: rotate3d(1, 1, 0, 20deg);
+<Layout title="Gallery" description="The gallery">
+  <div id="container">
+    <div id="gallery">
+      <div class="framed" id="content">
+        <h1 style={{ marginBottom: 0 }}>Gallery</h1>
+        <p style={{ marginTop: 0 }}>
+          One of the best ways to get involved is by building and testing one of
+          the machines. All you need is a 3D printer and a little bit of
+          hardware outlined in the bill of materials.
+        </p>
+      </div>
+      {
+        images.map(image => {
+          const rotate = random(-1, 1)
+          return (
+            <>
+              {image.snapshots.map(snapshot => {
+                return (
+                  <div
+                    class="framed"
+                    style={{
+                      transform: `rotate(${rotate}deg)`
+                    }}>
+                    <img
+                      class="thumbnail"
+                      alt={image.directory}
+                      src={`https://raw.githubusercontent.com/${username}/${repository}/${branch}/art/${image.directory}/snapshots/${snapshot}`}
+                    />
+                    <img class="top-left" src="/decorative-corner.svg" />
+                    <img class="top-right" src="/decorative-corner.svg" />
+                    <img class="bottom-left" src="/decorative-corner.svg" />
+                    <img class="bottom-right" src="/decorative-corner.svg" />
+                  </div>
+                )
+              })}
+            </>
+          )
+        })
       }
-    }
-
-      @keyframes shrinkShadow {
-      from {
-        box-shadow: 10px 10px 0 0px #33e5, -10px -10px 2px 0px rgba(255, 20, 20, 0.333);
-        transform: rotate3d(1, 1, 0, 20deg);
-      } to {
-        box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.1), 0px 0px 2px 0px rgba(255, 20, 20, 0.333);
-      }
-    }
-  </style>
-  
-  
-  <div class="toolbar">
-    <div class="blot">
-      <a href="/">
-      <i class="fa-solid fa-splotch" style="padding-right: 10px"></i>
-      Blot
-    </a>
     </div>
-    <div class="toolbar-right">
-      <a class="toolbar-item" href="/editor">
-        <i class="fa-solid fa-pen-nib" style="padding-right: .5rem"></i>
-        editor
-      </a>
-      <a class="toolbar-item">
-        <i class="fa-solid fa-laptop-file" style="padding-right: .5rem"></i>
-        workshops
-      </a>
-
-      <a class="toolbar-item" href="/gallery">
-        <i class="fa-solid fa-palette" style="padding-right: .5rem"></i>
-        gallery
-      </a>
-
-      <a class="toolbar-item">
-        <i class="fa-solid fa-arrows-to-dot" style="padding-right: .5rem"></i>
-        assembly
-      </a>
-    </div>
+    <canvas
+      style={{
+        position: 'absolute',
+        top: '0px',
+        right: '0px'
+      }}></canvas>
   </div>
-  
-  <div class="container">
-    <a href="/3dgallery">
-      <p class="mazeBanner">Explore this in 3D</p>
-    </a>
-    <h2>Gallery</h2>
-    <p>Upload your art <a class = "decoratedLink" href="https://github.com/hackclub/haxidraw/tree/main/astro/public/art">here</a></p>
-  <div class="gallery">
-    {
-          // @ts-ignore
-          data.map(item => (
-              <figure class="card">
-                <a href={`https://github.com/hackclub/haxidraw/tree/main/astro/public/art/${item.directory}`}>
-                  <img src={`https://haxidraw-art.hackclub.dev/${item.directory}/snapshots/${item.snapshots[0]}`} />
-                </a>
-                <h1 class="artTitle">{item.directory.replaceAll("-", ", ")}</h1>
-              </figure>
-          ))
-    }
-  </div>
-  </div>
+</Layout>

@@ -1,0 +1,134 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { getCollection, getEntry } from 'astro:content'
+
+export async function getStaticPaths() {
+  const workshops = await getCollection('workshops', ({ data }) => data)
+  return workshops.map(workshop => ({
+    params: { slug: workshop.slug }
+  }))
+}
+
+const { slug } = Astro.params
+const {
+  render,
+  data: { title, description, thumbnail, contributor }
+} = await getEntry('workshops', slug)
+const rendered = await render()
+const Content = rendered.Content
+---
+
+<style is:global lang="scss">
+  nav {
+    position: relative;
+  }
+
+  .prose {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0 auto;
+
+    a {
+      color: var(--primary);
+    }
+
+    article {
+      margin: 0 auto;
+      max-width: 50vw;
+    }
+
+    header {
+      display: flex;
+      position: relative;
+      border: 1px solid;
+      margin: 1rem;
+
+      > div,
+      > img {
+        flex: 50%;
+        position: relative;
+      }
+
+      > div {
+        background: url('/paper.png');
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      > img {
+        border-left: 1px solid;
+        max-width: 50%;
+      }
+
+      h1 {
+        font-family: var(--font-sans);
+        margin: 0;
+      }
+
+      p {
+        margin-top: 0;
+      }
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    code {
+      font-size: 0.995rem;
+      font-family: var(--font-mono);
+    }
+  }
+
+  #back {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    > p {
+      display: flex;
+      justify-content: space-between;
+      font-style: italic;
+      max-width: 50vw;
+      margin: 1rem auto;
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+</style>
+
+<Layout title={`Haxidraw | ${title}`} description={description}>
+  <div class="looseleaf">
+    <div class="prose">
+      <div id="back">
+        <p>
+          <a href="/workshops">&larr; Back to all workshops</a>
+          <a
+            href={`https://github.com/hackclub/haxidraw/edit/main/astro/src/content/workshops/${slug}.mdx`}
+            target="_blank">Update/make a grammar fix</a
+          >
+        </p>
+      </div>
+      <header>
+        <div>
+          <h1>{title}</h1>
+          <p>
+            <a href={`https://github.com/${contributor}`} target="_blank"
+              >@{contributor}</a
+            >
+          </p>
+        </div>
+        <img src={thumbnail} />
+      </header>
+      <article>
+        <Content />
+      </article>
+    </div>
+  </div>
+</Layout>

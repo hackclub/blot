@@ -1,6 +1,5 @@
 .button {
   box-sizing: border-box;
-  margin: 0;
   min-width: 0;
   appearance: none;
   display: inline-block;
@@ -8,14 +7,10 @@
   line-height: inherit;
   text-decoration: none;
   font-size: inherit;
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: calc(8px + 0.15rem) 8px;
   color: white;
   background-color: var(--primary);
   border: 0;
-  border-radius: 4px;
   transition: all 0.1s ease-in-out;
 }
 

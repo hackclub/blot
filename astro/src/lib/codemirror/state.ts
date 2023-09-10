@@ -23,7 +23,10 @@ const autocompleteRemoved = basicSetup.filter((_, i) => ![11, 12].includes(i))
 const theme = EditorView.theme({
   '.cm-content': {
     fontFamily: 'var(--font-mono)',
-    fontSize: '14px'
+    fontSize: '16px'
+  },
+  '.cm-gutter': {
+    fontFamily: 'var(--font-mono)'
   }
 })
 
@@ -44,7 +47,7 @@ const cmExtensions = [
         )
       )
         manualChangeSinceLiveUpdate.value = true
-      dispatchEditorChange();
+      dispatchEditorChange()
     }
   }),
   themeExtension(),

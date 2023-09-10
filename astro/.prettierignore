@@ -1,4 +1,7 @@
 package.json
 package-lock.json
-*/*/*.md
-*/*/*/*.md
+public/*
+.next/*
+.vercel/*
+*/*/*.mdx
+*/*/*/*.mdx

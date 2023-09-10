@@ -28,7 +28,6 @@ The array of `actuator`s passed to `createSynchronizer`.
 
 Go to the `pos` position without awaiting the end of the movement.
 
-
 ### async absolute(pos, vel?, accel?)
 
 Go to the absolute specified actuator position `pos`, and optionally change the velocity and acceleration to `vel` and `accel` respectively.
@@ -68,4 +67,3 @@ Get the current position of all actuators.
 ### async getVelocity()
 
 Get the current velocity of all actuators.
-

@@ -1,8 +1,7 @@
 import { Turtle, Point } from './drawingToolkit/index.js'
 import * as drawingUtils from './drawingToolkit/utils.js'
 
-
-let _returnTurtles : Turtle[] = [];
+let _returnTurtles: Turtle[] = []
 
 const customGlobal = {
   // setTimeout: patchedTimeout,
@@ -23,14 +22,14 @@ const customGlobal = {
   drawTurtles: (...turtlesToDraw: Turtle[]) => {
     turtlesToDraw.forEach(t => _returnTurtles.push(t))
   },
-  setDocDimensions(w: number, h: number) { }
+  setDocDimensions(w: number, h: number) {}
 }
 
 export function runTextReturnTurtles(text: string) {
-  _returnTurtles = [];
+  _returnTurtles = []
 
-  const f = new Function(...Object.keys(customGlobal), text);
-  f(...Object.values(customGlobal));
+  const f = new Function(...Object.keys(customGlobal), text)
+  f(...Object.values(customGlobal))
 
-  return _returnTurtles;
+  return _returnTurtles
 }

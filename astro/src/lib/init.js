@@ -1,18 +1,16 @@
-
 import { useOnEditorChange } from './events.ts'
 import { getStore, useStore } from './state.ts'
 
-import { addBezierControl } from "./events/addBezierControl.js";
+import { addBezierControl } from './events/addBezierControl.js'
 import { addMachineControl } from './events/addMachineControl.js'
 
 export function init() {
   console.log('init')
 
-  useOnEditorChange(backup);
-  addBezierControl();
-  addMachineControl();
+  useOnEditorChange(backup)
+  addBezierControl()
+  addMachineControl()
 }
-
 
 function backup() {
   const { view } = getStore()

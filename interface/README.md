@@ -1,5 +1,3 @@
-## Functions Available in Editor
-
 ### Turtle
 
 Our main drawing primative is a turtle. It's a collection of polylines with an associated pen that has a location and direction. 
@@ -120,7 +118,7 @@ lerp(min, max, t)
 
 ## Examples
 
-To find examples check [`/examples`](/examples).
+To find examples check out [`/gallery`](/gallery).
 
 
 

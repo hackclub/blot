@@ -53,6 +53,11 @@ export default function CodeMirror() {
 
   return (
     <>
+      <style jsx global>{`
+        .CodeMirror {
+          font-size: 18px;
+        }
+      `}</style>
       <div class={styles.cmWrapper} ref={editorRef} />
     </>
   )
