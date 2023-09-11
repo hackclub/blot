@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Editor from '../Editor.tsx';
 import EditorLayout from "../layouts/EditorLayout.astro";
 
+export const prerender = false
+
 const files = await Astro.glob('/../guides/*.md')
 
 const query = Astro.url.searchParams.get("tutorial")!
