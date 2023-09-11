@@ -1,34 +1,26 @@
 ---
-import Layout from '../layouts/EditorLayout.astro'
-import Editor from '../Editor.tsx'
-import { getEntry } from 'astro:content'
+import Layout from '../layouts/Layout.astro';
+import Editor from '../Editor.tsx';
+import EditorLayout from "../layouts/EditorLayout.astro";
 
-const username = 'hackclub'
-const repository = 'haxidraw'
-const pathToFile = 'guides/toolkit/toolkit.md'
-const branch = 'leo-dev'
-const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`
+export const prerender = false
 
-let toolkit = ''
-while (!toolkit.length) {
-  const response = await fetch(apiUrl)
-  const data = await response.json()
-  toolkit = atob(data.content)
-}
+const files = await Astro.glob('/../guides/*.md')
 
-const slug = 'landscape'
-const {
-  render,
-  data: { title, description, thumbnail, contributor }
-} = await getEntry('workshops', slug)
-const rendered = await render()
-const Content = rendered.Content
+const query = Astro.url.searchParams.get("tutorial")!
+
+let tutorial = undefined
+
+if (query)
+	files.map(file => {
+		if (file.file.endsWith(query + ".md")) tutorial = file
+	})
+
+if (tutorial) tutorial = {...tutorial, content: tutorial.compiledContent()}
 ---
 
-<Layout title="Editor" description="Editor">
-  <main>
-    <Editor client:load title={title} toolkit={toolkit}>
-      <Content />
-    </Editor>
-  </main>
-</Layout>
+<EditorLayout title="Editor" description="Editor">
+	<main>
+		<Editor client:load tutorial={tutorial}></Editor>
+	</main>
+</EditorLayout>

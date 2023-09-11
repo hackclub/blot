@@ -1,4 +1,10 @@
-# 10PRINT
+---
+title: 10PRINT
+description: >
+  "10PRINT" is one of the oldest and most well-known examples of generative art. It was originally created for the Commodore 64 in BASIC, and the code looked like this: <pre>10 PRINT CHR$(205.5+RND(1)); : GOTO 10</pre>
+thumbnail: https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png
+contributor: henrybass
+---
 
 ## Beginner, 25min
 
@@ -131,6 +137,7 @@ And, lastly, let's draw this to the screen! This is done simply by calling the f
 `drawTurtles(t);`
 
 And, you're done! If all went well, you should be seeing something like the below art:
+
 <img src="https://cloud-e0wpk8chk-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 Great job! You can still go farther with this, if you want.

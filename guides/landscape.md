@@ -1,4 +1,11 @@
-# Draw a landscape in Haxidraw with noise
+---
+title: Landscape
+description: >
+  This is an explainer on how to create art like the image above in the [Haxidraw editor](https://haxidraw.hackclub.dev/). It assumes some knowledge of programming in JavaScript and how Haxidraw works, but nothing beyond that.
+thumbnail: https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png
+contributor: henrybass
+---
+
 
 ### (Intermediate, ~45 min, by Henry Bass)
 

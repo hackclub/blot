@@ -8,31 +8,33 @@ const html = compiledContent()
 export default function Help({
   toggleClose,
   helpHeight,
-  children
+  workshop
 }: {
   toggleClose: () => void
   helpHeight: number
-  children: any
+  workshop: any
 }) {
   const closed = helpHeight <= 0
-  const [tab, setTab] = useState<'workshops' | 'toolkit'>('toolkit')
+  const [tab, setTab] = useState<"workshop" | "toolkit">(workshop ? "workshop" : "toolkit")
 
   return (
     <>
       <div class={styles.helpSection} style={{ height: `${helpHeight}%` }}>
         <div class={styles.helpSectionToolbar}>
+          {workshop &&
           <a
             className={styles.helpSectionTab}
             style={{
               backgroundColor:
-                tab == 'workshops' ? 'rgba(var(--primary-rgb), 0.9)' : ''
+                tab == 'workshop' ? 'rgba(var(--primary-rgb), 0.9)' : ''
             }}
             onClick={() => {
-              setTab('workshops')
+              setTab('workshop')
               if (closed) toggleClose()
             }}>
-            Workshops
+            Workshop
           </a>
+          }
           <a
             className={styles.helpSectionTab}
             style={{
@@ -54,8 +56,11 @@ export default function Help({
             dangerouslySetInnerHTML={{ __html: html }}
             class={styles.helpContent}></div>
         )}
-        {tab === 'workshops' && (
-          <div class={styles.helpContent}>{children}</div>
+        {tab === 'workshop' && (
+          <div class={styles.helpContent}>
+            <h1>{workshop.frontmatter.title}</h1>
+            <div dangerouslySetInnerHTML={{__html: workshop.content}}></div>
+          </div>
         )}
       </div>
     </>
