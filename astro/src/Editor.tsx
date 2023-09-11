@@ -1,7 +1,7 @@
 import CompatWarning from './components/CompatWarning.tsx'
 import Preview from './components/Preview.tsx'
 import Toolbar from './components/Toolbar.tsx'
-import styles from './Editor.module.css'
+import styles from './Editor.module.scss'
 import Error from './components/Error.tsx'
 import Console from './components/Console.tsx'
 import GlobalStateDebugger from './components/GlobalStateDebugger.tsx'
@@ -11,44 +11,48 @@ import CodeMirror from './components/CodeMirror.tsx'
 import { createListener } from './lib/createListener.js'
 import {useEffect, useRef, useState} from 'preact/hooks'
 import { init } from './lib/init.js'
-import Help from "./components/Help.js";
-import preview from "@astrojs/node/preview.js";
+import { useSettings } from './lib/settings.ts'
+import Help from './components/Help.js'
+import preview from '@astrojs/node/preview.js'
 
-export default function Editor({tutorial}: {tutorial: string}) {
-  const [width, setWidth] = useState(50);
+export default function Editor({ tutorial }: {tutorial: any}) {
+  const [width, setWidth] = useState(50)
+  const [tab, setTab] = useState('workshop')
+  const { theme } = useSettings(['theme'])
+
+  const INIT_HELP_HEIGHT = 40
+  const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
 
   useEffect(() => {
     init()
-    addBarResizing(setWidth)
-    addHelpResizing(setHelpHeight, editorContainer)
-  }, [])
+    addEditorResizing(setWidth, theme)
+    addHelpResizing(setHelpHeight, editorContainer, theme)
+  }, [theme])
 
-  const INIT_HELP_HEIGHT = 40;
-  const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT);
+  useEffect(() => {
+    init()
+    addEditorResizing(setWidth, theme)
+    addHelpResizing(setHelpHeight, editorContainer, theme)
+  }, [])
 
   const closeHelpPane = () => {
     const closed = helpHeight <= 0
 
-      let count = 0;
-      const intervalId = setInterval(() => {
+    let count = 0
+    const intervalId = setInterval(() => {
+      setHelpHeight(helpHeight + count)
 
-        setHelpHeight(
-            helpHeight
-            + count
-        )
+      if (helpHeight + count >= INIT_HELP_HEIGHT && closed) {
+        clearInterval(intervalId)
+      }
 
-        if (helpHeight + count >= INIT_HELP_HEIGHT && closed){
-          clearInterval(intervalId)
-        }
+      if (helpHeight + count <= 0 && !closed) {
+        setHelpHeight(0)
+        clearInterval(intervalId)
+      }
 
-        if (helpHeight + count <= 0 && !closed) {
-          setHelpHeight(0)
-          clearInterval(intervalId)
-        }
-
-        count += (closed ? 1 : -1)
-      }, 5);
-
+      count += closed ? 1 : -1
+    }, 5)
   }
 
   const editorContainer = useRef(null)
@@ -58,9 +62,15 @@ export default function Editor({tutorial}: {tutorial: string}) {
       <GlobalStateDebugger />
       <div class={styles.root}>
         <Toolbar />
-        <div class={styles.inner}  ref={editorContainer} >
-          <div style={{ width: `${width}%`, display: "flex", height: "100%", "flex-direction": "column" }}>
-            <div style={{ flex: 1, overflow: "scroll" }}>
+        <div class={styles.inner} ref={editorContainer}>
+          <div
+            style={{
+              'width': `${width}%`,
+              'display': 'flex',
+              'height': '100%',
+              'flex-direction': 'column'
+            }}>
+            <div style={{ flex: 1, overflow: 'scroll' }}>
               <CodeMirror />
             </div>
             <div>
@@ -73,8 +83,13 @@ export default function Editor({tutorial}: {tutorial: string}) {
             style={{ left: `${width}%` }}></div>
           <div class={styles.right} style={{ width: `${100 - width}%` }}>
             <Preview />
-            <div class={`${styles.horizBar} resize-help-trigger`} style={{top: `${100 - helpHeight}%`, width: `${100 - width}%`}}></div>
-            <Help toggleClose={closeHelpPane} helpHeight={helpHeight} workshopHTML={tutorial} />
+            <div
+              class={`${styles.horizBar} resize-help-trigger`}
+              style={{
+                top: `${100 - helpHeight}%`,
+                width: `${100 - width}%`
+              }}></div>
+            <Help toggleClose={closeHelpPane} helpHeight={helpHeight} workshop={tutorial}/>
           </div>
         </div>
       </div>
@@ -84,7 +99,7 @@ export default function Editor({tutorial}: {tutorial: string}) {
   )
 }
 
-function addBarResizing(setWidth) {
+function addEditorResizing(setWidth, theme) {
   const listen = createListener(document.body)
 
   let clicked = false
@@ -97,7 +112,7 @@ function addBarResizing(setWidth) {
     if (bar === null) return
 
     bar.style.width = '8px'
-    bar.style.background = 'black'
+    bar.style.background = theme === 1 ? '#404040' : '#eee'
   })
 
   listen('mousemove', '', e => {
@@ -132,7 +147,7 @@ function addBarResizing(setWidth) {
   })
 }
 
-function addHelpResizing(setHeight, container) {
+function addHelpResizing(setHeight, container, theme) {
   const listen = createListener(document.body)
 
   let clicked = false
@@ -145,13 +160,17 @@ function addHelpResizing(setHeight, container) {
     if (bar === null) return
 
     bar.style.height = '8px'
-    bar.style.background = 'black'
+    bar.style.background = theme === 1 ? '#404040' : '#eee'
   })
 
   listen('mousemove', '', e => {
     if (clicked) {
       e.preventDefault()
-      let percent = 100 - ((e.clientY - container.current.offsetTop) / container.current.offsetHeight) * 100
+      let percent =
+        100 -
+        ((e.clientY - container.current.offsetTop) /
+          container.current.offsetHeight) *
+          100
       percent = Math.min(percent, 100)
       percent = Math.max(percent, 0)
 

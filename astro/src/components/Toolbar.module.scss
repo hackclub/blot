@@ -3,7 +3,7 @@
   background-color: var(--primary);
   color: white;
   font-size: 1.1rem;
-  padding: 0.15rem 0.5rem;
+  padding: 0 0.5rem;
   align-items: center;
   justify-content: space-between;
 }
@@ -11,10 +11,14 @@
 .heading {
   font-size: 1.5rem;
   padding: 0 0.5rem;
-  padding-right: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+
+  a {
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+  }
 }
 
 .settingsDropdown > * {
@@ -54,6 +58,10 @@
   cursor: default;
   padding: 5px;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
 }
 
 .dropdownEntry:hover {
@@ -71,7 +79,6 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 1;
   padding: 0.25rem;
-
   display: flex;
   flex-direction: column;
 }

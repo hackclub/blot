@@ -1,13 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
-import { marked } from 'marked'
 
-async function workshopsFromGithub() {
-  // Get from GitHub instead
-}
-
-const workshops = await getCollection('workshops', ({ data }) => data)
+const workshops = await Astro.glob('/../guides/*.md')
 ---
 
 <script src="/masonry.min.js" type="module"></script>
@@ -87,6 +82,14 @@ const workshops = await getCollection('workshops', ({ data }) => data)
 </script>
 
 <style is:global lang="scss">
+  body,
+  html {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    min-height: 100vh;
+  }
+
   canvas {
     z-index: 0;
     overflow-y: hidden;
@@ -129,6 +132,7 @@ const workshops = await getCollection('workshops', ({ data }) => data)
     }
 
     .prose {
+      background-color: white;
       padding: 1rem;
 
       a {
@@ -153,14 +157,20 @@ const workshops = await getCollection('workshops', ({ data }) => data)
 
   .framed:not(#content) {
     cursor: pointer;
-    transition: all 0.1s;
+    transition: all 0.2s;
+
+    .prose {
+      border: 2px dashed var(--primary);
+      border-top: none;
+    }
 
     &:hover {
-      transform: scale(101%);
+      transform: scale(101%) rotate(-0.5deg);
     }
 
     .thumbnail {
-      border-bottom: 2px dashed var(--primary);
+      background-color: white;
+      border: 2px dashed var(--primary);
       width: 100%;
     }
 
@@ -206,16 +216,14 @@ const workshops = await getCollection('workshops', ({ data }) => data)
       </div>
       {
         workshops
-          .sort((a, b) => (a.data.pinned ? -1 : b.data.pinned ? 1 : 0))
+          .sort((a, b) => (a.frontmatter.pinned ? -1 : b.frontmatter.pinned ? 1 : 0))
           .map(workshop => (
             <div class="framed">
-              <a href={`/workshops/${workshop.slug}`}>
-                <img class="thumbnail" src={workshop.data.thumbnail} />
-              </a>
-              <a href={`/workshops/${workshop.slug}`}>
+              <a href={`/workshops/${workshop.file.split("/").pop().slice(0, -3)}`}>
+                <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
                 <div class="prose">
-                  <h2 style={{ marginBottom: 0 }}>{workshop.slug}</h2>
-                  <div set:html={marked(workshop.data.description)} />
+                  <h2 style={{ marginBottom: 0 }}>{workshop.frontmatter.title}</h2>
+                  <div set:html={workshop.frontmatter.description} />
                 </div>
               </a>
               <img class="top-left" src="/decorative-corner.svg" />

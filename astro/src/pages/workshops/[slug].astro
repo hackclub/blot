@@ -1,23 +1,24 @@
 ---
 import Layout from '../../layouts/Layout.astro'
-import Pre from '../../components/Pre.astro'
-import Editor from '../../Editor.tsx'
 import { getCollection, getEntry } from 'astro:content'
+import {MarkdownInstance} from "astro";
+
+const workshops = await Astro.glob('/../guides/*.md')
 
 export async function getStaticPaths() {
-  const workshops = await getCollection('workshops', ({ data }) => data)
+  const workshops = await Astro.glob('/../guides/*.md')
   return workshops.map(workshop => ({
-    params: { slug: workshop.slug }
+    params: { slug: workshop.file.split("/").pop().slice(0, -3) }
   }))
 }
 
 const { slug } = Astro.params
-const {
-  render,
-  data: { title, description, thumbnail, contributor }
-} = await getEntry('workshops', slug)
-const rendered = await render()
-const Content = rendered.Content
+let tutorial: MarkdownInstance<any>
+workshops.map(file => {
+  if (file.file.endsWith(slug + ".md")) tutorial = file
+}) // tutorial will never be undefined because of getStaticPaths
+
+const {title, description, contributor, thumbnail} = tutorial.frontmatter
 ---
 
 <style is:global lang="scss">
@@ -105,7 +106,7 @@ const Content = rendered.Content
   }
 </style>
 
-<Layout title={`Haxidraw | ${title}`} description={description}>
+<Layout title={title} description={description}>
   <div class="looseleaf">
     <div class="prose">
       <div id="back">
@@ -125,11 +126,16 @@ const Content = rendered.Content
               >@{contributor}</a
             >
           </p>
+          <p>
+            <a href={`/editor?tutorial=${slug}`} target="_blank"
+            >Open in Haxidraw Editor</a
+            >
+          </p>
         </div>
         <img src={thumbnail} />
       </header>
       <article>
-        <Content />
+        <div set:html={tutorial.compiledContent()}/>
       </article>
     </div>
   </div>

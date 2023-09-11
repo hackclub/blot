@@ -14,7 +14,6 @@ while (!images && tries < maxTries) {
   tries++
   const response = await fetch(apiUrl)
   const json = await response.json()
-  console.log(json)
   images = JSON.parse(atob(json.content))
 }
 
@@ -99,6 +98,14 @@ const random = (min: number, max: number) =>
 </script>
 
 <style is:global lang="scss">
+  body,
+  html {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    min-height: 100vh;
+  }
+
   canvas {
     z-index: 0;
     overflow-y: hidden;
@@ -146,6 +153,10 @@ const random = (min: number, max: number) =>
       max-width: 100%;
     }
 
+    .thumbnail {
+      border: 2px dashed var(--primary);
+    }
+
     .top-left {
       position: absolute;
       top: 0;
@@ -188,24 +199,28 @@ const random = (min: number, max: number) =>
       </div>
       {
         images.map(image => {
+          const rotate = random(-1, 1)
           return (
             <>
-              {image.snapshots.map(snapshot => (
-                <div
-                  class="framed"
-                  style={{
-                    transform: `rotate(${random(-1, 1)}deg)`
-                  }}>
-                  <img
-                    alt={image.directory}
-                    src={`https://raw.githubusercontent.com/${username}/${repository}/${branch}/art/${image.directory}/snapshots/${snapshot}`}
-                  />
-                  <img class="top-left" src="/decorative-corner.svg" />
-                  <img class="top-right" src="/decorative-corner.svg" />
-                  <img class="bottom-left" src="/decorative-corner.svg" />
-                  <img class="bottom-right" src="/decorative-corner.svg" />
-                </div>
-              ))}
+              {image.snapshots.map(snapshot => {
+                return (
+                  <div
+                    class="framed"
+                    style={{
+                      transform: `rotate(${rotate}deg)`
+                    }}>
+                    <img
+                      class="thumbnail"
+                      alt={image.directory}
+                      src={`https://raw.githubusercontent.com/${username}/${repository}/${branch}/art/${image.directory}/snapshots/${snapshot}`}
+                    />
+                    <img class="top-left" src="/decorative-corner.svg" />
+                    <img class="top-right" src="/decorative-corner.svg" />
+                    <img class="bottom-left" src="/decorative-corner.svg" />
+                    <img class="bottom-right" src="/decorative-corner.svg" />
+                  </div>
+                )
+              })}
             </>
           )
         })

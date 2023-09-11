@@ -1,265 +1,367 @@
 ---
-import Layout from '../layouts/Layout.astro'
+import Layout from "../layouts/Layout.astro";
 ---
 
 <script>
-  import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
-  import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
-  import * as THREE from 'three'
-  import { turtles } from '../lib/paths.js'
-  import { object } from 'astro/zod'
+    import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
+    import { MTLLoader } from "three/addons/loaders/MTLLoader.js";
+    import * as THREE from "three";
+    import { turtles } from "../lib/paths.js";
+    import { runTextReturnTurtles } from "../lib/runTextReturnTurtles.ts";
 
-  let objects = {
-    x: [],
-    y: []
-  }
 
-  // Set up scene
-  const scene = new THREE.Scene()
-  scene.background = null
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  )
+    const navHeight = document.querySelector("nav")?.offsetHeight;
 
-  // Set up renderer
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    alpha: true
-  })
-  renderer.setSize(window.innerWidth, window.innerHeight)
-  renderer.domElement.style.zIndex = '999'
-  document.body.appendChild(renderer.domElement)
+    let objects = {
+        x: [],
+        y: []
+    };
 
-  // Set up light
-  const light = new THREE.DirectionalLight(0xffffff)
-  light.position.set(0.5, 0, 1)
-  scene.add(light)
+    // Set up scene
+    const scene = new THREE.Scene();
+    scene.background = null;
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+    );
+    // Set up renderer
+    const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight - navHeight);
+    renderer.domElement.style.zIndex = "999";
+    const threeContainer = document.querySelector(".three-js-container");
+    threeContainer.appendChild(renderer.domElement);
 
-  // Add the parts
-  const objLoader = new OBJLoader().setPath('/model/')
-  const mtlLoader = new MTLLoader().setPath('/model/')
+    // Set up light
+    const light = new THREE.DirectionalLight(0xffffff);
+    light.position.set(-0.5, 0, 1);
+    scene.add(light);
 
-  camera.position.z = 0.3
-  camera.position.x = -0.2
-  camera.rotation.z = Math.PI
-  camera.position.y = -0.25
+    const ambientLight = new THREE.AmbientLight(0xffffff, .5);
+    scene.add(ambientLight);
 
-  mtlLoader.load('feet.mtl', function (materials) {
-    materials.preload()
-    objLoader.setMaterials(materials).load(
-      'feet.obj',
-      function (object) {
-        scene.add(object)
-        objects.feet = object
-      },
-      function (xhr) {},
-      function (error) {
-        console.log(error)
-      }
-    )
-  })
 
-  mtlLoader.load('carriage.mtl', function (materials) {
-    materials.preload()
-    objLoader.setMaterials(materials).load(
-      'carriage.obj',
-      function (object) {
-        scene.add(object)
-        objects.carriage = object
-      },
-      function (xhr) {},
-      function (error) {
-        console.log(error)
-      }
-    )
-  })
+    // Add the parts
+    const objLoader = new OBJLoader().setPath("/model/");
+    const mtlLoader = new MTLLoader().setPath("/model/");
 
-  mtlLoader.load('arm.mtl', function (materials) {
-    materials.preload()
-    objLoader.setMaterials(materials).load(
-      'arm.obj',
-      function (object) {
-        scene.add(object)
-        objects.arm = object
-      },
-      function (xhr) {},
-      function (error) {
-        console.log(error)
-      }
-    )
-  })
+    camera.position.z = 0.3;
+    camera.position.x = 0;
+    camera.rotation.z = Math.PI;
+    camera.position.y = -0.055;
 
-  mtlLoader.load('penholder.mtl', function (materials) {
-    materials.preload()
-    objLoader.setMaterials(materials).load(
-      'penholder.obj',
-      function (object) {
-        scene.add(object)
-        objects.x.push(renderer.domElement.offsetWidth / 2)
-        objects.y.push(renderer.domElement.offsetHeight / 2)
-        objects.penholder = object
-      },
-      function (xhr) {},
-      function (error) {
-        console.log(error)
-      }
-    )
-  })
+    const p0 = addSphere({ 
+      radius: .01, 
+      color: "red", 
+      x: -0.1,
+      y: 0
+    });
 
-  // Set up turtle
-  let width, height
-  const canvas = document.getElementById('canvas')
-  const ctx = canvas.getContext('2d')
-  ctx.strokeStyle = 'black'
-  width = canvas.width = window.innerWidth
-  height = canvas.height = window.innerHeight
+    const p1 = addSphere({ 
+      radius: .01, 
+      color: "red", 
+      x: 0.1,
+      y: 0
+    });
 
-  const turtle = turtles[0]
-  let polyline = turtle.path[0]
-  const config = {
-    scale: 5,
-    xoff: 70,
-    yoff: -10,
-    lineStart: 1,
-    lineEnd: polyline.length
-  }
-  const paths = polyline.map(([x, y]) => [
-    (x + config.xoff) * config.scale,
-    (y + config.yoff) * config.scale
-  ])
-  let i = config.lineStart + 1
-  let j = config.lineStart + 1
+    const p2 = addSphere({ 
+      radius: .01, 
+      color: "red", 
+      x: -0.1,
+      y: -.15
+    });
 
-  function dist(x1: number, y1: number, x2: number, y2: number) {
-    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
-  }
+    const p3 = addSphere({ 
+      radius: .01, 
+      color: "red", 
+      x: .1,
+      y: -.15
+    });
 
-  const lerp = (x, y, a) => x * (1 - a) + y * a
-  const clamp = (a, min = 0, max = 1) => Math.min(max, Math.max(min, a))
-  const invlerp = (x, y, a) => clamp((a - x) / (y - x))
-  const range = (x1, y1, x2, y2, a) => lerp(x2, y2, invlerp(x1, y1, a))
+    const penTip = addSphere({ 
+      radius: .005, 
+      color: "green", 
+      x: -0.25,
+      y: -0.3
+    });
 
-  function moveTo(x: number, y: number) {
-    let mappedX = range(
-      0,
-      width,
-      -camera.position.z / config.scale,
-      camera.position.z / config.scale,
-      x
-    )
-    let xoff = range(
-      0,
-      width,
-      -camera.position.z / config.scale,
-      camera.position.z / config.scale,
-      config.xoff
-    )
-    let mappedY = range(
-      0,
-      height,
-      -camera.position.y / config.scale,
-      camera.position.y / config.scale,
-      y
-    )
-    let yoff = range(
-      0,
-      height,
-      -camera.position.y / config.scale,
-      camera.position.y / config.scale,
-      config.yoff
-    )
-    objects.carriage.position.x = mappedX
-    objects.arm.position.x = mappedX
-    objects.penholder.position.x = mappedX
-    objects.arm.position.y = mappedY
-    objects.penholder.position.y = mappedY
-    objects.x.push(x)
-    objects.y.push(y)
-  }
+    [
+        "feet",
+        "carriage",
+        "arm",
+        "penholder"
+    ].map(addObj);
 
-  function animate() {
-    requestAnimationFrame(animate)
-    if (
-      i < config.lineEnd - 1 &&
-      objects.arm != undefined &&
-      objects.penholder != undefined &&
-      objects.carriage != undefined &&
-      objects.feet != undefined
-    ) {
-      i += 10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
-      j = Math.floor(i)
-      ctx.clearRect(0, 0, width, height)
-      let [x, y] = paths[j]
-      // increase i a bit if we're out of the screen
-      if (x < 0 || x > width || y < 0 || y > height) i++
-      if (j === 0) ctx.moveTo(x, y)
-      else
-        ctx.lineTo(
-          lerp(paths[j - 1][0], x, i - j),
-          lerp(paths[j - 1][1], y, i - j)
-        )
-      ctx.stroke()
-      moveTo(x, y)
+    function addObj(name) {
+      mtlLoader.load(`${name}.mtl`, function (materials) {
+        materials.preload();
+        objLoader.setMaterials(materials).load(
+          `${name}.obj`,
+          function (object) {
+            scene.add(object);
+            objects[name] = object;
+
+            const boundingBox = new THREE.Box3().setFromObject(object);
+            const yOffset = boundingBox.min.y;
+            const xOffset = (boundingBox.min.x + boundingBox.max.x) / 2;
+            const zOffset = (boundingBox.min.z + boundingBox.max.z) / 2;
+
+            object.traverse(child => {
+              if (child instanceof THREE.Mesh) {
+                child.position.set(-xOffset, -yOffset, -zOffset);
+              }
+            })
+          },
+          function (xhr) {},
+          function (error) {
+            console.log(error);
+          }
+        );
+      });
     }
-    renderer.render(scene, camera)
-  }
 
-  animate()
+
+
+
+    let texCanvas = document.createElement("canvas");
+    // document.body.appendChild(texCanvas);
+    texCanvas.style = `
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 999999;
+      scale: .5;
+      transform-origin: left top;
+
+    `
+    const texCanvasWidth = 512;
+    const texCanvasHeight = 512*2;
+    texCanvas.width = texCanvasWidth;
+    texCanvas.height = texCanvasHeight;
+
+    let ctx = texCanvas.getContext("2d");
+
+    ctx.fillStyle = 'antiquewhite';
+    ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight);
+    // ctx.fillStyle = 'blue';
+    // ctx.fillRect(128, 128, 256, 256);
+
+
+    const testTurtles = runTextReturnTurtles(`
+      const t = createTurtle();
+
+      for (let i = 0; i < 300; i++) {
+        t.forward(i);
+        t.right(91);
+      }
+
+      drawTurtles(t);
+    `)
+
+    if (testTurtles.length > 1) {
+      const [first, ...rest] = testTurtles;
+
+      rest.forEach(t => first.join(rest));
+    } 
+
+    const oneTurtle = testTurtles.length > 0 ? testTurtles[0] : null;
+
+    oneTurtle.translate([texCanvasWidth/2, texCanvasHeight/2], oneTurtle.cc);
+
+    console.log(oneTurtle);
+
+    ctx.beginPath();
+    oneTurtle.path.forEach(p => {
+      p.forEach((point, i) => {
+        if (i === 0) ctx.moveTo(...point);
+        else ctx.lineTo(...point);
+      })
+    })
+    ctx.strokeStyle = "black";
+    ctx.strokeWidth = 2;
+    ctx.stroke();
+
+
+    let texture = new THREE.CanvasTexture(texCanvas);
+    texture.needsUpdate = true;
+    texture.minFilter = THREE.LinearFilter;
+
+    let geometry = new THREE.PlaneGeometry(.4, .8);
+    let material = new THREE.MeshBasicMaterial({ map: texture });
+
+    let plane = new THREE.Mesh(geometry, material);
+    plane.position.x = 0;
+    plane.position.y = 0;
+    plane.position.z = 0;
+    scene.add(plane);
+
+    renderer.domElement.addEventListener("mousemove", (e) => {
+      const { x, y } = getRelativePoint(e, threeContainer);
+      const point = getIntersectedPoint(
+        x, 
+        y, 
+        plane
+      );
+
+      if (point) {
+        penTip.position.x = point.x;
+        penTip.position.y = point.y;
+
+        moveMachine(point.x, point.y);
+      }
+
+    })
+
+    function dist(x1: number, y1: number, x2: number, y2: number) {
+        return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+    }
+
+    const lerp = (x, y, a) => x * (1 - a) + y * a;
+    const clamp = (a, min = 0, max = 1) => Math.min(max, Math.max(min, a));
+    const invlerp = (x, y, a) => clamp((a - x) / (y - x));
+    const range = (x1, y1, x2, y2, a) => lerp(x2, y2, invlerp(x1, y1, a));
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Function to handle resizing
+    function onResize(entries) {
+      const bb = threeContainer.getBoundingClientRect();
+      for (let entry of entries) {
+        // For simplicity, using window dimensions, but you can use the container's dimensions
+        const width = bb.width;
+        const height = bb.height;
+        
+        // Update the camera's aspect ratio and projection matrix
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        
+        // Update the renderer's size
+        renderer.setSize(width, height);
+        
+        // Optional: re-render the scene
+        renderer.render(scene, camera);
+      }
+    }
+
+    const resizeObserver = new ResizeObserver(onResize);
+    resizeObserver.observe(threeContainer);
+
+    function addSphere({ radius, color, x, y }) {
+      const sphereRadius = radius;
+      const sphereWidthSegments = 32;  // Number of segmented faces around the circumference of the sphere.
+      const sphereHeightSegments = 32; // Number of rows of faces from the sphere's top to bottom.
+
+      const sphereGeometry = new THREE.SphereGeometry(
+        sphereRadius, 
+        sphereWidthSegments, 
+        sphereHeightSegments
+      );
+
+      const sphereMaterial = new THREE.MeshBasicMaterial({ color }); // green color
+
+      const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+      scene.add(sphereMesh);
+
+      sphereMesh.position.x = x;
+      sphereMesh.position.y = y;
+
+      return sphereMesh;
+    }
+
+    function getIntersectedPoint(x, y, targetObject) {
+
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+
+      const rect = renderer.domElement.getBoundingClientRect();
+
+      // Update the mouse vector with passed x and y values
+      mouse.x = (x / rect.width) * 2 - 1;
+      mouse.y = - (y / rect.height) * 2 + 1;
+
+      // Update the picking ray with the camera and mouse position
+      raycaster.setFromCamera(mouse, camera);
+
+      // Calculate objects intersecting the picking ray
+      const intersects = raycaster.intersectObject(targetObject);
+
+      if (intersects.length > 0) {
+          return intersects[0].point; // This is the Vector3 representing the intersection point in 3D space
+      } else {
+          return null; // No intersection
+      }
+    }
+
+    function getRelativePoint(event, element) {
+      const rect = element.getBoundingClientRect();
+      
+      return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+      };
+    }
+
+    function moveMachine(x, y) {
+      if (Object.keys(objects).length < 4) return;
+      // console.log(x, y);
+
+      objects.penholder.position.x = x;
+      objects.penholder.position.y = y;
+      objects.penholder.position.z = 0.04;
+
+      objects.carriage.position.x = x;
+      objects.carriage.position.y = 0.03;
+      objects.carriage.position.z = 0.02;
+
+      objects.arm.position.x = x+0.02;
+      objects.arm.position.y = y+0.04;
+      objects.arm.position.z = 0.04;
+    }
 </script>
 
 <style is:global lang="scss">
-  body {
-    background-size: 40px 40px;
-    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
-      linear-gradient(to bottom, #ddd 1px, transparent 1px);
-    min-height: 100vh;
-  }
-
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-  }
-
-  #canvas {
-    z-index: 999;
-  }
-
-  main {
-    position: relative;
-    z-index: 2;
-    padding: 1rem 0;
-  }
-
-  h1 {
-    font-family: var(--font-sans);
-    font-size: 4rem;
-    max-width: 50vw;
-    margin-inline: 4rem;
-    line-height: 1;
-    letter-spacing: -2px;
-
-    span {
-      color: var(--primary);
+    body,
+    html {
+        background-size: 40px 40px;
+        background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+            linear-gradient(to bottom, #ddd 1px, transparent 1px);
+        min-height: 100vh;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
     }
-  }
+
+    h1 {
+        font-family: var(--font-sans);
+        font-size: 4rem;
+        max-width: 50vw;
+        margin-inline: 4rem;
+        line-height: 1;
+        letter-spacing: -2px;
+
+        span {
+            color: var(--primary);
+        }
+    }
+
+    .three-js-container {
+      width: 100%;
+      height: 100%;
+    }
 </style>
 
 <Layout title="Blot" description="Blot out the world!">
-  <canvas id="canvas"></canvas>
-  <!-- 
-    <main>
-        <section>
-            <h1>
-                <span>Blot</span> is the plotting tool that everyone can make
-                art for.
-            </h1>
-            <h1>Draw some art, get a <span>Blot</span>.</h1>
-        </section>
-    </main>
-    -->
+    <!-- <canvas id="canvas"></canvas> -->
+    <section></section>
+    <div class="three-js-container"></div>
 </Layout>

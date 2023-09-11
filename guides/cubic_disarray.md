@@ -1,4 +1,10 @@
-# Cubic Disarray
+---
+title: Cubic Disarray
+description: >
+  **_Georg Nees_** was a pioneer of digital art, responsible for interesting works like Cubic Disarray.
+thumbnail: https://www.seekingoutside.com/wp-content/uploads/2018/12/Screen-Shot-2018-12-11-at-3.40.46-AM-480x670.png
+contributor: henrybass
+---
 
 **_Georg Nees_** was a pioneer of digital art, responsible for interesting works like Cubic Disarray.
 
@@ -8,7 +14,7 @@ Let's try to recreate this in the Haxidraw editor. A good first step to reverse 
 
 We can get started by setting up a turtle, and define some constants:
 
-```
+```js
 const t = createTurtle();
 drawTurtles(t);
 
@@ -18,7 +24,7 @@ const squareSize = 1;
 
 Obviously we'll need a way to draw these rotated squares, so let's define a function for that:
 
-```
+```js
 function draw(x, y, width, height, theta) {
   t.up()
   let startX = x - height/2
@@ -44,7 +50,7 @@ This can be done using the sine and cosine functions. They decompose a given ang
 
 It then returns the rotated points as an array.
 
-```
+```js
 function rotatePoints(ox, oy, x, y, theta) {
     let dx = x - ox
     let dy = y - oy
@@ -56,7 +62,7 @@ function rotatePoints(ox, oy, x, y, theta) {
 
 Great, we're almost done! Now it's down to simply drawing the grid. Loop over every x and y in some range, and draw a square there. We rotate them by a random amount, scaled proportional to how low the square is on the screen.
 
-```
+```js
 for (let x = 0; x < size; x++) {
   for (let y = 0; y < size; y++) {
     draw(x, y, squareSize, squareSize, (Math.random()-0.5) * ((10-y)/10))
