@@ -18,6 +18,7 @@ if (tutorial) tutorial = {...tutorial, content: tutorial.compiledContent()}
 ---
 
 <EditorLayout title="Editor" description="Editor">
+	{query}
 	<main>
 		<Editor client:load tutorial={tutorial}></Editor>
 	</main>
