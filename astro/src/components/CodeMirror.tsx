@@ -6,20 +6,16 @@ import { patchStore, useStore } from '../lib/state.ts'
 import { useCMTheme } from '../lib/codemirror/cmTheme.ts'
 import { useVimMode } from '../lib/codemirror/cmVimMode.ts'
 import { setErrorPos } from '../lib/codemirror/errorIndicator.js'
-import { useOnJumpTo, viewJumpTo } from '../lib/codemirror/state.js'
+import { createCMState, useOnJumpTo, viewJumpTo } from '../lib/codemirror/state.js'
 
 export default function CodeMirror() {
-  const { code: codeState, error } = useStore(['code', 'error'])
-  const [view, setView] = useState<EditorView>()
+  const { error } = useStore(['error']);
+
+  const [view, setView] = useState<EditorView>();
 
   useEffect(() => {
-    if (!view) return
-    view.setState(codeState.cmState)
-  }, [view, codeState])
-
-  useEffect(() => {
-    patchStore({ view })
-  }, [view])
+    patchStore({ view });
+  }, [view]);
 
   useCMTheme(view)
   useVimMode(view)
@@ -42,8 +38,11 @@ export default function CodeMirror() {
     if (!node) return
 
     const view = new EditorView({
+      state: createCMState(),
       parent: node
-    })
+    });
+
+    node.view = view;
 
     //@ts-expect-error
     node.children[0]['view'] = view
@@ -58,7 +57,7 @@ export default function CodeMirror() {
           font-size: 18px;
         }
       `}</style>
-      <div class={styles.cmWrapper} ref={editorRef} />
+      <div class={[styles.cmWrapper, "cm-editor"].join(" ")} ref={editorRef} />
     </>
   )
 }

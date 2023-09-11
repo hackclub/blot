@@ -4,7 +4,7 @@ import { javascript } from '@codemirror/lang-javascript'
 import { basicSetup } from 'codemirror'
 import { indentWithTab } from '@codemirror/commands'
 import { indentUnit } from '@codemirror/language'
-import { getStore } from '../state.js'
+import { patchStore } from '../state.js'
 import { EditorState, Transaction } from '@codemirror/state'
 import { manualChangeSinceLiveUpdate } from './liveUpdate.js'
 import { dispatchEditorChange } from '../events.js'
@@ -37,10 +37,7 @@ const cmExtensions = [
   indentUnit.of('  '),
   theme,
   EditorView.updateListener.of((v: ViewUpdate) => {
-    const { code } = getStore()
-    code.cmState = v.state
     if (v.docChanged) {
-      code.content = v.state.doc.toString()
       if (
         v.transactions.find(
           t => t.annotation(Transaction.userEvent) !== undefined
@@ -57,11 +54,7 @@ const cmExtensions = [
   widgetsPlugin
 ]
 
-export const createCMState = (content: string) =>
-  EditorState.create({ extensions: cmExtensions, doc: content })
-
-export const deserializeCMState = (state: any) =>
-  EditorState.fromJSON(state, { extensions: cmExtensions })
+export const createCMState = (doc = "") => EditorState.create({ extensions: cmExtensions, doc });
 
 export const [useOnJumpTo, dispatchJumpTo] = createEvent<CodePosition>()
 

@@ -24,15 +24,9 @@ export default function Editor({ tutorial }: {tutorial: any}) {
   const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
 
   useEffect(() => {
-    init()
-    addEditorResizing(setWidth, theme)
-    addHelpResizing(setHelpHeight, editorContainer, theme)
-  }, [theme])
-
-  useEffect(() => {
-    init()
-    addEditorResizing(setWidth, theme)
-    addHelpResizing(setHelpHeight, editorContainer, theme)
+    init();
+    addEditorResizing(setWidth, theme);
+    addHelpResizing(setHelpHeight, editorContainer, theme);
   }, [])
 
   const closeHelpPane = () => {

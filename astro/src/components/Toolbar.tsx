@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'preact/hooks'
 import download from '../lib/download.ts'
 import runCode from '../lib/run.ts'
+import { defaultProgram } from "../lib/defaultProgram.js";
 import {
-  loadCodeFromString,
   makeNewState,
   patchStore,
   useStore,
   getStore
 } from '../lib/state.ts'
+import {  loadCodeFromString } from "../lib/loadCodeFromString.ts";
 import styles from './Toolbar.module.scss'
 import Button from '../ui/Button.tsx'
 import cx from 'classnames'
@@ -142,12 +143,20 @@ function RunButton() {
   )
 }
 
+function getCode() {
+  const { view } = getStore();
+
+  const code = view.state.doc.toString();
+
+  return code;
+
+}
+
 function DownloadButton() {
-  const state = useStore()
   return (
     <div
       class={styles.dropdownEntry}
-      onClick={() => download('project.js', state.code.content)}>
+      onClick={() => download('project.js', getCode())}>
       js
     </div>
   )
@@ -158,9 +167,7 @@ function NewButton() {
     <Button
       variant="ghost"
       onClick={() => {
-        patchStore({
-          ...makeNewState()
-        })
+        loadCodeFromString(defaultProgram);
       }}>
       new
     </Button>

@@ -2,7 +2,9 @@ function createEvent() {
   const events = []
 
   const dispatchEvent = () => {
-    events.forEach(e => e())
+    events.forEach(e => {
+      e()
+    })
   }
 
   const listenToEvent = fn => {

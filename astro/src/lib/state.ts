@@ -1,15 +1,9 @@
 import type { EditorState } from '@codemirror/state'
 import { createState } from 'niue'
-import { createCMState } from './codemirror/state.ts'
 import { type Haxidraw, Turtle, type Point } from './drawingToolkit/index.js'
 import type { EditorView } from '@codemirror/view'
 
 // state types
-
-export type CodeState = {
-  content: string
-  cmState: EditorState
-}
 
 export type CodePosition = {
   line: number
@@ -31,7 +25,6 @@ export type ConsoleMessage = {
 }
 
 export type GlobalState = {
-  code: CodeState
   inst: Haxidraw | null
   connected: boolean
   turtles: Turtle[]
@@ -60,57 +53,15 @@ const newState: Omit<GlobalState, 'code'> = {
     width: 125,
     height: 125
   },
-  view: null
+  view: null,
 }
 
-const defaultProgram = `
-// welcome to haxidraw!
-
-const width = 125;
-const height = 125;
-
-setDocDimensions(width, height);
-
-const testTurtle = createTurtle();
-
-for (let i = 0; i < 86; i++) {
-    testTurtle.forward(i);
-    testTurtle.left(91);
-}
-
-testTurtle.translate(
-  [width/2, height/2], 
-  testTurtle.cc
-);
-
-drawTurtles(
-    testTurtle
-);
-`.trim()
-
-export const makeNewState = (
-  initialContent: string = defaultProgram
-): GlobalState => {
+export const makeNewState = (): GlobalState => {
   return {
-    code: {
-      content: initialContent,
-      cmState: createCMState(initialContent)
-    },
-    ...newState
+    ...newState,
   }
 }
 
-export function loadCodeFromString(code: string) {
-  patchStore({
-    code: {
-      content: code,
-      cmState: createCMState(code)
-    }
-  })
-}
-
-const backup = localStorage.getItem('cache')
-
 export const [useStore, patchStore, getStore] = createState<GlobalState>(
-  backup ? makeNewState(backup) : makeNewState()
+  makeNewState()
 )

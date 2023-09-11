@@ -30,8 +30,16 @@ const resolvePath = (path: string) =>
 const isURL = (id: string) =>
   ['http://', 'https://'].find(s => id.startsWith(s))
 
+
+function getCode() {
+  const { view } = getStore();
+  const code = view.state.doc.toString();
+
+  return code;
+}
+
 async function getBundle(): Promise<string> {
-  const { code } = getStore()
+  const code = getCode();
 
   const build = await rollup({
     input: '/index.js',
@@ -63,7 +71,7 @@ async function getBundle(): Promise<string> {
             const res = await fetch(id)
             return await res.text()
           } else if (id === '/index.js') {
-            return code.content
+            return code
           }
           return null
         }
@@ -146,7 +154,7 @@ export async function build() {
             column: err.loc.column
           }
         ],
-        code: getStore().code.content,
+        code: getCode(),
         name: err.name ?? caught.name,
         message: err.message.replace(/\((\d+):(\d+)(?![^\n]*:)\)/gm, '').trim()
       }
@@ -329,10 +337,11 @@ export default async function runCode(cached: boolean = false) {
       }
       return mapped
     }
+
     const mapped = positions.map(mapPosition)
     errorState = {
       stack: mapped,
-      code: getStore().code.content,
+      code: getCode(),
       name: err.name,
       message: err.message
     }
