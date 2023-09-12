@@ -16,7 +16,7 @@
   --accent-dark-rgb: 144, 0, 144;
   --font-sans: 'Atkinson Hyperlegible', sans-serif;
   --font-serif: 'PT Serif', serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: monospace;
 
   --font-0: 1rem;
   --font-1: 1.125rem;
@@ -39,13 +39,16 @@ html {
   overflow-x: clip;
   padding: 0;
   scroll-behavior: smooth;
+<<<<<<< HEAD
 }
 
 code,
 pre {
+  font-family: var(--font-mono);
 }
 
-body[data-theme='Light'], body:not([data-theme]) {
+body[data-theme='Light'],
+body:not([data-theme]) {
   /* PrismJS 1.29.0
 https://prismjs.com/download.html#themes=prism-coy&languages=clike+javascript */
   code[class*='language-'],
@@ -381,4 +384,6 @@ https://prismjs.com/download.html#themes=prism-twilight&languages=markup+css+cli
     background-color: #8693a6;
     color: #f4f1ef;
   }
+=======
+>>>>>>> 5562d1b204ce71f1d9e5c849b28ab404da6f2961
 }

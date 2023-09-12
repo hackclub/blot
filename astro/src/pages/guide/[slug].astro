@@ -1,24 +1,22 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import { getCollection, getEntry } from 'astro:content'
-import {MarkdownInstance} from "astro";
-
-const workshops = await Astro.glob('/../guides/*.md')
 
 export async function getStaticPaths() {
-  const workshops = await Astro.glob('/../guides/*.md')
+  const workshops = await getCollection('workshops', ({ data }) => data)
   return workshops.map(workshop => ({
-    params: { slug: workshop.file.split("/").pop().slice(0, -3) }
+    params: { slug: workshop.slug }
   }))
 }
 
 const { slug } = Astro.params
-let tutorial: MarkdownInstance<any>
-workshops.map(file => {
-  if (file.file.endsWith(slug + ".md")) tutorial = file
-}) // tutorial will never be undefined because of getStaticPaths
+const {
+  render,
+  data: { title, description, thumbnail, contributor }
+} = await getEntry('workshops', slug)
+const { Content, headings } = await render()
 
-const {title, description, contributor, thumbnail} = tutorial.frontmatter
+export const prerender = true
 ---
 
 <style is:global lang="scss">
@@ -106,7 +104,7 @@ const {title, description, contributor, thumbnail} = tutorial.frontmatter
   }
 </style>
 
-<Layout title={title} description={description}>
+<Layout title={`Workshop: ${title}`} description={description}>
   <div class="looseleaf">
     <div class="prose">
       <div id="back">
@@ -118,6 +116,7 @@ const {title, description, contributor, thumbnail} = tutorial.frontmatter
           >
         </p>
       </div>
+      <!--
       <header>
         <div>
           <h1>{title}</h1>
@@ -126,16 +125,12 @@ const {title, description, contributor, thumbnail} = tutorial.frontmatter
               >@{contributor}</a
             >
           </p>
-          <p>
-            <a href={`/editor?tutorial=${slug}`} target="_blank"
-            >Open in Haxidraw Editor</a
-            >
-          </p>
         </div>
         <img src={thumbnail} />
       </header>
+    -->
       <article>
-        <div set:html={tutorial.compiledContent()}/>
+        <Content />
       </article>
     </div>
   </div>
