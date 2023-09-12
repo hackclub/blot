@@ -1,6 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import { Image } from 'astro:assets'
+
+const slug = (file: string) => {
+  file = file.replace('.md', '').slice(file.lastIndexOf('/'))
+  return file.slice(1)
+}
+
+const list = (await Astro.glob('../../../art/list.json'))[0].default
+let art = {}
+list.map(folder => {
+  folder.snapshots.map(snapshot => {
+    art[snapshot] = { folder: folder.directory, source: folder.source }
+  })
+})
 
 const images = (await Astro.glob('../../../art/*/snapshots/*')).map(
   img => img.default
@@ -24,6 +36,7 @@ export const prerender = true
   }
 
   let toDraw = []
+  /*
   document.querySelectorAll('canvas').forEach(canvas => {
     canvas.width = 200
     canvas.height = document.getElementById('gallery').offsetHeight
@@ -86,6 +99,7 @@ export const prerender = true
       toDraw[idx].j = j
     })
   }, 10)
+  */
 </script>
 
 <style is:global lang="scss">
@@ -190,10 +204,14 @@ export const prerender = true
       </div>
       {
         images.map(image => {
-          const rotate = random(-1, 1)
+          const rotate = random(-0.5, 0.5)
+          console.log(image, art[slug(image)])
           return (
-            <div
+            <a
               class="framed"
+              href={`/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${
+                art[slug(image)].folder
+              }/${art[slug(image)].source}`}
               style={{
                 transform: `rotate(${rotate}deg)`
               }}>
@@ -202,7 +220,7 @@ export const prerender = true
               <img class="top-right" src="/decorative-corner.svg" />
               <img class="bottom-left" src="/decorative-corner.svg" />
               <img class="bottom-right" src="/decorative-corner.svg" />
-            </div>
+            </a>
           )
         })
       }
