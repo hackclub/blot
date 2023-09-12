@@ -14,7 +14,7 @@
   --accent-dark: #900090;
   --accent-dark-rgb: 144, 0, 144;
   --font-body: 'Atkinson Hyperlegible', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: monospace;
 
   --font-0: 1rem;
   --font-1: 1.125rem;
