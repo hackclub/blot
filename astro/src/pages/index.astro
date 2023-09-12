@@ -5,7 +5,7 @@ import Layout from '../layouts/Layout.astro'
 <script>
   import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
   import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
-  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import * as THREE from 'three'
   import { turtles } from '../lib/paths.js'
   import { runTextReturnTurtles } from '../lib/runTextReturnTurtles.ts'
@@ -32,10 +32,11 @@ import Layout from '../layouts/Layout.astro'
     alpha: true
   })
 
-  const controls = new OrbitControls(camera, renderer.domElement);
+  const controls = new OrbitControls(camera, renderer.domElement)
 
   renderer.setSize(window.innerWidth, window.innerHeight - navHeight)
   renderer.domElement.style.zIndex = '999'
+  renderer.domElement.style.top = `${navHeight}px`
   const threeContainer = document.querySelector('.three-js-container')
   threeContainer.appendChild(renderer.domElement)
 
@@ -61,60 +62,32 @@ import Layout from '../layouts/Layout.astro'
     color: 'red',
     x: -0.1,
     y: 0
-  });
+  })
 
-  const p1 = addSphere({
-    radius: 0.01,
-    color: 'red',
-    x: 0.1,
-    y: 0
-  });
-
-  const p2 = addSphere({
-    radius: 0.01,
-    color: 'red',
-    x: -0.1,
-    y: -0.15
-  });
-
-  const p3 = addSphere({
-    radius: 0.01,
-    color: 'red',
-    x: 0.1,
-    y: -0.15
-  });
-
-  const penTip = addSphere({
-    radius: 0.005,
-    color: 'green',
-    x: -0.25,
-    y: -0.3
-  });
-
-  [
-    { 
-      name: 'feet', 
-      post: (obj) => {
+  ;[
+    {
+      name: 'feet',
+      post: obj => {
         obj.position.z = 0.038
-      } 
-    }, 
-    { 
-      name: 'carriage', 
-      post: (obj) => {
+      }
+    },
+    {
+      name: 'carriage',
+      post: obj => {
         obj.position.z = 0.063
-      } 
-    }, 
-    { 
-      name: 'arm', 
-      post: (obj) => {
+      }
+    },
+    {
+      name: 'arm',
+      post: obj => {
         obj.position.z = 0.065
-      } 
-    }, 
-    { 
-      name: 'penholder', 
-      post: (obj) => {
+      }
+    },
+    {
+      name: 'penholder',
+      post: obj => {
         obj.position.z = 0.065
-      } 
+      }
     }
   ].map(addObj)
 
@@ -138,7 +111,7 @@ import Layout from '../layouts/Layout.astro'
             }
           })
 
-          post(object);
+          post(object)
         },
         function (xhr) {},
         function (error) {
@@ -166,7 +139,7 @@ import Layout from '../layouts/Layout.astro'
 
   let ctx = texCanvas.getContext('2d')
 
-  ctx.fillStyle = "rgba(255, 255, 255, 0)"
+  ctx.fillStyle = 'rgba(255, 255, 255, 0)'
   ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight)
   // ctx.fillStyle = 'blue';
   // ctx.fillRect(128, 128, 256, 256);
@@ -210,10 +183,10 @@ import Layout from '../layouts/Layout.astro'
   texture.minFilter = THREE.LinearFilter
 
   let geometry = new THREE.PlaneGeometry(0.4, 0.8)
-  let material = new THREE.MeshBasicMaterial({ 
-    map: texture, 
-    transparent: true, 
-    // opacity: .4 
+  let material = new THREE.MeshBasicMaterial({
+    map: texture,
+    transparent: true
+    // opacity: .4
   })
 
   let plane = new THREE.Mesh(geometry, material)
@@ -227,9 +200,6 @@ import Layout from '../layouts/Layout.astro'
     const point = getIntersectedPoint(x, y, plane)
 
     if (point) {
-      penTip.position.x = point.x
-      penTip.position.y = point.y
-
       moveMachine(point.x, point.y)
     }
   })
@@ -348,6 +318,7 @@ import Layout from '../layouts/Layout.astro'
     background-size: 40px 40px;
     background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
       linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    font-family: var(--font-sans);
     min-height: 100vh;
     height: 100vh;
     width: 100vw;
@@ -356,25 +327,68 @@ import Layout from '../layouts/Layout.astro'
   }
 
   h1 {
-    font-family: var(--font-sans);
     font-size: 4rem;
     max-width: 50vw;
-    margin-inline: 4rem;
-    line-height: 1;
     letter-spacing: -2px;
+    margin-inline: 4rem;
 
     span {
       color: var(--primary);
     }
   }
 
+  h2 {
+    font-size: 3rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+    font-weight: normal;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1;
+  }
+
+  header {
+    border-bottom: 2px dashed var(--primary);
+    height: 100%;
+  }
+
+  section {
+    background-color: white;
+    position: relative;
+    z-index: 1000;
+    padding: 2rem 4rem;
+
+    h2 {
+      margin-bottom: 0;
+    }
+
+    h3 {
+      margin-top: 0.995rem;
+    }
+  }
+
   .three-js-container {
     width: 100%;
     height: 100%;
+    position: absolute;
   }
 </style>
 
 <Layout title="Blot" description="Blot out the world!">
-  <section></section>
+  <header>
+    <h1>Blot is the drawing machine you can build.</h1>
+  </header>
   <div class="three-js-container"></div>
+  <section>
+    <h2>Make some art, get a Blot.</h2>
+    <h3>Start by making some generative art!</h3>
+  </section>
 </Layout>
