@@ -5,6 +5,7 @@ import Layout from '../layouts/Layout.astro'
 <script>
   import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
   import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
+  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
   import * as THREE from 'three'
   import { turtles } from '../lib/paths.js'
   import { runTextReturnTurtles } from '../lib/runTextReturnTurtles.ts'
@@ -30,6 +31,9 @@ import Layout from '../layouts/Layout.astro'
     antialias: true,
     alpha: true
   })
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+
   renderer.setSize(window.innerWidth, window.innerHeight - navHeight)
   renderer.domElement.style.zIndex = '999'
   const threeContainer = document.querySelector('.three-js-container')
@@ -47,7 +51,7 @@ import Layout from '../layouts/Layout.astro'
   const objLoader = new OBJLoader().setPath('/model/')
   const mtlLoader = new MTLLoader().setPath('/model/')
 
-  camera.position.z = 0.3
+  camera.position.z = 0.4
   camera.position.x = 0
   camera.rotation.z = Math.PI
   camera.position.y = -0.055
@@ -57,39 +61,64 @@ import Layout from '../layouts/Layout.astro'
     color: 'red',
     x: -0.1,
     y: 0
-  })
+  });
 
   const p1 = addSphere({
     radius: 0.01,
     color: 'red',
     x: 0.1,
     y: 0
-  })
+  });
 
   const p2 = addSphere({
     radius: 0.01,
     color: 'red',
     x: -0.1,
     y: -0.15
-  })
+  });
 
   const p3 = addSphere({
     radius: 0.01,
     color: 'red',
     x: 0.1,
     y: -0.15
-  })
+  });
 
   const penTip = addSphere({
     radius: 0.005,
     color: 'green',
     x: -0.25,
     y: -0.3
-  })
+  });
 
-  ;['feet', 'carriage', 'arm', 'penholder'].map(addObj)
+  [
+    { 
+      name: 'feet', 
+      post: (obj) => {
+        obj.position.z = 0.038
+      } 
+    }, 
+    { 
+      name: 'carriage', 
+      post: (obj) => {
+        obj.position.z = 0.063
+      } 
+    }, 
+    { 
+      name: 'arm', 
+      post: (obj) => {
+        obj.position.z = 0.065
+      } 
+    }, 
+    { 
+      name: 'penholder', 
+      post: (obj) => {
+        obj.position.z = 0.065
+      } 
+    }
+  ].map(addObj)
 
-  function addObj(name) {
+  function addObj({ name, post }) {
     mtlLoader.load(`${name}.mtl`, function (materials) {
       materials.preload()
       objLoader.setMaterials(materials).load(
@@ -108,6 +137,8 @@ import Layout from '../layouts/Layout.astro'
               child.position.set(-xOffset, -yOffset, -zOffset)
             }
           })
+
+          post(object);
         },
         function (xhr) {},
         function (error) {
@@ -135,7 +166,7 @@ import Layout from '../layouts/Layout.astro'
 
   let ctx = texCanvas.getContext('2d')
 
-  ctx.fillStyle = 'antiquewhite'
+  ctx.fillStyle = "rgba(255, 255, 255, 0)"
   ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight)
   // ctx.fillStyle = 'blue';
   // ctx.fillRect(128, 128, 256, 256);
@@ -179,7 +210,11 @@ import Layout from '../layouts/Layout.astro'
   texture.minFilter = THREE.LinearFilter
 
   let geometry = new THREE.PlaneGeometry(0.4, 0.8)
-  let material = new THREE.MeshBasicMaterial({ map: texture })
+  let material = new THREE.MeshBasicMaterial({ 
+    map: texture, 
+    transparent: true, 
+    // opacity: .4 
+  })
 
   let plane = new THREE.Mesh(geometry, material)
   plane.position.x = 0
@@ -298,15 +333,12 @@ import Layout from '../layouts/Layout.astro'
 
     objects.penholder.position.x = x
     objects.penholder.position.y = y
-    objects.penholder.position.z = 0.04
 
     objects.carriage.position.x = x
     objects.carriage.position.y = 0.03
-    objects.carriage.position.z = 0.02
 
     objects.arm.position.x = x + 0.02
     objects.arm.position.y = y + 0.04
-    objects.arm.position.z = 0.04
   }
 </script>
 
