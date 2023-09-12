@@ -11,14 +11,9 @@ This is the next "you ship, we ship"[^1] project. This time, if you make some di
 
 # Info
 
-The editor can be found [here](https://haxidraw.hackclub.dev/).
-
-Functions availabe in the editor are available [here](https://github.com/hackclub/haxidraw/tree/main/interface#functions-available-in-editor).
+The editor can be found [here](https://blot.hackclub.dev/).
 
 The virtual maze is here.
-
-Outdated assembly docs are available [here](https://haxidraw-docs.hackclub.dev/).
-
 
 # Getting Involved
 
