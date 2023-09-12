@@ -1,4 +1,6 @@
-# The Haxidraw
+# The Blot
+
+> blot is a plotting bot from Hack Club
 
 This is the next "you ship, we ship"[^1] project. This time, if you make some digital art, we'll send you the parts to build a drawing robot which can make that art real!
 
