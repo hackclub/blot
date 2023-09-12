@@ -1,24 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import { Image } from 'astro:assets'
 
-const username = 'hackclub'
-const repository = 'haxidraw'
-const pathToFile = 'art/list.json'
-const branch = 'main'
-const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`
-
-let tries = 0
-let maxTries = 10
-let images
-while (!images && tries < maxTries) {
-  tries++
-  const response = await fetch(apiUrl)
-  const json = await response.json()
-  images = JSON.parse(atob(json.content))
-}
+const images = (await Astro.glob('../../../art/*/snapshots/*')).map(
+  img => img.default
+)
 
 const random = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min
+
+export const prerender = true
 ---
 
 <script src="/masonry.min.js" type="module"></script>
@@ -201,27 +192,17 @@ const random = (min: number, max: number) =>
         images.map(image => {
           const rotate = random(-1, 1)
           return (
-            <>
-              {image.snapshots.map(snapshot => {
-                return (
-                  <div
-                    class="framed"
-                    style={{
-                      transform: `rotate(${rotate}deg)`
-                    }}>
-                    <img
-                      class="thumbnail"
-                      alt={image.directory}
-                      src={`https://raw.githubusercontent.com/${username}/${repository}/${branch}/art/${image.directory}/snapshots/${snapshot}`}
-                    />
-                    <img class="top-left" src="/decorative-corner.svg" />
-                    <img class="top-right" src="/decorative-corner.svg" />
-                    <img class="bottom-left" src="/decorative-corner.svg" />
-                    <img class="bottom-right" src="/decorative-corner.svg" />
-                  </div>
-                )
-              })}
-            </>
+            <div
+              class="framed"
+              style={{
+                transform: `rotate(${rotate}deg)`
+              }}>
+              <img class="thumbnail" alt={image.directory} src={image} />
+              <img class="top-left" src="/decorative-corner.svg" />
+              <img class="top-right" src="/decorative-corner.svg" />
+              <img class="bottom-left" src="/decorative-corner.svg" />
+              <img class="bottom-right" src="/decorative-corner.svg" />
+            </div>
           )
         })
       }

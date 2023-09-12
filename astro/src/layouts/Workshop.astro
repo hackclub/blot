@@ -1,10 +1,12 @@
 ---
-const {frontmatter: { title, content }} = Astro.props;
+const {
+  frontmatter: { title, content }
+} = Astro.props
 ---
 
 <style is:global>
-    @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-            
+  @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
   :root {
     --primary: #33e;
     --primary-rgb: 51, 51, 238;
@@ -18,7 +20,7 @@ const {frontmatter: { title, content }} = Astro.props;
     --accent-rgb: 255, 0, 255;
     --accent-dark: #900090;
     --accent-dark-rgb: 144, 0, 144;
-    --font-body: "Atkinson Hyperlegible", sans-serif;
+    --font-body: 'Atkinson Hyperlegible', sans-serif;
     --font-mono: monospace;
     --font-0: 1rem;
     --font-1: 1.125rem;
@@ -41,7 +43,8 @@ const {frontmatter: { title, content }} = Astro.props;
     color: white;
   }
 
-  html, body {
+  html,
+  body {
     margin: 0px;
     font-family: var(--font-body);
   }
@@ -73,7 +76,7 @@ const {frontmatter: { title, content }} = Astro.props;
 </style>
 
 <div class="container">
-    <div class="markdown">
-        <slot/>
-    </div>
+  <div class="markdown">
+    <slot />
+  </div>
 </div>

@@ -30,16 +30,15 @@ const resolvePath = (path: string) =>
 const isURL = (id: string) =>
   ['http://', 'https://'].find(s => id.startsWith(s))
 
-
 function getCode() {
-  const { view } = getStore();
-  const code = view.state.doc.toString();
+  const { view } = getStore()
+  const code = view.state.doc.toString()
 
-  return code;
+  return code
 }
 
 async function getBundle(): Promise<string> {
-  const code = getCode();
+  const code = getCode()
 
   const build = await rollup({
     input: '/index.js',

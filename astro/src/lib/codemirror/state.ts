@@ -54,7 +54,8 @@ const cmExtensions = [
   widgetsPlugin
 ]
 
-export const createCMState = (doc = "") => EditorState.create({ extensions: cmExtensions, doc });
+export const createCMState = (doc = '') =>
+  EditorState.create({ extensions: cmExtensions, doc })
 
 export const [useOnJumpTo, dispatchJumpTo] = createEvent<CodePosition>()
 

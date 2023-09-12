@@ -9,13 +9,13 @@ import DropBox from './components/DropBox.tsx'
 import CodeMirror from './components/CodeMirror.tsx'
 
 import { createListener } from './lib/createListener.js'
-import {useEffect, useRef, useState} from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { init } from './lib/init.js'
 import { useSettings } from './lib/settings.ts'
 import Help from './components/Help.js'
 import preview from '@astrojs/node/preview.js'
 
-export default function Editor({ tutorial }: {tutorial: any}) {
+export default function Editor({ tutorial }: { tutorial: any }) {
   const [width, setWidth] = useState(50)
   const [tab, setTab] = useState('workshop')
   const { theme } = useSettings(['theme'])
@@ -24,9 +24,9 @@ export default function Editor({ tutorial }: {tutorial: any}) {
   const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
 
   useEffect(() => {
-    init();
-    addEditorResizing(setWidth, theme);
-    addHelpResizing(setHelpHeight, editorContainer, theme);
+    init()
+    addEditorResizing(setWidth, theme)
+    addHelpResizing(setHelpHeight, editorContainer, theme)
   }, [])
 
   const closeHelpPane = () => {
@@ -83,7 +83,11 @@ export default function Editor({ tutorial }: {tutorial: any}) {
                 top: `${100 - helpHeight}%`,
                 width: `${100 - width}%`
               }}></div>
-            <Help toggleClose={closeHelpPane} helpHeight={helpHeight} workshop={tutorial}/>
+            <Help
+              toggleClose={closeHelpPane}
+              helpHeight={helpHeight}
+              workshop={tutorial}
+            />
           </div>
         </div>
       </div>
