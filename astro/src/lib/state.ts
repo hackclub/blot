@@ -53,12 +53,12 @@ const newState: Omit<GlobalState, 'code'> = {
     width: 125,
     height: 125
   },
-  view: null,
+  view: null
 }
 
 export const makeNewState = (): GlobalState => {
   return {
-    ...newState,
+    ...newState
   }
 }
 

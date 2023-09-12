@@ -3,7 +3,12 @@ import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 import { marked } from 'marked'
 
-const workshops = await getCollection('workshops', ({ data }) => data)
+const workshops = await Astro.glob('../../../guides/*.md')
+
+const slug = (file: string) => {
+  file = file.replace('.md', '').slice(file.lastIndexOf('/'))
+  return file.slice(1)
+}
 
 export const prerender = true
 ---
@@ -219,16 +224,20 @@ export const prerender = true
       </div>
       {
         workshops
-          .sort((a, b) => (a.data.pinned ? -1 : b.data.pinned ? 1 : 0))
+          .sort((a, b) =>
+            a.frontmatter.pinned ? -1 : b.frontmatter.pinned ? 1 : 0
+          )
           .map(workshop => (
             <div class="framed">
-              <a href={`/guide/${workshop.slug}`}>
-                <img class="thumbnail" src={workshop.data.thumbnail} />
+              <a href={`/guide/${slug(workshop.file)}`}>
+                <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
               </a>
-              <a href={`/guide/${workshop.slug}`}>
+              <a href={`/guide/${slug(workshop.file)}`}>
                 <div class="prose">
-                  <h2 style={{ marginBottom: 0 }}>{workshop.slug}</h2>
-                  <div set:html={marked(workshop.data.description)} />
+                  <h2 style={{ marginBottom: 0 }}>
+                    {workshop.frontmatter.title}
+                  </h2>
+                  <div set:html={marked(workshop.frontmatter.description)} />
                 </div>
               </a>
               <img class="top-left" src="/decorative-corner.svg" />

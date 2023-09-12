@@ -1,20 +1,31 @@
 ---
 import Layout from '../../layouts/Layout.astro'
-import { getCollection, getEntry } from 'astro:content'
 
-export async function getStaticPaths() {
-  const workshops = await getCollection('workshops', ({ data }) => data)
-  return workshops.map(workshop => ({
-    params: { slug: workshop.slug }
-  }))
+const slug = (file: string) => {
+  file = file.replace('.md', '').slice(file.lastIndexOf('/'))
+  return file.slice(1)
 }
 
-const { slug } = Astro.params
-const {
-  render,
-  data: { title, description, thumbnail, contributor }
-} = await getEntry('workshops', slug)
-const { Content, headings } = await render()
+export async function getStaticPaths() {
+  const workshops = await Astro.glob('../../../../guides/*.md')
+  return workshops.map(workshop => {
+    let file = workshop.file
+      .replace('.md', '')
+      .slice(workshop.file.lastIndexOf('/'))
+    return {
+      params: { slug: file.slice(1) }
+    }
+  })
+}
+
+const { slug: route } = Astro.params
+const workshops = await Astro.glob('../../../../guides/*.md')
+let workshop = workshops.filter(workshop => slug(workshop.file) === route)
+if (!workshop.length) return Astro.redirect('/404')
+
+workshop = workshop[0]
+const Content = workshop.Content
+const { title, description } = workshop.frontmatter
 
 export const prerender = true
 ---
@@ -109,9 +120,9 @@ export const prerender = true
     <div class="prose">
       <div id="back">
         <p>
-          <a href="/workshops">&larr; Back to all workshops</a>
+          <a href="/guides">&larr; Back to all workshops</a>
           <a
-            href={`https://github.com/hackclub/haxidraw/edit/main/astro/src/content/workshops/${slug}.mdx`}
+            href={`https://github.com/hackclub/haxidraw/edit/main/guides/${route}.md`}
             target="_blank">Update/make a grammar fix</a
           >
         </p>
