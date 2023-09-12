@@ -3,6 +3,7 @@ import preact from '@astrojs/preact'
 import vercel from '@astrojs/vercel/serverless'
 import prefresh from '@prefresh/vite'
 import mdx from '@astrojs/mdx'
+import remarkToc from 'remark-toc'
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,12 +11,14 @@ export default defineConfig({
   integrations: [
     preact({
       compat: true
-    })
+    }),
+    mdx()
   ],
   output: 'server',
   adapter: vercel(),
   markdown: {
     shikiConfig: { theme: 'github-light' },
+    remarkPlugins: [remarkToc]
   },
   vite: {
     plugins: [prefresh()],

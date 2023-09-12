@@ -43,9 +43,11 @@ html {
 
 code,
 pre {
+  font-family: var(--font-mono);
 }
 
-body[data-theme='Light'] {
+body[data-theme='Light'],
+body:not([data-theme]) {
   /* PrismJS 1.29.0
 https://prismjs.com/download.html#themes=prism-coy&languages=clike+javascript */
   code[class*='language-'],

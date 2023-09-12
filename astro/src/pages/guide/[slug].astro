@@ -14,8 +14,9 @@ const {
   render,
   data: { title, description, thumbnail, contributor }
 } = await getEntry('workshops', slug)
-const rendered = await render()
-const Content = rendered.Content
+const { Content, headings } = await render()
+
+export const prerender = true
 ---
 
 <style is:global lang="scss">
@@ -103,7 +104,7 @@ const Content = rendered.Content
   }
 </style>
 
-<Layout title={`Haxidraw | ${title}`} description={description}>
+<Layout title={`Workshop: ${title}`} description={description}>
   <div class="looseleaf">
     <div class="prose">
       <div id="back">
@@ -115,6 +116,7 @@ const Content = rendered.Content
           >
         </p>
       </div>
+      <!--
       <header>
         <div>
           <h1>{title}</h1>
@@ -126,6 +128,7 @@ const Content = rendered.Content
         </div>
         <img src={thumbnail} />
       </header>
+    -->
       <article>
         <Content />
       </article>
