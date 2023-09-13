@@ -369,17 +369,46 @@ import Layout from '../layouts/Layout.astro'
   .how-to {
     height: 500px;
     background: #ffc9c9;
-    display: grid;
+    display: flex;
   }
 
-  .how-to > * {
-    flex: 1;
+  .video-text {
+    font-size: 2rem;
+    font-weight: 500;
+    padding: 2.4rem;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .youtube-video-container {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .youtube-video {
+    aspect-ratio: 560/315;
+    border: none;
+    width: 90%;
   }
 
   .get-started {
     height: 500px;
     background: antiquewhite;
   }
+
+  .disclaimer {
+    font-size: 1rem;
+    font-weight: 100;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+  }
+
+  
 
 </style>
 
@@ -388,15 +417,23 @@ import Layout from '../layouts/Layout.astro'
     <div class="header-section strong-header">
       <div>Blot, the plotter bot</div>
       <div>from Hack Club.</div>
-      <div class="sub-header">You code art, we send you a machine.</div>
+      <div class="sub-header">You* code art, we send you a machine.</div>
     </div>
     <div class="three-js-container"></div>
+    <div class="disclaimer">(*Must be a <20 years old to receive a free machine.)</div>
   </div>
   <div class="how-to header-text">
-    <div>You code art, we send you a machine.</div>
-    <iframe class="youtube-video" src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"></iframe>
+    <div class="video-text">
+      <div>1) Learn to make generative art with our guides and from the community.</div>
+      <div>2) Make an original art piece.</div>
+      <div>3) Submit it as a pull request to the art gallery.</div>
+      <div>4) Get parts for your Blot in the mail and build your own machine.</div>
+    </div>
+    <div class="youtube-video-container">
+      <iframe class="youtube-video" src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"></iframe>
+    </div>
   </div>
   <div class="get-started header-text">
-    Haven't programmed art before, don't worry you can get started here
+    Haven't programmed before? Don't worry you can get started here.
   </div>
 </Layout>
