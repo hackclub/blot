@@ -133,7 +133,7 @@ import Layout from '../layouts/Layout.astro'
   }
 
   let texCanvas = document.createElement('canvas')
-  // document.body.appendChild(texCanvas);
+  document.body.appendChild(texCanvas);
   texCanvas.style = `
       position: absolute;
       left: 0px;
@@ -144,7 +144,7 @@ import Layout from '../layouts/Layout.astro'
 
     `
   const texCanvasWidth = 512;
-  const texCanvasHeight = 512*machineWidth/machineHeight;
+  const texCanvasHeight = 512*machineHeight/machineWidth;
 
   texCanvas.width = texCanvasWidth
   texCanvas.height = texCanvasHeight
@@ -176,7 +176,7 @@ import Layout from '../layouts/Layout.astro'
   const oneTurtle = testTurtles.length > 0 ? testTurtles[0] : null
 
   oneTurtle.translate([texCanvasWidth / 2, texCanvasHeight / 2], oneTurtle.cc)
-  oneTurtle.resample(10);
+  oneTurtle.resample(5);
   const totalN = oneTurtle.path.flat().length;
 
   function drawCanvasTexture(n) {
@@ -198,7 +198,7 @@ import Layout from '../layouts/Layout.astro'
       })
     })
     ctx.strokeStyle = 'black'
-    ctx.strokeWidth = 2
+    ctx.strokeWidth = 4
     ctx.stroke()
 
     // map 0 512, 0 512*2 
