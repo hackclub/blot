@@ -333,11 +333,26 @@ import Layout from '../layouts/Layout.astro'
     font-family: var(--font-sans);
   }
 
+  .strong-header {
+    font-size: 3.9rem;
+    letter-spacing: -2px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
   .header-section {
     position: absolute;
     left: 40px;
-    top: 40px;
+    top: 20px;
     width: 80%;
+  }
+
+  .sub-header {
+    font-size: 3rem;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: -1px;
+    padding-top: 10px;
   }
 
   .header-text {
@@ -354,6 +369,11 @@ import Layout from '../layouts/Layout.astro'
   .how-to {
     height: 500px;
     background: #ffc9c9;
+    display: grid;
+  }
+
+  .how-to > * {
+    flex: 1;
   }
 
   .get-started {
@@ -365,14 +385,16 @@ import Layout from '../layouts/Layout.astro'
 
 <Layout title="Blot" description="Blot out the world!">
   <div class="lead-section">
-    <div class="header-section header-text">
-      <div>Blot, the plotter bot from Hack Club</div>
-      <div>Code some art, get a machine.</div>
+    <div class="header-section strong-header">
+      <div>Blot, the plotter bot</div>
+      <div>from Hack Club.</div>
+      <div class="sub-header">You code art, we send you a machine.</div>
     </div>
     <div class="three-js-container"></div>
   </div>
   <div class="how-to header-text">
-    Here is how to get a machine
+    <div>You code art, we send you a machine.</div>
+    <iframe class="youtube-video" src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"></iframe>
   </div>
   <div class="get-started header-text">
     Haven't programmed art before, don't worry you can get started here
