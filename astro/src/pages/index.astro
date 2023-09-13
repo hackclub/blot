@@ -32,7 +32,7 @@ import Layout from '../layouts/Layout.astro'
     alpha: true
   })
 
-  const controls = new OrbitControls(camera, renderer.domElement)
+  // const controls = new OrbitControls(camera, renderer.domElement)
 
   renderer.setSize(window.innerWidth, window.innerHeight - navHeight)
   renderer.domElement.style.zIndex = '999'
@@ -52,19 +52,20 @@ import Layout from '../layouts/Layout.astro'
   const objLoader = new OBJLoader().setPath('/model/')
   const mtlLoader = new MTLLoader().setPath('/model/')
 
-  camera.position.z = 0.4
-  camera.position.x = 0
-  camera.rotation.z = Math.PI
-  camera.position.y = -0.055
+  camera.position.z = 0.4;
+  camera.position.x = 0;
+  camera.rotation.z = Math.PI;
+  camera.position.y = -0.055;
 
-  const p0 = addSphere({
-    radius: 0.01,
-    color: 'red',
-    x: -0.1,
-    y: 0
-  })
 
-  ;[
+
+  const toolTip = addSphere({
+    radius: 0.005,
+    color: "green"
+  });
+
+
+  [
     {
       name: 'feet',
       post: obj => {
@@ -244,6 +245,9 @@ import Layout from '../layouts/Layout.astro'
   resizeObserver.observe(threeContainer)
 
   function addSphere({ radius, color, x, y }) {
+    x = x ?? 0;
+    y = y ?? 0;
+
     const sphereRadius = radius
     const sphereWidthSegments = 32 // Number of segmented faces around the circumference of the sphere.
     const sphereHeightSegments = 32 // Number of rows of faces from the sphere's top to bottom.
@@ -299,7 +303,16 @@ import Layout from '../layouts/Layout.astro'
 
   function moveMachine(x, y) {
     if (Object.keys(objects).length < 4) return
-    // console.log(x, y);
+    console.log(x, y);
+    x = Math.max(x, -0.07031505489843565);
+    y = Math.max(y, -0.21385993884461388);
+
+    x = Math.min(x, 0.06585060696837623);
+    y = Math.min(y, -0.06802130646267329);
+
+    toolTip.position.x = x;
+    toolTip.position.y = y;
+    toolTip.position.z = 0;
 
     objects.penholder.position.x = x
     objects.penholder.position.y = y
@@ -307,88 +320,60 @@ import Layout from '../layouts/Layout.astro'
     objects.carriage.position.x = x
     objects.carriage.position.y = 0.03
 
-    objects.arm.position.x = x + 0.02
+    objects.arm.position.x = x + 0.0175
     objects.arm.position.y = y + 0.04
   }
 </script>
 
-<style is:global lang="scss">
-  body,
-  html {
+<style>
+
+  html, body {
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px), linear-gradient(to bottom, #ddd 1px, transparent 1px);
     background-size: 40px 40px;
-    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
-      linear-gradient(to bottom, #ddd 1px, transparent 1px);
     font-family: var(--font-sans);
-    min-height: 100vh;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
   }
 
-  h1 {
-    font-size: 4rem;
-    max-width: 50vw;
-    letter-spacing: -2px;
-    margin-inline: 4rem;
-
-    span {
-      color: var(--primary);
-    }
-  }
-
-  h2 {
-    font-size: 3rem;
-  }
-
-  h3 {
-    font-size: 2rem;
-    font-weight: normal;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    line-height: 1;
-  }
-
-  header {
-    border-bottom: 2px dashed var(--primary);
-    height: 100%;
-  }
-
-  section {
-    background-color: white;
-    position: relative;
-    z-index: 1000;
-    padding: 2rem 4rem;
-
-    h2 {
-      margin-bottom: 0;
-    }
-
-    h3 {
-      margin-top: 0.995rem;
-    }
-  }
-
-  .three-js-container {
-    width: 100%;
-    height: 100%;
+  .header-section {
     position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 70%;
+    padding: 1rem;
   }
+
+  .header-text {
+    font-size: 2.8rem;
+    letter-spacing: -2px;
+  }
+
+  .lead-section {
+    position: relative;
+  }
+
+  .how-to {
+    height: 500px;
+    background: #ffc9c9;
+  }
+
+  .get-started {
+    height: 500px;
+    background: antiquewhite;
+  }
+
 </style>
 
 <Layout title="Blot" description="Blot out the world!">
-  <header>
-    <h1>Blot is the drawing machine you can build.</h1>
-  </header>
-  <div class="three-js-container"></div>
-  <section>
-    <h2>Make some art, get a Blot.</h2>
-    <h3>Start by making some generative art!</h3>
-  </section>
+  <div class="lead-section">
+    <div class="header-section header-text">
+      <div>Blot, the plotter bot from Hack Club</div>
+      <div>Code some art, get a machine.</div>
+    </div>
+    <div class="three-js-container"></div>
+  </div>
+  <div class="how-to header-text">
+    Here is how to get a machine
+  </div>
+  <div class="get-started header-text">
+    Haven't programmed art before, don't worry you can get started here
+  </div>
 </Layout>
