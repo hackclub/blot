@@ -94,6 +94,13 @@ export function init(state) {
     }
   })
 
+  for(let i = 0; i < state.examples.length; i++){
+    let opt = document.createElement("option");
+    opt.value = state.examples[i] + ".js";
+    opt.innerText = state.examples[i].replace("-", " ");
+    document.querySelector(".examples-trigger").appendChild(opt);
+  }
+
   const listener = createListener(root);
 
   /* <button class="set-origin-trigger">set origin</button> */
@@ -166,7 +173,32 @@ export function init(state) {
     downloadText(`${state.filename}.js`, code);
   });
 
- 
+  listener("change", ".examples-trigger", () => {
+    if(document.querySelector(".examples-trigger").value !== "none") {
+      if(confirm("This will replace your current code. Are you sure you want to continue?")) {
+        fetch('/examples/' + document.querySelector(".examples-trigger").value)
+          .then(response => response.text())
+          .then(data => {
+            editor.update([editor.state.update({changes: {from: 0, to: editor.state.doc.length, insert: data}})]);
+          })
+          .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Error:', error);
+          });
+      }else{
+        document.querySelector(".examples-trigger").value = "none";
+      }
+    }
+  });
+
+  listener("click", ".export-trigger", () => {
+    const svg = root.querySelector("svg");
+    const svgString = new XMLSerializer().serializeToString(svg);
+    console.log(typeof svgString)
+    const rotated = svgString.slice(0, svgString.indexOf("scale")) + "rotate(180deg)" + svgString.slice(svgString.indexOf("scale") - 1);
+    downloadText(`${state.filename}.svg`, rotated);
+  });
+  
   listener("click", ".filename-trigger", () => {
     let newName = prompt("Please provide a new filename.", state.filename);
     // if (newName !== null) newName = newName.replaceAll(/\s/g, "-");

@@ -33,7 +33,9 @@ const menuBar = state => html`
     <button class="save-trigger">save</button>
     <button class="export-trigger">export svg</button>
     <button class="run-machine-trigger">run machine</button>
-    <button class="examples-trigger">examples</button>
+    <select class="examples-trigger">
+      <option disabled selected value="none">examples</option>
+    </select>
   </div>
 `
 
