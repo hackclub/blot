@@ -12,10 +12,16 @@ import Layout from '../layouts/Layout.astro'
 
   const navHeight = document.querySelector('nav')?.offsetHeight
 
-  let objects = {
-    x: [],
-    y: []
+  let objects = {}
+
+  const machineRange = {
+    x: [-0.07031505489843565, 0.06585060696837623],
+    y: [-0.21385993884461388, -0.06802130646267329 ]
   }
+
+  const machineWidth = machineRange.x[1]-machineRange.x[0];
+  const machineHeight = machineRange.y[1]-machineRange.y[0];
+
 
   // Set up scene
   const scene = new THREE.Scene()
@@ -90,7 +96,11 @@ import Layout from '../layouts/Layout.astro'
         obj.position.z = 0.065
       }
     }
-  ].map(addObj)
+  ].map(addObj);
+
+  setTimeout(() => {
+    moveMachine(0, 0);
+  }, 1000);
 
   function addObj({ name, post }) {
     mtlLoader.load(`${name}.mtl`, function (materials) {
@@ -133,23 +143,24 @@ import Layout from '../layouts/Layout.astro'
       transform-origin: left top;
 
     `
-  const texCanvasWidth = 512
-  const texCanvasHeight = 512 * 2
+  const texCanvasWidth = 512;
+  const texCanvasHeight = 512*machineWidth/machineHeight;
+
   texCanvas.width = texCanvasWidth
   texCanvas.height = texCanvasHeight
 
   let ctx = texCanvas.getContext('2d')
 
-  ctx.fillStyle = 'rgba(255, 255, 255, 0)'
+  ctx.fillStyle = 'rgba(255, 100, 200, .5)'
   ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight)
   // ctx.fillStyle = 'blue';
-  // ctx.fillRect(128, 128, 256, 256);
+  // ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight)
 
   const testTurtles = runTextReturnTurtles(`
       const t = createTurtle();
 
       for (let i = 0; i < 300; i++) {
-        t.forward(i);
+        t.forward(i*10);
         t.right(91);
       }
 
@@ -165,25 +176,55 @@ import Layout from '../layouts/Layout.astro'
   const oneTurtle = testTurtles.length > 0 ? testTurtles[0] : null
 
   oneTurtle.translate([texCanvasWidth / 2, texCanvasHeight / 2], oneTurtle.cc)
+  oneTurtle.resample(10);
+  const totalN = oneTurtle.path.flat().length;
 
-  console.log(oneTurtle)
+  function drawCanvasTexture(n) {
+    ctx.clearRect(0, 0, texCanvasWidth, texCanvasHeight);
 
-  ctx.beginPath()
-  oneTurtle.path.forEach(p => {
-    p.forEach((point, i) => {
-      if (i === 0) ctx.moveTo(...point)
-      else ctx.lineTo(...point)
+    let count = 0;
+    let lastPoint = null;
+    ctx.beginPath()
+    oneTurtle.path.forEach(p => {
+      p.forEach((point, i) => {
+        if (count > n) return;
+
+        lastPoint = point;
+
+        if (i === 0) ctx.moveTo(...point)
+        else ctx.lineTo(...point)
+
+        count += 1;
+      })
     })
-  })
-  ctx.strokeStyle = 'black'
-  ctx.strokeWidth = 2
-  ctx.stroke()
+    ctx.strokeStyle = 'black'
+    ctx.strokeWidth = 2
+    ctx.stroke()
+
+    // map 0 512, 0 512*2 
+
+    const flipped = flipPoint(lastPoint, [texCanvasWidth/2, texCanvasHeight/2], [1, -1]);
+    console.log({ lastPoint, flipped });
+    const xMachine = flipped[0]/texCanvasWidth*(machineRange.x[1]-machineRange.x[0])+machineRange.x[0];
+    const yMachine = flipped[1]/texCanvasHeight*(machineRange.y[1]-machineRange.y[0])+machineRange.y[0];
+    // console.log(xMachine, yMachine);
+    moveMachine(xMachine, yMachine);
+    texture.needsUpdate = true;
+  }
+
+  let drew = 0;
+  let id = setInterval(() => {
+    drawCanvasTexture(drew);
+
+    if (drew >= totalN) clearInterval(id);
+    drew += 1;
+  }, 30);
 
   let texture = new THREE.CanvasTexture(texCanvas)
   texture.needsUpdate = true
   texture.minFilter = THREE.LinearFilter
 
-  let geometry = new THREE.PlaneGeometry(0.4, 0.8)
+  let geometry = new THREE.PlaneGeometry(machineWidth, machineHeight);
   let material = new THREE.MeshBasicMaterial({
     map: texture,
     transparent: true
@@ -192,18 +233,18 @@ import Layout from '../layouts/Layout.astro'
 
   let plane = new THREE.Mesh(geometry, material)
   plane.position.x = 0
-  plane.position.y = 0
+  plane.position.y = -0.135;
   plane.position.z = 0
   scene.add(plane)
 
-  renderer.domElement.addEventListener('mousemove', e => {
-    const { x, y } = getRelativePoint(e, threeContainer)
-    const point = getIntersectedPoint(x, y, plane)
+  // renderer.domElement.addEventListener('mousemove', e => {
+  //   const { x, y } = getRelativePoint(e, threeContainer)
+  //   const point = getIntersectedPoint(x, y, plane)
 
-    if (point) {
-      moveMachine(point.x, point.y)
-    }
-  })
+  //   if (point) {
+  //     moveMachine(point.x, point.y)
+  //   }
+  // })
 
   function dist(x1: number, y1: number, x2: number, y2: number) {
     return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
@@ -304,11 +345,11 @@ import Layout from '../layouts/Layout.astro'
   function moveMachine(x, y) {
     if (Object.keys(objects).length < 4) return
 
-    x = Math.max(x, -0.07031505489843565);
-    y = Math.max(y, -0.21385993884461388);
+    x = Math.max(x, machineRange.x[0]);
+    y = Math.max(y, machineRange.y[0]);
 
-    x = Math.min(x, 0.06585060696837623);
-    y = Math.min(y, -0.06802130646267329);
+    x = Math.min(x, machineRange.x[1]);
+    y = Math.min(y, machineRange.y[1]);
 
     toolTip.position.x = x;
     toolTip.position.y = y;
@@ -322,6 +363,28 @@ import Layout from '../layouts/Layout.astro'
 
     objects.arm.position.x = x + 0.0175
     objects.arm.position.y = y + 0.04
+  }
+
+  function flipPoint(p, pivot, vector) {
+    // Step 1: Translate to origin
+    let translatedPoint = [
+        p[0] - pivot[0],
+        p[1] - pivot[1]
+    ];
+
+    // Step 2: Apply the flip
+    let flippedPoint = [
+        translatedPoint[0] * vector[0],
+        translatedPoint[1] * vector[1]
+    ];
+
+    // Step 3: Translate back to original position
+    let finalPoint = [
+        flippedPoint[0] + pivot[0],
+        flippedPoint[1] + pivot[1]
+    ];
+
+    return finalPoint;
   }
 </script>
 
@@ -416,7 +479,7 @@ import Layout from '../layouts/Layout.astro'
   <div class="lead-section">
     <div class="header-section strong-header">
       <div>Blot, the plotter bot</div>
-      <div>from Hack Club.</div>
+      <div>from <a href="https://www.hackclub.com">Hack Club</a>.</div>
       <div class="sub-header">You* code art, we send you a machine.</div>
     </div>
     <div class="three-js-container"></div>
@@ -424,10 +487,10 @@ import Layout from '../layouts/Layout.astro'
   </div>
   <div class="how-to header-text">
     <div class="video-text">
-      <div>1) Learn to make generative art with our guides and from the community.</div>
+      <div>1) Learn to make generative art with our <a href="/guides">guides</a> and from the community.</div>
       <div>2) Make an original art piece.</div>
-      <div>3) Submit it as a pull request to the art gallery.</div>
-      <div>4) Get parts for your Blot in the mail and build your own machine.</div>
+      <div>3) Submit it as a pull request to the art <a href="/gallery">gallery</a>.</div>
+      <div>4) Get parts for your Blot in the mail and <a href="/assembly">build your own</a> machine.</div>
     </div>
     <div class="youtube-video-container">
       <iframe class="youtube-video" src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"></iframe>
