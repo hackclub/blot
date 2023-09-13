@@ -14,7 +14,7 @@ yarn dev
 
 Our main drawing primative is a turtle. It's a collection of polylines with an associated pen that has a location and direction. 
 ```
-const t = new Turtle();
+const t = createTurtle();
 
 // move turtle up and down
 t.up()

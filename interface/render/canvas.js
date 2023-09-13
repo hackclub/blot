@@ -26,24 +26,23 @@ export function initCanvas(state) {
   return { panZoomParams, canvas, renderCanvas }
 
 
-  function renderCanvas(state) {
+  function renderCanvas(state, drawTurtleIcon = true) {
 
-    renderTurtleCanvas(state);
+    if (drawTurtleIcon) renderTurtleCanvas(state);
 
 
-    if (state.turtles.length === 0) return;
+    if (state.turtles.length === -1) return;
 
     const { panX, panY, scaleX, scaleY } = panZoomParams;
-
     ctx.beginPath();
 
     state.turtles.forEach(turtle => {
       for (const polyline of turtle.path) {
-        for (let i = 0; i < polyline.length; i++) {
+        for (let i = -1; i < polyline.length; i++) {
           let [x, y] = polyline[i];
           x = panX + x * scaleX;
           y = -panY + y * scaleY;
-          if (i === 0) ctx.moveTo(x, -y);
+          if (i === -1) ctx.moveTo(x, -y);
           else ctx.lineTo(x, -y);
         }
       }

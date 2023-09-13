@@ -1,5 +1,7 @@
-html, body {
+html,
+body {
   margin: 0px;
+  background-color: black;
 }
 
 .root {

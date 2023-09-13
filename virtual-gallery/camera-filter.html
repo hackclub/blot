@@ -11,10 +11,14 @@
 <body>
     <h1>Color Detection</h1>
     <p>Adjust the sliders to select a color and margin:</p>
-    <p>Red: <input type="range" min="0" max="255" value="127" class="slider" id="red"></p>
-    <p>Green: <input type="range" min="0" max="255" value="127" class="slider" id="green"></p>
-    <p>Blue: <input type="range" min="0" max="255" value="127" class="slider" id="blue"></p>
-    <p>Margin: <input type="range" min="0" max="255" value="10" class="slider" id="margin"></p>
+    105 208 173 43
+    <p>Red: <input type="range" min="0" max="255" value="0" class="slider" id="red"></p>
+    <p>Green: <input type="range" min="0" max="255" value="255" class="slider" id="green"></p>
+    <p>Blue: <input type="range" min="0" max="255" value="255" class="slider" id="blue"></p>
+    <p>Margin: <input type="range" min="0" max="255" value="100" class="slider" id="margin"></p>
+    <p>Vertical: <input type="range" min="0" max="1" value="0.3", step="0.1", class="slider" id="vertical"></p>
+    <p>Horizontal: <input type="range" min="0" max="1" value="0.3", step="0.1", class="slider" id="horizontal"></p>
+
     <video autoplay="true" id="videoElement"></video>
     <canvas id="canvasElement"></canvas>
 
@@ -22,12 +26,14 @@
         var video = document.querySelector("#videoElement");
         var canvas = document.querySelector("#canvasElement");
         var context = canvas.getContext('2d');
+        var trackerX, trackerY, v, h
         const pt = { x: 0, y: 0};
 
         window.addEventListener("message", function(event) {
           console.log("received", event);
             if (event.data === "pt") {
-                event.source.postMessage(pt, event.origin);
+                console.log(trackerX, v)
+                event.source.postMessage([pt, trackerY < v, trackerY > 1 - v, trackerX < h, trackerX > 1 - h], event.origin);
             }
         }, false);
 
@@ -51,13 +57,25 @@
                 if (!$this.paused && !$this.ended) {
                     context.drawImage($this, 0, 0, $this.videoWidth, $this.videoHeight);
                     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                    const { r, g, b, m } = getInputColor();  
+                    const { r, g, b, m, vc, hc} = getInputColor();  
+                    v = vc
+                    h = hc
+                    // console.log(vc, hc)
                     filterPixels(imageData, {r, g, b}, m);
 
                     const {x, y} = getCenterOfNonWhitePixels(imageData)
                     pt.x = x;
                     pt.y = y;
-                    context.putImageData(imageData, 0, 0);
+                    trackerX = (x / 640)
+                    trackerY = (y / 480)
+                    //context.putImageData(imageData, 0, 0);
+                    context.fillStyle = 'white'
+                    context.fillRect(0, 0, canvas.width, canvas.height)
+                    context.fillStyle = `rgba(0, 255, 0, 0.4)`;
+                    context.fillRect(0, 0, h * 640, 480);
+                    context.fillRect(0, 0, 640, v * 480);
+                    context.fillRect(0, 480 * (1 - v), 640, 480);
+                    context.fillRect(640 * (1 - h), 0, 640, 480);
                     if (x !== 0 && y !== 0) drawCircle(context, x, y, 10)
                     setTimeout(loop, 1000 / 30); // drawing at 30fps
                 }
@@ -88,8 +106,13 @@
           var g = Number(document.getElementById('green').value);
           var b = Number(document.getElementById('blue').value);
           var m = Number(document.getElementById('margin').value);
+          var vc = Number(document.getElementById('vertical').value);
+          var hc = Number(document.getElementById('horizontal').value);
+
+          //console.log(r, g, b, m, v, h)
+
       
-          return {r: r, g: g, b: b, m: m};
+          return {r: r, g: g, b: b, m: m, vc: vc, hc: hc};
       }
 
       function filterPixels(imageData, color, margin) {
@@ -137,7 +160,7 @@
 
       function drawCircle(context, x, y, radius) {
           context.beginPath();
-          context.arc(x, y, radius, 0, 2 * Math.PI, false);
+          context.arc(canvas.width - x, y, radius, 0, 2 * Math.PI, false);
           context.fillStyle = 'red';
           context.fill();
       }

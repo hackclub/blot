@@ -1,4 +1,6 @@
-# The Haxidraw
+# The Blot
+
+> blot is a plotting bot from Hack Club
 
 This is the next "you ship, we ship"[^1] project. This time, if you make some digital art, we'll send you the parts to build a drawing robot which can make that art real!
 
@@ -6,9 +8,12 @@ This is the next "you ship, we ship"[^1] project. This time, if you make some di
 
 ![Drawing machine creating turtle art](https://user-images.githubusercontent.com/27078897/232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg)
 
-The [CAD for this machine is available here](https://cad.onshape.com/documents/63bea8a7de5a67f20db27d22/w/8d3bc6b2e7a16d7a1133b3b5/e/b415f757fff520875b42c91b?renderMode=0&uiState=643daa9805069b1ce4bbaa03).
 
-We're also working with some researchers at MIT to make digital fabrication machines like this much more open and hackable. We're doing this by taking functionality which would ordinarily be inaccessible in the firmware and lifting it up to the user in a programmable browser editor. We call it [Modular Things](https://github.com/modular-things/modular-things).
+# Info
+
+The editor can be found [here](https://blot.hackclub.dev/).
+
+The virtual maze is here.
 
 # Getting Involved
 

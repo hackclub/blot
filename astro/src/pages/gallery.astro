@@ -1,0 +1,221 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+const username = 'hackclub'
+const repository = 'haxidraw'
+const pathToFile = 'art/list.json'
+const branch = 'main'
+const apiUrl = `https://api.github.com/repos/${username}/${repository}/contents/${pathToFile}?ref=${branch}`
+
+let tries = 0
+let maxTries = 10
+let images
+while (!images && tries < maxTries) {
+  tries++
+  const response = await fetch(apiUrl)
+  const json = await response.json()
+  console.log(json)
+  images = JSON.parse(atob(json.content))
+}
+
+const random = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min)) + min
+---
+
+<script src="/masonry.min.js" type="module"></script>
+
+<script>
+  import { turtles } from '../lib/paths.js'
+
+  window.onload = () => {
+    new Masonry(document.getElementById('gallery'), {
+      itemSelector: '.framed'
+    })
+  }
+
+  let toDraw = []
+  document.querySelectorAll('canvas').forEach(canvas => {
+    canvas.width = 200
+    canvas.height = document.getElementById('gallery').offsetHeight
+    const turtle = turtles[1]
+    let polyline = turtle.path[0]
+    const config = {
+      scale: 12,
+      xoff: 3,
+      yoff: -30,
+      lineStart: 1,
+      lineEnd: polyline.length
+    }
+    const paths = polyline.map(([x, y]) => [
+      (x + config.xoff) * config.scale,
+      (y + config.yoff) * config.scale
+    ])
+    toDraw.push({
+      ctx: canvas.getContext('2d'),
+      color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+      paths,
+      config,
+      width: canvas.width,
+      height: canvas.height,
+      i: config.lineStart + 1,
+      j: config.lineStart + 1
+    })
+  })
+
+  function lerp(x1: number, x2: number, t: number) {
+    return x1 + (x2 - x1) * t
+  }
+
+  function dist(x1: number, y1: number, x2: number, y2: number) {
+    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+  }
+
+  setInterval(() => {
+    toDraw.map(({ ctx, color, paths, i, j, config, width, height }, idx) => {
+      ctx.strokeStyle = '#ddd'
+      if (i >= config.lineEnd - 1) return
+      i += 10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
+      j = Math.floor(i)
+      ctx.clearRect(0, 0, width, height)
+      let [x, y] = paths[j]
+      // increase i a bit if we're out of the screen
+      if (x < 0 || x > width || y < 0 || y > height) i++
+      if (j === 0) ctx.moveTo(x, y)
+      else
+        ctx.lineTo(
+          lerp(paths[j - 1][0], x, i - j),
+          lerp(paths[j - 1][1], y, i - j)
+        )
+      ctx.stroke()
+      // Draw circle
+      ctx.fillStyle = 'orange'
+      ctx.beginPath()
+      ctx.arc(x, y, 5, 0, 2 * Math.PI)
+      ctx.fill()
+      toDraw[idx].i = i
+      toDraw[idx].j = j
+    })
+  }, 10)
+</script>
+
+<style is:global lang="scss">
+  canvas {
+    z-index: 0;
+    overflow-y: hidden;
+  }
+
+  #container {
+    margin: 2rem auto;
+    width: 90vw;
+  }
+
+  #gallery {
+    padding: 1rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+  }
+
+  #content {
+    font-size: 1.5rem;
+    font-family: var(--font-sans);
+  }
+
+  .framed {
+    position: relative;
+    padding: 2rem;
+    float: left;
+    max-width: 40vw;
+    margin-bottom: 1rem;
+    z-index: 1;
+  }
+
+  .framed:not(#content) {
+    cursor: pointer;
+    transition: all 0.1s;
+
+    &:hover {
+      transform: scale(101%);
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .top-left {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .top-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: rotate(90deg);
+    }
+
+    .bottom-left {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform: rotate(270deg);
+    }
+
+    .bottom-right {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      transform: rotate(180deg);
+    }
+  }
+</style>
+
+<Layout title="Gallery" description="The gallery">
+  <div id="container">
+    <div id="gallery">
+      <div class="framed" id="content">
+        <h1 style={{ marginBottom: 0 }}>Gallery</h1>
+        <p style={{ marginTop: 0 }}>
+          One of the best ways to get involved is by building and testing one of
+          the machines. All you need is a 3D printer and a little bit of
+          hardware outlined in the bill of materials.
+        </p>
+      </div>
+      {
+        images.map(image => {
+          return (
+            <>
+              {image.snapshots.map(snapshot => (
+                <div
+                  class="framed"
+                  style={{
+                    transform: `rotate(${random(-1, 1)}deg)`
+                  }}>
+                  <img
+                    alt={image.directory}
+                    src={`https://raw.githubusercontent.com/${username}/${repository}/${branch}/art/${image.directory}/snapshots/${snapshot}`}
+                  />
+                  <img class="top-left" src="/decorative-corner.svg" />
+                  <img class="top-right" src="/decorative-corner.svg" />
+                  <img class="bottom-left" src="/decorative-corner.svg" />
+                  <img class="bottom-right" src="/decorative-corner.svg" />
+                </div>
+              ))}
+            </>
+          )
+        })
+      }
+    </div>
+    <canvas
+      style={{
+        position: 'absolute',
+        top: '0px',
+        right: '0px'
+      }}></canvas>
+  </div>
+</Layout>
