@@ -1,3 +1,5 @@
+import { getStore } from './lib/state.js'
+import { init } from './lib/init.js'
 import CompatWarning from './components/CompatWarning.jsx'
 import Preview from './components/Preview.jsx'
 import Toolbar from './components/Toolbar.jsx'
@@ -10,15 +12,13 @@ import CodeMirror from './components/CodeMirror.jsx'
 
 import { createListener } from './lib/createListener.js'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import { init } from './lib/init.js'
-import { useSettings } from './lib/settings.js'
 import Help from './components/Help.jsx'
 import preview from '@astrojs/node/preview.js'
 
 export default function Editor({ tutorial }: { tutorial: any }) {
   const [width, setWidth] = useState(50)
   const [tab, setTab] = useState('workshop')
-  const { theme } = useSettings(['theme'])
+  const { theme } = getStore();
 
   const INIT_HELP_HEIGHT = 40
   const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)

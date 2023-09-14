@@ -1,8 +1,8 @@
 import { useEffect } from 'preact/hooks'
-import { useStore } from '../lib/state.ts'
+import { getStore } from '../lib/state.ts'
 
 export default function GlobalStateDebugger() {
-  const state = useStore()
+  const state = getStore();
 
   useEffect(() => {
     //@ts-expect-error

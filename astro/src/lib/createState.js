@@ -1,4 +1,4 @@
-// import { useState } from "preact/hooks";
+import { render } from "./render.tsx";
 
 export function createState(stateObj) {
 
@@ -8,19 +8,10 @@ export function createState(stateObj) {
     for (const k in newState) {
       stateObj[k] = newState[k];
     }
+
+    // re-render
+    render();
   }
 
-  const useState = (keys) => {
-    if (keys === undefined) return stateObj;
-    
-    const result = {};
-
-    keys.forEach(k => {
-      result[k] = stateObj[k];
-    })
-
-    return result;
-  }
-
-  return [useState, patchState, getState]
+  return [ patchState, getState ]
 }

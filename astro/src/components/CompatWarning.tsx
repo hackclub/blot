@@ -4,10 +4,6 @@ import Dialog from '../ui/Dialog.tsx'
 
 export default function CompatWarning() {
   const [show, setShow] = useState(false)
-  useEffect(() => {
-    // setShow(!navigator.serial);
-    // TODO: temporarily disabled
-  }, [])
 
   return (
     <Dialog

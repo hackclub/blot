@@ -2,7 +2,7 @@ import { useEffect, useState } from 'preact/hooks'
 import download from '../lib/download.ts'
 import runCode from '../lib/run.ts'
 import { defaultProgram } from '../lib/defaultProgram.js'
-import { makeNewState, patchStore, useStore, getStore } from '../lib/state.ts'
+import { patchStore, getStore } from '../lib/state.ts'
 import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
 import styles from './Toolbar.module.scss'
 import Button from '../ui/Button.tsx'
@@ -16,15 +16,14 @@ import {
   tryAutoConnect
 } from '../lib/machine.ts'
 import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
-import { Theme, patchSettings, useSettings } from '../lib/settings.ts'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
 
 export default function Toolbar() {
-  const { connected } = useStore(['connected'])
+  const { connected } = getStore();
 
-  const [hidden, setHidden] = useState(true)
+  const [hidden, setHidden] = useState(true);
 
   return (
     <div class={styles.root}>
@@ -337,7 +336,7 @@ function OpenButton() {
 }
 
 function MachineControls() {
-  const { inst, running } = useStore(['inst', 'running'])
+  const { inst, running } = getStore();
 
   useEffect(() => {
     tryAutoConnect()
@@ -370,7 +369,7 @@ function MachineControls() {
 }
 
 function SettingsButton() {
-  const { theme, vimMode } = useSettings(['theme', 'vimMode'])
+  const { theme, vimMode } = getStore()
   const [hidden, setHidden] = useState(true)
 
   return (
@@ -403,8 +402,8 @@ function SettingsButton() {
           class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
-            patchSettings({
-              theme: theme === Theme.Dark ? Theme.Light : Theme.Dark
+            patchStore({
+              theme: theme === "dark" ? "light" : "dark"
             })
             setHidden(false)
           }}>
@@ -415,7 +414,7 @@ function SettingsButton() {
           class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
-            patchSettings({ vimMode: !vimMode })
+            patchStore({ vimMode: !vimMode })
             setHidden(false)
           }}>
           <KeyboardIcon className={styles.icon} />

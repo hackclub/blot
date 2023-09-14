@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'preact/hooks'
-import { patchStore, useStore } from '../lib/state.ts'
+import { patchStore, getStore } from '../lib/state.ts'
 import { dispatchJumpTo } from '../lib/codemirror/state.js'
 import styles from './Console.module.css'
 import cx from 'classnames'
@@ -7,7 +7,7 @@ import Button from '../ui/Button.tsx'
 import TrashCanIcon from '../ui/TrashCanIcon.tsx'
 
 export default function Console() {
-  const { console } = useStore(['console'])
+  const { console } = getStore();
   const lines = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

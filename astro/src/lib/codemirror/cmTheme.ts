@@ -2,17 +2,17 @@ import { Compartment } from '@codemirror/state'
 import { basicDark } from 'cm6-theme-basic-dark'
 import type { EditorView } from '@codemirror/view'
 import { useEffect } from 'preact/hooks'
-import { Theme, getSettings, useSettings } from '../settings.ts'
+import { getStore } from '../state.ts'
 
-const getCMThemeExtension = (theme: Theme) =>
-  theme === Theme.Dark ? basicDark : []
+const getCMThemeExtension = (theme: "light" | "dark") =>
+  theme === "dark" ? basicDark : []
 
 const themeCompartment = new Compartment()
 export const themeExtension = () =>
-  themeCompartment.of(getCMThemeExtension(getSettings().theme))
+  themeCompartment.of(getCMThemeExtension(getStore().theme))
 
 export function useCMTheme(view: EditorView | undefined | null) {
-  const { theme } = useSettings(['theme'])
+  const { theme } = getStore();
 
   useEffect(() => {
     // update cm theme by adding or removing the extension

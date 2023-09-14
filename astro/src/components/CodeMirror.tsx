@@ -2,7 +2,7 @@ import { EditorView } from 'codemirror'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import cx from 'classnames'
 import styles from './CodeMirror.module.css'
-import { patchStore, useStore } from '../lib/state.ts'
+import { patchStore, getStore } from '../lib/state.ts'
 import { useCMTheme } from '../lib/codemirror/cmTheme.ts'
 import { useVimMode } from '../lib/codemirror/cmVimMode.ts'
 import { setErrorPos } from '../lib/codemirror/errorIndicator.js'
@@ -13,7 +13,7 @@ import {
 } from '../lib/codemirror/state.js'
 
 export default function CodeMirror() {
-  const { error } = useStore(['error'])
+  const { error } = getStore();
 
   const [view, setView] = useState<EditorView>()
 

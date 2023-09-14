@@ -1,4 +1,4 @@
-import { getStore, useStore, patchStore } from './state.ts'
+import { patchStore } from './state.ts'
 
 import { defaultProgram } from './defaultProgram.js'
 

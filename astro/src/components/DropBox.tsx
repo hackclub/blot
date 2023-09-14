@@ -8,20 +8,6 @@ export default function DropBox() {
     addDragDrop()
   }, []) // Empty dependency array means this effect runs once after initial render
 
-  // const styles = `
-  //     position: absolute;
-  //     width: 100%;
-  //     height: 100%;
-  //     background: lightblue;
-  //     opacity: .8;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: center;
-  //     border: 3px dashed grey;
-  //     left: 0px;
-  //     top: 0px;
-  // `
-
   return (
     <>
       <style>{`

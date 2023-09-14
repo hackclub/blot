@@ -47,8 +47,8 @@ const cmExtensions = [
       dispatchEditorChange()
     }
   }),
-  themeExtension(),
-  vimModeExtension(),
+  // themeExtension(),
+  // vimModeExtension(),
   numberScrubbingPlugin,
   errorIndicatorPlugin(),
   widgetsPlugin

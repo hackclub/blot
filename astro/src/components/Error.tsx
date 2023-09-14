@@ -1,4 +1,4 @@
-import { CodePosition, useStore } from '../lib/state.ts'
+import { CodePosition, getStore } from '../lib/state.ts'
 import styles from './Error.module.css'
 import { useCallback, useEffect, useRef } from 'preact/hooks'
 import { EditorView } from 'codemirror'
@@ -109,7 +109,7 @@ const Snippet = ({
 }
 
 export default function Error() {
-  const { error } = useStore(['error'])
+  const { error } = getStore();
 
   if (!error) return null
 
