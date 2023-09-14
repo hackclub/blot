@@ -66,6 +66,7 @@ export const prerender = true
     padding: 0;
     margin: 0;
     border: solid 70px white;
+    border-bottom-width: 20px;
     box-shadow: -3px -3px 12px #999;
 
     img {
@@ -81,6 +82,7 @@ export const prerender = true
   .prose {
     background-color: white;
     padding-top: 1rem;
+    font-size: 1.1rem;
 
     h2 {
       text-align: center;
@@ -96,7 +98,7 @@ export const prerender = true
     <div id="gallery">
       <div class="frame" id="content">
         <div class="border">
-          <h1 style={{ marginBottom: 0 }}>Guides</h1>
+          <h1 style={{ margin: 0 }}>Guides</h1>
           <p style={{ marginTop: 0 }}>
             A gallery of various guides created by Hack Clubbers that anyone can
             learn from and contribute to!
@@ -111,12 +113,14 @@ export const prerender = true
           .map(workshop => {
             console.log(workshop)
             return (
-              <div class="frame" href={`/guide/${slug(workshop.file)}`}>
+              <div class="frame">
                 <div class="border">
                   <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
                   <div class="prose">
                     <h2 style={{ marginBottom: 0 }}>
-                      {workshop.frontmatter.title}
+                      <a href={`/guide/${slug(workshop.file)}`}>
+                        {workshop.frontmatter.title}
+                      </a>
                     </h2>
                     <div
                       set:html={marked(description(workshop.rawContent()))}

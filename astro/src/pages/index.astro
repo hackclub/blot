@@ -41,7 +41,6 @@ import Layout from '../layouts/Layout.astro'
 
   renderer.setSize(window.innerWidth, window.innerHeight - navHeight)
   renderer.domElement.style.zIndex = '999'
-  renderer.domElement.style.top = `${navHeight}px`
   const threeContainer = document.querySelector('.three-js-container')
   threeContainer.appendChild(renderer.domElement)
 
@@ -57,7 +56,7 @@ import Layout from '../layouts/Layout.astro'
   const objLoader = new OBJLoader().setPath('/model/')
   const mtlLoader = new MTLLoader().setPath('/model/')
 
-  camera.position.z = 0.4
+  camera.position.z = 0.25
   camera.position.x = 0
   camera.rotation.z = Math.PI
   camera.position.y = -0.055
@@ -395,53 +394,24 @@ import Layout from '../layouts/Layout.astro'
     font-family: var(--font-sans);
   }
 
-  .strong-header {
-    font-size: 3.9rem;
-    letter-spacing: -2px;
-    font-weight: 600;
-    line-height: 1;
-  }
-
-  .header-section {
-    position: absolute;
-    left: 40px;
-    top: 20px;
-    width: 80%;
-  }
-
-  .sub-header {
-    font-size: 3rem;
-    line-height: 1;
-    font-weight: 400;
-    letter-spacing: -1px;
-    padding-top: 10px;
-  }
-
-  .header-text {
-    font-size: 3rem;
-    line-height: 1;
-    font-weight: 600;
-    letter-spacing: -1px;
-  }
-
-  .lead-section {
+  header {
+    margin: 2rem;
+    height: 100%;
     position: relative;
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 5rem;
+      letter-spacing: -3px;
+      line-height: 1;
+      max-width: 50vw;
+    }
   }
 
-  .how-to {
-    height: 500px;
-    background: #ffc9c9;
-    display: flex;
-  }
-
-  .video-text {
-    font-size: 2rem;
-    font-weight: 500;
-    padding: 2.4rem;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+  .three-js-container {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .youtube-video-container {
@@ -457,59 +427,28 @@ import Layout from '../layouts/Layout.astro'
     width: 90%;
   }
 
-  .get-started {
-    height: 500px;
-    background: antiquewhite;
+  main {
+    position: relative;
   }
 
-  .disclaimer {
-    font-size: 1rem;
-    font-weight: 100;
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
+  #howto {
+    border-top: 1px dashed var(--primary);
   }
 </style>
 
 <Layout
   title="Blot"
   description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
-  <div class="lead-section">
-    <div class="header-section strong-header">
-      <div>Blot, the plotter bot</div>
-      <div>from <a href="https://www.hackclub.com">Hack Club</a>.</div>
-      <div class="sub-header">You* code art, we send you a machine.</div>
-    </div>
+  <header>
+    <h1>
+      <span style={{ color: 'var(--primary)' }}>Blot</span>, the plotter bot
+      from Hack Club: you code art, we send you a machine.
+    </h1>
     <div class="three-js-container"></div>
-    <div class="disclaimer">
-      (*Must be a 20 years old to receive a free machine.)
-    </div>
-  </div>
-  <div class="how-to header-text">
-    <div class="video-text">
-      <div>
-        1) Learn to make generative art with our <a href="/guides">guides</a>
-         and from the community.
-      </div>
-      <div>2) Make an original art piece.</div>
-      <div>
-        3) Submit it as a pull request to the art <a href="/gallery">gallery</a
-        >.
-      </div>
-      <div>
-        4) Get parts for your Blot in the mail and <a href="/assembly"
-          >build your own</a
-        > machine.
-      </div>
-    </div>
-    <div class="youtube-video-container">
-      <iframe
-        class="youtube-video"
-        src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"
-      ></iframe>
-    </div>
-  </div>
-  <div class="get-started header-text">
-    Haven't programmed before? Don't worry you can get started here.
-  </div>
+  </header>
+  <main>
+    <section id="howto">
+      <h1>How exactly do I get one?</h1>
+    </section>
+  </main>
 </Layout>
