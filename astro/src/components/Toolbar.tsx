@@ -409,6 +409,8 @@ function SettingsButton() {
 
             document.body.dataset.theme = newTheme;
 
+            localStorage.setItem('colorTheme', newTheme);
+
             setHidden(false)
           }}>
           <BrightnessContrastIcon className={styles.icon} />
@@ -419,6 +421,7 @@ function SettingsButton() {
           variant="ghost"
           onClick={() => {
             patchStore({ vimMode: !vimMode })
+            localStorage.setItem('vimMode', (!vimMode).toString())
             setHidden(false)
           }}>
           <KeyboardIcon className={styles.icon} />

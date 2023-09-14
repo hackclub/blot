@@ -1,5 +1,4 @@
 import { getStore } from './lib/state.js'
-import { init } from './lib/init.js'
 import CompatWarning from './components/CompatWarning.jsx'
 import Preview from './components/Preview.jsx'
 import Toolbar from './components/Toolbar.jsx'
@@ -24,8 +23,7 @@ export default function Editor({ tutorial }: { tutorial: any }) {
   const INIT_HELP_HEIGHT = 40
   const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
 
-  useEffect(() => {
-    init()
+  useEffect(() => {    
     addEditorResizing(setWidth, theme)
     addHelpResizing(setHelpHeight, editorContainer, theme)
   }, [])
