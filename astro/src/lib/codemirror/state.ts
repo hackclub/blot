@@ -13,7 +13,7 @@ import { vimModeExtension } from './cmVimMode.js'
 import { numberScrubbingPlugin } from './numberScrubbing.js'
 import { errorIndicatorPlugin } from './errorIndicator.js'
 import { widgetsPlugin } from './widgets.js'
-import { createEvent } from 'niue'
+import { createEvent } from '../events.ts'
 
 // this is a terrible hack but strange bugs are about this one
 //@ts-expect-error

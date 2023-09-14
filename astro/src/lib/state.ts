@@ -1,5 +1,5 @@
 import type { EditorState } from '@codemirror/state'
-import { createState } from 'niue'
+import { createState } from './createState.js'
 import { type Haxidraw, Turtle, type Point } from './drawingToolkit/index.js'
 import type { EditorView } from '@codemirror/view'
 

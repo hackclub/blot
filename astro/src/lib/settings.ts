@@ -1,4 +1,4 @@
-import { createState } from 'niue'
+import { createState } from './createState.js'
 
 export enum Theme {
   Light,

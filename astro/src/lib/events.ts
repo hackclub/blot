@@ -1,4 +1,4 @@
-function createEvent() {
+export function createEvent() {
   const events = []
 
   const dispatchEvent = () => {
