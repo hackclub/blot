@@ -6,7 +6,7 @@
   let referenceHeight = window.getComputedStyle(referenceDiv).height;
   document.documentElement.style.setProperty('--reference-height', referenceHeight);
 
-  function splitPathIntoSubpathsAndAddCSS(pathData, animationDuration = .5) {
+  function splitPathIntoSubpathsAndAddCSS(pathData, animationDuration = .1) {
     const subpaths = pathData.split(/(?=M)/);
     let styleContent = '';
 
