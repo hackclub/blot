@@ -23,7 +23,7 @@ export default function Editor({ tutorial }: { tutorial: any }) {
   const INIT_HELP_HEIGHT = 40
   const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
 
-  useEffect(() => {    
+  useEffect(() => {   
     addEditorResizing(setWidth, theme)
     addHelpResizing(setHelpHeight, editorContainer, theme)
   }, [])

@@ -2,6 +2,7 @@ import { render } from "./render.tsx";
 
 export function createState(stateObj) {
 
+  // const state = addGettersSetters(stateObj);
   const state = stateObj;
 
   const getState = () => {
@@ -30,19 +31,17 @@ export function createState(stateObj) {
 
 
 
-function addGetters(inputObj) {
+function addGettersSetters(inputObj) {
   const outputObj = {};
 
   for (let key in inputObj) {
     if (inputObj.hasOwnProperty(key)) {
       Object.defineProperty(outputObj, key, {
         get: function() {
-          console.log(`Getting value for key: ${key}`);
           return inputObj[key];
         },
         set: function(value) {
           inputObj[key] = value;
-          console.log(`setting value for key: ${key} to ${value}`);
           return value;
         },
         enumerable: true  // This ensures the property shows up during enumeration, like in for...in loops.

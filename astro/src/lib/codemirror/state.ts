@@ -46,7 +46,6 @@ const cmExtensions = [
       
       manualChangeSinceLiveUpdate.value = true
       dispatchEditorChange();
-      console.log("editor change");
     }
   }),
   themeExtension(),
