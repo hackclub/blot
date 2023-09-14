@@ -6,9 +6,10 @@
   let referenceHeight = window.getComputedStyle(referenceDiv).height;
   document.documentElement.style.setProperty('--reference-height', referenceHeight);
 
-  function splitPathIntoSubpathsAndAddCSS(pathData, animationDuration = .1) {
+  function splitPathIntoSubpathsAndAddCSS(pathData, rateOfDrawing = 100) { // units/second
     const subpaths = pathData.split(/(?=M)/);
     let styleContent = '';
+    let cumulativeAnimationTime = 0;
 
     // Create a temporary SVG to compute path lengths
     const tempSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -27,14 +28,16 @@
         
         pathElement.setAttribute("id", `line${index + 1}`);
         
+        const animationDurationForThisPath = pathLength / rateOfDrawing;
+
         // Create the style for this path
         styleContent += `
           #line${index + 1} {
               stroke-dasharray: ${pathLength}; 
               stroke-dashoffset: ${pathLength};
               animation-name: drawLine${index + 1};
-              animation-duration: ${animationDuration}s;
-              animation-delay: ${animationDuration * index}s;
+              animation-duration: ${animationDurationForThisPath}s;
+              animation-delay: ${cumulativeAnimationTime}s;
               animation-fill-mode: forwards;
               stroke-width: .3;
           }
@@ -45,7 +48,10 @@
               }
           }
         `;
-        
+
+        // Update cumulative animation time for the next iteration
+        cumulativeAnimationTime += animationDurationForThisPath;
+
         return pathElement;
     });
 
