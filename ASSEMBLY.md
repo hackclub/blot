@@ -30,7 +30,7 @@ Insert 4 nuts into the nut traps on the back of the carriage. Nut traps are hexa
 
 ---
 <img src="https://cloud-7i4fszop8-hack-club-bot.vercel.app/2image0002.png" alt="aaa" width="300"/><br>
-Next, create 4 bearing assemblies in the manner shown above using M5x20mm screws, 2 Idler bearings, and shims.  
+Next, create 4 belt bearing assemblies in the manner shown above using M5x20mm screws, 2 Idler bearings, and shims.  
 
 ---
 <img src="https://cloud-7i4fszop8-hack-club-bot.vercel.app/3image0003.png" alt="aaa" width="300"/><br>
@@ -159,24 +159,55 @@ Insert a t-nut into the rail, and slide it under one of the circular holes on th
 Screw the leg to the rail using M5x10mm screws. Repeat this for all three holes previously identified. 
 
 ---
-<img src="https://cloud-8faenwnrg-hack-club-bot.vercel.app/7image0035.png" alt="aaa" width="300"/><br>
-Attach the carriage onto the rail with the belt bearings facing upwards. Should this prove difficult, you may need to adjust the eccentric spacers using the 8mm wrench provided. turning the eccentric spacers changes the width of the space between the v-wheels. 
+<img src="https://cloud-8faenwnrg-hack-club-bot.vercel.app/7image0035.png" alt="aaa" width="300"/><img src="https://cloud-mrjtch3qx-hack-club-bot.vercel.app/0image0075.png" alt="aaa" width="300"/><br>
+Attach the carriage onto the rail with the belt bearings facing upwards. *Should this prove difficult, you may need to adjust the eccentric spacers using the 8mm wrench provided. turning the eccentric spacers changes the width of the space between the v-wheels.*
 
  ---
+ <img src="https://cloud-8faenwnrg-hack-club-bot.vercel.app/8image0036.png" alt="aaa" width="300"/><br>
  attach the other leg, enclosing the carriage between both legs.
 
-Attach the printed rail to one side of the other aluminum extrusion, using the same t-nut+ m5x10mm screw technique as with the feet. 
+---
+<img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/0image0037.png" alt="aaa" width="300"/><br>
+Attach the printed rail to one side of the other aluminum extrusion.
+
+---
+<img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/1image0038.png" alt="aaa" width="300"/><img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/2image0039.png" alt="aaa" width="300"/><br>
+Indentify all three circular mounting holes on the printed rail. 
+
+---
+<img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/3image0040.png" alt="aaa" width="300"/><img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/4image0041.png" alt="aaa" width="300"/><br>
+Insert a t-nut into the rail, and slide it under one of the circular holes on the leg, so that the hole of the t-nut and the hole of the leg line up.
+
+---
+<img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/5image0042.png" alt="aaa" width="300"/><img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/6image0043.png" alt="aaa" width="300"/><br>
+Screw the leg to the rail using M5x10mm screws. Repeat this for all three holes previously identified. 
+
+---
+<img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/7image0044.png" alt="aaa" width="300"/><br>
 Insert the rail into the top of the carriage. Then, flip the blot over so that its feet are facing up.
 
-Create another belt bearing assembly and ensure the belt is behind it. Then, screw it into the printed rail. 
+---
 
-Next, we need to attach the belt clip. 
-Simply attach it to the end of the printed-rail extrusion and screw it on using the same t-nut technique. 
+<img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/0image0045.png" alt="aaa" width="300"/>
+<img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/2image0047.png" alt="aaa" width="300"/><br>
+Next, we need to attach the belt clip. Make sure it is flush with the aluminum extrusion.
 
+---
+<img src="https://cloud-hma32kk1l-hack-club-bot.vercel.app/0image0046.png" alt="aaa" width="300"/>
+<img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/3image0048.png" alt="aaa" width="300"/><br>
+Screw it on using the same t-nut technique. 
 
-Here comes the hardest part: routing the belt. Basically it goes like this:
+---
+<img src="https://cloud-7i4fszop8-hack-club-bot.vercel.app/2image0002.png" alt="aaa" width="300"/><img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/4image0049.png" alt="aaa" width="300"/><br>
+Create another belt bearing assembly and ensure the belt is behind it.
 
+ ---
+ <img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/6image0051.png" alt="aaa" width="300"/><br>
+ screw it into the printed rail. 
 
-Ensure it goes around the shafts of both motors, and runs between the belt bearings within the carriage. 
+---
+ <img src="https://cloud-hma32kk1l-hack-club-bot.vercel.app/4image0076.png" alt="aaa" width="300"/><img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/7image0052.png" alt="aaa" width="300"/><br>
+Here comes the hardest part: routing the belt. Ensure it goes around the shafts of both motors, and runs between the belt bearings within the carriage. 
 
- Bend the belt around on itself (with the teeth facing outwards) in order to hold it tight. 
+---
+ At the belt clip, bend the belt around on itself (with the teeth facing outwards) in order to hold it tight. 
