@@ -2,8 +2,8 @@ Blot instructions
 ---
 Below is a list of all parts needed to construct your Blot. Keep in mind that the colors shown below are not representative of the actual color of the components. The components are colored differently to ease differentiation when going through these instructions. 
 
-|----------------------|----|---
 |Part  			  |quantity 	|image 
+|----------------------|----|---
 |M5x30			  |?	   	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/0image0056.png" alt="aaa" width="100"/>
 |M5x20			  |?	  	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/2image0058.png" alt="aaa" width="100"/>
 |M5x10			  |?	     		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/3image0059.png" alt="aaa" width="100"/>
