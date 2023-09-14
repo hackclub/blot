@@ -1,9 +1,9 @@
 export function createEvent() {
   const events = []
 
-  const dispatchEvent = () => {
+  const dispatchEvent = (...args) => {
     events.forEach(e => {
-      e()
+      e(...args)
     })
   }
 
