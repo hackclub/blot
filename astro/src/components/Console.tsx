@@ -14,7 +14,7 @@ export default function Console() {
     if (!lines.current) return
 
     lines.current.scrollTop = lines.current.scrollHeight
-  }, [console])
+  })
 
   if (console.length === 0) return null
 

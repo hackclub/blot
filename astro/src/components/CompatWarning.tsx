@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 import Button from '../ui/Button.tsx'
 import Dialog from '../ui/Dialog.tsx'
 

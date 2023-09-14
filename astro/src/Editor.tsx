@@ -16,8 +16,9 @@ import Help from './components/Help.jsx'
 import preview from '@astrojs/node/preview.js'
 
 export default function Editor({ tutorial }: { tutorial: any }) {
-  const [width, setWidth] = useState(50)
-  const [tab, setTab] = useState('workshop')
+  const [width, setWidth] = useState(50);
+  const [tab, setTab] = useState('workshop');
+
   const { theme } = getStore();
 
   const INIT_HELP_HEIGHT = 40

@@ -16,5 +16,5 @@ export function useVimMode(view: EditorView | undefined | null) {
     view.dispatch({
       effects: vimModeCompartment.reconfigure(vimMode ? vim() : [])
     })
-  }, [vimMode])
+  })
 }

@@ -33,7 +33,7 @@ body {
   margin: 0;
 }
 
-body[data-theme='Dark'] {
+body[data-theme='dark'] {
   --background: #292d30;
   --background-rgb: 41, 45, 48;
   --text: #fff;

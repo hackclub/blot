@@ -402,9 +402,13 @@ function SettingsButton() {
           class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
+            const newTheme = theme === "dark" ? "light" : "dark";
             patchStore({
-              theme: theme === "dark" ? "light" : "dark"
+              theme: newTheme
             })
+
+            document.body.dataset.theme = newTheme;
+
             setHidden(false)
           }}>
           <BrightnessContrastIcon className={styles.icon} />

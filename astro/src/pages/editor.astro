@@ -1,7 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Editor from '../Editor.tsx'
+// import Editor from '../Editor.tsx'
 import EditorLayout from '../layouts/EditorLayout.astro'
+
+import Editor from '../layouts/Editor.astro'
 
 export const prerender = false
 
@@ -23,3 +25,6 @@ if (tutorial)
     <Editor client:load tutorial={tutorial} />
   </main>
 </EditorLayout>
+
+
+

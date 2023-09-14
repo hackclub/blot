@@ -10,7 +10,7 @@ import { addSrcURLParam } from './events/addSrcURLParam.js'
 export function init() {
   const cm = document.querySelector('.cm-editor')
   const view = cm.view
-  patchStore({ view })
+  patchStore({ view }, false);
 
   addLoadBackup()
   // load src if present after default loading behavior
@@ -18,4 +18,18 @@ export function init() {
 
   addBezierControl()
   addMachineControl()
+
+
+  // get settings from localStorage
+  // const theme = Number(localStorage.getItem('colorTheme')) ??
+  //     window.matchMedia('(prefers-color-scheme: dark)')
+  //       ? "dark"
+  //       : "light";
+
+  // patchStore({
+  //   theme,
+  //   vimMode: localStorage.getItem('vimMode') === 'true'
+  // })
+
+  // document.body.dataset.theme = theme;
 }

@@ -77,7 +77,7 @@ const Snippet = ({
         insert: code.split('\n')[pos.line - 1]
       }
     })
-  }, [code])
+  })
 
   const hasContext = pos.line !== 1
   const lines = code.split('\n')

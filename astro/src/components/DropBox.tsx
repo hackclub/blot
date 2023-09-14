@@ -65,7 +65,7 @@ function addDragDrop() {
       } else if (extension === 'svg') {
         text = text.replaceAll('\n', '')
 
-        const newLines = `const importedSVG = new Turtle().fromSVG(String.raw\`${text}\`);\n`
+        const newLines = `const importedSVG = createTurtle().fromSVG(String.raw\`${text}\`);\n`
 
         view.dispatch({
           changes: { from: 0, insert: newLines }

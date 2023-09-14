@@ -17,12 +17,10 @@ export default function CodeMirror() {
 
   const [view, setView] = useState<EditorView>()
 
-  useEffect(() => {
-    patchStore({ view })
-  }, [view])
+  patchStore({ view }, false);
 
-  useCMTheme(view)
-  useVimMode(view)
+  useCMTheme(view);
+  useVimMode(view);
 
   useOnJumpTo(
     pos => {
@@ -36,7 +34,7 @@ export default function CodeMirror() {
     if (!view) return
     const line = error?.stack[0].line
     setErrorPos(view, line ? view.state.doc.line(line).from : null)
-  }, [error])
+  })
 
   const editorRef = useCallback((node: HTMLDivElement | null) => {
     if (!node) return

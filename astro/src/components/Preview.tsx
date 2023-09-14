@@ -16,7 +16,7 @@ export default function Preview(props: { className?: string }) {
   useEffect(() => {
     const canvas = document.querySelector('.main-canvas')
     requestRedraw(canvas)
-  }, [turtles, docDimensions])
+  })
 
   return (
     <div class={styles.root}>

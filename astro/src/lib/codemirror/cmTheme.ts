@@ -20,5 +20,5 @@ export function useCMTheme(view: EditorView | undefined | null) {
     view.dispatch({
       effects: themeCompartment.reconfigure(getCMThemeExtension(theme))
     })
-  }, [theme])
+  })
 }

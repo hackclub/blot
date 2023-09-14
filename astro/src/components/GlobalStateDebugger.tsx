@@ -7,7 +7,7 @@ export default function GlobalStateDebugger() {
   useEffect(() => {
     //@ts-expect-error
     globalThis['_globalState'] = state
-  }, [state])
+  })
 
   return null
 }
