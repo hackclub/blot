@@ -17,7 +17,7 @@ const images = (await Astro.glob('/../art/*/snapshots/*')).map(
 const random = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min
 
-export const prerender = true
+export const prerender = false
 ---
 
 <script src="/masonry.min.js" type="module"></script>
@@ -25,7 +25,8 @@ export const prerender = true
 <script>
   window.onload = () => {
     new Masonry(document.getElementById('gallery'), {
-      itemSelector: '.frame'
+      itemSelector: '.frame',
+      percentPosition: true
     })
 
     document.getElementById('3d').addEventListener('change', event => {
@@ -45,7 +46,6 @@ export const prerender = true
   }
 
   #container {
-    width: 85vw;
     margin: 0 auto;
   }
 
@@ -61,7 +61,7 @@ export const prerender = true
   }
 
   #content {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-family: var(--font-sans);
   }
 
@@ -72,7 +72,7 @@ export const prerender = true
     box-shadow: -3px -3px 12px #999;
     position: relative;
     float: left;
-    max-width: 40vw;
+    max-width: calc(100vw / 3 - (0.5rem * 2));
     margin-bottom: 1rem;
     z-index: 1;
   }
@@ -82,7 +82,7 @@ export const prerender = true
     position: relative;
     padding: 0;
     margin: 0;
-    border: solid 70px white;
+    border: solid 40px white;
     box-shadow: -3px -3px 12px #999;
 
     img {

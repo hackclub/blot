@@ -15,10 +15,18 @@ export const prerender = true
     new Masonry(document.getElementById('gallery'), {
       itemSelector: '.frame'
     })
+
+    window.addEventListener('resize', () => {
+      new Masonry(document.getElementById('gallery'), {
+        itemSelector: '.frame'
+      })
+    })
   }
 </script>
 
 <style is:global lang="scss">
+  @import '../ui/variables.scss';
+
   body,
   html {
     background-size: 40px 40px;
@@ -29,7 +37,10 @@ export const prerender = true
 
   #container {
     margin: 0 auto;
-    width: 85vw;
+
+    @media screen and (min-width: $lg) {
+      width: 85vw;
+    }
   }
 
   #gallery {
@@ -87,6 +98,11 @@ export const prerender = true
     h2 {
       text-align: center;
       color: var(--primary);
+
+      a {
+        color: var(--primary);
+        text-decoration: none;
+      }
     }
   }
 </style>
