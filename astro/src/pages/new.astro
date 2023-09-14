@@ -57,7 +57,7 @@ import Layout from '../layouts/Layout.astro'
   const objLoader = new OBJLoader().setPath('/model/')
   const mtlLoader = new MTLLoader().setPath('/model/')
 
-  camera.position.z = 0.4
+  camera.position.z = 0.27
   camera.position.x = 0
   camera.rotation.z = Math.PI
   camera.position.y = -0.055
@@ -386,8 +386,19 @@ import Layout from '../layouts/Layout.astro'
   }
 </script>
 
+<style is:global lang="scss">
+  header {
+    font-family: var(--font-cursive);
+    font-size: 3rem;
+    letter-spacing: -0.995rem;
+  }
+</style>
+
 <Layout
   title="Blot"
   description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
-  <div < Layout></div>
+  <header>
+    <h1>Blot, the plotter bot from Hack Club.</h1>
+  </header>
+  <div class="three-js-container"></div>
 </Layout>

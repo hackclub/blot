@@ -40,7 +40,7 @@ const headings = assembly.getHeadings()
     border: 1px solid var(--primary);
     align-self: flex-start;
     font-family: var(--font-serif);
-    font-size: 0.995rem;
+    font-size: 0.8rem;
     position: sticky;
     top: 4rem;
     padding: 1rem;
@@ -61,6 +61,7 @@ const headings = assembly.getHeadings()
   }
 
   .prose {
+    flex: 1;
     font-family: var(--font-serif);
     font-size: 1.1rem;
     line-height: 1.6;
@@ -74,11 +75,6 @@ const headings = assembly.getHeadings()
       &:hover {
         opacity: 0.8;
       }
-    }
-
-    article {
-      margin: 0 auto;
-      max-width: 50vw;
     }
 
     img {
@@ -104,6 +100,20 @@ const headings = assembly.getHeadings()
       border-top: 1px solid #ccc;
       margin: 1em 0;
       padding: 0;
+    }
+
+    table {
+      td,
+      th {
+        border-bottom: 1px solid #ccc;
+        padding: 1rem;
+      }
+
+      tr:nth-last-child(1) {
+        td {
+          border-bottom: 0;
+        }
+      }
     }
   }
 </style>

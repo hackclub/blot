@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { marked } from 'marked'
-import { slug } from '../lib/guide.ts'
+import { description, slug } from '../lib/guide.ts'
 
 const workshops = await Astro.glob('/../guides/*.md')
 
@@ -13,7 +13,7 @@ export const prerender = true
 <script>
   window.onload = () => {
     new Masonry(document.getElementById('gallery'), {
-      itemSelector: '.framed'
+      itemSelector: '.frame'
     })
   }
 </script>
@@ -28,8 +28,8 @@ export const prerender = true
   }
 
   #container {
-    margin: 2rem auto;
-    width: 90vw;
+    margin: 0 auto;
+    width: 85vw;
   }
 
   #gallery {
@@ -51,15 +51,17 @@ export const prerender = true
   .frame {
     position: relative;
     padding: 0;
-    margin: 0;
-    margin-bottom: 1rem;
+    margin: 0.5rem;
     float: left;
     border: solid 15px #555;
     max-width: 40vw;
     box-shadow: -3px -3px 12px #999;
+    text-decoration: none;
+    font-family: var(--font-serif);
   }
 
   .border {
+    background-color: white;
     position: relative;
     padding: 0;
     margin: 0;
@@ -75,6 +77,16 @@ export const prerender = true
       border-right: solid 2px #ccc;
     }
   }
+
+  .prose {
+    background-color: white;
+    padding-top: 1rem;
+
+    h2 {
+      text-align: center;
+      color: var(--primary);
+    }
+  }
 </style>
 
 <Layout
@@ -82,34 +94,38 @@ export const prerender = true
   description="A gallery of various guides created by Hack Clubbers.">
   <div id="container">
     <div id="gallery">
-      <div class="framed" id="content">
-        <h1 style={{ marginBottom: 0 }}>Gallery</h1>
-        <p style={{ marginTop: 0 }}>
-          A gallery of various art pieces created by Hack Clubbers, with an
-          interactive gallery mode built in!
-        </p>
+      <div class="frame" id="content">
+        <div class="border">
+          <h1 style={{ marginBottom: 0 }}>Guides</h1>
+          <p style={{ marginTop: 0 }}>
+            A gallery of various guides created by Hack Clubbers that anyone can
+            learn from and contribute to!
+          </p>
+        </div>
       </div>
       {
         workshops
           .sort((a, b) =>
             a.frontmatter.pinned ? -1 : b.frontmatter.pinned ? 1 : 0
           )
-          .map(workshop => (
-            <div class="frame">
-              <div class="border">
-                <a href={`/guide/${slug(workshop.file)}`}>
+          .map(workshop => {
+            console.log(workshop)
+            return (
+              <div class="frame" href={`/guide/${slug(workshop.file)}`}>
+                <div class="border">
                   <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
-                </a>
-                <a href={`/guide/${slug(workshop.file)}`}>
                   <div class="prose">
                     <h2 style={{ marginBottom: 0 }}>
                       {workshop.frontmatter.title}
                     </h2>
+                    <div
+                      set:html={marked(description(workshop.rawContent()))}
+                    />
                   </div>
-                </a>
+                </div>
               </div>
-            </div>
-          ))
+            )
+          })
       }
     </div>
   </div>

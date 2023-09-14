@@ -1,0 +1,1 @@
+nav{background-color:var(--primary);color:#fff;display:flex;align-items:center;justify-content:space-between;font-family:var(--font-sans);font-size:1.5rem;padding:.5rem 1rem;position:sticky;top:0;z-index:1000}nav a{color:#fff;font-size:inherit;text-decoration:none}nav a,nav>div{display:flex;align-items:center;gap:4px}nav>div{gap:14px}nav h1{margin:0}

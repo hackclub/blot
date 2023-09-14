@@ -18,7 +18,8 @@ if (!workshop) return Astro.redirect('/404')
 
 const { Content } = workshop
 const headings = await workshop.getHeadings()
-const { title, thumbnail, contributors } = workshop.frontmatter
+let { title, thumbnail, contributors } = workshop.frontmatter
+contributors = contributors.split(',')
 ---
 
 <style is:global lang="scss">
@@ -50,10 +51,9 @@ const { title, thumbnail, contributors } = workshop.frontmatter
 
   #cta {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 4px;
     margin-top: 1.5rem;
-    margin-bottom: 0;
 
     svg {
       width: 1.1rem;
@@ -68,6 +68,7 @@ const { title, thumbnail, contributors } = workshop.frontmatter
     position: sticky;
     top: 4rem;
     padding: 1rem;
+    padding-bottom: 0;
     margin-top: 2rem;
 
     *:not(button) {
@@ -105,9 +106,23 @@ const { title, thumbnail, contributors } = workshop.frontmatter
       max-width: 50vw;
     }
 
+    blockquote {
+      border-left: 3px solid var(--primary);
+      padding-left: 1rem;
+    }
+
+    hr {
+      display: block;
+      height: 1px;
+      border: 0;
+      border-top: 1px solid #ccc;
+      margin: 1em 0;
+      padding: 0;
+    }
+
     img {
       display: block;
-      margin-top: 1.1rem;
+      margin: 1.1rem 0;
       max-width: 100%;
     }
 
@@ -230,17 +245,29 @@ const { title, thumbnail, contributors } = workshop.frontmatter
       </div>
       <header>
         <h1>{title}</h1>
-      </header>
-      <article>
-        <Content />
         <p>
-          <a
-            href={`https://github.com/hackclub/haxidraw/edit/main/guides/${route}.md`}
-            target="_blank"
-            >Update/make a grammar fix
-          </a>
+          Contributors: {
+            contributors.map((contributor, idx) => (
+              <span>
+                <a href={`https://github.com/${contributor}`} target="_blank">
+                  {contributor}
+                </a>
+                {idx < contributors.length - 1 && ','}
+              </span>
+            ))
+          }
         </p>
-      </article>
+        <article>
+          <Content />
+          <p>
+            <a
+              href={`https://github.com/hackclub/haxidraw/edit/main/guides/${route}.md`}
+              target="_blank"
+              >Update/make a grammar fix
+            </a>
+          </p>
+        </article>
+      </header>
     </div>
   </section>
 </Layout>

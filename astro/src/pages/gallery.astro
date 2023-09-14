@@ -25,7 +25,12 @@ export const prerender = true
 <script>
   window.onload = () => {
     new Masonry(document.getElementById('gallery'), {
-      itemSelector: '.framed'
+      itemSelector: '.frame'
+    })
+
+    document.getElementById('3d').addEventListener('change', event => {
+      if (event.currentTarget.checked)
+        window.open('https://haxidraw-3dgallery.hackclub.dev/', '_self')
     })
   }
 </script>
@@ -40,8 +45,8 @@ export const prerender = true
   }
 
   #container {
-    margin: 2rem auto;
-    width: 90vw;
+    width: 85vw;
+    margin: 0 auto;
   }
 
   #gallery {
@@ -61,17 +66,19 @@ export const prerender = true
   }
 
   .frame {
-    position: relative;
     padding: 0;
-    margin: 0;
-    margin-bottom: 1rem;
-    float: left;
+    margin: 0.5rem;
     border: solid 15px #555;
-    max-width: 40vw;
     box-shadow: -3px -3px 12px #999;
+    position: relative;
+    float: left;
+    max-width: 40vw;
+    margin-bottom: 1rem;
+    z-index: 1;
   }
 
   .border {
+    background-color: white;
     position: relative;
     padding: 0;
     margin: 0;
@@ -87,6 +94,55 @@ export const prerender = true
       border-right: solid 2px #ccc;
     }
   }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+
+      &:checked + .slider {
+        background-color: var(--primary);
+      }
+
+      &:focus + .slider {
+        box-shadow: 0 0 1px var(--primary);
+      }
+
+      &:checked + .slider:before {
+        transform: translateX(26px);
+      }
+    }
+
+    .slider {
+      border-radius: 34px;
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #ccc;
+      transition: 0.4s;
+
+      &::before {
+        border-radius: 50%;
+        position: absolute;
+        content: '';
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+      }
+    }
+  }
 </style>
 
 <Layout
@@ -94,12 +150,21 @@ export const prerender = true
   description="A gallery of various art pieces created by Hack Clubbers.">
   <div id="container">
     <div id="gallery">
-      <div class="framed" id="content">
-        <h1 style={{ marginBottom: 0 }}>Gallery</h1>
-        <p style={{ marginTop: 0 }}>
-          A gallery of various art pieces created by Hack Clubbers, with an
-          interactive gallery mode built in!
-        </p>
+      <div class="frame" id="content">
+        <div class="border">
+          <h1 style={{ margin: 0 }}>Gallery</h1>
+          <p style={{ margin: 0 }}>
+            A gallery of various art pieces created by Hack Clubbers, with an
+            interactive 3D gallery mode!
+          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+            <label class="switch">
+              <input type="checkbox" id="3d" />
+              <span class="slider round"></span>
+            </label>
+            <p>3D gallery</p>
+          </div>
+        </div>
       </div>
       {
         images.map(img => {
