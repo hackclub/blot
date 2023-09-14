@@ -28,9 +28,6 @@ export function createState(stateObj) {
 
 
 
-
-
-
 function addGettersSetters(inputObj) {
   const outputObj = {};
 
