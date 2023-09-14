@@ -17,18 +17,17 @@ export async function runCommand(cmd, state) {
 
   // runCode(functionString + text);
 
-  console.log(state.topScope);
+  console.log(state.topScope)
 
-  const names = Object.keys(state.topScope);
-  const values = Object.values(state.topScope);
+  const names = Object.keys(state.topScope)
+  const values = Object.values(state.topScope)
 
-  const AsyncFunction = (async function () { }).constructor;
+  const AsyncFunction = async function () {}.constructor
 
   // need to return last statement
-  const f = new AsyncFunction(...names, cmd);
+  const f = new AsyncFunction(...names, cmd)
 
-  const result = await f(...values);
+  const result = await f(...values)
 
-  console.log(result);
-
+  console.log(result)
 }

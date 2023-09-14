@@ -1,6 +1,7 @@
 ### Turtle
 
-Our main drawing primative is a turtle. It's a collection of polylines with an associated pen that has a location and direction. 
+Our main drawing primative is a turtle. It's a collection of polylines with an associated pen that has a location and direction.
+
 ```js
 const t = new Turtle();
 
@@ -31,7 +32,7 @@ t.fromSVG(svgString: string)
 /*
 You can get 9 points of interest from the turtle as get methods.
 l is left, r is right, c is center, b is bottom.
-The points are as such. 
+The points are as such.
 
 lt -- ct -- rt
 |     |     |
@@ -70,6 +71,7 @@ t.interpolate(tValue)
 ```
 
 To render a turtle use `drawTurtles` it is variadic (can take multiple turtles as arguments).
+
 ```js
 drawTurtles(...turtles)
 ```
@@ -84,6 +86,7 @@ setRandSeed(seed: number)
 randInRange(min: number, max: number)
 randIntInRange(min: number, max: number)
 ```
+
 ### Noise
 
 Noise is one of the most powerful tools for making proceduarally generated natural looking things. It can be thought of as smooth randomness.
@@ -91,14 +94,14 @@ Noise is one of the most powerful tools for making proceduarally generated natur
 ```js
 // y and z are optional
 noise(
-  [ 
-    x: number, 
-    y: number, 
-    z: number 
-  ], 
-  { 
-    octaves = 4, 
-    falloff = 0.5 
+  [
+    x: number,
+    y: number,
+    z: number
+  ],
+  {
+    octaves = 4,
+    falloff = 0.5
   }
 )
 ```
@@ -106,7 +109,7 @@ noise(
 Can be used like such
 
 ```js
-noise([ 2, 3 ])
+noise([2, 3])
 ```
 
 ### Utilities
@@ -119,8 +122,3 @@ lerp(min, max, t)
 ## Examples
 
 To find examples check out [`/gallery`](/gallery).
-
-
-
-
-

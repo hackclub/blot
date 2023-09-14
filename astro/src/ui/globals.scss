@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Bellefair&family=JetBrains+Mono&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+@font-face {
+  font-family: 'Circous';
+  src: url('/fonts/Circous.ttf') format('truetype');
+}
+
 :root {
   --background: #f8f6f3;
   --primary: #33e;
@@ -16,7 +21,8 @@
   --accent-dark-rgb: 144, 0, 144;
   --font-sans: 'Atkinson Hyperlegible', sans-serif;
   --font-serif: 'PT Serif', serif;
-  --font-mono: monospace;
+  --font-mono: 'Jetbrains Mono', monospace;
+  --font-cursive: 'Circous', cursive;
 
   --font-0: 1rem;
   --font-1: 1.125rem;
@@ -39,6 +45,10 @@ html {
   overflow-x: clip;
   padding: 0;
   scroll-behavior: smooth;
+}
+
+a {
+  cursor: pointer;
 }
 
 code,
@@ -80,9 +90,7 @@ https://prismjs.com/download.html#themes=prism-coy&languages=clike+javascript */
     position: relative;
     z-index: 1;
     border-left: 10px solid #358ccb;
-    box-shadow:
-      -1px 0 0 0 #358ccb,
-      0 0 0 1px #dfdfdf;
+    box-shadow: -1px 0 0 0 #358ccb, 0 0 0 1px #dfdfdf;
     background-color: #fdfdfd;
     background-image: linear-gradient(
       transparent 50%,

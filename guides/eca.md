@@ -1,11 +1,7 @@
 ---
 title: Elementary Cellular Automata
-description: >
-  [Elementary Cellular Automata](https://en.wikipedia.org/wiki/Elementary_cellular_automaton) is one of the simplest classes of [Cellular Automata](https://en.wikipedia.org/wiki/Cellular_automaton).
-
-  Through extremely simple rules, complex patterns can be created.
 thumbnail: https://cloud-oz9juilm9-hack-club-bot.vercel.app/0image.png
-contributor: henrybass
+contributors: henrybass
 ---
 
 ### (Henry Bass, Beginner/Intermediate, 20min)

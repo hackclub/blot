@@ -28,41 +28,39 @@
   font-family: var(--font-serif);
   font-size: 1.1rem;
   line-height: 1.6;
-  margin: 0 auto;
-  max-width: 100%;
-  padding: 1rem;
+  position: relative;
+  padding: 1.5rem;
   overflow-x: clip;
   overflow-y: auto;
   height: 100%;
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  img {
-    margin-bottom: 1.1rem;
+  > :nth-child(1) {
+    margin-top: 0;
   }
 
   a {
     color: var(--primary);
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   img {
+    display: block;
+    margin-top: 1.1rem;
     max-width: 100%;
   }
 
-  code {
+  code,
+  pre {
     font-size: 0.995rem;
     font-family: var(--font-mono);
   }
 
-  hr {
-    background-color: rgba(0, 0, 0, 0.25);
-    height: 1px;
-    border: 0;
+  li p {
+    margin: 0;
   }
 }
 
@@ -76,6 +74,10 @@ body[data-theme='Dark'] {
 
     hr {
       background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    img {
+      background-color: white;
     }
   }
 }

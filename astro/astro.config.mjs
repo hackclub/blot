@@ -3,11 +3,9 @@ import preact from '@astrojs/preact'
 import vercel from '@astrojs/vercel/serverless'
 import prefresh from '@prefresh/vite'
 import mdx from '@astrojs/mdx'
-import remarkToc from 'remark-toc'
 
-// https://astro.build/config
 export default defineConfig({
-  site: 'https://editor.haxidraw.hackclub.com',
+  site: 'https://haxidraw.hackclub.com',
   integrations: [
     preact({
       compat: true
@@ -17,8 +15,7 @@ export default defineConfig({
   output: 'server',
   adapter: vercel(),
   markdown: {
-    shikiConfig: { theme: 'github-light' },
-    remarkPlugins: [remarkToc]
+    syntaxHighlight: 'prism'
   },
   vite: {
     plugins: [prefresh()],
@@ -36,9 +33,6 @@ export default defineConfig({
     build: {
       target: 'es2020'
     }
-  },
-  markdown: {
-    syntaxHighlight: 'prism'
   },
   integrations: [preact(), mdx()]
 })

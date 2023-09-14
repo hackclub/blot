@@ -8,16 +8,14 @@ import { addLoadBackup } from './events/addLoadBackup.js'
 import { addSrcURLParam } from './events/addSrcURLParam.js'
 
 export function init() {
-  console.log('init')
-
   const cm = document.querySelector('.cm-editor')
   const view = cm.view
   patchStore({ view })
 
-  addLoadBackup();
+  addLoadBackup()
   // load src if present after default loading behavior
-  addSrcURLParam();
+  addSrcURLParam()
 
-  addBezierControl();
-  addMachineControl();
+  addBezierControl()
+  addMachineControl()
 }

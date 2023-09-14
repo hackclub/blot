@@ -1,171 +1,254 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <style>
-        #videoElement {
-            width: 480px;
-            height: 360px;
-        }
+      #videoElement {
+        width: 480px;
+        height: 360px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Color Detection</h1>
     <p>Adjust the sliders to select a color and margin:</p>
     105 208 173 43
-    <p>Red: <input type="range" min="0" max="255" value="0" class="slider" id="red"></p>
-    <p>Green: <input type="range" min="0" max="255" value="255" class="slider" id="green"></p>
-    <p>Blue: <input type="range" min="0" max="255" value="255" class="slider" id="blue"></p>
-    <p>Margin: <input type="range" min="0" max="255" value="100" class="slider" id="margin"></p>
-    <p>Vertical: <input type="range" min="0" max="1" value="0.3", step="0.1", class="slider" id="vertical"></p>
-    <p>Horizontal: <input type="range" min="0" max="1" value="0.3", step="0.1", class="slider" id="horizontal"></p>
+    <p>
+      Red:
+      <input type="range" min="0" max="255" value="0" class="slider" id="red" />
+    </p>
+    <p>
+      Green:
+      <input
+        type="range"
+        min="0"
+        max="255"
+        value="255"
+        class="slider"
+        id="green" />
+    </p>
+    <p>
+      Blue:
+      <input
+        type="range"
+        min="0"
+        max="255"
+        value="255"
+        class="slider"
+        id="blue" />
+    </p>
+    <p>
+      Margin:
+      <input
+        type="range"
+        min="0"
+        max="255"
+        value="100"
+        class="slider"
+        id="margin" />
+    </p>
+    <p>
+      Vertical:
+      <input
+        type="range"
+        min="0"
+        max="1"
+        value="0.3"
+        ,
+        step="0.1"
+        ,
+        class="slider"
+        id="vertical" />
+    </p>
+    <p>
+      Horizontal:
+      <input
+        type="range"
+        min="0"
+        max="1"
+        value="0.3"
+        ,
+        step="0.1"
+        ,
+        class="slider"
+        id="horizontal" />
+    </p>
 
     <video autoplay="true" id="videoElement"></video>
     <canvas id="canvasElement"></canvas>
 
     <script>
-        var video = document.querySelector("#videoElement");
-        var canvas = document.querySelector("#canvasElement");
-        var context = canvas.getContext('2d');
-        var trackerX, trackerY, v, h
-        const pt = { x: 0, y: 0};
+      var video = document.querySelector('#videoElement')
+      var canvas = document.querySelector('#canvasElement')
+      var context = canvas.getContext('2d')
+      var trackerX, trackerY, v, h
+      const pt = { x: 0, y: 0 }
 
-        window.addEventListener("message", function(event) {
-          console.log("received", event);
-            if (event.data === "pt") {
-                console.log(trackerX, v)
-                event.source.postMessage([pt, trackerY < v, trackerY > 1 - v, trackerX < h, trackerX > 1 - h], event.origin);
+      window.addEventListener(
+        'message',
+        function (event) {
+          console.log('received', event)
+          if (event.data === 'pt') {
+            console.log(trackerX, v)
+            event.source.postMessage(
+              [
+                pt,
+                trackerY < v,
+                trackerY > 1 - v,
+                trackerX < h,
+                trackerX > 1 - h
+              ],
+              event.origin
+            )
+          }
+        },
+        false
+      )
+
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then(function (stream) {
+            video.srcObject = stream
+          })
+          .catch(function (error) {
+            console.log('Something went wrong!')
+          })
+      }
+
+      video.addEventListener(
+        'play',
+        function () {
+          var $this = this
+          // Set canvas dimensions based on video dimensions
+          canvas.width = $this.videoWidth
+          canvas.height = $this.videoHeight
+
+          ;(function loop() {
+            if (!$this.paused && !$this.ended) {
+              context.drawImage(
+                $this,
+                0,
+                0,
+                $this.videoWidth,
+                $this.videoHeight
+              )
+              const imageData = context.getImageData(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+              )
+              const { r, g, b, m, vc, hc } = getInputColor()
+              v = vc
+              h = hc
+              // console.log(vc, hc)
+              filterPixels(imageData, { r, g, b }, m)
+
+              const { x, y } = getCenterOfNonWhitePixels(imageData)
+              pt.x = x
+              pt.y = y
+              trackerX = x / 640
+              trackerY = y / 480
+              //context.putImageData(imageData, 0, 0);
+              context.fillStyle = 'white'
+              context.fillRect(0, 0, canvas.width, canvas.height)
+              context.fillStyle = `rgba(0, 255, 0, 0.4)`
+              context.fillRect(0, 0, h * 640, 480)
+              context.fillRect(0, 0, 640, v * 480)
+              context.fillRect(0, 480 * (1 - v), 640, 480)
+              context.fillRect(640 * (1 - h), 0, 640, 480)
+              if (x !== 0 && y !== 0) drawCircle(context, x, y, 10)
+              setTimeout(loop, 1000 / 30) // drawing at 30fps
             }
-        }, false);
-
-        if (navigator.mediaDevices.getUserMedia) {       
-            navigator.mediaDevices.getUserMedia({video: true})
-            .then(function(stream) {
-                video.srcObject = stream;
-            })
-            .catch(function(error) {
-                console.log("Something went wrong!");
-            });
-        }
-
-        video.addEventListener('play', function() {
-            var $this = this;
-            // Set canvas dimensions based on video dimensions
-            canvas.width = $this.videoWidth;
-            canvas.height = $this.videoHeight;
-
-            (function loop() {
-                if (!$this.paused && !$this.ended) {
-                    context.drawImage($this, 0, 0, $this.videoWidth, $this.videoHeight);
-                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                    const { r, g, b, m, vc, hc} = getInputColor();  
-                    v = vc
-                    h = hc
-                    // console.log(vc, hc)
-                    filterPixels(imageData, {r, g, b}, m);
-
-                    const {x, y} = getCenterOfNonWhitePixels(imageData)
-                    pt.x = x;
-                    pt.y = y;
-                    trackerX = (x / 640)
-                    trackerY = (y / 480)
-                    //context.putImageData(imageData, 0, 0);
-                    context.fillStyle = 'white'
-                    context.fillRect(0, 0, canvas.width, canvas.height)
-                    context.fillStyle = `rgba(0, 255, 0, 0.4)`;
-                    context.fillRect(0, 0, h * 640, 480);
-                    context.fillRect(0, 0, 640, v * 480);
-                    context.fillRect(0, 480 * (1 - v), 640, 480);
-                    context.fillRect(640 * (1 - h), 0, 640, 480);
-                    if (x !== 0 && y !== 0) drawCircle(context, x, y, 10)
-                    setTimeout(loop, 1000 / 30); // drawing at 30fps
-                }
-            })();
-        }, 0);
-
+          })()
+        },
+        0
+      )
 
       function getPixels($this) {
         // Create an off-screen canvas
-        var canvas = document.createElement('canvas');
-        var context = canvas.getContext('2d');
-    
+        var canvas = document.createElement('canvas')
+        var context = canvas.getContext('2d')
+
         // Set canvas dimensions to match video
-        canvas.width = $this.videoWidth;
-        canvas.height = $this.videoHeight;
-    
+        canvas.width = $this.videoWidth
+        canvas.height = $this.videoHeight
+
         // Draw the current frame from the video onto the canvas
-        context.drawImage($this, 0, 0, $this.videoWidth, $this.videoHeight);
-    
+        context.drawImage($this, 0, 0, $this.videoWidth, $this.videoHeight)
+
         // Get image data from the canvas
-        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);        
-        
-        return imageData;
-    }
+        var imageData = context.getImageData(0, 0, canvas.width, canvas.height)
+
+        return imageData
+      }
 
       function getInputColor() {
-          var r = Number(document.getElementById('red').value);
-          var g = Number(document.getElementById('green').value);
-          var b = Number(document.getElementById('blue').value);
-          var m = Number(document.getElementById('margin').value);
-          var vc = Number(document.getElementById('vertical').value);
-          var hc = Number(document.getElementById('horizontal').value);
+        var r = Number(document.getElementById('red').value)
+        var g = Number(document.getElementById('green').value)
+        var b = Number(document.getElementById('blue').value)
+        var m = Number(document.getElementById('margin').value)
+        var vc = Number(document.getElementById('vertical').value)
+        var hc = Number(document.getElementById('horizontal').value)
 
-          //console.log(r, g, b, m, v, h)
+        //console.log(r, g, b, m, v, h)
 
-      
-          return {r: r, g: g, b: b, m: m, vc: vc, hc: hc};
+        return { r: r, g: g, b: b, m: m, vc: vc, hc: hc }
       }
 
       function filterPixels(imageData, color, margin) {
-          var data = imageData.data;
-          for (var i = 0; i < data.length; i += 4) {
-              var r = data[i];
-              var g = data[i+1];
-              var b = data[i+2];
-              if (Math.abs(r - color.r) > margin || Math.abs(g - color.g) > margin || Math.abs(b - color.b) > margin) {
-                  // If the color of the pixel is not within the margin of the target color, set alpha to 0
-                  data[i+3] = 0;
-              }
+        var data = imageData.data
+        for (var i = 0; i < data.length; i += 4) {
+          var r = data[i]
+          var g = data[i + 1]
+          var b = data[i + 2]
+          if (
+            Math.abs(r - color.r) > margin ||
+            Math.abs(g - color.g) > margin ||
+            Math.abs(b - color.b) > margin
+          ) {
+            // If the color of the pixel is not within the margin of the target color, set alpha to 0
+            data[i + 3] = 0
           }
+        }
       }
 
       function getCenterOfNonWhitePixels(imageData) {
-          var data = imageData.data;
-          var sumX = 0;
-          var sumY = 0;
-          var count = 0;
-      
-          for (var y = 0; y < imageData.height; y++) {
-              for (var x = 0; x < imageData.width; x++) {
-                  var index = (y * imageData.width + x) * 4;
-                  var r = data[index];
-                  var g = data[index+1];
-                  var b = data[index+2];
-                  var a = data[index+3];
-      
-                  // Check if pixel is not white
-                  if (!(a === 0)) {
-                      sumX += x;
-                      sumY += y;
-                      count++;
-                  }
-              }
+        var data = imageData.data
+        var sumX = 0
+        var sumY = 0
+        var count = 0
+
+        for (var y = 0; y < imageData.height; y++) {
+          for (var x = 0; x < imageData.width; x++) {
+            var index = (y * imageData.width + x) * 4
+            var r = data[index]
+            var g = data[index + 1]
+            var b = data[index + 2]
+            var a = data[index + 3]
+
+            // Check if pixel is not white
+            if (!(a === 0)) {
+              sumX += x
+              sumY += y
+              count++
+            }
           }
-      
-          if (count === 0) {
-              return {x:0, y: 0}; // return null if there are no non-white pixels
-          }
-      
-          return {x: sumX / count, y: sumY / count}; // return the center as an object with x and y properties
+        }
+
+        if (count === 0) {
+          return { x: 0, y: 0 } // return null if there are no non-white pixels
+        }
+
+        return { x: sumX / count, y: sumY / count } // return the center as an object with x and y properties
       }
 
       function drawCircle(context, x, y, radius) {
-          context.beginPath();
-          context.arc(canvas.width - x, y, radius, 0, 2 * Math.PI, false);
-          context.fillStyle = 'red';
-          context.fill();
+        context.beginPath()
+        context.arc(canvas.width - x, y, radius, 0, 2 * Math.PI, false)
+        context.fillStyle = 'red'
+        context.fill()
       }
-
-
     </script>
-</body>
+  </body>
 </html>

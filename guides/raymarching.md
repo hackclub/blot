@@ -1,11 +1,7 @@
 ---
 title: Raymarching in Haxidraw
-description: >
-  The goal of this guide will be to simulate 3D environments, with realistic lighting and shadows. By the end, you should have something like this...
 thumbnail: https://cloud-4kaqtq8oi-hack-club-bot.vercel.app/0image.png
-contributor: henrybass
-difficulty: advanced
-time: 1hr
+contributors: henrybass
 pinned: true
 ---
 

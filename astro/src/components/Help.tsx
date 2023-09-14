@@ -8,7 +8,8 @@ const html = compiledContent()
 export default function Help({
   toggleClose,
   helpHeight,
-  workshop
+  workshop,
+  slug
 }: {
   toggleClose: () => void
   helpHeight: number
@@ -62,6 +63,9 @@ export default function Help({
           <div class={styles.helpContent}>
             <h1>{workshop.frontmatter.title}</h1>
             <div dangerouslySetInnerHTML={{ __html: workshop.content }}></div>
+            <p>
+              <a href={`/guide/${workshop.slug}`}>Open as full page</a>
+            </p>
           </div>
         )}
       </div>

@@ -1,38 +1,87 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import { slug } from '../../lib/guide.ts'
 
-const slug = (file: string) => {
-  file = file.replace('.md', '').slice(file.lastIndexOf('/'))
-  return file.slice(1)
-}
+export const prerender = true
 
 export async function getStaticPaths() {
-  const workshops = await Astro.glob('../../../../guides/*.md')
+  const workshops = await Astro.glob('/../guides/*.md')
   return workshops.map(workshop => {
-    let file = workshop.file
-      .replace('.md', '')
-      .slice(workshop.file.lastIndexOf('/'))
-    return {
-      params: { slug: file.slice(1) }
-    }
+    return { params: { slug: slug(workshop.file) } }
   })
 }
 
 const { slug: route } = Astro.params
-const workshops = await Astro.glob('../../../../guides/*.md')
-let workshop = workshops.filter(workshop => slug(workshop.file) === route)
-if (!workshop.length) return Astro.redirect('/404')
+const workshops = await Astro.glob('/../guides/*md')
+const workshop = workshops.find(workshop => slug(workshop.file) === route)
+if (!workshop) return Astro.redirect('/404')
 
-workshop = workshop[0]
-const Content = workshop.Content
-const { title, description } = workshop.frontmatter
-
-export const prerender = true
+const { Content } = workshop
+const headings = await workshop.getHeadings()
+const { title, thumbnail, contributors } = workshop.frontmatter
 ---
 
 <style is:global lang="scss">
-  nav {
+  @import '../../ui/variables.scss';
+
+  #container {
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 2.5rem;
     position: relative;
+
+    @media screen and (min-width: $md) {
+      display: flex;
+      width: 80vw;
+    }
+
+    @media screen and (min-width: $md) and (max-width: $lg) {
+      width: 95vw;
+    }
+  }
+
+  header {
+    h1 {
+      font-size: 4rem;
+      line-height: 1.1;
+      margin: 1.1rem 0;
+    }
+  }
+
+  #cta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+
+    svg {
+      width: 1.1rem;
+    }
+  }
+
+  .toc {
+    border: 1px solid var(--primary);
+    align-self: flex-start;
+    font-family: var(--font-serif);
+    font-size: 0.995rem;
+    position: sticky;
+    top: 4rem;
+    padding: 1rem;
+    margin-top: 2rem;
+
+    *:not(button) {
+      color: var(--primary);
+      font-weight: normal;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      margin-top: 0;
+      margin-bottom: calc(0.995rem / 2);
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
   }
 
   .prose {
@@ -40,9 +89,15 @@ export const prerender = true
     font-size: 1.1rem;
     line-height: 1.6;
     margin: 0 auto;
+    position: relative;
 
     a {
       color: var(--primary);
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
 
     article {
@@ -50,48 +105,20 @@ export const prerender = true
       max-width: 50vw;
     }
 
-    header {
-      display: flex;
-      position: relative;
-      border: 1px solid;
-      margin: 1rem;
-
-      > div,
-      > img {
-        flex: 50%;
-        position: relative;
-      }
-
-      > div {
-        background: url('/paper.png');
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-
-      > img {
-        border-left: 1px solid;
-        max-width: 50%;
-      }
-
-      h1 {
-        font-family: var(--font-sans);
-        margin: 0;
-      }
-
-      p {
-        margin-top: 0;
-      }
-    }
-
     img {
+      display: block;
+      margin-top: 1.1rem;
       max-width: 100%;
     }
 
-    code {
+    code,
+    pre {
       font-size: 0.995rem;
       font-family: var(--font-mono);
+    }
+
+    li p {
+      margin: 0;
     }
   }
 
@@ -101,48 +128,119 @@ export const prerender = true
     top: 0;
     z-index: 10;
 
-    > p {
-      display: flex;
-      justify-content: space-between;
-      font-style: italic;
-      max-width: 50vw;
-      margin: 1rem auto;
-
-      a {
-        text-decoration: none;
-      }
+    a {
+      text-decoration: none;
     }
   }
 </style>
 
-<Layout title={`Workshop: ${title}`} description={description}>
-  <div class="looseleaf">
+<Layout title={`Guide: ${title}`}>
+  <section id="container">
+    <div class="toc">
+      {
+        headings.map((heading, idx) => {
+          let prevDepth = idx > 0 ? headings[idx - 1].depth : Infinity
+          switch (heading.depth) {
+            case 1:
+              return (
+                <h1>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </h1>
+              )
+            case 2:
+              return (
+                <h2>
+                  <a
+                    href={`#${heading.slug}`}
+                    style={{ marginLeft: prevDepth < 2 ? '4px' : '' }}>
+                    {heading.text}
+                  </a>
+                </h2>
+              )
+            case 3:
+              return (
+                <h3>
+                  <a
+                    href={`#${heading.slug}`}
+                    style={{ marginLeft: prevDepth < 3 ? '5px' : '' }}>
+                    {heading.text}
+                  </a>
+                </h3>
+              )
+            case 4:
+              return (
+                <h4>
+                  <a
+                    href={`#${heading.slug}`}
+                    style={{ marginLeft: prevDepth < 3 ? '6px' : '' }}>
+                    {heading.text}
+                  </a>
+                </h4>
+              )
+            case 5:
+              return (
+                <h5>
+                  <a
+                    href={`#${heading.slug}`}
+                    style={{ marginLeft: prevDepth < 3 ? '7px' : '' }}>
+                    {heading.text}
+                  </a>
+                </h5>
+              )
+            case 6:
+              return (
+                <h6>
+                  <a
+                    href={`#${heading.slug}`}
+                    style={{ marginLeft: prevDepth < 3 ? '8px' : '' }}>
+                    {heading.text}
+                  </a>
+                </h6>
+              )
+          }
+        })
+      }
+      <p id="cta">
+        <a href={`/editor?tutorial=${route}`}>Open in editor</a>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-external-link"
+          ><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+          ></path><polyline points="15 3 21 3 21 9"></polyline><line
+            x1="10"
+            x2="21"
+            y1="14"
+            y2="3"></line></svg
+        >
+      </p>
+    </div>
     <div class="prose">
       <div id="back">
         <p>
-          <a href="/guides">&larr; Back to all workshops</a>
-          <a
-            href={`https://github.com/hackclub/haxidraw/edit/main/guides/${route}.md`}
-            target="_blank">Update/make a grammar fix</a
-          >
+          <a href="/guides">&larr; Back to all guides</a>
         </p>
       </div>
-      <!--
       <header>
-        <div>
-          <h1>{title}</h1>
-          <p>
-            <a href={`https://github.com/${contributor}`} target="_blank"
-              >@{contributor}</a
-            >
-          </p>
-        </div>
-        <img src={thumbnail} />
+        <h1>{title}</h1>
       </header>
-    -->
       <article>
         <Content />
+        <p>
+          <a
+            href={`https://github.com/hackclub/haxidraw/edit/main/guides/${route}.md`}
+            target="_blank"
+            >Update/make a grammar fix
+          </a>
+        </p>
       </article>
     </div>
-  </div>
+  </section>
 </Layout>

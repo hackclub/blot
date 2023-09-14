@@ -1,16 +1,7 @@
-.root {
-  display: flex;
-  background-color: var(--primary);
-  color: white;
-  font-size: 1.1rem;
-  padding: 0 0.5rem;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .heading {
   font-size: 1.5rem;
   padding: 0 0.5rem;
+  margin-right: 0.5rem;
 
   a {
     color: inherit;
@@ -81,4 +72,56 @@
   padding: 0.25rem;
   display: flex;
   flex-direction: column;
+}
+
+.root {
+  display: flex;
+  background-color: var(--primary);
+  color: white;
+  font-size: 1.1rem;
+  padding: 0 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  pre {
+    margin: 0;
+  }
+
+  h1 {
+    font-size: var(--font-4);
+  }
+
+  h2 {
+    font-size: var(--font-3);
+  }
+
+  h3 {
+    font-size: var(--font-2);
+  }
+
+  h4 {
+    font-size: var(--font-1);
+  }
+
+  h5 {
+    font-size: var(--font-0);
+    color: var(--primary);
+  }
+
+  h6 {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  pre,
+  code {
+    font-family: var(--font-mono);
+  }
 }
