@@ -36,7 +36,6 @@
     "firebase-admin": "^11.10.1",
     "marked": "^7.0.4",
     "nanoid": "^4.0.2",
-    "niue": "^0.2.0",
     "preact": "^10.17.1",
     "remark-toc": "^8.0.1",
     "source-map-js": "^1.0.2",

@@ -10,7 +10,7 @@ export function init() {
 
   const cm = document.querySelector('.cm-editor')
   const view = cm.view
-  patchStore({ view }, false);
+  patchStore({ view });
 
   addLoadBackup()
   // load src if present after default loading behavior
