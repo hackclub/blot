@@ -1,11 +1,8 @@
 ---
 title: Landscape
-description: >
-  This is an explainer on how to create art like the image above in the [Haxidraw editor](https://haxidraw.hackclub.dev/). It assumes some knowledge of programming in JavaScript and how Haxidraw works, but nothing beyond that.
 thumbnail: https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png
-contributor: henrybass
+contributors: henrybass
 ---
-
 
 ### (Intermediate, ~45 min, by Henry Bass)
 
@@ -41,7 +38,7 @@ This is much closer, but it's missing an essential aspect: Detail. Hills on a la
 
 <img src="https://cloud-oidzg4hcv-hack-club-bot.vercel.app/0untitled_drawing__5_.png" width="512"/>
 
-That looks a lot closer! As a note, the amount we change the frequency, amplitude, and blur with respect to each octave is arbitrary, and tweaking those functions can lead to interesting variations of our noise. The name of this technique is: *Fractal Noise*.
+That looks a lot closer! As a note, the amount we change the frequency, amplitude, and blur with respect to each octave is arbitrary, and tweaking those functions can lead to interesting variations of our noise. The name of this technique is: _Fractal Noise_.
 
 In fact, the Haxidraw editor actually has a function for fractal noise built in!
 
@@ -106,12 +103,9 @@ This is starting to look like mountains! If we want to make these look more like
 That water still looks a bit boring, though! Trigonometric functions like `Math.sin()` and `Math.cos()` are great for creating wave-like patterns. If we add the sine of the x value to the sea level, the water will be higher and lower in a wave-like pattern. Going further, by offsetting the input to the sine function by another wave, such as the cosine of the y value, the waves will sway side to side depending on how far up in the image they are. If you're not following along with why this works, try tweaking constants and scaling the waves in various ways to gain an intuition for what each part of the code contributes to the output.
 
 ```js
-sea_level = default_wave_height + (
-	wave_height *
-	Math.sin(
-		(x + Math.cos(y * offset_freq)
-	) * wave_freq)
-)
+sea_level =
+  default_wave_height +
+  wave_height * Math.sin((x + Math.cos(y * offset_freq)) * wave_freq)
 ```
 
 Of course, for this code, you'd need to set actual values to all the variables mentioned. By now, you'll probably have something that looks like this:
@@ -158,11 +152,11 @@ We're really close to a complete image, but there's a one more thing we can add 
 Trees generally grow a good distance above sea level, and they're pretty random in height. Luckily for us, trees can be easily approximated as straight lines from far enough away. Simply create a `drawTree(x, y)` function, that creates a vertical line like this:
 
 ```js
-size = tree_size * Math.random() + (size/2)
-  t.goto([x, y])
-  t.goto([x, y+size])
-  t.up()
-  t.goto([x, y])
+size = tree_size * Math.random() + size / 2
+t.goto([x, y])
+t.goto([x, y + size])
+t.up()
+t.goto([x, y])
 ```
 
 Then, we should only call this if `Math.random() > tree_prob && height * (y + perspective_offset) > tree_line`. We multiply by `(y + perspective_offset)` to cancel out the division back in the `getHeight` function, and ignore perspective. With all this done, you'll have a nice looking landscape, generated 100% from code. Great job!
@@ -195,43 +189,42 @@ const wave_freq = 16.5
 const default_wave_height = 11
 const tree_size = 0.04
 
-let maxHeights = Array(Math.floor(10/dx)).fill(0)
+let maxHeights = Array(Math.floor(10 / dx)).fill(0)
 
 function drawTree(x, y) {
-  size = tree_size * Math.random() + (size/2)
+  size = tree_size * Math.random() + size / 2
   t.goto([x, y])
-  t.goto([x, y+size])
+  t.goto([x, y + size])
   t.up()
   t.goto([x, y])
 }
 
 function getHeight(x, y) {
-	let height = noise(
-	[x * noise_x_scale, y * noise_y_scale]
-	) * noise_amp
-    sea_level = default_wave_height + (
-    	wave_height *
-    	Math.sin(
-    		(x + Math.cos(y * offset_freq)
-    	) * wave_freq)
-    )
-    return Math.max(sea_level, height) * (1/(y + 10))
+  let height = noise([x * noise_x_scale, y * noise_y_scale]) * noise_amp
+  sea_level =
+    default_wave_height +
+    wave_height * Math.sin((x + Math.cos(y * offset_freq)) * wave_freq)
+  return Math.max(sea_level, height) * (1 / (y + 10))
 }
 
 for (let y = 0; y < 15; y += dy) {
-	for (let x = 0; x < +6; x += dx) {
-      	height = getHeight(x, y)
-        if (height + y/3 > maxHeights[Math.floor(x/dx)]) {
-          maxHeights[Math.floor(x/dx)] = height + y/3
-          if (x == 0) {t.up()} else {t.down()}
-          if (Math.random() > 0.75 && height * (y + 9) > +13.0) {
-            drawTree(x, y/3 + height)
-          }
-        } else {
-          t.up()
-        }
-        t.goto([x, y/3 + height])
-	 }
+  for (let x = 0; x < +6; x += dx) {
+    height = getHeight(x, y)
+    if (height + y / 3 > maxHeights[Math.floor(x / dx)]) {
+      maxHeights[Math.floor(x / dx)] = height + y / 3
+      if (x == 0) {
+        t.up()
+      } else {
+        t.down()
+      }
+      if (Math.random() > 0.75 && height * (y + 9) > +13.0) {
+        drawTree(x, y / 3 + height)
+      }
+    } else {
+      t.up()
+    }
+    t.goto([x, y / 3 + height])
+  }
 }
 
 drawTurtles(t)

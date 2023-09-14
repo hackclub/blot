@@ -1,10 +1,10 @@
-import HImg from "/components/HImg";
-import imgFirmwareBootButton from "./img/firmware-boot-button.jpg";
-import imgFirmwareDisk from "./img/firmware-disk.png";
-import imgFirmwareBoardsManager from "./img/firmware-boards-manager.png";
-import imgFirmwareSelectBoard from "./img/firmware-select-board.png";
-import imgFirmwareSerialPort from "./img/firmware-serial-port.png";
-import imgFirmwareUpload from "./img/firmware-upload.png";
+import HImg from '/components/HImg'
+import imgFirmwareBootButton from './img/firmware-boot-button.jpg'
+import imgFirmwareDisk from './img/firmware-disk.png'
+import imgFirmwareBoardsManager from './img/firmware-boards-manager.png'
+import imgFirmwareSelectBoard from './img/firmware-select-board.png'
+import imgFirmwareSerialPort from './img/firmware-serial-port.png'
+import imgFirmwareUpload from './img/firmware-upload.png'
 
 # Firmware
 
@@ -26,10 +26,11 @@ The "RPI-RP2" disk should show up on your computer if the above step was success
 
 1. Open the Arduino IDE.
 2. Add the Seeed Studio XIAO RP2040 board package to your IDE.
-> - On macOS: Navigate to **Arduino IDE** > **Preferences** > **Settings**
-> - On Windows/Linux: Navigate to **File** > **Preferences** > **Settings**
+   > - On macOS: Navigate to **Arduino IDE** > **Preferences** > **Settings**
+   > - On Windows/Linux: Navigate to **File** > **Preferences** > **Settings**
 
 and add the following URLs to the **Additional Board Manager URLs** field:
+
 ```
 https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 https://raw.githubusercontent.com/qbolsee/ArduinoCore-fab-sam/master/json/package_Fab_SAM_index.json
@@ -61,4 +62,4 @@ To select the port, go to **Tools** > **Port** and select the serial port name o
 
 > Now you can use the Haxidraw editor (https://editor.haxidraw.hackclub.com) to control the machine.
 
-> * Things not working quite right? check out [troubleshooting](/troubleshooting) *
+> - Things not working quite right? check out [troubleshooting](/troubleshooting) \*

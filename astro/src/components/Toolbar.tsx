@@ -28,7 +28,11 @@ export default function Toolbar() {
 
   return (
     <div class={styles.root}>
-      <div style={{ 'display': 'flex', 'align-items': 'center' }}>
+      <div
+        style={{
+          'display': 'flex',
+          'align-items': 'center'
+        }}>
         <h1 class={styles.heading}>
           <a href="/">
             <svg
@@ -209,8 +213,8 @@ function DownloadSVG() {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${
                   docDimensions.width
                 } ${docDimensions.height}" width="${
-                  docDimensions.width
-                }mm" height="${docDimensions.height}mm">
+          docDimensions.width
+        }mm" height="${docDimensions.height}mm">
                     ${paths.join('\n')}
                 </svg>
             `
@@ -262,8 +266,8 @@ function DownloadPNG() {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${
                   docDimensions.width
                 } ${docDimensions.height}" width="${
-                  docDimensions.width
-                }mm" height="${docDimensions.height}mm">
+          docDimensions.width
+        }mm" height="${docDimensions.height}mm">
                     ${paths.join('\n')}
                 </svg>
             `

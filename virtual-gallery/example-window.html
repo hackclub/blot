@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>New Window Opener</title>
-        <script type="text/javascript">
-            var newWindow;
+  <head>
+    <title>New Window Opener</title>
+    <script type="text/javascript">
+      var newWindow
 
-            function openNewWindow() {
-                newWindow = window.open("", "_blank");
-                newWindow.document.write('<body onload="window.opener.postMessage(\'Hello from new window!\', \'*\')"><h1>Welcome to the new window!</h1></body>');
-            }
+      function openNewWindow() {
+        newWindow = window.open('', '_blank')
+        newWindow.document.write(
+          "<body onload=\"window.opener.postMessage('Hello from new window!', '*')\"><h1>Welcome to the new window!</h1></body>"
+        )
+      }
 
-            window.addEventListener("message", function(event) {
-                alert("Received message:  " + event.data);
-            }, false);
-        </script>
-    </head>
-    <body onload="openNewWindow()">
-        <h1>Welcome!</h1>
-        <p>This page will open a new window and receive a message from it.</p>
-    </body>
+      window.addEventListener(
+        'message',
+        function (event) {
+          alert('Received message:  ' + event.data)
+        },
+        false
+      )
+    </script>
+  </head>
+  <body onload="openNewWindow()">
+    <h1>Welcome!</h1>
+    <p>This page will open a new window and receive a message from it.</p>
+  </body>
 </html>

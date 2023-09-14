@@ -4,11 +4,11 @@ So you just found out about this cool robotic drawing machine which you can buil
 
 # 1) Make a unique piece of generative art
 
-The first step is to make some generative art like that seen in [the gallery](https://blot.hackclub.dev/gallery). 
+The first step is to make some generative art like that seen in [the gallery](https://blot.hackclub.dev/gallery).
 
-You can learn how to use the editor and make art by following some of [these guides](https://blot.hackclub.dev/guides). 
+You can learn how to use the editor and make art by following some of [these guides](https://blot.hackclub.dev/guides).
 
-You can't just copy an existing piece of art and mess with the numbers. You need to make your own original piece. 
+You can't just copy an existing piece of art and mess with the numbers. You need to make your own original piece.
 That being said you can take inspiration from other art and remix a few pieces together.
 
 # 2) Make a PR with your original artwork
@@ -28,5 +28,5 @@ Once your PR is merged we'll give you a link to fill out an order form so we can
 
 # 4) Build your blot
 
-Once you get your machine build it and have it make your art. 
+Once you get your machine build it and have it make your art.
 Your fabricated piece will become your ticket to a very special event we are planning next summer.
