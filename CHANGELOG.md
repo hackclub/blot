@@ -30,7 +30,8 @@ while (abs(motor1Step) < abs(motor1Target) || abs(motor2Step) < abs(motor2Target
   ...
 }
 ```
-I was finding it difficult to debug with the cobs encoded messages coming up from the device so started using cobs encoding to send messages but using new line  (`0x0A`) delimiters to differentiate messages being sent back.
+
+I was finding it difficult to debug with the cobs encoded messages coming up from the device so started using cobs encoding to send messages but using new line (`0x0A`) delimiters to differentiate messages being sent back.
 
 The print function is useful for debugging arrays.
 
@@ -78,7 +79,7 @@ void sendAck(uint8_t msgCount, uint8_t* reply, uint8_t length) {
   // printArray("ACK", byteArray, 5+length);
 
   Serial.write(byteArray, arrayLength);
-      
+
   // uint8_t byteArrayEncoded[arrayLength + 2]; // +2 for possible COBS overhead
   // cobs_encode(byteArrayEncoded, byteArray, arrayLength);
   // Serial.write(byteArrayEncoded, arrayLength + 2);
@@ -90,7 +91,7 @@ void sendAck(uint8_t msgCount, uint8_t* reply, uint8_t length) {
 
 So far this has worked pretty well for me, but Shawn is still reporting some issues so we need to run more tests.
 
-Moving on to some other parts of the project. I wrote up a [doc describing an engagement model](https://github.com/hackclub/haxidraw/blob/main/ENGAGEMENT.md) for gettine the machine. 
+Moving on to some other parts of the project. I wrote up a [doc describing an engagement model](https://github.com/hackclub/haxidraw/blob/main/ENGAGEMENT.md) for gettine the machine.
 
 Part of that model involves submitting pieces to a virtual gallery space. I decided an interesting space could be a infinite maze which gets randomly populated with submitted art work. I made a quick implementation of the maze which ended up being a classic raycasting project. Right now it's very Wolfenstein.
 
@@ -104,40 +105,39 @@ Here is the draft interface:
 
 <img width="1113" alt="Screen Shot 2023-05-26 at 10 44 05 AM" src="https://github.com/hackclub/haxidraw/assets/27078897/ca30829b-d886-4253-8fa9-216b2684c198">
 
-I created two ways to make drawings. One is using the Turtle class which lets you create drawings programmatically, and two is by dropping an SVG into the editor which will automatically be converted into a Turtle. You can then use affine transformations (scale, rotate, translate) to position it properly. 
+I created two ways to make drawings. One is using the Turtle class which lets you create drawings programmatically, and two is by dropping an SVG into the editor which will automatically be converted into a Turtle. You can then use affine transformations (scale, rotate, translate) to position it properly.
 
 In the bottom right corner the editor has a little console. This was somewhat interesting to implement. I wanted it to have access to the functions in the top-level scope of the most recently run script. So you can define functions in the editor and then run them on command in the command line. I did this by rewriting the script a bit before running it.
 
 Here is the relevant code:
 
 ```js
-const ast = acorn.parse(code, { ecmaVersion: "latest" });
+const ast = acorn.parse(code, { ecmaVersion: 'latest' })
 
-const topScopeInserts = [];
+const topScopeInserts = []
 
 ast.body.forEach(statement => {
-  const { type } = statement;
+  const { type } = statement
 
-  if (type === "VariableDeclaration") {
+  if (type === 'VariableDeclaration') {
     statement.declarations.forEach(x => {
-      topScopeInserts.push(x.id.name);
+      topScopeInserts.push(x.id.name)
     })
   }
 
-  if (type === "FunctionDeclaration") {
-    topScopeInserts.push(statement.id.name);
+  if (type === 'FunctionDeclaration') {
+    topScopeInserts.push(statement.id.name)
   }
-
 })
 
 topScopeInserts.forEach(name => {
   code += `\n;topScope["${name}"] = ${name};`
-});
+})
 ```
 
 One design consideration when making the editor is that when a user calls the `runMachine()` function it should run the drawing which is currently visible.
 
-Moving on to the firmware. It took a bit of patience to implement COBS properly. Though implementing it in JavaScript recently I willfully ignored doing so for the embedded instead opting to use newline delimiters for the communication stream. The ASCII for newline is `0x0A` otherwise known as 10. 10 periodically does show up in bytesteam encodings, which was giving me some trouble. This is what COBS is for, to give you a known unique character which will occur only at the end of your messages. The challenge in implementing it is my Arduino print statements (my primary debugging technique) no longer worked because the other end of my serial communication connection in the browser was then expecting 0 delimited messages. 
+Moving on to the firmware. It took a bit of patience to implement COBS properly. Though implementing it in JavaScript recently I willfully ignored doing so for the embedded instead opting to use newline delimiters for the communication stream. The ASCII for newline is `0x0A` otherwise known as 10. 10 periodically does show up in bytesteam encodings, which was giving me some trouble. This is what COBS is for, to give you a known unique character which will occur only at the end of your messages. The challenge in implementing it is my Arduino print statements (my primary debugging technique) no longer worked because the other end of my serial communication connection in the browser was then expecting 0 delimited messages.
 
 The solution is pretty straightforward though. Just implement the encoding and decoding incrementally. So first verify I can encode and decode messages just in JS. Then send encoded messages to the firmware but expect to receive back newline delimited messages so I can read the print statements. Then when I know everything else works encode the messages coming back up and decode them in JS.
 
@@ -161,9 +161,9 @@ I acquired some Gelly Roll Sakura pens which I used to make some of our most int
 I made the JS controls function asyncronously by adding a number ID to each message and sending back acknowledgements. This allows us to write code like such:
 
 ```js
-const port = await createWebSerialPort(rawPort);
-const bytes = floatsToBytes([ x, y ]);
-await port.send("go", bytes);
+const port = await createWebSerialPort(rawPort)
+const bytes = floatsToBytes([x, y])
+await port.send('go', bytes)
 ```
 
 in which the machine actually executes and finishes the command before the await resolves.
@@ -227,21 +227,21 @@ It looks like we'll be using the single control board designed for the drawing m
 - We should still be able to interface with the machine in high-level languages as a virtual object.
 - The motor control should be good
 
-These two goals and our approaches to addressing them are heavily influenced by the work we did the Modular Things project. For the first goal we need to define a communication interface. Almost like a REST API for the machine (if you're coming from the web dev world). 
+These two goals and our approaches to addressing them are heavily influenced by the work we did the Modular Things project. For the first goal we need to define a communication interface. Almost like a REST API for the machine (if you're coming from the web dev world).
 
 Motor control is a tricky topic. Historically most digital fabrication machines have been built around [GRBL](https://github.com/grbl/grbl) recently [Klipper3D](https://www.klipper3d.org/) has risen in popularity.
 
-The basic problem is about figuring out how to turn multiple motors who's collective motion results in the movement of the machine in a controlled manner. In the case of our machine we have two motors which are coupled together through a belt. 
+The basic problem is about figuring out how to turn multiple motors who's collective motion results in the movement of the machine in a controlled manner. In the case of our machine we have two motors which are coupled together through a belt.
 
 In short I managed to write a fairly low quality motion controller (but a functional one) which has constant speed. Preferably we would set maximum accelerations and the planner would figure out the appropriate speeds based on the path it needs to take. But we'll build up to that in the coming weeks. We are sending out machines to testers and developers now so we need to have a nice interface for people to develop devices.
 
 Something like this:
 
 ```js
-import { createHaxidraw } from "createHaxidraw.js";
+import { createHaxidraw } from 'createHaxidraw.js'
 
-await haxidraw.servo(-90);
-await haxidraw.moveTo(x, y);
+await haxidraw.servo(-90)
+await haxidraw.moveTo(x, y)
 ```
 
 This is a virtual machine which communicates with the actual machine through the serial port.

@@ -1,0 +1,83 @@
+.helpSection {
+  color: black;
+  position: relative;
+}
+
+.helpSectionToolbar {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  transform: translate(0, -100%);
+  background: rgba(var(--primary-rgb), 0.89);
+  border-radius: 0 10px 0 0;
+  overflow: clip;
+}
+
+.helpSectionTab {
+  padding: 6px 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.helpSectionTab:hover {
+  background: rgba(var(--primary-rgb), 0.89);
+}
+
+.helpContent {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  position: relative;
+  padding: 1.5rem;
+  overflow-x: clip;
+  overflow-y: auto;
+  height: 100%;
+
+  > :nth-child(1) {
+    margin-top: 0;
+  }
+
+  a {
+    color: var(--primary);
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  img {
+    display: block;
+    margin-top: 1.1rem;
+    max-width: 100%;
+  }
+
+  code,
+  pre {
+    font-size: 0.995rem;
+    font-family: var(--font-mono);
+  }
+
+  li p {
+    margin: 0;
+  }
+}
+
+body[data-theme='dark'] {
+  .helpContent {
+    color: white;
+
+    a {
+      color: white;
+    }
+
+    hr {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    img {
+      background-color: white;
+    }
+  }
+}

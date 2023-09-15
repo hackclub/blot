@@ -1,9 +1,9 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "extends": "astro/tsconfigs/base",
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "lib": ["ES2015"],
+    "lib": ["ES2015", "dom"],
     "moduleResolution": "NodeNext",
     "allowImportingTsExtensions": true,
     "target": "ES2020"

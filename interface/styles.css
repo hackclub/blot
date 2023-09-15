@@ -97,7 +97,7 @@ html {
   justify-content: center;
   align-items: center;
   font-size: 2em;
-  border: .2em dashed black;
+  border: 0.2em dashed black;
   box-sizing: border-box;
 }
 
@@ -112,7 +112,7 @@ html {
 }
 
 .cm-editor {
-  height: 100%
+  height: 100%;
 }
 
 /*TODO: not sure why this doesnt work*/
@@ -126,4 +126,3 @@ html {
   box-sizing: border-box;
   cursor: col-resize;
 }
-

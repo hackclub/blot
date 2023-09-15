@@ -1,6 +1,10 @@
-# Square Disarray
+---
+title: Square Disarray
+thumbnail: https://github.com/hackclub/haxidraw/assets/27078897/bcaf04e7-a00e-4f98-aaed-01eeebf2c79c
+contributors: henrybass
+---
 
-> You can follow along in [this editor](https://haxidraw.hackclub.dev/editor).
+> You can follow along in [this editor](https://haxidraw.hackclub.dev/).
 
 Let's something like draw this:
 
@@ -11,16 +15,16 @@ Let's something like draw this:
 Let's start by centering the drawing we'll make in the document.
 
 ```js
-const width = 120;
-const height = 120;
+const width = 120
+const height = 120
 
-setDocDimensions(width, height);
+setDocDimensions(width, height)
 
-const shapes = createTurtle(); // this will be our container turtle
+const shapes = createTurtle() // this will be our container turtle
 
-shapes.translate([width / 2, height / 2], shapes.cc); // this moves the center of our turtle to the center of our doc
+shapes.translate([width / 2, height / 2], shapes.cc) // this moves the center of our turtle to the center of our doc
 
-drawTurtles(shapes);
+drawTurtles(shapes)
 ```
 
 # Draw a Square
@@ -29,16 +33,16 @@ This function draws squares.
 
 ```js
 function rect(w, h) {
-  const t = createTurtle();
+  const t = createTurtle()
 
   for (let i = 0; i < 2; i++) {
-    t.forward(w);
-    t.right(90);
-    t.forward(h);
-    t.right(90);
+    t.forward(w)
+    t.right(90)
+    t.forward(h)
+    t.right(90)
   }
 
-  return t;
+  return t
 }
 ```
 
@@ -47,9 +51,9 @@ Let's use it to add a square to our drawing.
 ```js
 // ...
 
-shapes.join(rect(10, 10)); // here is the new line
+shapes.join(rect(10, 10)) // here is the new line
 
-shapes.translate([width / 2, height / 2], shapes.cc);
+shapes.translate([width / 2, height / 2], shapes.cc)
 
 // ...
 ```
@@ -61,11 +65,11 @@ shapes.translate([width / 2, height / 2], shapes.cc);
 First we'll make a row. Start with a lot of squares.
 
 ```js
-const gridWidth = 10;
+const gridWidth = 10
 
 for (let i = 0; i < gridWidth; i++) {
-  const t = rect(10, 10);
-  shapes.join(t);
+  const t = rect(10, 10)
+  shapes.join(t)
 }
 ```
 
@@ -75,9 +79,9 @@ We can't see any change because they are on top of eachother! Space them out.
 
 ```js
 for (let i = 0; i < 3; i++) {
-  const t = rect(10, 10);
-  t.translate([23 * i, 0]);
-  shapes.join(t);
+  const t = rect(10, 10)
+  t.translate([23 * i, 0])
+  shapes.join(t)
 }
 ```
 
@@ -86,11 +90,11 @@ for (let i = 0; i < 3; i++) {
 If we want the spacing to be perfect, each square should move by the width of a square.
 
 ```js
-const squareWidth = 10;
+const squareWidth = 10
 for (let i = 0; i < 3; i++) {
-  const t = rect(squareWidth, 10);
-  t.translate([squareWidth * i, 0]);
-  shapes.join(t);
+  const t = rect(squareWidth, 10)
+  t.translate([squareWidth * i, 0])
+  shapes.join(t)
 }
 ```
 
@@ -99,13 +103,13 @@ for (let i = 0; i < 3; i++) {
 To make it a grid add another loop.
 
 ```js
-const squareWidth = 10;
-const squareHeight = 10;
+const squareWidth = 10
+const squareHeight = 10
 for (let i = 0; i < 3; i++) {
   for (let j = 0; j < 3; j++) {
-    const t = rect(squareWidth, squareHeight);
-    t.translate([squareWidth * i, squareHeight * j]);
-    shapes.join(t);
+    const t = rect(squareWidth, squareHeight)
+    t.translate([squareWidth * i, squareHeight * j])
+    shapes.join(t)
   }
 }
 ```
@@ -123,13 +127,13 @@ We can randomly translate each square.
 ```js
 for (let i = 0; i < 10; i++) {
   for (let j = 0; j < 10; j++) {
-    const t = rect(squareWidth, squareHeight);
-    t.translate([squareWidth * i, squareHeight * j]);
+    const t = rect(squareWidth, squareHeight)
+    t.translate([squareWidth * i, squareHeight * j])
 
     // randomness added here
-    t.translate([randInRange(-1, 1), randInRange(-1, 1)]);
+    t.translate([randInRange(-1, 1), randInRange(-1, 1)])
 
-    shapes.join(t);
+    shapes.join(t)
   }
 }
 ```
@@ -139,7 +143,7 @@ for (let i = 0; i < 10; i++) {
 Scale the randomness with the x location.
 
 ```js
-t.translate([(randInRange(-1, 1) * i) / 6, (randInRange(-1, 1) * i) / 6]);
+t.translate([(randInRange(-1, 1) * i) / 6, (randInRange(-1, 1) * i) / 6])
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/fb392a9b-4ec8-4eec-9f1f-035d67c4ea50" width="512"/>
@@ -147,7 +151,7 @@ t.translate([(randInRange(-1, 1) * i) / 6, (randInRange(-1, 1) * i) / 6]);
 Now rotate each square in a similar manner.
 
 ```js
-t.rotate(randInRange(-1, 1) * 2 * i);
+t.rotate(randInRange(-1, 1) * 2 * i)
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/1a0902f1-084d-4651-a188-c1dbe6995289" width="512"/>

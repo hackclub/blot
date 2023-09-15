@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'preact/hooks'
 import download from '../lib/download.ts'
 import runCode from '../lib/run.ts'
-import {
-  loadCodeFromString,
-  makeNewState,
-  patchStore,
-  useStore,
-  getStore
-} from '../lib/state.ts'
-import styles from './Toolbar.module.css'
+import { defaultProgram } from '../lib/defaultProgram.js'
+import { patchStore, getStore } from '../lib/state.ts'
+import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
+import styles from './Toolbar.module.scss'
 import Button from '../ui/Button.tsx'
 import cx from 'classnames'
 // import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
@@ -20,34 +16,39 @@ import {
   tryAutoConnect
 } from '../lib/machine.ts'
 import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
-import { Theme, patchSettings, useSettings } from '../lib/settings.ts'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
 
 export default function Toolbar() {
-  const { connected } = useStore(['connected'])
+  const { connected } = getStore();
 
-  const [hidden, setHidden] = useState(true)
+  const [hidden, setHidden] = useState(true);
 
   return (
     <div class={styles.root}>
-      <div style={{ 'display': 'flex', 'align-items': 'center' }}>
+      <div
+        style={{
+          'display': 'flex',
+          'align-items': 'center'
+        }}>
         <h1 class={styles.heading}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-star">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-          </svg>
-          <span style="font-weight: 700;">blot</span>
+          <a href="/">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-star">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span style="font-weight: 700;">blot</span>
+          </a>
         </h1>
         <RunButton />
         <NewButton />
@@ -71,6 +72,7 @@ export default function Toolbar() {
               'display': hidden ? 'none' : '',
               'position': 'absolute',
               'background': 'var(--primary)',
+              'border': '1px solid rgba(255, 255, 255, 0.1)',
               'z-index': 9999,
               'width': '100%',
               'top': '100%',
@@ -139,12 +141,19 @@ function RunButton() {
   )
 }
 
+function getCode() {
+  const { view } = getStore()
+
+  const code = view.state.doc.toString()
+
+  return code
+}
+
 function DownloadButton() {
-  const state = useStore()
   return (
     <div
       class={styles.dropdownEntry}
-      onClick={() => download('project.js', state.code.content)}>
+      onClick={() => download('project.js', getCode())}>
       js
     </div>
   )
@@ -155,9 +164,7 @@ function NewButton() {
     <Button
       variant="ghost"
       onClick={() => {
-        patchStore({
-          ...makeNewState()
-        })
+        loadCodeFromString(defaultProgram)
       }}>
       new
     </Button>
@@ -205,8 +212,8 @@ function DownloadSVG() {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${
                   docDimensions.width
                 } ${docDimensions.height}" width="${
-                  docDimensions.width
-                }mm" height="${docDimensions.height}mm">
+          docDimensions.width
+        }mm" height="${docDimensions.height}mm">
                     ${paths.join('\n')}
                 </svg>
             `
@@ -258,8 +265,8 @@ function DownloadPNG() {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${
                   docDimensions.width
                 } ${docDimensions.height}" width="${
-                  docDimensions.width
-                }mm" height="${docDimensions.height}mm">
+          docDimensions.width
+        }mm" height="${docDimensions.height}mm">
                     ${paths.join('\n')}
                 </svg>
             `
@@ -329,7 +336,7 @@ function OpenButton() {
 }
 
 function MachineControls() {
-  const { inst, running } = useStore(['inst', 'running'])
+  const { inst, running } = getStore();
 
   useEffect(() => {
     tryAutoConnect()
@@ -362,61 +369,65 @@ function MachineControls() {
 }
 
 function SettingsButton() {
-  const { theme, vimMode } = useSettings(['theme', 'vimMode'])
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-
-  useEffect(() => {
-    if (!dropdownOpen) return
-    // make it so when you click anywhere else the dialog closes
-    function handleClick(e: MouseEvent) {
-      const target = e.target as HTMLElement
-      if (!target.closest(`.${styles.settingsWrapper}`)) {
-        setDropdownOpen(false)
-      }
-    }
-
-    window.addEventListener('click', handleClick)
-    return () => {
-      window.removeEventListener('click', handleClick)
-    }
-  }, [dropdownOpen])
+  const { theme, vimMode } = getStore()
+  const [hidden, setHidden] = useState(true)
 
   return (
-    <div class={styles.settingsWrapper}>
-      <Button
-        variant="ghost"
-        icon
-        aria-label="show settings menu"
-        aria-expanded={dropdownOpen}
-        onClick={() => {
-          setDropdownOpen(!dropdownOpen)
-        }}>
-        <SettingsIcon />
+    <div
+      style={{
+        cursor: 'default',
+        width: 'min-width'
+      }}
+      onMouseEnter={() => setHidden(false)}
+      onMouseLeave={() => setHidden(true)}>
+      <Button variant="ghost">
+        <a style={{ all: 'unset' }}>
+          <div style={{ transform: 'translate(0, 3.5px)' }}>
+            <SettingsIcon className={styles.icon} />
+          </div>
+        </a>
       </Button>
-      {dropdownOpen && (
-        <div class={styles.settingsDropdown}>
-          <Button
-            variant="ghost"
-            onClick={() => {
-              patchSettings({
-                theme: theme === Theme.Dark ? Theme.Light : Theme.Dark
-              })
-              setDropdownOpen(false)
-            }}>
-            <BrightnessContrastIcon className={styles.icon} />
-            <span>toggle theme</span>
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => {
-              patchSettings({ vimMode: !vimMode })
-              setDropdownOpen(false)
-            }}>
-            <KeyboardIcon className={styles.icon} />
-            <span>{vimMode ? 'disable' : 'enable'} vim mode</span>
-          </Button>
-        </div>
-      )}
+      <div
+        style={{
+          'display': hidden ? 'none' : '',
+          'position': 'absolute',
+          'right': '5px',
+          'background': 'var(--primary)',
+          'border': '1px solid rgba(255, 255, 255, 0.1)',
+          'z-index': 9999,
+          'padding': '5px',
+          'border-radius': '5px'
+        }}>
+        <Button
+          class={styles.dropdownEntry}
+          variant="ghost"
+          onClick={() => {
+            const newTheme = theme === "dark" ? "light" : "dark";
+            patchStore({
+              theme: newTheme
+            })
+
+            document.body.dataset.theme = newTheme;
+
+            localStorage.setItem('colorTheme', newTheme);
+
+            setHidden(false)
+          }}>
+          <BrightnessContrastIcon className={styles.icon} />
+          <span>toggle theme</span>
+        </Button>
+        <Button
+          class={styles.dropdownEntry}
+          variant="ghost"
+          onClick={() => {
+            patchStore({ vimMode: !vimMode })
+            localStorage.setItem('vimMode', (!vimMode).toString())
+            setHidden(false)
+          }}>
+          <KeyboardIcon className={styles.icon} />
+          <span>{vimMode ? 'disable' : 'enable'} vim mode</span>
+        </Button>
+      </div>
     </div>
   )
 }

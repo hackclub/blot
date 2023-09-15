@@ -36,7 +36,7 @@ export default function Dialog({
     return () => {
       window.removeEventListener('keydown', keyHandler)
     }
-  }, [show, keyHandler])
+  })
 
   return show ? (
     <div

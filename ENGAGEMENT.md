@@ -12,9 +12,9 @@ Let's explore some ideas to address this.
 
 ## A MOMA Exhibit
 
-Let's create a collectively developed physical/digital art exhibit for the Museum of Modern Art in NYC. 
+Let's create a collectively developed physical/digital art exhibit for the Museum of Modern Art in NYC.
 
-Hack Club will produce a microworld web-based environment for creating generative line drawings which can be fabricated on the Haxidraw. We will encourage students to create a collection of digital art which can be submitted to our virtual or AR gallery space where they can see their work alongside pieces created by thousands of teens around the world. When they have curated their own exhibit (collection) in this virtual gallery we send them a machine so they can run a physical pop-up exhibit in their high school, printed using the haxidraw machines that they have assembled. We will do this for one year. 
+Hack Club will produce a microworld web-based environment for creating generative line drawings which can be fabricated on the Haxidraw. We will encourage students to create a collection of digital art which can be submitted to our virtual or AR gallery space where they can see their work alongside pieces created by thousands of teens around the world. When they have curated their own exhibit (collection) in this virtual gallery we send them a machine so they can run a physical pop-up exhibit in their high school, printed using the haxidraw machines that they have assembled. We will do this for one year.
 
 After that year, we will host a physical installation of these pop-up exhibits at a museum we partner with and fly out many contributors from around the world to celebrate their collective creation together.
 
@@ -31,7 +31,7 @@ There are a couple units of interaction with this model.
 
 ![Screen Shot 2023-05-26 at 2 35 38 PM](https://github.com/hackclub/haxidraw/assets/27078897/a0f8b225-9fc5-4d4a-85c2-0c2f622691c8)
 
-Design a digital art piece. You can draw it or generate it algorithmically. 
+Design a digital art piece. You can draw it or generate it algorithmically.
 
 Explore all the art in Hack Clubs virtual museum of plotter art.
 
@@ -66,10 +66,3 @@ Host an exhibit in a local venue like your school or a makerspace.
 Come celebrate with the community as we turn our virtual museum into a real one and share it with the world.
 
 ![download](https://github.com/hackclub/haxidraw/assets/27078897/edc29718-9be0-4465-88d5-0404b67e6a69)
-
-
-
-
-
-
-

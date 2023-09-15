@@ -1,265 +1,158 @@
 ---
 import Layout from '../layouts/Layout.astro'
+
+import Background from '../layouts/Background.astro'
+import ThreeDModel from '../layouts/ThreeDModel.astro'
+
 ---
 
-<script>
-  import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
-  import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
-  import * as THREE from 'three'
-  import { turtles } from '../lib/paths.js'
-  import { object } from 'astro/zod'
 
-  let objects = {
-    x: [],
-    y: []
-  }
+<style>
 
-  // Set up scene
-  const scene = new THREE.Scene()
-  scene.background = null
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  )
-
-  // Set up renderer
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    alpha: true
-  })
-  renderer.setSize(window.innerWidth, window.innerHeight)
-  renderer.domElement.style.zIndex = '999'
-  document.body.appendChild(renderer.domElement)
-
-  // Set up light
-  const light = new THREE.DirectionalLight(0xffffff)
-  light.position.set(0.5, 0, 1)
-  scene.add(light)
-
-  // Add the parts
-  const objLoader = new OBJLoader().setPath('/model/')
-  const mtlLoader = new MTLLoader().setPath('/model/')
-
-  camera.position.z = 0.3
-  camera.position.x = -0.2
-  camera.rotation.z = Math.PI
-  camera.position.y = -0.25
-
-  mtlLoader.load('feet.mtl', function (materials) {
-    materials.preload()
-    objLoader.setMaterials(materials).load(
-      'feet.obj',
-      function (object) {
-        scene.add(object)
-        objects.feet = object
-      },
-      function (xhr) {},
-      function (error) {
-        console.log(error)
-      }
-    )
-  })
-
-  mtlLoader.load('carriage.mtl', function (materials) {
-    materials.preload()
-    objLoader.setMaterials(materials).load(
-      'carriage.obj',
-      function (object) {
-        scene.add(object)
-        objects.carriage = object
-      },
-      function (xhr) {},
-      function (error) {
-        console.log(error)
-      }
-    )
-  })
-
-  mtlLoader.load('arm.mtl', function (materials) {
-    materials.preload()
-    objLoader.setMaterials(materials).load(
-      'arm.obj',
-      function (object) {
-        scene.add(object)
-        objects.arm = object
-      },
-      function (xhr) {},
-      function (error) {
-        console.log(error)
-      }
-    )
-  })
-
-  mtlLoader.load('penholder.mtl', function (materials) {
-    materials.preload()
-    objLoader.setMaterials(materials).load(
-      'penholder.obj',
-      function (object) {
-        scene.add(object)
-        objects.x.push(renderer.domElement.offsetWidth / 2)
-        objects.y.push(renderer.domElement.offsetHeight / 2)
-        objects.penholder = object
-      },
-      function (xhr) {},
-      function (error) {
-        console.log(error)
-      }
-    )
-  })
-
-  // Set up turtle
-  let width, height
-  const canvas = document.getElementById('canvas')
-  const ctx = canvas.getContext('2d')
-  ctx.strokeStyle = 'black'
-  width = canvas.width = window.innerWidth
-  height = canvas.height = window.innerHeight
-
-  const turtle = turtles[0]
-  let polyline = turtle.path[0]
-  const config = {
-    scale: 5,
-    xoff: 70,
-    yoff: -10,
-    lineStart: 1,
-    lineEnd: polyline.length
-  }
-  const paths = polyline.map(([x, y]) => [
-    (x + config.xoff) * config.scale,
-    (y + config.yoff) * config.scale
-  ])
-  let i = config.lineStart + 1
-  let j = config.lineStart + 1
-
-  function dist(x1: number, y1: number, x2: number, y2: number) {
-    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
-  }
-
-  const lerp = (x, y, a) => x * (1 - a) + y * a
-  const clamp = (a, min = 0, max = 1) => Math.min(max, Math.max(min, a))
-  const invlerp = (x, y, a) => clamp((a - x) / (y - x))
-  const range = (x1, y1, x2, y2, a) => lerp(x2, y2, invlerp(x1, y1, a))
-
-  function moveTo(x: number, y: number) {
-    let mappedX = range(
-      0,
-      width,
-      -camera.position.z / config.scale,
-      camera.position.z / config.scale,
-      x
-    )
-    let xoff = range(
-      0,
-      width,
-      -camera.position.z / config.scale,
-      camera.position.z / config.scale,
-      config.xoff
-    )
-    let mappedY = range(
-      0,
-      height,
-      -camera.position.y / config.scale,
-      camera.position.y / config.scale,
-      y
-    )
-    let yoff = range(
-      0,
-      height,
-      -camera.position.y / config.scale,
-      camera.position.y / config.scale,
-      config.yoff
-    )
-    objects.carriage.position.x = mappedX
-    objects.arm.position.x = mappedX
-    objects.penholder.position.x = mappedX
-    objects.arm.position.y = mappedY
-    objects.penholder.position.y = mappedY
-    objects.x.push(x)
-    objects.y.push(y)
-  }
-
-  function animate() {
-    requestAnimationFrame(animate)
-    if (
-      i < config.lineEnd - 1 &&
-      objects.arm != undefined &&
-      objects.penholder != undefined &&
-      objects.carriage != undefined &&
-      objects.feet != undefined
-    ) {
-      i += 10 / dist(paths[j - 1][0], paths[j - 1][1], paths[j][0], paths[j][1])
-      j = Math.floor(i)
-      ctx.clearRect(0, 0, width, height)
-      let [x, y] = paths[j]
-      // increase i a bit if we're out of the screen
-      if (x < 0 || x > width || y < 0 || y > height) i++
-      if (j === 0) ctx.moveTo(x, y)
-      else
-        ctx.lineTo(
-          lerp(paths[j - 1][0], x, i - j),
-          lerp(paths[j - 1][1], y, i - j)
-        )
-      ctx.stroke()
-      moveTo(x, y)
-    }
-    renderer.render(scene, camera)
-  }
-
-  animate()
-</script>
-
-<style is:global lang="scss">
-  body {
+  html, body {
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px), linear-gradient(to bottom, #ddd 1px, transparent 1px);
     background-size: 40px 40px;
-    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
-      linear-gradient(to bottom, #ddd 1px, transparent 1px);
-    min-height: 100vh;
-  }
-
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-  }
-
-  #canvas {
-    z-index: 999;
-  }
-
-  main {
-    position: relative;
-    z-index: 2;
-    padding: 1rem 0;
-  }
-
-  h1 {
     font-family: var(--font-sans);
-    font-size: 4rem;
-    max-width: 50vw;
-    margin-inline: 4rem;
-    line-height: 1;
-    letter-spacing: -2px;
-
-    span {
-      color: var(--primary);
-    }
   }
+
+  .strong-header {
+    font-size: 3.9em;
+    letter-spacing: -2px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .header-section {
+    position: absolute;
+    left: 40px;
+    top: 28px;
+    width: 80%;
+  }
+
+  .sub-header {
+    font-size: .55em;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: -1px;
+    padding-top: 10px;
+  }
+
+  .header-text {
+    font-size: 3em;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -1px;
+  }
+
+  .lead-section {
+    position: relative;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .how-to {
+    color: white;
+    height: 500px;
+    background: #122953;
+/*    background: #ffc9c9;*/
+    display: flex;
+  }
+
+  .video-text {
+    font-size: .55em;
+    font-weight: 500;
+    padding: 1em;;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .youtube-video-container {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .youtube-video {
+    aspect-ratio: 560/315;
+    border: none;
+    width: 90%;
+  }
+
+  .get-started {
+    height: 500px;
+    background: antiquewhite;
+  }
+
+  .disclaimer {
+    font-size: 1em;
+    font-weight: 100;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+  }
+
+  a {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    color: #ec3750;
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-underline-position: under;
+  }
+
+  a:hover {
+    text-decoration-style: wavy;
+  }
+
+  .hack-club-text-box {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    padding: 0px 5px;
+    background-color: #ec3750;
+    border-radius: 10px;
+/*    -webkit-transform: rotate(-3deg) translateY(-5px);*/
+/*    -moz-transform: rotate(-3deg) translateY(-5px);*/
+/*    -ms-transform: rotate(-3deg) translateY(-5px);*/
+/*    transform: rotate(-3deg) translateY(-5px);*/
+    color: white;
+    white-space: nowrap;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+  }
+
 </style>
 
 <Layout title="Blot" description="Blot out the world!">
-  <canvas id="canvas"></canvas>
-  <!-- 
-    <main>
-        <section>
-            <h1>
-                <span>Blot</span> is the plotting tool that everyone can make
-                art for.
-            </h1>
-            <h1>Draw some art, get a <span>Blot</span>.</h1>
-        </section>
-    </main>
-    -->
+  <div class="lead-section">
+    <div class="header-section strong-header">
+      <div>Blot, the plotter bot</div>
+      <div>from <a class="hack-club-text-box" href="https://www.hackclub.com">Hack Club</a>.</div>
+      <div class="sub-header">You* code art, we send you a machine.</div>
+    </div>
+    
+    <Background></Background>
+    <div class="disclaimer">(*Must be a <20 years old to receive a free machine.)</div>
+  </div>
+  <div class="how-to header-text">
+    <div class="video-text">
+      <div>1) Learn to make generative art with our <a href="/guides">guides</a> and from the community.</div>
+      <div>2) Make an original art piece.</div>
+      <div>3) Submit it as a pull request to the art <a href="/gallery">gallery</a>.</div>
+      <div>4) Get parts for your Blot in the mail and <a href="/assembly">build your own</a> machine.</div>
+    </div>
+    <div class="youtube-video-container">
+      <ThreeDModel></ThreeDModel>
+      <!-- <iframe class="youtube-video" src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"></iframe> -->
+    </div>
+  </div>
+  <div class="get-started header-text">
+    <div>Images of machine here.</div>
+    <div>Links to artwork.</div>
+  </div>
 </Layout>

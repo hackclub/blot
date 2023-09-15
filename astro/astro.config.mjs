@@ -4,16 +4,19 @@ import vercel from '@astrojs/vercel/serverless'
 import prefresh from '@prefresh/vite'
 import mdx from '@astrojs/mdx'
 
-// https://astro.build/config
 export default defineConfig({
-  site: 'https://editor.haxidraw.hackclub.com',
+  site: 'https://haxidraw.hackclub.com',
   integrations: [
     preact({
       compat: true
-    })
+    }),
+    mdx()
   ],
   output: 'server',
   adapter: vercel(),
+  markdown: {
+    syntaxHighlight: 'prism'
+  },
   vite: {
     plugins: [prefresh()],
     ssr: {
@@ -30,9 +33,6 @@ export default defineConfig({
     build: {
       target: 'es2020'
     }
-  },
-  markdown: {
-    syntaxHighlight: 'prism'
   },
   integrations: [preact(), mdx()]
 })
