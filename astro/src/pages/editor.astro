@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Editor from '../Editor.tsx'
 import EditorLayout from '../layouts/EditorLayout.astro'
+import Editor from '../layouts/Editor.astro'
 
 export const prerender = false
 
@@ -16,10 +16,14 @@ if (query)
 
 if (tutorial)
   tutorial = { ...tutorial, content: tutorial.compiledContent(), slug: query }
+
 ---
 
 <EditorLayout title="Editor" description="Editor">
   <main>
-    <Editor client:load tutorial={tutorial} />
+    <Editor client:load tutorial={tutorial}/>
   </main>
 </EditorLayout>
+
+
+

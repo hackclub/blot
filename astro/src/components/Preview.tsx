@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback } from 'preact/hooks'
 import styles from './Preview.module.css'
-import { getStore, useStore } from '../lib/state.ts'
+import { getStore } from '../lib/state.ts'
 import CenterToFitIcon from '../ui/CenterToFitIcon.tsx'
 import Button from '../ui/Button.tsx'
 import type { Point } from '../lib/drawingToolkit/index.js'
@@ -9,14 +9,14 @@ import lineclip from '../lib/lineclip.ts'
 import { createListener } from '../lib/createListener.js'
 
 export default function Preview(props: { className?: string }) {
-  const { turtles, docDimensions } = useStore(['turtles', 'docDimensions'])
+  const { turtles, docDimensions } = getStore();
 
   useEffect(init, [])
 
   useEffect(() => {
     const canvas = document.querySelector('.main-canvas')
     requestRedraw(canvas)
-  }, [turtles, docDimensions])
+  })
 
   return (
     <div class={styles.root}>

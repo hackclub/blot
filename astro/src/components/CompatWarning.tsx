@@ -1,13 +1,9 @@
-import { useEffect, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 import Button from '../ui/Button.tsx'
 import Dialog from '../ui/Dialog.tsx'
 
 export default function CompatWarning() {
   const [show, setShow] = useState(false)
-  useEffect(() => {
-    // setShow(!navigator.serial);
-    // TODO: temporarily disabled
-  }, [])
 
   return (
     <Dialog

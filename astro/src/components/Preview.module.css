@@ -13,7 +13,7 @@
   overflow-x: auto; /* fix resizing the canvas */
 }
 
-body[data-theme='Dark'] .canvas {
+body[data-theme='dark'] .canvas {
   filter: invert(1);
 }
 
@@ -41,7 +41,7 @@ body[data-theme='Dark'] .canvas {
   background-color: rgba(200, 200, 200, 0.9);
 }
 
-body[data-theme='Dark'] .centerButton {
+body[data-theme='dark'] .centerButton {
   background-color: rgba(50, 50, 50, 0.9);
 }
 

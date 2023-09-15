@@ -1,4 +1,3 @@
-import { ReactNode } from 'preact/compat'
 import { compiledContent } from '../../../interface/README.md'
 import styles from './Help.module.scss'
 import { useState } from 'preact/hooks'
