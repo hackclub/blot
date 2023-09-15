@@ -16,21 +16,21 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
   }
 
   .strong-header {
-    font-size: 3.9rem;
+    font-size: 3.9em;
     letter-spacing: -2px;
     font-weight: 600;
-    line-height: 1;
+    line-height: 1.2;
   }
 
   .header-section {
     position: absolute;
     left: 40px;
-    top: 20px;
+    top: 28px;
     width: 80%;
   }
 
   .sub-header {
-    font-size: 3rem;
+    font-size: .55em;
     line-height: 1;
     font-weight: 400;
     letter-spacing: -1px;
@@ -38,7 +38,7 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
   }
 
   .header-text {
-    font-size: 3rem;
+    font-size: 3em;
     line-height: 1;
     font-weight: 600;
     letter-spacing: -1px;
@@ -52,15 +52,17 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
   }
 
   .how-to {
+    color: white;
     height: 500px;
-    background: #ffc9c9;
+    background: #555560;
+/*    background: #ffc9c9;*/
     display: flex;
   }
 
   .video-text {
-    font-size: 2rem;
+    font-size: .55em;
     font-weight: 500;
-    padding: 2.4rem;
+    padding: 1em;;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -86,14 +88,43 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
   }
 
   .disclaimer {
-    font-size: 1rem;
+    font-size: 1em;
     font-weight: 100;
     position: absolute;
     left: 10px;
     bottom: 10px;
   }
 
-  
+  a {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    color: #ec3750;
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-underline-position: under;
+  }
+
+  a:hover {
+    text-decoration-style: wavy;
+  }
+
+  .hack-club-text-box {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    padding: 0px 5px;
+    background-color: #ec3750;
+    border-radius: 10px;
+/*    -webkit-transform: rotate(-3deg) translateY(-5px);*/
+/*    -moz-transform: rotate(-3deg) translateY(-5px);*/
+/*    -ms-transform: rotate(-3deg) translateY(-5px);*/
+/*    transform: rotate(-3deg) translateY(-5px);*/
+    color: white;
+    white-space: nowrap;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+  }
 
 </style>
 
@@ -101,10 +132,10 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
   <div class="lead-section">
     <div class="header-section strong-header">
       <div>Blot, the plotter bot</div>
-      <div>from <a href="https://www.hackclub.com">Hack Club</a>.</div>
+      <div>from <a class="hack-club-text-box" href="https://www.hackclub.com">Hack Club</a>.</div>
       <div class="sub-header">You* code art, we send you a machine.</div>
     </div>
-    <!-- <ThreeDModel></ThreeDModel> -->
+    
     <Background></Background>
     <div class="disclaimer">(*Must be a <20 years old to receive a free machine.)</div>
   </div>
@@ -116,10 +147,12 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
       <div>4) Get parts for your Blot in the mail and <a href="/assembly">build your own</a> machine.</div>
     </div>
     <div class="youtube-video-container">
+      <ThreeDModel></ThreeDModel>
       <!-- <iframe class="youtube-video" src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"></iframe> -->
     </div>
   </div>
   <div class="get-started header-text">
-    Haven't programmed before? Don't worry you can get started here.
+    <div>Images of machine here.</div>
+    <div>Links to artwork.</div>
   </div>
 </Layout>

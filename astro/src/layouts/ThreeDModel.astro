@@ -1,10 +1,50 @@
+---
+import { runTextReturnTurtles } from '../lib/runTextReturnTurtles.ts'
+
+const machineRange = {
+  x: [-0.07031505489843565, 0.06585060696837623],
+  y: [-0.21385993884461388, -0.06802130646267329 ]
+}
+
+const machineWidth = machineRange.x[1]-machineRange.x[0];
+const machineHeight = machineRange.y[1]-machineRange.y[0];
+
+const texCanvasWidth = 512;
+const texCanvasHeight = 512*machineHeight/machineWidth;
+
+
+const testTurtles = runTextReturnTurtles(`
+    const t = createTurtle();
+
+    for (let i = 0; i < 300; i++) {
+      t.forward(i*10);
+      t.right(91);
+    }
+
+    drawTurtles(t);
+  `)
+
+if (testTurtles.length > 1) {
+  const [first, ...rest] = testTurtles
+
+  rest.forEach(t => first.join(rest))
+}
+
+const oneTurtle = testTurtles.length > 0 ? testTurtles[0] : null
+
+oneTurtle.translate([texCanvasWidth / 2, texCanvasHeight / 2], oneTurtle.cc)
+oneTurtle.resample(5);
+
+---
+<div class="turtle" data-turtle={JSON.stringify(oneTurtle.path)}></div>
+
 <script>
   import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
   import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import * as THREE from 'three'
-  import { turtles } from '../lib/paths.js'
-  import { runTextReturnTurtles } from '../lib/runTextReturnTurtles.ts'
+
+  const turtle = document.querySelector(".turtle").dataset.turtle;
 
   const navHeight = document.querySelector('nav')?.offsetHeight
 
@@ -34,7 +74,7 @@
     alpha: true
   })
 
-  const controls = new OrbitControls(camera, renderer.domElement)
+  // const controls = new OrbitControls(camera, renderer.domElement)
 
   renderer.setSize(window.innerWidth, window.innerHeight - navHeight)
   renderer.domElement.style.zIndex = '999'
@@ -81,7 +121,7 @@
 
   const toolTip = addSphere({
     radius: 0.005,
-    color: "green"
+    color: "black"
   });
 
 
@@ -170,28 +210,9 @@
   // ctx.fillStyle = 'blue';
   // ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight)
 
-  const testTurtles = runTextReturnTurtles(`
-      const t = createTurtle();
+  const oneTurtlePath = JSON.parse(turtle);
 
-      for (let i = 0; i < 300; i++) {
-        t.forward(i*10);
-        t.right(91);
-      }
-
-      drawTurtles(t);
-    `)
-
-  if (testTurtles.length > 1) {
-    const [first, ...rest] = testTurtles
-
-    rest.forEach(t => first.join(rest))
-  }
-
-  const oneTurtle = testTurtles.length > 0 ? testTurtles[0] : null
-
-  oneTurtle.translate([texCanvasWidth / 2, texCanvasHeight / 2], oneTurtle.cc)
-  oneTurtle.resample(5);
-  const totalN = oneTurtle.path.flat().length;
+  const totalN = oneTurtlePath.flat().length;
 
   function drawCanvasTexture(n) {
     ctx.clearRect(0, 0, texCanvasWidth, texCanvasHeight);
@@ -199,7 +220,7 @@
     let count = 0;
     let lastPoint = null;
     ctx.beginPath()
-    oneTurtle.path.forEach(p => {
+    oneTurtlePath.forEach(p => {
       p.forEach((point, i) => {
         if (count > n) return;
 
@@ -211,8 +232,8 @@
         count += 1;
       })
     })
-    ctx.strokeStyle = 'black'
-    ctx.strokeWidth = 4
+    ctx.strokeStyle = 'white'
+    ctx.strokeWidth = 10
     ctx.stroke()
 
     // map 0 512, 0 512*2 
