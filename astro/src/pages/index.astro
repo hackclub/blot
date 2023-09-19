@@ -1,85 +1,107 @@
 ---
 import Layout from '../layouts/Layout.astro'
-
 import Background from '../layouts/Background.astro'
 import ThreeDModel from '../layouts/ThreeDModel.astro'
-
 ---
 
-
-<style>
-
-  html, body {
-    background-image: linear-gradient(to right, #ddd 1px, transparent 1px), linear-gradient(to bottom, #ddd 1px, transparent 1px);
+<style lang="scss" is:global>
+  html,
+  body {
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
     background-size: 40px 40px;
     font-family: var(--font-sans);
   }
 
-  .strong-header {
-    font-size: 3.9em;
-    letter-spacing: -2px;
-    font-weight: 600;
-    line-height: 1.2;
+  header, section {
+    a {
+        color: var(--primary);
+        font-style: italic;
+        text-decoration: none;
+      }
   }
 
-  .header-section {
-    position: absolute;
-    left: 40px;
-    top: 28px;
-    width: 80%;
+  h1 {
+      font-family: var(--font-serif);
+    }
+
+  p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-top: 0.995rem;
   }
 
-  .sub-header {
-    font-size: .55em;
-    line-height: 1;
-    font-weight: 400;
-    letter-spacing: -1px;
-    padding-top: 10px;
+  header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed var(--primary);
+
+    > div {
+      max-width: 50vw;
+      padding-bottom: 2rem;
+      padding-left: 2rem;
+    }
+
+    h1 {
+      font-size: 5rem;
+      letter-spacing: -3px;
+      line-height: 1;
+      margin-bottom: 2rem;
+    }
   }
 
-  .header-text {
-    font-size: 3em;
-    line-height: 1;
-    font-weight: 600;
-    letter-spacing: -1px;
-  }
-
-  .lead-section {
-    position: relative;
-    height: 100%;
-    display: grid;
-    grid-template-rows: auto 1fr;
-  }
-
-  .how-to {
+  .cta {
+    background-color: var(--primary);
     color: white;
-    height: 500px;
-    background: #122953;
-/*    background: #ffc9c9;*/
-    display: flex;
+    padding: 10px 30px;
+    border-radius: 24px;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-style: normal;
+    transition: all 0.2s;
+
+    &:hover {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
   }
 
-  .video-text {
-    font-size: .55em;
-    font-weight: 500;
-    padding: 1em;;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+  .code {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid #cbd5e1;
+    background-color: white;
+    max-height: 50vh;
+    overflow: hidden;
   }
 
-  .youtube-video-container {
-    width: 50%;
+  section {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    padding-inline: 2rem;
+
+    h1 {
+      font-size: 3rem;
+      line-height: 1.2;
+      letter-spacing: -2px;
+      max-width: 50vw;
+      margin-bottom: 0;
+    }
   }
 
-  .youtube-video {
-    aspect-ratio: 560/315;
-    border: none;
-    width: 90%;
+  #howto {
+    gap: 1rem;
+    position: relative;
+
+    > div {
+      max-width: 50%;
+    }
+
+    .turtle {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid #cbd5e1;
+    background-color: white;
+    max-height: 100%;
+    max-width: 50%;
   }
 
   .get-started {
@@ -93,6 +115,46 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
     position: absolute;
     left: 10px;
     bottom: 10px;
+  }
+
+  #workshops {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 0;
+
+
+    > h1 {
+      width: calc(50% - 1rem);
+    }
+
+    .workshop {
+      align-self: flex-start;
+      border-radius: 15px;
+      border: 1px solid #cbd5e1;
+      max-width: calc(25% - 1rem);
+      flex-grow: 0;
+      background-color: white;
+
+      img {
+        max-width: 100%;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+      }
+
+      > div {
+        border-top: 1px solid #cbd5e1;
+        padding: 1rem;
+
+        h1, h2, h3, h4, h5, h6, p {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  footer {
+    margin: 1rem;
   }
 
   a {
@@ -128,31 +190,139 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
 
 </style>
 
-<Layout title="Blot" description="Blot out the world!">
-  <div class="lead-section">
-    <div class="header-section strong-header">
-      <div>Blot, the plotter bot</div>
-      <div>from <a class="hack-club-text-box" href="https://www.hackclub.com">Hack Club</a>.</div>
-      <div class="sub-header">You* code art, we send you a machine.</div>
+<Layout
+  title="Blot"
+  description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
+  <header>
+    <div>
+    <h1>
+      <span style={{ color: 'var(--primary)' }}>Blot</span>, the plotter bot
+      from Hack Club: you code art, we send you a machine.
+    </h1>
+    <div id="ctas">
+    <a class="cta" href="/editor">Start making art</a>
+    <a class="cta" href="https://github.com/hackclub/blot" target="_blank">Check out the source</a>
     </div>
-    
-    <Background></Background>
-    <div class="disclaimer">(*Must be a <20 years old to receive a free machine.)</div>
   </div>
-  <div class="how-to header-text">
-    <div class="video-text">
-      <div>1) Learn to make generative art with our <a href="/guides">guides</a> and from the community.</div>
-      <div>2) Make an original art piece.</div>
-      <div>3) Submit it as a pull request to the art <a href="/gallery">gallery</a>.</div>
-      <div>4) Get parts for your Blot in the mail and <a href="/assembly">build your own</a> machine.</div>
+    <Background />
+  </header>
+  <main>
+    <section id="howto">
+      <div style={{ flex: "50%"}}>
+      <h1>Write code, get your Blot to draw it out.</h1>
+      <p>Blot is a plotting bot designed by people (insert something appropriate here) at <a href="https://hackclub.com">Hack Club</a> for drawing art digitally with code and then turning it into actual art.</p>
+        <div class="code">
+        <CodeSnippet client:only content={`const leafLength = 5
+const leafW = 1.3
+
+const edge = createTurtle()
+  .forward(leafLength)
+  .resample(0.01)
+  .warp(bezierEasing(0, [0.4, 2.29], [0.52, 0.31], 0))
+
+function veins() {
+  const lines = createTurtle()
+
+  let littleLinesMax = 61
+  for (let i = 4; i < littleLinesMax - 5; i++) {
+    const t = i / (littleLinesMax - 1)
+    const x0 = t * leafLength
+    const y0 = 0
+
+    let y = edge.interpolate(t + 0.1)[1]
+
+    const line = createTurtle([x0, y0])
+
+    line.right(-70 + t * 37 + randInRange(-4, 4))
+
+    let r = y * 0.7
+
+    const trimTo = i % 5 === 0 ? randInRange(0.7, 0.9) : randInRange(0.1, 0.7)
+
+    if (r < 0.01) continue
+
+    const warper = bezierEasing(0, [0.28, y / 4], [0.58, y / 8], 0)
+
+    line.forward(r).resample(0.01).warp(warper).resample(0.05).trim(0, trimTo)
+
+    line.iteratePath(pt => {
+      return Math.random() < (i % 5 === 0 ? +0.17 : 0.56) ? 'BREAK' : pt
+    })
+
+    lines.join(line)
+  }
+
+  return lines
+}
+
+const t = createTurtle()
+
+const bottom = edge.copy().scale([1, -1], [0, 0])
+
+edge.warp(
+  t => noise(t * 20.4, { octaves: 2 }) * 0.09 * (t === 0 || t === 1 ? 0 : 1)
+)
+bottom.warp(
+  t => noise(t * 23.6, { octaves: 2 }) * -0.1 * (t === 0 || t === 1 ? 0 : 1)
+)
+
+t.join(edge)
+t.join(bottom)
+t.join(veins())
+t.join(veins().scale([1, -1], [0, 0]))
+
+const lineStem = createTurtle([-1, 0])
+  .forward(leafLength + 1)
+  .resample(0.1)
+
+t.join(lineStem)
+
+t.iteratePath(pt => {
+  let [x, y] = pt
+  y += x * x * 0.02
+  y += noise([x * 0.2]) * 0.3
+  return [x, y]
+})
+
+t.translate([125 / 2, 125 / 2], t.cc)
+t.scale(17.2)
+
+drawTurtles(t)`}/>
     </div>
     <div class="youtube-video-container">
-      <ThreeDModel></ThreeDModel>
-      <!-- <iframe class="youtube-video" src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"></iframe> -->
+    <iframe class="youtube-video" src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"></iframe>
     </div>
   </div>
-  <div class="get-started header-text">
-    <div>Images of machine here.</div>
-    <div>Links to artwork.</div>
+  <div class="turtle">
+      <div class="three-js-container"></div>
   </div>
+    </section>
+    <section>
+      <div id="workshops">
+        <h1>Learn to make generative art with our <a href="/guides">guides</a> and from the community.</h1>
+        {workshops.slice(2, 8).map((workshop, idx) => {
+          return (
+            <>
+            <div class="workshop">
+              <img class="thumbnail"src={workshop.frontmatter.thumbnail}/>
+              <div class="prose">
+                <h2>{workshop.frontmatter.title}</h2>
+              <div set:html={marked(description(workshop.rawContent()))}/>
+              </div>
+            </div>
+            </>
+          )
+        })}
+      </div>
+    </section>
+    <section>
+      <div>
+        <p></p>
+      </div>
+      <div>
+        <h1>Wait, so how do I get one?</h1>
+      </div>
+    </section>
+    <footer>© 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)</footer>
+  </main>
 </Layout>
