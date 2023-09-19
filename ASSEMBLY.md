@@ -6,7 +6,7 @@ Below is a list of all parts needed to construct your Blot. Keep in mind that th
 |----------------------|----|---
 |M5x35			  |11	   	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/0image0056.png" alt="aaa" width="100"/>
 |M5x20			  |6	  	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/2image0058.png" alt="aaa" width="100"/>
-|M5x10			  |11	     		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/3image0059.png" alt="aaa" width="100"/>
+|M5x10			  |14	     		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/3image0059.png" alt="aaa" width="100"/>
 |M3x10			  |8			|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/1image0057.png" alt="aaa" width="100"/>
 |Shim			  |5	       		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/4image0060.png" alt="aaa" width="100"/>
 |Eccentric<br>Spacer|5	      		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/8image0055.png" alt="aaa" width="100"/>
