@@ -20,6 +20,7 @@ const random = (min: number, max: number) =>
 export const prerender = false
 ---
 
+<!-- 
 <script src="/masonry.min.js" type="module"></script>
 
 <script>
@@ -28,13 +29,9 @@ export const prerender = false
       itemSelector: '.frame',
       percentPosition: true
     })
-
-    document.getElementById('3d').addEventListener('change', event => {
-      if (event.currentTarget.checked)
-        window.open('https://haxidraw-3dgallery.hackclub.dev/', '_self')
-    })
   }
-</script>
+</script> 
+-->
 
 <style is:global lang="scss">
   body,
@@ -50,14 +47,11 @@ export const prerender = false
   }
 
   #gallery {
-    padding: 1rem;
-    position: relative;
-
-    &::after {
-      content: '';
-      display: block;
-      clear: both;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
   #content {
@@ -70,114 +64,59 @@ export const prerender = false
     margin: 0.5rem;
     border: solid 15px #555;
     box-shadow: -3px -3px 12px #999;
-    position: relative;
+    max-width: 30%;
+    max-height: 30vh;
     float: left;
-    max-width: calc(100vw / 3 - (0.5rem * 2));
     margin-bottom: 1rem;
     z-index: 1;
+    
+    display: flex;
+    align-items: center;  /* centers vertically */
+    justify-content: center; /* centers horizontally */
+    overflow: hidden; /* ensures nothing overflows outside the frame */
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 25vh;
+    object-fit: contain; /* ensures the image maintains aspect ratio and scales within the container */
+    // border-top: solid 2px #aaa;
+    // border-left: solid 2px #aaa;
+    // border-bottom: solid 2px #ccc;
+    // border-right: solid 2px #ccc;
   }
 
   .border {
+    max-width: 100%;
+    max-height: 100%;
     background-color: white;
-    position: relative;
     padding: 0;
     margin: 0;
     border: solid 40px white;
     box-shadow: -3px -3px 12px #999;
-
-    img {
-      display: block;
-      width: 100%;
-      border-top: solid 2px #aaa;
-      border-left: solid 2px #aaa;
-      border-bottom: solid 2px #ccc;
-      border-right: solid 2px #ccc;
-    }
   }
 
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-
-    input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-
-      &:checked + .slider {
-        background-color: var(--primary);
-      }
-
-      &:focus + .slider {
-        box-shadow: 0 0 1px var(--primary);
-      }
-
-      &:checked + .slider:before {
-        transform: translateX(26px);
-      }
-    }
-
-    .slider {
-      border-radius: 34px;
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: #ccc;
-      transition: 0.4s;
-
-      &::before {
-        border-radius: 50%;
-        position: absolute;
-        content: '';
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        transition: 0.4s;
-      }
-    }
-  }
 </style>
 
 <Layout
   title="Gallery"
   description="A gallery of various art pieces created by Hack Clubbers.">
   <div id="container">
+    <h1 style={{ margin: 0 }}>Gallery</h1>
+    <p style={{ margin: 0 }}>
+      A gallery of various art pieces created by Hack Clubbers, with an
+      interactive 3D gallery mode!
+    </p>
     <div id="gallery">
-      <div class="frame" id="content">
-        <div class="border">
-          <h1 style={{ margin: 0 }}>Gallery</h1>
-          <p style={{ margin: 0 }}>
-            A gallery of various art pieces created by Hack Clubbers, with an
-            interactive 3D gallery mode!
-          </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-            <label class="switch">
-              <input type="checkbox" id="3d" />
-              <span class="slider round"></span>
-            </label>
-            <p>3D gallery</p>
-          </div>
-        </div>
-      </div>
       {
         images.map(img => {
           return (
             <div class="frame">
-              <div class="border">
-                <a
-                  href={`/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${
+              <a class="border" href={`/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${
                     art[slug(img)].folder
                   }/${art[slug(img)].source}`}>
                   <img class="thumbnail" alt={img.directory} src={img} />
-                </a>
-              </div>
+              </a>
             </div>
           )
         })

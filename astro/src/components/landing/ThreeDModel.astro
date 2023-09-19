@@ -62,10 +62,21 @@
     const objLoader = new OBJLoader().setPath('/model/')
     const mtlLoader = new MTLLoader().setPath('/model/')
 
-    camera.position.z = 0.25
-    camera.position.x = 0
-    camera.rotation.z = Math.PI
-    camera.position.y = -0.055
+    // camera.position.z = 0.25
+    // camera.position.x = 0
+    // camera.rotation.z = Math.PI
+    // camera.position.y = -0.055
+
+    const initCamPos = {x: -0.012060728422271984, y: -0.30995465588219245, z: 0.22370699843435427};
+    const initCamAngle = {x: 1.0095700038735655, y: 0.0025350872263442863, z: -0.004032504057447568 };
+
+    for (const k in initCamPos) {
+      camera.position[k] = initCamPos[k];
+    }
+
+    for (const k in initCamAngle) {
+      camera.rotation[k] = initCamAngle[k];
+    }
 
     /*
   const toolTip = addSphere({
@@ -135,7 +146,7 @@
     }
 
     let texCanvas = document.createElement('canvas')
-    document.body.appendChild(texCanvas)
+    // document.body.appendChild(texCanvas)
     texCanvas.style = `
       position: absolute;
       left: 0px;
