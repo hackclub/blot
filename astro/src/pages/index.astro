@@ -1,466 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Background from '../components/landing/Background.astro'
-import CodeSnippet from "../components/landing/CodeSnippet.tsx"
-import { marked } from 'marked';
-import { description } from '../lib/guide.ts';
+import CodeSnippet from '../components/landing/CodeSnippet.tsx'
+import ThreeDModel from '../components/landing/ThreeDModel.astro'
 
-const workshops = await Astro.glob("/../guides/*.md");
----
+const workshops = await Astro.glob('/../guides/*.md')
 
-<script>
-  import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
-  import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
-  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-  import * as THREE from 'three'
-  import { turtles } from '../lib/paths.js'
-  import { runTextReturnTurtles } from '../lib/runTextReturnTurtles.ts'
-
-  const navHeight = document.querySelector('nav')?.offsetHeight
-
-  let objects = {}
-
-  const machineRange = {
-    x: [-0.07031505489843565, 0.06585060696837623],
-    y: [-0.21385993884461388, -0.06802130646267329]
-  }
-
-  const machineWidth = machineRange.x[1] - machineRange.x[0]
-  const machineHeight = machineRange.y[1] - machineRange.y[0]
-
-  // Set up scene
-  const scene = new THREE.Scene()
-  scene.background = null
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  )
-  // Set up renderer
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    alpha: true
-  })
-
-  // const controls = new OrbitControls(camera, renderer.domElement)
-
-  const container = document.querySelector(".turtle");
-  renderer.setSize(window.innerWidth, container.offsetHeight)
-  renderer.domElement.style.zIndex = '999'
-  const threeContainer = document.querySelector('.three-js-container')
-  threeContainer.appendChild(renderer.domElement)
-
-  // Set up light
-  const light = new THREE.DirectionalLight(0xffffff)
-  light.position.set(-0.5, 0, 1)
-  scene.add(light)
-
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
-  scene.add(ambientLight)
-
-  // Add the parts
-  const objLoader = new OBJLoader().setPath('/model/')
-  const mtlLoader = new MTLLoader().setPath('/model/')
-
-  camera.position.z = 0.25
-  camera.position.x = 0
-  camera.rotation.z = Math.PI
-  camera.position.y = -0.055
-
-  /*
-  const toolTip = addSphere({
-    radius: 0.005,
-    color: 'green'
-  })
-  */
-
-  ;[
-    {
-      name: 'feet',
-      post: obj => {
-        obj.position.z = 0.038
-      }
-    },
-    {
-      name: 'carriage',
-      post: obj => {
-        obj.position.z = 0.063
-      }
-    },
-    {
-      name: 'arm',
-      post: obj => {
-        obj.position.z = 0.065
-      }
-    },
-    {
-      name: 'penholder',
-      post: obj => {
-        obj.position.z = 0.065
-      }
-    }
-  ].map(addObj)
-
-  setTimeout(() => {
-    moveMachine(0, 0)
-  }, 1000)
-
-  function addObj({ name, post }) {
-    mtlLoader.load(`${name}.mtl`, function (materials) {
-      materials.preload()
-      objLoader.setMaterials(materials).load(
-        `${name}.obj`,
-        function (object) {
-          scene.add(object)
-          objects[name] = object
-
-          const boundingBox = new THREE.Box3().setFromObject(object)
-          const yOffset = boundingBox.min.y
-          const xOffset = (boundingBox.min.x + boundingBox.max.x) / 2
-          const zOffset = (boundingBox.min.z + boundingBox.max.z) / 2
-
-          object.traverse(child => {
-            if (child instanceof THREE.Mesh) {
-              child.position.set(-xOffset, -yOffset, -zOffset)
-            }
-          })
-
-          post(object)
-        },
-        function (xhr) {},
-        function (error) {
-          console.log(error)
-        }
-      )
-    })
-  }
-
-  let texCanvas = document.createElement('canvas')
-  document.body.appendChild(texCanvas)
-  texCanvas.style = `
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      z-index: 999999;
-      scale: .5;
-      transform-origin: left top;
-
-    `
-  const texCanvasWidth = 512
-  const texCanvasHeight = (512 * machineHeight) / machineWidth
-
-  texCanvas.width = texCanvasWidth
-  texCanvas.height = texCanvasHeight
-
-  let ctx = texCanvas.getContext('2d')
-
-  ctx.fillStyle = 'rgba(255, 100, 200, .5)'
-  ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight)
-  // ctx.fillStyle = 'blue';
-  // ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight)
-
-  const testTurtles = runTextReturnTurtles(`const leafLength = 5
-const leafW = 1.3
-
-const edge = createTurtle()
-  .forward(leafLength)
-  .resample(0.01)
-  .warp(bezierEasing(0, [0.4, 2.29], [0.52, 0.31], 0))
-
-function veins() {
-  const lines = createTurtle()
-
-  let littleLinesMax = 61
-  for (let i = 4; i < littleLinesMax - 5; i++) {
-    const t = i / (littleLinesMax - 1)
-    const x0 = t * leafLength
-    const y0 = 0
-
-    let y = edge.interpolate(t + 0.1)[1]
-
-    const line = createTurtle([x0, y0])
-
-    line.right(-70 + t * 37 + randInRange(-4, 4))
-
-    let r = y * 0.7
-
-    const trimTo = i % 5 === 0 ? randInRange(0.7, 0.9) : randInRange(0.1, 0.7)
-
-    if (r < 0.01) continue
-
-    const warper = bezierEasing(0, [0.28, y / 4], [0.58, y / 8], 0)
-
-    line.forward(r).resample(0.01).warp(warper).resample(0.05).trim(0, trimTo)
-
-    line.iteratePath(pt => {
-      return Math.random() < (i % 5 === 0 ? +0.17 : 0.56) ? 'BREAK' : pt
-    })
-
-    lines.join(line)
-  }
-
-  return lines
-}
-
-const t = createTurtle()
-
-const bottom = edge.copy().scale([1, -1], [0, 0])
-
-edge.warp(
-  t => noise(t * 20.4, { octaves: 2 }) * 0.09 * (t === 0 || t === 1 ? 0 : 1)
-)
-bottom.warp(
-  t => noise(t * 23.6, { octaves: 2 }) * -0.1 * (t === 0 || t === 1 ? 0 : 1)
-)
-
-t.join(edge)
-t.join(bottom)
-t.join(veins())
-t.join(veins().scale([1, -1], [0, 0]))
-
-const lineStem = createTurtle([-1, 0])
-  .forward(leafLength + 1)
-  .resample(0.1)
-
-t.join(lineStem)
-
-t.iteratePath(pt => {
-  let [x, y] = pt
-  y += x * x * 0.02
-  y += noise([x * 0.2]) * 0.3
-  return [x, y]
+let curated = [
+  'raymarching',
+  'cubic_disarray',
+  'square-disarray',
+  'mesh',
+  'eca'
+]
+curated = curated.map(name => {
+  let find = workshops.find(workshop => workshop.file.includes(name))
+  return find
 })
-
-t.translate([125 / 2, 125 / 2], t.cc)
-t.scale(17.2)
-
-drawTurtles(t)`)
-
-  if (testTurtles.length > 1) {
-    const [first, ...rest] = testTurtles
-
-    rest.forEach(t => first.join(rest))
-  }
-
-  const oneTurtle = testTurtles.length > 0 ? testTurtles[0] : null
-
-  oneTurtle.translate([texCanvasWidth / 2, texCanvasHeight / 2], oneTurtle.cc)
-  oneTurtle.resample(5)
-  const totalN = oneTurtle.path.flat().length
-
-  function drawCanvasTexture(n) {
-    ctx.clearRect(0, 0, texCanvasWidth, texCanvasHeight)
-
-    let count = 0
-    let lastPoint = null
-    ctx.beginPath()
-    oneTurtle.path.forEach(p => {
-      p.forEach((point, i) => {
-        if (count > n) return
-
-        lastPoint = point
-
-        if (i === 0) ctx.moveTo(...point)
-        else ctx.lineTo(...point)
-
-        count += 1
-      })
-    })
-    ctx.strokeStyle = 'black'
-    ctx.strokeWidth = 4
-    ctx.stroke()
-
-    // map 0 512, 0 512*2
-
-    const flipped = flipPoint(
-      lastPoint,
-      [texCanvasWidth / 2, texCanvasHeight / 2],
-      [1, -1]
-    )
-    console.log({ lastPoint, flipped })
-    const xMachine =
-      (flipped[0] / texCanvasWidth) * (machineRange.x[1] - machineRange.x[0]) +
-      machineRange.x[0]
-    const yMachine =
-      (flipped[1] / texCanvasHeight) * (machineRange.y[1] - machineRange.y[0]) +
-      machineRange.y[0]
-    // console.log(xMachine, yMachine);
-    moveMachine(xMachine, yMachine)
-    texture.needsUpdate = true
-  }
-
-  let drew = 0
-  let id = setInterval(() => {
-    drawCanvasTexture(drew)
-
-    if (drew >= totalN) clearInterval(id)
-    drew += 1
-  }, 30)
-
-  let texture = new THREE.CanvasTexture(texCanvas)
-  texture.needsUpdate = true
-  texture.minFilter = THREE.LinearFilter
-
-  let geometry = new THREE.PlaneGeometry(machineWidth, machineHeight)
-  let material = new THREE.MeshBasicMaterial({
-    map: texture,
-    transparent: true
-    // opacity: .4
-  })
-
-  let plane = new THREE.Mesh(geometry, material)
-  plane.position.x = 0
-  plane.position.y = -0.135
-  plane.position.z = 0
-  scene.add(plane)
-
-  // renderer.domElement.addEventListener('mousemove', e => {
-  //   const { x, y } = getRelativePoint(e, threeContainer)
-  //   const point = getIntersectedPoint(x, y, plane)
-
-  //   if (point) {
-  //     moveMachine(point.x, point.y)
-  //   }
-  // })
-
-  function dist(x1: number, y1: number, x2: number, y2: number) {
-    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
-  }
-
-  const lerp = (x, y, a) => x * (1 - a) + y * a
-  const clamp = (a, min = 0, max = 1) => Math.min(max, Math.max(min, a))
-  const invlerp = (x, y, a) => clamp((a - x) / (y - x))
-  const range = (x1, y1, x2, y2, a) => lerp(x2, y2, invlerp(x1, y1, a))
-
-  function animate() {
-    requestAnimationFrame(animate)
-    renderer.render(scene, camera)
-  }
-
-  animate()
-
-  // Function to handle resizing
-  function onResize(entries) {
-    const bb = threeContainer.getBoundingClientRect()
-    for (let entry of entries) {
-      // For simplicity, using window dimensions, but you can use the container's dimensions
-      const width = bb.width
-      const height = bb.height
-
-      // Update the camera's aspect ratio and projection matrix
-      camera.aspect = width / height
-      camera.updateProjectionMatrix()
-
-      // Update the renderer's size
-      renderer.setSize(width, height)
-
-      // Optional: re-render the scene
-      renderer.render(scene, camera)
-    }
-  }
-
-  const resizeObserver = new ResizeObserver(onResize)
-  resizeObserver.observe(threeContainer)
-
-  function addSphere({ radius, color, x, y }) {
-    x = x ?? 0
-    y = y ?? 0
-
-    const sphereRadius = radius
-    const sphereWidthSegments = 32 // Number of segmented faces around the circumference of the sphere.
-    const sphereHeightSegments = 32 // Number of rows of faces from the sphere's top to bottom.
-
-    const sphereGeometry = new THREE.SphereGeometry(
-      sphereRadius,
-      sphereWidthSegments,
-      sphereHeightSegments
-    )
-
-    const sphereMaterial = new THREE.MeshBasicMaterial({ color }) // green color
-
-    const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial)
-    scene.add(sphereMesh)
-
-    sphereMesh.position.x = x
-    sphereMesh.position.y = y
-
-    return sphereMesh
-  }
-
-  function getIntersectedPoint(x, y, targetObject) {
-    const raycaster = new THREE.Raycaster()
-    const mouse = new THREE.Vector2()
-
-    const rect = renderer.domElement.getBoundingClientRect()
-
-    // Update the mouse vector with passed x and y values
-    mouse.x = (x / rect.width) * 2 - 1
-    mouse.y = -(y / rect.height) * 2 + 1
-
-    // Update the picking ray with the camera and mouse position
-    raycaster.setFromCamera(mouse, camera)
-
-    // Calculate objects intersecting the picking ray
-    const intersects = raycaster.intersectObject(targetObject)
-
-    if (intersects.length > 0) {
-      return intersects[0].point // This is the Vector3 representing the intersection point in 3D space
-    } else {
-      return null // No intersection
-    }
-  }
-
-  function getRelativePoint(event, element) {
-    const rect = element.getBoundingClientRect()
-
-    return {
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top
-    }
-  }
-
-  function moveMachine(x, y) {
-    if (Object.keys(objects).length < 4) return
-
-    x = Math.max(x, machineRange.x[0])
-    y = Math.max(y, machineRange.y[0])
-
-    x = Math.min(x, machineRange.x[1])
-    y = Math.min(y, machineRange.y[1])
-
-    /*
-    toolTip.position.x = x
-    toolTip.position.y = y
-    toolTip.position.z = 0
-    */
-
-    objects.penholder.position.x = x
-    objects.penholder.position.y = y
-
-    objects.carriage.position.x = x
-    objects.carriage.position.y = 0.03
-
-    objects.arm.position.x = x + 0.0175
-    objects.arm.position.y = y + 0.04
-  }
-
-  function flipPoint(p, pivot, vector) {
-    // Step 1: Translate to origin
-    let translatedPoint = [p[0] - pivot[0], p[1] - pivot[1]]
-
-    // Step 2: Apply the flip
-    let flippedPoint = [
-      translatedPoint[0] * vector[0],
-      translatedPoint[1] * vector[1]
-    ]
-
-    // Step 3: Translate back to original position
-    let finalPoint = [flippedPoint[0] + pivot[0], flippedPoint[1] + pivot[1]]
-
-    return finalPoint
-  }
-</script>
+---
 
 <style lang="scss" is:global>
   html,
@@ -471,18 +28,18 @@ drawTurtles(t)`)
     font-family: var(--font-sans);
   }
 
-
-  header, section {
+  header,
+  section {
     a {
-        color: var(--primary);
-        font-style: italic;
-        text-decoration: none;
-      }
+      color: var(--primary);
+      font-style: italic;
+      text-decoration: none;
+    }
   }
 
   h1 {
-      font-family: var(--font-serif);
-    }
+    font-family: var(--font-serif);
+  }
 
   p {
     font-size: 1.3rem;
@@ -531,6 +88,23 @@ drawTurtles(t)`)
     background-color: white;
     max-height: 50vh;
     overflow: hidden;
+    position: relative;
+
+    a {
+      background-color: #ddd;
+      border: 1px solid #cbd5e1;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: inline-block;
+      margin: 0 auto;
+      padding: 3px 9px;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      font-style: normal;
+      color: black;
+    }
   }
 
   section {
@@ -541,7 +115,6 @@ drawTurtles(t)`)
       font-size: 3rem;
       line-height: 1.2;
       letter-spacing: -2px;
-      max-width: 50vw;
       margin-bottom: 0;
     }
   }
@@ -550,33 +123,60 @@ drawTurtles(t)`)
     gap: 1rem;
     position: relative;
 
+    h1 {
+      max-width: 50vw;
+    }
+
+    .turtle {
+      position: relative;
+
+      .buttons {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 16px 12px;
+      }
+
+      button {
+        background-color: transparent;
+        border: 0;
+        transition: all 0.2s;
+        cursor: pointer;
+
+        &:hover {
+          color: var(--primary);
+        }
+      }
+    }
+
     > div {
       max-width: 50%;
     }
 
     .turtle {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    border: 1px solid #cbd5e1;
-    background-color: white;
-    max-height: 100%;
-    max-width: 50%;
-  }
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      border: 1px solid #cbd5e1;
+      background-color: white;
+      max-height: 100%;
+      max-width: 50%;
+    }
 
-  .youtube-video-container {
-    margin-top: 1rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
+    .youtube-video-container {
+      margin-top: 1rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
 
-  .youtube-video {
-    aspect-ratio: 560/315;
-    border: none;
-    border-radius: 15px;
-    width: 90%;
-  }
+    .youtube-video {
+      aspect-ratio: 560/315;
+      border: none;
+      border-radius: 15px;
+      width: 90%;
+    }
   }
 
   #workshops {
@@ -584,33 +184,133 @@ drawTurtles(t)`)
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem 0;
+    position: relative;
 
+    &::after {
+      background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 1) 90%
+      );
+      content: '';
+      width: 100%;
+      height: 35%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 999;
+    }
 
-    > h1 {
-      width: calc(50% - 1rem);
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex: calc(33% - 1rem);
+      flex-grow: 0;
     }
 
     .workshop {
+      cursor: pointer;
       align-self: flex-start;
       border-radius: 15px;
       border: 1px solid #cbd5e1;
-      max-width: calc(25% - 1rem);
+      // max-width: calc(50% - 1rem);
       flex-grow: 0;
       background-color: white;
+      transition: all 0.1s;
+      position: relative;
+
+      &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--primary);
+      }
 
       img {
         max-width: 100%;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
+        border-radius: 15px;
       }
 
       > div {
-        border-top: 1px solid #cbd5e1;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.2);
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
         padding: 1rem;
+        overflow-x: clip;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 999;
 
-        h1, h2, h3, h4, h5, h6, p {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
           margin: 0;
         }
+
+        blockquote {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  #workshop-container {
+    column-count: 3;
+    column-gap: 2rem;
+  }
+
+  #steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+
+    > div {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 15px;
+      border: 1px solid #cbd5e1;
+
+      h2 {
+        font-family: var(--font-serif);
+        letter-spacing: -1px;
+
+        span {
+          display: inline-block;
+          background-color: var(--primary);
+          border-radius: 50%;
+          color: white;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  #timeline {
+    display: flex;
+    width: 100%;
+
+    > div {
+      border-top: 1px solid var(--primary);
+      flex: 34%;
+      position: relative;
+      gap: 2rem;
+
+      h2:nth-child(1) {
+        font-size: 2rem;
+        margin-bottom: 0;
+      }
+
+      h2:nth-child(2) {
+        font-family: var(--font-serif);
+        font-weight: normal;
+        letter-spacing: -1px;
+        margin: 0;
       }
     }
   }
@@ -625,24 +325,32 @@ drawTurtles(t)`)
   description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
   <header>
     <div>
-    <h1>
-      <span style={{ color: 'var(--primary)' }}>Blot</span>, the plotter bot
-      from Hack Club: you code art, we send you a machine.
-    </h1>
-    <div id="ctas">
-    <a class="cta" href="/editor">Start making art</a>
-    <a class="cta" href="https://github.com/hackclub/blot" target="_blank">Check out the source</a>
+      <h1>
+        <span style={{ color: 'var(--primary)' }}>Blot</span>, the plotter bot
+        from Hack Club: you code art, we send you a machine.
+      </h1>
+      <div id="ctas">
+        <a class="cta" href="/editor">Start making art</a>
+        <a class="cta" href="https://github.com/hackclub/blot" target="_blank"
+          >Check out the source</a
+        >
+      </div>
     </div>
-  </div>
     <Background />
   </header>
   <main>
     <section id="howto">
-      <div style={{ flex: "50%"}}>
-      <h1>Write code, get your Blot to draw it out.</h1>
-      <p>Blot is a plotting bot designed by people (insert something appropriate here) at <a href="https://hackclub.com">Hack Club</a> for drawing art digitally with code and then turning it into actual art.</p>
+      <div style={{ flex: '50%' }}>
+        <h1>Write code, get your Blot to draw it out.</h1>
+        <p>
+          Blot is a plotting bot designed by people (insert something
+          appropriate here) at <a href="https://hackclub.com">Hack Club</a> for
+          drawing art digitally with code and then turning it into actual art.
+        </p>
         <div class="code">
-        <CodeSnippet client:only content={`const leafLength = 5
+          <CodeSnippet
+            client:only
+            content={`const leafLength = 5
 const leafW = 1.3
 
 const edge = createTurtle()
@@ -717,32 +425,65 @@ t.iteratePath(pt => {
 t.translate([125 / 2, 125 / 2], t.cc)
 t.scale(17.2)
 
-drawTurtles(t)`}/>
-    </div>
-    <div class="youtube-video-container">
-    <iframe class="youtube-video" src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"></iframe>
-    </div>
-  </div>
-  <div class="turtle">
-      <div class="three-js-container"></div>
-  </div>
+drawTurtles(t)`}
+          />
+          <a href="/editor">Check out the guide for drawing leaves</a>
+        </div>
+        <div class="youtube-video-container">
+          <iframe
+            class="youtube-video"
+            src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"
+          ></iframe>
+        </div>
+      </div>
+      <div class="turtle">
+        <ThreeDModel />
+      </div>
     </section>
-    <section>
+    <section id="workshop-container">
       <div id="workshops">
-        <h1>Learn to make generative art with our <a href="/guides">guides</a> and from the community.</h1>
-        {workshops.slice(2, 8).map((workshop, idx) => {
-          return (
-            <>
-            <div class="workshop">
-              <img class="thumbnail"src={workshop.frontmatter.thumbnail}/>
-              <div class="prose">
-                <h2>{workshop.frontmatter.title}</h2>
-              <div set:html={marked(description(workshop.rawContent()))}/>
+        <h1 style={{ textAlign: 'center', marginTop: 0 }}>
+          Learn to make generative art with our <a href="/guides">guides</a> and
+          from the community.
+        </h1>
+        <div>
+          {
+            curated.slice(0, curated.length / 3 + 1).map((workshop, idx) => (
+              <div class="workshop">
+                <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                <div class="prose">
+                  <h2>{workshop.frontmatter.title}</h2>
+                </div>
               </div>
-            </div>
-            </>
-          )
-        })}
+            ))
+          }
+        </div>
+        <div>
+          {
+            curated
+              .slice(curated.length / 3 + 1, (curated.length / 3) * 2)
+              .map((workshop, idx) => (
+                <div class="workshop">
+                  <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                  <div class="prose">
+                    <h2>{workshop.frontmatter.title}</h2>
+                  </div>
+                </div>
+              ))
+          }
+        </div>
+        <div>
+          {
+            curated.slice((curated.length / 3) * 2).map((workshop, idx) => (
+              <div class="workshop">
+                <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                <div class="prose">
+                  <h2>{workshop.frontmatter.title}</h2>
+                </div>
+              </div>
+            ))
+          }
+        </div>
       </div>
     </section>
     <section>
@@ -750,7 +491,32 @@ drawTurtles(t)`}/>
         <p></p>
       </div>
       <div>
-        <h1>Wait, so how do I get one?</h1>
+        <h1>
+          Wait, so how do <span style={{ color: 'var(--primary)' }}>I</span> get
+          one?
+        </h1>
+        <div id="timeline">
+          <div>
+            <h2>#1</h2>
+            <h2>Make an original art piece</h2>
+          </div>
+          <div>
+            <h2>#2</h2>
+            <h2>
+              Submit it as a pull request to the art <a href="/gallery"
+                >gallery</a
+              >.
+            </h2>
+          </div>
+          <div>
+            <h2>#3</h2>
+            <h2>
+              Get parts for your Blot in the mail and <a href="/assembly"
+                >build your own</a
+              > machine.
+            </h2>
+          </div>
+        </div>
       </div>
     </section>
     <footer>© 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)</footer>

@@ -109,7 +109,7 @@ function GitHubLink() {
     <Button variant="ghost">
       <a
         style={{ all: 'unset' }}
-        href="https://github.com/hackclub/haxidraw/tree/main"
+        href="https://github.com/hackclub/blot/tree/main"
         target="_blank">
         <div style={{ transform: 'translate(0, 3.5px)' }}>
           <GitHubIcon className={styles.icon} />
@@ -213,8 +213,8 @@ function DownloadSVG() {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${
                   docDimensions.width
                 } ${docDimensions.height}" width="${
-          docDimensions.width
-        }mm" height="${docDimensions.height}mm">
+                  docDimensions.width
+                }mm" height="${docDimensions.height}mm">
                     ${paths.join('\n')}
                 </svg>
             `
@@ -266,8 +266,8 @@ function DownloadPNG() {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${
                   docDimensions.width
                 } ${docDimensions.height}" width="${
-          docDimensions.width
-        }mm" height="${docDimensions.height}mm">
+                  docDimensions.width
+                }mm" height="${docDimensions.height}mm">
                     ${paths.join('\n')}
                 </svg>
             `

@@ -5,7 +5,7 @@ import prefresh from '@prefresh/vite'
 import mdx from '@astrojs/mdx'
 
 export default defineConfig({
-  site: 'https://haxidraw.hackclub.com',
+  site: 'https://blot.hackclub.com',
   integrations: [
     preact({
       compat: true

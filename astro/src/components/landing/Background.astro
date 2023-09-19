@@ -82,12 +82,14 @@
   subpathElements.forEach(element => svgElement.appendChild(element))
 </script>
 
-<style>
+<style lang="scss">
   .main {
     background: repeating-linear-gradient(
-  white, white 25px,
-  #9198e5 26px, #9198e5 27px
- );
+      white,
+      white 25px,
+      #9198e5 26px,
+      #9198e5 27px
+    );
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
     transform: rotate(-1deg);
     width: 50vw;
@@ -117,6 +119,7 @@
     }
   }
 </style>
+
 <div class="main">
   <svg
     class="svg-container"
