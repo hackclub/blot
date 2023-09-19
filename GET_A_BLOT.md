@@ -16,6 +16,48 @@ That being said you can take inspiration from other art and remix a few pieces t
 Once you have made some art you can make a pull request (PR) onto this repo with that program.
 These are the steps you need to take to make a PR.
 
+## 2.1) Download your program
+
+- Hover over `download`
+- Click `js`
+
+<img width="1411" alt="Screenshot 2023-09-15 at 3 41 39 PM" src="https://github.com/hackclub/blot/assets/27078897/6d23dfc8-8768-4134-a24d-e276e2c67b52">
+
+
+## 2.2) Place your program in a folder with some snapshots
+
+- Create a folder called `{yourArtworkName}-{yourName}`.
+- Inside that folder create a `snapshots` folder with some screenshots of your work.
+- Place the code for your artwork in an `index.js` file.
+
+The directory structure can be seen below:
+
+<img width="729" alt="Screenshot 2023-09-15 at 3 34 15 PM" src="https://github.com/hackclub/blot/assets/27078897/07be7b3e-f0ad-4fab-a316-52fa3ef919c4">
+
+Refer to [this example](https://github.com/hackclub/blot/tree/main/art/square-disarray-leo) for the directory structure.
+
+## 2.3) Fork the blot repo
+
+[Click here to fork the blot repo.](https://github.com/hackclub/blot/fork)
+
+## 2.4) Upload your artwork
+
+- Open the "art" folder within your fork
+- Click "Add File"
+- Select "Upload Files"
+- Add your direcotry and click "Commit changes"
+  
+<img width="1273" alt="Screenshot 2023-09-15 at 3 40 12 PM" src="https://github.com/hackclub/blot/assets/27078897/161ca980-c100-41c7-8252-bf3602cff072">
+
+## 2.5) Make a PR
+
+- On your fork's page, click on "Contribute"
+- Select "Open Pull Request"
+- Click "Create Pull Request"
+- Name your pull request with the name of your directory (`{yourArtworkName}-{yourName}`)
+- In the body, describe your artwork and your experience coding
+- Click "Create Pull Request"
+
 Your PR will be reviewed by people in the BLOT community. We aren't evaluating it based on style
 we're looking to see if you put effort and creativity into your work.
 Don't worry if this is the first program you have ever written, if you worked hard (at least ~5 hrs) and are proud of the result then it's probably good.

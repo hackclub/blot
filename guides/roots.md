@@ -1,7 +1,7 @@
 ---
 title: Roots
 thumbnail: https://cloud-dl5vmy52p-hack-club-bot.vercel.app/0roots.png
-contributors: henrybass
+contributors: profsucrose
 ---
 
 (Written by @profsucrose, if you have any issues or questions)

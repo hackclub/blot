@@ -1,7 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Background from '../layouts/Background.astro'
-import ThreeDModel from '../layouts/ThreeDModel.astro'
+import Background from '../components/landing/Background.astro'
+import CodeSnippet from '../components/landing/CodeSnippet.tsx'
+import ThreeDModel from '../components/landing/ThreeDModel.astro'
+
+const workshops = await Astro.glob('/../guides/*.md')
+
+let curated = [
+  'raymarching',
+  'cubic_disarray',
+  'square-disarray',
+  'mesh',
+  'eca'
+]
+curated = curated.map(name => {
+  let find = workshops.find(workshop => workshop.file.includes(name))
+  return find
+})
 ---
 
 <style lang="scss" is:global>
@@ -13,17 +28,18 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
     font-family: var(--font-sans);
   }
 
-  header, section {
+  header,
+  section {
     a {
-        color: var(--primary);
-        font-style: italic;
-        text-decoration: none;
-      }
+      color: var(--primary);
+      font-style: italic;
+      text-decoration: none;
+    }
   }
 
   h1 {
-      font-family: var(--font-serif);
-    }
+    font-family: var(--font-serif);
+  }
 
   p {
     font-size: 1.3rem;
@@ -72,6 +88,23 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
     background-color: white;
     max-height: 50vh;
     overflow: hidden;
+    position: relative;
+
+    a {
+      background-color: #ddd;
+      border: 1px solid #cbd5e1;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: inline-block;
+      margin: 0 auto;
+      padding: 3px 9px;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      font-style: normal;
+      color: black;
+    }
   }
 
   section {
@@ -82,7 +115,6 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
       font-size: 3rem;
       line-height: 1.2;
       letter-spacing: -2px;
-      max-width: 50vw;
       margin-bottom: 0;
     }
   }
@@ -91,30 +123,60 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
     gap: 1rem;
     position: relative;
 
+    h1 {
+      max-width: 50vw;
+    }
+
+    .turtle {
+      position: relative;
+
+      .buttons {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 16px 12px;
+      }
+
+      button {
+        background-color: transparent;
+        border: 0;
+        transition: all 0.2s;
+        cursor: pointer;
+
+        &:hover {
+          color: var(--primary);
+        }
+      }
+    }
+
     > div {
       max-width: 50%;
     }
 
     .turtle {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    border: 1px solid #cbd5e1;
-    background-color: white;
-    max-height: 100%;
-    max-width: 50%;
-  }
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      border: 1px solid #cbd5e1;
+      background-color: white;
+      max-height: 100%;
+      max-width: 50%;
+    }
 
-  .get-started {
-    height: 500px;
-    background: antiquewhite;
-  }
+    .youtube-video-container {
+      margin-top: 1rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
 
-  .disclaimer {
-    font-size: 1em;
-    font-weight: 100;
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
+    .youtube-video {
+      aspect-ratio: 560/315;
+      border: none;
+      border-radius: 15px;
+      width: 90%;
+    }
   }
 
   #workshops {
@@ -122,33 +184,133 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem 0;
+    position: relative;
 
+    &::after {
+      background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 1) 90%
+      );
+      content: '';
+      width: 100%;
+      height: 35%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 999;
+    }
 
-    > h1 {
-      width: calc(50% - 1rem);
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex: calc(33% - 1rem);
+      flex-grow: 0;
     }
 
     .workshop {
+      cursor: pointer;
       align-self: flex-start;
       border-radius: 15px;
       border: 1px solid #cbd5e1;
-      max-width: calc(25% - 1rem);
+      // max-width: calc(50% - 1rem);
       flex-grow: 0;
       background-color: white;
+      transition: all 0.1s;
+      position: relative;
+
+      &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--primary);
+      }
 
       img {
         max-width: 100%;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
+        border-radius: 15px;
       }
 
       > div {
-        border-top: 1px solid #cbd5e1;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.2);
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
         padding: 1rem;
+        overflow-x: clip;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 999;
 
-        h1, h2, h3, h4, h5, h6, p {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
           margin: 0;
         }
+
+        blockquote {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  #workshop-container {
+    column-count: 3;
+    column-gap: 2rem;
+  }
+
+  #steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+
+    > div {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 15px;
+      border: 1px solid #cbd5e1;
+
+      h2 {
+        font-family: var(--font-serif);
+        letter-spacing: -1px;
+
+        span {
+          display: inline-block;
+          background-color: var(--primary);
+          border-radius: 50%;
+          color: white;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  #timeline {
+    display: flex;
+    width: 100%;
+
+    > div {
+      border-top: 1px solid var(--primary);
+      flex: 34%;
+      position: relative;
+      gap: 2rem;
+
+      h2:nth-child(1) {
+        font-size: 2rem;
+        margin-bottom: 0;
+      }
+
+      h2:nth-child(2) {
+        font-family: var(--font-serif);
+        font-weight: normal;
+        letter-spacing: -1px;
+        margin: 0;
       }
     }
   }
@@ -195,24 +357,32 @@ import ThreeDModel from '../layouts/ThreeDModel.astro'
   description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
   <header>
     <div>
-    <h1>
-      <span style={{ color: 'var(--primary)' }}>Blot</span>, the plotter bot
-      from Hack Club: you code art, we send you a machine.
-    </h1>
-    <div id="ctas">
-    <a class="cta" href="/editor">Start making art</a>
-    <a class="cta" href="https://github.com/hackclub/blot" target="_blank">Check out the source</a>
+      <h1>
+        <span style={{ color: 'var(--primary)' }}>Blot</span>, the plotter bot
+        from Hack Club: you code art, we send you a machine.
+      </h1>
+      <div id="ctas">
+        <a class="cta" href="/editor">Start making art</a>
+        <a class="cta" href="https://github.com/hackclub/blot" target="_blank"
+          >Check out the source</a
+        >
+      </div>
     </div>
-  </div>
     <Background />
   </header>
   <main>
     <section id="howto">
-      <div style={{ flex: "50%"}}>
-      <h1>Write code, get your Blot to draw it out.</h1>
-      <p>Blot is a plotting bot designed by people (insert something appropriate here) at <a href="https://hackclub.com">Hack Club</a> for drawing art digitally with code and then turning it into actual art.</p>
+      <div style={{ flex: '50%' }}>
+        <h1>Write code, get your Blot to draw it out.</h1>
+        <p>
+          Blot is a plotting bot designed by people (insert something
+          appropriate here) at <a href="https://hackclub.com">Hack Club</a> for
+          drawing art digitally with code and then turning it into actual art.
+        </p>
         <div class="code">
-        <CodeSnippet client:only content={`const leafLength = 5
+          <CodeSnippet
+            client:only
+            content={`const leafLength = 5
 const leafW = 1.3
 
 const edge = createTurtle()
@@ -287,32 +457,65 @@ t.iteratePath(pt => {
 t.translate([125 / 2, 125 / 2], t.cc)
 t.scale(17.2)
 
-drawTurtles(t)`}/>
-    </div>
-    <div class="youtube-video-container">
-    <iframe class="youtube-video" src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"></iframe>
-    </div>
-  </div>
-  <div class="turtle">
-      <div class="three-js-container"></div>
-  </div>
+drawTurtles(t)`}
+          />
+          <a href="/editor">Check out the guide for drawing leaves</a>
+        </div>
+        <div class="youtube-video-container">
+          <iframe
+            class="youtube-video"
+            src="https://www.youtube.com/embed/yxvEO-wUz2g?si=jspPdOWhnDxh_VcR"
+          ></iframe>
+        </div>
+      </div>
+      <div class="turtle">
+        <ThreeDModel />
+      </div>
     </section>
-    <section>
+    <section id="workshop-container">
       <div id="workshops">
-        <h1>Learn to make generative art with our <a href="/guides">guides</a> and from the community.</h1>
-        {workshops.slice(2, 8).map((workshop, idx) => {
-          return (
-            <>
-            <div class="workshop">
-              <img class="thumbnail"src={workshop.frontmatter.thumbnail}/>
-              <div class="prose">
-                <h2>{workshop.frontmatter.title}</h2>
-              <div set:html={marked(description(workshop.rawContent()))}/>
+        <h1 style={{ textAlign: 'center', marginTop: 0 }}>
+          Learn to make generative art with our <a href="/guides">guides</a> and
+          from the community.
+        </h1>
+        <div>
+          {
+            curated.slice(0, curated.length / 3 + 1).map((workshop, idx) => (
+              <div class="workshop">
+                <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                <div class="prose">
+                  <h2>{workshop.frontmatter.title}</h2>
+                </div>
               </div>
-            </div>
-            </>
-          )
-        })}
+            ))
+          }
+        </div>
+        <div>
+          {
+            curated
+              .slice(curated.length / 3 + 1, (curated.length / 3) * 2)
+              .map((workshop, idx) => (
+                <div class="workshop">
+                  <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                  <div class="prose">
+                    <h2>{workshop.frontmatter.title}</h2>
+                  </div>
+                </div>
+              ))
+          }
+        </div>
+        <div>
+          {
+            curated.slice((curated.length / 3) * 2).map((workshop, idx) => (
+              <div class="workshop">
+                <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                <div class="prose">
+                  <h2>{workshop.frontmatter.title}</h2>
+                </div>
+              </div>
+            ))
+          }
+        </div>
       </div>
     </section>
     <section>
@@ -320,7 +523,32 @@ drawTurtles(t)`}/>
         <p></p>
       </div>
       <div>
-        <h1>Wait, so how do I get one?</h1>
+        <h1>
+          Wait, so how do <span style={{ color: 'var(--primary)' }}>I</span> get
+          one?
+        </h1>
+        <div id="timeline">
+          <div>
+            <h2>#1</h2>
+            <h2>Make an original art piece</h2>
+          </div>
+          <div>
+            <h2>#2</h2>
+            <h2>
+              Submit it as a pull request to the art <a href="/gallery"
+                >gallery</a
+              >.
+            </h2>
+          </div>
+          <div>
+            <h2>#3</h2>
+            <h2>
+              Get parts for your Blot in the mail and <a href="/assembly"
+                >build your own</a
+              > machine.
+            </h2>
+          </div>
+        </div>
       </div>
     </section>
     <footer>© 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)</footer>

@@ -1,30 +1,31 @@
-# [Motor Control Board](https://leomcelroy.com/svg-pcb/?file=https://raw.githubusercontent.com/hackclub/haxidraw/main/motor-control-board/circuit/motor-control-board.js)
+# Blot Control Board
 
-Ultimately the idea is that each device will have it's own little board which we network together through Modular Things.
+There are the two boards we designed to drive the blot machine. The first one is the Carrier Board that holds everything together, and the second one is a USB-C Power Delivery Decoy board. 
 
-For development purposes (and for the sake of doing due diligence) I decided to make a single control board as well which the two steppers and single servo and plug into. It saves money because the board only requires one Xiao instead of three. I decided to use SVG PCB to design the board because I'm pretty comfortable with the software (because I wrote it). Additionally, a community contributor to the project (Kris) recently added Gerber export which I was eager to use.
+![A set of three assembled control boards and decoy boards](https://cloud-1qtfaazar-hack-club-bot.vercel.app/0image_from_ios.jpg)
 
-https://www.snapeda.com/parts/102010388/Seeed%20Technology%20Co.%2C%20Ltd/view-part/?ref=search&t=xiao Xiao board
+To drive the stepper motors, we're using a pair of A4988 stepper motor drivers from Allegro Microsystems, controlled by a Seeeduino XIAO RP2040 and powered by a custom USB-C PD board using the Cypress Semiconductor CYPD3177. 
 
-![Seeeduino-XIAO-pinout-1](https://user-images.githubusercontent.com/27078897/228574704-c915e09c-e003-4cff-96e2-54516c05eefa.jpg) (_Seeduino XIAO pinout_)
+The KiCAD project files are provided in the repo and are designed with KiCAD v7. This may not be compatible with previous versions, but you can get the latest version [here](https://www.kicad.org/download/). 
+## Carrier Board
 
-![stepper motor driver](https://user-images.githubusercontent.com/27078897/228574724-5ba97131-4382-4651-a72e-8aebf1cabaaa.jpg) (_A4988 Stepstick Stepper Motor Driver Module_)
+The carrier board wires the breakouts together, provides external power circuitry for the A4988 and steppers, and a convenient way to mount the board to the blot machine. It's a simple 2-layer 1.6mm PCB measured at 50x70mm. It also has a pin header breaking out 5 unused GPIO pins, including 1 DAC channel, 2 analog-capable pins, and one I2C bus. 
 
-![Screen Shot 2023-03-29 at 10 39 46 AM](https://user-images.githubusercontent.com/27078897/228574762-d211bedb-085e-42d4-ab3a-5761f78e579d.png) (_board design in SVGPCB_)
+![KiCAD Render of Carrier Board](https://cloud-msqq36tmv-hack-club-bot.vercel.app/0v1.20-render-populated.png)
 
-<img width="1228" alt="tracespace view" src="https://user-images.githubusercontent.com/27078897/228574940-f192d2ad-80f3-4d30-a1b3-9cd271ae8c55.png">
+## Power Delivery Board
 
-([_tracespace.io/view_](https://tracespace.io/view))
+The power delivery board provides a fixed output of 9V1A using the CYPD3177 chipset. It's highly flexible, allowing USB-C Charging up to 15W and USB-C PD up to 100W. Unlike many other chips available, it does not require any firmware nor flashing, and power settings are configured with pullup and pulldown resistors. This board is set to 9V @ 1A, to ensure maximum compatibility with most PD-capable bricks. It's very compact, measuring less than 22x32mm with breadboard-friendly mounting, an affordable 2-layer design, and single side SMD component placement. 
 
-## Bill of Materials
+During prototyping, we used an off-the-shelf module from Amazon. These only had four 2.54mm pins on the edge of the board and were hard to mount onto the board securely. Building our own also gave us better control over supply of these boards. 
 
-| Quantity | Thing                                                                                                                                                                           | Supplier                                                                                                |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| 1        | 100uf aluminum electrolytic capacitor (EEE-FN1H101V)                                                                                                                            | [Mouser](https://www.mouser.com/ProductDetail/Panasonic/EEE-FN1H101V?qs=OlC7AqGiEDkqWr496XIoYQ%3D%3D)   |
-| 1        | .1uf capactior ceramic (CC1206KRX7R9BB104)                                                                                                                                      | [Mouser](https://www.mouser.com/ProductDetail/YAGEO/CC1206KRX7R9BB104?qs=AgBp2OyFlx9LH1KRd7TZVQ%3D%3D)  |
-| 1        | circuit board ([design here](https://leomcelroy.com/svg-pcb/?file=https://raw.githubusercontent.com/hackclub/haxidraw/main/motor-control-board/circuit/motor-control-board.js)) | [JLCPCB](https://jlcpcb.com)                                                                            |
-| 3        | A4988 Stepstick Stepper Motor Driver Module                                                                                                                                     | [Amazon](https://www.amazon.com/gp/product/B07BND65C8?smid=A30QSGOJR8LMXA)                              |
-| 1        | 3-pin male header (for servo)                                                                                                                                                   | Generic                                                                                                 |
-| 4        | 4-pin male header                                                                                                                                                               | Generic                                                                                                 |
-| 1        | RP2040 Xiao board (with two 7-pin male headers soldered on)                                                                                                                     | [Seeed Studio](https://www.seeedstudio.com/XIAO-RP2040-v1-0-p-5026.html)                                |
-| 1        | USB-C Female Input 15V DC Fixed Voltage Power Module 5A                                                                                                                         | [Amazon](https://www.amazon.com/gp/product/B08NFKV2LD/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1) |
+![KiCAD Render of PD Board](https://cloud-msqq36tmv-hack-club-bot.vercel.app/1cypd_usb-pd_9v1a.png)
+
+## Additional Relevant Reading
+
+Below is a list of datasheets / product briefs that may be relevant. 
+
+[Seeeduino RP2040 XIAO](https://wiki.seeedstudio.com/XIAO-RP2040/)\
+[A4988 Breakout Board](https://www.pololu.com/product/1182)\
+[CYPD3177](https://www.infineon.com/cms/en/product/universal-serial-bus/usb-c-charging-port-controllers/ez-pd-barrel-connector-replacement-bcr/cypd3177-24lqxq/)
+
