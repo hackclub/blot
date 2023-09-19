@@ -18,6 +18,7 @@ export default function CodeMirror() {
   const [view, setView] = useState<EditorView>()
 
   useEffect(() => {
+    console.log(view)
     patchStore({ view })
   }, [view])
 
