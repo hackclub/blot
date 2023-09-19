@@ -1,30 +1,30 @@
-import CompatWarning from './components/CompatWarning.jsx'
-import Preview from './components/Preview.jsx'
-import Toolbar from './components/Toolbar.jsx'
+import { getStore } from '../lib/state.js'
+import { createListener } from '../lib/createListener.js'
 import styles from './Editor.module.scss'
-import Error from './components/Error.jsx'
-import Console from './components/Console.jsx'
-import GlobalStateDebugger from './components/GlobalStateDebugger.jsx'
-import DropBox from './components/DropBox.jsx'
-import CodeMirror from './components/CodeMirror.jsx'
-
-import { createListener } from './lib/createListener.js'
+import CompatWarning from './CompatWarning.jsx'
+import Preview from './Preview.jsx'
+import Toolbar from './Toolbar.jsx'
+import Error from './Error.jsx'
+import Console from './Console.jsx'
+import GlobalStateDebugger from './GlobalStateDebugger.jsx'
+import DropBox from './DropBox.jsx'
+import CodeMirror from './CodeMirror.jsx'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import { init } from './lib/init.js'
-import { useSettings } from './lib/settings.js'
-import Help from './components/Help.jsx'
+import Help from './Help.jsx'
 import preview from '@astrojs/node/preview.js'
 
 export default function Editor({ tutorial }: { tutorial: any }) {
-  const [width, setWidth] = useState(50)
-  const [tab, setTab] = useState('workshop')
-  const { theme } = useSettings(['theme'])
+  console.log("tutorial", tutorial);
+
+  const [width, setWidth] = useState(50);
+  const [tab, setTab] = useState('workshop');
+
+  const { theme } = getStore();
 
   const INIT_HELP_HEIGHT = 40
   const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
 
-  useEffect(() => {
-    init()
+  useEffect(() => {   
     addEditorResizing(setWidth, theme)
     addHelpResizing(setHelpHeight, editorContainer, theme)
   }, [])

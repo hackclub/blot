@@ -231,7 +231,7 @@ export default async function runCode(cached: boolean = false) {
           values: args
         }
       ]
-    })
+    }, false)
   }
 
   const hConsole = {
@@ -263,7 +263,7 @@ export default async function runCode(cached: boolean = false) {
           width: w,
           height: h
         }
-      })
+      }, false)
     }
   }
 
@@ -298,7 +298,7 @@ export default async function runCode(cached: boolean = false) {
 
   patchStore({
     console: []
-  })
+  }, false)
 
   try {
     await f(...values)

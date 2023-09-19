@@ -2,7 +2,7 @@ import { EditorView } from 'codemirror'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import cx from 'classnames'
 import styles from './CodeMirror.module.css'
-import { patchStore, useStore } from '../lib/state.ts'
+import { patchStore, getStore } from '../lib/state.ts'
 import { useCMTheme } from '../lib/codemirror/cmTheme.ts'
 import { useVimMode } from '../lib/codemirror/cmVimMode.ts'
 import { setErrorPos } from '../lib/codemirror/errorIndicator.js'
@@ -13,17 +13,13 @@ import {
 } from '../lib/codemirror/state.js'
 
 export default function CodeMirror() {
-  const { error } = useStore(['error'])
+  const { error } = getStore();
 
   const [view, setView] = useState<EditorView>()
 
-  useEffect(() => {
-    console.log(view)
-    patchStore({ view })
-  }, [view])
-
-  useCMTheme(view)
-  useVimMode(view)
+  patchStore({ view }, false);
+  useCMTheme(view);
+  useVimMode(view);
 
   useOnJumpTo(
     pos => {
@@ -37,7 +33,7 @@ export default function CodeMirror() {
     if (!view) return
     const line = error?.stack[0].line
     setErrorPos(view, line ? view.state.doc.line(line).from : null)
-  }, [error])
+  })
 
   const editorRef = useCallback((node: HTMLDivElement | null) => {
     if (!node) return

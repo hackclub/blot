@@ -43,7 +43,7 @@
   overflow-x: auto;
 }
 
-body[data-theme='Dark'] .snippet {
+body[data-theme='dark'] .snippet {
   background-color: rgba(50, 50, 50, 1);
   color: white;
 }
@@ -59,7 +59,7 @@ body[data-theme='Dark'] .snippet {
   color: rgba(0, 0, 0, 0.7);
 }
 
-body[data-theme='Dark'] .snippet > :first-child > :first-child {
+body[data-theme='dark'] .snippet > :first-child > :first-child {
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -81,7 +81,7 @@ body[data-theme='Dark'] .snippet > :first-child > :first-child {
   font-size: 0.8rem;
 }
 
-body[data-theme='Dark'] .context {
+body[data-theme='dark'] .context {
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -105,7 +105,7 @@ body[data-theme='Dark'] .context {
   gap: 0.25rem;
 }
 
-body[data-theme='Light'] .jumpTo {
+body[data-theme='light'] .jumpTo {
   background-color: rgba(0, 0, 0, 0.1);
 }
 

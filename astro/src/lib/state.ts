@@ -1,5 +1,4 @@
-import type { EditorState } from '@codemirror/state'
-import { createState } from 'niue'
+import { createState } from './createState.js'
 import { type Haxidraw, Turtle, type Point } from './drawingToolkit/index.js'
 import type { EditorView } from '@codemirror/view'
 
@@ -36,7 +35,9 @@ export type GlobalState = {
     height: number
   }
   running: boolean
-  view: EditorView | null
+  view: EditorView | null,
+  theme: "light" | "dark",
+  vimMode: boolean
 }
 
 // setting/initializing state
@@ -53,7 +54,9 @@ const newState: Omit<GlobalState, 'code'> = {
     width: 125,
     height: 125
   },
-  view: null
+  view: null,
+  theme: "light",
+  vimMode: false
 }
 
 export const makeNewState = (): GlobalState => {
@@ -62,6 +65,6 @@ export const makeNewState = (): GlobalState => {
   }
 }
 
-export const [useStore, patchStore, getStore] = createState<GlobalState>(
+export const [ patchStore, getStore ] = createState<GlobalState>(
   makeNewState()
 )

@@ -22,4 +22,4 @@ We have a [TODO](./TODO.md) list which you can check out for various tasks that 
 
 One of the best ways to get involved is by building and testing one of the machines. All you need is a 3D printer and a little bit of hardware outlined in the [bill of materials](./drawing-thing-v2).
 
-If you're a teen who wants to follow along with the project you can join the Hack Club Slack and head to the [#haxidraw-development](https://app.slack.com/client/T0266FRGM/C04GCH8A91D/thread/C04GCH8A91D-1672275851.810779) channel.
+If you're a teen who wants to follow along with the project you can join the Hack Club Slack and head to the [#blot](https://app.slack.com/client/T0266FRGM/C04GCH8A91D) channel.

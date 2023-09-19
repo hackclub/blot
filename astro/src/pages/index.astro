@@ -318,6 +318,38 @@ curated = curated.map(name => {
   footer {
     margin: 1rem;
   }
+
+  a {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    color: #ec3750;
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-underline-position: under;
+  }
+
+  a:hover {
+    text-decoration-style: wavy;
+  }
+
+  .hack-club-text-box {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    padding: 0px 5px;
+    background-color: #ec3750;
+    border-radius: 10px;
+/*    -webkit-transform: rotate(-3deg) translateY(-5px);*/
+/*    -moz-transform: rotate(-3deg) translateY(-5px);*/
+/*    -ms-transform: rotate(-3deg) translateY(-5px);*/
+/*    transform: rotate(-3deg) translateY(-5px);*/
+    color: white;
+    white-space: nowrap;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+  }
+
 </style>
 
 <Layout

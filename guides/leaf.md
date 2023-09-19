@@ -1,7 +1,7 @@
 ---
 title: How to draw a leaf
 thumbnail: https://github.com/hackclub/haxidraw/assets/27078897/9ce96217-bc5e-49cc-87b2-178681188eb3
-contributors: henrybass
+contributors: leomcelroy
 ---
 
 > You can follow along in this editor: https://editor.haxidraw.hackclub.com/

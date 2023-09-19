@@ -8,7 +8,7 @@
   padding-bottom: 1rem;
 }
 
-body:not([data-theme='Dark']) .root {
+body:not([data-theme='dark']) .root {
   background-color: rgba(var(--primary-rgb), 0.1);
 }
 
@@ -57,7 +57,7 @@ body:not([data-theme='Dark']) .root {
   color: inherit;
 }
 
-body:not([data-theme='Dark']) .pos {
+body:not([data-theme='dark']) .pos {
   color: var(--primary);
 }
 

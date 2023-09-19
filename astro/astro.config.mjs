@@ -19,9 +19,6 @@ export default defineConfig({
   },
   vite: {
     plugins: [prefresh()],
-    ssr: {
-      noExternal: ['niue']
-    },
     esbuild: {
       target: 'es2020'
     },
