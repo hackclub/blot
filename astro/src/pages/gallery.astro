@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 import { slug } from '../lib/guide.ts'
 
+
 let images = [];
 let art = {};
 try {
@@ -21,10 +22,7 @@ try {
   console.log(error)
 }
 
-const random = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min)) + min
-
-export const prerender = false
+export const prerender = true
 ---
 
 <style is:global lang="scss">
