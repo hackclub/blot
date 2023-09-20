@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro'
 import EditorLayout from '../layouts/EditorLayout.astro'
 import Editor from '../layouts/Editor.astro'
+<<<<<<< HEAD
 
 export const prerender = false
 
@@ -16,6 +16,8 @@ if (query)
 
 if (tutorial)
   tutorial = { ...tutorial, content: tutorial.compiledContent(), slug: query }
+=======
+>>>>>>> ae39339863ed0b9472c2b6ed42fbd0bfa1b720c1
 ---
 
 <EditorLayout title="Editor" description="Editor">
