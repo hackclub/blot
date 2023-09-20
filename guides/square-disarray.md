@@ -52,6 +52,7 @@ Let's use it to add a square to our drawing.
 
 <details>
 <summary>Hint</summary>
+  
 ```javascript
 // ...
 
@@ -61,6 +62,7 @@ shapes.translate([width / 2, height / 2], shapes.cc)
 
 // ...
 ```
+
 </details>
 
 # Make a Grid
