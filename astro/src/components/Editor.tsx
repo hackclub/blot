@@ -14,8 +14,8 @@ import Help from './Help.jsx'
 import preview from '@astrojs/node/preview.js'
 
 export default function Editor() {
-  const [width, setWidth] = useState(50);
-  const [tab, setTab] = useState('workshop');
+  const [width, setWidth] = useState(50)
+  const [tab, setTab] = useState('workshop')
 
   const { theme } = getStore()
 
@@ -81,10 +81,7 @@ export default function Editor() {
                 top: `${100 - helpHeight}%`,
                 width: `${100 - width}%`
               }}></div>
-            <Help
-              toggleClose={closeHelpPane}
-              helpHeight={helpHeight}
-            />
+            <Help toggleClose={closeHelpPane} helpHeight={helpHeight} />
           </div>
         </div>
       </div>

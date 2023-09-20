@@ -1,7 +1,7 @@
 import { compiledContent } from '../../../interface/README.md'
 import styles from './Help.module.scss'
 import { useState, useEffect } from 'preact/hooks'
-import { marked } from "marked";
+import { marked } from 'marked'
 
 const html = compiledContent()
 
@@ -14,35 +14,34 @@ export default function Help({
 }) {
   const closed = helpHeight <= 0
 
-  const [tab, setTab] = useState<'workshop' | 'toolkit'>('toolkit');
+  const [tab, setTab] = useState<'workshop' | 'toolkit'>('toolkit')
 
-  const currentUrl = new URL(window.location.href);
-  const workshop = currentUrl.searchParams.get('tutorial');
-  const [ workshopContent, setWorkshopContent ] = useState({
+  const currentUrl = new URL(window.location.href)
+  const workshop = currentUrl.searchParams.get('tutorial')
+  const [workshopContent, setWorkshopContent] = useState({
     slug: `/guide/${workshop}`,
     frontMatter: {},
-    htmlContent: ""
-  });
-
+    htmlContent: ''
+  })
 
   useEffect(() => {
-
     const fetchData = async () => {
-      if (workshop === null) return;
+      if (workshop === null) return
 
-      const res = await fetch(`https://raw.githubusercontent.com/hackclub/blot/main/guides/${workshop}.md`);
-      const data = await res.text();
+      const res = await fetch(
+        `https://raw.githubusercontent.com/hackclub/blot/main/guides/${workshop}.md`
+      )
+      const data = await res.text()
 
-      const result = parseMDFrontMatter(data);
-      result.slug = `/guide/${workshop}`;
-      
-      setWorkshopContent(result);
-      setTab("workshop");
-    };
+      const result = parseMDFrontMatter(data)
+      result.slug = `/guide/${workshop}`
 
-    fetchData();
+      setWorkshopContent(result)
+      setTab('workshop')
+    }
 
-  }, []);
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -86,7 +85,10 @@ export default function Help({
         {tab === 'workshop' && (
           <div class={styles.helpContent}>
             <h1>{workshopContent.frontMatter.title}</h1>
-            <div dangerouslySetInnerHTML={{ __html: workshopContent.htmlContent }}></div>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: workshopContent.htmlContent
+              }}></div>
             <p>
               <a href={`/guide/${workshopContent.slug}`}>Open as full page</a>
             </p>
@@ -98,28 +100,30 @@ export default function Help({
 }
 
 function parseMDFrontMatter(mdString) {
-    // Check if string starts and ends with ---
-    if (!mdString.startsWith('---') || !mdString.includes('\n---\n')) {
-        throw new Error('No frontmatter detected');
-    }
+  // Check if string starts and ends with ---
+  if (!mdString.startsWith('---') || !mdString.includes('\n---\n')) {
+    throw new Error('No frontmatter detected')
+  }
 
-    // Split the string at the second occurrence of ---
-    const parts = mdString.split('---', 2);
-    const frontMatterString = parts[1].trim();
+  // Split the string at the second occurrence of ---
+  const parts = mdString.split('---', 2)
+  const frontMatterString = parts[1].trim()
 
-    // Convert frontMatter string to an object (assuming YAML format)
-    const frontMatter = frontMatterString.split('\n').reduce((acc, line) => {
-        const [key, ...valueParts] = line.split(':');
-        acc[key.trim()] = valueParts.join(':').trim();
-        return acc;
-    }, {});
+  // Convert frontMatter string to an object (assuming YAML format)
+  const frontMatter = frontMatterString.split('\n').reduce((acc, line) => {
+    const [key, ...valueParts] = line.split(':')
+    acc[key.trim()] = valueParts.join(':').trim()
+    return acc
+  }, {})
 
-    // Get the Markdown content without the frontMatter
-    const contentString = mdString.replace(`---\n${frontMatterString}\n---`, '').trim();
-    const htmlContent = marked(contentString);
+  // Get the Markdown content without the frontMatter
+  const contentString = mdString
+    .replace(`---\n${frontMatterString}\n---`, '')
+    .trim()
+  const htmlContent = marked(contentString)
 
-    return {
-        frontMatter,
-        htmlContent
-    };
+  return {
+    frontMatter,
+    htmlContent
+  }
 }

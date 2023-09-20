@@ -40,7 +40,6 @@ export const prerender = true
 
   #gallery {
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
@@ -52,44 +51,47 @@ export const prerender = true
   }
 
   .frame {
+    background: white;
     padding: 0;
     margin: 0.5rem;
     border: solid 15px #555;
     box-shadow: -3px -3px 12px #999;
     max-width: 30%;
-    float: left;
-    margin-bottom: 1rem;
     z-index: 1;
-    display: flex;
-    align-items: center; /* centers vertically */
-    justify-content: center; /* centers horizontally */
-    overflow: hidden; /* ensures nothing overflows outside the frame */
+    transition: all 0.2s;
+    height: 100%;
+
+    &:hover {
+      transform: scale(101%);
+    }
+  }
+
+  img {
+    max-width: 100%;
+    object-fit: contain;
+    border: 1px solid #aaa;
   }
 
   .border {
+    max-width: 100%;
+    max-height: 100%;
     background-color: white;
-    position: relative;
-    padding: 0;
     margin: 0;
-    border: solid 70px white;
-    border-bottom-width: 20px;
+    border: solid 10px white;
     box-shadow: -3px -3px 12px #999;
-
-    img {
-      max-width: 100%;
-      max-height: 25vh;
-      object-fit: contain;
-      border: 1px solid #aaa;
-    }
   }
 
   .prose {
     background-color: white;
-    padding-top: 1rem;
-    font-size: 1.1rem;
+    font-size: 0.995rem;
+    padding: 0 1rem;
+    font-family: var(--font-serif);
+
+    blockquote {
+      margin-left: 0;
+    }
 
     h2 {
-      text-align: center;
       color: var(--primary);
 
       a {
@@ -114,10 +116,10 @@ export const prerender = true
   <div id="container">
     <div class="description">
       <h1 style={{ margin: 0 }}>Guides</h1>
-          <p style={{ marginTop: 0 }}>
-            A gallery of various guides created by Hack Clubbers that anyone can
-            learn from and contribute to!
-          </p>
+      <p style={{ marginTop: 0 }}>
+        A gallery of various guides created by Hack Clubbers that anyone can
+        learn from and contribute to!
+      </p>
     </div>
     <div id="gallery">
       {
