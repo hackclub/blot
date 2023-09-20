@@ -2,19 +2,21 @@
 import Layout from '../layouts/Layout.astro'
 import { slug } from '../lib/guide.ts'
 
+let images = [];
+let art = {};
 try {
 
-const list = (await Astro.glob('/../art/list.json'))[0].default
-let art = {}
-list.map(folder => {
-  folder.snapshots.map(snapshot => {
-    art[snapshot] = { folder: folder.directory, source: folder.source }
+  const list = (await Astro.glob('/../art/list.json'))[0].default
+  art = {}
+  list.map(folder => {
+    folder.snapshots.map(snapshot => {
+      art[snapshot] = { folder: folder.directory, source: folder.source }
+    })
   })
-})
 
-const images = (await Astro.glob('/../art/*/snapshots/*')).map(
-  img => img.default
-)
+  images = (await Astro.glob('/../art/*/snapshots/*')).map(
+    img => img.default
+  )
 } catch (error) {
   console.log(error)
 }
@@ -25,18 +27,6 @@ const random = (min: number, max: number) =>
 export const prerender = false
 ---
 
-<!-- 
-<script src="/masonry.min.js" type="module"></script>
-
-<script>
-  window.onload = () => {
-    new Masonry(document.getElementById('gallery'), {
-      itemSelector: '.frame',
-      percentPosition: true
-    })
-  }
-</script> 
--->
 <style is:global lang="scss">
   body,
   html {
@@ -123,6 +113,7 @@ export const prerender = false
     <div id="gallery">
       {
         images.map(img => {
+          console.log(img);
           return (
             <div class="frame">
               <a
