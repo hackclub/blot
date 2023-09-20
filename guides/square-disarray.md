@@ -51,6 +51,7 @@ Let's use it to add a square to our drawing.
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/6a9b273c-391e-4ee7-9036-114524589d09" width="512"/>
 
 <details>
+<summary>Hint</summary>
 <pre class=" language-js" tabindex="0">
   <code class=" language-js">
 // ...
