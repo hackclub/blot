@@ -13,14 +13,14 @@ import {
 } from '../lib/codemirror/state.js'
 
 export default function CodeMirror() {
-  const { error } = getStore();
+  const { error } = getStore()
 
   const [view, setView] = useState<EditorView>()
 
-  patchStore({ view }, false);
+  patchStore({ view }, false)
 
-  useCMTheme(view);
-  useVimMode(view);
+  useCMTheme(view)
+  useVimMode(view)
 
   useOnJumpTo(
     pos => {

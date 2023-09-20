@@ -9,7 +9,7 @@ import lineclip from '../lib/lineclip.ts'
 import { createListener } from '../lib/createListener.js'
 
 export default function Preview(props: { className?: string }) {
-  const { turtles, docDimensions } = getStore();
+  const { turtles, docDimensions } = getStore()
 
   useEffect(init, [])
 

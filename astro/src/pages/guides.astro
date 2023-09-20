@@ -8,6 +8,7 @@ const workshops = await Astro.glob('/../guides/*.md')
 export const prerender = true
 ---
 
+<!--
 <script src="/masonry.min.js" type="module"></script>
 
 <script>
@@ -15,15 +16,9 @@ export const prerender = true
     new Masonry(document.getElementById('gallery'), {
       itemSelector: '.frame'
     })
-
-    window.addEventListener('resize', () => {
-      new Masonry(document.getElementById('gallery'), {
-        itemSelector: '.frame'
-      })
-    })
   }
 </script>
-
+-->
 <style is:global lang="scss">
   @import '../ui/variables.scss';
 
@@ -60,15 +55,18 @@ export const prerender = true
   }
 
   .frame {
-    position: relative;
     padding: 0;
     margin: 0.5rem;
-    float: left;
     border: solid 15px #555;
-    max-width: 40vw;
     box-shadow: -3px -3px 12px #999;
-    text-decoration: none;
-    font-family: var(--font-serif);
+    max-width: 30%;
+    float: left;
+    margin-bottom: 1rem;
+    z-index: 1;
+    display: flex;
+    align-items: center; /* centers vertically */
+    justify-content: center; /* centers horizontally */
+    overflow: hidden; /* ensures nothing overflows outside the frame */
   }
 
   .border {
@@ -81,12 +79,13 @@ export const prerender = true
     box-shadow: -3px -3px 12px #999;
 
     img {
-      display: block;
-      width: 100%;
-      border-top: solid 2px #aaa;
-      border-left: solid 2px #aaa;
-      border-bottom: solid 2px #ccc;
-      border-right: solid 2px #ccc;
+      max-width: 100%;
+      max-height: 25vh;
+      object-fit: contain; /* ensures the image maintains aspect ratio and scales within the container */
+      // border-top: solid 2px #aaa;
+      // border-left: solid 2px #aaa;
+      // border-bottom: solid 2px #ccc;
+      // border-right: solid 2px #ccc;
     }
   }
 

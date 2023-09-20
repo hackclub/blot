@@ -43,9 +43,8 @@ const cmExtensions = [
           t => t.annotation(Transaction.userEvent) !== undefined
         )
       )
-      
-      manualChangeSinceLiveUpdate.value = true
-      dispatchEditorChange();
+        manualChangeSinceLiveUpdate.value = true
+      dispatchEditorChange()
     }
   }),
   themeExtension(),

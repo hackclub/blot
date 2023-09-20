@@ -21,9 +21,9 @@ import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
 
 export default function Toolbar() {
-  const { connected } = getStore();
+  const { connected } = getStore()
 
-  const [hidden, setHidden] = useState(true);
+  const [hidden, setHidden] = useState(true)
 
   return (
     <div class={styles.root}>
@@ -336,7 +336,7 @@ function OpenButton() {
 }
 
 function MachineControls() {
-  const { inst, running } = getStore();
+  const { inst, running } = getStore()
 
   useEffect(() => {
     tryAutoConnect()
@@ -402,14 +402,14 @@ function SettingsButton() {
           class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
-            const newTheme = theme === "dark" ? "light" : "dark";
+            const newTheme = theme === 'dark' ? 'light' : 'dark'
             patchStore({
               theme: newTheme
             })
 
-            document.body.dataset.theme = newTheme;
+            document.body.dataset.theme = newTheme
 
-            localStorage.setItem('colorTheme', newTheme);
+            localStorage.setItem('colorTheme', newTheme)
 
             setHidden(false)
           }}>

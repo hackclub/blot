@@ -7,7 +7,7 @@ import Button from '../ui/Button.tsx'
 import TrashCanIcon from '../ui/TrashCanIcon.tsx'
 
 export default function Console() {
-  const { console } = getStore();
+  const { console } = getStore()
   const lines = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

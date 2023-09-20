@@ -14,17 +14,17 @@ import Help from './Help.jsx'
 import preview from '@astrojs/node/preview.js'
 
 export default function Editor({ tutorial }: { tutorial: any }) {
-  console.log("tutorial", tutorial);
+  console.log('tutorial', tutorial)
 
-  const [width, setWidth] = useState(50);
-  const [tab, setTab] = useState('workshop');
+  const [width, setWidth] = useState(50)
+  const [tab, setTab] = useState('workshop')
 
-  const { theme } = getStore();
+  const { theme } = getStore()
 
   const INIT_HELP_HEIGHT = 40
   const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
 
-  useEffect(() => {   
+  useEffect(() => {
     addEditorResizing(setWidth, theme)
     addHelpResizing(setHelpHeight, editorContainer, theme)
   }, [])

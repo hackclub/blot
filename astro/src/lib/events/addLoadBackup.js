@@ -1,6 +1,6 @@
 import { useOnEditorChange } from '../events.ts'
 import { getStore } from '../state.ts'
-import { defaultProgram } from "../defaultProgram.js";
+import { defaultProgram } from '../defaultProgram.js'
 
 export function addLoadBackup() {
   const { view } = getStore()

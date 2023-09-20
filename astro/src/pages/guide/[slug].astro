@@ -19,7 +19,7 @@ if (!workshop) return Astro.redirect('/404')
 const { Content } = workshop
 const headings = await workshop.getHeadings()
 let { title, thumbnail, contributors } = workshop.frontmatter
-contributors = contributors?.split(',') ?? [];
+contributors = contributors?.split(',') ?? []
 ---
 
 <style is:global lang="scss">

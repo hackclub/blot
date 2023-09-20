@@ -3,16 +3,11 @@ import Layout from '../layouts/Layout.astro'
 import Background from '../components/landing/Background.astro'
 import CodeSnippet from '../components/landing/CodeSnippet.tsx'
 import ThreeDModel from '../components/landing/ThreeDModel.astro'
+import { slug } from '../lib/guide.ts'
 
 const workshops = await Astro.glob('/../guides/*.md')
 
-let curated = [
-  'raymarching',
-  'cubic_disarray',
-  'square-disarray',
-  'mesh',
-  'eca'
-]
+let curated = ['raymarching', 'mesh', 'square-disarray']
 curated = curated.map(name => {
   let find = workshops.find(workshop => workshop.file.includes(name))
   return find
@@ -50,19 +45,36 @@ curated = curated.map(name => {
   header {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px dashed var(--primary);
+    padding-bottom: 2rem;
 
-    > div {
+    > div:nth-child(1) {
+      justify-content: space-between;
+      display: flex;
+      flex-direction: column;
       max-width: 50vw;
-      padding-bottom: 2rem;
-      padding-left: 2rem;
+      padding: 4rem 2rem 0 2rem;
     }
 
     h1 {
-      font-size: 5rem;
+      font-size: 4.5rem;
       letter-spacing: -3px;
-      line-height: 1;
-      margin-bottom: 2rem;
+      line-height: 1.1;
+      margin: 0;
+
+      a {
+        font-style: normal;
+      }
+    }
+
+    h3 {
+      font-family: var(--font-serif);
+      margin: 0.995rem 0 2rem 0;
+      font-size: 2rem;
+      letter-spacing: -1px;
+    }
+
+    p {
+      font-size: 0.995rem;
     }
   }
 
@@ -83,12 +95,15 @@ curated = curated.map(name => {
 
   .code {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
     border: 1px solid #cbd5e1;
+    border-radius: 15px;
     background-color: white;
-    max-height: 50vh;
-    overflow: hidden;
     position: relative;
+
+    img {
+      border-radius: 15px;
+      width: 100%;
+    }
 
     a {
       background-color: #ddd;
@@ -179,6 +194,34 @@ curated = curated.map(name => {
     }
   }
 
+  #workshop-container {
+    display: block;
+  }
+
+  .fade-button {
+    background-color: white;
+    margin-inline: -2rem;
+    display: flex;
+    justify-content: center;
+
+    > a {
+      background-color: var(--primary);
+      border: 0;
+      font-family: var(--font-sans);
+      color: white;
+      padding: 10px 30px;
+      border-radius: 24px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-style: normal;
+      transition: all 0.2s;
+
+      &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+
   #workshops {
     display: flex;
     flex-wrap: wrap;
@@ -193,12 +236,13 @@ curated = curated.map(name => {
         rgba(255, 255, 255, 1) 90%
       );
       content: '';
-      width: 100%;
+      width: 100vw;
       height: 35%;
       position: absolute;
       bottom: 0;
       left: 0;
       z-index: 999;
+      margin-inline: -2rem;
     }
 
     > div {
@@ -242,6 +286,11 @@ curated = curated.map(name => {
         width: 100%;
         z-index: 999;
 
+        a {
+          color: inherit;
+          font-style: inherit;
+        }
+
         h1,
         h2,
         h3,
@@ -259,47 +308,26 @@ curated = curated.map(name => {
     }
   }
 
-  #workshop-container {
-    column-count: 3;
-    column-gap: 2rem;
-  }
-
   #steps {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 1rem;
-
-    > div {
-      background-color: white;
-      padding: 1rem;
-      border-radius: 15px;
-      border: 1px solid #cbd5e1;
-
-      h2 {
-        font-family: var(--font-serif);
-        letter-spacing: -1px;
-
-        span {
-          display: inline-block;
-          background-color: var(--primary);
-          border-radius: 50%;
-          color: white;
-          text-align: center;
-        }
-      }
-    }
+    background-color: white;
+    position: relative;
   }
 
   #timeline {
     display: flex;
     width: 100%;
+    position: relative;
 
     > div {
       border-top: 1px solid var(--primary);
-      flex: 34%;
       position: relative;
-      gap: 2rem;
+      padding: 0 2rem 2rem 2rem;
+
+      &::before {
+        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-pen-tool'%3E%3Cpath d='m12 19 7-7 3 3-7 7-3-3z'/%3E%3Cpath d='m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z'/%3E%3Cpath d='m2 2 7.586 7.586'/%3E%3Ccircle cx='11' cy='11' r='2'/%3E%3C/svg%3E");
+        stroke-width: 1px;
+        font-weight: 100;
+      }
 
       h2:nth-child(1) {
         font-size: 2rem;
@@ -316,7 +344,8 @@ curated = curated.map(name => {
   }
 
   footer {
-    margin: 1rem;
+    background-color: white;
+    padding: 1rem;
   }
 
   a {
@@ -340,16 +369,15 @@ curated = curated.map(name => {
     padding: 0px 5px;
     background-color: #ec3750;
     border-radius: 10px;
-/*    -webkit-transform: rotate(-3deg) translateY(-5px);*/
-/*    -moz-transform: rotate(-3deg) translateY(-5px);*/
-/*    -ms-transform: rotate(-3deg) translateY(-5px);*/
-/*    transform: rotate(-3deg) translateY(-5px);*/
+    /*    -webkit-transform: rotate(-3deg) translateY(-5px);*/
+    /*    -moz-transform: rotate(-3deg) translateY(-5px);*/
+    /*    -ms-transform: rotate(-3deg) translateY(-5px);*/
+    /*    transform: rotate(-3deg) translateY(-5px);*/
     color: white;
     white-space: nowrap;
     -webkit-text-decoration: none;
     text-decoration: none;
   }
-
 </style>
 
 <Layout
@@ -357,18 +385,19 @@ curated = curated.map(name => {
   description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
   <header>
     <div>
-      <h1>
-        <span style={{ color: 'var(--primary)' }}>Blot</span>, the plotter bot
-        from Hack Club
-      </h1>
-      <h3>You code art, we send you a machine.</h3>
-
-      <div id="ctas">
-        <a class="cta" href="/editor">Start making art</a>
-        <a class="cta" href="https://github.com/hackclub/blot" target="_blank"
-          >Check out the source</a
-        >
+      <div>
+        <h1>
+          <span style={{ color: 'var(--primary)' }}>Blot</span>, the plotter bot
+        </h1>
+        <h1>
+          from <a href="https://hackclub.com" target="_blank">Hack Club</a>
+        </h1>
+        <h3>You* code art, we send you a machine.</h3>
+        <div id="ctas">
+          <a class="cta" href="/editor">Start making art</a>
+        </div>
       </div>
+      <p>*Must be &lt;20 years old to receive a free machine.</p>
     </div>
     <Background />
   </header>
@@ -382,85 +411,7 @@ curated = curated.map(name => {
           drawing art digitally with code and then turning it into actual art.
         </p>
         <div class="code">
-          <CodeSnippet
-            client:only
-            content={`const leafLength = 5
-const leafW = 1.3
-
-const edge = createTurtle()
-  .forward(leafLength)
-  .resample(0.01)
-  .warp(bezierEasing(0, [0.4, 2.29], [0.52, 0.31], 0))
-
-function veins() {
-  const lines = createTurtle()
-
-  let littleLinesMax = 61
-  for (let i = 4; i < littleLinesMax - 5; i++) {
-    const t = i / (littleLinesMax - 1)
-    const x0 = t * leafLength
-    const y0 = 0
-
-    let y = edge.interpolate(t + 0.1)[1]
-
-    const line = createTurtle([x0, y0])
-
-    line.right(-70 + t * 37 + randInRange(-4, 4))
-
-    let r = y * 0.7
-
-    const trimTo = i % 5 === 0 ? randInRange(0.7, 0.9) : randInRange(0.1, 0.7)
-
-    if (r < 0.01) continue
-
-    const warper = bezierEasing(0, [0.28, y / 4], [0.58, y / 8], 0)
-
-    line.forward(r).resample(0.01).warp(warper).resample(0.05).trim(0, trimTo)
-
-    line.iteratePath(pt => {
-      return Math.random() < (i % 5 === 0 ? +0.17 : 0.56) ? 'BREAK' : pt
-    })
-
-    lines.join(line)
-  }
-
-  return lines
-}
-
-const t = createTurtle()
-
-const bottom = edge.copy().scale([1, -1], [0, 0])
-
-edge.warp(
-  t => noise(t * 20.4, { octaves: 2 }) * 0.09 * (t === 0 || t === 1 ? 0 : 1)
-)
-bottom.warp(
-  t => noise(t * 23.6, { octaves: 2 }) * -0.1 * (t === 0 || t === 1 ? 0 : 1)
-)
-
-t.join(edge)
-t.join(bottom)
-t.join(veins())
-t.join(veins().scale([1, -1], [0, 0]))
-
-const lineStem = createTurtle([-1, 0])
-  .forward(leafLength + 1)
-  .resample(0.1)
-
-t.join(lineStem)
-
-t.iteratePath(pt => {
-  let [x, y] = pt
-  y += x * x * 0.02
-  y += noise([x * 0.2]) * 0.3
-  return [x, y]
-})
-
-t.translate([125 / 2, 125 / 2], t.cc)
-t.scale(17.2)
-
-drawTurtles(t)`}
-          />
+          <img src="/landing/code.png" />
           <a href="/editor">Check out the guide for drawing leaves</a>
         </div>
         <div class="youtube-video-container">
@@ -482,11 +433,15 @@ drawTurtles(t)`}
         </h1>
         <div>
           {
-            curated.slice(0, curated.length / 3 + 1).map((workshop, idx) => (
+            curated.slice(0, curated.length / 3).map((workshop, idx) => (
               <div class="workshop">
-                <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                <a href={`/guide/${slug(workshop.file)}`}>
+                  <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                </a>
                 <div class="prose">
-                  <h2>{workshop.frontmatter.title}</h2>
+                  <a href={`/guide/${slug(workshop.file)}`}>
+                    <h2>{workshop.frontmatter.title}</h2>
+                  </a>
                 </div>
               </div>
             ))
@@ -495,12 +450,19 @@ drawTurtles(t)`}
         <div>
           {
             curated
-              .slice(curated.length / 3 + 1, (curated.length / 3) * 2)
+              .slice(curated.length / 3, (curated.length / 3) * 2)
               .map((workshop, idx) => (
                 <div class="workshop">
-                  <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                  <a href={`/guide/${slug(workshop.file)}`}>
+                    <img
+                      class="thumbnail"
+                      src={workshop.frontmatter.thumbnail}
+                    />
+                  </a>
                   <div class="prose">
-                    <h2>{workshop.frontmatter.title}</h2>
+                    <a href={`/guide/${slug(workshop.file)}`}>
+                      <h2>{workshop.frontmatter.title}</h2>
+                    </a>
                   </div>
                 </div>
               ))
@@ -510,49 +472,55 @@ drawTurtles(t)`}
           {
             curated.slice((curated.length / 3) * 2).map((workshop, idx) => (
               <div class="workshop">
-                <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                <a href={`/guide/${slug(workshop.file)}`}>
+                  <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                </a>
                 <div class="prose">
-                  <h2>{workshop.frontmatter.title}</h2>
+                  <a href={`/guide/${slug(workshop.file)}`}>
+                    <h2>{workshop.frontmatter.title}</h2>
+                  </a>
                 </div>
               </div>
             ))
           }
         </div>
       </div>
-    </section>
-    <section>
-      <div>
-        <p></p>
+      <div class="fade-button">
+        <a href="/guides">Check out the guides</a>
       </div>
-      <div>
-        <h1>
-          Wait, so how do <span style={{ color: 'var(--primary)' }}>I</span> get
-          one?
-        </h1>
-        <div id="timeline">
-          <div>
-            <h2>#1</h2>
-            <h2>Make an original art piece</h2>
-          </div>
-          <div>
-            <h2>#2</h2>
-            <h2>
-              Submit it as a pull request to the art <a href="/gallery"
-                >gallery</a
-              >.
-            </h2>
-          </div>
-          <div>
-            <h2>#3</h2>
-            <h2>
-              Get parts for your Blot in the mail and <a href="/assembly"
-                >build your own</a
-              > machine.
-            </h2>
-          </div>
+    </section>
+  </main>
+  <section id="steps">
+    <div>
+      <p></p>
+    </div>
+    <div>
+      <h1>
+        Wait, so how do <span style={{ color: 'var(--primary)' }}>I</span> get
+        one?
+      </h1>
+      <div id="timeline">
+        <div>
+          <h2>#1</h2>
+          <h2>Make an original art piece</h2>
+        </div>
+        <div>
+          <h2>#2</h2>
+          <h2>
+            Submit it as a pull request to the art <a href="/gallery">gallery</a
+            >.
+          </h2>
+        </div>
+        <div>
+          <h2>#3</h2>
+          <h2>
+            Get parts for your Blot in the mail and <a href="/assembly"
+              >build your own</a
+            > machine.
+          </h2>
         </div>
       </div>
-    </section>
-    <footer>© 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)</footer>
-  </main>
+    </div>
+  </section>
+  <footer>© 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)</footer>
 </Layout>
