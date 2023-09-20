@@ -13,17 +13,9 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import Help from './Help.jsx'
 import preview from '@astrojs/node/preview.js'
 
-<<<<<<< HEAD
-export default function Editor({ tutorial }: { tutorial: any }) {
-  console.log('tutorial', tutorial)
-
-  const [width, setWidth] = useState(50)
-  const [tab, setTab] = useState('workshop')
-=======
 export default function Editor() {
   const [width, setWidth] = useState(50);
   const [tab, setTab] = useState('workshop');
->>>>>>> ae39339863ed0b9472c2b6ed42fbd0bfa1b720c1
 
   const { theme } = getStore()
 

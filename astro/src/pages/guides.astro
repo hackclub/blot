@@ -39,14 +39,11 @@ export const prerender = true
   }
 
   #gallery {
-    padding: 1rem;
-    position: relative;
-
-    &::after {
-      content: '';
-      display: block;
-      clear: both;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
   #content {
@@ -81,11 +78,8 @@ export const prerender = true
     img {
       max-width: 100%;
       max-height: 25vh;
-      object-fit: contain; /* ensures the image maintains aspect ratio and scales within the container */
-      // border-top: solid 2px #aaa;
-      // border-left: solid 2px #aaa;
-      // border-bottom: solid 2px #ccc;
-      // border-right: solid 2px #ccc;
+      object-fit: contain;
+      border: 1px solid #aaa;
     }
   }
 
@@ -104,22 +98,28 @@ export const prerender = true
       }
     }
   }
+
+  .description {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 2rem;
+    letter-spacing: -1px;
+  }
 </style>
 
 <Layout
   title="Guides"
   description="A gallery of various guides created by Hack Clubbers.">
   <div id="container">
-    <div id="gallery">
-      <div class="frame" id="content">
-        <div class="border">
-          <h1 style={{ margin: 0 }}>Guides</h1>
+    <div class="description">
+      <h1 style={{ margin: 0 }}>Guides</h1>
           <p style={{ marginTop: 0 }}>
             A gallery of various guides created by Hack Clubbers that anyone can
             learn from and contribute to!
           </p>
-        </div>
-      </div>
+    </div>
+    <div id="gallery">
       {
         workshops
           .sort((a, b) =>

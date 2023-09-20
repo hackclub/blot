@@ -1,23 +1,6 @@
 ---
 import EditorLayout from '../layouts/EditorLayout.astro'
 import Editor from '../layouts/Editor.astro'
-<<<<<<< HEAD
-
-export const prerender = false
-
-const files = await Astro.glob('/../guides/*.md')
-const query = Astro.url.searchParams.get('tutorial')
-
-let tutorial = undefined
-if (query)
-  files.map(file => {
-    if (file.file.endsWith(query + '.md')) tutorial = file
-  })
-
-if (tutorial)
-  tutorial = { ...tutorial, content: tutorial.compiledContent(), slug: query }
-=======
->>>>>>> ae39339863ed0b9472c2b6ed42fbd0bfa1b720c1
 ---
 
 <EditorLayout title="Editor" description="Editor">

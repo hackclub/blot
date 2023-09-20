@@ -68,31 +68,40 @@ export const prerender = false
     float: left;
     margin-bottom: 1rem;
     z-index: 1;
-
     display: flex;
     align-items: center; /* centers vertically */
     justify-content: center; /* centers horizontally */
     overflow: hidden; /* ensures nothing overflows outside the frame */
+    transition: all 0.2s;
+
+    &:hover {
+      transform: scale(101%);
+    }
   }
 
   img {
     max-width: 100%;
     max-height: 25vh;
     object-fit: contain; /* ensures the image maintains aspect ratio and scales within the container */
-    // border-top: solid 2px #aaa;
-    // border-left: solid 2px #aaa;
-    // border-bottom: solid 2px #ccc;
-    // border-right: solid 2px #ccc;
+    border: 1px solid #aaa;
   }
 
   .border {
     max-width: 100%;
     max-height: 100%;
     background-color: white;
-    padding: 0;
+    padding: 2rem 0;
     margin: 0;
     border: solid 40px white;
     box-shadow: -3px -3px 12px #999;
+  }
+
+  .description {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 2rem;
+    letter-spacing: -1px;
   }
 </style>
 
@@ -100,11 +109,13 @@ export const prerender = false
   title="Gallery"
   description="A gallery of various art pieces created by Hack Clubbers.">
   <div id="container">
+    <div class="description">
     <h1 style={{ margin: 0 }}>Gallery</h1>
     <p style={{ margin: 0 }}>
       A gallery of various art pieces created by Hack Clubbers, with an
       interactive 3D gallery mode!
     </p>
+    </div>
     <div id="gallery">
       {
         images.map(img => {
