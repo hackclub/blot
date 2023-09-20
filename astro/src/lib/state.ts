@@ -35,8 +35,8 @@ export type GlobalState = {
     height: number
   }
   running: boolean
-  view: EditorView | null,
-  theme: "light" | "dark",
+  view: EditorView | null
+  theme: 'light' | 'dark'
   vimMode: boolean
 }
 
@@ -55,7 +55,7 @@ const newState: Omit<GlobalState, 'code'> = {
     height: 125
   },
   view: null,
-  theme: "light",
+  theme: 'light',
   vimMode: false
 }
 
@@ -65,6 +65,4 @@ export const makeNewState = (): GlobalState => {
   }
 }
 
-export const [ patchStore, getStore ] = createState<GlobalState>(
-  makeNewState()
-)
+export const [patchStore, getStore] = createState<GlobalState>(makeNewState())

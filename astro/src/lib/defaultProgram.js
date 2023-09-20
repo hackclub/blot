@@ -1,5 +1,5 @@
 export const defaultProgram = `
-// welcome to haxidraw!
+// welcome to blot!
 
 const width = 125;
 const height = 125;

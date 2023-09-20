@@ -100,9 +100,11 @@ const Snippet = ({
         <span class={styles.arrow}>↑</span>
         {message && <span class={styles.message}>{message}</span>}
       </code>
-      <button class={styles.jumpTo} onClick={() => {
-        dispatchJumpTo(pos);
-      }}>
+      <button
+        class={styles.jumpTo}
+        onClick={() => {
+          dispatchJumpTo(pos)
+        }}>
         <JumpLinkIcon />
         Jump to line
       </button>
@@ -111,7 +113,7 @@ const Snippet = ({
 }
 
 export default function Error() {
-  const { error } = getStore();
+  const { error } = getStore()
 
   if (!error) return null
 

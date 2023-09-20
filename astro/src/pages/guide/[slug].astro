@@ -19,7 +19,7 @@ if (!workshop) return Astro.redirect('/404')
 const { Content } = workshop
 const headings = await workshop.getHeadings()
 let { title, thumbnail, contributors } = workshop.frontmatter
-contributors = contributors?.split(',') ?? [];
+contributors = contributors?.split(',') ?? []
 ---
 
 <style is:global lang="scss">
@@ -28,16 +28,12 @@ contributors = contributors?.split(',') ?? [];
   #container {
     margin: 0 auto;
     padding: 2rem;
-    gap: 2.5rem;
+    gap: 2rem;
     position: relative;
 
     @media screen and (min-width: $md) {
       display: flex;
-      width: 80vw;
-    }
-
-    @media screen and (min-width: $md) and (max-width: $lg) {
-      width: 95vw;
+      width: 70vw;
     }
   }
 
@@ -61,13 +57,12 @@ contributors = contributors?.split(',') ?? [];
   }
 
   .toc {
-    border: 1px solid var(--primary);
     align-self: flex-start;
     font-family: var(--font-serif);
     font-size: 0.995rem;
     position: sticky;
+    flex: 25%;
     top: 4rem;
-    padding: 1rem;
     padding-bottom: 0;
     margin-top: 2rem;
 
@@ -83,6 +78,11 @@ contributors = contributors?.split(',') ?? [];
         opacity: 0.8;
       }
     }
+  }
+
+  #title {
+    line-height: 1;
+    letter-spacing: -1px;
   }
 
   .prose {
@@ -244,7 +244,7 @@ contributors = contributors?.split(',') ?? [];
         </p>
       </div>
       <header>
-        <h1>{title}</h1>
+        <h1 id="title">{title}</h1>
         <p>
           Contributors: {
             contributors.map((contributor, idx) => (

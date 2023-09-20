@@ -8,6 +8,7 @@ const workshops = await Astro.glob('/../guides/*.md')
 export const prerender = true
 ---
 
+<!--
 <script src="/masonry.min.js" type="module"></script>
 
 <script>
@@ -15,15 +16,9 @@ export const prerender = true
     new Masonry(document.getElementById('gallery'), {
       itemSelector: '.frame'
     })
-
-    window.addEventListener('resize', () => {
-      new Masonry(document.getElementById('gallery'), {
-        itemSelector: '.frame'
-      })
-    })
   }
 </script>
-
+-->
 <style is:global lang="scss">
   @import '../ui/variables.scss';
 
@@ -44,14 +39,11 @@ export const prerender = true
   }
 
   #gallery {
-    padding: 1rem;
-    position: relative;
-
-    &::after {
-      content: '';
-      display: block;
-      clear: both;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
   #content {
@@ -60,15 +52,18 @@ export const prerender = true
   }
 
   .frame {
-    position: relative;
     padding: 0;
     margin: 0.5rem;
-    float: left;
     border: solid 15px #555;
-    max-width: 40vw;
     box-shadow: -3px -3px 12px #999;
-    text-decoration: none;
-    font-family: var(--font-serif);
+    max-width: 30%;
+    float: left;
+    margin-bottom: 1rem;
+    z-index: 1;
+    display: flex;
+    align-items: center; /* centers vertically */
+    justify-content: center; /* centers horizontally */
+    overflow: hidden; /* ensures nothing overflows outside the frame */
   }
 
   .border {
@@ -81,12 +76,10 @@ export const prerender = true
     box-shadow: -3px -3px 12px #999;
 
     img {
-      display: block;
-      width: 100%;
-      border-top: solid 2px #aaa;
-      border-left: solid 2px #aaa;
-      border-bottom: solid 2px #ccc;
-      border-right: solid 2px #ccc;
+      max-width: 100%;
+      max-height: 25vh;
+      object-fit: contain;
+      border: 1px solid #aaa;
     }
   }
 
@@ -105,22 +98,28 @@ export const prerender = true
       }
     }
   }
+
+  .description {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 2rem;
+    letter-spacing: -1px;
+  }
 </style>
 
 <Layout
   title="Guides"
   description="A gallery of various guides created by Hack Clubbers.">
   <div id="container">
-    <div id="gallery">
-      <div class="frame" id="content">
-        <div class="border">
-          <h1 style={{ margin: 0 }}>Guides</h1>
+    <div class="description">
+      <h1 style={{ margin: 0 }}>Guides</h1>
           <p style={{ marginTop: 0 }}>
             A gallery of various guides created by Hack Clubbers that anyone can
             learn from and contribute to!
           </p>
-        </div>
-      </div>
+    </div>
+    <div id="gallery">
       {
         workshops
           .sort((a, b) =>

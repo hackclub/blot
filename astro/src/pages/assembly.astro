@@ -4,7 +4,6 @@ import Layout from '../layouts/Layout.astro'
 export const prerender = true
 
 const assembly = (await Astro.glob('/../ASSEMBLY.md'))[0]
-console.log(assembly)
 const { Content } = assembly
 const headings = assembly.getHeadings()
 ---
@@ -15,16 +14,12 @@ const headings = assembly.getHeadings()
   #container {
     margin: 0 auto;
     padding: 2rem;
-    gap: 2.5rem;
+    gap: 2rem;
     position: relative;
 
     @media screen and (min-width: $md) {
       display: flex;
-      width: 80vw;
-    }
-
-    @media screen and (min-width: $md) and (max-width: $lg) {
-      width: 95vw;
+      width: 70vw;
     }
   }
 
@@ -36,15 +31,30 @@ const headings = assembly.getHeadings()
     }
   }
 
+  #cta {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    margin-top: 1.5rem;
+
+    svg {
+      width: 1.1rem;
+    }
+  }
+
   .toc {
-    border: 1px solid var(--primary);
     align-self: flex-start;
     font-family: var(--font-serif);
-    font-size: 0.8rem;
+    font-size: 0.995rem;
     position: sticky;
+    flex: 25%;
     top: 4rem;
-    padding: 1rem;
+    padding-bottom: 0;
     margin-top: 2rem;
+
+    h1 {
+      font-size: inherit;
+    }
 
     *:not(button) {
       color: var(--primary);
@@ -60,8 +70,12 @@ const headings = assembly.getHeadings()
     }
   }
 
+  #title {
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
   .prose {
-    flex: 1;
     font-family: var(--font-serif);
     font-size: 1.1rem;
     line-height: 1.6;
@@ -77,9 +91,28 @@ const headings = assembly.getHeadings()
       }
     }
 
+    article {
+      margin: 0 auto;
+      max-width: 50vw;
+    }
+
+    blockquote {
+      border-left: 3px solid var(--primary);
+      padding-left: 1rem;
+    }
+
+    hr {
+      display: block;
+      height: 1px;
+      border: 0;
+      border-top: 1px solid #ccc;
+      margin: 1em 0;
+      padding: 0;
+    }
+
     img {
       display: block;
-      margin-top: 1.1rem;
+      margin: 1.1rem 0;
       max-width: 100%;
     }
 
@@ -92,33 +125,21 @@ const headings = assembly.getHeadings()
     li p {
       margin: 0;
     }
+  }
 
-    hr {
-      display: block;
-      height: 1px;
-      border: 0;
-      border-top: 1px solid #ccc;
-      margin: 1em 0;
-      padding: 0;
-    }
+  #back {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 
-    table {
-      td,
-      th {
-        border-bottom: 1px solid #ccc;
-        padding: 1rem;
-      }
-
-      tr:nth-last-child(1) {
-        td {
-          border-bottom: 0;
-        }
-      }
+    a {
+      text-decoration: none;
     }
   }
 </style>
 
-<Layout title="Assembly" description="Learn how to assemble your Blot machine!">
+<Layout title="Assembly">
   <section id="container">
     <div class="toc">
       {
@@ -186,19 +207,18 @@ const headings = assembly.getHeadings()
       }
     </div>
     <div class="prose">
-      <heaader>
-        <h1>Assembly</h1>
-      </heaader>
-      <article>
-        <Content />
-        <p>
-          <a
-            href={`https://github.com/hackclub/haxidraw/edit/main/ASSEMBLY.md`}
-            target="_blank"
-            >Update/make a grammar fix
-          </a>
-        </p>
-      </article>
+      <header>
+        <article>
+          <Content />
+          <p>
+            <a
+              href={`https://github.com/hackclub/haxidraw/edit/main/ASSEMBLY.md`}
+              target="_blank"
+              >Update/make a grammar fix
+            </a>
+          </p>
+        </article>
+      </header>
     </div>
   </section>
 </Layout>

@@ -221,17 +221,20 @@ export default async function runCode(cached: boolean = false) {
     ) // zeroth is line in baselogger, first is call to baseLogger, second is call to actual log function (although getActual gets the first one from the actual eval'ed function so we don't need to worry about this)
     const pos = mappedPos && smc!.originalPositionFor(mappedPos)
 
-    patchStore({
-      console: [
-        ...getStore().console,
-        {
-          type,
-          pos,
-          time: Number(new Date()),
-          values: args
-        }
-      ]
-    }, false)
+    patchStore(
+      {
+        console: [
+          ...getStore().console,
+          {
+            type,
+            pos,
+            time: Number(new Date()),
+            values: args
+          }
+        ]
+      },
+      false
+    )
   }
 
   const hConsole = {
@@ -258,12 +261,15 @@ export default async function runCode(cached: boolean = false) {
       turtlesToDraw.forEach(t => turtles.push(t))
     },
     setDocDimensions(w: number, h: number) {
-      patchStore({
-        docDimensions: {
-          width: w,
-          height: h
-        }
-      }, false)
+      patchStore(
+        {
+          docDimensions: {
+            width: w,
+            height: h
+          }
+        },
+        false
+      )
     }
   }
 
@@ -296,9 +302,12 @@ export default async function runCode(cached: boolean = false) {
 
   // console.log(f, f.toString());
 
-  patchStore({
-    console: []
-  }, false)
+  patchStore(
+    {
+      console: []
+    },
+    false
+  )
 
   try {
     await f(...values)
