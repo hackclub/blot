@@ -5,10 +5,12 @@ import { slug } from '../lib/guide.ts'
 const list = (await Astro.glob('/../art/list.json'))[0].default
 let art = {}
 list.map(folder => {
+  if (folder) {
   folder.snapshots.map(snapshot => {
     art[snapshot] = { folder: folder.directory, source: folder.source }
   })
-})
+}
+}).flat()
 
 const images = (await Astro.glob('/../art/*/snapshots/*')).map(
   img => img.default
