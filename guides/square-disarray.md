@@ -48,7 +48,11 @@ function rect(w, h) {
 
 Let's use it to add a square to our drawing.
 
-```js
+<img src="https://github.com/hackclub/haxidraw/assets/27078897/6a9b273c-391e-4ee7-9036-114524589d09" width="512"/>
+
+<details>
+<pre class=" language-js" tabindex="0">
+  <code class=" language-js">
 // ...
 
 shapes.join(rect(10, 10)) // here is the new line
@@ -56,9 +60,9 @@ shapes.join(rect(10, 10)) // here is the new line
 shapes.translate([width / 2, height / 2], shapes.cc)
 
 // ...
-```
-
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/6a9b273c-391e-4ee7-9036-114524589d09" width="512"/>
+  </code>
+</pre>
+</details>
 
 # Make a Grid
 
