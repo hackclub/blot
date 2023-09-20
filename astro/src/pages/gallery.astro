@@ -2,8 +2,6 @@
 import Layout from '../layouts/Layout.astro'
 import { slug } from '../lib/guide.ts'
 
-try {
-
 const list = (await Astro.glob('/../art/list.json'))[0].default
 let art = {}
 list.map(folder => {
@@ -15,14 +13,8 @@ list.map(folder => {
 const images = (await Astro.glob('/../art/*/snapshots/*')).map(
   img => img.default
 )
-} catch (error) {
-  console.log(error)
-}
 
-const random = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min)) + min
-
-export const prerender = false
+export const prerender = true
 ---
 
 <!-- 
