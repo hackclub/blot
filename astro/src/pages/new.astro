@@ -1,0 +1,427 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Background from '../components/landing/Background.astro'
+import { slug } from '../lib/guide.ts'
+import { MarkdownInstance } from 'astro'
+import ThreeDModel from '../components/landing/ThreeDModel.astro'
+
+const workshops = await Astro.glob('/../guides/*.md')
+let curated: string[] | MarkdownInstance<Record<string, any>>[] = [
+  'raymarching',
+  'mesh',
+  'square-disarray'
+]
+curated = curated.map((name: string) => {
+  let find = workshops.find(workshop => workshop.file.includes(name))
+  return find
+})
+---
+
+<style lang="scss" is:global>
+  html,
+  body {
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    background-size: 40px 40px;
+    font-family: var(--font-sans);
+  }
+
+  a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+  }
+
+  span.special {
+    color: var(--primary);
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+
+    > div:nth-child(1) {
+      // Text column
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 50%;
+      max-width: 50vw;
+      padding: 1rem 2rem;
+
+      > div:nth-child(2) {
+        padding-top: 3rem;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 4.5rem;
+        letter-spacing: -3px;
+        line-height: 1.2;
+
+        &:nth-child(1) {
+          margin-bottom: 0;
+        }
+
+        &:nth-child(2) {
+          margin: 0;
+        }
+      }
+
+      h3 {
+        font-size: 2.5rem;
+        margin: 0.5rem 0 1.1rem 0;
+        letter-spacing: -1px;
+      }
+    }
+
+    .cta {
+      background-color: var(--primary);
+      color: white !important;
+      padding: 10px 30px;
+      border-radius: 24px;
+      border: 0;
+      font-family: var(--font-sans);
+      font-size: 1.5rem;
+      font-style: normal;
+      transition: all 0.2s;
+
+      &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      a {
+        color: white;
+      }
+    }
+  }
+
+  section {
+    display: flex;
+  }
+
+  #howto {
+    padding: 0rem 2rem 0rem 2rem;
+    gap: 1rem;
+    position: relative;
+
+    h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      letter-spacing: -2px;
+      margin-bottom: 0;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex: 50%;
+      max-width: 50%;
+    }
+
+    .code {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+      border: 1px solid #cbd5e1;
+      border-radius: 15px;
+      background-color: white;
+      position: relative;
+      max-height: 75vh;
+      overflow: hidden !important;
+
+      img {
+        border-radius: 15px;
+        width: 100%;
+      }
+
+      a {
+        width: 100%;
+        background-color: #ddd;
+        border: 1px solid #cbd5e1;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: inline-block;
+        margin: 0 auto;
+        padding: 3px 9px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        font-style: normal;
+        color: black;
+      }
+    }
+
+    .model {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      border: 1px solid #cbd5e1;
+      background-color: white;
+      position: relative;
+      height: 100%;
+      max-height: 100%;
+    }
+  }
+
+  #steps {
+    padding: 0rem 2rem 2rem 2rem;
+    gap: 1rem;
+    position: relative;
+    flex-direction: column;
+
+    h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      letter-spacing: -2px;
+      margin-bottom: 0;
+    }
+  }
+
+  .step {
+    background-color: white;
+    border: 1px solid #cbd5e1;
+    display: flex;
+
+    > div {
+      h2:nth-child(1) {
+        font-family: var(--font-sans);
+        font-size: 2rem;
+        margin-top: 0;
+      }
+    }
+
+    > div:nth-child(1) {
+      padding: 2rem;
+      min-width: 25vw;
+
+      h2:nth-child(1) {
+        margin-bottom: 0;
+      }
+
+      h2:nth-child(2) {
+        font-weight: normal;
+        letter-spacing: -1px;
+        margin: 0;
+      }
+    }
+
+    > div:nth-child(2) {
+      padding: 2rem;
+      padding-bottom: 0;
+    }
+  }
+
+  #step-1 {
+    display: flex;
+    gap: 1rem;
+    position: relative;
+
+    &::after {
+      background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 1) 90%
+      );
+      content: '';
+      width: 100vw;
+      height: 35%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 999;
+      margin-inline: -2rem;
+    }
+
+    .workshop {
+      cursor: pointer;
+      height: 100%;
+      border-radius: 15px;
+      border: 1px solid #cbd5e1;
+      flex: 33%;
+      flex-grow: 0;
+      background-color: white;
+      transition: all 0.1s;
+      position: relative;
+
+      &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--primary);
+      }
+
+      img {
+        max-width: 100%;
+        border-radius: 15px;
+      }
+
+      .prose {
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.2);
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        padding: 1rem;
+        overflow-x: clip;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 999;
+
+        a {
+          color: inherit;
+          font-style: inherit;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+          margin: 0;
+        }
+
+        blockquote {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  .fade-button {
+    background-color: white;
+    border: 0;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+
+    > a {
+      background-color: var(--primary);
+      border: 0;
+      font-family: var(--font-sans);
+      color: white;
+      padding: 10px 30px;
+      border-radius: 24px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-style: normal;
+      transition: all 0.2s;
+      width: 100%;
+
+      &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+
+  footer {
+    padding: 1rem;
+  }
+</style>
+
+<Layout
+  title="Blot"
+  description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
+  <header>
+    <div>
+      <div>
+        <h1>
+          <span class="special">Blot</span>, the plotter bot
+        </h1>
+        <h1>
+          from <a href="https://hackclub.com" target="_blank">Hack Club</a>
+        </h1>
+        <h3>You* code art, we send you a machine.</h3>
+        <button class="cta">
+          <a href="/editor">Start making art</a>
+        </button>
+      </div>
+      <div>
+        <p>*Must be &lt;20 years old to receive a free machine.</p>
+      </div>
+    </div>
+    <Background />
+  </header>
+  <section id="howto">
+    <div>
+      <h1>Write <span class="special">code</span></h1>
+      <div class="code">
+        <img src="/landing/code.png" />
+        <p>
+          <a href="/editor?tutorial=cubic_disarray"
+            >Check out the guide for cubic disarray</a
+          >
+        </p>
+      </div>
+    </div>
+    <div>
+      <h1>Get your Blot to <span class="special">draw</span> it out.</h1>
+      <div class="model">
+        <ThreeDModel />
+      </div>
+    </div>
+  </section>
+  <section id="steps">
+    <div>
+      <h1>How do <span class="special">I</span> get one?</h1>
+    </div>
+    <div class="step">
+      <div>
+        <h2>#1</h2>
+        <h2>Make an original art piece</h2>
+      </div>
+      <div>
+        <h2>
+          Start by following along with guides from us and the community in our
+          custom editor.
+        </h2>
+        <div id="step-1">
+          {
+            curated.map((workshop, idx) => (
+              <div class="workshop">
+                <a href={`/guide/${slug(workshop.file)}`}>
+                  <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                </a>
+                <div class="prose">
+                  <a href={`/guide/${slug(workshop.file)}`}>
+                    <h2>{workshop.frontmatter.title}</h2>
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+        <button class="fade-button">
+          <a href="/guides">Check out the guides</a>
+        </button>
+      </div>
+    </div>
+    <div class="step">
+      <div>
+        <h2>#2</h2>
+        <h2>
+          Submit it as a pull request to the art <a href="/gallery">gallery</a>.
+        </h2>
+      </div>
+    </div>
+    <div class="step">
+      <div>
+        <h2>#3</h2>
+        <h2>
+          Get parts for your Blot in the mail and <a href="/assembly"
+            >build your own</a
+          > machine.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <footer>© 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)</footer>
+</Layout>

@@ -4,5 +4,6 @@ public/*
 .next/*
 .vercel/*
 */.vercel
+*/dist
 */*/*.mdx
 */*/*/*.mdx
