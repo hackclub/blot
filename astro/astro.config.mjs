@@ -12,6 +12,7 @@ export default defineConfig({
     }),
     mdx()
   ],
+  output: 'server',
   adapter: vercel(),
   markdown: {
     syntaxHighlight: 'prism'
