@@ -1,3 +1,19 @@
+<style>
+  .three-js-container {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .buttons {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+  }
+</style>
+
 <script>
   import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
   import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
@@ -45,12 +61,10 @@
         controls = undefined
       }
     })
-
-    const container = document.querySelector('.turtle')
-    renderer.setSize(window.innerWidth, container.offsetHeight)
-    renderer.domElement.style.zIndex = '999'
+    
     const threeContainer = document.querySelector('.three-js-container')
     threeContainer.appendChild(renderer.domElement)
+    renderer.setSize(window.innerWidth, threeContainer.offsetHeight)
 
     // Set up light
     const light = new THREE.DirectionalLight(0xffffff)
@@ -64,10 +78,21 @@
     const objLoader = new OBJLoader().setPath('/model/')
     const mtlLoader = new MTLLoader().setPath('/model/')
 
-    camera.position.z = 0.25
-    camera.position.x = 0
-    camera.rotation.z = Math.PI
-    camera.position.y = -0.055
+    // camera.position.z = 0.25
+    // camera.position.x = 0
+    // camera.rotation.z = Math.PI
+    // camera.position.y = -0.055
+
+    const initCamPos = {x: -0.012060728422271984, y: -0.30995465588219245, z: 0.22370699843435427};
+    const initCamAngle = {x: 1.0095700038735655, y: 0.0025350872263442863, z: -0.004032504057447568 };
+
+    for (const k in initCamPos) {
+      camera.position[k] = initCamPos[k];
+    }
+
+    for (const k in initCamAngle) {
+      camera.rotation[k] = initCamAngle[k];
+    }
 
     /*
   const toolTip = addSphere({
@@ -478,47 +503,44 @@ drawTurtles(t)`)
   }
 </script>
 
-<div class="buttons">
-  <button id="rotate" title="Toggle rotate">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-rotate-3d"
-      ><path
-        d="M16.466 7.5C15.643 4.237 13.952 2 12 2 9.239 2 7 6.477 7 12s2.239 10 5 10c.342 0 .677-.069 1-.2"
-      ></path><path d="m15.194 13.707 3.814 1.86-1.86 3.814"></path><path
-        d="M19 15.57c-1.804.885-4.274 1.43-7 1.43-5.523 0-10-2.239-10-5s4.477-5 10-5c4.838 0 8.873 1.718 9.8 4"
-      ></path></svg
-    >
-  </button>
-  <button id="refresh" title="Replay">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-rotate-ccw"
-      ><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path
-        d="M3 3v5h5"></path></svg
-    >
-  </button>
-</div>
-<div class="three-js-container"></div>
+<div class="three-js-container">
+  <div class="buttons">
+    <button id="rotate" title="Toggle rotate">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-rotate-3d"
+        ><path
+          d="M16.466 7.5C15.643 4.237 13.952 2 12 2 9.239 2 7 6.477 7 12s2.239 10 5 10c.342 0 .677-.069 1-.2"
+        ></path><path d="m15.194 13.707 3.814 1.86-1.86 3.814"></path><path
+          d="M19 15.57c-1.804.885-4.274 1.43-7 1.43-5.523 0-10-2.239-10-5s4.477-5 10-5c4.838 0 8.873 1.718 9.8 4"
+        ></path></svg
+      >
+    </button>
+    <button id="refresh" title="Replay">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-rotate-ccw"
+        ><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path
+          d="M3 3v5h5"></path></svg
+      >
+    </button>
+  </div>
 
-<style is:global>
-  .three-js-container canvas {
-    border-radius: 15px !important;
-  }
-</style>
+</div>
+
