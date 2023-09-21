@@ -6,7 +6,12 @@
     "lib": ["ES2015", "dom"],
     "moduleResolution": "NodeNext",
     "allowImportingTsExtensions": true,
-    "target": "ES2020"
+    "target": "ES2020",
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      },
+    ]
     // "paths": {
     //   "@/*": ["./src/*"]
     // }
