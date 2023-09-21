@@ -6,10 +6,7 @@ import mdx from '@astrojs/mdx'
 export default defineConfig({
   site: 'https://blot.hackclub.com',
   integrations: [
-    preact({
-      compat: true
-    }),
+    preact(),
     mdx()
-  ],
-  integrations: [preact(), mdx()]
+  ]
 })
