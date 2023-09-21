@@ -49,9 +49,5 @@
     "prettier-plugin-astro": "^0.11.1",
     "sass": "^1.66.1",
     "typescript": "^5.1.6"
-  },
-  "overrides": {
-    "react": "npm:@preact/compat@latest",
-    "react-dom": "npm:@preact/compat@latest"
   }
 }
