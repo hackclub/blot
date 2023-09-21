@@ -14,7 +14,7 @@ const images = (await Astro.glob('/../art/*/snapshots/*')).map(
   img => img.default
 )
 
-export const prerender = true
+export const prerender = false
 ---
 
 <style is:global lang="scss">
