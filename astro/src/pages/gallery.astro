@@ -8,7 +8,6 @@ let art = {};
 try {
 
   const list = (await Astro.glob('/../art/list.json'))[0].default
-  art = {}
   list.map(folder => {
     folder.snapshots.map(snapshot => {
       art[snapshot] = { folder: folder.directory, source: folder.source }
