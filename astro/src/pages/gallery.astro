@@ -31,6 +31,26 @@ export const prerender = true
     background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
       linear-gradient(to bottom, #ddd 1px, transparent 1px);
     min-height: 100vh;
+    font-family: "Phantom Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+
+  .description {
+    padding: .3rem;
+    margin-left: 40px;
+    width: 60%;
+    margin: auto;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  .guides-title {
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  .guides-sub-title {
+    font-size: 1.7rem;
+    font-weight: 300;
   }
 
   #container {
@@ -47,7 +67,6 @@ export const prerender = true
 
   #content {
     font-size: 1.1rem;
-    font-family: var(--font-sans);
   }
 
   .frame {
@@ -55,8 +74,9 @@ export const prerender = true
     margin: 0.5rem;
     border: solid 15px #555;
     box-shadow: -3px -3px 12px #999;
-    max-width: 30%;
-    max-height: 30vh;
+    width: 30%;
+    min-width: 300px;
+    aspect-ratio: 1;
     float: left;
     margin-bottom: 1rem;
     z-index: 1;
@@ -73,27 +93,24 @@ export const prerender = true
 
   img {
     max-width: 100%;
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
     object-fit: contain; /* ensures the image maintains aspect ratio and scales within the container */
     border: 1px solid #aaa;
   }
 
   .border {
     max-width: 100%;
+    width: 100%;
+    height: 100%;
     max-height: 100%;
     background-color: white;
-    padding: 2rem 0;
     margin: 0;
-    border: solid 40px white;
+    border: solid 10px white;
     box-shadow: -3px -3px 12px #999;
   }
 
-  .description {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    text-align: center;
-    padding: 2rem;
-    letter-spacing: -1px;
-  }
 </style>
 
 <Layout
@@ -101,11 +118,10 @@ export const prerender = true
   description="A gallery of various art pieces created by Hack Clubbers.">
   <div id="container">
     <div class="description">
-      <h1 style={{ margin: 0 }}>Gallery</h1>
-      <p style={{ margin: 0 }}>
-        A gallery of various art pieces created by Hack Clubbers, with an
-        interactive 3D gallery mode!
-      </p>
+      <div class="guides-title">Gallery</div>
+      <div class="guides-sub-title">
+        A gallery of various art pieces created by Hack Clubbers, with an interactive 3D gallery mode!
+      </div>
     </div>
     <div id="gallery">
       {
