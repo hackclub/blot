@@ -1,6 +1,6 @@
 ﻿---
 title: 10PRINT2
-thumbnails: https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png
+thumbnail: https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png
 contributors: henrybass
 ---
 
