@@ -1,7 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro'
-
-
 const assembly = (await Astro.glob('/../ASSEMBLY.md'))[0]
 const { Content } = assembly
 const headings = assembly.getHeadings()
