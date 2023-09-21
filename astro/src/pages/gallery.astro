@@ -4,19 +4,19 @@ import { slug } from '../lib/guide.ts'
 
 
 let images = [];
-let art = {};
 try {
-
   const list = (await Astro.glob('/../art/list.json'))[0].default
-  list.map(folder => {
+  list.forEach(folder => {
     folder.snapshots.map(snapshot => {
-      art[snapshot] = { folder: folder.directory, source: folder.source }
+      images.push({
+        dir: folder.directory,
+        img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/snapshots/${snapshot}`, 
+        href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/${folder.source}`,
+        alt: folder.directory
+      })
     })
   })
 
-  images = (await Astro.glob('/../art/*/snapshots/*')).map(
-    img => img.default
-  )
 } catch (error) {
   console.log(error)
 }
@@ -125,15 +125,12 @@ try {
     <div id="gallery">
       {
         images.map(img => {
-          console.log(img);
           return (
             <div class="frame">
               <a
                 class="border"
-                href={`/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${
-                  art[slug(img)].folder
-                }/${art[slug(img)].source}`}>
-                <img class="thumbnail" alt={img.directory} src={img} />
+                href={img.href}>
+                <img class="thumbnail" alt={img.alt} src={img.img} />
               </a>
             </div>
           )
