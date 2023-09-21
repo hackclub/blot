@@ -13,7 +13,6 @@
     "format": "prettier --ignore-path ../.prettierignore --write . --plugin=prettier-plugin-astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^0.19.7",
     "@astrojs/preact": "^2.2.2",
     "@astrojs/vercel": "^3.6.0",
     "@codemirror/commands": "^6.2.4",
