@@ -1,9 +1,9 @@
-import { compiledContent } from '../../../interface/README.md'
+// import { compiledContent } from '../../../interface/README.md'
 import styles from './Help.module.scss'
 import { useState, useEffect } from 'preact/hooks'
 import { marked } from 'marked'
 
-const html = compiledContent()
+// const html = compiledContent()
 
 export default function Help({
   toggleClose,
@@ -24,6 +24,8 @@ export default function Help({
     htmlContent: ''
   })
 
+  const [helpContent, setHelpContent] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       if (workshop === null) return
@@ -36,8 +38,15 @@ export default function Help({
       const result = parseMDFrontMatter(data)
       result.slug = `/guide/${workshop}`
 
-      setWorkshopContent(result)
-      setTab('workshop')
+      setWorkshopContent(result);
+      setTab('workshop');
+
+      const helpRes = await fetch(
+        `https://raw.githubusercontent.com/hackclub/blot/main/interface/README.md`
+      )
+      const helpData = await helpRes.text()
+
+      setHelpContent(marked(helpData));
     }
 
     fetchData()
@@ -79,7 +88,7 @@ export default function Help({
         </div>
         {tab === 'toolkit' && (
           <div
-            dangerouslySetInnerHTML={{ __html: html }}
+            dangerouslySetInnerHTML={{ __html: helpContent }}
             class={styles.helpContent}></div>
         )}
         {tab === 'workshop' && (
