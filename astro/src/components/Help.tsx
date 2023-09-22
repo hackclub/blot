@@ -28,6 +28,13 @@ export default function Help({
 
   useEffect(() => {
     const fetchData = async () => {
+      const helpRes = await fetch(
+        `https://raw.githubusercontent.com/hackclub/blot/main/interface/README.md`
+      )
+      const helpData = await helpRes.text()
+
+      setHelpContent(marked(helpData));
+
       if (workshop === null) return
 
       const res = await fetch(
@@ -40,13 +47,6 @@ export default function Help({
 
       setWorkshopContent(result);
       setTab('workshop');
-
-      const helpRes = await fetch(
-        `https://raw.githubusercontent.com/hackclub/blot/main/interface/README.md`
-      )
-      const helpData = await helpRes.text()
-
-      setHelpContent(marked(helpData));
     }
 
     fetchData()
