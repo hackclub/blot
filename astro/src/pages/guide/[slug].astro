@@ -2,8 +2,6 @@
 import Layout from '../../layouts/Layout.astro'
 import { slug } from '../../lib/guide.ts'
 
-export const prerender = true
-
 export async function getStaticPaths() {
   const workshops = await Astro.glob('/../guides/*.md')
   return workshops.map(workshop => {
