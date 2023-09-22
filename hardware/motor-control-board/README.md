@@ -27,9 +27,9 @@ Below is a list of datasheets / product briefs that may be relevant.
 
 [Seeeduino RP2040 XIAO](https://wiki.seeedstudio.com/XIAO-RP2040/)\
 [A4988 Breakout Board](https://www.pololu.com/product/1182)\
-[CYPD3177](https://www.infineon.com/cms/en/product/universal-serial-bus/usb-c-charging-port-controllers/ez-pd-barrel-connector-replacement-bcr/cypd3177-24lqxq/)
-[DMP3013SFV](https://www.diodes.com/assets/Datasheets/DMP3013SFV.pdf)
-[MM3Z15VC](https://www.onsemi.com/pdf/datasheet/mm3z9v1c-d.pdf)
-[WCAP-ATG5](https://www.we-online.com/components/products/datasheet/860020573008.pdf)
-[JS Series Switch](https://www.ckswitches.com/media/1422/js.pdf)
+[CYPD3177](https://www.infineon.com/cms/en/product/universal-serial-bus/usb-c-charging-port-controllers/ez-pd-barrel-connector-replacement-bcr/cypd3177-24lqxq/)\
+[DMP3013SFV](https://www.diodes.com/assets/Datasheets/DMP3013SFV.pdf)\
+[MM3Z15VC](https://www.onsemi.com/pdf/datasheet/mm3z9v1c-d.pdf)\
+[WCAP-ATG5](https://www.we-online.com/components/products/datasheet/860020573008.pdf)\
+[JS Series Switch](https://www.ckswitches.com/media/1422/js.pdf)\
 [Schottky Diode](https://datasheets.kyocera-avx.com/schottky.pdf)
