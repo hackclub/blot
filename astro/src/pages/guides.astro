@@ -1,7 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { marked } from 'marked'
-import { description, slug } from '../lib/guide.ts'
+
+import { slug } from '../lib/guide.ts'
 
 const workshops = await Astro.glob('/../guides/*.md')
 
