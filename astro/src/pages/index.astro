@@ -26,7 +26,7 @@ try {
       })
     })
   })
-
+  console.log(images);
 } catch (error) {
   console.log(error)
 }
@@ -353,17 +353,22 @@ try {
     <div class="step-text"><span class="step">Step 2) </span>Submit it as a pull request to the <a href="/gallery">art gallery</a>.</div>
     <div class="step-2-css">
       {
-        images.filter(x => ["leaf", "tree", "square-disarray"].some(x => x.includes(x.dir))).map(img => {
-          return (
-            <div class="frame">
-              <a
-                class="border"
-                href={img.href}>
-                <img class="thumbnail" alt={img.alt} src={img.img} />
-              </a>
-            </div>
+        images
+          .filter(img => 
+            ["leaf", "tree", "square-disarray"]
+            .some(x => img.dir.includes(x))
           )
-        })
+          .map(img => {
+            return (
+              <div class="frame">
+                <a
+                  class="border"
+                  href={img.href}>
+                  <img class="thumbnail" alt={img.alt} src={img.img} />
+                </a>
+              </div>
+            )
+          })
       }
     </div>
   </div>
