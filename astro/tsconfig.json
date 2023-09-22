@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
     "plugins": [
       {
         "name": "@astrojs/ts-plugin"
