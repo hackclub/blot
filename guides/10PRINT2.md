@@ -9,7 +9,7 @@ _This tutorial is aimed at beginners, but it works best if you have a little pri
 "10PRINT" is one of the oldest and most well-known examples of generative art. It was originally created for the Commodore 64 in BASIC, and the code looked like this:
 
 ```basic
-10 PRINT CHR$(205.5+RND(1)); : goTo 10
+10 PRINT CHR$(205.5+RND(1)); : GOTO 10
 ```
 
 From just that one line, the following intricate pattern is be created:
