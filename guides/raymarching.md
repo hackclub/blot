@@ -438,16 +438,16 @@ Here's what that looks like in the code:
 ```js
 function drawPixel(x, y, w, h, brightness) {
   t.up()
-  t.goto([x, y])
+  t.goTo([x, y])
   t.down()
   if (brightness < Math.random()) {
-    t.goto([x + w, y + h])
-    t.goto([x, y])
+    t.goTo([x + w, y + h])
+    t.goTo([x, y])
     if (brightness < Math.random() * 0.5) {
-      t.goto([x + w, y])
-      t.goto([x, y + h])
-      t.goto([x + w, y + h])
-      t.goto([x, y])
+      t.goTo([x + w, y])
+      t.goTo([x, y + h])
+      t.goTo([x + w, y + h])
+      t.goTo([x, y])
     }
   }
 }
@@ -526,7 +526,7 @@ Draw a pixel with that brightness. If we didn't hit something with the ray at th
         drawPixel(x, y, dx, dy, brightness)
       } else {
         t.up()
-        t.goto([x, y])
+        t.goTo([x, y])
       }
     }
 ```
@@ -535,7 +535,7 @@ Go back to the left to render the next line:
 
 ```js
     t.up()
-    t.goto([-3, 0])
+    t.goTo([-3, 0])
     t.down()
   }
 }

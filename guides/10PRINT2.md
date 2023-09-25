@@ -52,7 +52,7 @@ Here are some examples of art people have made with Haxidraw:
 
 The artwork seems to be a grid of slashes. Some slashes point to to the top-right, others point to the bottom-right. Overall, the distribution seems to be about 50/50. If you look closely, you might notice that the slashes are just plain text: "/" or "\\". In fact, the Commodore program just prints a random sequence of characters to the screen, left to right. The challenge is, in the Haxidraw editor, you can't write symbols directly to the screen - we'll have to draw the slashes as lines.
 
-Let's start by defining a constant `t`: this will represent our turtle. The turtle is basically our pen - we can send it instructions like `t.up()` or `t.goto([x,y])` to move it around. For example, calling `t.down()` places the pen on the paper, and `t.goto([0, 0])` moves the pen to the position `0, 0`.
+Let's start by defining a constant `t`: this will represent our turtle. The turtle is basically our pen - we can send it instructions like `t.up()` or `t.goTo([x,y])` to move it around. For example, calling `t.down()` places the pen on the paper, and `t.goTo([0, 0])` moves the pen to the position `0, 0`.
 
 ```js
 const t = createTurtle()
@@ -65,9 +65,9 @@ Since the original artwork is made up of many diagonal lines, we'll need a funct
 ```js
 function drawSlash(x, y, width, height) {
   t.up()
-  t.goto([x, y])
+  t.goTo([x, y])
   t.down()
-  t.goto([x + width, y + height])
+  t.goTo([x + width, y + height])
 }
 ```
 
@@ -153,14 +153,14 @@ Since `rand()` returns a number between 0 and 1, 50% of the time it's going to b
 function drawSlash(x, y, width, height) {
   if (rand() > 0.5) {
     t.up()
-    t.goto([x + width, y])
+    t.goTo([x + width, y])
     t.down()
-    t.goto([x, y + height])
+    t.goTo([x, y + height])
   } else {
     t.up()
-    t.goto([x, y])
+    t.goTo([x, y])
     t.down()
-    t.goto([x + width, y + height])
+    t.goTo([x + width, y + height])
   }
 }
 ```

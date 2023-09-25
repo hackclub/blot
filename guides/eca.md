@@ -136,26 +136,26 @@ If there's a 1 at this position, do the drawing procedure:
 ```
     if (arr[x]) {
       t.up()
-      t.goto([x, y])
+      t.goTo([x, y])
       t.down()
 ```
 
 Check the 3 above cells, and if they're in the 1 state, draw a line to them:
 
 ```
-      if (prevGen[x] == 1) t.goto([x, y + 1])
-      t.goto([x, y])
-      if (prevGen[x - 1] == 1) t.goto([x - 1, y + 1])
-      t.goto([x, y])
-      if (prevGen[x + 1] == 1) t.goto([x + 1, y + 1])
-      t.goto([x, y])
-      if (arr[x - 1] == 1) t.goto([x - 1, y])
-      t.goto([x, y])
+      if (prevGen[x] == 1) t.goTo([x, y + 1])
+      t.goTo([x, y])
+      if (prevGen[x - 1] == 1) t.goTo([x - 1, y + 1])
+      t.goTo([x, y])
+      if (prevGen[x + 1] == 1) t.goTo([x + 1, y + 1])
+      t.goTo([x, y])
+      if (arr[x - 1] == 1) t.goTo([x - 1, y])
+      t.goTo([x, y])
     }
 
   }
   t.up()
-  t.goto([w, -y - 1])
+  t.goTo([w, -y - 1])
 }
 ```
 

@@ -34,7 +34,7 @@ export class Turtle {
     return this
   }
 
-  goto([x, y]: Point) {
+  goTo([x, y]: Point) {
     const lastPath = this.path.at(-1)!
     if (this.drawing) {
       const [lastX, lastY] = this.position
@@ -56,7 +56,7 @@ export class Turtle {
     const x = last[0] + distance * Math.cos(a)
     const y = last[1] + distance * Math.sin(a)
 
-    this.goto([x, y])
+    this.goTo([x, y])
 
     return this
   }
@@ -151,7 +151,7 @@ export class Turtle {
     pls.forEach(pl => {
       this.up()
       pl.points.forEach((pt, i) => {
-        this.goto([pt[0], pt[1]])
+        this.goTo([pt[0], pt[1]])
         if (i === 0) this.down()
       })
     })

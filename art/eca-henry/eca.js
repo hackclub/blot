@@ -6,7 +6,7 @@ let genStart = Array(w).fill(0)
 genStart = genStart.map(() => Math.round(Math.random()))
 genStart[w / 2] = 1
 
-t.goto([0, 0])
+t.goTo([0, 0])
 
 let rule = toBits(Math.floor(Math.random() * 255), 8)
 let allGens = [genStart]
@@ -35,8 +35,8 @@ function nextGen(prev, gen) {
   return nextGen
 }
 
-function goto(pos) {
-  t.goto([pos[0] * 0.2, pos[1] * 0.2])
+function goTo(pos) {
+  t.goTo([pos[0] * 0.2, pos[1] * 0.2])
 }
 
 function drawGen(arr, y) {
@@ -45,21 +45,21 @@ function drawGen(arr, y) {
     arr[x] ? t.down() : t.up()
     if (arr[x]) {
       t.up()
-      goto([x, y])
+      goTo([x, y])
       t.down()
-      if (prevGen[x] == 1) goto([x, y + 1.0])
-      goto([x, y])
-      if (prevGen[x - 1] == 1) goto([x - 1.0, y + 1.0])
-      goto([x, y])
-      if (prevGen[x + 1] == 1) goto([x + 1.0, y + 1.0])
-      goto([x, y])
-      if (arr[x - 1] == 1) goto([x - 1, y])
-      goto([x, y])
+      if (prevGen[x] == 1) goTo([x, y + 1.0])
+      goTo([x, y])
+      if (prevGen[x - 1] == 1) goTo([x - 1.0, y + 1.0])
+      goTo([x, y])
+      if (prevGen[x + 1] == 1) goTo([x + 1.0, y + 1.0])
+      goTo([x, y])
+      if (arr[x - 1] == 1) goTo([x - 1, y])
+      goTo([x, y])
     }
     t.up()
   }
   t.up()
-  goto([w, y - 1])
+  goTo([w, y - 1])
   t.down()
 }
 
