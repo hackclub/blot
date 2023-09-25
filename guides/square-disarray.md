@@ -54,8 +54,7 @@ Let's use it to add a square to our drawing.
 <details>
 <summary>Hint</summary>
   
-<pre>
-<code class="language-js">
+```js
 // ...
 
 shapes.join(rect(10, 10)) // here is the new line
@@ -63,8 +62,7 @@ shapes.join(rect(10, 10)) // here is the new line
 shapes.translate([width / 2, height / 2], shapes.cc)
 
 // ...
-</code>
-</pre>
+```
 
 </details>
 
@@ -89,14 +87,15 @@ We can't see any change because they are on top of eachother! Space them out.
 
 <details>
 <summary>Hint</summary>
-<pre><code class="language-js">
+
+```js
 for (let i = 0; i < 3; i++) {
   const t = rect(10, 10)
   t.translate([23 * i, 0])
   shapes.join(t)
 }
-</code>
-</pre>
+```
+
 </details>
 
 If we want the spacing to be perfect, each square should move by the width of a square.
@@ -105,15 +104,16 @@ If we want the spacing to be perfect, each square should move by the width of a 
 
 <details>
 <summary>Hint</summary>
-<pre><code class="language-js">
+
+```js
 const squareWidth = 10
 for (let i = 0; i < 3; i++) {
   const t = rect(squareWidth, 10)
   t.translate([squareWidth * i, 0])
   shapes.join(t)
 }
-</code>
-</pre>
+```
+
 </details>
 
 To make it a grid add another loop.
@@ -122,7 +122,8 @@ To make it a grid add another loop.
 
 <details>
 <summary>Hint</summary>
-<pre><code class="language-js">
+
+```js
 const squareWidth = 10
 const squareHeight = 10
 for (let i = 0; i < 3; i++) {
@@ -132,8 +133,8 @@ for (let i = 0; i < 3; i++) {
     shapes.join(t)
   }
 }
-</code>
-</pre>
+```
+
 </details>
 
 Increase the loop range for a bigger grid.
@@ -148,7 +149,8 @@ We can randomly translate each square.
 
 <details>
 <summary>Hint</summary>
-<pre><code class="language-js">
+  
+```js
 for (let i = 0; i < 10; i++) {
   for (let j = 0; j < 10; j++) {
     const t = rect(squareWidth, squareHeight)
@@ -160,8 +162,8 @@ for (let i = 0; i < 10; i++) {
     shapes.join(t)
   }
 }
-</code>
-</pre>
+```
+
 </details>
 
 Scale the randomness with the x location.
@@ -170,10 +172,11 @@ Scale the randomness with the x location.
 
 <details>
 <summary>Hint</summary>
-<pre><code class="language-js">
+  
+```js
 t.translate([(randInRange(-1, 1) * i) / 6, (randInRange(-1, 1) * i) / 6])
-</code>
-</pre>
+```
+
 </details>
 
 Now rotate each square in a similar manner.
@@ -182,10 +185,11 @@ Now rotate each square in a similar manner.
 
 <details>
 <summary>Hint</summary>
-<pre><code class="language-js">
+
+```js
 t.rotate(randInRange(-1, 1) * 2 * i)
-</code>
-</pre>
+```
+
 </details>
 
 And that's our piece!
