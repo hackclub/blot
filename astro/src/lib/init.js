@@ -1,4 +1,5 @@
 import { patchStore } from './state.ts'
+import { render } from './render.tsx'
 
 import { addBezierControl } from './events/addBezierControl.js'
 import { addMachineControl } from './events/addMachineControl.js'
@@ -7,6 +8,8 @@ import { addSrcURLParam } from './events/addSrcURLParam.js'
 
 export function init() {
   console.log('init')
+
+  render(true);
 
   const cm = document.querySelector('.cm-editor')
   const view = cm.view
