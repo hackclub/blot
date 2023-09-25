@@ -8,8 +8,14 @@ The first step is to make some generative art like that seen in [the gallery](ht
 
 You can learn how to use the editor and make art by following some of [these guides](https://blot.hackclub.dev/guides).
 
-You can't just copy an existing piece of art and mess with the numbers. You need to make your own original piece.
-That being said you can take inspiration from other art and remix a few pieces together.
+Some criteria your art needs to meet:
+
+- Drawable by the machine.
+  - That means the lines can not be too dense.
+  - It should fit within the workarea.
+- You need to make your own original piece.
+  - You can't just copy an existing piece of art and mess with the numbers.
+  - That being said you can take inspiration from other art and remix a few pieces together.
 
 # 2) Make a PR with your original artwork
 
@@ -56,6 +62,7 @@ Refer to [this example](https://github.com/hackclub/blot/tree/main/art/square-di
 - Click "Create Pull Request"
 - Name your pull request with the name of your directory (`{yourArtworkName}-{yourName}`)
 - In the body, describe your artwork and your experience coding
+- Please add an image of your artwork to the pull request.
 - Click "Create Pull Request"
 
 Your PR will be reviewed by people in the BLOT community. We aren't evaluating it based on style
