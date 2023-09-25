@@ -103,7 +103,7 @@ const workshops = await Astro.glob('/../guides/*.md')
           )
           .map(workshop => {
             return (
-              <a class="frame" href={`/guide/${slug(workshop.file)}`}>
+              <a class="frame" href={`/editor?guide=${slug(workshop.file)}`}>
                 <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
                 <div class="prose">
                   {workshop.frontmatter.title}
