@@ -1,9 +1,14 @@
-// import { compiledContent } from '../../../interface/README.md'
 import styles from './Help.module.scss'
 import { useState, useEffect } from 'preact/hooks'
 import { marked } from 'marked'
 
-// const html = compiledContent()
+
+marked.setOptions({
+    highlight: function (code, language) {
+        const validLanguage = Prism.languages[language] ? language : 'markup';
+        return Prism.highlight(code, Prism.languages[validLanguage], validLanguage);
+    }
+});
 
 export default function Help({
   toggleClose,
@@ -17,7 +22,7 @@ export default function Help({
   const [tab, setTab] = useState<'workshop' | 'toolkit'>('toolkit')
 
   const currentUrl = new URL(window.location.href)
-  const workshop = currentUrl.searchParams.get('tutorial')
+  const workshop = currentUrl.searchParams.get('guide')
   const [workshopContent, setWorkshopContent] = useState({
     slug: `/guide/${workshop}`,
     frontMatter: {},
@@ -29,7 +34,7 @@ export default function Help({
   useEffect(() => {
     const fetchData = async () => {
       const helpRes = await fetch(
-        `https://raw.githubusercontent.com/hackclub/blot/main/interface/README.md`
+        `https://raw.githubusercontent.com/hackclub/blot/main/docs/TOOLKIT.md`
       )
       const helpData = await helpRes.text()
 
@@ -54,7 +59,7 @@ export default function Help({
 
   return (
     <>
-      <div class={styles.helpSection} style={{ height: `${helpHeight}%` }}>
+      <div class={[styles.helpSection, "help-section"].join(" ")} style={{ height: `${helpHeight}%` }}>
         <div class={styles.helpSectionToolbar}>
           {workshop && (
             <a

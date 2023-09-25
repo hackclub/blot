@@ -54,6 +54,11 @@ a {
 code,
 pre {
   font-family: var(--font-mono);
+  background: #f1f1f1;
+}
+
+.help-section img {
+  width: 50%;
 }
 
 body[data-theme='light'],
