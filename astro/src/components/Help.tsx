@@ -103,9 +103,6 @@ export default function Help({
               dangerouslySetInnerHTML={{
                 __html: workshopContent.htmlContent
               }}></div>
-            <p>
-              <a href={`/guide/${workshopContent.slug}`}>Open as full page</a>
-            </p>
           </div>
         )}
       </div>
