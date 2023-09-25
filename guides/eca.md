@@ -1,4 +1,8 @@
-# Elementary Cellular Automata in Haxidraw
+---
+title: Elementary Cellular Automata
+thumbnail: https://cloud-oz9juilm9-hack-club-bot.vercel.app/0image.png
+contributors: henrybass
+---
 
 ### (Henry Bass, Beginner/Intermediate, 20min)
 

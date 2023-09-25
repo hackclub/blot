@@ -30,8 +30,15 @@ const resolvePath = (path: string) =>
 const isURL = (id: string) =>
   ['http://', 'https://'].find(s => id.startsWith(s))
 
+function getCode() {
+  const { view } = getStore()
+  const code = view.state.doc.toString()
+
+  return code
+}
+
 async function getBundle(): Promise<string> {
-  const { code } = getStore()
+  const code = getCode()
 
   const build = await rollup({
     input: '/index.js',
@@ -63,7 +70,7 @@ async function getBundle(): Promise<string> {
             const res = await fetch(id)
             return await res.text()
           } else if (id === '/index.js') {
-            return code.content
+            return code
           }
           return null
         }
@@ -146,7 +153,7 @@ export async function build() {
             column: err.loc.column
           }
         ],
-        code: getStore().code.content,
+        code: getCode(),
         name: err.name ?? caught.name,
         message: err.message.replace(/\((\d+):(\d+)(?![^\n]*:)\)/gm, '').trim()
       }
@@ -214,17 +221,20 @@ export default async function runCode(cached: boolean = false) {
     ) // zeroth is line in baselogger, first is call to baseLogger, second is call to actual log function (although getActual gets the first one from the actual eval'ed function so we don't need to worry about this)
     const pos = mappedPos && smc!.originalPositionFor(mappedPos)
 
-    patchStore({
-      console: [
-        ...getStore().console,
-        {
-          type,
-          pos,
-          time: Number(new Date()),
-          values: args
-        }
-      ]
-    })
+    patchStore(
+      {
+        console: [
+          ...getStore().console,
+          {
+            type,
+            pos,
+            time: Number(new Date()),
+            values: args
+          }
+        ]
+      },
+      false
+    )
   }
 
   const hConsole = {
@@ -251,12 +261,15 @@ export default async function runCode(cached: boolean = false) {
       turtlesToDraw.forEach(t => turtles.push(t))
     },
     setDocDimensions(w: number, h: number) {
-      patchStore({
-        docDimensions: {
-          width: w,
-          height: h
-        }
-      })
+      patchStore(
+        {
+          docDimensions: {
+            width: w,
+            height: h
+          }
+        },
+        false
+      )
     }
   }
 
@@ -289,9 +302,12 @@ export default async function runCode(cached: boolean = false) {
 
   // console.log(f, f.toString());
 
-  patchStore({
-    console: []
-  })
+  patchStore(
+    {
+      console: []
+    },
+    false
+  )
 
   try {
     await f(...values)
@@ -329,10 +345,11 @@ export default async function runCode(cached: boolean = false) {
       }
       return mapped
     }
+
     const mapped = positions.map(mapPosition)
     errorState = {
       stack: mapped,
-      code: getStore().code.content,
+      code: getCode(),
       name: err.name,
       message: err.message
     }

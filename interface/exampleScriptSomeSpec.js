@@ -1,33 +1,30 @@
-const t0 = new Turtle();
+const t0 = new Turtle()
 t0.fromSVG(`...`)
-t0.forward(90);
-t0.goTo(0, 1);
-t0.right();
-t0.left();
-t0.up();
-t0.down();
-t0.translate(0, 0, [0, 0]); // should this be [x, y]
-t0.rotate(32, [0, 0]);
-t0.scale([1, 2], [0, 0]); // can also be scale rather than [xScale, yScale]
+t0.forward(90)
+t0.goTo(0, 1)
+t0.right()
+t0.left()
+t0.up()
+t0.down()
+t0.translate(0, 0, [0, 0]) // should this be [x, y]
+t0.rotate(32, [0, 0])
+t0.scale([1, 2], [0, 0]) // can also be scale rather than [xScale, yScale]
 
 // drawing and drawing turtles (virtual and physical)
-renderTurtles(t0); // or drawTurtles(t0);
-runMachineTurtles(t0);
+renderTurtles(t0) // or drawTurtles(t0);
+runMachineTurtles(t0)
 
 // do I want to draw the current instance (by value) or reference the Turtle
 // referencing allows us to drag and position the turtle later
 // will direct manipulations be tracked in the source
 // could use a drawing queue
 
+clear()
 
-clear();
-
-setOrigin();
-await machine.goTo(0, 0);
-await machine.penUp();
-await machine.penDown();
-
-
+setOrigin()
+await machine.goTo(0, 0)
+await machine.penUp()
+await machine.penDown()
 
 /*
 

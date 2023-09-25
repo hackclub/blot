@@ -1,0 +1,226 @@
+---
+import Layout from '../layouts/Layout.astro'
+const assembly = (await Astro.glob('/../ASSEMBLY.md'))[0]
+const { Content } = assembly
+const headings = assembly.getHeadings()
+---
+
+<style is:global lang="scss">
+  @import '../ui/variables.scss';
+
+  #container {
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 2rem;
+    position: relative;
+
+    @media screen and (min-width: $md) {
+      display: flex;
+      width: 70vw;
+    }
+  }
+
+  header {
+    h1 {
+      font-size: 4rem;
+      line-height: 1.1;
+      margin: 1.1rem 0;
+    }
+  }
+
+  #cta {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    margin-top: 1.5rem;
+
+    svg {
+      width: 1.1rem;
+    }
+  }
+
+  .toc {
+    align-self: flex-start;
+    font-family: var(--font-serif);
+    font-size: 0.995rem;
+    position: sticky;
+    flex: 25%;
+    top: 4rem;
+    padding-bottom: 0;
+    margin-top: 2rem;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 0.995rem;
+    }
+
+    *:not(button) {
+      color: var(--primary);
+      font-weight: normal;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      margin-top: 0;
+      margin-bottom: calc(0.995rem / 2);
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  #title {
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  .prose {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0 auto;
+    position: relative;
+
+    a {
+      color: var(--primary);
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    article {
+      margin: 0 auto;
+      max-width: 50vw;
+    }
+
+    blockquote {
+      border-left: 3px solid var(--primary);
+      padding-left: 1rem;
+    }
+
+    hr {
+      display: block;
+      height: 1px;
+      border: 0;
+      border-top: 1px solid #ccc;
+      margin: 1em 0;
+      padding: 0;
+    }
+
+    img {
+      display: block;
+      margin: 1.1rem 0;
+      max-width: 100%;
+    }
+
+    code,
+    pre {
+      font-size: 0.995rem;
+      font-family: var(--font-mono);
+    }
+
+    li p {
+      margin: 0;
+    }
+  }
+
+  #back {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    a {
+      text-decoration: none;
+    }
+  }
+</style>
+
+<Layout title="Assembly">
+  <section id="container">
+    <div class="toc">
+      {
+        headings.map((heading, idx) => {
+          let prevDepth = idx > 0 ? headings[idx - 1].depth : Infinity
+          switch (heading.depth) {
+            case 1:
+              return (
+                <h1>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </h1>
+              )
+            case 2:
+              return (
+                <h2>
+                  <a
+                    href={`#${heading.slug}`}
+                    style={{ marginLeft: prevDepth < 2 ? '4px' : '' }}>
+                    {heading.text}
+                  </a>
+                </h2>
+              )
+            case 3:
+              return (
+                <h3>
+                  <a
+                    href={`#${heading.slug}`}
+                    style={{ marginLeft: prevDepth < 3 ? '5px' : '' }}>
+                    {heading.text}
+                  </a>
+                </h3>
+              )
+            case 4:
+              return (
+                <h4>
+                  <a
+                    href={`#${heading.slug}`}
+                    style={{ marginLeft: prevDepth < 3 ? '6px' : '' }}>
+                    {heading.text}
+                  </a>
+                </h4>
+              )
+            case 5:
+              return (
+                <h5>
+                  <a
+                    href={`#${heading.slug}`}
+                    style={{ marginLeft: prevDepth < 3 ? '7px' : '' }}>
+                    {heading.text}
+                  </a>
+                </h5>
+              )
+            case 6:
+              return (
+                <h6>
+                  <a
+                    href={`#${heading.slug}`}
+                    style={{ marginLeft: prevDepth < 3 ? '8px' : '' }}>
+                    {heading.text}
+                  </a>
+                </h6>
+              )
+          }
+        })
+      }
+    </div>
+    <div class="prose">
+      <header>
+        <article>
+          <Content />
+          <p>
+            <a
+              href={`https://github.com/hackclub/haxidraw/edit/main/ASSEMBLY.md`}
+              target="_blank"
+              >Update/make a grammar fix
+            </a>
+          </p>
+        </article>
+      </header>
+    </div>
+  </section>
+</Layout>

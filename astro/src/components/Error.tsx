@@ -1,4 +1,4 @@
-import { CodePosition, useStore } from '../lib/state.ts'
+import { CodePosition, getStore } from '../lib/state.ts'
 import styles from './Error.module.css'
 import { useCallback, useEffect, useRef } from 'preact/hooks'
 import { EditorView } from 'codemirror'
@@ -77,7 +77,7 @@ const Snippet = ({
         insert: code.split('\n')[pos.line - 1]
       }
     })
-  }, [code])
+  })
 
   const hasContext = pos.line !== 1
   const lines = code.split('\n')
@@ -100,7 +100,11 @@ const Snippet = ({
         <span class={styles.arrow}>↑</span>
         {message && <span class={styles.message}>{message}</span>}
       </code>
-      <button class={styles.jumpTo} onClick={() => dispatchJumpTo(pos)}>
+      <button
+        class={styles.jumpTo}
+        onClick={() => {
+          dispatchJumpTo(pos)
+        }}>
         <JumpLinkIcon />
         Jump to line
       </button>
@@ -109,7 +113,7 @@ const Snippet = ({
 }
 
 export default function Error() {
-  const { error } = useStore(['error'])
+  const { error } = getStore()
 
   if (!error) return null
 

@@ -2,24 +2,22 @@ import { EditorView } from 'codemirror'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 import cx from 'classnames'
 import styles from './CodeMirror.module.css'
-import { patchStore, useStore } from '../lib/state.ts'
+import { patchStore, getStore } from '../lib/state.ts'
 import { useCMTheme } from '../lib/codemirror/cmTheme.ts'
 import { useVimMode } from '../lib/codemirror/cmVimMode.ts'
 import { setErrorPos } from '../lib/codemirror/errorIndicator.js'
-import { useOnJumpTo, viewJumpTo } from '../lib/codemirror/state.js'
+import {
+  createCMState,
+  useOnJumpTo,
+  viewJumpTo
+} from '../lib/codemirror/state.js'
 
 export default function CodeMirror() {
-  const { code: codeState, error } = useStore(['code', 'error'])
+  const { error } = getStore()
+
   const [view, setView] = useState<EditorView>()
 
-  useEffect(() => {
-    if (!view) return
-    view.setState(codeState.cmState)
-  }, [view, codeState])
-
-  useEffect(() => {
-    patchStore({ view })
-  }, [view])
+  patchStore({ view }, false)
 
   useCMTheme(view)
   useVimMode(view)
@@ -36,14 +34,17 @@ export default function CodeMirror() {
     if (!view) return
     const line = error?.stack[0].line
     setErrorPos(view, line ? view.state.doc.line(line).from : null)
-  }, [error])
+  })
 
   const editorRef = useCallback((node: HTMLDivElement | null) => {
     if (!node) return
 
     const view = new EditorView({
+      state: createCMState(),
       parent: node
     })
+
+    node.view = view
 
     //@ts-expect-error
     node.children[0]['view'] = view
@@ -53,7 +54,12 @@ export default function CodeMirror() {
 
   return (
     <>
-      <div class={styles.cmWrapper} ref={editorRef} />
+      <style jsx global>{`
+        .CodeMirror {
+          font-size: 18px;
+        }
+      `}</style>
+      <div class={[styles.cmWrapper, 'cm-editor'].join(' ')} ref={editorRef} />
     </>
   )
 }

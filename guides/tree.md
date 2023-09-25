@@ -1,4 +1,7 @@
-# let's draw a tree
+---
+title: Let's draw a tree
+thumbnail: https://github.com/hackclub/haxidraw/assets/27078897/b2b3b319-1b0f-4c0e-bf78-d8323ab577d4
+---
 
 > You can follow along in this editor: [https://blot.hackclub.dev/editor/
 ](https://blot.hackclub.dev/editor)

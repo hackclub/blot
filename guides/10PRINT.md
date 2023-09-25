@@ -1,4 +1,8 @@
-# 10PRINT
+---
+title: 10PRINT
+thumbnail: https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png
+contributors: henrybass
+---
 
 ## Beginner, 25min
 
@@ -131,6 +135,7 @@ And, lastly, let's draw this to the screen! This is done simply by calling the f
 `drawTurtles(t);`
 
 And, you're done! If all went well, you should be seeing something like the below art:
+
 <img src="https://cloud-e0wpk8chk-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 Great job! You can still go farther with this, if you want.

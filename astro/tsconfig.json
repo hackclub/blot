@@ -1,18 +1,7 @@
 {
-  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "lib": ["ES2015"],
-    "moduleResolution": "NodeNext",
-    "allowImportingTsExtensions": true,
-    "target": "ES2020"
-    // "paths": {
-    //   "@/*": ["./src/*"]
-    // }
-    // "paths": {
-    //   "react": ["./node_modules/preact/compat/"],
-    //   "react-dom": ["./node_modules/preact/compat/"]
-    // }
+    "allowImportingTsExtensions": true
   }
 }

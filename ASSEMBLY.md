@@ -2,25 +2,17 @@ Blot instructions
 ---
 Below is a list of all parts needed to construct your Blot. Keep in mind that the colors shown below are not representative of the actual color of the components. The components are colored differently to ease differentiation when going through these instructions. 
 
-|Part  			  |quantity 	|image 
-|----------------------|----|---
-|M5x30			  |?	   	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/0image0056.png" alt="aaa" width="100"/>
-|M5x20			  |?	  	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/2image0058.png" alt="aaa" width="100"/>
-|M5x10			  |?	     		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/3image0059.png" alt="aaa" width="100"/>
-|M3x10			  |8			|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/1image0057.png" alt="aaa" width="100"/>
-|Shim			  |?	       		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/4image0060.png" alt="aaa" width="100"/>
-|Eccentric<br>Spacer|5	      		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/8image0055.png" alt="aaa" width="100"/>
-|Spacer			  |?	       		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/5image0061.png" alt="aaa" width="100"/>
-|V-Wheel			  |8	       		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/6image0053.png" alt="aaa" width="100"/>
-|Idler bearing		  |10	       		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/7image0054.png" alt="aaa" width="100"/>
-|Timing Belt<br>Pulley  |2	       		|<img src="https://cloud-ailzl7xby-hack-club-bot.vercel.app/1image0068.png" alt="aaa" width="100"/>
-|Rubber<br>Feet	  |4	       		|<img src="" alt="aaa" width="100"/>
-|Carriage		  	  |1	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/0image0062.png" alt="aaa" width="100"/>
-|Tool Head		  |1	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/1image0063.png" alt="aaa" width="100"/>
-|Printed Rail		  |1	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/2image0064.png" alt="aaa" width="100"/>
-|Motor Leg		  |2	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/3image0065.png" alt="aaa" width="100"/>
-|Belt Clip			  |1	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/4image0066.png" alt="aaa" width="100"/>
-|Stepper<br>Motor  |2	       		|<img src="https://cloud-ailzl7xby-hack-club-bot.vercel.app/0image0067.png" alt="aaa" width="100"/>
+|Part  			  |Quantity 	|Image||Part|Quantity|Image    
+|----------------------|-----|-|-|-|-|-
+|M5x35			  |11	   	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/0image0056.png" alt="aaa" width="100"/>||Timing Belt<br>Pulley  |2	       	|<img src="https://cloud-ailzl7xby-hack-club-bot.vercel.app/1image0068.png" alt="aaa" width="100"/>
+|M5x20			  |6	  	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/2image0058.png" alt="aaa" width="100"/>||Rubber<br>Feet	  |4	       		|<img src="https://cloud-hma32kk1l-hack-club-bot.vercel.app/6image0078.png" alt="aaa" width="100"/>
+|M5x10			  |14	     		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/3image0059.png" alt="aaa" width="100"/>||Carriage		  	  |1	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/0image0062.png" alt="aaa" width="100"/>
+|M3x10			  |8			|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/1image0057.png" alt="aaa" width="100"/>||Tool Head		  |1	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/1image0063.png" alt="aaa" width="100"/>
+|Shim			  |5	       		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/4image0060.png" alt="aaa" width="100"/>||Printed Rail		  |1	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/2image0064.png" alt="aaa" width="100"/>
+|[Eccentric<br>Spacer](https://www.amazon.com/Micro-Traders-Eccentric-Aluminium-Extrusion/dp/B09CYK9P43/)|5	      		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/8image0055.png" alt="aaa" width="100"/>||Motor Leg		  |2	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/3image0065.png" alt="aaa" width="100"/>
+|Spacer			  |4	       		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/5image0061.png" alt="aaa" width="100"/>||Belt Clip			  |1	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/4image0066.png" alt="aaa" width="100"/>
+|V-Wheel			  |8	       		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/6image0053.png" alt="aaa" width="100"/>||Stepper<br>Motor  |2	       		|<img src="https://cloud-ailzl7xby-hack-club-bot.vercel.app/0image0067.png" alt="aaa" width="100"/>
+|Idler bearing		  |10	       		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/7image0054.png" alt="aaa" width="100"/>||Servo|1|
 
 ---
 Carriage assembly
@@ -105,6 +97,10 @@ Insert a motor into the motor mount, with its cable facing away from the legs, a
 Screw the motor in place with 4 m3x10 screws. Do this assembly twice, once for each leg.
 
 ---
+<img src="https://cloud-hma32kk1l-hack-club-bot.vercel.app/5image0077.png" alt="aaa" width="300"/><br>
+Attach rubber feet to the bottom of the legs.
+
+---
 Printed rail assembly
 ---
 <img src="https://cloud-nzd74pzqy-hack-club-bot.vercel.app/2image0019.png" alt="aaa" width="300"/><img src="https://cloud-nzd74pzqy-hack-club-bot.vercel.app/3image0020.png" alt="aaa" width="300"/><br>
@@ -144,7 +140,7 @@ Your final toolhead assembly should now look like this.
 Final assembly
 ---
 <img src="https://cloud-8faenwnrg-hack-club-bot.vercel.app/0image0028.png" alt="aaa" width="300"/><br>
-Insert one aluminum extrusion into one of your leg assemblies. 
+Insert one aluminum extrusion into one of your leg assemblies.  *Be careful as it may require some force.* 
 
 ---
 <img src="https://cloud-8faenwnrg-hack-club-bot.vercel.app/1image0029.png" alt="aaa" width="300"/><img src="https://cloud-8faenwnrg-hack-club-bot.vercel.app/2image0030.png" alt="aaa" width="300"/><br>
@@ -164,11 +160,11 @@ Attach the carriage onto the rail with the belt bearings facing upwards. *Should
 
  ---
  <img src="https://cloud-8faenwnrg-hack-club-bot.vercel.app/8image0036.png" alt="aaa" width="300"/><br>
- attach the other leg, enclosing the carriage between both legs.
+ attach the other leg, enclosing the carriage between both legs. *Be careful as it may require some force.*
 
 ---
 <img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/0image0037.png" alt="aaa" width="300"/><br>
-Attach the printed rail to one side of the other aluminum extrusion.
+Attach the printed rail to one side of the other aluminum extrusion. *Be careful as it may require some force.*
 
 ---
 <img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/1image0038.png" alt="aaa" width="300"/><img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/2image0039.png" alt="aaa" width="300"/><br>
@@ -190,7 +186,7 @@ Insert the rail into the top of the carriage. Then, flip the blot over so that i
 
 <img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/0image0045.png" alt="aaa" width="300"/>
 <img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/2image0047.png" alt="aaa" width="300"/><br>
-Next, we need to attach the belt clip. Make sure it is flush with the aluminum extrusion.
+Next, we need to attach the belt clip. Make sure it is flush with the aluminum extrusion. *Be careful as it may require some force.*
 
 ---
 <img src="https://cloud-hma32kk1l-hack-club-bot.vercel.app/0image0046.png" alt="aaa" width="300"/>
@@ -210,4 +206,4 @@ Create another belt bearing assembly and ensure the belt is behind it.
 Here comes the hardest part: routing the belt. Ensure it goes around the shafts of both motors, and runs between the belt bearings within the carriage. 
 
 ---
- At the belt clip, bend the belt around on itself (with the teeth facing outwards) in order to hold it tight. 
+ At the belt clip, bend the belt around on itself (with the teeth facing outwards) in order to hold it tight. 	

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'preact/hooks'
 import styles from './Dialog.module.css'
 import cx from 'classnames'
-import { nanoid } from 'nanoid'
 import type { VNode } from 'preact'
 
 type DialogProps = {
@@ -21,7 +20,7 @@ export default function Dialog({
   actions,
   close
 }: DialogProps) {
-  const id = useMemo(() => nanoid(), [])
+  const id = useMemo(() => `_${Date.now()}`, [])
 
   const keyHandler = useCallback(() => {
     close()
@@ -36,7 +35,7 @@ export default function Dialog({
     return () => {
       window.removeEventListener('keydown', keyHandler)
     }
-  }, [show, keyHandler])
+  })
 
   return show ? (
     <div

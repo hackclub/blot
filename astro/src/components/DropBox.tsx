@@ -1,25 +1,12 @@
 import { useEffect } from 'preact/hooks'
-import { getStore, loadCodeFromString } from '../lib/state.ts'
+import { getStore } from '../lib/state.ts'
+import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
 
 export default function DropBox() {
   useEffect(() => {
     // Make sure the ref is defined
     addDragDrop()
   }, []) // Empty dependency array means this effect runs once after initial render
-
-  // const styles = `
-  //     position: absolute;
-  //     width: 100%;
-  //     height: 100%;
-  //     background: lightblue;
-  //     opacity: .8;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: center;
-  //     border: 3px dashed grey;
-  //     left: 0px;
-  //     top: 0px;
-  // `
 
   return (
     <>
@@ -36,6 +23,7 @@ export default function DropBox() {
                 left: 0px;
                 top: 0px;
                 display: flex;
+                z-index: 999;
             }
 
             .hidden {
@@ -77,7 +65,7 @@ function addDragDrop() {
       } else if (extension === 'svg') {
         text = text.replaceAll('\n', '')
 
-        const newLines = `const importedSVG = new Turtle().fromSVG(String.raw\`${text}\`);\n`
+        const newLines = `const importedSVG = createTurtle().fromSVG(String.raw\`${text}\`);\n`
 
         view.dispatch({
           changes: { from: 0, insert: newLines }
@@ -94,7 +82,6 @@ function addDragDrop() {
     droparea.classList.remove('hidden')
     pauseEvent(evt)
   })
-
   ;['mouseout'].forEach(trigger =>
     window.addEventListener(trigger, function (evt) {
       droparea.classList.add('hidden')
