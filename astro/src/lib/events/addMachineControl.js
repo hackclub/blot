@@ -84,11 +84,11 @@ export async function runMachineHelper(haxidraw, turtles) {
         await delay(100)
       }
 
-      await haxidraw.goto(x, y)
+      await haxidraw.goTo(x, y)
     }
   }
 
   await haxidraw.servo(1000)
   await delay(200)
-  await haxidraw.goto(0, 0)
+  await haxidraw.goTo(0, 0)
 }

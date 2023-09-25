@@ -208,19 +208,19 @@ function drawPixel(x, y, w, h, brightness) {
   w *= 3.3
   h *= 3.3
   t.up()
-  t.goto([x, y])
+  t.goTo([x, y])
   t.down()
-  //t.goto([x + w, y])
-  //t.goto([x + w, y + h])
-  //t.goto([x, y + h])
+  //t.goTo([x + w, y])
+  //t.goTo([x + w, y + h])
+  //t.goTo([x, y + h])
   if (brightness < Math.random()) {
-    t.goto([x + w, y + h])
-    t.goto([x, y])
+    t.goTo([x + w, y + h])
+    t.goTo([x, y])
     if (brightness < Math.random() * 0.5) {
-      t.goto([x + w, y])
-      t.goto([x, y + h])
-      t.goto([x + w, y + h])
-      t.goto([x, y])
+      t.goTo([x + w, y])
+      t.goTo([x, y + h])
+      t.goTo([x + w, y + h])
+      t.goTo([x, y])
     }
   }
 }
@@ -244,11 +244,11 @@ function renderFrame(camera) {
         drawPixel(x, y, dx, dy, brightness)
       } else {
         t.up()
-        t.goto([x, y])
+        t.goTo([x, y])
       }
     }
     t.up()
-    t.goto([-3, 0])
+    t.goTo([-3, 0])
     t.down()
   }
 }

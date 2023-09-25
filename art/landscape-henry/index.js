@@ -44,7 +44,7 @@ function genHeight(x, y) {
 }
 
 function go(x, y) {
-  t.goto([x * globalScale, (y - 9) * globalScale])
+  t.goTo([x * globalScale, (y - 9) * globalScale])
 }
 
 function drawTree(x, y, size) {

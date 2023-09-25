@@ -85,9 +85,9 @@ for (let y = 0; y < 15; y += dy) {
 }
 ```
 
-Using the `t.goto([x, y])` function in Haxidraw, we can create straight lines. If we want to replicate a smooth curve, we have to use many `goto` commands with very small changes in the x and y.
+Using the `t.goTo([x, y])` function in Haxidraw, we can create straight lines. If we want to replicate a smooth curve, we have to use many `goTo` commands with very small changes in the x and y.
 
-If we just call `t.goto([x, y])` at every x and y in our loop, we'll get straight lines. Instead, let's add the noise height to this, with `t.goto([x, y + height])`.
+If we just call `t.goTo([x, y])` at every x and y in our loop, we'll get straight lines. Instead, let's add the noise height to this, with `t.goTo([x, y + height])`.
 
 Using `drawTurtles(t)` at the end, we can visualize the path.
 You may notice that there's a straight line between the start and end of each path. This is because the pen is still down when we start a new line, and it can be solved by simply raising the pen if we're going to the first point of a new line.
@@ -96,7 +96,7 @@ If all goes well, you should see many rough lines, that look something like this
 
 <img src="https://cloud-2d1gm9q2d-hack-club-bot.vercel.app/0image.png" width="512"/>
 
-To give the appearance that we're looking at this from the side, we can divide the y value by 2 or 3 in each `goto` command. This will shrink the terrain vertically, but leave the hill height the same.
+To give the appearance that we're looking at this from the side, we can divide the y value by 2 or 3 in each `goTo` command. This will shrink the terrain vertically, but leave the hill height the same.
 
 This is starting to look like mountains! If we want to make these look more like islands instead, we'd need to cut off the noise below a given height, and replace it with flat-looking water. By returning `Math.max(height, sea_level)` in our `getHeight` function, only the larger of the two values will be returned. This means we'll see a line at sea level whenever the noise height is below it.
 
@@ -153,10 +153,10 @@ Trees generally grow a good distance above sea level, and they're pretty random 
 
 ```js
 size = tree_size * Math.random() + size / 2
-t.goto([x, y])
-t.goto([x, y + size])
+t.goTo([x, y])
+t.goTo([x, y + size])
 t.up()
-t.goto([x, y])
+t.goTo([x, y])
 ```
 
 Then, we should only call this if `Math.random() > tree_prob && height * (y + perspective_offset) > tree_line`. We multiply by `(y + perspective_offset)` to cancel out the division back in the `getHeight` function, and ignore perspective. With all this done, you'll have a nice looking landscape, generated 100% from code. Great job!
@@ -193,10 +193,10 @@ let maxHeights = Array(Math.floor(10 / dx)).fill(0)
 
 function drawTree(x, y) {
   size = tree_size * Math.random() + size / 2
-  t.goto([x, y])
-  t.goto([x, y + size])
+  t.goTo([x, y])
+  t.goTo([x, y + size])
   t.up()
-  t.goto([x, y])
+  t.goTo([x, y])
 }
 
 function getHeight(x, y) {
@@ -223,7 +223,7 @@ for (let y = 0; y < 15; y += dy) {
     } else {
       t.up()
     }
-    t.goto([x, y / 3 + height])
+    t.goTo([x, y / 3 + height])
   }
 }
 

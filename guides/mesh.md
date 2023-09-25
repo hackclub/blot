@@ -52,15 +52,15 @@ Then, use the built-in haxidraw noise function to offset the points again, this 
 }
 ```
 
-Now, we need a way to draw this. We can define a simple function to render a triange, where we simply go through every point of the triangle with the turtle `goto` function.
+Now, we need a way to draw this. We can define a simple function to render a triange, where we simply go through every point of the triangle with the turtle `goTo` function.
 
 ```
 function drawTriangle(pointA, pointB, pointC) {
-  t.goto([pointA.x, pointA.y]);
+  t.goTo([pointA.x, pointA.y]);
   t.down()
-  t.goto([pointB.x, pointB.y]);
-  t.goto([pointC.x, pointC.y]);
-  t.goto([pointA.x, pointA.y]);
+  t.goTo([pointB.x, pointB.y]);
+  t.goTo([pointC.x, pointC.y]);
+  t.goTo([pointA.x, pointA.y]);
   t.up()
 }
 ```

@@ -29,7 +29,7 @@ for (let line = 0; line < height; line += lineSpacing) {
   for (let x = -lineWidth/2; x < lineWidth/2; x += dx) {
     let height = line;
     if (x == -lineWidth/2) t.up();
-    t.goto(
+    t.goTo(
       [x, height]
     );
     t.down();

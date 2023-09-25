@@ -28,12 +28,12 @@ function draw(x, y, width, height, theta) {
   let startX = x - height / 2
   let startY = y - height / 2
 
-  t.goto(rotatePoints(x, y, startX, startY, theta))
+  t.goTo(rotatePoints(x, y, startX, startY, theta))
   t.down()
-  t.goto(rotatePoints(x, y, startX + width, startY, theta))
-  t.goto(rotatePoints(x, y, startX + width, startY + height, theta))
-  t.goto(rotatePoints(x, y, startX, startY + height, theta))
-  t.goto(rotatePoints(x, y, startX, startY, theta))
+  t.goTo(rotatePoints(x, y, startX + width, startY, theta))
+  t.goTo(rotatePoints(x, y, startX + width, startY + height, theta))
+  t.goTo(rotatePoints(x, y, startX, startY + height, theta))
+  t.goTo(rotatePoints(x, y, startX, startY, theta))
   t.up()
 }
 ```

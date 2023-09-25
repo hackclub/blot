@@ -9,7 +9,7 @@ contributors: henrybass
 _This tutorial is aimed at beginners, but it works best if you have a little prior programming experience._
 
 "10PRINT" is one of the oldest and most well-known examples of generative art. It was originally created for the Commodore 64 in BASIC, and the code looked like this:
-`10 PRINT CHR$(205.5+RND(1)); : GOTO 10`
+`10 PRINT CHR$(205.5+RND(1)); : goTo 10`
 From just that one line, the following intricate pattern is created:
 
 <img src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png" width="512"/>
@@ -46,7 +46,7 @@ This looks like:
 
 So, let's start making something! Boot up the editor at [editor.haxidraw.hackclub.com](https://editor.haxidraw.hackclub.com/). On the left side of the screen, you write code. On the other side, you can see a preview of what you're building. At any point, press "**Run Code**" at the top to see what you've made so far.
 
-Let's start by defining a constant `t`: this will represent our turtle. The turtle is basically our pen - we can send it instructions like `t.up()` or `t.goto([x,y])` to move it around. For example, calling `t.down()` places the pen on the paper, and `t.goto([0, 0])` moves the pen to the position `0, 0`.
+Let's start by defining a constant `t`: this will represent our turtle. The turtle is basically our pen - we can send it instructions like `t.up()` or `t.goTo([x,y])` to move it around. For example, calling `t.down()` places the pen on the paper, and `t.goTo([0, 0])` moves the pen to the position `0, 0`.
 
 ```
 const t = new Turtle();
@@ -77,9 +77,9 @@ To actually draw the slash, we need to give the turtle a few instructions. Start
 
 ```
     t.up();
-    t.goto([x, y]);
+    t.goTo([x, y]);
     t.down();
-    t.goto([x + width, y + height]);
+    t.goTo([x + width, y + height]);
 ```
 
 If the random number was instead below 0.5, then we can draw a forward slash. This is done in an `else` statement:
@@ -92,9 +92,9 @@ Raise the pen, but this time, start out a bit to the right of `x, y`. Lower the 
 
 ```
     t.up();
-    t.goto([x + width, y]);
+    t.goTo([x + width, y]);
     t.down();
-    t.goto([x, y + height]);
+    t.goTo([x, y + height]);
   }
 }
 ```

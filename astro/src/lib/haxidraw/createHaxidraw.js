@@ -4,7 +4,7 @@ import { floatsToBytes, uint16ToBytes, intsToBytes } from './converters.js'
 export async function createHaxidraw(rawPort) {
   const port = await createWebSerialPort(rawPort)
 
-  async function goto(x, y) {
+  async function goTo(x, y) {
     const bytes = floatsToBytes([x, y])
     await port.send('go', bytes)
   }
@@ -26,7 +26,7 @@ export async function createHaxidraw(rawPort) {
 
   return {
     port,
-    goto,
+    goTo,
     // setAccel,
     // setMaxSpeed,
     servo
