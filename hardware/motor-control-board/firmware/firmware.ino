@@ -1,7 +1,7 @@
 #include <Servo.h>
 
 #define SPU 80 // 20 teeth pulley, 16 microstep, 2mm a tooth belt, 16*200 microsteps per turn  == (16*200)/(20*2) == 80
-#define PIN_SERVO D4
+#define PIN_SERVO D6
 
 Servo servo;
 
@@ -15,10 +15,10 @@ struct EventCallback {
 
 float pos[] = {0, 0};
 
-const int motor1StepPin = D6;
-const int motor1DirPin = D5;
-const int motor2StepPin = D7;
-const int motor2DirPin = D8;
+const int motor1StepPin = D10;
+const int motor1DirPin = D9;
+const int motor2StepPin = D8;
+const int motor2DirPin = D7;
 
 void setup() {  
   servo.attach(PIN_SERVO);
