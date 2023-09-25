@@ -4,7 +4,7 @@ thumbnail: https://github.com/hackclub/haxidraw/assets/27078897/bcaf04e7-a00e-4f
 contributors: leomcelroy
 ---
 
-> You can follow along in [this editor](https://haxidraw.hackclub.dev/).
+> You can follow along in [this editor](https://blot.hackclub.dev/editor).
 
 Let's something like draw this:
 
@@ -54,7 +54,7 @@ Let's use it to add a square to our drawing.
 <details>
 <summary>Hint</summary>
   
-<pre><code>
+```js
 // ...
 
 shapes.join(rect(10, 10)) // here is the new line
@@ -62,7 +62,7 @@ shapes.join(rect(10, 10)) // here is the new line
 shapes.translate([width / 2, height / 2], shapes.cc)
 
 // ...
-</code></pre>
+```
 
 </details>
 
