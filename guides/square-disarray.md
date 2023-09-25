@@ -54,7 +54,8 @@ Let's use it to add a square to our drawing.
 <details>
 <summary>Hint</summary>
   
-```js
+<pre>
+<code class="class="language-js">
 // ...
 
 shapes.join(rect(10, 10)) // here is the new line
@@ -62,7 +63,8 @@ shapes.join(rect(10, 10)) // here is the new line
 shapes.translate([width / 2, height / 2], shapes.cc)
 
 // ...
-```
+</code>
+</pre>
 
 </details>
 
