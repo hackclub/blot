@@ -2,7 +2,16 @@
 
   (uuid 25ba3625-200c-4f99-813a-cf055aab1e42)
 
-  (paper "A4")
+  (paper "USLetter")
+
+  (title_block
+    (title "CYPD3177-24LQXQ Evaluation Board")
+    (date "2023-09-22")
+    (rev "v1.7")
+    (company "Hugo Hu")
+    (comment 1 "Other voltage/current options available by changing resistor values.")
+    (comment 2 "Fixed at 9V and 1A + 0mA.")
+  )
 
   (lib_symbols
     (symbol "Blot:CYPD3177" (in_bom yes) (on_board yes)
@@ -1768,6 +1777,446 @@
     (uuid fe06e3ab-6137-4b52-a976-467a15062b40)
   )
 
+  (text_box "20V"
+    (at 85.09 142.24 0) (size 13.97 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 0019198f-6d3b-4c82-9073-d34ea97d4cc7)
+  )
+  (text_box "5.1K"
+    (at 43.18 187.96 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 00a02399-ab3c-4c2a-bf44-5a43621dee03)
+  )
+  (text_box "ISNK_COARSE(U1-5)\n"
+    (at 16.51 157.48 0) (size 82.55 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 1.27 1.27) (thickness 0.508) bold (color 226 144 255 1)))
+    (uuid 0b396c56-b065-4221-8b36-fba6d733ca58)
+  )
+  (text_box "2.4K"
+    (at 57.15 153.67 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 0e1a839f-a950-4936-a861-32ea4dbd0381)
+  )
+  (text_box "5.1K"
+    (at 76.2 168.91 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 0e95ddd5-4b4b-40f9-8ad5-526b92028cdc)
+  )
+  (text_box "1K"
+    (at 43.18 153.67 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 12768a90-1323-4322-b50f-c04fbb36e224)
+  )
+  (text_box "0mA"
+    (at 29.21 180.34 0) (size 13.97 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2 2) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 26bb0e25-441b-45ef-9bf5-596b6c20971f)
+  )
+  (text_box "VBUS_MIN(U1-1), VBUS_MAX(U1-2)"
+    (at 16.51 138.43 0) (size 82.55 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 1.27 1.27) (thickness 0.508) bold (color 226 144 255 1)))
+    (uuid 294be667-2886-4e2b-b3da-3785a2c93046)
+  )
+  (text_box "5V"
+    (at 29.21 142.24 0) (size 13.97 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 336e1675-392b-4eec-a059-fae78f221762)
+  )
+  (text_box "5.1K"
+    (at 43.18 149.86 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 3e694146-9b56-4268-ad35-a22fe42a7e14)
+  )
+  (text_box "500mA"
+    (at 57.15 180.34 0) (size 13.97 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2 2) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 455ef486-950a-4813-b10f-74282fc42ab0)
+  )
+  (text_box "OPEN"
+    (at 85.09 153.67 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 46d30b66-69cb-407f-b6c7-57b759144d75)
+  )
+  (text_box "OPEN\n"
+    (at 29.21 149.86 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 4cbf6eed-63dd-47d4-952b-13b565798e44)
+  )
+  (text_box "10K"
+    (at 76.2 172.72 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 4d162aad-7ff0-40b4-bcfa-04d365b11c07)
+  )
+  (text_box "0"
+    (at 30.48 172.72 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 5525bb11-4a8d-4383-8de0-fc9bb6cfc94f)
+  )
+  (text_box "5.1K"
+    (at 71.12 149.86 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 59f5ca6d-83dd-4d3a-91e5-a2d4ea6b2b48)
+  )
+  (text_box ""
+    (at 16.51 161.29 0) (size 12.7 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 5b3a0e8a-2df7-47bc-bf46-bbdd4e5d9dc4)
+  )
+  (text_box "2A"
+    (at 53.34 161.29 0) (size 11.43 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 619c1147-0b86-4c9d-84ee-a85cd378d05f)
+  )
+  (text_box "9V\n"
+    (at 43.18 142.24 0) (size 13.97 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 65bdd94b-3b70-4f1e-8fa0-43bec72359ac)
+  )
+  (text_box "15V"
+    (at 71.12 142.24 0) (size 13.97 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 699793cf-e4b1-469f-ab01-f70630af5b31)
+  )
+  (text_box "This board fixes 9V @ 1A+0mA Setting."
+    (at 16.51 195.58 0) (size 82.55 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 1.27 1.27) (thickness 0.508) bold (color 226 144 255 1)))
+    (uuid 6a22e587-52b9-4635-b33a-964269c5c623)
+  )
+  (text_box "2.4K"
+    (at 53.34 172.72 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 70556ba9-6236-4e63-b6ae-42a8daa40726)
+  )
+  (text_box "1K"
+    (at 43.18 191.77 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 7254f745-a00d-4a10-bc7b-640e34a92c0d)
+  )
+  (text_box "5.1K"
+    (at 71.12 187.96 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 74fe476e-864f-4f80-9c3e-c5a245dfbf8e)
+  )
+  (text_box "3A"
+    (at 64.77 161.29 0) (size 11.43 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 765d71af-2353-4ae4-a9cc-388624a21246)
+  )
+  (text_box "5A"
+    (at 87.63 161.29 0) (size 11.43 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 7940fd35-ec61-455e-b2b3-5d63a2a0fc7f)
+  )
+  (text_box "5.1K"
+    (at 71.12 153.67 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 84e5f6d3-5cf5-4017-8dc4-523ffdb2f523)
+  )
+  (text_box "0A\n"
+    (at 30.48 161.29 0) (size 11.43 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 8892401b-fc5e-44cc-8239-09114f4343f9)
+  )
+  (text_box "PULLDOWN"
+    (at 16.51 191.77 0) (size 12.7 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 1.27 1.27) (thickness 0.508) bold (color 226 144 255 1)))
+    (uuid 8932a510-5cb3-4b97-b97c-8fa27174566b)
+  )
+  (text_box "12V"
+    (at 57.15 142.24 0) (size 13.97 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 8b65f55c-dc51-445c-b70e-d262a9b1108c)
+  )
+  (text_box "2.4K"
+    (at 57.15 191.77 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 8c03a37a-e2af-4fae-90b2-3032aab82783)
+  )
+  (text_box "250mA"
+    (at 43.18 180.34 0) (size 13.97 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2 2) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 8dbaa24a-697a-4fad-9b75-e0dfca44bf8b)
+  )
+  (text_box "PULLUP"
+    (at 16.51 187.96 0) (size 12.7 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 1.27 1.27) (thickness 0.508) bold (color 226 144 255 1)))
+    (uuid 91d2b7db-b181-4b1e-9aa6-cc6612654d3f)
+  )
+  (text_box "PULLUP"
+    (at 16.51 168.91 0) (size 12.7 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 1.27 1.27) (thickness 0.508) bold (color 226 144 255 1)))
+    (uuid 92f95b34-5866-4c1c-b002-525aa315a990)
+  )
+  (text_box "900mA"
+    (at 85.09 180.34 0) (size 13.97 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2 2) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 9d9188c0-3d10-4352-a441-347018f0bdc7)
+  )
+  (text_box "1A"
+    (at 41.91 161.29 0) (size 11.43 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid 9df7ef41-004d-4e2d-9cff-760228783285)
+  )
+  (text_box "0"
+    (at 87.63 168.91 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid 9ee5ddad-1307-490c-a4b7-fc900c46fb92)
+  )
+  (text_box "0"
+    (at 29.21 153.67 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid a18c399d-e367-4af7-a566-c522ddb615f5)
+  )
+  (text_box "4A"
+    (at 76.2 161.29 0) (size 11.43 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid a21c757c-2878-47fe-aa4b-7e61ed2b0b38)
+  )
+  (text_box "5.1K"
+    (at 57.15 187.96 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid ab2b3b1e-b8eb-4731-a028-9cb28731ef2a)
+  )
+  (text_box "5.1K"
+    (at 41.91 168.91 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid b4cb91bb-17b3-447b-82a4-57e1113b933a)
+  )
+  (text_box "5.1K"
+    (at 57.15 149.86 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid b5a8cdee-7caf-4e08-81d9-0372eae7cdf2)
+  )
+  (text_box "OPEN\n"
+    (at 29.21 187.96 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid b5f31fa4-3893-4ac4-be59-99d7651d0297)
+  )
+  (text_box "OPEN\n"
+    (at 87.63 172.72 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid b79f5744-5837-44c8-b047-fc524137dcc1)
+  )
+  (text_box ""
+    (at 16.51 180.34 0) (size 12.7 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid b823e39a-ba12-4507-9941-b36a6549c309)
+  )
+  (text_box "Pullup / Pulldown Resistor Setting"
+    (at 16.51 132.08 0) (size 82.55 6.35)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 2.54 2.54) (thickness 0.508) bold))
+    (uuid b82cb4a8-6487-4515-a7ab-e9ffeea08029)
+  )
+  (text_box "PULLDOWN"
+    (at 16.51 153.67 0) (size 12.7 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 1.27 1.27) (thickness 0.508) bold (color 226 144 255 1)))
+    (uuid bc4b3f95-b921-4460-a021-a7edd58b2f5c)
+  )
+  (text_box "750mA"
+    (at 71.12 180.34 0) (size 13.97 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2 2) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid bc80fc69-d6bb-4384-b8e2-0bdd7d46a83d)
+  )
+  (text_box "5.1K"
+    (at 53.34 168.91 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid bfd1bbf8-f917-4704-97c8-6eed9856e113)
+  )
+  (text_box "OPEN"
+    (at 85.09 191.77 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid c3f0915d-9b30-4fe2-962b-b072141ca943)
+  )
+  (text_box "0\n"
+    (at 85.09 149.86 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid c67c52d3-6dab-4a3e-a4cb-9d9e9dd3a5ef)
+  )
+  (text_box "ISNK_FINE(U1-6)\n"
+    (at 16.51 176.53 0) (size 82.55 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 1.27 1.27) (thickness 0.508) bold (color 226 144 255 1)))
+    (uuid cc6596f3-5df1-4bcb-af2c-e6118f76d878)
+  )
+  (text_box ""
+    (at 16.51 142.24 0) (size 12.7 7.62)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 2.54 2.54) (thickness 0.508) bold (color 255 133 61 1)))
+    (uuid cc926c9d-b2a7-4784-9487-8bb1d2c1bef1)
+  )
+  (text_box "PULLUP"
+    (at 16.51 149.86 0) (size 12.7 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 1.27 1.27) (thickness 0.508) bold (color 226 144 255 1)))
+    (uuid d7657294-2b6d-4745-9bd8-952319edd65f)
+  )
+  (text_box "OPEN\n"
+    (at 30.48 168.91 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid d86931b0-a199-4546-98f2-c07220439982)
+  )
+  (text_box "5.1K"
+    (at 71.12 191.77 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid de569287-4b19-48cc-9cec-bf9fbb60aca2)
+  )
+  (text_box "5.1K"
+    (at 64.77 168.91 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid dfa18418-fc87-493f-bf16-04259cf3ebd0)
+  )
+  (text_box "0"
+    (at 29.21 191.77 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid e32f52e9-56fa-4138-baa5-f8bc62284754)
+  )
+  (text_box "PULLDOWN"
+    (at 16.51 172.72 0) (size 12.7 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia") (size 1.27 1.27) (thickness 0.508) bold (color 226 144 255 1)))
+    (uuid ecde51b1-849d-4cff-aaef-c9d916208194)
+  )
+  (text_box "1K"
+    (at 41.91 172.72 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid f187aea7-1dea-4dc3-9e8c-0377f87c07ec)
+  )
+  (text_box "0\n"
+    (at 85.09 187.96 0) (size 13.97 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid f4e066f5-8b4f-421f-a531-cdba6c507073)
+  )
+  (text_box "5.1K"
+    (at 64.77 172.72 0) (size 11.43 3.81)
+    (stroke (width 0) (type default) (color 0 0 0 1))
+    (fill (type none))
+    (effects (font (face "Archia Medium") (size 1.27 1.27) (thickness 0.508) bold (color 149 113 255 1)))
+    (uuid fddc1844-3440-44f9-aae5-62d71546dd2c)
+  )
+
+  (text "" (at 53.34 171.45 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid e77685cd-1425-49ed-8a74-682567e2d647)
+  )
+
   (label "VBUSOUT" (at 176.53 27.94 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 045a2e2b-2bb6-4585-b3d2-c7a6c161c222)
@@ -1825,14 +2274,14 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
     (pin "1" (uuid d70edaf6-2ec7-4e22-8cce-efcef8bdfad5))
-    (pin "2" (uuid 5de8ddad-f551-48c3-a272-af8e64c415fb))
-    (pin "2" (uuid 5de8ddad-f551-48c3-a272-af8e64c415fb))
-    (pin "3" (uuid 7ce9b397-2efa-4907-9aa0-38e89e8690d3))
-    (pin "3" (uuid 7ce9b397-2efa-4907-9aa0-38e89e8690d3))
+    (pin "2" (uuid 5de8ddad-f551-48c3-a272-af8e64c415fe))
+    (pin "2" (uuid 5de8ddad-f551-48c3-a272-af8e64c415fe))
+    (pin "3" (uuid 7ce9b397-2efa-4907-9aa0-38e89e8690d6))
+    (pin "3" (uuid 7ce9b397-2efa-4907-9aa0-38e89e8690d6))
     (pin "4" (uuid 400840df-8738-4381-8c2e-fe64c6372a1f))
     (pin "5" (uuid ac1a9eb1-3021-49c2-bd64-0381ad3b6ea9))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "Q2") (unit 1)
         )
@@ -1862,7 +2311,7 @@
     )
     (pin "1" (uuid 8447e22b-298a-43f7-b4e7-f65094d924f0))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR09") (unit 1)
         )
@@ -1893,7 +2342,7 @@
     (pin "1" (uuid 3ad92258-f1ab-42a6-ae6e-16453c06e7b3))
     (pin "2" (uuid c044f171-213c-478c-94a5-4d6f41e2bcb3))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "C8") (unit 1)
         )
@@ -1923,7 +2372,7 @@
     )
     (pin "1" (uuid 45c4c0a9-6f0e-4e78-864b-82ec9914a604))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR021") (unit 1)
         )
@@ -1953,7 +2402,7 @@
     )
     (pin "1" (uuid 3b04ab23-8cd8-47fc-be66-467ecc6bd5f0))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR03") (unit 1)
         )
@@ -1983,7 +2432,7 @@
     )
     (pin "1" (uuid 6f51e207-81ab-47bb-a7c6-d144d54e6089))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR020") (unit 1)
         )
@@ -2013,7 +2462,7 @@
     )
     (pin "1" (uuid 66e5b211-b169-4631-ab4c-bc8113726f34))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR018") (unit 1)
         )
@@ -2044,7 +2493,7 @@
     (pin "1" (uuid 8a534b5e-5541-4b9c-be03-fd04da276218))
     (pin "2" (uuid e41b5d69-ac91-4e06-8191-3243e9205f3b))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "C2") (unit 1)
         )
@@ -2075,7 +2524,7 @@
     (pin "1" (uuid 7676aa18-32b0-4b7d-9e30-7834ef62d762))
     (pin "2" (uuid 8a92ed3c-bdc9-4d1c-957a-09e754272c5a))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "R7") (unit 1)
         )
@@ -2116,7 +2565,7 @@
     (pin "8" (uuid 06dc8de7-bc7c-4017-b886-45c3235f2273))
     (pin "9" (uuid 06a28c91-a946-4c09-88f6-298f94f41a7b))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "J2") (unit 1)
         )
@@ -2147,7 +2596,7 @@
     (pin "1" (uuid 582bf9eb-f2b8-4692-b2fd-80e1f5543bc7))
     (pin "2" (uuid 1049741f-235e-4da8-aa06-140f019df6f4))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "C1") (unit 1)
         )
@@ -2177,7 +2626,7 @@
     )
     (pin "1" (uuid 044fd219-ca7a-4f4b-ab36-57b26b50df20))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR017") (unit 1)
         )
@@ -2208,7 +2657,7 @@
     (pin "1" (uuid 3aaf0a5b-ec03-468f-a30e-7024ca420c45))
     (pin "2" (uuid b0ff4e30-e384-431c-b70c-02430ad58d20))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "R2") (unit 1)
         )
@@ -2238,7 +2687,7 @@
     )
     (pin "1" (uuid 737520e6-82a6-473b-af52-a25500b56ff5))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR01") (unit 1)
         )
@@ -2269,7 +2718,7 @@
     (pin "1" (uuid 938b5ec6-cc2c-4f10-bd00-55923968fee2))
     (pin "2" (uuid 94fc56c9-cbfc-486b-a5ef-0a9190ee2598))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "D1") (unit 1)
         )
@@ -2299,7 +2748,7 @@
     )
     (pin "1" (uuid 3b9d0ccd-5cf1-4c9e-9bb3-4d1557ac6463))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR010") (unit 1)
         )
@@ -2328,14 +2777,14 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
     (pin "1" (uuid 6b82b272-a605-45df-9f31-836aecb47aed))
-    (pin "2" (uuid a8a9b137-ad81-4871-91c3-349a06e9cd4f))
-    (pin "2" (uuid a8a9b137-ad81-4871-91c3-349a06e9cd4f))
-    (pin "3" (uuid 9bd30027-1026-4c88-bfb6-7c14fc75cf42))
-    (pin "3" (uuid 9bd30027-1026-4c88-bfb6-7c14fc75cf42))
+    (pin "2" (uuid a8a9b137-ad81-4871-91c3-349a06e9cd52))
+    (pin "2" (uuid a8a9b137-ad81-4871-91c3-349a06e9cd52))
+    (pin "3" (uuid 9bd30027-1026-4c88-bfb6-7c14fc75cf45))
+    (pin "3" (uuid 9bd30027-1026-4c88-bfb6-7c14fc75cf45))
     (pin "4" (uuid b8b42ede-6f6d-4730-af6e-6fbe42ac7e7b))
     (pin "5" (uuid e57aad9d-b24e-442a-9482-22afba9ea804))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "Q1") (unit 1)
         )
@@ -2366,7 +2815,7 @@
     (pin "1" (uuid a89394a6-9641-4663-b470-5f6dce7c0d49))
     (pin "2" (uuid adbfc875-291a-434e-a469-76230698393e))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "C6") (unit 1)
         )
@@ -2396,7 +2845,7 @@
     )
     (pin "1" (uuid ac27c461-6d81-4da0-831f-f063d28edb9c))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR07") (unit 1)
         )
@@ -2442,7 +2891,7 @@
     (pin "B9" (uuid 93877cca-531c-4d38-a3a7-260840b2d032))
     (pin "S1" (uuid fd39bd4f-49e3-4a78-aefa-786fe689a07b))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "J1") (unit 1)
         )
@@ -2473,7 +2922,7 @@
     (pin "1" (uuid bf948da3-1f49-4647-a528-f7be8bc0c509))
     (pin "2" (uuid ff7c2901-382f-426b-982f-82c92c638804))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "R5") (unit 1)
         )
@@ -2503,7 +2952,7 @@
     )
     (pin "1" (uuid 4243524e-ec1f-450e-9f74-6c59a7e8d7de))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR016") (unit 1)
         )
@@ -2534,7 +2983,7 @@
     (pin "1" (uuid f4ae67aa-f92e-4508-9428-3c334c8abe4d))
     (pin "2" (uuid a787ac6f-ff7b-4926-8208-a1ef870e4f14))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "C7") (unit 1)
         )
@@ -2565,7 +3014,7 @@
     (pin "1" (uuid d9874001-c51f-498e-82db-a83109daaed5))
     (pin "2" (uuid 77da64b0-8f5a-4497-a5d6-c4ee738af316))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "C9") (unit 1)
         )
@@ -2596,7 +3045,7 @@
     (pin "1" (uuid a7cb738b-3cdd-48eb-8a03-c07b75cc9595))
     (pin "2" (uuid 4cd0ce8b-36c1-4df1-aed3-678d2b524215))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "C3") (unit 1)
         )
@@ -2626,7 +3075,7 @@
     )
     (pin "1" (uuid e70ba0b9-cc73-4507-a419-10444da2bdca))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR015") (unit 1)
         )
@@ -2657,7 +3106,7 @@
     (pin "1" (uuid ab4a6633-7c71-44d0-9a02-a893a1dbcfce))
     (pin "2" (uuid ed744f6c-7cb6-4bb0-ba2c-2f43e5dd6ef2))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "R3") (unit 1)
         )
@@ -2687,7 +3136,7 @@
     )
     (pin "1" (uuid 31f49cd1-2964-4a9c-a37f-fae926ff0a9c))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR013") (unit 1)
         )
@@ -2718,7 +3167,7 @@
     (pin "1" (uuid 84bf0dc5-d1d2-424d-98be-ede20cdbdb0a))
     (pin "2" (uuid 38d2a5a4-ccd8-49c9-91dd-bb5fdd2483fa))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "D2") (unit 1)
         )
@@ -2749,7 +3198,7 @@
     (pin "1" (uuid 3fbed9b4-672f-4921-9a9b-86a7efd3e9ef))
     (pin "2" (uuid 9fc2f86f-f562-4b1e-b66e-144f2da483b6))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "R8") (unit 1)
         )
@@ -2779,7 +3228,7 @@
     )
     (pin "1" (uuid aa814b79-b1a5-4693-b29b-35db075d007e))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR02") (unit 1)
         )
@@ -2833,7 +3282,7 @@
     (pin "8" (uuid 581b13b3-f094-42a0-81de-4a7e7a102662))
     (pin "9" (uuid b3ebb159-91e8-4779-868d-7a5e3fec4832))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "U1") (unit 1)
         )
@@ -2859,7 +3308,7 @@
     (pin "1" (uuid 98d7eccc-8618-4e08-b82a-8f16091db792))
     (pin "2" (uuid 3262e1ac-39eb-4c0b-8dbc-c89689756c8a))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "R6") (unit 1)
         )
@@ -2890,7 +3339,7 @@
     (pin "1" (uuid 5273df94-2d31-448e-9adb-9f59f860d351))
     (pin "2" (uuid aceecace-5eb1-47ba-975f-2b0350b8b8e8))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "C5") (unit 1)
         )
@@ -2920,7 +3369,7 @@
     )
     (pin "1" (uuid 50bb0446-7121-4935-b1dd-c6e4f5563330))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR012") (unit 1)
         )
@@ -2950,7 +3399,7 @@
     )
     (pin "1" (uuid 4b8d7f97-2ff3-4669-a958-53abfbd14750))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR06") (unit 1)
         )
@@ -2980,7 +3429,7 @@
     )
     (pin "1" (uuid 6bb472d6-6a36-48f9-953a-86de37e5f2a6))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR08") (unit 1)
         )
@@ -3010,7 +3459,7 @@
     )
     (pin "1" (uuid 3cffc575-0bea-427b-9add-352ea84645c1))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR019") (unit 1)
         )
@@ -3041,7 +3490,7 @@
     (pin "1" (uuid 5a359ad5-66db-4af3-a301-8c33609058a2))
     (pin "2" (uuid 0694a41c-2587-45fd-b39b-951c2141ee29))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "R1") (unit 1)
         )
@@ -3071,7 +3520,7 @@
     )
     (pin "1" (uuid 3578a52f-46af-408b-a99b-ccd1168c7751))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR014") (unit 1)
         )
@@ -3101,7 +3550,7 @@
     )
     (pin "1" (uuid 923bc470-825e-4ee8-bf36-8dc310e98003))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "#PWR011") (unit 1)
         )
@@ -3132,7 +3581,7 @@
     (pin "1" (uuid 19040f7e-c3a2-435c-8ea6-4f537fbf2928))
     (pin "2" (uuid 1548e221-eab0-432c-9fc1-fe91b521d2d8))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "R4") (unit 1)
         )
@@ -3173,7 +3622,7 @@
     (pin "8" (uuid 31c98330-4ea9-4701-99ad-393593985520))
     (pin "9" (uuid 2dac7d85-495a-4222-a812-142ebcdcfff3))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "J4") (unit 1)
         )
@@ -3204,7 +3653,7 @@
     (pin "1" (uuid 37e08f10-6b37-4c97-9ff7-507560255c63))
     (pin "2" (uuid 16545214-9f8c-4e1c-9b66-111b9183cc15))
     (instances
-      (project "Motor Controller v1.17"
+      (project "CYPD-3177 Breakout"
         (path "/25ba3625-200c-4f99-813a-cf055aab1e42"
           (reference "C4") (unit 1)
         )

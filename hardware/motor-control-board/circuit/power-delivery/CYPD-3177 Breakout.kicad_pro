@@ -454,8 +454,8 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
-      "vrml": ""
+      "step": "../Motor Controller v1.17.step",
+      "vrml": "../Motor Controller v1.17.wrl"
     },
     "page_layout_descr_file": ""
   },

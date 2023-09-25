@@ -637,6 +637,11 @@
       (net 26 "/A10") (pinfunction "MOSI") (pintype "input") (tstamp cc07e2a0-04e8-4a84-804a-98666338ec88))
     (pad "GND" thru_hole oval (at 7.63 8.4) (size 1.7 1.7) (drill 1) (layers "*.Cu" "*.Mask")
       (net 1 "GND") (pinfunction "GND") (pintype "input") (tstamp 90eac523-9f08-4ffa-8ed2-613f2d59c3c2))
+    (model "/Users/hugohu/Downloads/seeed-studio-xiao-rp2040-1/Seeed Studio XIAO RP2040 v26.step"
+      (offset (xyz 0 -13.5 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 0))
+    )
   )
 
   (footprint "Blot:A4988" (layer "F.Cu")
@@ -849,6 +854,11 @@
       (net 1 "GND") (pinfunction "GND") (pintype "input") (tstamp da1c3429-02af-4ad1-9748-d2c101f44231))
     (pad "16" thru_hole oval (at 6.35 7.62) (size 1.7 1.7) (drill 1) (layers "*.Cu" "*.Mask")
       (net 2 "VBUS") (pinfunction "VMOT") (pintype "input") (tstamp 5893ed07-8518-4f8b-a997-0bf367411109))
+    (model "/Users/hugohu/Downloads/a4988-stepper-driver-with-pins-socketed-1/A4988-Stepper-Driver-Socketed.stp"
+      (offset (xyz 0 -16.5 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 0))
+    )
   )
 
   (footprint "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" (layer "F.Cu")
@@ -1645,6 +1655,11 @@
       (net 1 "GND") (pinfunction "GND") (pintype "input") (tstamp b8a694bc-90af-4172-a66b-9708943b43a3))
     (pad "16" thru_hole oval (at 6.35 7.62) (size 1.7 1.7) (drill 1) (layers "*.Cu" "*.Mask")
       (net 2 "VBUS") (pinfunction "VMOT") (pintype "input") (tstamp 0239a8b2-3d06-4fa7-80b3-f3ff9d1f3d7e))
+    (model "/Users/hugohu/Downloads/a4988-stepper-driver-with-pins-socketed-1/A4988-Stepper-Driver-Socketed.stp"
+      (offset (xyz 0 -16.5 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 0))
+    )
   )
 
   (footprint "Blot:SWITCH_011CQN" (layer "F.Cu")
@@ -1844,6 +1859,11 @@
       (net 21 "unconnected-(SW1-C-Pad3)") (pinfunction "C") (pintype "passive") (tstamp b03ec427-f97d-4aee-88fd-6c7689c43c8f))
     (pad "3" thru_hole circle (at 3.3 5 90) (size 1.397 1.397) (drill 0.889) (layers "*.Cu" "*.Mask")
       (net 21 "unconnected-(SW1-C-Pad3)") (pinfunction "C") (pintype "passive") (tstamp 091365c1-17f2-4faf-9b17-fdebbb771500))
+    (model "/Users/hugohu/Downloads/LIB_JS202011CQN-2/JS202011CQN/3D/JS202011CQN.stp"
+      (offset (xyz 1.7 -2.5 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 90))
+    )
   )
 
   (footprint "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" (layer "F.Cu")
@@ -2467,6 +2487,11 @@
       (net 1 "GND") (pinfunction "GND") (pintype "input") (tstamp 4bfe5e99-b653-44de-a9f4-cbd2e4fb9cef))
     (pad "24" thru_hole circle (at 8.89 -13.97) (size 1.7 1.7) (drill 1) (layers "*.Cu" "*.Mask")
       (net 1 "GND") (pinfunction "GND") (pintype "input") (tstamp 0ef69ae5-bd03-49c0-a3e2-bb3ec831732b))
+    (model "/Users/hugohu/Downloads/Motor Controller v1.17.step"
+      (offset (xyz 67.3 -47 2.5))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 180))
+    )
   )
 
   (footprint "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" (layer "F.Cu")
@@ -6732,6 +6757,9 @@
         )
       )
     )
+  )
+  (gr_text "Board Dimensions: 50.00mm x 70.00mm\nFR4 1.6mm, 2-layer\n" (at 131.572 36.576) (layer "Dwgs.User") (tstamp 15ea3d51-d40a-4d68-99a2-ee065a33c487)
+    (effects (font (size 1.5 1.5) (thickness 0.3) bold) (justify left bottom))
   )
 
   (segment (start 101.54 53.44) (end 101.54 92.293085) (width 1.5) (layer "F.Cu") (net 2) (tstamp 052f0d80-aec9-4950-94a5-14884d5e87e2))

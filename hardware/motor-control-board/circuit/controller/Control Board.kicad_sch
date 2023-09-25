@@ -4,6 +4,13 @@
 
   (paper "A5")
 
+  (title_block
+    (title "Blot Control Board")
+    (date "2023-09-22")
+    (rev "v1.20")
+    (company "Hugo Hu")
+  )
+
   (lib_symbols
     (symbol "Blot:A4988" (in_bom yes) (on_board yes)
       (property "Reference" "U" (at 0 0 0)
