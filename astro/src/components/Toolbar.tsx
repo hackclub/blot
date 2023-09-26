@@ -386,7 +386,7 @@ function SettingsButton() {
           'padding': '5px',
           'border-radius': '5px'
         }}>
-        <Button
+{/*        <Button
           class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
@@ -403,7 +403,7 @@ function SettingsButton() {
           }}>
           <BrightnessContrastIcon className={styles.icon} />
           <span>toggle theme</span>
-        </Button>
+        </Button>*/}
         <Button
           class={styles.dropdownEntry}
           variant="ghost"

@@ -24,7 +24,6 @@ export default function Help({
   const currentUrl = new URL(window.location.href)
   const workshop = currentUrl.searchParams.get('guide')
   const [workshopContent, setWorkshopContent] = useState({
-    slug: `/guide/${workshop}`,
     frontMatter: {},
     htmlContent: ''
   })
@@ -48,7 +47,6 @@ export default function Help({
       const data = await res.text()
 
       const result = parseMDFrontMatter(data)
-      result.slug = `/guide/${workshop}`
 
       setWorkshopContent(result);
       setTab('workshop');

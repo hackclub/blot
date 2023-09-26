@@ -7,13 +7,13 @@ let images = [];
 try {
   const list = (await Astro.glob('/../art/list.json'))[0].default
   list.forEach(folder => {
-    folder.snapshots.map(snapshot => {
-      images.push({
-        dir: folder.directory,
-        img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/snapshots/${snapshot}`, 
-        href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/${folder.source}`,
-        alt: folder.directory
-      })
+    const snapshot = folder.snapshots[0];
+    
+    images.push({
+      dir: folder.directory,
+      img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/snapshots/${snapshot}`, 
+      href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/${folder.source}`,
+      alt: folder.directory
     })
   })
 
@@ -110,6 +110,20 @@ try {
     box-shadow: -3px -3px 12px #999;
   }
 
+  a {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    color: #ec3750;
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-underline-position: under;
+  }
+
+  a:hover {
+    text-decoration-style: wavy;
+  }
+
 </style>
 
 <Layout
@@ -120,6 +134,9 @@ try {
       <div class="guides-title">Gallery</div>
       <div class="guides-sub-title">
         A gallery of various art pieces created by Hack Clubbers, with an interactive 3D gallery mode!
+      </div>
+      <div class="guides-sub-title">
+        Teenagers can submit art to the gallery to get their own Blot. Guide to submission is <a href="https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md">here</a>.
       </div>
     </div>
     <div id="gallery">
