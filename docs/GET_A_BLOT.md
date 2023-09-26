@@ -10,6 +10,13 @@ You can learn how to use the editor and make art by following some of [these gui
 
 Some criteria your art needs to meet:
 
+- Your artwork must be [figurative](https://en.wikipedia.org/wiki/Figurative_art)
+  - That means it must draw inspiration from depicting a real life thing.
+- Your art program must be able to produce multiple versions of the piece.
+  - You should be able to adjust a parameter to make another version of your artwork.
+- For examples of meeting above criteria check out
+  - [Leaf](https://blot.hackclub.dev/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/leaf-leo/index.js)
+  - [Fishdraw](https://github.com/LingDong-/fishdraw)
 - Drawable by the machine.
   - That means the lines can not be too dense.
   - It should fit within the workarea.
