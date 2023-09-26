@@ -14,6 +14,7 @@ Some criteria your art needs to meet:
   - That means it must draw inspiration from depicting a real life thing.
 - Your art program must be able to produce multiple versions of the piece.
   - You should be able to adjust a parameter to make another version of your artwork.
+  - To demonstrate this **submit 3 snapshots**.
 - For examples of meeting above criteria check out
   - [Leaf](https://blot.hackclub.dev/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/leaf-leo/index.js)
   - [Fishdraw](https://github.com/LingDong-/fishdraw)
@@ -37,10 +38,10 @@ These are the steps you need to take to make a PR.
 <img width="1411" alt="Screenshot 2023-09-15 at 3 41 39 PM" src="https://github.com/hackclub/blot/assets/27078897/6d23dfc8-8768-4134-a24d-e276e2c67b52">
 
 
-## 2.2) Place your program in a folder with some snapshots
+## 2.2) Place your program in a folder with at least 3 snapshots
 
 - Create a folder called `{yourArtworkName}-{yourName}`.
-- Inside that folder create a `snapshots` folder with some screenshots of your work.
+- Inside that folder create a `snapshots` folder with **at least 3 screenshots** of your work.
 - Place the code for your artwork in an `index.js` file.
 
 The directory structure can be seen below:
