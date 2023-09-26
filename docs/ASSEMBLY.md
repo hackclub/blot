@@ -4,7 +4,7 @@ Below is a list of all parts needed to construct your Blot. Keep in mind that th
 
 |Part  			  |Quantity 	|Image||Part|Quantity|Image    
 |----------------------|-----|-|-|-|-|-
-|[M5x35](https://www.mcmaster.com/92095A220/)			  |11	   	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/0image0056.png" alt="aaa" width="100"/>||Timing Belt<br>Pulley  |2	       	|<img src="https://cloud-ailzl7xby-hack-club-bot.vercel.app/1image0068.png" alt="aaa" width="100"/>
+|[M5x35](https://www.mcmaster.com/92095A220/)			  |11	   	        |<img src="https://github.com/hackclub/blot/assets/109123711/ac811d34-c37b-49dd-a5da-0c9a99074345" alt="aaa" width="100"/>||Timing Belt<br>Pulley  |2	       	|<img src="https://cloud-ailzl7xby-hack-club-bot.vercel.app/1image0068.png" alt="aaa" width="100"/>
 |[M5x20](https://www.mcmaster.com/92095A214/)			  |5	  	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/2image0058.png" alt="aaa" width="100"/>||Rubber<br>Feet	  |4	       		|<img src="https://cloud-hma32kk1l-hack-club-bot.vercel.app/6image0078.png" alt="aaa" width="100"/>
 |[M5x20,<br>cyl. head](https://www.mcmaster.com/91292A128/)			  |1	  	        |<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/2image0058.png" alt="aaa" width="100"/>|||
 |[M5x10](https://www.mcmaster.com/92095A208/)			  |14	     		|<img src="https://cloud-agax6w6e0-hack-club-bot.vercel.app/3image0059.png" alt="aaa" width="100"/>||Carriage		  	  |1	       		|<img src="https://cloud-dxz9fnfpj-hack-club-bot.vercel.app/0image0062.png" alt="aaa" width="100"/>
