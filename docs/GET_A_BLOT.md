@@ -1,5 +1,7 @@
 # How to Get a Blot
 
+> Blot is not released yet and this criteria is still in flux. If you want to get an early start and help shape what it means to get a Blot I welcome and appreciate it.
+
 So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one.
 
 # 1) Make a unique piece of generative art
