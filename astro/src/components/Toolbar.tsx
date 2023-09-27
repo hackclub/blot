@@ -34,7 +34,7 @@ export default function Toolbar() {
         }}>
         <h1 class={styles.heading}>
           <a href="/">
-            <img src="/blot.svg" style="display: none; width: 30px"/>
+            <img src="/blot.svg" style="width: 30px"/>
             <span style="font-weight: 700;">blot</span>
           </a>
         </h1>
