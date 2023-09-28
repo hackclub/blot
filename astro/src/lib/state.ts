@@ -1,6 +1,8 @@
+import type { EditorView } from '@codemirror/view'
+import { signal } from '@preact/signals'
 import { createState } from './createState.js'
 import { type Haxidraw, Turtle, type Point } from './drawingToolkit/index.js'
-import type { EditorView } from '@codemirror/view'
+import type { Art, SessionInfo } from './db/account.ts'
 
 // state types
 

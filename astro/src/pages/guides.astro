@@ -1,25 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { marked } from 'marked'
-import { description, slug } from '../lib/guide.ts'
+
+import { slug } from '../lib/guide.ts'
 
 const workshops = await Astro.glob('/../guides/*.md')
-
-export const prerender = true
 ---
 
-<!--
-<script src="/masonry.min.js" type="module"></script>
-
-<script>
-  window.onload = () => {
-    new Masonry(document.getElementById('gallery'), {
-      itemSelector: '.frame'
-    })
-  }
-</script>
--->
-<style is:global lang="scss">
+<style is:global>
   @import '../ui/variables.scss';
 
   body,
@@ -28,84 +16,81 @@ export const prerender = true
     background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
       linear-gradient(to bottom, #ddd 1px, transparent 1px);
     min-height: 100vh;
-  }
-
-  #container {
-    margin: 0 auto;
-
-    @media screen and (min-width: $lg) {
-      width: 85vw;
-    }
-  }
-
-  #gallery {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  #content {
-    font-size: 1.5rem;
-    font-family: var(--font-sans);
-  }
-
-  .frame {
-    background: white;
-    padding: 0;
-    margin: 0.5rem;
-    border: solid 15px #555;
-    box-shadow: -3px -3px 12px #999;
-    max-width: 30%;
-    z-index: 1;
-    transition: all 0.2s;
-
-    &:hover {
-      transform: scale(101%);
-    }
-  }
-
-  img {
-    max-width: 100%;
-    object-fit: contain;
-    border: 1px solid #aaa;
-  }
-
-  .border {
-    max-width: 100%;
-    max-height: 100%;
-    background-color: white;
-    margin: 0;
-    border: solid 10px white;
-    box-shadow: -3px -3px 12px #999;
-  }
-
-  .prose {
-    background-color: white;
-    font-size: 0.995rem;
-    padding: 0 1rem;
-    font-family: var(--font-serif);
-
-    blockquote {
-      margin-left: 0;
-    }
-
-    h2 {
-      color: var(--primary);
-
-      a {
-        color: var(--primary);
-        text-decoration: none;
-      }
-    }
+    font-family:
+      'Phantom Sans',
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      sans-serif;
   }
 
   .description {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    text-align: center;
-    padding: 2rem;
-    letter-spacing: -1px;
+    padding: 0.3rem;
+    margin-left: 40px;
+  }
+
+  .guides-title {
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  .guides-sub-title {
+    font-size: 1.7rem;
+    font-weight: 300;
+  }
+
+  .gallery {
+    display: flex;
+    width: 100vw;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    row-gap: 24px;
+    margin: 20px 0; /* Added some vertical margin for better spacing */
+  }
+
+  .frame {
+    text-decoration: none;
+    color: inherit;
+    width: 30%;
+    min-width: 300px;
+    max-width: 400px;
+    aspect-ratio: 1;
+    background-image: linear-gradient(169deg, #cecef9, #e7f0fb);
+    border-radius: 27px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 17px;
+    box-shadow: 7px 6px 7px rgba(0, 0, 0, 0.1);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease; /* Smooth transition for hover effects */
+    &:hover {
+      /* Hover effect */
+      transform: scale(1.05); /* Slightly scales the frame up */
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); /* Brighter shadow on hover */
+    }
+  }
+
+  .thumbnail {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 1rem;
+    transition: opacity 0.3s ease; /* Smooth transition for hover effects */
+    /* Make the thumbnail slightly less opaque on hover for a subtle effect */
+    .frame:hover & {
+      opacity: 0.9;
+    }
+  }
+
+  .prose {
+    padding: 10px;
   }
 </style>
 
@@ -114,13 +99,13 @@ export const prerender = true
   description="A gallery of various guides created by Hack Clubbers.">
   <div id="container">
     <div class="description">
-      <h1 style={{ margin: 0 }}>Guides</h1>
-      <p style={{ marginTop: 0 }}>
-        A gallery of various guides created by Hack Clubbers that anyone can
+      <div class="guides-title">Guides</div>
+      <div class="guides-sub-title">
+        A collection of various guides created by Hack Clubbers that anyone can
         learn from and contribute to!
-      </p>
+      </div>
     </div>
-    <div id="gallery">
+    <div class="gallery">
       {
         workshops
           .sort((a, b) =>
@@ -128,21 +113,10 @@ export const prerender = true
           )
           .map(workshop => {
             return (
-              <div class="frame">
-                <div class="border">
-                  <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
-                  <div class="prose">
-                    <h2 style={{ marginBottom: 0 }}>
-                      <a href={`/guide/${slug(workshop.file)}`}>
-                        {workshop.frontmatter.title}
-                      </a>
-                    </h2>
-                    <div
-                      set:html={marked(description(workshop.rawContent()))}
-                    />
-                  </div>
-                </div>
-              </div>
+              <a class="frame" href={`/guide/${slug(workshop.file)}`}>
+                <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                <div class="prose">{workshop.frontmatter.title}</div>
+              </a>
             )
           })
       }

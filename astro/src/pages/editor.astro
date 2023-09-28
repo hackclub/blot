@@ -1,22 +1,31 @@
 ---
-import EditorLayout from '../layouts/EditorLayout.astro'
-import Editor from '../layouts/Editor.astro'
+import '../ui/editor-theme.css'
+import '../ui/globals.scss'
 ---
 
-<head>
-  <!-- Prism CSS -->
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"
-    rel="stylesheet"
-  />
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Blot editor!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <!-- Prism JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"
-  ></script>
-</head>
+    <!-- Prism CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"
+      rel="stylesheet"
+    />
+    <!-- Prism JS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"
+    ></script>
 
-<EditorLayout title="Editor" description="Editor">
-  <main>
-    <Editor />
-  </main>
-</EditorLayout>
+    <meta name="generator" content={Astro.generator} />
+    <title>Blot</title>
+  </head>
+  <body>
+    <main></main>
+    <script src="../lib/initApp.js"></script>
+  </body>
+</html>

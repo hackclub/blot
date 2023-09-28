@@ -1,17 +1,16 @@
 import { getStore } from '../lib/state.js'
 import { createListener } from '../lib/createListener.js'
 import styles from './Editor.module.scss'
-import CompatWarning from './CompatWarning.jsx'
+import CompatWarning from './CompatWarning.tsx'
 import Preview from './Preview.jsx'
 import Toolbar from './Toolbar.jsx'
-import Error from './Error.jsx'
+import Error from './Error.tsx'
 import Console from './Console.jsx'
 import GlobalStateDebugger from './GlobalStateDebugger.jsx'
 import DropBox from './DropBox.jsx'
-import CodeMirror from './CodeMirror.jsx'
+import CodeMirror from './CodeMirror.tsx'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import Help from './Help.jsx'
-import preview from '@astrojs/node/preview.js'
 import type { PersistenceState } from '../lib/stateDb.ts'
 import { Signal } from '@preact/signals'
 import { useSignalEffect, useSignal } from '@preact/signals'
@@ -26,48 +25,6 @@ interface EditorProps {
     hideHelp: boolean
   }
 }
-
-let lastSavePromise = Promise.resolve()
-let saveQueueSize = 0
-export const saveArt = debounce(
-  800,
-  (persistenceState: Signal<PersistenceState>, code: string) => {
-    const doSave = async () => {
-      let isError = false
-      try {
-        const art =
-          persistenceState.value.kind === 'PERSISTED' &&
-          persistenceState.value.art !== 'LOADING'
-            ? persistenceState.value.art
-            : null
-        const res = await fetch('/api/art/save', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            code,
-            artId: art?.id,
-            tutorialName: art?.tutorialName,
-            tutorialIndex: art?.tutorialIndex
-          })
-        })
-        if (!res.ok) throw new Error(`Error saving piece: ${await res.text()}`)
-      } catch (error) {
-        console.error(error)
-        isError = true
-      }
-
-      saveQueueSize--
-      if (saveQueueSize === 0 && persistenceState.value.kind === 'PERSISTED')
-        persistenceState.value = {
-          ...persistenceState.value,
-          cloudSaveState: isError ? 'ERROR' : 'SAVED'
-        }
-    }
-
-    saveQueueSize++
-    lastSavePromise = (lastSavePromise ?? Promise.resolve()).then(doSave)
-  }
-)
 
 const minOutputAreaSize = 360
 const defaultOutputAreaSize = 400

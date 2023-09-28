@@ -1,3 +1,19 @@
+<style>
+  .three-js-container {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .buttons {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+  }
+</style>
+
 <script>
   import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
   import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
@@ -46,11 +62,9 @@
       }
     })
 
-    const container = document.querySelector('.model')
-    renderer.setSize(window.innerWidth, container.offsetHeight)
-    renderer.domElement.style.zIndex = '999'
     const threeContainer = document.querySelector('.three-js-container')
     threeContainer.appendChild(renderer.domElement)
+    renderer.setSize(window.innerWidth, threeContainer.offsetHeight)
 
     // Set up light
     const light = new THREE.DirectionalLight(0xffffff)
@@ -64,10 +78,29 @@
     const objLoader = new OBJLoader().setPath('/model/')
     const mtlLoader = new MTLLoader().setPath('/model/')
 
-    camera.position.z = 0.25
-    camera.position.x = 0
-    camera.rotation.z = Math.PI
-    camera.position.y = -0.055
+    // camera.position.z = 0.25
+    // camera.position.x = 0
+    // camera.rotation.z = Math.PI
+    // camera.position.y = -0.055
+
+    const initCamPos = {
+      x: -0.012060728422271984,
+      y: -0.30995465588219245,
+      z: 0.22370699843435427
+    }
+    const initCamAngle = {
+      x: 1.0095700038735655,
+      y: 0.0025350872263442863,
+      z: -0.004032504057447568
+    }
+
+    for (const k in initCamPos) {
+      camera.position[k] = initCamPos[k]
+    }
+
+    for (const k in initCamAngle) {
+      camera.rotation[k] = initCamAngle[k]
+    }
 
     /*
   const toolTip = addSphere({
@@ -158,52 +191,80 @@
     // ctx.fillStyle = 'blue';
     // ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight)
 
-    const testTurtles = runTextReturnTurtles(`// square disarray
-// leo mcelroy
+    const testTurtles = runTextReturnTurtles(`const leafLength = 5
+const leafW = 1.3
 
-const width = 120
-const height = 120
+const edge = createTurtle()
+  .forward(leafLength)
+  .resample(0.01)
+  .warp(bezierEasing(0, [0.4, 2.29], [0.52, 0.31], 0))
 
-const nWidth = 10
-const nHeight = 10
+function veins() {
+  const lines = createTurtle()
 
-setDocDimensions(width, height)
+  let littleLinesMax = 61
+  for (let i = 4; i < littleLinesMax - 5; i++) {
+    const t = i / (littleLinesMax - 1)
+    const x0 = t * leafLength
+    const y0 = 0
 
-const shapes = createTurtle()
+    let y = edge.interpolate(t + 0.1)[1]
 
-function createSquare(translate = [0, 0], rotate = 0) {
-  const t = createTurtle()
+    const line = createTurtle([x0, y0])
 
-  for (let i = 0; i < 2; i++) {
-    t.forward(width / nWidth)
-    t.right(90)
-    t.forward(height / nHeight)
-    t.right(90)
+    line.right(-70 + t * 37 + randInRange(-4, 4))
+
+    let r = y * 0.7
+
+    const trimTo = i % 5 === 0 ? randInRange(0.7, 0.9) : randInRange(0.1, 0.7)
+
+    if (r < 0.01) continue
+
+    const warper = bezierEasing(0, [0.28, y / 4], [0.58, y / 8], 0)
+
+    line.forward(r).resample(0.01).warp(warper).resample(0.05).trim(0, trimTo)
+
+    line.iteratePath(pt => {
+      return Math.random() < (i % 5 === 0 ? +0.17 : 0.56) ? 'BREAK' : pt
+    })
+
+    lines.join(line)
   }
 
-  t.translate(translate)
-  t.rotate(rotate)
-
-  return t
+  return lines
 }
 
-const stepW = width / nWidth
-const stepH = height / nHeight
-for (let i = 0; i < nWidth; i++) {
-  for (let j = 0; j < nHeight; j++) {
-    const t = createSquare()
-    t.translate([0, 0], t.lb)
-    t.translate([stepW * i, stepH * j])
-    t.rotate(randInRange(-1, 1) * (i + j) * 2.2)
-    t.translate([
-      randInRange(-1, 1) * (i + j) * 0.14,
-      randInRange(-1, 1) * (i + j) * 0.14
-    ])
-    shapes.join(t)
-  }
-}
+const t = createTurtle()
 
-shapes.scale([3, 3])
+const bottom = edge.copy().scale([1, -1], [0, 0])
+
+edge.warp(
+  t => noise(t * 20.4, { octaves: 2 }) * 0.09 * (t === 0 || t === 1 ? 0 : 1)
+)
+bottom.warp(
+  t => noise(t * 23.6, { octaves: 2 }) * -0.1 * (t === 0 || t === 1 ? 0 : 1)
+)
+
+t.join(edge)
+t.join(bottom)
+t.join(veins())
+t.join(veins().scale([1, -1], [0, 0]))
+
+const lineStem = createTurtle([-1, 0])
+  .forward(leafLength + 1)
+  .resample(0.1)
+
+t.join(lineStem)
+
+t.iteratePath(pt => {
+  let [x, y] = pt
+  y += x * x * 0.02
+  y += noise([x * 0.2]) * 0.3
+  return [x, y]
+})
+
+t.translate([125 / 2, 125 / 2], t.cc)
+t.scale(70)
 
 drawTurtles(shapes)
 `)
@@ -451,44 +512,45 @@ drawTurtles(shapes)
   }
 </script>
 
-<div class="buttons">
-  <button id="rotate" title="Toggle rotate">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-rotate-3d"
-      ><path
-        d="M16.466 7.5C15.643 4.237 13.952 2 12 2 9.239 2 7 6.477 7 12s2.239 10 5 10c.342 0 .677-.069 1-.2"
-      ></path><path d="m15.194 13.707 3.814 1.86-1.86 3.814"></path><path
-        d="M19 15.57c-1.804.885-4.274 1.43-7 1.43-5.523 0-10-2.239-10-5s4.477-5 10-5c4.838 0 8.873 1.718 9.8 4"
-      ></path></svg
-    >
-  </button>
-  <button id="refresh" title="Replay">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-rotate-ccw"
-      ><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path
-        d="M3 3v5h5"></path></svg
-    >
-  </button>
+<div class="three-js-container">
+  <div class="buttons">
+    <button id="rotate" title="Toggle rotate">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-rotate-3d"
+        ><path
+          d="M16.466 7.5C15.643 4.237 13.952 2 12 2 9.239 2 7 6.477 7 12s2.239 10 5 10c.342 0 .677-.069 1-.2"
+        ></path><path d="m15.194 13.707 3.814 1.86-1.86 3.814"></path><path
+          d="M19 15.57c-1.804.885-4.274 1.43-7 1.43-5.523 0-10-2.239-10-5s4.477-5 10-5c4.838 0 8.873 1.718 9.8 4"
+        ></path></svg
+      >
+    </button>
+    <button id="refresh" title="Replay">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-rotate-ccw"
+        ><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+        ></path><path d="M3 3v5h5"></path></svg
+      >
+    </button>
+  </div>
 </div>
-<div class="three-js-container"></div>
 
 <style lang="scss" is:global>
   .three-js-container canvas {

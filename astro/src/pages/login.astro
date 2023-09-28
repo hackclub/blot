@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { getSession } from '../lib/db/account.ts'
+import Login from '../components/Login.tsx'
+
+const to = Astro.url.searchParams.get('to') ?? '/~'
+const session = await getSession(Astro.cookies)
+if (session?.session.full) return Astro.redirect(to, 302)
+const email = Astro.url.searchParams.get('email') ?? session?.user.email ?? ''
+---
+
+<style lang="scss" is:global>
+  body,
+  html {
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    background-size: 40px 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+</style>
+
+<Layout title="Login" description="">
+  <div id="login-wrapper">
+    <Login client:load to={to} email={email} session={session} />
+  </div>
+</Layout>

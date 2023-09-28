@@ -1,10 +1,10 @@
 <script>
-  let referenceDiv = document.querySelector('nav')
-  let referenceHeight = window.getComputedStyle(referenceDiv).height
-  document.documentElement.style.setProperty(
-    '--reference-height',
-    referenceHeight
-  )
+  // let referenceDiv = document.querySelector('nav')
+  // let referenceHeight = window.getComputedStyle(referenceDiv).height
+  // document.documentElement.style.setProperty(
+  //   '--reference-height',
+  //   referenceHeight
+  // )
 
   function splitPathIntoSubpathsAndAddCSS(pathData, rateOfDrawing = 100) {
     // units/second
@@ -88,7 +88,7 @@
     background-size: 500px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
     transform: rotate(-1deg);
-    width: 50vw;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;

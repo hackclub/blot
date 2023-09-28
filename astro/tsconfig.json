@@ -7,12 +7,5 @@
     "moduleResolution": "NodeNext",
     "allowImportingTsExtensions": true,
     "target": "ES2020"
-    // "paths": {
-    //   "@/*": ["./src/*"]
-    // }
-    // "paths": {
-    //   "react": ["./node_modules/preact/compat/"],
-    //   "react-dom": ["./node_modules/preact/compat/"]
-    // }
   }
 }

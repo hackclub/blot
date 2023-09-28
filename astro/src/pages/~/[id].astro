@@ -1,0 +1,78 @@
+---
+import { firestore, getArt, getSession } from '../../lib/db/account.ts'
+import { signal } from '@preact/signals'
+import type { PersistenceState } from '../../lib/stateDb.ts'
+import { mobileUserAgent } from '../../lib/utils/mobile.ts'
+import Layout from '../../layouts/Layout.astro'
+import Editor from '../../components/EditorLoggedIn.tsx'
+
+const session = await getSession(Astro.cookies)
+if (!session) return Astro.redirect(`/login?to=${Astro.request.url}`, 302)
+
+const art = await getArt(Astro.params.id!)
+if (!art || art.ownerId !== session.user.id) return Astro.redirect('/404', 302)
+
+const fileRegexp = /^.*\/(.+)-(\d+)\.md$/
+
+let tutorial: string[] | undefined
+let tutorialIndex: number | undefined
+if (art.tutorialName) {
+  const files = await Astro.glob('/guides/*.md')
+  tutorial = files
+    .filter(file => {
+      const regexedFile = file.file.match(fileRegexp)
+      return regexedFile && regexedFile[1] === art.tutorialName
+    })
+    ?.map(md => md.compiledContent())
+  tutorialIndex = art.tutorialIndex
+}
+
+let _persistenceState: PersistenceState
+if (session.session.full) {
+  if (art.unprotected) {
+    await firestore.collection('art').doc(art.id).update({ unprotected: false })
+    art.unprotected = false
+  }
+  if (Astro.cookies.get('blotTempArt')?.value === art.id)
+    Astro.cookies.delete('blotTempArt', { path: '/' })
+
+  _persistenceState = {
+    kind: 'PERSISTED',
+    session,
+    cloudSaveState: 'SAVED',
+    art,
+    tutorial,
+    tutorialIndex,
+    stale: false
+  }
+} else {
+  if (!art.unprotected)
+    return Astro.redirect(`/login?to=${Astro.request.url}`, 302)
+  if (art.ownerId !== session.user.id) return Astro.redirect('/404', 302)
+
+  _persistenceState = {
+    kind: 'PERSISTED',
+    session,
+    cloudSaveState: 'SAVED',
+    art,
+    tutorial,
+    tutorialIndex,
+    stale: false
+  }
+}
+
+const persistenceState = signal<PersistenceState>(_persistenceState)
+const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
+---
+
+<Layout title="Editor" description="">
+  <Editor
+    client:load
+    persistenceState={persistenceState}
+    cookies={{
+      outputAreaSize: Astro.cookies.get('outputAreaSize')?.number(),
+      hideHelp: Astro.cookies.get('hideHelp')?.boolean()
+    }}
+  />
+  {isMobile ? <MobileUnsupported /> : null}
+</Layout>
