@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { getSession } from '../lib/db/account.ts'
-import Login from '../components/Login.tsx'
+import Login from '../components/~/Login.tsx'
 
 const to = Astro.url.searchParams.get('to') ?? '/~'
 const session = await getSession(Astro.cookies)
