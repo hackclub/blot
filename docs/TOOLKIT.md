@@ -10,7 +10,7 @@ t.up()
 t.down()
 
 // draw paths
-t.goto([ x: number, y: number ])
+t.goTo([ x: number, y: number ])
 t.forward(distance: number)
 t.arc(angle: number, radius: number)
 
