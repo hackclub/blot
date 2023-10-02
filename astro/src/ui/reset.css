@@ -48,53 +48,6 @@ p, h1, h2, h3, h4, h5, h6 {
 
 
 
-/* UTILITY CSS */
-
-.flex {
-  display: flex;
-}
-
-.col {
-  flex-direction: column;
-}
-
-.row {
-  flex-direction: row;
-}
-
-.center-inner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.center-self {
-  justify-self: center;
-  align-self: center;
-}
-
-.background {
-  position: absolute; 
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.w-100 {
-  width: 100%;
-}
-
-.fill {
-  flex-grow: 1;
-}
-
-.img-fill {
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: contain !important;
-}
-
 
 
 

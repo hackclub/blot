@@ -6,7 +6,7 @@
   //   referenceHeight
   // )
 
-  function splitPathIntoSubpathsAndAddCSS(pathData, rateOfDrawing = 100) {
+  function splitPathIntoSubpathsAndAddCSS(pathData, rateOfDrawing = 10) {
     // units/second
     const subpaths = pathData.split(/(?=M)/)
     let styleContent = ''
@@ -44,7 +44,7 @@
               stroke-dashoffset: ${pathLength};
               animation-name: drawLine${index + 1};
               animation-duration: ${animationDurationForThisPath}s;
-              animation-delay: ${cumulativeAnimationTime}s;
+              animation-delay: ${cumulativeAnimationTime%1.4}s;
               animation-fill-mode: forwards;
               stroke-width: .1;
           }
@@ -80,6 +80,34 @@
 
   const svgElement = document.querySelector('.svg-container')
   subpathElements.forEach(element => svgElement.appendChild(element))
+
+  setTimeout(() => {
+    console.log("run")
+    document.querySelectorAll(".fade-in").forEach(el => {
+      fadeIn(el, 1500);
+    })
+  }, 1000)
+
+  function fadeIn(el, duration = 2000) {
+    let start;
+
+    function animate(timestamp) {
+        if (!start) start = timestamp;
+        const elapsed = timestamp - start;
+
+        // Calculate the current opacity
+        const opacity = Math.min(elapsed / duration, 1);
+        el.style.opacity = opacity;
+
+        // Continue the animation until the duration is reached
+        if (elapsed < duration) {
+            requestAnimationFrame(animate);
+        }
+    }
+
+    // Start the animation
+    requestAnimationFrame(animate);
+}
 </script>
 
 <style lang="scss">

@@ -35,6 +35,7 @@ try {
 
 <style is:global lang="scss">
   @import url("../ui/reset.css");
+  @import url("../ui/global.css");
 
   html,
   body {
@@ -47,6 +48,10 @@ try {
     color: inherit;
   }
 
+  .fade-in {
+    opacity: 0;
+  }
+
   .lead-section {
     height: calc(100vh - 45px);
     width: 100%;
@@ -57,11 +62,13 @@ try {
   }
 
   .header-section {
-    padding-left: 7%;
-    padding-top: 20px;
+    margin-left: 7%;
+    margin-top: 20px;
+    padding: 15px;
     width: min-content;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(242, 242, 242, 0.1);
     backdrop-filter: blur(2px);
+    border-radius: 17px;
   }
 
   .strong-header {
@@ -274,7 +281,7 @@ try {
   description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
   <div class="lead-section">
 
-    <div class="header-section strong-header">
+    <div class="fade-in header-section strong-header">
       <div>Blot, the plotter bot</div>
       <div>from <a class="hack-club-text-box" href="https://www.hackclub.com">Hack Club</a></div>
       <div class="sub-header" style="font-size: 1.4rem;">Write a program that creates art and we'll send you a CNC machine that can draw it.</div>
@@ -287,16 +294,16 @@ try {
       </div>
     </div>
 
-    <div class="fill flex" style="justify-content: space-evenly; align-items: center;">
+    <div class=" fade-in fill flex" style="justify-content: space-evenly; align-items: center;">
       <div class="col flex" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); width: 38%; border: 1px solid black; border-radius: 5px;">
-        <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #7a7979; color: white; padding: 5px; border-radius: 5px;">Write code in the editor.</div>
+        <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #8cc8fd; color: #413c3c; padding: 5px; border-radius: 5px;">Write code in the editor.</div>
         <div class="fill img-fill" style="background-color: white; background-image: url('/landing/code2.png');"></div>
       </div>
 
       <div style="align-self: center; font-size: 3rem;">⇒</div>
 
       <div class="col flex" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); width: 38%; border: 1px solid black; border-radius: 5px;">
-        <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #7a7979; color: white; padding: 5px; border-radius: 5px;">Get a machine to draw it.</div>
+        <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #8cc8fd; color: #413c3c; padding: 5px; border-radius: 5px;">Get a machine to draw it.</div>
         <div class="fill img-fill" style="background-color: white; background-image: url('/machine.png');"></div>
       </div>
     </div>
