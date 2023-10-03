@@ -131,9 +131,9 @@ function init() {
 // drawing function
 
 const panZoomParams = {
-  panX: 200,
-  panY: 200,
-  scale: 100
+  panX: 0,
+  panY: 0,
+  scale: 1
 }
 
 let dpr = typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1
