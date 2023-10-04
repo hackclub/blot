@@ -290,6 +290,16 @@ try {
     }
   }
 
+  .arrow::after {
+    content: "→"
+  }
+
+  @media only screen and (max-width: 700px) {
+    .arrow::after {
+      content: "↓";
+    }
+  }
+
 
 </style>
 
@@ -316,7 +326,7 @@ try {
         <div class="fill img-fill" style="background-color: white; background-image: url('/landing/code2.png');"></div>
       </div>
 
-      <div style="align-self: center; font-size: 3rem;">⇒</div>
+      <div class="arrow" style="align-self: center; font-size: 3rem; padding: 35px;"></div>
 
       <div class="col half-to-full" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); border: 1px solid black; border-radius: 5px;">
         <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #8cc8fd; color: #413c3c; padding: 5px; border-radius: 5px;">Get a machine to draw it.</div>
@@ -419,7 +429,7 @@ try {
 
 
     <div class="step-item">
-      <div class="step-text"><span class="step">Step 3) </span>Get parts for your Blot in the mail and <a href="/guides">build your own machine</a>.</div>
+      <div class="step-text"><span class="step">Step 3) </span>Get parts for your Blot in the mail and <a href="/assembly">build your own machine</a>.</div>
       <div class="machine-img-container">
         <img class="machine-img" src="/landing/machine.png"/>
       </div>
