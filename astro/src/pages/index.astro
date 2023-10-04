@@ -65,17 +65,23 @@ try {
     margin-left: 7%;
     margin-top: 30px;
     padding: 15px;
-    width: min-content;
     background: rgba(242, 242, 242, 0.1);
     backdrop-filter: blur(2px);
     border-radius: 17px;
+    max-width: max-content;
   }
 
   .strong-header {
-    font-size: 4.4vw;
+    font-size: 3.2rem;
     letter-spacing: -2px;
     font-weight: 600;
     line-height: 1.4;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .strong-header {
+      font-size: 2.5rem;;
+    }
   }
 
   .sub-header {
@@ -84,7 +90,6 @@ try {
     font-weight: 300;
     letter-spacing: -1px;
     padding-top: 10px;
-    white-space: nowrap;
   }
 
   .header-text {
@@ -161,6 +166,7 @@ try {
         width: 30%;
         min-width: 300px;
         max-width: 400px;
+        height: 360px;
         aspect-ratio: 1;
         background-image: linear-gradient(169deg, #cecef9, #e7f0fb);
         border-radius: 27px;
@@ -169,6 +175,7 @@ try {
         flex-direction: column;
         justify-content: space-around;
         padding: 17px;
+        margin: 5px;
         box-shadow: 7px 6px 7px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
         &:hover { /* Hover effect */
@@ -273,6 +280,16 @@ try {
     padding: 5px;
   }
 
+  .half-to-full {
+    width: 50%;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .half-to-full {
+      width: 100%;
+    }
+  }
+
 
 </style>
 
@@ -285,8 +302,6 @@ try {
       <div>Blot, the plotter bot</div>
       <div>from <a class="hack-club-text-box" href="https://www.hackclub.com">Hack Club</a></div>
       <div class="sub-header" style="font-size: 1.4rem;">Write a program that creates art and we'll send you a CNC machine that can draw it.</div>
-      <div class="sub-header" style="font-size: 1.4rem;">We built everything from scratch, with love, and open-source.</div>
-
     </div>
     <div class="background center-inner" style="z-index: -5; opacity: .4;">
       <div style="width: 100%; transform: scale(1.5);">
@@ -294,15 +309,16 @@ try {
       </div>
     </div>
 
-    <div class=" fade-in fill flex" style="justify-content: space-evenly; align-items: center;">
-      <div class="col flex" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); width: 38%; border: 1px solid black; border-radius: 5px;">
+    <div class="row-to-col fade-in fill" style="margin: 10px; justify-content: space-evenly; align-items: center;">
+      
+      <div class="col half-to-full" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); border: 1px solid black; border-radius: 5px;">
         <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #8cc8fd; color: #413c3c; padding: 5px; border-radius: 5px;">Write code in the editor.</div>
         <div class="fill img-fill" style="background-color: white; background-image: url('/landing/code2.png');"></div>
       </div>
 
       <div style="align-self: center; font-size: 3rem;">⇒</div>
 
-      <div class="col flex" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); width: 38%; border: 1px solid black; border-radius: 5px;">
+      <div class="col half-to-full" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); border: 1px solid black; border-radius: 5px;">
         <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #8cc8fd; color: #413c3c; padding: 5px; border-radius: 5px;">Get a machine to draw it.</div>
         <div class="fill img-fill" style="background-color: white; background-image: url('/machine.png');"></div>
       </div>
@@ -315,44 +331,54 @@ try {
   <div class="steps">
 
     <div style="padding-top: 50px;"></div>
-    <div style="margin: 0px auto; width: 70%; padding: 15px; background: white; border-radius: 5px; border: 1px grey solid;">
-      <div style="font-size: 1.7rem; font-weight: 500;">Blot is a web-based editor for making programmatic art.</div>
+    <div style="font-size: 1.7rem; font-weight: 500; text-align: center; margin-bottom: 30px;">We built everything from scratch, with ❤️, and open source.</div>
 
-      <div style="padding: 10px 0px; font-size: 1.2rem;">
-        We built a custom editor
-        specifically pen plotter art. That includes a vector drawing library, direct
-        manipulation widgets, and a split screen code/visualizer. 
+    <div class="col" style="width: 80%; margin: 0px auto;">
+
+      <div class="row-to-col" style="width:100%; margin: 10px 0px; border-bottom: 1px grey solid; padding-bottom: 10px;">
+        <img class="half-to-full" style="align-self: center; border-radius: 5px; border: .5px grey solid; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);" src="/landing/editor.png"/>
+        <div style="margin: auto; padding: 25px 40px; font-size: 1.1rem; line-height: 1.3;">
+          <b>Custom editor for pen plotter art</b> with vector drawing library, direct
+          manipulation widgets, a split screen code/visualizer, and direct from browser machine control. 
+        </div>
       </div>
 
-      <div style="padding: 10px 0px; font-size: 1.2rem;">
-        When you plug your machine in
-        you can control it right from the browser.
+
+      <div class="row-to-col" style="width:100%; padding-top: 10px; border-bottom: 1px grey solid; padding-bottom: 10px;">
+        <img class="half-to-full" style="align-self: center; border-radius: 5px;" src="/landing/parts.png"/>
+        <div style="margin: auto; padding: 25px 40px; font-size: 1.1rem; line-height: 1.3;">
+          <b>CNC you build yourself</b>
+          made of six 3D printed parts, and 
+          standard DIY machine building design patterns (aluminum extrusion, delrin v-wheels, 
+          flanged bearing idlers...). 
+        </div>
       </div>
 
-
-      <div style="font-size: 1.7rem; font-weight: 500;">Blot is CNC machine you build yourself.</div>
-
-      <div style="padding: 10px 0px; font-size: 1.2rem;">
-        Made of six 3D printed parts, and 
-        standard DIY machine building design patterns (aluminum extrusion, delrin v-wheels, 
-        flanged bearing idlers...). 
+      <div class="row-to-col" style="width:100%; padding-top: 10px; padding-bottom: 10px;">
+        <img class="half-to-full" style="align-self: center; border-radius: 5px;" src="/landing/parts.png"/>
+        <div style="margin: auto; padding: 25px 40px; font-size: 1.1rem; line-height: 1.3;">
+          <b>Custom control board and firmware</b> so you can 
+          understand what goes on in the brains of the machine.
+        </div>
       </div>
-
-      <img style="width: 80%; margin: auto; background: #cecece; border-radius: 5px;" src="/landing/parts.png"/>
-
-      <div style="padding: 10px 0px; font-size: 1.2rem;">
-        We wrote the firmware so you can 
-        understand what goes on in the brains of the machine.
-      </div>
-
-      <img style="width: 80%; margin: auto; background: #cecece; border-radius: 5px;" src="/landing/parts.png"/>
 
       <!-- Here's how to get a Blot machine yourself. -->
     </div>
 
+    <div class="strong-header" style="
+      text-align: center;
+      background: #3333ee;
+      color: white;
+      width: 60%;
+      margin: auto;
+      border-radius: 10px;
+      margin-top: 10px;">
+      How do I get Blot?
+      </div>
+
     <div class="step-item">
       <div class="step-text"><span class="step">Step 1) </span>Code an original art piece. Learn from <a href="/guides">our guides</a>.</div>
-      <div class="step-1-css">
+      <div class="step-1-css row-to-col">
         {
           curated.map(workshop =>      
             <a class="frame" href={`/editor?guide=${slug(workshop.file)}`}>
@@ -369,7 +395,7 @@ try {
 
     <div class="step-item">
       <div class="step-text"><span class="step">Step 2) </span>Submit it as a pull request to the <a href="/gallery">art gallery</a>.</div>
-      <div class="step-2-css">
+      <div class="step-2-css row-to-col">
         {
           images
             .filter(img => 

@@ -6,16 +6,35 @@
 
 /* UTILITY CSS */
 
-.flex {
-  display: flex;
-}
 
 .col {
+  display: flex;
   flex-direction: column;
 }
 
 .row {
+  display: flex;
   flex-direction: row;
+}
+
+
+.row-to-col {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 700px) {
+  .row-to-col {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .hide-mobile {
+    display: none;
+  }
 }
 
 .center-inner {
