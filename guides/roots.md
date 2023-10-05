@@ -1,6 +1,6 @@
 ---
 title: Roots
-thumbnail: https://cloud-dl5vmy52p-hack-club-bot.vercel.app/0roots.png
+thumbnail: https://cloud-54f820d0z-hack-club-bot.vercel.app/00roots.webp
 contributors: profsucrose
 ---
 
@@ -9,7 +9,8 @@ contributors: profsucrose
 Let's walk through the process of how the following image was generated:
 
 <img
-  src="https://cloud-dl5vmy52p-hack-club-bot.vercel.app/0roots.png"
+  alt="roots"
+  src="https://cloud-54f820d0z-hack-club-bot.vercel.app/00roots.webp"
   width="200"
 />
 

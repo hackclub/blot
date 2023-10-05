@@ -1,6 +1,6 @@
 ﻿---
 title: 10PRINT2
-thumbnail: https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png
+thumbnail: https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp
 contributors: henrybass
 ---
 
@@ -15,7 +15,8 @@ _This tutorial is aimed at beginners, but it works best if you have a little pri
 From just that one line, the following intricate pattern is be created:
 
 <img
-  src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png"
+  alt="10print2"
+  src="https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp"
   width="512px"
 />
 

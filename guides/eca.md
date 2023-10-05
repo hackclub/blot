@@ -1,6 +1,6 @@
 ---
 title: Elementary Cellular Automata
-thumbnail: https://cloud-oz9juilm9-hack-club-bot.vercel.app/0image.png
+thumbnail: https://cloud-i7potzeq3-hack-club-bot.vercel.app/00image-2-2.webp
 contributors: henrybass
 ---
 
@@ -10,8 +10,8 @@ contributors: henrybass
 
 Through extremely simple rules, complex patterns can be created.
 
-<img src="https://cloud-oz9juilm9-hack-club-bot.vercel.app/0image.png" width="512"/>
-<img src="https://cloud-eci1vxr8d-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img alt="elementary cellular automata" src="https://cloud-i7potzeq3-hack-club-bot.vercel.app/00image-2-2.webp" width="512"/>
+<img alt="elementary cellular automata" src="https://cloud-4du3fnctv-hack-club-bot.vercel.app/00image-3.webp" width="512"/>
 
 The rules behind Elementary Cellular Automata, or ECA, are very simple.
 

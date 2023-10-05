@@ -97,6 +97,7 @@ function GitHubLink() {
       <a
         style={{ all: 'unset' }}
         href="https://github.com/hackclub/blot/tree/main"
+        rel="noreferrer"
         target="_blank">
         <div style={{ transform: 'translate(0, 3.5px)' }}>
           <GitHubIcon className={styles.icon} />
