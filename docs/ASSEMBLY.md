@@ -109,6 +109,14 @@ Printed rail assembly
 Insert a nut into the nut trap as identified above. 
 
 ---
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0071.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0072.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0073.png" alt="aaa" width="300"/><br>
+Insert the servo in the orientation shown above. The servo wire should be facing _away_ from the printed rail.
+
+---
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0082.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0083.png" alt="aaa" width="300"/><br>
+Attach the servo arm, facing to the left. Make sure to place the servo arm on **at** the angle shown above (do not place it at the wrong angle, and then proceed to rotate the servo).  
+
+---
 Toolhead assembly
 ---
 <img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0021.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0022.png" alt="aaa" width="300"/><br>
