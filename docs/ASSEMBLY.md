@@ -4,17 +4,17 @@ Below is a list of all parts needed to construct your Blot. Keep in mind that th
 
 |Part  			  |Quantity 	|Image||Part|Quantity|Image    
 |----------------------|-----|-|-|-|-|-
-|[M5x35](https://www.mcmaster.com/92095A220/)			                                                         |11	   	     |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0056.png" alt="Image of M5x35 millimeter screw, pan head" width="100"/>       ||M5 nut                 |           |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0084.png" alt="Image of M5 Nut" width="100"/>
-|[M5x20](https://www.mcmaster.com/92095A214/)			                                                         |5	  	       |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0058.png" alt="Image of M5x20 millimeter screw, pan head" width="100"/>       ||M5 T-nut               |           |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0085.png" alt="Image of M5 T-nut" width="100"/>
+|[M5x35](https://www.mcmaster.com/92095A220/)			                                                         |11	   	     |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0056.png" alt="Image of M5x35 millimeter screw, pan head" width="100"/>       ||M5 nut                 |17           |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0084.png" alt="Image of M5 Nut" width="100"/>
+|[M5x20](https://www.mcmaster.com/92095A214/)			                                                         |5	  	       |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0058.png" alt="Image of M5x20 millimeter screw, pan head" width="100"/>       ||M5 T-nut               |13         |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0085.png" alt="Image of M5 T-nut" width="100"/>
 |[M5x20,<br>cyl. head](https://www.mcmaster.com/91292A128/)			                                           |1	  	       |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0058.png" alt="Image of M5x20 millimeter screw, cylinder head" width="100"/>  ||Timing Belt<br>Pulley  |2 	       	|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0068.png" alt="aaa" width="100"/>
-|[M5x10](https://www.mcmaster.com/92095A208/)			                                                         |14	     		  |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0059.png" alt="Image of M5x10 millimeter screw, pan head" width="100"/>       ||Rubber<br>Feet	        |4	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0078.png" alt="aaa" width="100"/>
-|[M3x10](https://www.mcmaster.com/91292A113/)			                                                         |8			        |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0057.png" alt="Image of M3x10 millimeter screw, pan head" width="100"/>       ||Carriage		  	          |1	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0062.png" alt="aaa" width="100"/>
-|[Shim](https://www.mcmaster.com/98089A375/)			                                                          |5	        		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0060.png" alt="Image of M5 shim" width="100"/>                                ||Tool Head		            |1	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0063.png" alt="aaa" width="100"/>
-|[Eccentric<br>Spacer](https://www.amazon.com/Micro-Traders-Eccentric-Aluminium-Extrusion/dp/B09CYK9P43/)|5	        		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0055.png" alt="Image of 6mm Eccentric Spacer" width="100"/>                   ||Printed Rail		         |1	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0064.png" alt="aaa" width="100"/>
-|[Spacer](https://www.mcmaster.com/94669A042/)			                                                        |4	        		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0061.png" alt="Image of 6mm spacer" width="100"/>                             ||Motor Leg		            |2	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0065.png" alt="aaa" width="100"/>
-|[V-Wheel](https://www.amazon.com/gp/product/B09CGJZYPK/)		                                              |8	        		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0053.png" alt="Image of V-wheel" width="100"/>                                ||Belt Clip			           |1	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0066.png" alt="aaa" width="100"/>
+|[M5x10](https://www.mcmaster.com/92095A208/)			                                                         |13	     		  |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0059.png" alt="Image of M5x10 millimeter screw, pan head" width="100"/>       ||Rubber<br>Feet	        |4	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0078.png" alt="aaa" width="100"/>
+|[M3x10](https://www.mcmaster.com/91292A113/)			                                                         |8			        |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0057.png" alt="Image of M3x10 millimeter screw, pan head" width="100"/>       ||[Carriage](https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v4/1x_Carriage.stl)		  	          |1	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0062.png" alt="aaa" width="100"/>
+|[Shim](https://www.mcmaster.com/98089A375/)			                                                          |5	        		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0060.png" alt="Image of M5 shim" width="100"/>                                ||[Tool Head](https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v4/1x_ToolHead.stl)		            |1	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0063.png" alt="aaa" width="100"/>
+|[Eccentric<br>Spacer](https://www.amazon.com/Micro-Traders-Eccentric-Aluminium-Extrusion/dp/B09CYK9P43/)|5	        		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0055.png" alt="Image of 6mm Eccentric Spacer" width="100"/>                   ||[Printed Rail](https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v4/1x_PrintedRail.stl)		         |1	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0064.png" alt="aaa" width="100"/>
+|[Spacer](https://www.mcmaster.com/94669A042/)			                                                        |4	        		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0061.png" alt="Image of 6mm spacer" width="100"/>                             ||[Motor Leg](https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v4/2x_Legs.stl)		            |2	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0065.png" alt="aaa" width="100"/>
+|[V-Wheel](https://www.amazon.com/gp/product/B09CGJZYPK/)		                                              |8	        		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0053.png" alt="Image of V-wheel" width="100"/>                                ||[Belt Clip](https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v4/1x_BeltClip.stl)			           |1	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0066.png" alt="aaa" width="100"/>
 |[Flanged bearing](https://www.amazon.com/gp/product/B07Z3DXF14/)		                                      |10	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0054.png" alt="Image of flanged bearing" width="100"/>                        ||Stepper<br>Motor       |2	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0067.png" alt="aaa" width="100"/>
-|PCB                                                                                                     |            |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0086.png" alt="Image of PCB" width="100"/>                                    ||Servo                  |1          |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0080.png" alt="Image of Servo Motor" width="100"/>
+|[PCB](https://github.com/hackclub/blot/tree/main/hardware/motor-control-board)                          |1           |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0086.png" alt="Image of PCB" width="100"/>                                    ||Servo                  |1          |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0080.png" alt="Image of Servo Motor" width="100"/>
 
 ---
 Carriage assembly
@@ -44,7 +44,7 @@ On the back of the carriage, 4 circular holes can be found. Two of these holes a
 Assemble 2 V-wheel assemblies as shown above using V-wheels, m5x35 screws, and eccentric spacers. 
 
 ---
-<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0008.png" alt="aaa" width="300"/><img src="https://cloud-poei2v4f9-hack-club-bot.vercel.app/0image0074.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0008.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0074.png" alt="aaa" width="300"/><br>
 Screw these assemblies into the large circular holes identified earlier. Ensure that the eccentric spacers are flush with the part they're screwed into, as shown above. 
 
 ---
@@ -80,14 +80,14 @@ Screw in these two V-wheel assemblies into the remaining two circular holes.
 
 
 ---
-<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0015.png" alt="aaa" width="300"/><img src="https://cloud-nu3r4cixj-hack-club-bot.vercel.app/0image0016.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0015.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0016.png" alt="aaa" width="300"/><br>
 Your final carriage assembly should now look like this. 
 
 ---
 Leg assembly
 ---
 
-<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0069.png" alt="aaa" width="300"/><img src="https://cloud-nzd74pzqy-hack-club-bot.vercel.app/5image0070.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0069.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0070.png" alt="aaa" width="300"/><br>
 Insert a timing belt pulley onto a stepper motor, and tighten the collar screw so that the pulley is flush with the motor shaft. 
 
 ---
@@ -105,13 +105,13 @@ Attach rubber feet to the bottom of the legs.
 ---
 Printed rail assembly
 ---
-<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0019.png" alt="aaa" width="300"/><img src="https://cloud-nzd74pzqy-hack-club-bot.vercel.app/3image0020.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0019.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0020.png" alt="aaa" width="300"/><br>
 Insert a nut into the nut trap as identified above. 
 
 ---
 Toolhead assembly
 ---
-<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0021.png" alt="aaa" width="300"/><img src="https://cloud-4l49hjvuu-hack-club-bot.vercel.app/1image0022.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0021.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0022.png" alt="aaa" width="300"/><br>
 Insert 4 nuts into each of the nut traps.
 
 ---
@@ -161,7 +161,7 @@ Screw the leg to the rail using M5x10mm screws. Repeat this for all three holes 
 Attach the carriage onto the rail with the belt bearings facing upwards. *Should this prove difficult, you may need to adjust the eccentric spacers using the 8mm wrench provided. turning the eccentric spacers changes the width of the space between the v-wheels.*
 
  ---
- <img src="https://cloud-8faenwnrg-hack-club-bot.vercel.app/8image0036.png" alt="aaa" width="300"/><br>
+ <img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0036.png" alt="aaa" width="300"/><br>
  attach the other leg, enclosing the carriage between both legs. *Be careful as it may require some force.*
 
 ---
@@ -169,43 +169,43 @@ Attach the carriage onto the rail with the belt bearings facing upwards. *Should
 Attach the printed rail to one side of the other aluminum extrusion. *Be careful as it may require some force.*
 
 ---
-<img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/1image0038.png" alt="aaa" width="300"/><img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/2image0039.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0038.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0039.png" alt="aaa" width="300"/><br>
 Indentify all three circular mounting holes on the printed rail. 
 
 ---
-<img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/3image0040.png" alt="aaa" width="300"/><img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/4image0041.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0040.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0041.png" alt="aaa" width="300"/><br>
 Insert a t-nut into the rail, and slide it under one of the circular holes on the leg, so that the hole of the t-nut and the hole of the leg line up.
 
 ---
-<img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/5image0042.png" alt="aaa" width="300"/><img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/6image0043.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0042.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0043.png" alt="aaa" width="300"/><br>
 Screw the leg to the rail using M5x10mm screws. Repeat this for all three holes previously identified. 
 
 ---
-<img src="https://cloud-6lmi5hoqv-hack-club-bot.vercel.app/7image0044.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0044.png" alt="aaa" width="300"/><br>
 Insert the rail into the top of the carriage. Then, flip the blot over so that its feet are facing up.
 
 ---
 
-<img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/0image0045.png" alt="aaa" width="300"/>
-<img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/2image0047.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0045.png" alt="aaa" width="300"/>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0047.png" alt="aaa" width="300"/><br>
 Next, we need to attach the belt clip. Make sure it is flush with the aluminum extrusion. *Be careful as it may require some force.*
 
 ---
-<img src="https://cloud-hma32kk1l-hack-club-bot.vercel.app/0image0046.png" alt="aaa" width="300"/>
-<img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/3image0048.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0046.png" alt="aaa" width="300"/>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0048.png" alt="aaa" width="300"/><br>
 Screw it on using the same t-nut technique. 
 
 ---
-<img src="https://cloud-7i4fszop8-hack-club-bot.vercel.app/2image0002.png" alt="aaa" width="300"/><img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/4image0049.png" alt="aaa" width="300"/><br>
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0002.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0049.png" alt="aaa" width="300"/><br>
 Create another belt bearing assembly and ensure the belt is behind it.
 
  ---
- <img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/6image0051.png" alt="aaa" width="300"/><br>
+ <img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0051.png" alt="aaa" width="300"/><br>
  screw it into the printed rail. 
 
 ---
- <img src="https://cloud-hma32kk1l-hack-club-bot.vercel.app/4image0076.png" alt="aaa" width="300"/><img src="https://cloud-i3kx1iw0w-hack-club-bot.vercel.app/7image0052.png" alt="aaa" width="300"/><br>
+ <img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0076.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0052.png" alt="aaa" width="300"/><br>
 Here comes the hardest part: routing the belt. Ensure it goes around the shafts of both motors, and runs between the belt bearings within the carriage. 
 
 ---
- At the belt clip, bend the belt around on itself (with the teeth facing outwards) in order to hold it tight. 	
+At the belt clip, bend the belt around on itself (with the teeth facing outwards) in order to hold it tight. 	
