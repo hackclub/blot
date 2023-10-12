@@ -1,12 +1,12 @@
 ---
 title: Cubic Disarray
-thumbnail: https://www.seekingoutside.com/wp-content/uploads/2018/12/Screen-Shot-2018-12-11-at-3.40.46-AM-480x670.png
+thumbnail: https://cloud-r9jbhouts-hack-club-bot.vercel.app/0im.webp
 contributors: henrybass
 ---
 
 **_Georg Nees_** was a pioneer of digital art, responsible for interesting works like Cubic Disarray.
 
-<img src="https://www.seekingoutside.com/wp-content/uploads/2018/12/Screen-Shot-2018-12-11-at-3.40.46-AM-480x670.png" width="512"/>
+<img alt="cubic disarray" src="https://cloud-r9jbhouts-hack-club-bot.vercel.app/0im.webp" width="512"/>
 
 Let's try to recreate this in the Haxidraw editor. A good first step to reverse engineering any artwork is to break it down into the obvious components. There's a grid of squares, and the squares closer to the bottom seem to be rotated more and more.
 

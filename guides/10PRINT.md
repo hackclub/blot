@@ -1,6 +1,6 @@
 ---
 title: 10PRINT
-thumbnail: https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png
+thumbnail: https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp
 contributors: henrybass
 ---
 
@@ -12,7 +12,7 @@ _This tutorial is aimed at beginners, but it works best if you have a little pri
 `10 PRINT CHR$(205.5+RND(1)); : GOTO 10`
 From just that one line, the following intricate pattern is created:
 
-<img src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png" width="512"/>
+<img alt="10print" src="https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp" width="512"/>
 
 There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Haxidraw_**. (This tutorial works fine if you don't have one!)
 

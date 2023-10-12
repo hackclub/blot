@@ -1,12 +1,12 @@
 ---
 title: Landscape
-thumbnail: https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png
+thumbnail: https://cloud-bxuqstv0l-hack-club-bot.vercel.app/00image-2.webp
 contributors: henrybass
 ---
 
 ### (Intermediate, ~45 min, by Henry Bass)
 
-<img src="https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img alt="landscape" src="https://cloud-bxuqstv0l-hack-club-bot.vercel.app/00image-2.webp" width="512"/>
 
 This is an explainer on how to create art like the image above in the [Haxidraw editor](https://haxidraw.hackclub.dev/). It assumes some knowledge of programming in JavaScript and how Haxidraw works, but nothing beyond that.
 

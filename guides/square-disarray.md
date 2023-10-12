@@ -1,6 +1,6 @@
 ---
 title: Square Disarray
-thumbnail: https://github.com/hackclub/haxidraw/assets/27078897/bcaf04e7-a00e-4f98-aaed-01eeebf2c79c
+thumbnail: https://cloud-qogbw3upi-hack-club-bot.vercel.app/0260524306-bcaf04e7-a00e-4f98-aaed-01eeebf2c79c.webp
 contributors: leomcelroy
 ---
 
@@ -8,7 +8,7 @@ contributors: leomcelroy
 
 Let's something like draw this:
 
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/bcaf04e7-a00e-4f98-aaed-01eeebf2c79c" width="50%"/>
+<img alt="square disarray" src="https://cloud-qogbw3upi-hack-club-bot.vercel.app/0260524306-bcaf04e7-a00e-4f98-aaed-01eeebf2c79c.webp" width="50%"/>
 
 # Setting Up Workarea
 
