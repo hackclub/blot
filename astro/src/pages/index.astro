@@ -53,7 +53,7 @@ try {
   }
 
   .lead-section {
-    height: calc(100vh - 45px);
+    min-height: calc(100vh - 45px);
     width: 100%;
     position: relative;
     display: flex;
@@ -256,7 +256,8 @@ try {
   }
 
   .machine-img {
-    width: 40%;
+    width: 100%;
+    max-width: 400px;
     margin: auto;
   }
 
@@ -315,7 +316,7 @@ try {
     <div class="fade-in header-section strong-header">
       <div>Blot, the plotter bot</div>
       <div>from <a class="hack-club-text-box" href="https://www.hackclub.com">Hack Club</a></div>
-      <div class="sub-header" style="font-size: 1.4rem;">Write a program that creates art and we'll send you a CNC machine that can draw it.</div>
+      <div class="sub-header" style="font-size: 1.4rem;">Write a program that creates art and we'll send you* a CNC machine that can draw it.</div>
     </div>
     <div class="background center-inner" style="z-index: -5; opacity: .4;">
       <div style="width: 100%; transform: scale(1.5);">
@@ -325,19 +326,21 @@ try {
 
     <div class="row-to-col fade-in fill" style="margin: 10px; justify-content: space-evenly; align-items: center;">
       
-      <div class="col half-to-full" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); border: 1px solid black; border-radius: 5px;">
+      <div class="col half-to-full" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); border: 1px solid black; border-radius: 5px; min-height: 300px;">
         <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #8cc8fd; color: #413c3c; padding: 5px; border-radius: 5px;">Write code in the editor.</div>
         <div class="fill img-fill" style="background-color: white; background-image: url('/landing/code2.png');"></div>
       </div>
 
       <div class="arrow" style="align-self: center; font-size: 3rem; padding: 35px;"></div>
 
-      <div class="col half-to-full" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); border: 1px solid black; border-radius: 5px;">
+      <div class="col half-to-full" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); border: 1px solid black; border-radius: 5px; min-height: 300px;">
         <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #8cc8fd; color: #413c3c; padding: 5px; border-radius: 5px;">Get a machine to draw it.</div>
         <div class="fill img-fill" style="background-color: white; background-image: url('/machine.png');"></div>
       </div>
     </div>
 
+    <div class="fade-in" style="background: rgba(242, 242, 242, 0.1); backdrop-filter: blur(2px); width: max-content; margin: 10px; padding: 5px;">
+      (*Must be a teenager to receive a free machine.)</div>
   </div>
 
 
@@ -369,7 +372,7 @@ try {
       </div>
 
       <div class="row-to-col" style="width:100%; padding-top: 10px; padding-bottom: 10px;">
-        <img class="half-to-full" style="align-self: center; border-radius: 5px;" src="/landing/parts.png"/>
+        <img class="half-to-full" style="align-self: center; border-radius: 5px;" src="/landing/control-board.png"/>
         <div style="margin: auto; padding: 25px 40px; font-size: 1.1rem; line-height: 1.3;">
           <b>Custom control board and firmware</b> so you can 
           understand what goes on in the brains of the machine.
@@ -379,63 +382,72 @@ try {
       <!-- Here's how to get a Blot machine yourself. -->
     </div>
 
-    <div class="strong-header" style="
-      text-align: center;
-      background: #3333ee;
-      color: white;
-      width: 60%;
-      margin: auto;
-      border-radius: 10px;
-      margin-top: 10px;">
-      How do I get Blot?
-      </div>
+    <div style={{
+      paddingTop: "30px",
+      background: "#f4f3fb"
+    }}>
+      <div class="strong-header" style="
+        text-align: center;
+        background: #3333ee;
+        color: white;
+        width: 60%;
+        margin: auto;
+        border-radius: 10px;
+        margin-top: 10px;">
+        How do I get Blot?
+        </div>
 
-    <div class="step-item">
-      <div class="step-text"><span class="step">Step 1) </span>Code an original art piece. Learn from <a href="/guides">our guides</a>.</div>
-      <div class="step-1-css row-to-col">
-        {
-          curated.map(workshop =>      
-            <a class="frame" href={`/editor?guide=${slug(workshop.file)}`}>
-              <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+      <div class="step-item">
+        <div class="step-text"><span class="step">Step 1) </span>Code an original art piece. Learn from <a href="/guides">our guides</a>.</div>
+        <div class="step-1-css row-to-col">
+          {
+            curated.map(workshop =>      
+              <a class="frame" href={`/editor?guide=${slug(workshop.file)}`}>
+                <div class="thumbnail img-fill" style={{
+                  width: "100%",
+                  height: "100%",
+                  backgroundImage: `url(${workshop.frontmatter.thumbnail})`
+                }}></div>
                 <div class="prose">
                   {workshop.frontmatter.title}
                 </div>
-            </a>
-          )
-        }
-      </div>
-    </div>
-
-
-    <div class="step-item">
-      <div class="step-text"><span class="step">Step 2) </span>Submit it as a pull request to the <a href="/gallery">art gallery</a>.</div>
-      <div class="step-2-css row-to-col">
-        {
-          images
-            .filter(img => 
-              ["leaf", "tree", "square-disarray"]
-              .some(x => img.dir.includes(x))
+              </a>
             )
-            .map(img => {
-              return (
-                <div class="frame">
-                  <a
-                    class="border"
-                    href={img.href}>
-                    <img class="thumbnail" alt={img.alt} src={img.img} />
-                  </a>
-                </div>
-              )
-            })
-        }
+          }
+        </div>
       </div>
-    </div>
 
 
-    <div class="step-item">
-      <div class="step-text"><span class="step">Step 3) </span>Get parts for your Blot in the mail and <a href="/assembly">build your own machine</a>.</div>
-      <div class="machine-img-container">
-        <img class="machine-img" src="/landing/machine.png"/>
+      <div class="step-item">
+        <div class="step-text"><span class="step">Step 2) </span>Submit it as a pull request to the <a href="/gallery">art gallery</a>.</div>
+        <div class="step-2-css row-to-col">
+          {
+            images
+              .filter(img => 
+                ["leaf", "tree", "square-disarray"]
+                .some(x => img.dir.includes(x))
+              )
+              .map(img => {
+                return (
+                  <div class="frame">
+                    <a
+                      class="border"
+                      href={img.href}>
+                      <img class="thumbnail" alt={img.alt} src={img.img} />
+                    </a>
+                  </div>
+                )
+              })
+          }
+        </div>
+      </div>
+
+
+      <div class="step-item">
+        <div class="step-text"><span class="step">Step 3) </span>Get parts for your Blot in the mail and <a href="/assembly">build your own machine</a>.</div>
+        <div class="machine-img-container">
+          <img class="machine-img" src="/landing/machine.png"/>
+        </div>
       </div>
     </div>
 
