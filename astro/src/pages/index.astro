@@ -32,13 +32,14 @@ try {
 }
 ---
 
+
 <style is:global lang="scss">
+  @import url("../ui/reset.css");
+  @import url("../ui/global.css");
+
   html,
   body {
     all: unset;
-    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
-      linear-gradient(to bottom, #ddd 1px, transparent 1px);
-    background-size: 40px 40px;
     font-family: "Phantom Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   }
 
@@ -47,28 +48,44 @@ try {
     color: inherit;
   }
 
+  .fade-in {
+    opacity: 0;
+  }
+
   .lead-section {
-    height: calc(100vh - 45px);
+    min-height: calc(100vh - 45px);
     width: 100%;
     position: relative;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   .header-section {
-    width: 40%;
-    padding-left: 5%;
+    margin-left: 7%;
+    margin-top: 30px;
+    padding: 15px;
+    background: rgba(242, 242, 242, 0.1);
+    backdrop-filter: blur(2px);
+    border-radius: 17px;
+    max-width: max-content;
   }
 
   .strong-header {
-    font-size: 4.4vw;
+    font-size: 3.2rem;
     letter-spacing: -2px;
     font-weight: 600;
     line-height: 1.4;
   }
 
+  @media only screen and (max-width: 700px) {
+    .strong-header {
+      font-size: 2.5rem;;
+    }
+  }
+
   .sub-header {
-    font-size: .5em;
+    font-size: .5rem;
     line-height: 1;
     font-weight: 300;
     letter-spacing: -1px;
@@ -89,10 +106,6 @@ try {
     padding: 0px 5px;
     background-color: #ec3750;
     border-radius: 10px;
-    /*    -webkit-transform: rotate(-3deg) translateY(-5px);*/
-    /*    -moz-transform: rotate(-3deg) translateY(-5px);*/
-    /*    -ms-transform: rotate(-3deg) translateY(-5px);*/
-    /*    transform: rotate(-3deg) translateY(-5px);*/
     color: white;
     white-space: nowrap;
     -webkit-text-decoration: none;
@@ -105,58 +118,7 @@ try {
     padding-top: 20px;
   }
 
-  .animated-drawing {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 
-
-  .write-code-machine-draws {
-    height: 75vh;  
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    margin-bottom: 20vh;
-
-    .header {
-      font-size: 1.7rem;
-      text-align: center;
-      padding-bottom: 10px;
-    }
-  }
-
-  .write-code {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: 100%;
-    max-height: 100%;
-/*    background: green;*/
-  }
-
-  .code-image {
-    flex: 1;
-    object-fit: cover;
-    max-height: 100%;
-    border-radius: 10px;
-    box-shadow: 2px 6px 8px #3e3e3e;
-  }
-
-  .machine-draws {
-    width: 45%;
-    height: 100%;
-  }
-
-  .three-d-model {
-    height: 100%;
-    max-height: 100%;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 2px 6px 8px #3e3e3e;
-  }
 
   .step-item {
     padding: 1rem;
@@ -204,6 +166,7 @@ try {
         width: 30%;
         min-width: 300px;
         max-width: 400px;
+        height: 360px;
         aspect-ratio: 1;
         background-image: linear-gradient(169deg, #cecef9, #e7f0fb);
         border-radius: 27px;
@@ -212,6 +175,7 @@ try {
         flex-direction: column;
         justify-content: space-around;
         padding: 17px;
+        margin: 5px;
         box-shadow: 7px 6px 7px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
         &:hover { /* Hover effect */
@@ -292,8 +256,53 @@ try {
   }
 
   .machine-img {
-    width: 40%;
+    width: 100%;
+    max-width: 400px;
     margin: auto;
+  }
+
+  .steps {
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+    linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .write-up {
+    background-image: url("data:image/svg+xml,%3Csvg width='1000' height='50' viewBox='0 0 1000 50' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1000' height='50' fill='white'/%3E%3Cline y1='25.5' x2='1000' y2='25.5' stroke='%239198E5'/%3E%3C/svg%3E");
+    background-size: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    transform: rotate(-1deg);
+    margin-top: 20px;
+    height: 400px;
+    width: 60%;
+    transform: translate(33%, 3%);
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  .half-to-full {
+    width: 50%;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .half-to-full {
+      width: 100%;
+    }
+  }
+
+  .arrow {
+    font-weight: 800;
+  }
+  
+  .arrow::after {
+    content: "→"
+  }
+
+  @media only screen and (max-width: 700px) {
+    .arrow::after {
+      content: "↓";
+    }
   }
 
 
@@ -303,83 +312,146 @@ try {
   title="Blot"
   description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
   <div class="lead-section">
-    <div class="header-section strong-header">
+
+    <div class="fade-in header-section strong-header">
       <div>Blot, the plotter bot</div>
       <div>from <a class="hack-club-text-box" href="https://www.hackclub.com">Hack Club</a></div>
-      <div class="sub-header">You* code art, we send you a machine.</div>
+      <div class="sub-header" style="font-size: 1.4rem;">Write a program that creates art and we'll send you* a CNC machine that can draw it.</div>
     </div>
-
-    <div class="animated-drawing">
-      <div style="width: 80%;"><Background></Background></div>
-      <div class="disclaimer">(*Must be a <20 years old to receive a free machine.)</div>
-    </div>
-
-  </div>
-
-  <div class="write-code-machine-draws">
-
-    <div class="write-code">
-      <div class="header">Write code in the Blot editor.</div>
-      <img class="code-image" alt="code image" src="/landing/code2.webp" />
-    </div>
-
-    <div class="machine-draws">
-      <div class="header">Get a machine which can draw it.</div>
-      <div class="three-d-model">
-        <ThreeDModel />
+    <div class="background center-inner" style="z-index: -5; opacity: .4;">
+      <div style="width: 100%; transform: scale(1.5);">
+        <Background></Background>
       </div>
     </div>
 
-  </div>
+    <div class="row-to-col fade-in fill" style="margin: 10px; justify-content: space-evenly; align-items: center;">
+      
+      <div class="col half-to-full" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); border: 1px solid black; border-radius: 5px; min-height: 300px;">
+        <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #8cc8fd; color: #413c3c; padding: 5px; border-radius: 5px;">Write code in the editor.</div>
+        <div class="fill img-fill" style="background-color: white; background-image: url('/landing/code2.png');"></div>
+      </div>
 
-  <div class="step-item">
-    <div class="step-text"><span class="step">Step 1) </span>Make an original art piece. Learn from <a href="/guides">our guides</a>.</div>
-    <div class="step-1-css">
-      {
-        curated.map(workshop =>      
-          <a class="frame" href={`/editor?guide=${slug(workshop.file)}`}>
-            <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
-              <div class="prose">
-                {workshop.frontmatter.title}
-              </div>
-          </a>
-        )
-      }
+      <div class="arrow" style="align-self: center; font-size: 3rem; padding: 35px;"></div>
+
+      <div class="col half-to-full" style="overflow:clip; height: 80%; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); border: 1px solid black; border-radius: 5px; min-height: 300px;">
+        <div class="w-100" style="text-align: center; font-size: 1.5rem; background: #8cc8fd; color: #413c3c; padding: 5px; border-radius: 5px;">Get a machine to draw it.</div>
+        <div class="fill img-fill" style="background-color: white; background-image: url('/machine.png');"></div>
+      </div>
     </div>
+
+    <div class="fade-in" style="background: rgba(242, 242, 242, 0.1); backdrop-filter: blur(2px); width: max-content; margin: 10px; padding: 5px;">
+      (*Must be a teenager to receive a free machine.)</div>
   </div>
 
 
-  <div class="step-item">
-    <div class="step-text"><span class="step">Step 2) </span>Submit it as a pull request to the <a href="/gallery">art gallery</a>.</div>
-    <div class="step-2-css">
-      {
-        images
-          .filter(img => 
-            ["leaf", "tree", "square-disarray"]
-            .some(x => img.dir.includes(x))
-          )
-          .map(img => {
-            return (
-              <div class="frame">
-                <a
-                  class="border"
-                  href={img.href}>
-                  <img class="thumbnail" alt={img.alt} src={img.img} />
-                </a>
-              </div>
+
+  <div class="steps">
+
+    <div style="padding-top: 50px;"></div>
+    <div style="font-size: 1.7rem; font-weight: 500; text-align: center; margin-bottom: 30px;">We built everything from scratch, with ❤️, and open source.</div>
+
+    <div class="col" style="width: 80%; margin: 0px auto;">
+
+      <div class="row-to-col" style="width:100%; margin: 10px 0px; border-bottom: 1px grey solid; padding-bottom: 10px;">
+        <img class="half-to-full" style="align-self: center; border-radius: 5px; border: .5px grey solid; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);" src="/landing/editor.png"/>
+        <div style="margin: auto; padding: 25px 40px; font-size: 1.1rem; line-height: 1.3;">
+          <b>Custom editor for pen plotter art</b> with vector drawing library, direct
+          manipulation widgets, a split screen code/visualizer, and direct from browser machine control. 
+        </div>
+      </div>
+
+
+      <div class="row-to-col" style="width:100%; padding-top: 10px; border-bottom: 1px grey solid; padding-bottom: 10px;">
+        <img class="half-to-full" style="align-self: center; border-radius: 5px;" src="/landing/parts.png"/>
+        <div style="margin: auto; padding: 25px 40px; font-size: 1.1rem; line-height: 1.3;">
+          <b>CNC you build yourself</b>
+          made of six 3D printed parts, and 
+          standard DIY machine building design patterns (aluminum extrusion, delrin v-wheels, 
+          flanged bearing idlers...). 
+        </div>
+      </div>
+
+      <div class="row-to-col" style="width:100%; padding-top: 10px; padding-bottom: 10px;">
+        <img class="half-to-full" style="align-self: center; border-radius: 5px;" src="/landing/control-board.png"/>
+        <div style="margin: auto; padding: 25px 40px; font-size: 1.1rem; line-height: 1.3;">
+          <b>Custom control board and firmware</b> so you can 
+          understand what goes on in the brains of the machine.
+        </div>
+      </div>
+
+      <!-- Here's how to get a Blot machine yourself. -->
+    </div>
+
+    <div style={{
+      paddingTop: "30px",
+      background: "#f4f3fb"
+    }}>
+      <div class="strong-header" style="
+        text-align: center;
+        background: #3333ee;
+        color: white;
+        width: 60%;
+        margin: auto;
+        border-radius: 10px;
+        margin-top: 10px;">
+        How do I get Blot?
+        </div>
+
+      <div class="step-item">
+        <div class="step-text"><span class="step">Step 1) </span>Code an original art piece. Learn from <a href="/guides">our guides</a>.</div>
+        <div class="step-1-css row-to-col">
+          {
+            curated.map(workshop =>      
+              <a class="frame" href={`/editor?guide=${slug(workshop.file)}`}>
+                <div class="thumbnail img-fill" style={{
+                  width: "100%",
+                  height: "100%",
+                  backgroundImage: `url(${workshop.frontmatter.thumbnail})`
+                }}></div>
+                <div class="prose">
+                  {workshop.frontmatter.title}
+                </div>
+              </a>
             )
-          })
-      }
+          }
+        </div>
+      </div>
+
+
+      <div class="step-item">
+        <div class="step-text"><span class="step">Step 2) </span>Submit it as a pull request to the <a href="/gallery">art gallery</a>.</div>
+        <div class="step-2-css row-to-col">
+          {
+            images
+              .filter(img => 
+                ["leaf", "tree", "square-disarray"]
+                .some(x => img.dir.includes(x))
+              )
+              .map(img => {
+                return (
+                  <div class="frame">
+                    <a
+                      class="border"
+                      href={img.href}>
+                      <img class="thumbnail" alt={img.alt} src={img.img} />
+                    </a>
+                  </div>
+                )
+              })
+          }
+        </div>
+      </div>
+
+
+      <div class="step-item">
+        <div class="step-text"><span class="step">Step 3) </span>Get parts for your Blot in the mail and <a href="/assembly">build your own machine</a>.</div>
+        <div class="machine-img-container">
+          <img class="machine-img" src="/landing/machine.png"/>
+        </div>
+      </div>
     </div>
+
+    <footer>© 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)</footer>
+
   </div>
-
-
-  <div class="step-item">
-    <div class="step-text"><span class="step">Step 3) </span>Get parts for your Blot in the mail and <a href="/guides">build your own machine</a>.</div>
-    <div class="machine-img-container">
-      <img class="machine-img" src="/landing/machine.webp"/>
-    </div>
-  </div>
-
-  <footer>© 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)</footer>
 </Layout>
