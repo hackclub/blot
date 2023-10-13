@@ -36,12 +36,14 @@
 }
 
 @media only screen and (max-width: 700px) {
-  .hide-mobile {
-    display: none;
-  }
-
   .mobile-bg-scale {
     transform: scale(3) rotate(90deg);
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .hide-mobile {
+    display: none;
   }
 }
 
