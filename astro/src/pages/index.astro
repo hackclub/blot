@@ -1,8 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Background from '../components/landing/Background.astro'
-import CodeSnippet from '../components/landing/CodeSnippet.tsx'
-import ThreeDModel from '../components/landing/ThreeDModel.astro'
 import { slug } from '../lib/guide.ts'
 
 const workshops = await Astro.glob('/../guides/*.md')
@@ -379,7 +377,6 @@ try {
         </div>
       </div>
 
-      <!-- Here's how to get a Blot machine yourself. -->
     </div>
 
     <div style={{
