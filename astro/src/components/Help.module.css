@@ -1,6 +1,7 @@
 .helpSection {
   color: black;
   position: relative;
+  font-family: var(--font-sans);
 }
 
 .helpSectionToolbar {
@@ -62,6 +63,14 @@
 
 .helpContent li p {
   margin: 0;
+}
+
+.helpContent pre {
+  background: #f4f4f4;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 body[data-theme='dark'] .helpContent {

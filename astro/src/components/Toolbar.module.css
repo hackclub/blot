@@ -75,6 +75,7 @@
 }
 
 .root {
+  font-family: var(--font-sans);
   display: flex;
   background-color: var(--primary);
   color: white;
@@ -82,4 +83,5 @@
   padding: 0 0.5rem;
   align-items: center;
   justify-content: space-between;
+  font-weight: 500;
 }
