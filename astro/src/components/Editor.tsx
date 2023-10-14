@@ -1,6 +1,6 @@
 import { getStore } from '../lib/state.js'
 import { createListener } from '../lib/createListener.js'
-import styles from './Editor.module.scss'
+import styles from './Editor.module.css'
 import CompatWarning from './CompatWarning.jsx'
 import Preview from './Preview.jsx'
 import Toolbar from './Toolbar.jsx'

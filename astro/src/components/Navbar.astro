@@ -2,7 +2,7 @@
 import GitHubIcon from '../ui/GitHubIcon.tsx'
 ---
 
-<style is:global lang="scss">
+<style is:global>
   nav {
     background-color: var(--primary);
     color: white;
@@ -15,27 +15,27 @@ import GitHubIcon from '../ui/GitHubIcon.tsx'
     position: sticky;
     top: 0;
     z-index: 1000;
+  }
 
-    a {
-      color: white;
-      font-size: inherit;
-      text-decoration: none;
-    }
+  nav a {
+    color: white;
+    font-size: inherit;
+    text-decoration: none;
+  }
 
-    a,
-    > div {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
+  nav a,
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
 
-    > div {
-      gap: 14px;
-    }
+  nav > div {
+    gap: 14px;
+  }
 
-    h1 {
-      margin: 0;
-    }
+  nav h1 {
+    margin: 0;
   }
 </style>
 

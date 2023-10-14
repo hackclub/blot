@@ -1,8 +1,40 @@
-:root {
+@import url("./reset.css");
 
-  
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Bellefair&family=JetBrains+Mono&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@font-face {
+  font-family: 'Circous';
+  src: url('/fonts/Circous.ttf') format('truetype');
 }
 
+:root {
+  --background: #f8f6f3;
+  --primary: #33e;
+  --primary-rgb: 51, 51, 238;
+  --text: #000;
+  --text-rgb: 0, 0, 0;
+  --background: #fff;
+  --background-rgb: 255, 255, 255;
+  --muted: #e5e5e5;
+  --muted-rgb: 229, 229, 229;
+  --accent: #f0f;
+  --accent-rgb: 255, 0, 255;
+  --accent-dark: #900090;
+  --accent-dark-rgb: 144, 0, 144;
+  --font-sans: 'Atkinson Hyperlegible', sans-serif;
+  --font-serif: 'PT Serif', serif;
+  --font-mono: 'Jetbrains Mono', monospace;
+  --font-cursive: 'Circous', cursive;
+
+  --font-0: 1rem;
+  --font-1: 1.125rem;
+  --font-2: 1.25rem;
+  --font-3: 1.5rem;
+  --font-4: 2rem;
+  --font-5: 3rem;
+  --font-6: 4rem;
+  --font-7: 6rem;
+}
 
 /* UTILITY CSS */
 
@@ -16,7 +48,6 @@
   display: flex;
   flex-direction: row;
 }
-
 
 .row-to-col {
   display: flex;

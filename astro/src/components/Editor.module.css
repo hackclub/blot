@@ -31,12 +31,12 @@
   height: 100%;
   z-index: 10;
   transform: translate(-50%, 0);
+}
 
-  &:hover {
-    width: 8px;
-    background: #eee;
-    cursor: col-resize;
-  }
+.vertBar:hover {
+  width: 8px;
+  background: #eee;
+  cursor: col-resize;
 }
 
 .horizBar {
@@ -47,12 +47,12 @@
   width: 100%;
   z-index: 9;
   transform: translate(0, -50%);
+}
 
-  &:hover {
-    height: 8px;
-    background: #eee;
-    cursor: row-resize;
-  }
+.horizBar:hover {
+  height: 8px;
+  background: #eee;
+  cursor: row-resize;
 }
 
 .helpSection {
@@ -64,12 +64,12 @@
   align-items: center;
   justify-content: space-between;
   background: var(--primary);
+}
 
-  h1 {
-    color: white;
-    font-size: inherit;
-    margin-left: 12px;
-  }
+.helpSectionToolbar h1 {
+  color: white;
+  font-size: inherit;
+  margin-left: 12px;
 }
 
 .helpSectionTab {
@@ -84,6 +84,8 @@
 .helpSectionTab:hover {
   opacity: 0.9;
 }
+
+/*
 
 body[data-theme='dark'] {
   .prose {
@@ -103,3 +105,7 @@ body[data-theme='dark'] {
     }
   }
 }
+
+*/
+
+

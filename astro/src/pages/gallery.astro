@@ -23,14 +23,12 @@ try {
 
 ---
 
-<style is:global lang="scss">
-  body,
-  html {
+<style is:global>
+  body, html {
     background-size: 40px 40px;
-    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
-      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px), linear-gradient(to bottom, #ddd 1px, transparent 1px);
     min-height: 100vh;
-    font-family: "Phantom Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-family: "Phantom Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
   .description {
@@ -80,14 +78,14 @@ try {
     margin-bottom: 1rem;
     z-index: 1;
     display: flex;
-    align-items: center; /* centers vertically */
-    justify-content: center; /* centers horizontally */
-    overflow: hidden; /* ensures nothing overflows outside the frame */
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     transition: all 0.2s;
+  }
 
-    &:hover {
-      transform: scale(101%);
-    }
+  .frame:hover {
+    transform: scale(101%);
   }
 
   img {
@@ -95,7 +93,7 @@ try {
     width: 100%;
     max-height: 100%;
     height: 100%;
-    object-fit: contain; /* ensures the image maintains aspect ratio and scales within the container */
+    object-fit: contain;
     border: 1px solid #aaa;
   }
 

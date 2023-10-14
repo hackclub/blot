@@ -1,4 +1,4 @@
-import styles from './Help.module.scss'
+import styles from './Help.module.css'
 import { useState, useEffect } from 'preact/hooks'
 import { marked } from 'marked'
 

@@ -4,7 +4,7 @@ import runCode from '../lib/run.ts'
 import { defaultProgram } from '../lib/defaultProgram.js'
 import { patchStore, getStore } from '../lib/state.ts'
 import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
-import styles from './Toolbar.module.scss'
+import styles from './Toolbar.module.css'
 import Button from '../ui/Button.tsx'
 import cx from 'classnames'
 // import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
