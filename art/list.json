@@ -46,7 +46,7 @@
   },
   {
     "directory": "flower-shourya",
-    "snapshots": ["landscape.png"],
+    "snapshots": ["flower1.png"],
     "source": "index.js"
   }
 ]
