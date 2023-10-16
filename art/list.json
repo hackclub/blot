@@ -43,5 +43,10 @@
     "directory": "landscape-henry",
     "snapshots": ["landscape.png"],
     "source": "index.js"
+  },
+  {
+    "directory": "flower-shourya",
+    "snapshots": ["landscape.png"],
+    "source": "index.js"
   }
 ]
