@@ -76,6 +76,9 @@ code {
 
 /* UTILITY CSS */
 
+.hidden {
+  display: none;
+}
 
 .col {
   display: flex;
