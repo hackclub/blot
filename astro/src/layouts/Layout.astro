@@ -6,11 +6,13 @@ import Navbar from '../components/Navbar.astro'
 export interface Props {
   title: string | undefined
   description: string | undefined
+  showNav: string | undefined
 }
 
-let { title, description } = Astro.props
+let { title, description, showNav } = Astro.props
 title = `Blot | ${title}` || 'Blot'
 description = description || 'Blot editor!'
+showNav = showNav || 'true'
 ---
 
 <!DOCTYPE html>
@@ -22,8 +24,12 @@ description = description || 'Blot editor!'
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
-    <Navbar />
+  <body data-shownav={showNav}>
+    <Navbar/>
     <slot />
+    <script client:load>
+      const showNav = document.body.dataset.shownav;
+      if (showNav === "true") document.querySelector("nav").style.opacity = 1;
+    </script>
   </body>
 </html>

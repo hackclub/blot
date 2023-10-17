@@ -81,7 +81,6 @@
   const svgElement = document.querySelector('.svg-container')
   subpathElements.forEach(element => svgElement.appendChild(element))
 
-  document.querySelector("nav").style.opacity = 0;
   setTimeout(() => {
     fadeIn(document.querySelector("nav"), 1500);
     document.querySelectorAll(".fade-in").forEach(el => {
