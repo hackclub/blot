@@ -28,17 +28,13 @@ try {
 } catch (error) {
   console.log(error)
 }
+
 ---
 
 
 <style is:global>
   html, body {
     font-family: "Phantom Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  }
-
-  a {
-    text-decoration: none;
-    color: inherit;
   }
 
   .fade-in {
@@ -64,51 +60,14 @@ try {
     max-width: max-content;
   }
 
-  .strong-header {
-    font-size: 3.2rem;
-    letter-spacing: -2px;
-    font-weight: 600;
-    line-height: 1.4;
-  }
 
   @media only screen and (max-width: 700px) {
-    .strong-header {
-      font-size: 2.5rem;
+    .header-section {
+      margin-left: 0px;
+      margin-top: 0px;
+      margin: 5px;
+      max-width: 100%;
     }
-  }
-
-  .sub-header {
-    font-size: .5rem;
-    line-height: 1;
-    font-weight: 300;
-    letter-spacing: -1px;
-    padding-top: 10px;
-  }
-
-  .header-text {
-    font-size: 3em;
-    line-height: 1;
-    font-weight: 600;
-    letter-spacing: -1px;
-  }
-
-  .hack-club-text-box {
-    box-sizing: border-box;
-    margin: 0;
-    min-width: 0;
-    padding: 0px 5px;
-    background-color: #ec3750;
-    border-radius: 10px;
-    color: white;
-    white-space: nowrap;
-    -webkit-text-decoration: none;
-    text-decoration: none;
-  }
-
-  .disclaimer {
-    font-size: 1em;
-    font-weight: 300;
-    padding-top: 20px;
   }
 
   .step-item {
@@ -142,16 +101,10 @@ try {
     text-decoration-style: wavy;
   }
 
-  footer {
-    padding: 10px;
-  }
-
   .step-1-css .frame {
     text-decoration: none;
     color: inherit;
-    width: 30%;
-    min-width: 300px;
-    max-width: 400px;
+    width: clamp(300px, 350px, 400px);
     height: 360px;
     aspect-ratio: 1;
     background-image: linear-gradient(169deg, #cecef9, #e7f0fb);
@@ -198,8 +151,7 @@ try {
     margin: 0.5rem;
     border: solid 15px #555;
     box-shadow: -3px -3px 12px #999;
-    width: 30%;
-    min-width: 300px;
+    width: clamp(300px, 350px, 400px);
     aspect-ratio: 1;
     float: left;
     margin-bottom: 1rem;
@@ -303,10 +255,12 @@ try {
   description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
   <div class="lead-section">
 
-    <div class="fade-in header-section strong-header">
+    <div class={["text-4xl sm:text-7xl sm:leading-snug leading-snug font-semibold tracking-tighter", "fade-in", "header-section"].join(" ")}>
       <div>Blot, the plotter bot</div>
-      <div>from <a class="hack-club-text-box" href="https://www.hackclub.com">Hack Club</a></div>
-      <div class="sub-header" style="font-size: 1.4rem;">Write a program that creates art and we'll send you* a CNC machine that can draw it.</div>
+      <div>from <a class="box-border m-0 min-w-0 p-0 px-1 bg-[#ec3750] rounded-lg text-white whitespace-nowrap no-underline" href="https://www.hackclub.com">Hack Club</a></div>
+      <div class="text-xl leading-none font-light tracking-tighter pt-2.5">
+        Write a program that creates art and we'll send you* a CNC machine that can draw it.
+      </div>
     </div>
     <div class="background center-inner" style="z-index: -5; opacity: .4;">
       <div class="mobile-bg-scale" style="width: 100%;">
@@ -329,7 +283,8 @@ try {
       </div>
     </div>
 
-    <div class="fade-in" style="background: rgba(242, 242, 242, 0.1); backdrop-filter: blur(2px); width: max-content; margin: 10px; padding: 5px;">
+    <div class="fade-in" 
+      style="background: rgba(242, 242, 242, 0.1); backdrop-filter: blur(2px); width: max-content; margin: 10px; padding: 5px;">
       (*Must be a teenager to receive a free machine.)</div>
   </div>
 
@@ -375,16 +330,9 @@ try {
       paddingTop: "30px",
       background: "#f4f3fb"
     }}>
-      <div class="strong-header" style="
-        text-align: center;
-        background: #3333ee;
-        color: white;
-        width: 60%;
-        margin: auto;
-        border-radius: 10px;
-        margin-top: 10px;">
+      <div class="text-5xl p-3 font-semibold bg-[#3333ee] text-center text-white w-3/5 mx-auto rounded-md mt-2.5">
         How do I get Blot?
-        </div>
+      </div>
 
       <div class="step-item">
         <div class="step-text"><span class="step">Step 1) </span>Code an original art piece. Learn from <a href="/guides">our guides</a>.</div>
@@ -440,7 +388,7 @@ try {
       </div>
     </div>
 
-    <footer>© 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)</footer>
+    <footer class="p-2">© 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)</footer>
 
   </div>
 </Layout>

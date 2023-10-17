@@ -12,8 +12,8 @@ export default function DropBox() {
     <div class="
       drop 
       droparea 
+      
       hidden
-
       w-100 
       h-full 
       absolute 
