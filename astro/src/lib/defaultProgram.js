@@ -18,7 +18,7 @@ testTurtle.translate(
   testTurtle.cc
 );
 
-drawTurtles(
+drawTurtles([
     testTurtle
-);
+]);
 `.trim()

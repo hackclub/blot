@@ -83,7 +83,7 @@ for(var y = 0; y < lines.length - 1; y++) {
   }
 }
 
-drawTurtles(t)
+drawTurtles([ t ])
 ```
 
 And, that's it! If all went well, you should have an image resembling the one at the start of the guide.

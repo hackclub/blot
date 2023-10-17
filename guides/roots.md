@@ -41,7 +41,7 @@ function makeBranch(turtle) {
 
 makeBranch(t)
 
-drawTurtles(...turtles)
+drawTurtles([ turtles ])
 ```
 
 You should get something like the screenshot below:
@@ -105,7 +105,7 @@ function thicken(turtle) {
 
 makeBranch(t, 0.1, 0)
 
-drawTurtles(t)
+drawTurtles([ t ])
 
 // Smoothstep
 function clamp(x, minVal, maxVal) {

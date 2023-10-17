@@ -73,7 +73,7 @@ t.interpolate(tValue)
 To render a turtle use `drawTurtles` it is variadic (can take multiple turtles as arguments).
 
 ```js
-drawTurtles(...turtles)
+drawTurtles([ turtles ])
 ```
 
 You can drag in SVG's, and the interface will generate a turtle for it. Keep in mind that SVG's are often imported far too large, and will need to be scaled and translated.

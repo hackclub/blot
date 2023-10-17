@@ -68,4 +68,4 @@ for (let gen = 0; gen < w * 2; gen++) {
   drawGen(allGens[gen + 1], -gen)
 }
 
-drawTurtles(t)
+drawTurtles([t])

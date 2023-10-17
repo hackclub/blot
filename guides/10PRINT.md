@@ -132,7 +132,7 @@ Each time we're at a new row, start moving horizontally by increasing `x`. At ev
 
 And, lastly, let's draw this to the screen! This is done simply by calling the function `drawTurtles` with the turtle we defined at the start.
 
-`drawTurtles(t);`
+`drawTurtles([ t ]);`
 
 And, you're done! If all went well, you should be seeing something like the below art:
 

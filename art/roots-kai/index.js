@@ -181,4 +181,4 @@ function makeBranch(turtle, length, startingT) {
 makeBranch(t, 0.1, 0)
 
 // Draw turtles array
-drawTurtles(...turtles)
+drawTurtles([turtles])

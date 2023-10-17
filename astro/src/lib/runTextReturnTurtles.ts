@@ -19,8 +19,14 @@ const customGlobal = {
   lerp(start: number, end: number, t: number) {
     return (1 - t) * start + t * end
   },
-  drawTurtles: (...turtlesToDraw: Turtle[]) => {
-    turtlesToDraw.forEach(t => _returnTurtles.push(t))
+  drawTurtles: (turtlesToDraw: Turtle[], style = {}) => {
+    turtlesToDraw.forEach(t => {
+      const temp = t.copy();
+      if (style.fill === undefined) style.fill = "none";
+      if (style.stroke === undefined) style.stroke = "black";
+      temp.style = style;
+      turtles.push(temp);
+    });
   },
   setDocDimensions(w: number, h: number) {}
 }

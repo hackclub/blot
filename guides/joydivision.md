@@ -14,7 +14,7 @@ Let's give this a shot! First, simply declare a turtle, and draw it's path to th
 
 ```
 const t = new Turtle();
-drawTurtles(t);
+drawTurtles([ t ]);
 ```
 
 To actually get it to draw something, we can iterate through a grid, drawing horizontal lines:

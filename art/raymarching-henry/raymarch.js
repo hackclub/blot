@@ -263,4 +263,4 @@ world.objects = [
   new Plane(new Vec3(0, -3, 0))
 ]
 renderFrame(cam)
-drawTurtles(t)
+drawTurtles([t])

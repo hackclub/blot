@@ -73,4 +73,4 @@ t.iteratePath(pt => {
 t.translate([125 / 2, 125 / 2], t.cc)
 t.scale(17.2)
 
-drawTurtles(t)
+drawTurtles([t])

@@ -1,5 +1,5 @@
 const t = new Turtle()
-drawTurtles(t)
+drawTurtles([t])
 const time = 106
 
 const resX = 5.16

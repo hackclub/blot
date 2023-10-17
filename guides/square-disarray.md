@@ -24,7 +24,7 @@ const shapes = createTurtle() // this will be our container turtle
 
 shapes.translate([width / 2, height / 2], shapes.cc) // this moves the center of our turtle to the center of our doc
 
-drawTurtles(shapes)
+drawTurtles([ shapes ])
 ```
 
 # Draw a Square

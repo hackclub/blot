@@ -167,7 +167,7 @@ for (let gen = 0; gen < w; gen++) {
   drawGen(allGens[gen + 1], gen)
 }
 
-drawTurtles(t)
+drawTurtles([ t ])
 ```
 
 Great job! There are plenty of variations on ECAs that you can explore. Here's a few more drawings done with the code, by setting only the center pixel as a one:

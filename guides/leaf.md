@@ -39,7 +39,7 @@ const edge = createTurtle().forward(leafLength)
 // render the final leaf like such
 const leaf = createTurtle().join(edge)
 
-drawTurtles(leaf)
+drawTurtles([ leaf ])
 ```
 
 <img
@@ -70,7 +70,7 @@ const bottom = edge.copy().scale([1, -1], [0, 0])
 
 const leaf = createTurtle().join(edge).join(bottom)
 
-drawTurtles(leaf)
+drawTurtles([ leaf ])
 ```
 
 <img

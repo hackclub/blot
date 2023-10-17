@@ -14,7 +14,7 @@ We can get started by setting up a turtle, and define some constants:
 
 ```js
 const t = createTurtle()
-drawTurtles(t)
+drawTurtles([ t ])
 
 const size = 10
 const squareSize = 1

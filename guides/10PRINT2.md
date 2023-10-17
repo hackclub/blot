@@ -59,7 +59,7 @@ Let's start by defining a constant `t`: this will represent our turtle. The turt
 const t = createTurtle()
 ```
 
-Directly below that, write `drawTurtles(t);`. This function makes it so that we can see the turtle's path in the preview window as we add to it.
+Directly below that, write `drawTurtles([ t ]);`. This function makes it so that we can see the turtle's path in the preview window as we add to it.
 
 Since the original artwork is made up of many diagonal lines, we'll need a function that can draw these.
 

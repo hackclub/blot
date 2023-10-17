@@ -134,7 +134,7 @@ for (let i = 0; i < 1000; i++) {
   const [endX, endY] = randomWalk.end;
 }
 
-drawTurtles(randomWalk);
+drawTurtles([ randomWalk ]);
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/f98e2f48-3785-4449-b936-dc5e637bdff5" height="512"/>
@@ -276,7 +276,7 @@ let startPt = trunk.ct;
 
 randomWalk.rotate(randInRange(-5, 5)).translate([-0.1, -0.6]);
 
-drawTurtles(randomWalk, trunk);
+drawTurtles([ randomWalk, trunk ]);
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/114d17dc-b5a3-43ab-baf6-0e1dfee2d959" height="512"/>

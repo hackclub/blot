@@ -227,5 +227,5 @@ for (let y = 0; y < 15; y += dy) {
   }
 }
 
-drawTurtles(t)
+drawTurtles([ t ])
 ```
