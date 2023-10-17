@@ -14,12 +14,20 @@ export class Turtle {
   position: Point
   angle: number
   path: Polyline[]
+  style: {
+    fill: string,
+    stroke: string,
+  }
 
   constructor(start: Point = [0, 0]) {
     this.drawing = true
     this.position = [...start]
     this.angle = 0
     this.path = [[[...start]]]
+    this.style = {
+      fill: "none",
+      stroke: "black"
+    }
   }
 
   up() {
@@ -174,10 +182,18 @@ export class Turtle {
   }
 
   copy() {
-    const newPath = JSON.parse(JSON.stringify(this.path))
-    const t = new Turtle()
-    t.path = newPath
-    return t
+    const copy = obj => JSON.parse(JSON.stringify(obj));
+
+    const t = new Turtle();
+
+    t.path = copy(this.path);
+    t.drawing = copy(t.drawing);
+    t.position = copy(t.position);
+    t.angle = copy(t.angle);
+    t.path = copy(t.path);
+    t.style = copy(t.style);
+
+    return t;
   }
 
   resample(resolution: number) {

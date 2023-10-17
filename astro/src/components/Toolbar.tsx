@@ -27,11 +27,7 @@ export default function Toolbar() {
 
   return (
     <div class={styles.root}>
-      <div
-        style={{
-          'display': 'flex',
-          'align-items': 'center'
-        }}>
+      <div class="flex items-center h-full">
         <h1 class={styles.heading}>
           <a href="/">
             <img src="/blot.svg" style="width: 30px"/>
@@ -42,39 +38,33 @@ export default function Toolbar() {
         <NewButton />
         <OpenButton />
         <div
-          style={{
-            position: 'relative',
-            cursor: 'default',
-            width: 'min-width'
-          }}
+          class="relative cursor-default w-min h-full flex items-center p-1"
           onMouseEnter={() => setHidden(false)}
           onMouseLeave={() => setHidden(true)}>
+          <div>download</div>
           <div
-            style={{
-              padding: '5px'
-            }}>
-            download
-          </div>
-          <div
-            style={{
-              'display': hidden ? 'none' : '',
-              'position': 'absolute',
-              'background': 'var(--primary)',
-              'border': '1px solid rgba(255, 255, 255, 0.1)',
-              'z-index': 9999,
-              'width': '100%',
-              'top': '100%',
-              'padding': '5px',
-              'border-radius': '5px'
-            }}>
+            class={[
+              hidden ? 'hidden' : '',
+              "border border-white border-opacity-10",
+              "bg-[--primary] absolute z-50 top-full p-1 rounded-md"
+            ].join(" ")}
+            >
             <DownloadButton />
             <DownloadSVG />
             <DownloadPNG />
+            <div 
+              class="w-max p-1 rounded hover:bg-white hover:bg-opacity-10"
+              onClick={e => {
+                const { turtles } = getStore();
+                console.log(turtles);
+              }}>
+              cull hidden lines
+            </div>
           </div>
         </div>
       </div>
 
-      <div style={{ 'display': 'flex', 'align-items': 'center' }}>
+      <div class="flex items-center">
         <Button variant="ghost" class="connect-trigger">
           {connected ? 'disconnect from' : 'connect to'} machine
         </Button>
@@ -99,9 +89,7 @@ function GitHubLink() {
         href="https://github.com/hackclub/blot/tree/main"
         rel="noreferrer"
         target="_blank">
-        <div style={{ transform: 'translate(0, 3.5px)' }}>
-          <GitHubIcon className={styles.icon} />
-        </div>
+        <GitHubIcon className={styles.icon} />
       </a>
     </Button>
   )
@@ -187,8 +175,8 @@ function DownloadSVG() {
           return `<path 
                     d="${d}" 
                     stroke-width="0.25" 
-                    stroke="black" 
-                    fill="none" 
+                    stroke="${t.style.stroke}" 
+                    fill="${t.style.fill}" 
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     style="transform: scale(1, 1);"
@@ -240,8 +228,8 @@ function DownloadPNG() {
           return `<path 
                     d="${d}" 
                     stroke-width="0.25" 
-                    stroke="black" 
-                    fill="none" 
+                    stroke="${t.style.stroke}" 
+                    fill="${t.style.fill}" 
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     style="transform: scale(1, 1);"
@@ -371,9 +359,7 @@ function SettingsButton() {
       onMouseLeave={() => setHidden(true)}>
       <Button variant="ghost">
         <a style={{ all: 'unset' }}>
-          <div style={{ transform: 'translate(0, 3.5px)' }}>
-            <SettingsIcon className={styles.icon} />
-          </div>
+          <SettingsIcon className={styles.icon} />
         </a>
       </Button>
       <div

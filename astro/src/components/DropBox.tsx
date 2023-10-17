@@ -9,29 +9,27 @@ export default function DropBox() {
   }, []) // Empty dependency array means this effect runs once after initial render
 
   return (
-    <>
-      <style>{`
-            .drop {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                background: lightblue;
-                opacity: .8;
-                align-items: center;
-                justify-content: center;
-                border: 3px dashed grey;
-                left: 0px;
-                top: 0px;
-                display: flex;
-                z-index: 999;
-            }
+    <div class="
+      drop 
+      droparea 
+      hidden
 
-            .hidden {
-                display: none;
-            }
-        `}</style>
-      <div class="drop hidden droparea">Drop an SVG or JS file.</div>
-    </>
+      w-100 
+      h-full 
+      absolute 
+      bg-blue-200
+      bg-opacity-80 
+      flex 
+      items-center 
+      justify-center 
+      border-4
+      border-dashed
+      border-gray-800
+      left-0 
+      top-0 
+      z-50">
+      Drop an SVG or JS file.
+    </div>
   )
 }
 
@@ -81,8 +79,9 @@ function addDragDrop() {
   window.addEventListener('dragover', function (evt) {
     droparea.classList.remove('hidden')
     pauseEvent(evt)
-  })
-  ;['mouseout'].forEach(trigger =>
+  });
+
+  ['mouseout'].forEach(trigger =>
     window.addEventListener(trigger, function (evt) {
       droparea.classList.add('hidden')
     })
