@@ -70,7 +70,7 @@ t.resample(resolution)
 t.interpolate(tValue)
 ```
 
-To render a turtle use `drawTurtles` it is variadic (can take multiple turtles as arguments).
+To render a turtle use `drawTurtles`, it takes a list of turtles to draw.
 
 ```js
 drawTurtles([ turtles ])
