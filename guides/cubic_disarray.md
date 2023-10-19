@@ -14,10 +14,13 @@ We can get started by setting up a turtle, and define some constants:
 
 ```js
 const t = createTurtle()
-drawTurtles([ t ])
 
 const size = 10
 const squareSize = 1
+
+// ... other code goes here ...
+
+drawTurtles([ t ])
 ```
 
 Obviously we'll need a way to draw these rotated squares, so let's define a function for that:

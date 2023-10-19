@@ -6,6 +6,6 @@ for (let i of eval(
     eval(i == 'F' ? `t.forward(-0.1)` : `t.left(${i}87)`)
   } catch {}
 
-t.scale(125/t.width);
+t.scale(110/t.width);
 t.translate([125/2, 125/2], t.cc);
 drawTurtles([t])

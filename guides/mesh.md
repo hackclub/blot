@@ -26,7 +26,7 @@ Next, let's define a scale for the whole image:
 
 Then, we can create a grid. This is identical to a typical rectangular grid, except we offset every other line by a bit, making it triangular.
 
-```
+```js
 var line, dot,
     odd = false,
     lines = [],
@@ -41,7 +41,7 @@ for(var y = gap / 2; y <= size; y+= gap) {
 
 Then, use the built-in haxidraw noise function to offset the points again, this time randomly. Also, add an offset on the x axis if we're drawing an odd-numbered line.
 
-```
+```js
     let n = noise([x * 0.1, y * 0.1])
     line.push({
       x: x + (n*4.1 - .4) * gap  + (odd ? gap/2 : 0),
@@ -54,7 +54,7 @@ Then, use the built-in haxidraw noise function to offset the points again, this 
 
 Now, we need a way to draw this. We can define a simple function to render a triange, where we simply go through every point of the triangle with the turtle `goTo` function.
 
-```
+```js
 function drawTriangle(pointA, pointB, pointC) {
   t.goTo([pointA.x, pointA.y]);
   t.down()
@@ -67,7 +67,7 @@ function drawTriangle(pointA, pointB, pointC) {
 
 Now, to draw the whole mesh, we can iterate through the points, drawing triangles at every 3 points next to each other in 2D.
 
-```
+```js
 var dotLine;
 odd = true;
 
