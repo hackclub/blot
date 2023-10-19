@@ -186,11 +186,12 @@ function DownloadSVG() {
         const paths = turtles.map(turtleToPath)
 
         const svg = `
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${
-                  docDimensions.width
-                } ${docDimensions.height}" width="${
-                  docDimensions.width
-                }mm" height="${docDimensions.height}mm">
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 ${docDimensions.width} ${docDimensions.height}" 
+                  width="${docDimensions.width}mm" 
+                  height="${docDimensions.height}mm"
+                  style="transform: scale(1, -1)">
                     ${paths.join('\n')}
                 </svg>
             `
@@ -239,11 +240,12 @@ function DownloadPNG() {
         const paths = turtles.map(turtleToPath)
 
         const svg = `
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${
-                  docDimensions.width
-                } ${docDimensions.height}" width="${
-                  docDimensions.width
-                }mm" height="${docDimensions.height}mm">
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 ${docDimensions.width} ${docDimensions.height}" 
+                  width="${docDimensions.width}mm" 
+                  height="${docDimensions.height}mm"
+                  style="transform: scale(1, -1)">
                     ${paths.join('\n')}
                 </svg>
             `

@@ -3,7 +3,7 @@ const screenHeight = 2
 const dx = 0.01
 const dy = 0.01
 
-const t = new Turtle()
+const t = createTurtle()
 
 class Vec3 {
   constructor(x, y, z) {

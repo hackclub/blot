@@ -1,4 +1,4 @@
-const t = new Turtle()
+const t = createTurtle();
 
 const w = 50
 
@@ -68,4 +68,7 @@ for (let gen = 0; gen < w * 2; gen++) {
   drawGen(allGens[gen + 1], -gen)
 }
 
-drawTurtles([t])
+t.scale(110/t.height);
+t.translate([125/2, 125/2], t.cc);
+
+drawTurtles([t]);

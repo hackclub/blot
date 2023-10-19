@@ -8,3 +8,4 @@ astro/.astro/types.d.ts
 .vercel
 */node_modules
 astro/.env
+.env
