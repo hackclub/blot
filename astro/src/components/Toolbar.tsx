@@ -37,14 +37,14 @@ export default function Toolbar() {
         </h1>
         <RunButton />
         <div 
-          class="relative cursor-pointer w-min h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
+          class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
           onClick={() => saveFile(getCode())}>
-          save
+          save (ctrl/cmd+s)
         </div>
         <NewButton />
         <OpenButton />
         <div
-          class="relative cursor-default w-min h-full flex items-center p-1"
+          class="relative cursor-default w-max h-full flex items-center p-1"
           onMouseEnter={() => setHidden(false)}
           onMouseLeave={() => setHidden(true)}>
           <div>download</div>
