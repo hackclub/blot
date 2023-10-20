@@ -1,3 +1,7 @@
+# Welcome to Blot
+
+This is Blot's programmatic art IDE. For an introduction to the editor watch this video (coming soon!).
+
 ### Turtle
 
 Our main drawing primative is a turtle. It's a collection of polylines with an associated pen that has a location and direction.
