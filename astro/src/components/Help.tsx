@@ -41,7 +41,7 @@ export default function Help({
 
       if (workshop === null) return
 
-      loadCodeFromString("");
+      if (confirm("Clear text editor?")) loadCodeFromString("");
 
       const res = await fetch(
         `https://raw.githubusercontent.com/hackclub/blot/main/guides/${workshop}.md`
