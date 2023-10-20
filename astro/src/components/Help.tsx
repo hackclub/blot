@@ -1,7 +1,7 @@
 import styles from './Help.module.css'
 import { useState, useEffect } from 'preact/hooks'
 import { marked } from 'marked'
-
+import { loadCodeFromString } from "../lib/loadCodeFromString.ts";
 
 marked.setOptions({
     highlight: function (code, language) {
@@ -40,6 +40,8 @@ export default function Help({
       setHelpContent(marked(helpData));
 
       if (workshop === null) return
+
+      loadCodeFromString("");
 
       const res = await fetch(
         `https://raw.githubusercontent.com/hackclub/blot/main/guides/${workshop}.md`
