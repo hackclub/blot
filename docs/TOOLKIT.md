@@ -18,6 +18,9 @@ t.goTo([ x: number, y: number ])
 t.forward(distance: number)
 t.arc(angle: number, radius: number)
 
+// to move to pt without drawing and end up in drawing position
+t.jump([ x: number, y: number ])
+
 // change angle
 t.setAngle(theta: number)
 t.right(theta: number)
@@ -66,13 +69,31 @@ t.height
 t.join(anotherTurtle)
 
 // to apply a function to all pts in a turtle
-// this will replace the old point values with the new ones
+// fn takes (pt, tValue) => { ... }
+// return [ x, y ] to replace the old point value with the new one
+// return "BREAK" to split path at that point
+// return "REMOVE" to filter out that point
 t.iteratePath(fn)
 
 t.resample(resolution)
 
+// takes value 0 - 1 and returns point that far along paths
 t.interpolate(tValue)
+
+// takes value 0 - 1 and returns angle that far along paths
+t.getAngle(tValue)
 ```
+
+<!-- 
+displace
+warp
+bezierEasing
+trim 
+merge
+getNormal
+extrema
+copy
+-->
 
 To render a turtle use `drawTurtles`, it takes a list of turtles to draw.
 

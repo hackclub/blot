@@ -6,6 +6,8 @@ import { addMachineControl } from './events/addMachineControl.js'
 import { addLoadBackup } from './events/addLoadBackup.js'
 import { addSrcURLParam } from './events/addSrcURLParam.js'
 import { saveFile } from "./saveFile.ts";
+import { useOnEditorChange } from "./events.ts";
+
 
 export function init() {
   console.log('init')
@@ -37,6 +39,10 @@ export function init() {
         saveFile(code, { fileHandle });
       }
     }
+  })
+
+  useOnEditorChange(() => {
+    patchStore({ needsSaving: true });
   })
 
   // get settings from localStorage

@@ -22,7 +22,7 @@ import GitHubIcon from '../ui/GitHubIcon.tsx'
 import { saveFile } from "../lib/saveFile.ts";
 
 export default function Toolbar() {
-  const { connected } = getStore()
+  const { connected, needsSaving } = getStore()
 
   const [hidden, setHidden] = useState(true)
 
@@ -39,7 +39,7 @@ export default function Toolbar() {
         <div 
           class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
           onClick={() => saveFile(getCode())}>
-          save (ctrl/cmd+s)
+          { needsSaving ? "save* (ctrl/cmd+s)" : "save (ctrl/cmd+s)" }
         </div>
         <NewButton />
         <OpenButton />

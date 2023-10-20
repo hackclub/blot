@@ -58,6 +58,13 @@ export class Turtle {
     return this
   }
 
+  jump(pt: Point) {
+    this.up();
+    this.goTo(pt);
+    this.down();
+    return this;
+  }
+
   forward(distance: number) {
     const last = this.position
     const a = (this.angle / 180) * Math.PI
@@ -217,9 +224,9 @@ export class Turtle {
     return getAngle(this.path, t)
   }
 
-  getNormal(t: number) {
-    return getNormal(this.path, t)
-  }
+  // getNormal(t: number) {
+  //   return getNormal(this.path, t)
+  // }
 
   trim(t0: number, t1: number) {
     trimPolylines(this.path, t0, t1)
@@ -466,15 +473,19 @@ function extrema(pts: Point[]) {
 function tValuesForPoints(polylines: Polyline[]) {
   let totalLength = 0
   let lengths = []
-  let tValues = [0]
+  let tValues = []
 
+  let segmentLength = 0;
   for (let i = 0; i < polylines.length; i++) {
     let polyline = polylines[i]
-    for (let j = 1; j < polyline.length; j++) {
-      let dx = polyline[j][0] - polyline[j - 1][0]
-      let dy = polyline[j][1] - polyline[j - 1][1]
-      let segmentLength = Math.sqrt(dx * dx + dy * dy)
-      totalLength += segmentLength
+    for (let j = 0; j < polyline.length; j++) {
+      if (j > 0) {
+        let dx = polyline[j][0] - polyline[j - 1][0]
+        let dy = polyline[j][1] - polyline[j - 1][1]
+        segmentLength = Math.sqrt(dx * dx + dy * dy)
+        totalLength += segmentLength
+      }
+
       lengths.push(segmentLength)
     }
   }

@@ -22,8 +22,6 @@ export async function saveFile(content, { filename, fileHandle } = {} ) {
       suggestedName: filename ?? "anon",
     });
 
-    patchStore({ fileHandle });
-
     // Create a FileSystemWritableFileStream to write to.
     const writableStream = await fileHandle.createWritable();
     
@@ -35,6 +33,8 @@ export async function saveFile(content, { filename, fileHandle } = {} ) {
 
     // Here, you can only print the file name, not the full path
     console.log(`File saved: ${fileHandle.name}`);
+
+    patchStore({ fileHandle, needsSaving: false });
   } catch (err) {
     console.error("File save failed", err);
   }
