@@ -112,13 +112,6 @@ Can be used like such
 noise([2, 3])
 ```
 
-### Utilities
-
-```js
-// min: number, max: number, t: number (0 to 1)
-lerp(min, max, t)
-```
-
 ## Examples
 
 To find examples check out [`/gallery`](/gallery).
