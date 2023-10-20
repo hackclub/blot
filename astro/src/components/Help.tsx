@@ -2,6 +2,7 @@ import styles from './Help.module.css'
 import { useState, useEffect } from 'preact/hooks'
 import { marked } from 'marked'
 import { loadCodeFromString } from "../lib/loadCodeFromString.ts";
+import { removeQueryParam } from "../lib/removeQueryParam.js";
 
 marked.setOptions({
     highlight: function (code, language) {
@@ -41,7 +42,11 @@ export default function Help({
 
       if (workshop === null) return
 
+
       if (confirm("Clear text editor?")) loadCodeFromString("");
+
+      removeQueryParam("guide");
+
 
       const res = await fetch(
         `https://raw.githubusercontent.com/hackclub/blot/main/guides/${workshop}.md`
