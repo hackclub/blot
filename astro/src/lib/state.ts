@@ -37,7 +37,8 @@ export type GlobalState = {
   running: boolean
   view: EditorView | null
   theme: 'light' | 'dark'
-  vimMode: boolean
+  vimMode: boolean,
+  fileHandle: any
 }
 
 // setting/initializing state
@@ -56,7 +57,8 @@ const newState: Omit<GlobalState, 'code'> = {
   },
   view: null,
   theme: 'light',
-  vimMode: false
+  vimMode: false,
+  fileHandle: null
 }
 
 export const makeNewState = (): GlobalState => {

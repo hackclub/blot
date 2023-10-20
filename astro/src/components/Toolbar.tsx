@@ -19,6 +19,7 @@ import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
+import { saveFile } from "../lib/saveFile.ts";
 
 export default function Toolbar() {
   const { connected } = getStore()
@@ -35,6 +36,11 @@ export default function Toolbar() {
           </a>
         </h1>
         <RunButton />
+        <div 
+          class="relative cursor-pointer w-min h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
+          onClick={() => saveFile(getCode())}>
+          save
+        </div>
         <NewButton />
         <OpenButton />
         <div
@@ -408,3 +414,4 @@ function SettingsButton() {
     </div>
   )
 }
+
