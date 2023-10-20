@@ -1,0 +1,289 @@
+---
+import { firestore, getSession } from '../../lib/db/account.ts'
+import ms from 'ms'
+import Button from '../../components/~/Button.tsx'
+import { isRandomName } from '../../lib/utils/words'
+import type { Art } from '../../lib/db/account.ts'
+
+const session = await getSession(Astro.cookies)
+if (!session || !session.session.full)
+  return Astro.redirect(`/login?to=${Astro.request.url}`, 302)
+
+const _art = await firestore
+  .collection('art')
+  .where('ownerId', '==', session.user.id)
+  .get()
+const allArt = _art.docs.map(doc => ({ id: doc.id, ...doc.data() }) as Art)
+
+let art = allArt.filter(art => !isRandomName(art.name))
+let unnamedArt = allArt.filter(art => isRandomName(art.name))
+
+if (art.length === 0 && unnamedArt.length > 0) {
+  art = unnamedArt
+  unnamedArt = []
+}
+---
+
+<style is:global>
+  @import '../../css/global.css';
+
+  .columns {
+    display: flex;
+    font-family: var(--font-sans);
+    gap: 4px;
+  }
+
+  .sidebar {
+    background-color: rgba(var(--primary-rgb), 0.4);
+    border-right: 1px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 25%;
+    width: 25%;
+    height: 100vh;
+    padding: 2rem;
+  }
+
+  .account-strip {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .account-strip svg {
+    color: black;
+    vertical-align: middle;
+    transition: all 0.1s;
+  }
+
+  .account-strip svg:hover {
+    color: var(--primary);
+  }
+
+  .content {
+    padding: 2rem;
+    flex: 75%;
+    width: 75%;
+  }
+
+  .art {
+    display: flex;
+  }
+
+  .copy-container * {
+    margin-top: 0;
+  }
+
+  .piece {
+    display: block;
+    border: 1px solid;
+    width: 25%;
+    color: black;
+    text-decoration: none !important;
+    padding: 1rem;
+    transition: all 0.1s;
+
+    .modified-at {
+      margin-top: 0.2rem;
+    }
+
+    .delete {
+      background: transparent;
+      border: 0;
+      float: right;
+      color: #404040;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+
+    .delete:hover {
+      color: red;
+    }
+  }
+
+  .piece h3 {
+    margin-bottom: 0;
+    margin-top: 0.2rem;
+  }
+
+  .piece:hover {
+    color: var(--primary);
+  }
+</style>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>~</title>
+  </head>
+  <body>
+    <div class="columns">
+      <div class="sidebar">
+        <div class="sidebar-section">
+          <h3>Welcome to Blot</h3>
+          <p>
+            You have {allArt.length}{' '}{
+              allArt.length === 1 ? 'piece' : 'pieces'
+            } of art, {art.length || 'none'} of which {
+              art.length === 1 ? 'has' : 'have'
+            } a name. You've been using Blot for {
+              ms(Date.now() - session.user.createdAt.toMillis(), { long: true })
+            } so far.
+          </p>
+        </div>
+        <div class="sidebar-section">
+          <div class="account-strip">
+            <p class="email">{session.user.email}</p>
+            <a href="/logout"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-log-out"
+                ><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+                ></path><polyline points="16 17 21 12 16 7"></polyline><line
+                  x1="21"
+                  x2="9"
+                  y1="12"
+                  y2="12"></line></svg
+              ></a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="copy-container">
+          <h1>Your Art</h1>
+          {
+            art.length === 0 ? (
+              <p>
+                It's all spooky and empty here.{' '}
+                <a href="/~/new">Draw something already!</a>
+              </p>
+            ) : null
+          }
+        </div>
+        <div class="art">
+          {
+            art.map(piece => (
+              <a class="piece" href={`/~/${piece.id}`}>
+                <h3>{piece.name || 'Untitled'}</h3>
+                <p class="modified-at">
+                  Edited{' '}
+                  {ms(
+                    Math.max(Date.now() - piece.modifiedAt.toMillis(), 1000),
+                    { long: true }
+                  )}{' '}
+                  ago
+                </p>
+                <button
+                  class="delete"
+                  data-id={piece.id}
+                  data-name={piece.name || 'Untitled'}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-trash-2">
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                    <line x1="10" x2="10" y1="11" y2="17" />
+                    <>
+                      <path d="M3 6h18" />
+                      <line x1="14" x2="14" y1="11" y2="17" />
+                    </>
+                  </svg>
+                </button>
+              </a>
+            ))
+          }
+        </div>
+        {
+          unnamedArt.length > 0 ? (
+            <div class="unnamed">
+              <h2>Unnamed art</h2>
+              <div class="art">
+                {unnamedArt.map(piece => (
+                  <a class="piece" href={`/~/${piece.id}`}>
+                    <h3>{piece.name || 'Untitled'}</h3>
+                    <p class="modified-at">
+                      Edited{' '}
+                      {ms(
+                        Math.max(
+                          Date.now() - piece.modifiedAt.toMillis(),
+                          1000
+                        ),
+                        { long: true }
+                      )}{' '}
+                      ago
+                    </p>
+                    <button
+                      class="delete"
+                      data-id={piece.id}
+                      data-name={piece.name || 'Untitled'}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="lucide lucide-trash-2">
+                        <path d="M3 6h18" />
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                        <line x1="10" x2="10" y1="11" y2="17" />
+                        <line x1="14" x2="14" y1="11" y2="17" />
+                      </svg>
+                    </button>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : null
+        }
+      </div>
+    </div>
+  </body>
+  <script>
+    document.body.addEventListener('click', async event => {
+      const deleteBtn = event
+        .composedPath()
+        .find(
+          item => item instanceof HTMLElement && item.matches('.delete')
+        ) as HTMLElement | undefined
+      if (!deleteBtn) return
+      event.preventDefault()
+      const artId = deleteBtn.dataset.id!
+      const artName = deleteBtn.dataset.name!
+      if (!confirm(`Are you sure you want to delete "${artName}"?`)) return
+      deleteBtn.closest('.art')!.remove()
+
+      const res = await fetch(`/api/art/delete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ artId })
+      })
+      if (!res.ok) console.error(`Error deleting art: ${await res.text()}`)
+      window.location.reload()
+    })
+  </script>
+</html>

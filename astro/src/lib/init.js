@@ -5,12 +5,13 @@ import { addBezierControl } from './events/addBezierControl.js'
 import { addMachineControl } from './events/addMachineControl.js'
 import { addLoadBackup } from './events/addLoadBackup.js'
 import { addSrcURLParam } from './events/addSrcURLParam.js'
-import { saveFile } from "./saveFile.ts";
+import { saveFile } from './saveFile.ts'
+import { addSnapshotURLParam } from './events/addSnapshotURLParam.js'
 
 export function init() {
   console.log('init')
 
-  render(true);
+  render(true)
 
   const cm = document.querySelector('.cm-editor')
   const view = cm.view
@@ -19,22 +20,25 @@ export function init() {
   addLoadBackup()
   // load src if present after default loading behavior
   addSrcURLParam()
+  addSnapshotURLParam()
 
   addBezierControl()
   addMachineControl()
 
-  window.addEventListener("keydown", e => {
+  window.addEventListener('keydown', e => {
+    if (
+      (event.ctrlKey || event.metaKey) &&
+      (event.key === 's' || event.key === 'S')
+    ) {
+      e.preventDefault()
 
-    if ((event.ctrlKey || event.metaKey) && (event.key === "s" || event.key === "S")) {
-      e.preventDefault();
-
-      const { fileHandle, view } = getStore();
+      const { fileHandle, view } = getStore()
       const code = view.state.doc.toString()
 
       if (fileHandle === null) {
-        saveFile(code);
+        saveFile(code)
       } else {
-        saveFile(code, { fileHandle });
+        saveFile(code, { fileHandle })
       }
     }
   })
@@ -54,5 +58,3 @@ export function init() {
 
   document.body.dataset.theme = theme
 }
-
-

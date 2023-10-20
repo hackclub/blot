@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { getSession } from '../lib/db/account'
+import LoginComponent from '../components/~/Login.tsx'
+
+const to = Astro.url.searchParams.get('to') ?? '/~'
+const session = await getSession(Astro.cookies)
+if (session?.session.full) return Astro.redirect(to, 302)
+const email = Astro.url.searchParams.get('email') ?? session?.user.email ?? ''
+---
+
+<style is:global>
+  body,
+  html {
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    background-size: 40px 40px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  #login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  #login-wrapper form {
+    border: 1px solid var(--primary);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    align-self: center;
+    padding: 2rem;
+    background-color: white;
+    font-family: var(--font-sans);
+    width: 45vw;
+  }
+
+  #login-wrapper form h1 {
+    margin: 0;
+  }
+
+  .label {
+    display: block;
+  }
+
+  .input-wrapper {
+    display: flex;
+    gap: 4px;
+    margin: 0.2em 0;
+  }
+
+  .input-wrapper .input {
+    flex: 1;
+    border: 1px solid #ddd;
+    font: inherit;
+    outline: 0;
+    padding: 7px;
+  }
+
+  .input-wrapper .button {
+    border: 0;
+    font: inherit;
+    outline: 0;
+    cursor: pointer;
+    padding: 7px 14px;
+  }
+
+  .input-wrapper a {
+    color: var(--primary) !important;
+    cursor: pointer;
+  }
+</style>
+
+<Layout title="Login" description="Log in and start making some art!">
+  <div id="login-wrapper">
+    <LoginComponent client:load to={to} email={email} session={session} />
+  </div>
+</Layout>
