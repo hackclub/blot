@@ -103,8 +103,6 @@ function thicken(turtle, startingTime) {
 
       // Add noise
       ring.iteratePath((ringPoint, ringT) => {
-        const normal = ring.getNormal(ringT)
-
         // Smoothstep so more noisy in middle, less at edges
         const s =
           0.9 * smoothstep(-0.1, 0.4, 0.5 - Math.abs(ringT - 0.5)) * thickness // Scale with thickness, as there's more/less room
