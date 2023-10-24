@@ -19,9 +19,9 @@ A piece of art made for Blot can be the first program you ever write, but it can
 
 <img width="250" src="https://github.com/hackclub/blot/assets/27078897/0ffc0ca8-516b-4f9a-b34e-4f09218e41cd"/>
 
-Check out the 3D model of the project here (COMING SOON).
+Check out the [3D model of the project](https://cad.onshape.com/documents/0bcd2f50d2614ea26189f43b/w/23913e7defc94fc29f7833e6/e/72ea852bfc1822955e506e37?renderMode=0&uiState=6538235d42737a70b1996741).
 
-You can find the 3D parts for the model here (LINK PARTS LIST).
+You can find the [bill of materials here](https://blot.hackclub.dev/assembly) if you'd like to 3D print your Blot [the parts are here](https://github.com/hackclub/blot/tree/main/hardware/mechanical/drawing-thing-v4).
 
 **A web based editor for programmatic art** that we designed specifically for pen plotting with a custom geometry library.
 
