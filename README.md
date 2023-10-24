@@ -5,19 +5,19 @@
 Create programmatic art in our web-based editor and submit it to the gallery and we'll send you a CNC machine which can make that art.
 Blot is a "You Ship, We Ship" project from [Hack Club](https://hackclub.com) (like [Sprig](https://github.com/hackclub/sprig)). 
 
-![machine](https://github.com/hackclub/blot/assets/27078897/2a3d89c5-79b0-4d1d-98b7-a2c4b285fde5)
+<img width="500" src="https://github.com/hackclub/blot/assets/27078897/2a3d89c5-79b0-4d1d-98b7-a2c4b285fde5"/>
 
 A piece of art made for Blot can be the first program you ever write, but it can also be a challenge for a master programmer. Check out some of the art made already in our gallery.
 
-[![Screenshot 2023-10-24 at 3 44 10 PM](https://github.com/hackclub/blot/assets/27078897/5666011a-089e-44d9-8956-5c283f00ff14)](https://blot.hackclub.dev/gallery)
+[<img width="500" src="https://github.com/hackclub/blot/assets/27078897/5666011a-089e-44d9-8956-5c283f00ff14"/>](https://blot.hackclub.dev/gallery)
 
 # Blot is...
 
 **A custom CNC drawing machine** designed from scratch to introduce you to digital fabrication. It's made of 6 unique 3D printed parts with a custom control board and easy to understand firmware, which can be interfaced with through JavaScript in the browser.
 
-<img width="499" alt="parts" src="https://github.com/hackclub/blot/assets/27078897/04ab7345-03fa-4b60-9870-64a99327e8cd">
+<img width="500" alt="parts" src="https://github.com/hackclub/blot/assets/27078897/04ab7345-03fa-4b60-9870-64a99327e8cd">
 
-![board-parts](https://github.com/hackclub/blot/assets/27078897/0ffc0ca8-516b-4f9a-b34e-4f09218e41cd)
+<img width="500" src="https://github.com/hackclub/blot/assets/27078897/0ffc0ca8-516b-4f9a-b34e-4f09218e41cd"/>
 
 Check out the 3D model of the project here (COMING SOON).
 
@@ -25,11 +25,14 @@ You can find the 3D parts for the model here (LINK PARTS LIST).
 
 **A web based editor for programmatic art** that we designed specifically for pen plotting with a custom geometry library.
 
-<img width="1353" alt="editor" src="https://github.com/hackclub/blot/assets/27078897/6f444dcf-cd44-4e49-986a-3bd9b57e6593">
+<img width="500" alt="editor" src="https://github.com/hackclub/blot/assets/27078897/6f444dcf-cd44-4e49-986a-3bd9b57e6593">
 
 # To get started
 
 Check out the examples in the [gallery](https://blot.hackclub.dev/gallery) and then follow along with some of our [guides](https://blot.hackclub.dev/guides).
+
+<img width="500" src="https://github.com/hackclub/blot/assets/27078897/a072225f-dcaf-4571-bcaa-966d7271247c"/>
+
 
 The guides are designed to work like visual coding puzzles, which incrementally bring you through building generative art pieces.
 
