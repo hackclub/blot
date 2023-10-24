@@ -36,6 +36,8 @@ Check out the examples in the [gallery](https://blot.hackclub.dev/gallery) and t
 
 The guides are designed to work like visual coding puzzles, which incrementally bring you through building generative art pieces.
 
+The [submission rules to get a Blot for a PR are here](https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md). **You must be a teenager (or younger to qualify)** but anyone can make art and make a PR. Also...
+
 # It's all Open Source
 
 Every part of Blot is freely available for you to investigate and discover. 
@@ -43,6 +45,8 @@ That includes the editor, the hardware design, the electronics, and even the fin
 We think people deserve tools they can take ownership of. That's why we give away the source for free. 
 
 Our projects at Hack Club have hundreds of teenage contributors from all over the world, if you want to learn how to program we invite you to jump in and start building tools used by thousands.
+
+You're also welcome to participate and use our tools if you aren't a teen (like making art or building your own blot). But our [online community](https://hackclub.com/slack) is for teens only.
 
 # Development
 
