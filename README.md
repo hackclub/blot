@@ -1,25 +1,70 @@
-# The Blot
+# Blot, the plotter bot from Hack Club
 
-> blot is a plotting bot from Hack Club
+**[💻 Online Editor: Make art](https://blot.hackclub.dev/editor)** | **[👀 Gallery](https://blot.hackclub.dev/gallery)** | **[🕸 Landing Page](https://blot.hackclub.dev)**
 
-This is the next "you ship, we ship"[^1] project. This time, if you make some digital art, we'll send you the parts to build a drawing robot which can make that art real!
+Create programmatic art in our web-based editor and submit it to the gallery and we'll send you a CNC machine which can make that art.
+Blot is a "You Ship, We Ship" project from [Hack Club](https://hackclub.com) (like [Sprig](https://github.com/hackclub/sprig)). 
 
-[^1]: Like [Sprig](https://sprig.hackclub.com)—where you ship a project, and Hack Club ships you hardware/electronics.
+![machine](https://github.com/hackclub/blot/assets/27078897/2a3d89c5-79b0-4d1d-98b7-a2c4b285fde5)
 
-![Drawing machine creating turtle art](https://user-images.githubusercontent.com/27078897/232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg)
+A piece of art made for Blot can be the first program you ever write, but it can also be a challenge for a master programmer. Check out some of the art made already in our gallery.
 
-# Info
+[![Screenshot 2023-10-24 at 3 44 10 PM](https://github.com/hackclub/blot/assets/27078897/5666011a-089e-44d9-8956-5c283f00ff14)](https://blot.hackclub.dev/gallery)
 
-The editor can be found [here](https://blot.hackclub.dev/).
+# Blot is...
 
-The virtual maze is here.
+**A custom CNC drawing machine** designed from scratch to introduce you to digital fabrication. It's made of 6 unique 3D printed parts with a custom control board and easy to understand firmware, which can be interfaced with through JavaScript in the browser.
 
-# Getting Involved
+<img width="499" alt="parts" src="https://github.com/hackclub/blot/assets/27078897/04ab7345-03fa-4b60-9870-64a99327e8cd">
 
-We post regular updates in our [CHANGELOG](./CHANGELOG.md).
+![board-parts](https://github.com/hackclub/blot/assets/27078897/0ffc0ca8-516b-4f9a-b34e-4f09218e41cd)
 
-We have a [TODO](./TODO.md) list which you can check out for various tasks that are being worked on (or need to be worked on).
+Check out the 3D model of the project here (COMING SOON).
 
-One of the best ways to get involved is by building and testing one of the machines. All you need is a 3D printer and a little bit of hardware outlined in the [bill of materials](./drawing-thing-v2).
+You can find the 3D parts for the model here (LINK PARTS LIST).
 
-If you're a teen who wants to follow along with the project you can join the Hack Club Slack and head to the [#blot](https://app.slack.com/client/T0266FRGM/C04GCH8A91D) channel.
+**A web based editor for programmatic art** that we designed specifically for pen plotting with a custom geometry library.
+
+<img width="1353" alt="editor" src="https://github.com/hackclub/blot/assets/27078897/6f444dcf-cd44-4e49-986a-3bd9b57e6593">
+
+# To get started
+
+Check out the examples in the [gallery](https://blot.hackclub.dev/gallery) and then follow along with some of our [guides](https://blot.hackclub.dev/guides).
+
+The guides are designed to work like visual coding puzzles, which incrementally bring you through building generative art pieces.
+
+# It's all Open Source
+
+Every part of Blot is freely available for you to investigate and discover. 
+That includes the editor, the hardware design, the electronics, and even the finances around the project.
+
+# Development
+
+Join the `#blot` channel on the [Hack Club Slack](https://hackclub.com/slack). 
+
+The Blot editor is made with astro. To run the project locally.
+
+You'll need:
+
+```
+Git
+Node.js
+Yarn
+```
+
+After installing those, clone the repo.
+
+```
+git clone https://github.com/hackclub/blot/
+cd blot/astro
+yarn install
+```
+
+To run the development server.
+
+```
+yarn dev
+```
+
+# License
+The Hack Club Blot is open source and licensed under the [MIT License](https://github.com/hackclub/blot/LICENSE.md). Fork, remix, and make it your own! Pull requests and other contributions greatly appreciated.
