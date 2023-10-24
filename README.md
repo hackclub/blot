@@ -15,9 +15,9 @@ A piece of art made for Blot can be the first program you ever write, but it can
 
 **A custom CNC drawing machine** designed from scratch to introduce you to digital fabrication. It's made of 6 unique 3D printed parts with a custom control board and easy to understand firmware, which can be interfaced with through JavaScript in the browser.
 
-<img width="500" alt="parts" src="https://github.com/hackclub/blot/assets/27078897/04ab7345-03fa-4b60-9870-64a99327e8cd">
+<img width="250" alt="parts" src="https://github.com/hackclub/blot/assets/27078897/04ab7345-03fa-4b60-9870-64a99327e8cd">
 
-<img width="500" src="https://github.com/hackclub/blot/assets/27078897/0ffc0ca8-516b-4f9a-b34e-4f09218e41cd"/>
+<img width="250" src="https://github.com/hackclub/blot/assets/27078897/0ffc0ca8-516b-4f9a-b34e-4f09218e41cd"/>
 
 Check out the 3D model of the project here (COMING SOON).
 
