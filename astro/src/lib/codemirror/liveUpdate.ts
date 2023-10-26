@@ -5,7 +5,7 @@
 import type { EditorState } from '@codemirror/state'
 import type { EditorView } from '@codemirror/view'
 import { codePositionToOffset, rangeToCodePositions } from './utils.js'
-import runCode, { build, bundle, bundleState, smc } from '../run.js'
+import runCode, { build, bundle, bundleState, smc } from '../run.ts'
 
 export const manualChangeSinceLiveUpdate = {
   value: true
