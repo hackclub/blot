@@ -9,7 +9,7 @@ import {
 } from '@codemirror/view'
 import type { TreeCursor } from '@lezer/common'
 import runCode from '../run.js'
-import { nodeIsNumber } from './utils.js'
+import { nodeIsNumber } from './utils.ts'
 import {
   createSpan,
   createUpdate,

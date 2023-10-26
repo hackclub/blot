@@ -1,6 +1,5 @@
 import { Point, createHaxidraw } from './drawingToolkit/index.js'
 import { getStore, patchStore } from './state.ts'
-import { sleep } from './run.ts'
 
 export async function connect() {
   if (getStore().inst) throw new Error('Already connected to an instance')
@@ -30,6 +29,9 @@ export async function tryAutoConnect() {
     inst: await createHaxidraw(p)
   })
 }
+
+export const sleep = (ms: number) =>
+  new Promise(resolve => window.setTimeout(resolve, ms))
 
 export async function runMachine(scaleX: number = 1, scaleY: number = 1) {
   patchStore({ running: true })
