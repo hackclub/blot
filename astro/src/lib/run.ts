@@ -114,12 +114,15 @@ export default async function runCode() {
   try {
     const ast = parse(code, { sourceType: "module" });
   } catch (err) {
-    console.log(err);    
+    console.log(err);
+
+    const sliceAt = err.message.indexOf("(") - 1;
+    err.message    
     const error = {
       pos: err.loc,
       code: getCode(),
       name: err.name,
-      message: err.message
+      message: err.message.slice(0, sliceAt)
     }
 
     patchStore({ error });
