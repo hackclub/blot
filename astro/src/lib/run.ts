@@ -109,11 +109,26 @@ const args = {
 }
 
 export default async function runCode() {
+  const code = getCode();
 
   try {
-    const code = getCode();
-    const ast = parse(code);
-    console.log(ast);
+    const ast = parse(code, { sourceType: "module" });
+  } catch (err) {
+    console.log(err);    
+    const error = {
+      pos: err.loc,
+      stack: err.stack.split("\n"), // TODO: this is bugged
+      code: getCode(),
+      name: err.name,
+      message: err.message
+    }
+
+    patchStore({ error });
+
+    return;
+  }
+
+  try {
     await runCodeInner(code, args);
   } catch (err) {
     console.log(err);
@@ -127,8 +142,8 @@ export default async function runCode() {
 
     patchStore({ error });
   }
-    
-}
+  
+} 
 
 
 async function runCodeInner(str, globalScope) {
@@ -164,8 +179,6 @@ async function runCodeInner(str, globalScope) {
 
   const fn = new AsyncFunction(...Object.keys(globalScope), str)
 
-  console.log(str);
-
   await fn(...Object.values(globalScope)).catch(err => {
     console.log("about to throw error")
     throw err;
@@ -177,26 +190,7 @@ async function runCodeInner(str, globalScope) {
   })
 }
 
-
-function getPosFromStackLine(line: string): CodePosition | undefined {
-  const match = line.match(/<anonymous>:(\d+):(\d+)/gm)
-  if (match) {
-    return { line: Number(match[1]) - 2, column: Number(match[2]) }
-  } else return
-}
-
-function getActualFirstStackLine(lines: string[]) {
-  let i = 0
-  while (!['<anonymous>', 'AsyncFunction'].find(e => lines[i].includes(e))) i++
-  return i
-}
-
 function getPosFromErr(err) {
-  // const stackLines = err.stack.split('\n')
-  // const pos = getPosFromStackLine(
-  //   stackLines[getActualFirstStackLine(stackLines)]
-  // )
-
   const match = err
     .stack
     .match(/<anonymous>:(\d+):(\d+)/);

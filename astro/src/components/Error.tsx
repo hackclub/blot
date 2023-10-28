@@ -106,8 +106,7 @@ export default function Error() {
   const { error } = getStore()
 
   if (!error) return null
-
-
+    
   return (
     <div class={styles.root}>
       <span class={styles.name}>{error.name}</span>
