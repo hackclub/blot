@@ -79,22 +79,12 @@ const Snippet = ({
     })
   })
 
-  const hasContext = pos.line !== 1
-  const lines = code.split('\n')
-  const context = hasContext ? lines[pos.line - 2].trimStart() : undefined
   return (
     <pre class={styles.snippet}>
       <div>
-        {hasContext && <div>{pos.line - 1}</div>}
         <div>{pos.line}</div>
       </div>
       <code>
-        {hasContext && (
-          <>
-            {' '.repeat(lines[pos.line - 2].length - context!.length)}
-            <span class={styles.context}>{context}</span>
-          </>
-        )}
         <div ref={cmRef} class={styles.cm} />
         {' '.repeat(pos.column)}
         <span class={styles.arrow}>↑</span>
@@ -117,41 +107,15 @@ export default function Error() {
 
   if (!error) return null
 
-  const l = error.stack?.[0]?.line
 
   return (
     <div class={styles.root}>
       <span class={styles.name}>{error.name}</span>
-      {l !== null && l !== undefined ? (
-        <Snippet
-          pos={error.stack[0]}
+      <Snippet
+          pos={error.pos}
           code={error.code}
           message={error.message}
         />
-      ) : (
-        <>
-          <span>{error.message}</span>
-          <span>
-            something went wrong getting the error snippet. report this as a bug
-            on GitHub.
-          </span>
-        </>
-      )}
-      {error.stack.length > 1 && (
-        <details>
-          <summary class={styles.stackLabel}>stack trace</summary>
-          <div class={styles.stack}>
-            {error.stack.slice(1).map((pos, i) => (
-              <Snippet
-                pos={pos}
-                code={error.code}
-                key={i}
-                message="in this call"
-              />
-            ))}
-          </div>
-        </details>
-      )}
     </div>
   )
 }
