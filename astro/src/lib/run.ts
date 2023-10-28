@@ -117,7 +117,6 @@ export default async function runCode() {
     console.log(err);    
     const error = {
       pos: err.loc,
-      stack: err.stack.split("\n"), // TODO: this is bugged
       code: getCode(),
       name: err.name,
       message: err.message
@@ -134,7 +133,6 @@ export default async function runCode() {
     console.log(err);
     const error = {
       pos: getPosFromErr(err),
-      stack: err.stack.split("\n"), // TODO: this is bugged
       code: getCode(),
       name: err.name,
       message: err.message
@@ -197,7 +195,7 @@ function getPosFromErr(err) {
 
   const pos = { line: Number(match[1]) - 2, column: Number(match[2]) };
   
-  // to account for "use strict"
+  // to account for "use strict\n"
   pos.line -= 1;
   pos.column -= 1;
  
