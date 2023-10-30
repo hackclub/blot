@@ -20,7 +20,10 @@ import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
 import { saveFile } from "../lib/saveFile.ts";
-import prettier from "prettier";
+import * as prettier from "prettier";
+import js_beautify from "js-beautify";
+
+console.log(js_beautify);
 
 export default function Toolbar() {
   const { connected, needsSaving, view } = getStore()
@@ -46,9 +49,10 @@ export default function Toolbar() {
         <OpenButton />
         <div 
           class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
-          onClick={() => {
+          onClick={async () => {
             const ogCode = getCode();
-            const formatted = formatCode(ogCode);
+            const formatted = await formatCode(ogCode);
+            console.log(formatted);
             view.dispatch({
               changes: {
                 from: 0,
@@ -336,11 +340,11 @@ function OpenButton() {
   )
 }
 
-function formatCode(code) {
+async function formatCode(code) {
     try {
-        return prettier.format(code, { parser: "babel" });
+        return js_beautify(dataJson, options);
     } catch (error) {
-        console.error("Error formatting the code:", error.message);
+        console.log(error);
         return code; // return the original code if there's an error
     }
 }
