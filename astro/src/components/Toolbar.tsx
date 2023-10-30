@@ -19,11 +19,11 @@ import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
-import { saveFile } from "../lib/saveFile.ts";
-import * as prettier from "prettier";
-import js_beautify from "js-beautify";
+import { saveFile } from '../lib/saveFile.ts'
+import * as prettier from 'prettier'
+import js_beautify from 'js-beautify'
 
-console.log(js_beautify);
+console.log(js_beautify)
 
 export default function Toolbar() {
   const { connected, needsSaving, view } = getStore()
@@ -35,24 +35,23 @@ export default function Toolbar() {
       <div class="flex items-center h-full">
         <h1 class={styles.heading}>
           <a href="/">
-            <img src="/blot.svg" style="width: 30px"/>
+            <img src="/blot.svg" style="width: 30px" />
             <span style="font-weight: 700;">blot</span>
           </a>
         </h1>
         <RunButton />
-        <div 
+        <div
           class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
           onClick={() => saveFile(getCode())}>
-          { needsSaving ? "save* (ctrl/cmd+s)" : "save (ctrl/cmd+s)" }
+          {needsSaving ? 'save* (ctrl/cmd+s)' : 'save (ctrl/cmd+s)'}
         </div>
         <NewButton />
         <OpenButton />
-        <div 
+        <div
           class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
-          onClick={async () => {
-            const ogCode = getCode();
-            const formatted = await formatCode(ogCode);
-            console.log(formatted);
+          onClick={() => {
+            const ogCode = getCode()
+            const formatted = formatCode(ogCode)
             view.dispatch({
               changes: {
                 from: 0,
@@ -71,18 +70,17 @@ export default function Toolbar() {
           <div
             class={[
               hidden ? 'hidden' : '',
-              "border border-white border-opacity-10",
-              "bg-[--primary] absolute z-50 top-full p-1 rounded-md"
-            ].join(" ")}
-            >
+              'border border-white border-opacity-10',
+              'bg-[--primary] absolute z-50 top-full p-1 rounded-md'
+            ].join(' ')}>
             <DownloadButton />
             <DownloadSVG />
             <DownloadPNG />
-            <div 
+            <div
               class="w-max p-1 rounded hover:bg-white hover:bg-opacity-10"
               onClick={e => {
-                const { turtles } = getStore();
-                console.log(turtles);
+                const { turtles } = getStore()
+                console.log(turtles)
               }}>
               cull hidden lines
             </div>
@@ -340,13 +338,16 @@ function OpenButton() {
   )
 }
 
-async function formatCode(code) {
-    try {
-        return js_beautify(dataJson, options);
-    } catch (error) {
-        console.log(error);
-        return code; // return the original code if there's an error
+function formatCode(code) {
+  try {
+    const options = {
+      indent_size: 2
     }
+    return js_beautify(code, options)
+  } catch (error) {
+    console.log(error)
+    return code // return the original code if there's an error
+  }
 }
 
 function MachineControls() {
@@ -410,7 +411,7 @@ function SettingsButton() {
           'padding': '5px',
           'border-radius': '5px'
         }}>
-{/*        <Button
+        {/*        <Button
           class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
@@ -443,4 +444,3 @@ function SettingsButton() {
     </div>
   )
 }
-

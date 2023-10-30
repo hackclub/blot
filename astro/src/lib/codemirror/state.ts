@@ -44,7 +44,6 @@ const cmExtensions = [
   vimModeExtension(),
   errorIndicatorPlugin(),
   widgetButtons
-  // widgetsPlugin
 ]
 
 export const createCMState = (doc = '') =>
