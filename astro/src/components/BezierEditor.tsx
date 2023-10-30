@@ -45,7 +45,7 @@ export const BezierEditor = ({ initialValue, onChange }) => {
   const ref = addToRef({ change, pointRef })
 
   return (
-    <div class={styles.container}>
+    <div data-bezier-editor class={`${styles.container} font-mono z-50`}>
       <svg
         ref={ref}
         class={['bez-ctrl', styles.bezCtrl].join(' ')}

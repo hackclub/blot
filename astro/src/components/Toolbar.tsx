@@ -20,9 +20,10 @@ import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
 import { saveFile } from "../lib/saveFile.ts";
+import prettier from "prettier";
 
 export default function Toolbar() {
-  const { connected, needsSaving } = getStore()
+  const { connected, needsSaving, view } = getStore()
 
   const [hidden, setHidden] = useState(true)
 
@@ -43,6 +44,21 @@ export default function Toolbar() {
         </div>
         <NewButton />
         <OpenButton />
+        <div 
+          class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
+          onClick={() => {
+            const ogCode = getCode();
+            const formatted = formatCode(ogCode);
+            view.dispatch({
+              changes: {
+                from: 0,
+                to: ogCode.length,
+                insert: formatted
+              }
+            })
+          }}>
+          tidy code
+        </div>
         <div
           class="relative cursor-default w-max h-full flex items-center p-1"
           onMouseEnter={() => setHidden(false)}
@@ -318,6 +334,15 @@ function OpenButton() {
       open
     </Button>
   )
+}
+
+function formatCode(code) {
+    try {
+        return prettier.format(code, { parser: "babel" });
+    } catch (error) {
+        console.error("Error formatting the code:", error.message);
+        return code; // return the original code if there's an error
+    }
 }
 
 function MachineControls() {

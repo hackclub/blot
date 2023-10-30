@@ -3,6 +3,8 @@ import { RangeSetBuilder } from "@codemirror/state"
 import { syntaxTree } from "@codemirror/language"
 import { nodeIsNumber } from './utils.ts'
 
+// TODO: make this a widget so I can insert stuff into it's dom
+
 const CALLNAME_BUTTONS = [
   "bezierEasing"
 ]
@@ -61,6 +63,9 @@ function decorate(view) {
             attributes: {
               "data-start-index": fullRange.from,
               "data-end-index": fullRange.to,
+              "data-args-string": argsString,
+              "data-args-start": fullRange.from + fullString.indexOf("(") + 1,
+              "data-args-end": fullRange.from + fullString.indexOf("(") + argsString.length,
               [`data-${callname}`]: ""
             },
             class: `bg-[--primary] text-white rounded px-1 cursor-pointer` 
