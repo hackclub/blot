@@ -5,12 +5,14 @@ const SCALE = DPI/25.4;
 
 export function getBitmap() {
   const { turtles, docDimensions } = getStore()
+  const w = docDimensions.width*SCALE;
+  const h = docDimensions.height*SCALE;
 
   // make min 0, 0
 
   const canvas = document.createElement('canvas');
-  canvas.width = docDimensions.width*SCALE;
-  canvas.height = docDimensions.height*SCALE;
+  canvas.width = w;
+  canvas.height = h;
 
   const ctx = canvas.getContext('2d');
   // ctx.transform(1, 0, 0, -1, 0, canvas.height)
@@ -47,6 +49,8 @@ export function getBitmap() {
     top: 0;
   `
 
+  // document.body.appendChild(canvas);
+
   // console.log(canvas);
 
   // setTimeout(() => {
@@ -68,7 +72,7 @@ export function createMask() {
   }
 
   const avgGrey = (x, y) => {
-    const colors = ctx.getImageData(x*SCALE-1, y*SCALE-1, 3, 3);
+    const colors = ctx.getImageData(x*SCALE, y*SCALE, 1, 1);
     const { data } = colors;
 
     let totalGrey = 0;
@@ -94,25 +98,13 @@ export function createMask() {
   }
 
   const isVisible = (x, y) => {
-    const scaleX = x*SCALE;
-    const scaleY = y*SCALE;
-    const pixel0 = ctx.getImageData(scaleX, scaleY, 1, 1).data;
-    const isWhite0 = pixel0.every(v => v === 255);
-    const pixel1 = ctx.getImageData(scaleX-1, scaleY+1, 1, 1).data;
-    const isWhite1 = pixel1.every(v => v === 255);
-    const pixel2 = ctx.getImageData(scaleX+1, scaleY-1, 1, 1).data;
-    const isWhite2 = pixel2.every(v => v === 255);
-    const pixel3 = ctx.getImageData(scaleX-1, scaleY-1, 1, 1).data;
-    const isWhite3 = pixel3.every(v => v === 255);
-    const pixel4 = ctx.getImageData(scaleX+1, scaleY+1, 1, 1).data;
-    const isWhite4 = pixel4.every(v => v === 255);
+    const scaleX = Math.floor(x*SCALE);
+    const scaleY = Math.floor(y*SCALE);
+    const pixels = ctx.getImageData(scaleX-1, scaleY-1, 3, 3).data;
 
-    // circle(scaleX, scaleY, isWhite ? "red" : "black", 4);
+    const isWhite = pixels.every(v => v === 255);
 
-    // const pixelAfter = ctx.getImageData(scaleX, scaleY, 1, 1).data;
-
-    return !isWhite0 || !isWhite1 || !isWhite2 || !isWhite3 || !isWhite4;
-
+    return !isWhite;
   }
 
   function getPixelGrayValue(x, y) {
