@@ -22,8 +22,8 @@ import GitHubIcon from '../ui/GitHubIcon.tsx'
 import { saveFile } from '../lib/saveFile.ts'
 import * as prettier from 'prettier'
 import js_beautify from 'js-beautify'
-
-console.log(js_beautify)
+import { createMask } from "../lib/getBitmap.js";
+import { Turtle } from '../lib/drawingToolkit/index.js'
 
 export default function Toolbar() {
   const { connected, needsSaving, view } = getStore()
@@ -79,8 +79,35 @@ export default function Toolbar() {
             <div
               class="w-max p-1 rounded hover:bg-white hover:bg-opacity-10"
               onClick={e => {
-                const { turtles } = getStore()
-                console.log(turtles)
+                const { turtles } = getStore();
+                const { isVisible }  = createMask();
+
+                const newTurtle = new Turtle();
+                let lastVisible = false;
+
+                turtles.forEach(turtle => {
+                  turtle
+                  .resample(0.1)
+                  .path.forEach(pl => {
+                    pl.forEach((pt, i) => {
+                      const [x, y] = pt;
+                      const visible = isVisible(x, y);
+
+                      if (lastVisible && i > 0 && visible) newTurtle.goTo([x, y]);
+                      else newTurtle.jump([x, y]);
+                      lastVisible = visible;
+                    })
+                  })
+                })
+
+                newTurtle.simplify(.01);
+                newTurtle.style.fill ="none";
+                newTurtle.style.stroke = "black";
+
+                patchStore({
+                  turtles: [newTurtle]
+                })
+                
               }}>
               cull hidden lines
             </div>
