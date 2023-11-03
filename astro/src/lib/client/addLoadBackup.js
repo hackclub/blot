@@ -1,4 +1,4 @@
-import { useOnEditorChange } from '../events'
+import { useOnEditorChange } from '../events/events'
 import { getStore } from '../state/state'
 import defaultProgram from '../examples/defaultProgram'
 

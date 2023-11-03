@@ -2,7 +2,7 @@ import { syntaxTree } from '@codemirror/language'
 import type { Range } from '@codemirror/state'
 import {
   Decoration,
-  DecorationSet,
+  type DecorationSet,
   EditorView,
   ViewPlugin,
   ViewUpdate
@@ -14,7 +14,7 @@ import {
   createSpan,
   createUpdate,
   dispatchLiveUpdates,
-  LiveUpdateSpan,
+  type LiveUpdateSpan,
   runLiveUpdates
 } from './liveUpdate'
 

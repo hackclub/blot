@@ -33,9 +33,11 @@ const loggedIn = session && session.session.full
 
 // Check if on mobile
 const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
+
+export const prerender = false
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -44,8 +46,6 @@ const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
   </head>
   <body>
     <main></main>
-    <script
-      src="../lib/client/init.js"
-      define:vars={{ source, guide, toolkit, loggedIn, isMobile }}></script>
+    <script src="../lib/client/init.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import { createListener } from '../createListener.js'
+import { createListener } from '../client/createListener.js'
 
 export function addBezierControl() {
   const listen = createListener(document.body)

@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Search from '../components/Search.tsx'
-import { slug } from '../lib/utils/guide.ts'
+import { slug } from '../lib/utils/guide'
 
 let images = []
 try {
@@ -21,8 +20,6 @@ try {
 } catch (error) {
   console.log(error)
 }
-
-let filtered = images
 
 export const prerender = true
 ---
@@ -166,40 +163,33 @@ export const prerender = true
 
       @media screen and (max-width: $lg) {
         font-size: 1.1rem;
+        width: 100%;
       }
     }
   </style>
-
-  <script>
-    document.querySelectorAll('.overlay').forEach(button => {
-      button.addEventListener('click', event => {
-        document.location.href = event.target.dataset?.background
-      })
-    })
-
-    document.querySelectorAll('.overlay a').forEach(link => {
-      link.addEventListener('click', event => {
-        event.stopImmediatePropagation()
-        event.stopPropagation()
-      })
-    })
-  </script>
 
   <header>
     <h1>Gallery</h1>
     <p>
       A gallery of various art pieces created by Hack Clubbers, with an
       interactive 3D gallery mode! Teenagers can submit art to the gallery to
-      get their own Blot. Guide to submission is <a href="" target="_blank"
-        >here</a
+      get their own Blot. Guide to submission is <a
+        style={{ color: 'var(--primary)' }}
+        href=""
+        target="_blank">here</a
       >.
     </p>
-    <Search client:only images={images} />
+    <input
+      autocomplete="off"
+      id="search"
+      placeholder="Search gallery"
+      type="text"
+    />
   </header>
   <div id="container">
     <div id="gallery">
       {
-        filtered.map(img => {
+        images.map(img => {
           return (
             <div class="frame">
               <a href={img.href}>
@@ -219,5 +209,51 @@ export const prerender = true
       }
     </div>
   </div>
+
+  <script define:vars={{ images }}>
+    window.filterImages = (query, filter) => {
+      const results = filter(images, query, { key: 'title' })
+      const gallery = document.getElementById('gallery')
+      gallery.innerHTML = ''
+      for (let img of results) {
+        let frame = document.createElement('div')
+        frame.classList.add('frame')
+        frame.innerHTML = `
+          <a href="${img.href}">
+            <img class="thumbnail" alt="${img.alt}" src="${img.img}" />
+          </a>
+          <button class="overlay prose" data-background="${img.href}">
+            <p style="font-weight: bold;">${img.title}</p>
+            <p style="font-size: 1.3rem;">
+              <a href="https://github.com/${img.artist}" target="_blank">
+                @${img.artist}
+              </a>
+            </p>
+          </button>
+        `
+        gallery.appendChild(frame)
+      }
+    }
+  </script>
+  <script>
+    import { filter } from 'fuzzaldrin'
+
+    document.querySelectorAll('.overlay').forEach(button => {
+      button.addEventListener('click', event => {
+        document.location.href = event.target.dataset?.background
+      })
+    })
+
+    document.querySelectorAll('.overlay a').forEach(link => {
+      link.addEventListener('click', event => {
+        event.stopImmediatePropagation()
+        event.stopPropagation()
+      })
+    })
+
+    document.querySelector('#search').addEventListener('input', event => {
+      const query = event.target.value
+      window.filterImages(query, filter)
+    })
+  </script>
 </Layout>
- ../components/Search.tsx

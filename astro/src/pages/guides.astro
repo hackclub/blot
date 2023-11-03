@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Search from '../components/Search'
 import { slug } from '../lib/utils/guide'
-const workshops = await Astro.glob('/../guides/*.md')
+let guides = await Astro.glob('/../guides/*.md')
+guides = guides.map(guide => ({ ...guide, title: guide.frontmatter.title }))
 
 export const prerender = true
 ---
@@ -86,6 +86,7 @@ export const prerender = true
       align-items: center;
       justify-content: center;
       text-decoration: none;
+      text-align: center;
 
       p {
         color: black;
@@ -150,44 +151,42 @@ export const prerender = true
 
       @media screen and (max-width: $lg) {
         font-size: 1.1rem;
+        width: 100%;
       }
     }
   </style>
 
-  <script>
-    document.querySelectorAll('.overlay').forEach(button => {
-      button.addEventListener('click', event => {
-        document.location.href = event.target.dataset?.guide
-      })
-    })
-  </script>
-
   <header>
     <h1>Guides</h1>
     <p>A gallery of various guides created by Hack Clubbers.</p>
-    <Search client:only images={[]} />
+    <input
+      autocomplete="off"
+      id="search"
+      placeholder="Search guides"
+      type="text"
+    />
   </header>
   <div id="container">
     <div id="gallery">
       {
-        workshops
+        guides
           .sort((a, b) =>
             a.frontmatter.pinned ? -1 : b.frontmatter.pinned ? 1 : 0
           )
-          .map(workshop => {
+          .map(guides => {
             return (
               <div class="frame">
-                <img class="thumbnail" src={workshop.frontmatter.thumbnail} />
+                <img class="thumbnail" src={guides.frontmatter.thumbnail} />
                 <div class="overlay">
                   <div class="prose">
                     <p style={{ fontWeight: 'bold' }}>
-                      {workshop.frontmatter.title}
+                      {guides.frontmatter.title}
                     </p>
-                    <a href={`/editor?guide=${slug(workshop.file)}`}>
+                    <a href={`/editor?guide=${slug(guides.file)}`}>
                       Open in editor
                     </a>{' '}
                     &middot;{' '}
-                    <a href={`/guide/${slug(workshop.file)}`}>Open as guide</a>
+                    <a href={`/guide/${slug(guides.file)}`}>Open as guide</a>
                   </div>
                 </div>
               </div>
@@ -196,5 +195,52 @@ export const prerender = true
       }
     </div>
   </div>
+
+  <script define:vars={{ guides }}>
+    window.filterGuides = (query, filter, slug) => {
+      const results = filter(guides, query, { key: 'title' })
+      const gallery = document.getElementById('gallery')
+      gallery.innerHTML = ''
+      for (let guides of results) {
+        let frame = document.createElement('div')
+        frame.classList.add('frame')
+        frame.innerHTML = `
+          <img class="thumbnail" src="${guides.frontmatter.thumbnail}"/>
+          <div class="overlay">
+            <div class="prose">
+              <p style="font-weight: bold;">${guides.frontmatter.title}</p>
+              <a href="${`/editor?guide=${slug(
+                guides.file
+              )}`}">Open in editor</a> &middot; <a href="/guide/${slug(
+                guides.file
+              )}">Open as guide</a>
+            </div>
+          </div>
+        `
+        gallery.appendChild(frame)
+      }
+    }
+  </script>
+  <script>
+    import { filter } from 'fuzzaldrin'
+    import { slug } from '../lib/utils/guide'
+
+    document.querySelectorAll('.overlay').forEach(button => {
+      button.addEventListener('click', event => {
+        document.location.href = event.target.dataset?.background
+      })
+    })
+
+    document.querySelectorAll('.overlay a').forEach(link => {
+      link.addEventListener('click', event => {
+        event.stopImmediatePropagation()
+        event.stopPropagation()
+      })
+    })
+
+    document.querySelector('#search').addEventListener('input', event => {
+      const query = event.target.value
+      window.filterGuides(query, filter, slug)
+    })
+  </script>
 </Layout>
- ../components/Search

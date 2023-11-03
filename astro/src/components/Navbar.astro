@@ -235,16 +235,11 @@ loginLink = loginLink || false
 </nav>
 
 <script>
-  window.onload = () => {
-    if (window.innerWidth < 767.98) {
-      document
-        .querySelector('.navbar-dropdown-button')
-        .addEventListener('click', function () {
-          const dropdown = document.querySelector('.navbar-dropdown-content')
-          if (dropdown.style.display === 'none')
-            dropdown.style.display = 'block'
-          else dropdown.style.display = 'none'
-        })
-    }
-  }
+  document
+    .querySelector('.navbar-dropdown-button')
+    .addEventListener('click', function () {
+      const dropdown = document.querySelector('.navbar-dropdown-content')
+      if (dropdown.style.display === 'none') dropdown.style.display = 'block'
+      else dropdown.style.display = 'none'
+    })
 </script>

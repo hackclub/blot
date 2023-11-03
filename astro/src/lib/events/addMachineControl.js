@@ -1,7 +1,7 @@
 import { createBlot } from '../blot/createBlot'
-import { createListener } from '../createListener.js'
+import { createListener } from '../client/createListener.js'
 import runCode from '../run.ts'
-import { getStore, patchStore } from '../state.ts'
+import { getStore, patchStore } from '../state/state'
 
 export function addMachineControl() {
   let blot
