@@ -5,7 +5,7 @@ const errorTheme = EditorView.baseTheme({
   '& .cm-errorLine': {
     position: 'relative'
   },
-  '& .cm-errorLine::before': {
+  '& .cm-errorLink::before': {
     content: '""',
     backgroundColor: 'rgba(255, 0, 0, 0.3)',
     position: 'absolute',

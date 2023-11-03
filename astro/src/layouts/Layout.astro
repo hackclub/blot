@@ -1,35 +1,28 @@
 ---
-import '../css/global.css'
-
+import '../ui/globals.scss'
 import Navbar from '../components/Navbar.astro'
+import Meta from '../components/Meta.astro'
 
 export interface Props {
-  title: string | undefined
-  description: string | undefined
-  showNav: string | undefined
+  title?: string
+  description?: string | undefined
+  navbar?: boolean | undefined
+  loginLink?: boolean | undefined
 }
 
-let { title, description, showNav } = Astro.props
-title = `Blot | ${title}` || 'Blot'
-description = description || 'Blot editor!'
-showNav = showNav || 'true'
+let { navbar, loginLink } = Astro.props
+navbar = navbar || false
+loginLink = loginLink === undefined ? true : loginLink
 ---
 
-<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <Meta {...Astro.props} />
   </head>
-  <body data-shownav={showNav}>
-    <Navbar/>
+  <body>
+    {navbar === true ? <Navbar loginLink={loginLink} /> : null}
     <slot />
-    <script client:load>
-      const showNav = document.body.dataset.shownav;
-      if (showNav === "true") document.querySelector("nav").style.opacity = 1;
-    </script>
   </body>
 </html>

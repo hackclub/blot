@@ -4,8 +4,8 @@ import {
   getSession,
   getUserByEmail,
   makeOrUpdateSession
-} from '../../../lib/db/account.ts'
-import { isValidEmail } from '../../../lib/db/email.ts'
+} from '../../../db/account.ts'
+import { isValidEmail } from '../../../db/email.ts'
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   const session = await getSession(cookies)

@@ -1,13 +1,13 @@
 import type { APIRoute } from 'astro'
-import type { User } from '../../../lib/db/account.ts'
+import type { User } from '../../../db/account.ts'
 import {
   getSession,
   getUserByEmail,
   makeArt,
   makeOrUpdateSession,
   makeUser
-} from '../../../lib/db/account.ts'
-import { isValidEmail, mail, tempTemplate } from '../../../lib/db/email.ts'
+} from '../../../db/account.ts'
+import { isValidEmail, mail, tempTemplate } from '../../../db/email.ts'
 import { assessCaptcha } from '../../../lib/utils/recaptcha.ts'
 
 export const POST: APIRoute = async ({ request, cookies }) => {

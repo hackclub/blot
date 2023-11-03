@@ -1,25 +1,51 @@
 ---
-import '../css/global.css'
+import Layout from '../layouts/Layout.astro'
+import MobileUnsupported from '../components/MobileUnsupported.astro'
+import { slug } from '../lib/utils/guide'
+import { getSession } from '../db/account'
+import { mobileUserAgent } from '../lib/utils/mobile'
+
+let source: string = Astro.url.searchParams.get('src')
+if (source) {
+  // Fetch actual source
+  const response = await fetch(source)
+  if (response.ok) {
+    source = await response.text()
+  } else source = undefined
+}
+
+let guide: string = Astro.url.searchParams.get('guide')
+if (guide) {
+  // Get actual content
+  const guides = await Astro.glob('/../guides/*.md')
+  guide = guides
+    .find(g => {
+      if (slug(g.file) == guide) return true
+    })
+    ?.compiledContent()
+}
+
+let toolkit = (await Astro.glob('/../docs/TOOLKIT.md'))[0].compiledContent()
+
+// Check if logged in
+const session = await getSession(Astro.cookies)
+const loggedIn = session && session.session.full
+
+// Check if on mobile
+const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta name="description" content="Blot editor!" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
-    <!-- Prism CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet" />
-    <!-- Prism JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
-
-    <meta name="generator" content={Astro.generator} />
-    <title>Blot</title>
   </head>
   <body>
     <main></main>
-    <script src="../lib/initApp.js"></script>
+    <script
+      src="../lib/client/init.js"
+      define:vars={{ source, guide, toolkit, loggedIn, isMobile }}></script>
   </body>
 </html>

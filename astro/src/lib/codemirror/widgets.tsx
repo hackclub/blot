@@ -1,34 +1,30 @@
 import {
   Decoration,
-  DecorationSet,
+  type DecorationSet,
   EditorView,
   ViewPlugin,
   ViewUpdate,
   WidgetType
 } from '@codemirror/view'
 import type { Range } from '@codemirror/state'
-
 import { h, type ComponentType, render } from 'preact'
 import { useState } from 'preact/hooks'
-
 import { syntaxTree } from '@codemirror/language'
 import type { SyntaxNode, TreeCursor } from '@lezer/common'
-import styles from './widgets.module.css'
-import { createEvent } from '../events.ts'
-import { nodeIsNumber } from './utils.js'
-import Button from '../../ui/Button.js'
-import type { LiveUpdateSpan } from './liveUpdate.js'
+import { createEvent } from '../events/events'
+import { nodeIsNumber } from './utils'
+import styles from './widgets.module.scss'
+import Button from '../../ui/editor/Button'
+import type { LiveUpdateSpan } from './liveUpdate'
 import {
   createSpan,
   createUpdate,
   dispatchLiveUpdates,
   runLiveUpdates
-} from './liveUpdate.js'
-
-import ThreeDCurveManualIcon from '../../ui/ThreeDCurveManualIcon.tsx'
-import CloseIcon from '../../ui/CloseIcon.tsx'
-
-import { BezierEditor } from '../../components/BezierEditor.tsx'
+} from './liveUpdate'
+import ThreeDCurveManualIcon from '../../ui/icons/ThreeDCurveManualIcon'
+import CloseIcon from '../../ui/icons/CloseIcon'
+import { BezierEditor } from '../../components/editor/BezierEditor'
 
 type BezierPoints = any
 

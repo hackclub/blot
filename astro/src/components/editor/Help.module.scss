@@ -1,0 +1,38 @@
+.helpSection {
+  color: black;
+  position: relative;
+}
+
+.helpSectionToolbar {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  transform: translate(0, -100%);
+  background: rgba(var(--primary-rgb), 0.89);
+  border-radius: 0 10px 0 0;
+  overflow: clip;
+}
+
+.helpSectionTab {
+  padding: 6px 10px;
+  color: white;
+  cursor: pointer;
+  font-family: var(--sans-serif);
+  user-select: none;
+}
+
+.helpSectionTab:hover {
+  background: rgba(var(--primary-rgb), 0.89);
+}
+
+.helpContent {
+  padding: 1rem;
+  overflow-x: clip;
+  overflow-y: auto;
+  height: 100%;
+
+  > :nth-child(1) {
+    margin-top: 0;
+  }
+}

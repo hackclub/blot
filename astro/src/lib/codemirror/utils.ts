@@ -1,5 +1,5 @@
 import type { EditorView } from '@codemirror/view'
-import type { CodePosition } from '../state.js'
+import type { CodePosition } from '../state'
 import type { SyntaxNode } from '@lezer/common'
 import type { EditorState } from '@codemirror/state'
 

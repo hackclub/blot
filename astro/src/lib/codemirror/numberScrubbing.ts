@@ -8,15 +8,15 @@ import {
   ViewUpdate
 } from '@codemirror/view'
 import type { TreeCursor } from '@lezer/common'
-import runCode from '../run.js'
-import { nodeIsNumber } from './utils.js'
+import runCode from '../run'
+import { nodeIsNumber } from './utils'
 import {
   createSpan,
   createUpdate,
   dispatchLiveUpdates,
   LiveUpdateSpan,
   runLiveUpdates
-} from './liveUpdate.js'
+} from './liveUpdate'
 
 function numberScrubbers(view: EditorView): DecorationSet {
   const decos: Range<Decoration>[] = []

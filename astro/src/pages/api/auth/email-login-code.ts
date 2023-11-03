@@ -1,10 +1,6 @@
 import type { APIRoute } from 'astro'
-import {
-  getUserByEmail,
-  makeLoginCode,
-  makeUser
-} from '../../../lib/db/account.ts'
-import { isValidEmail, loginCodeTemplate, mail } from '../../../lib/db/email.ts'
+import { getUserByEmail, makeLoginCode, makeUser } from '../../../db/account.ts'
+import { isValidEmail, loginCodeTemplate, mail } from '../../../db/email.ts'
 
 export const POST: APIRoute = async ({ request }) => {
   let email: string

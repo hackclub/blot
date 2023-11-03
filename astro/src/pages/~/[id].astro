@@ -1,14 +1,16 @@
 ---
-import { firestore, getArt, getSession } from '../../lib/db/account.ts'
+import Layout from '../../layouts/Layout.astro'
+import EditorComponent from '../../components/editor/Editor'
+import EditorAutosave from '../../components/~/EditorAutosave'
+import { firestore, getArt, getSession } from '../../db/account'
 import { signal } from '@preact/signals'
-import type { PersistenceState } from '../../lib/persist.ts'
+import type { PersistenceState } from '../../lib/state/persist'
 import { mobileUserAgent } from '../../lib/utils/mobile'
-import Editor from '../../components/~/Editor.tsx'
-import EditorLayout from '../../layouts/EditorLayout.astro'
-import { render } from '../../lib/render.tsx'
-import { init } from '../../lib/init.js'
-import '../../ui/editor-theme.css'
-import '../../css/global.css'
+import MobileUnsupported from '../../components/MobileUnsupported.astro'
+import { persist } from '../../db/auth-helper'
+import { slug } from '../../lib/utils/guide'
+
+let toolkit = (await Astro.glob('/../docs/TOOLKIT.md'))[0].compiledContent()
 
 const session = await getSession(Astro.cookies)
 if (!session) return Astro.redirect(`/login?to=${Astro.request.url}`, 302)
@@ -16,19 +18,10 @@ if (!session) return Astro.redirect(`/login?to=${Astro.request.url}`, 302)
 const art = await getArt(Astro.params.id!)
 if (!art || art.ownerId !== session.user.id) return Astro.redirect('/404', 302)
 
-const fileRegexp = /^.*\/(.+)-(\d+)\.md$/
-
 let tutorial: string[] | undefined
 let tutorialIndex: number | undefined
 if (art.tutorialName) {
-  const files = await Astro.glob('/guides/*.md')
-  tutorial = files
-    .filter(file => {
-      const regexedFile = file.file.match(fileRegexp)
-      return regexedFile && regexedFile[1] === art.tutorialName
-    })
-    ?.map(md => md.compiledContent())
-  tutorialIndex = art.tutorialIndex
+  // Get tutorial and pass into editor
 }
 
 let _persistenceState: PersistenceState
@@ -66,33 +59,29 @@ if (session.session.full) {
 }
 
 const persistenceState = signal<PersistenceState>(_persistenceState)
+console.log(persistenceState.value)
 const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
 
 export const prerender = false
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Blot editor!" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <!-- Prism CSS -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"
-      rel="stylesheet"
-    />
-    <!-- Prism JS -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"
-    ></script>
-
-    <meta name="generator" content={Astro.generator} />
-    <title>Blot</title>
-  </head>
-  <body>
-    <main></main>
-    <script src="../../lib/initApp.js"></script>
-  </body>
-</html>
+<Layout
+  title={`Blot | ${persistenceState.value.art.name || 'Editor'}`}
+  navbar={isMobile ? true : false}>
+  {
+    isMobile ? (
+      <MobileUnsupported />
+    ) : (
+      <>
+        <EditorComponent
+          client:only
+          source={persistenceState.value.art.code}
+          guide={null}
+          toolkit={toolkit}
+          loggedIn={true}
+        />
+        <EditorAutosave client:only />
+      </>
+    )
+  }
+</Layout>

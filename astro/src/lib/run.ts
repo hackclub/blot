@@ -1,9 +1,14 @@
-// haxidraw code runtime environment
+// Blot code runtime environment
 
-import { CodePosition, ErrorState, getStore, patchStore } from './state.ts'
-import { RollupError, rollup } from '@rollup/browser'
-import { Turtle, Point } from './drawingToolkit/index.js'
-import * as drawingUtils from './drawingToolkit/utils.js'
+import {
+  type CodePosition,
+  type ErrorState,
+  getStore,
+  patchStore
+} from './state/state'
+import { type RollupError, rollup } from '@rollup/browser'
+import { Turtle, type Point } from './drawing-toolkit/index'
+import * as drawingUtils from './drawing-toolkit/utils'
 import { type FindPosition, SourceMapConsumer } from 'source-map-js'
 import { EditorState } from '@codemirror/state'
 
@@ -259,12 +264,12 @@ export default async function runCode(cached: boolean = false) {
     },
     drawTurtles: (turtlesToDraw: Turtle[], style = {}) => {
       turtlesToDraw.forEach(t => {
-        const temp = t.copy();
-        if (style.fill === undefined) style.fill = "none";
-        if (style.stroke === undefined) style.stroke = "black";
-        temp.style = style;
-        turtles.push(temp);
-      });
+        const temp = t.copy()
+        if (style.fill === undefined) style.fill = 'none'
+        if (style.stroke === undefined) style.stroke = 'black'
+        temp.style = style
+        turtles.push(temp)
+      })
     },
     setDocDimensions(w: number, h: number) {
       patchStore(

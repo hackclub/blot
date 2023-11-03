@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro'
-import { firestore, getArt, getSession } from '../../../lib/db/account.ts'
+import { firestore, getArt, getSession } from '../../../db/account.ts'
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   let artId: string

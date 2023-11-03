@@ -1,0 +1,43 @@
+---
+import { recaptchaKeyId } from '../lib/utils/recaptcha'
+
+interface Props {
+  title?: string
+  description?: string | undefined
+}
+
+let { title, description } = Astro.props
+title = title || 'Blot'
+description =
+  description ||
+  'Blot, the plotter bot from Hack Club: You code art, we send you a machine.'
+
+const image = ''
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<meta name="description" content={description} />
+<link rel="icon" href="/favicon.png" />
+<meta property="og:title" content={title} />
+<meta property="og:site_name" content="Blot" />
+<meta name="description" content={description} />
+<meta property="og:description" content={description} />
+<meta name="keywords" content="art, blot, hack club" />
+<meta name="author" content="@hackclub" />
+<meta name="twitter:creator" content="@hackclub" />
+<meta name="theme-color" content="#33e" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content={image} />
+<meta property="twitter:image" content={image} />
+<meta name="twitter:card" content="summary_large_image" />
+<script
+  defer
+  data-domain="blot.hackclub.com"
+  src="https://plausible.io/js/plausible.js"></script>
+<script
+  defer
+  src={`https://www.google.com/recaptcha/enterprise.js?render=${recaptchaKeyId}`}
+></script>
+<title>{title}</title>

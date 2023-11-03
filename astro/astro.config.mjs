@@ -1,13 +1,17 @@
 import { defineConfig } from 'astro/config'
 import preact from '@astrojs/preact'
-import vercel from '@astrojs/vercel/serverless'
-
-import tailwind from '@astrojs/tailwind'
+import nodejs from '@astrojs/node'
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://blot.hackclub.com',
-  integrations: [preact(), tailwind()],
+  adapter: nodejs({
+    mode: 'middleware'
+  }),
   output: 'hybrid',
-  adapter: vercel()
+  integrations: [preact()],
+  markdown: {
+    shikiConfig: {
+      theme: 'css-variables'
+    }
+  }
 })

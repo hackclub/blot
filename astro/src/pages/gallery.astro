@@ -1,0 +1,223 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Search from '../components/Search.tsx'
+import { slug } from '../lib/utils/guide.ts'
+
+let images = []
+try {
+  const list = (await Astro.glob('/../art/list.json'))[0].default
+  list.forEach(folder => {
+    folder.snapshots.map(snapshot => {
+      images.push({
+        dir: folder.directory,
+        img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/snapshots/${snapshot}`,
+        href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/${folder.source}`,
+        alt: folder.directory,
+        title: folder.title,
+        artist: folder.artist
+      })
+    })
+  })
+} catch (error) {
+  console.log(error)
+}
+
+let filtered = images
+
+export const prerender = true
+---
+
+<Layout
+  navbar={true}
+  title="Blot | Gallery"
+  description="A gallery of various art pieces created by Hack Clubbers.">
+  <style is:global lang="scss">
+    @import '../ui/variables.scss';
+
+    :root {
+      --gallery-width-desktop: 80vw;
+      --gallery-width-mobile: calc(100vw - 2rem);
+      --gallery-gap: 7px;
+    }
+
+    #container {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    #gallery {
+      margin: auto;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--gallery-gap);
+      width: var(--gallery-width-mobile);
+      padding: 2rem 0;
+      position: relative;
+      display: flex;
+
+      @media screen and (max-width: $md) {
+        flex-direction: column;
+      }
+
+      @media screen and (min-width: $lg) {
+        width: var(--gallery-width-desktop);
+      }
+    }
+
+    .frame {
+      border: 0.5px solid var(--primary);
+      position: relative;
+
+      &:hover .overlay {
+        opacity: 0.9;
+      }
+
+      img {
+        background-color: white;
+        display: block;
+        width: 100%;
+
+        @media screen and (min-width: $md) {
+          object-fit: contain;
+          height: calc(var(--gallery-width-desktop) / 3 - 28px);
+          width: calc(var(--gallery-width-desktop) / 3 - 28px);
+        }
+      }
+    }
+
+    .overlay {
+      cursor: pointer;
+      border: 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: 0.2s ease;
+      background-color: #ddd;
+      display: flex;
+      font-family: var(--serif);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+
+      p {
+        color: black;
+        font-size: 1.5rem;
+        margin: 0 0 0.5rem 0;
+        line-height: 1.1;
+      }
+    }
+
+    header {
+      line-height: 1;
+      padding: 3rem 2rem;
+      background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+        linear-gradient(to bottom, #ddd 1px, transparent 1px);
+      background-size: 40px 40px;
+      box-shadow: inset 0 4px 8px 8px rgba(0, 0, 0, 0.1);
+      margin: auto;
+      text-align: center;
+
+      h1 {
+        margin: 0;
+        margin-bottom: 0.75rem;
+        letter-spacing: -4px;
+      }
+
+      @media screen and (max-width: $lg) {
+        font-size: 2rem;
+      }
+
+      @media screen and (min-width: $lg) {
+        font-size: 3rem;
+      }
+
+      p {
+        font-family: var(--sans-serif);
+        font-size: 1.5rem;
+        line-height: 1.3;
+        letter-spacing: -1px;
+        margin: auto;
+
+        @media screen and (max-width: $lg) {
+          font-size: 1.3rem;
+          margin-bottom: 0.5rem;
+        }
+
+        @media screen and (min-width: $md) {
+          max-width: 50vw;
+        }
+      }
+    }
+
+    #search {
+      background-color: white;
+      border: 2px solid;
+      font-family: var(--mono);
+      font-size: 1.3rem;
+      padding: 9px 12px;
+      min-width: 50vw;
+
+      @media screen and (max-width: $lg) {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+
+  <script>
+    document.querySelectorAll('.overlay').forEach(button => {
+      button.addEventListener('click', event => {
+        document.location.href = event.target.dataset?.background
+      })
+    })
+
+    document.querySelectorAll('.overlay a').forEach(link => {
+      link.addEventListener('click', event => {
+        event.stopImmediatePropagation()
+        event.stopPropagation()
+      })
+    })
+  </script>
+
+  <header>
+    <h1>Gallery</h1>
+    <p>
+      A gallery of various art pieces created by Hack Clubbers, with an
+      interactive 3D gallery mode! Teenagers can submit art to the gallery to
+      get their own Blot. Guide to submission is <a href="" target="_blank"
+        >here</a
+      >.
+    </p>
+    <Search client:only images={images} />
+  </header>
+  <div id="container">
+    <div id="gallery">
+      {
+        filtered.map(img => {
+          return (
+            <div class="frame">
+              <a href={img.href}>
+                <img class="thumbnail" alt={img.alt} src={img.img} />
+              </a>
+              <button class="overlay prose" data-background={img.href}>
+                <p style={{ fontWeight: 'bold' }}>{img.title}</p>
+                <p style={{ fontSize: '1.3rem' }}>
+                  <a href={`https://github.com/${img.artist}`} target="_blank">
+                    @{img.artist}
+                  </a>
+                </p>
+              </button>
+            </div>
+          )
+        })
+      }
+    </div>
+  </div>
+</Layout>
+ ../components/Search.tsx
