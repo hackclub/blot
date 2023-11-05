@@ -321,6 +321,24 @@ export const prerender = false
   }
 </script>
 
+<style lang="scss">
+  #three-js-container {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .buttons button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    transition: color 0.1s;
+
+    &:hover,
+    &:focus {
+      color: var(--primary);
+    }
+  }
+</style>
+
 <div id="three-js-container">
   <div class="buttons">
     <button id="rotate" title="Toggle rotate">

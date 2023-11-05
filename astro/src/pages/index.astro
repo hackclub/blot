@@ -12,6 +12,8 @@ export const prerender = true
 
 <Layout navbar={true}>
   <style lang="scss" is:global>
+    @import '../ui/variables.scss';
+
     #navbar {
       position: sticky;
       top: 0;
@@ -30,6 +32,11 @@ export const prerender = true
         line-height: 1;
         letter-spacing: -4px;
         margin: 0;
+
+        @media screen and (max-width: $md) {
+          font-size: 4rem;
+          letter-spacing: -2px;
+        }
 
         a {
           color: var(--primary);
@@ -74,6 +81,10 @@ export const prerender = true
       h1 {
         font-size: 2.5rem;
         text-align: center;
+
+        @media screen and (max-width: $md) {
+          line-height: 1.2;
+        }
       }
     }
 
@@ -85,6 +96,19 @@ export const prerender = true
         align-items: center;
         display: flex;
         gap: 2rem;
+
+        @media screen and (max-width: $md) {
+          flex-direction: column;
+
+          img {
+            max-width: 100% !important;
+          }
+
+          &#control-board-firmware {
+            padding-top: 2rem;
+            flex-direction: column-reverse;
+          }
+        }
 
         img {
           max-width: 100%;
@@ -180,7 +204,9 @@ export const prerender = true
         </div>
         <img style={{ maxWidth: '45vw' }} src="/landing/parts.png" />
       </div>
-      <div style={{ maxWidth: '80vw', margin: 'auto' }}>
+      <div
+        id="control-board-firmware"
+        style={{ maxWidth: '80vw', margin: 'auto' }}>
         <img src="/landing/control-board.png" style={{ maxWidth: '35vw' }} />
         <div class="info-grid-description">
           <h2>Custom control board and firmware</h2>

@@ -20,8 +20,9 @@ export default function Login({ email, to }: LoginProps) {
   })
 
   return (
-    <>
+    <div className={styles.modal}>
       <form
+        className={styles.form}
         onSubmit={event => {
           event.preventDefault()
           if (auth.stage.value === 'EMAIL') auth.submitEmail()
@@ -84,6 +85,6 @@ export default function Login({ email, to }: LoginProps) {
           </>
         )}
       </form>
-    </>
+    </div>
   )
 }

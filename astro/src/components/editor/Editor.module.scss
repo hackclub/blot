@@ -1,4 +1,5 @@
 .root {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -21,11 +22,11 @@
 .left {
   display: flex;
   flex-direction: column;
-}
 
-.left > *:first-child {
-  flex: 1;
-  overflow-x: auto; /* fix resizing the canvas */
+  > *:first-child {
+    flex: 1;
+    overflow-x: auto;
+  }
 }
 
 .vertBar {
@@ -84,10 +85,10 @@
   cursor: pointer;
   border-radius: 5px;
   background: #f0f2f3;
-}
 
-.helpSectionTab:hover {
-  opacity: 0.9;
+  &:hover {
+    opacity: 0.9;
+  }
 }
 
 body[data-theme='dark'] {

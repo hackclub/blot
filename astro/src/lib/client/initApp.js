@@ -1,4 +1,4 @@
-import { render } from '../state/render.tsx'
+import { render } from '../render.tsx'
 import { init } from './init.js'
 
 // To initialize DOM elements

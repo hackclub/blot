@@ -1,7 +1,5 @@
 ---
-import Layout from '../../layouts/Layout.astro'
-import EditorComponent from '../../components/editor/Editor'
-import EditorAutosave from '../../components/~/EditorAutosave'
+import '../../ui/globals.scss'
 import { firestore, getArt, getSession } from '../../db/account'
 import { signal } from '@preact/signals'
 import type { PersistenceState } from '../../lib/state/persist'
@@ -65,23 +63,19 @@ const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
 export const prerender = false
 ---
 
-<Layout
-  title={`Blot | ${persistenceState.value.art.name || 'Editor'}`}
-  navbar={isMobile ? true : false}>
-  {
-    isMobile ? (
-      <MobileUnsupported />
-    ) : (
-      <>
-        <EditorComponent
-          client:only
-          source={persistenceState.value.art.code}
-          guide={null}
-          toolkit={toolkit}
-          loggedIn={true}
-        />
-        <EditorAutosave client:only />
-      </>
-    )
-  }
-</Layout>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Blot editor!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <main></main>
+    <script define:vars={{ toolkit, loggedIn: true }}>
+      window.getToolkit = () => toolkit
+      window.getLoggedIn = () => loggedIn
+    </script>
+    <script src="../../lib/client/initApp.js"></script>
+  </body>
+</html>

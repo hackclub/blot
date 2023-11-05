@@ -195,8 +195,8 @@ function DownloadSVG() {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${
                   docDimensions.width
                 } ${docDimensions.height}" width="${
-          docDimensions.width
-        }mm" height="${docDimensions.height}mm">
+                  docDimensions.width
+                }mm" height="${docDimensions.height}mm">
                     ${paths.join('\n')}
                 </svg>
             `
@@ -248,8 +248,8 @@ function DownloadPNG() {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${
                   docDimensions.width
                 } ${docDimensions.height}" width="${
-          docDimensions.width
-        }mm" height="${docDimensions.height}mm">
+                  docDimensions.width
+                }mm" height="${docDimensions.height}mm">
                     ${paths.join('\n')}
                 </svg>
             `
@@ -376,7 +376,7 @@ function SettingsButton() {
           'padding': '5px',
           'border-radius': '5px'
         }}>
-        {/*        <Button
+        <Button
           class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
@@ -386,14 +386,12 @@ function SettingsButton() {
             })
 
             document.body.dataset.theme = newTheme
-
             localStorage.setItem('colorTheme', newTheme)
-
             setHidden(false)
           }}>
           <BrightnessContrastIcon className={styles.icon} />
           <span>toggle theme</span>
-        </Button>*/}
+        </Button>
         <Button
           class={styles.dropdownEntry}
           variant="ghost"

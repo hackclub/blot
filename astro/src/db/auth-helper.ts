@@ -6,7 +6,7 @@ import {
 } from '@preact/signals'
 import type { Art, SessionInfo } from './account.ts'
 import { isValidEmail } from './email.ts'
-import { executeCaptcha } from '../../../../../test/astro/src/lib/utils/recaptcha.ts'
+import { executeCaptcha } from '../lib/utils/recaptcha.ts'
 
 export type AuthState =
   | 'IDLE'

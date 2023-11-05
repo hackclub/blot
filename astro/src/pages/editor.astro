@@ -1,4 +1,5 @@
 ---
+import '../ui/globals.scss'
 import Layout from '../layouts/Layout.astro'
 import MobileUnsupported from '../components/MobileUnsupported.astro'
 import { slug } from '../lib/utils/guide'
@@ -37,7 +38,6 @@ const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
 export const prerender = false
 ---
 
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -46,6 +46,12 @@ export const prerender = false
   </head>
   <body>
     <main></main>
-    <script src="../lib/client/init.js"></script>
+    <script define:vars={{ toolkit, loggedIn, source, guide }}>
+      window.getToolkit = () => toolkit
+      window.getLoggedIn = () => loggedIn
+      window.getSrc = () => source
+      window.getGuide = () => guide
+    </script>
+    <script src="../lib/client/initApp.js"></script>
   </body>
 </html>

@@ -6,11 +6,19 @@ const { pathname } = Astro.url
 <Layout navbar={true}>
   <style lang="scss" is:global>
     #not-found {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      height: 100%;
+      max-height: calc(100vh - 4rem);
 
       svg {
-        height: 75vh;
+        max-width: 100vw;
+        max-height: 75vh;
         margin: 0 auto;
+        margin-bottom: -4rem;
         display: block;
       }
     }

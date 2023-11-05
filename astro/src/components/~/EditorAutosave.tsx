@@ -1,4 +1,4 @@
-import { useOnEditorChange } from '../../lib/events'
+import { useOnEditorChange } from '../../lib/events/events'
 import type { PersistenceState } from '../../lib/state/persist'
 import { getStore } from '../../lib/state/state'
 import { debounce } from 'throttle-debounce'
@@ -47,6 +47,7 @@ export const saveArt = debounce(
 )
 
 export default function EditorAutosave({ persistenceState }) {
+  console.log(persistenceState)
   useOnEditorChange(() => {
     persistenceState.value = {
       ...persistenceState.value,

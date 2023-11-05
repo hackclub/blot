@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro'
-import { firestore } from '../lib/db/account.ts'
+import { firestore } from '../db/account.ts'
 
 export const GET: APIRoute = async ({ redirect, cookies }) => {
   const sessionId = cookies.get('blotSession')?.value

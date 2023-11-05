@@ -5,24 +5,24 @@ import { addMachineControl } from '../events/addMachineControl'
 import { addLoadBackup } from '../client/addLoadBackup'
 
 export function init() {
-  render(true)
+  render({ hard: true })
 
-  // const cm = document.querySelector('.cm-editor')
-  // const view = cm.view
-  // patchStore({ view })
+  const cm = document.querySelector('.cm-editor')
+  const view = cm.view
+  patchStore({ view })
 
-  // addLoadBackup()
+  if (!window.getLoggedIn()) addLoadBackup()
 
-  // addBezierControl()
-  // addMachineControl()
+  addBezierControl()
+  addMachineControl()
 
-  // // Get settings from localStorage
-  // const theme = localStorage.getItem('colorTheme') ?? 'light'
+  // Get settings from localStorage
+  const theme = localStorage.getItem('colorTheme') ?? 'light'
 
-  // patchStore({
-  //   theme,
-  //   vimMode: localStorage.getItem('vimMode') === 'true'
-  // })
+  patchStore({
+    theme,
+    vimMode: localStorage.getItem('vimMode') === 'true'
+  })
 
-  // document.body.dataset.theme = theme
+  document.body.dataset.theme = theme
 }
