@@ -7,6 +7,7 @@ import { mobileUserAgent } from '../../lib/utils/mobile'
 import MobileUnsupported from '../../components/MobileUnsupported.astro'
 import { persist } from '../../db/auth-helper'
 import { slug } from '../../lib/utils/guide'
+import EditorAutosave from '../../components/~/EditorAutosave'
 
 let toolkit = (await Astro.glob('/../docs/TOOLKIT.md'))[0].compiledContent()
 
@@ -57,7 +58,6 @@ if (session.session.full) {
 }
 
 const persistenceState = signal<PersistenceState>(_persistenceState)
-console.log(persistenceState.value)
 const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
 
 export const prerender = false
@@ -72,9 +72,18 @@ export const prerender = false
   </head>
   <body>
     <main></main>
-    <script define:vars={{ toolkit, loggedIn: true }}>
+    <script
+      define:vars={{
+        toolkit,
+        loggedIn: true,
+        source: persistenceState.value.art?.code,
+        persistenceState
+      }}
+    >
       window.getToolkit = () => toolkit
       window.getLoggedIn = () => loggedIn
+      window.getSrc = () => source
+      window.getPersistenceState = () => persistenceState
     </script>
     <script src="../../lib/client/initApp.js"></script>
   </body>

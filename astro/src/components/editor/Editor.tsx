@@ -13,7 +13,13 @@ import styles from './Editor.module.scss'
 import Toolbar from './Toolbar'
 import { loadCodeFromString } from '../../lib/client/loadCodeFromString'
 
-export default function Editor({ guide, toolkit, source, loggedIn }) {
+export default function Editor({
+  guide,
+  toolkit,
+  source,
+  loggedIn,
+  persistenceState
+}) {
   const editorContainer = useRef(null)
 
   const [width, setWidth] = useState(50)
@@ -52,7 +58,7 @@ export default function Editor({ guide, toolkit, source, loggedIn }) {
     <>
       <GlobalStateDebugger />
       <div class={styles.root}>
-        <Toolbar loggedIn={loggedIn} />
+        <Toolbar persistenceState={persistenceState} />
         <div class={styles.inner} ref={editorContainer}>
           <div
             style={{

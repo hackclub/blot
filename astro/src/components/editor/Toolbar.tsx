@@ -23,7 +23,7 @@ import GitHubIcon from '../../ui/icons/GitHubIcon'
 import SaveButton from './SaveButton'
 import { persist } from '../../db/auth-helper'
 
-export default function Toolbar({ loggedIn }) {
+export default function Toolbar({ persistenceState }) {
   const { connected } = getStore()
 
   const [hidden, setHidden] = useState(true)
@@ -73,13 +73,25 @@ export default function Toolbar({ loggedIn }) {
           </div>
         </div>
       </div>
+      {persistenceState ? (
+        <div
+          class="navbar-links no-gap"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column'
+          }}>
+          <a>{persistenceState.value.art.name}</a>
+          <a>{persistenceState.value.cloudSaveState}</a>
+        </div>
+      ) : null}
       <div
         class="navbar-links no-gap"
         style={{ display: 'flex', alignItems: 'center' }}>
         <MachineControls />
         <GitHubLink />
         <SettingsButton />
-        {loggedIn ? null : null}
+        {persistenceState ? null : null}
       </div>
     </nav>
   )

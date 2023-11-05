@@ -3,6 +3,11 @@
   position: relative;
 }
 
+body[data-theme='dark'] .helpSection {
+  background-color: var(--dark-background);
+  color: white;
+}
+
 .helpSectionToolbar {
   display: flex;
   justify-content: flex-start;
