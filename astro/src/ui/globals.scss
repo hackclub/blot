@@ -57,11 +57,6 @@
   --font-5: 3rem;
   --font-6: 4rem;
   --font-7: 6rem;
-
-  --astro-code-color-text: black;
-  --astro-code-token-keyword: #00c;
-  --astro-code-token-function: #167;
-  --astro-code-token-constant: #708;
 }
 
 * {
@@ -76,6 +71,20 @@ html {
   padding: 0;
   scroll-behavior: smooth;
   height: 100%;
+}
+
+body {
+  --astro-code-color-text: black;
+  --astro-code-token-keyword: #00c;
+  --astro-code-token-function: #167;
+  --astro-code-token-constant: #708;
+}
+
+body[data-theme='dark'] {
+  --astro-code-color-text: white;
+  --astro-code-token-keyword: #fda331;
+  --astro-code-token-function: #6fb3d2;
+  --astro-code-token-constant: #b5bd68;
 }
 
 button,
@@ -182,6 +191,12 @@ pre {
 
   @media screen and (max-width: $md) {
     font-size: 1.3rem;
+  }
+}
+
+body[data-theme='dark'] .prose {
+  a {
+    color: white;
   }
 }
 

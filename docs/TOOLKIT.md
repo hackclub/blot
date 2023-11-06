@@ -1,5 +1,3 @@
-# Welcome to Blot
-
 This is Blot's programmatic art IDE. For an introduction to the editor watch this video (coming soon!).
 
 ### Turtle

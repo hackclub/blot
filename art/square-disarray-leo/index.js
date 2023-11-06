@@ -45,4 +45,4 @@ for (let i = 0; i < nWidth; i++) {
 
 shapes.scale([0.9, -0.9])
 
-drawTurtles([shapes])
+drawTurtles(shapes)

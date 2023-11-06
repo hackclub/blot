@@ -1,5 +1,5 @@
-const t = createTurtle();
-
+const t = new Turtle()
+drawTurtles(t)
 const time = 106
 
 const resX = 5.16
@@ -84,9 +84,3 @@ function drawLandscape() {
 }
 
 drawLandscape()
-
-t.scale(125/t.width);
-t.translate([125/2, 0], t.cb);
-
-drawTurtles([t])
-

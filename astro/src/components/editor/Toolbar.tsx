@@ -27,6 +27,21 @@ export default function Toolbar({ persistenceState }) {
   const { connected } = getStore()
 
   const [hidden, setHidden] = useState(true)
+  const [status, setStatus] = useState('')
+
+  useSignalEffect(() => {
+    switch (persistenceState.value.cloudSaveState) {
+      case 'SAVED':
+        setStatus('Saved')
+        break
+      case 'SAVING':
+        setStatus('Saving')
+        break
+      case 'ERROR':
+        setStatus('Error')
+        break
+    }
+  })
 
   return (
     <nav id="navbar">
@@ -82,7 +97,7 @@ export default function Toolbar({ persistenceState }) {
             flexDirection: 'column'
           }}>
           <a>{persistenceState.value.art.name}</a>
-          <a>{persistenceState.value.cloudSaveState}</a>
+          {status}
         </div>
       ) : null}
       <div
@@ -91,10 +106,26 @@ export default function Toolbar({ persistenceState }) {
         <MachineControls />
         <GitHubLink />
         <SettingsButton />
-        {persistenceState ? null : null}
+        {persistenceState ? (
+          <ShareLink persistenceState={persistenceState} />
+        ) : (
+          <RemixLink />
+        )}
       </div>
     </nav>
   )
+}
+
+export function ShareLink({ persistenceState }) {
+  return (
+    <Button variant="ghost" onClick={() => {}}>
+      share
+    </Button>
+  )
+}
+
+export function RemixLink() {
+  return <Button variant="ghost">remix to save edits</Button>
 }
 
 export function GitHubLink() {

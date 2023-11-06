@@ -32,6 +32,11 @@ let toolkit = (await Astro.glob('/../docs/TOOLKIT.md'))[0].compiledContent()
 const session = await getSession(Astro.cookies)
 const loggedIn = session && session.session.full
 
+if (loggedIn && !source && !guide) {
+  // Redirect to /~/new
+  return Astro.redirect('/~/new', 302)
+}
+
 // Check if on mobile
 const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
 

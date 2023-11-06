@@ -1,5 +1,3 @@
-Blot instructions
----
 Below is a list of all parts needed to construct your Blot. Keep in mind that the colors shown below are not representative of the actual color of the components. The components are colored differently to ease differentiation when going through these instructions. 
 
 |Part  			  |Quantity 	|Image||Part|Quantity|Image    
@@ -17,7 +15,6 @@ Below is a list of all parts needed to construct your Blot. Keep in mind that th
 |2020x250mm Aluminum Extrusion                                                                           |2           |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0081.png" alt="Image of Aluminum Extrusion" width="100"/>                     ||[Stepper<br>Motor](https://www.amazon.com/gp/product/B0B38H2ZMR/)                                                   |2	       		|<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0067.png" alt="Image of a Stepper Motor" width="100"/>
 |[PCB](https://github.com/hackclub/blot/tree/main/hardware/motor-control-board)                          |1           |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0086.png" alt="Image of PCB" width="100"/>                                    ||[Servo](https://www.amazon.com/gp/product/B07L2SF3R4/)                                                              |1          |<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0080.png" alt="Image of Servo Motor" width="100"/>
 
----
 Carriage assembly
 ---
 <img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0001.png" alt="aaa" width="300"/><br>

@@ -14,27 +14,27 @@ From just that one line, the following intricate pattern is created:
 
 <img alt="10print" src="https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp" width="512"/>
 
-There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Haxidraw_**. (This tutorial works fine if you don't have one!)
+There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Blot_**. (This tutorial works fine if you don't have one!)
 
-A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
+A Blot is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
 
-<img src="https://haxidraw.hackclub.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdrawing-machine.726ff526.png&w=3840&q=75" width="512"/>
+<img src="https://blot.hackclub.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdrawing-machine.726ff526.png&w=3840&q=75" width="512"/>
 
 <img src="https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png" width="512"/>
 
-Here are some examples of art people have made with Haxidraw:
+Here are some examples of art people have made with Blot:
 
-<img src="https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true" width="512"/>
+<img src="https://github.com/hackclub/blot/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true" width="512"/>
 
-<img src="https://github.com/hackclub/haxidraw/blob/main/art/roots-kai/snapshots/roots.png?raw=true" width="512"/>
+<img src="https://github.com/hackclub/blot/blob/main/art/roots-kai/snapshots/roots.png?raw=true" width="512"/>
 
-<img src="https://github.com/hackclub/haxidraw/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true" width="512"/>
+<img src="https://github.com/hackclub/blot/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true" width="512"/>
 
 Now, let's take another look at the original 10PRINT artwork that we'll try to replicate.
 
 <img src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png" width="512"/>
 
-The artwork seems to be a grid of slashes. Some slashes point to to the top-right, others point to the bottom-right. Overall, the distribution seems to be about 50/50. If you look closely, you might notice that the slashes are just plain text: "/" or "\\". In fact, the Commodore program just prints a random sequence of characters to the screen, left to right. The challenge is, in the Haxidraw editor, you can't write symbols directly to the screen - we'll have to draw the slashes as lines.
+The artwork seems to be a grid of slashes. Some slashes point to to the top-right, others point to the bottom-right. Overall, the distribution seems to be about 50/50. If you look closely, you might notice that the slashes are just plain text: "/" or "\\". In fact, the Commodore program just prints a random sequence of characters to the screen, left to right. The challenge is, in the Blot editor, you can't write symbols directly to the screen - we'll have to draw the slashes as lines.
 
 On a high level, here's our strategy:
 
@@ -44,7 +44,7 @@ This looks like:
 
 <img src="https://cloud-eeo1n3h1p-hack-club-bot.vercel.app/0image.png" width="512"/>
 
-So, let's start making something! Boot up the editor at [editor.haxidraw.hackclub.com](https://editor.haxidraw.hackclub.com/). On the left side of the screen, you write code. On the other side, you can see a preview of what you're building. At any point, press "**Run Code**" at the top to see what you've made so far.
+So, let's start making something! Boot up the editor at [blot.hackclub.com](https://blot.hackclub.com/). On the left side of the screen, you write code. On the other side, you can see a preview of what you're building. At any point, press "**Run Code**" at the top to see what you've made so far.
 
 Let's start by defining a constant `t`: this will represent our turtle. The turtle is basically our pen - we can send it instructions like `t.up()` or `t.goTo([x,y])` to move it around. For example, calling `t.down()` places the pen on the paper, and `t.goTo([0, 0])` moves the pen to the position `0, 0`.
 
@@ -115,7 +115,7 @@ for (code to run at the start of the loop;
 }
 ```
 
-We'll want to loop through every row in the grid. By setting `y` to negative `gridSize`, we effectively shift the whole image down the screen. We do this to ensure that it's within range for the Haxidraw to draw. To move to the next row, we add `gridSpacing` to `y` every time we loop. We only break once `y` reaches zero, because that means it's traveled a total distance of `gridSize`, and we've drawn the image.
+We'll want to loop through every row in the grid. By setting `y` to negative `gridSize`, we effectively shift the whole image down the screen. We do this to ensure that it's within range for the Blot to draw. To move to the next row, we add `gridSpacing` to `y` every time we loop. We only break once `y` reaches zero, because that means it's traveled a total distance of `gridSize`, and we've drawn the image.
 
 ```
 for (let y = -gridSize; y < 0; y += gridSpacing) {
@@ -144,4 +144,4 @@ Great job! You can still go farther with this, if you want.
 - Try changing how detailed the artwork is, by tweaking `gridSpacing`
 - See what other patterns emerge when you draw things other than slashes
 
-Also - if you have a Haxidraw on hand, go through [this guide](https://haxidraw.hackclub.com/) for instructions on how to set it up. After that, press "run machine", and watch the Haxidraw draw the art you created!
+Also - if you have a Blot on hand, go through [this guide](https://blot.hackclub.com/) for instructions on how to set it up. After that, press "run machine", and watch the Blot draw the art you created!

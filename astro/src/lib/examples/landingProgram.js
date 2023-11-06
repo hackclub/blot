@@ -73,6 +73,6 @@ t.iteratePath(pt => {
 t.translate([125 / 2, 125 / 2], t.cc)
 t.scale(70)
 
-drawTurtles(t)`
+drawTurtles([t])`
 
 export default landingProgram

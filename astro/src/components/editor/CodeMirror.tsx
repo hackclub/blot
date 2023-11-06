@@ -52,18 +52,20 @@ export default function CodeMirror({ loggedIn }) {
 
   useEffect(() => {
     // Add unload to warn user
-    window.addEventListener('beforeunload', e => {
-      e.returnValue =
-        'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
-      return 'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
-    })
-
-    return () => {
-      window.removeEventListener('beforeunload', e => {
+    if (!loggedIn) {
+      window.addEventListener('beforeunload', e => {
         e.returnValue =
           'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
         return 'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
       })
+
+      return () => {
+        window.removeEventListener('beforeunload', e => {
+          e.returnValue =
+            'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
+          return 'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
+        })
+      }
     }
   }, [])
 

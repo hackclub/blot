@@ -1,5 +1,5 @@
 ---
-title: Raymarching in Haxidraw
+title: Raymarching in Blot
 thumbnail: https://cloud-79ah2o72z-hack-club-bot.vercel.app/00image.webp
 contributors: henrybass
 pinned: true
@@ -8,7 +8,7 @@ pinned: true
 The goal of this guide will be to simulate 3D environments, with realistic lighting and shadows. By the end, you should have something like this:
 
 <img 
-  alt="Raymarching in Haxidraw"
+  alt="Raymarching in Blot"
   src="https://cloud-79ah2o72z-hack-club-bot.vercel.app/00image.webp"
   width="512"
 />
@@ -169,7 +169,7 @@ class Plane {
 }
 ```
 
-If you want, you can define more complex objects too. For example, here's a sphere distorted by [noise](https://en.wikipedia.org/wiki/Gradient_noise). It's identical to a sphere, except for the fact that we randomly disturb the SDF with the Haxidraw editor's built-in fractal noise function. We'll also want to offset the noise sample by some constants, to make it asymmetrical.
+If you want, you can define more complex objects too. For example, here's a sphere distorted by [noise](https://en.wikipedia.org/wiki/Gradient_noise). It's identical to a sphere, except for the fact that we randomly disturb the SDF with the Blot editor's built-in fractal noise function. We'll also want to offset the noise sample by some constants, to make it asymmetrical.
 
 ```js
 class NoisySphere {
@@ -416,7 +416,7 @@ And that's the camera object!
 
 ### So, how do we draw this to the screen?
 
-This whole time, we haven't done much Haxidraw-specific code at all. To actually draw the output, we'll need a way of representing a pixel as a turtle path. To do this, we can use a process called [dithering.](https://en.wikipedia.org/wiki/Dither) Let's take a closer look at the original image, to see how this is used:
+This whole time, we haven't done much Blot-specific code at all. To actually draw the output, we'll need a way of representing a pixel as a turtle path. To do this, we can use a process called [dithering.](https://en.wikipedia.org/wiki/Dither) Let's take a closer look at the original image, to see how this is used:
 
 <img
   src="https://cloud-5v54vbcnl-hack-club-bot.vercel.app/0image.png"
@@ -560,7 +560,7 @@ renderFrame(cam)
 drawTurtles(t)
 ```
 
-Great job! If all went well, you should have a working 3D renderer for the Haxidraw. It's capable of rendering any shape with a defined SDF, so there are plenty of possibilities to explore. Here are a few scenes I've created with the engine:
+Great job! If all went well, you should have a working 3D renderer for the Blot. It's capable of rendering any shape with a defined SDF, so there are plenty of possibilities to explore. Here are a few scenes I've created with the engine:
 
 <img
   src="https://cloud-8vr3j0wiq-hack-club-bot.vercel.app/0image.png"

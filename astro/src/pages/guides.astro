@@ -225,12 +225,6 @@ export const prerender = true
     import { filter } from 'fuzzaldrin'
     import { slug } from '../lib/utils/guide'
 
-    document.querySelectorAll('.overlay').forEach(button => {
-      button.addEventListener('click', event => {
-        document.location.href = event.target.dataset?.background
-      })
-    })
-
     document.querySelectorAll('.overlay a').forEach(link => {
       link.addEventListener('click', event => {
         event.stopImmediatePropagation()

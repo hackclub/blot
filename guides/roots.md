@@ -333,5 +333,5 @@ That's it! But you can still add a lot of features from here, if you're up to it
 - For instance, one thing to add would be occlusion, so each branch can be assigned a z-index and cover other ones, so many more branches can be rendered without being too busy
 - Or, you could make the texturing more interesting by varying `ringSeed` for different branches or different regions
 - You could render multiple initial branches/roots at the start, and generate random parameters for each one in an interesting pattern
-- Add some logic so the branches stay within the Haxidraw bed/document always, and curl away from the edges if they get too close
+- Add some logic so the branches stay within the Blot bed/document always, and curl away from the edges if they get too close
 - Generate a texture for the background

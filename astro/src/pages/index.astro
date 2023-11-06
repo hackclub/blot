@@ -1,11 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Background from '../components/landing/Background.astro'
-import CodeSnippet from '../components/landing/CodeSnippet.tsx'
 import ThreeDModel from '../components/landing/3DModel.astro'
 import EditorDemo from '../components/landing/EditorDemo.tsx'
 import SVGScroll from '../components/landing/SVGScroll.astro'
-import landingProgram from '../lib/examples/landingProgram'
+import { slug } from '../lib/utils/guide'
+
+const guides = await Astro.glob('/../guides/*.md')
+let curated = ['raymarching', 'mesh', 'square-disarray']
+curated = curated.map(name => {
+  let find = guides.find(guide => guide.file.includes(name))
+  return find
+})
+
+let images = []
+const list = (await Astro.glob('/../art/list.json'))[0].default
+list.forEach(folder => {
+  folder.snapshots.map(snapshot => {
+    images.push({
+      dir: folder.directory,
+      img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/snapshots/${snapshot}`,
+      href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/${folder.source}`,
+      alt: folder.directory
+    })
+  })
+})
 
 export const prerender = true
 ---
@@ -140,11 +159,35 @@ export const prerender = true
       }
     }
 
+    #steps-container {
+      display: flex;
+
+      h2 {
+        background-color: rgba(var(--primary-rgb), 0.1);
+        font-size: 1.75rem;
+        font-weight: normal;
+        padding: 2rem;
+
+        a {
+          color: var(--primary);
+        }
+      }
+    }
+
     #demo {
       display: flex;
+      gap: 14px;
 
       > div {
         flex: 50%;
+      }
+    }
+
+    #code-snippet {
+      border: 1px solid var(--primary);
+
+      img {
+        max-height: 50vh;
       }
     }
   </style>
@@ -159,13 +202,15 @@ export const prerender = true
         <h1>
           from <a href="https://hackclub.com" target="_blank">Hack Club</a>
         </h1>
-        <h2 class="background-blur">
+        <h2 class="background-blur" style={{ marginBottom: '2rem' }}>
           Write a program that creates art and we'll send you* a CNC machine
           that can draw it.
         </h2>
       </div>
       <div id="demo">
-        <CodeSnippet client:only code={landingProgram} />
+        <div id="code-snippet">
+          <img src="/landing/code-snippet.webp" />
+        </div>
         <div id="three-js-model">
           <ThreeDModel client:load />
         </div>
@@ -219,6 +264,37 @@ export const prerender = true
   </section>
   <section id="steps">
     <h1>How do I get a Blot?</h1>
-    <SVGScroll />
+    <div id="steps-container">
+      <SVGScroll />
+      <div>
+        <div id="step-1">
+          <h2>
+            <b>Step 1)</b> Code an original art piece. Learn from our <a
+              href="/guides">guides</a
+            >. For submission rules, <a
+              href="https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md"
+              >read this</a
+            >.
+          </h2>
+          {
+            curated.map(guide => (
+              <a class="frame" href={`/editor?guide=${slug(guide.file)}`}>
+                <div />
+                <div class="prose">{guide.frontmatter.title}</div>
+              </a>
+            ))
+          }
+        </div>
+        <div id="step-2">
+          <h2>Step 2) Submit it as a pull request to the art gallery.</h2>
+        </div>
+        <div id="step-3">
+          <h2>
+            Step 3) Get parts for your Blot in the mail and build your own
+            machine.
+          </h2>
+        </div>
+      </div>
+    </div>
   </section>
 </Layout>

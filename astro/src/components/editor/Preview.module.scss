@@ -13,10 +13,6 @@
   overflow-x: auto; /* fix resizing the canvas */
 }
 
-body[data-theme='dark'] .canvas {
-  filter: invert(1);
-}
-
 .mousePosition {
   border-top-left-radius: 0.25rem;
   position: absolute;
@@ -41,14 +37,20 @@ body[data-theme='dark'] .canvas {
   background-color: rgba(200, 200, 200, 0.9);
 }
 
+body[data-theme='dark'] .mousePosition {
+  color: white;
+}
+
+body[data-theme='dark'] .canvas {
+  background-color: #d1cdca;
+  filter: invert(1);
+}
+
 body[data-theme='dark'] .centerButton {
   background-color: rgba(50, 50, 50, 0.9);
+  color: white;
 }
 
 .centerButton:hover {
   background-color: rgba(200, 200, 200, 1);
-}
-
-body[data-theme='Dark'] .centerButton:hover {
-  background-color: rgba(50, 50, 50, 1);
 }

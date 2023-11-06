@@ -20,9 +20,9 @@ From just that one line, the following intricate pattern is be created:
   width="512px"
 />
 
-There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Haxidraw_**. (This tutorial works fine if you don't have one!)
+There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Blot_**. (This tutorial works fine if you don't have one!)
 
-A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
+A Blot is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
 
 <img
   src="https://cloud-imp7l9zfa-hack-club-bot.vercel.app/0232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg"
@@ -34,24 +34,24 @@ A Haxidraw is a small drawing robot that can be programed from a browser. You se
   width="512px"
 />
 
-Here are some examples of art people have made with Haxidraw:
+Here are some examples of art people have made with Blot:
 
 <img
-  src="https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true"
+  src="https://github.com/hackclub/blot/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true"
   width="512px"
 />
 
 <img
-  src="https://github.com/hackclub/haxidraw/blob/main/art/roots-kai/snapshots/roots.png?raw=true"
+  src="https://github.com/hackclub/blot/blob/main/art/roots-kai/snapshots/roots.png?raw=true"
   width="512px"
 />
 
 <img
-  src="https://github.com/hackclub/haxidraw/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true"
+  src="https://github.com/hackclub/blot/blob/main/art/tidal-flats-leo/snapshots/tidalFlats.png?raw=true"
   width="512px"
 />
 
-The artwork seems to be a grid of slashes. Some slashes point to to the top-right, others point to the bottom-right. Overall, the distribution seems to be about 50/50. If you look closely, you might notice that the slashes are just plain text: "/" or "\\". In fact, the Commodore program just prints a random sequence of characters to the screen, left to right. The challenge is, in the Haxidraw editor, you can't write symbols directly to the screen - we'll have to draw the slashes as lines.
+The artwork seems to be a grid of slashes. Some slashes point to to the top-right, others point to the bottom-right. Overall, the distribution seems to be about 50/50. If you look closely, you might notice that the slashes are just plain text: "/" or "\\". In fact, the Commodore program just prints a random sequence of characters to the screen, left to right. The challenge is, in the Blot editor, you can't write symbols directly to the screen - we'll have to draw the slashes as lines.
 
 Let's start by defining a constant `t`: this will represent our turtle. The turtle is basically our pen - we can send it instructions like `t.up()` or `t.goTo([x,y])` to move it around. For example, calling `t.down()` places the pen on the paper, and `t.goTo([0, 0])` moves the pen to the position `0, 0`.
 
@@ -146,7 +146,7 @@ We're getting close, but all the lines still face in the same direction. Going b
   width="512px"
 />
 
-In the original 10PRINT artwork, the lines can face in either direction randomly. By calling the `rand()` function built into Haxidraw, we can randomly swap between the two line styles.
+In the original 10PRINT artwork, the lines can face in either direction randomly. By calling the `rand()` function built into Blot, we can randomly swap between the two line styles.
 
 Since `rand()` returns a number between 0 and 1, 50% of the time it's going to be over 0.5.
 

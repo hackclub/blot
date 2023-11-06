@@ -20,7 +20,6 @@ export default function EditorDemo() {
 
   const onMouseMove = useCallback(
     throttle(e => {
-      console.log(e)
       const img = e.currentTarget
       const box = img.getBoundingClientRect()
       const x = e.clientX - box.left
