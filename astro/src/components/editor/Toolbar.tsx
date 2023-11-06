@@ -30,17 +30,19 @@ export default function Toolbar({ persistenceState }) {
   const [status, setStatus] = useState('')
 
   useSignalEffect(() => {
+    let newStatus
     switch (persistenceState.value.cloudSaveState) {
       case 'SAVED':
-        setStatus('Saved')
+        newStatus = 'Saved'
         break
       case 'SAVING':
-        setStatus('Saving')
+        newStatus = 'Saving'
         break
       case 'ERROR':
-        setStatus('Error')
+        newStatus = 'Error'
         break
     }
+    console.log(newStatus)
   })
 
   return (
@@ -58,7 +60,7 @@ export default function Toolbar({ persistenceState }) {
         </div>
         <div class="navbar-links no-gap">
           <RunButton />
-          <NewButton />
+          <NewButton persistenceState={persistenceState} />
           <OpenButton />
           <div
             style={{
@@ -96,7 +98,41 @@ export default function Toolbar({ persistenceState }) {
             alignItems: 'center',
             flexDirection: 'column'
           }}>
-          <a>{persistenceState.value.art.name}</a>
+          <form
+            onSubmit={event => {
+              event.preventDefault()
+              const name =
+                event.target.name?.value || persistenceState.value.art.name
+              fetch('/api/art/rename', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  artId: persistenceState.value.art.id,
+                  newName: name
+                })
+              }).catch(err => console.error(err))
+            }}>
+            <input
+              name="name"
+              class={styles.nameInput}
+              type="text"
+              value={persistenceState.value.art.name}
+              onBlur={event => {
+                // POST onBlur
+                event.preventDefault()
+                const name =
+                  event.target.value || persistenceState.value.art.name
+                fetch('/api/art/rename', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    artId: persistenceState.value.art.id,
+                    newName: name
+                  })
+                }).catch(err => console.error(err))
+              }}
+            />
+          </form>
           {status}
         </div>
       ) : null}
@@ -118,14 +154,33 @@ export default function Toolbar({ persistenceState }) {
 
 export function ShareLink({ persistenceState }) {
   return (
-    <Button variant="ghost" onClick={() => {}}>
+    <Button
+      variant="ghost"
+      onClick={() => {
+        fetch('/api/art/snapshot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            artId: persistenceState.value.art.id
+          })
+        })
+          .then(res => res.json())
+          .then(json => {
+            console.log(json)
+          })
+          .then(err => console.error(err))
+      }}>
       share
     </Button>
   )
 }
 
 export function RemixLink() {
-  return <Button variant="ghost">remix to save edits</Button>
+  return (
+    <Button variant="ghost" onClick={() => {}}>
+      remix to save edits
+    </Button>
+  )
 }
 
 export function GitHubLink() {
@@ -185,12 +240,15 @@ function DownloadButton() {
   )
 }
 
-function NewButton() {
+function NewButton({ persistenceState }) {
   return (
     <Button
       variant="ghost"
       onClick={() => {
-        loadCodeFromString(defaultProgram)
+        if (persistenceState) {
+          // Check save state of persistenceState
+          window.location.href = '/~/new'
+        } else loadCodeFromString(defaultProgram)
       }}>
       new
     </Button>
@@ -334,7 +392,7 @@ function DownloadPNG() {
   )
 }
 
-function OpenButton() {
+function OpenButton({ persistenceState }) {
   return (
     <Button
       variant="ghost"

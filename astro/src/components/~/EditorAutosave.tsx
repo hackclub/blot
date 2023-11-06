@@ -27,7 +27,6 @@ export const saveArt = debounce(
             tutorialIndex: art?.tutorialIndex
           })
         })
-        console.log(res)
         if (!res.ok) throw new Error(`Error saving game: ${await res.text()}`)
       } catch (error) {
         console.error(error)
@@ -53,7 +52,6 @@ export default function EditorAutosave({ persistenceState }) {
       ...persistenceState.value,
       stale: true
     }
-    console.log(persistenceState.value)
     if (persistenceState.value.kind === 'PERSISTED') {
       persistenceState.value = {
         ...persistenceState.value,

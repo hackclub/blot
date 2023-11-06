@@ -91,3 +91,18 @@
     text-decoration: none;
   }
 }
+
+.nameInput {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  font-size: inherit;
+  color: white;
+  width: fit-content !important;
+  letter-spacing: inherit;
+  text-align: center;
+
+  &:focus {
+    border-bottom: 1px solid white;
+  }
+}
