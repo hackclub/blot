@@ -229,7 +229,13 @@ loginLink = loginLink || false
         >
         <span>source</span>
       </a>
-      {loginLink === true && <a href="/~">my art</a>}
+      {
+        loginLink === true ? (
+          <a href="/~">my art</a>
+        ) : (
+          <a href="/logout">logout</a>
+        )
+      }
     </div>
   </div>
 </nav>

@@ -1,0 +1,57 @@
+---
+import '../../../ui/globals.scss'
+import { slug } from '../../../lib/utils/guide'
+import { getSession, getSnapshotData } from '../../../db/account'
+import { mobileUserAgent } from '../../../lib/utils/mobile'
+import { signal } from '@preact/signals'
+
+import { AstroComponentInstance } from 'astro/dist/runtime/server'
+
+let toolkit = (await Astro.glob('/../docs/TOOLKIT.md'))[0].compiledContent()
+
+// Check if logged in
+const session = await getSession(Astro.cookies)
+const loggedIn = session && session.session.full
+
+const snapshotData = await getSnapshotData(Astro.params.snapshotId!)
+if (!snapshotData) return Astro.redirect('/404', 302)
+
+const persistenceState = signal<PersistenceState>({
+  kind: 'SHARED',
+  name: snapshotData.name,
+  authorName: snapshotData.ownerName,
+  code: snapshotData.code,
+  stale: false,
+  session
+})
+
+// Check if on mobile
+const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
+
+export const prerender = false
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Blot editor!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <main></main>
+    <script
+      define:vars={{
+        toolkit,
+        loggedIn,
+        source: persistenceState.value.code,
+        persistenceState
+      }}
+    >
+      window.getToolkit = () => toolkit
+      window.getLoggedIn = () => loggedIn
+      window.getSrc = () => source
+      window.getPersistenceState = () => persistenceState
+    </script>
+    <script src="../../../lib/client/initApp.js"></script>
+  </body>
+</html>

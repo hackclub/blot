@@ -50,24 +50,24 @@ export default function CodeMirror({ loggedIn }) {
     setView(view)
   }, [])
 
-  useEffect(() => {
-    // Add unload to warn user
-    if (!loggedIn) {
-      window.addEventListener('beforeunload', e => {
-        e.returnValue =
-          'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
-        return 'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
-      })
+  // useEffect(() => {
+  //   // Add unload to warn user
+  //   if (!loggedIn) {
+  //     window.addEventListener('beforeunload', e => {
+  //       e.returnValue =
+  //         'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
+  //       return 'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
+  //     })
 
-      return () => {
-        window.removeEventListener('beforeunload', e => {
-          e.returnValue =
-            'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
-          return 'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
-        })
-      }
-    }
-  }, [])
+  //     return () => {
+  //       window.removeEventListener('beforeunload', e => {
+  //         e.returnValue =
+  //           'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
+  //         return 'This page is asking you to confirm that you want to leave — information you’ve entered may not be saved.'
+  //       })
+  //     }
+  //   }
+  // }, [])
 
   return (
     <div class={styles.root}>

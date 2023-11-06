@@ -55,12 +55,12 @@ export default function Help({
         </div>
         {tab === 'toolkit' && (
           <div
-            class={`prose sm ${styles.helpContent}`}
+            class={`prose xs ${styles.helpContent}`}
             dangerouslySetInnerHTML={{ __html: toolkit }}
           />
         )}
         {tab === 'guide' && (
-          <div class={`prose sm ${styles.helpContent}`}>
+          <div class={`prose xs ${styles.helpContent}`}>
             <div dangerouslySetInnerHTML={{ __html: guide }} />
           </div>
         )}

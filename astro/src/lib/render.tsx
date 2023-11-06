@@ -25,6 +25,7 @@ export function render(options: RenderOptions | undefined) {
           loggedIn={window.getLoggedIn()}
           source={window.getSrc ? window.getSrc() : undefined}
           guide={window.getGuide ? window.getGuide() : undefined}
+          snapshot={window.getSnapshot ? window.getSnapshot() : undefined}
           persistenceState={
             window.getPersistenceState
               ? signal<PersistenceState>(window.getPersistenceState())
@@ -49,6 +50,7 @@ export function render(options: RenderOptions | undefined) {
             toolkit={window.getToolkit()}
             loggedIn={window.getLoggedIn()}
             source={window.getSrc ? window.getSrc() : undefined}
+            snapshot={window.getSnapshot ? window.getSnapshot() : undefined}
             guide={window.getGuide ? window.getGuide() : undefined}
             persistenceState={
               window.getPersistenceState

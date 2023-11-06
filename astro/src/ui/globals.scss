@@ -189,6 +189,15 @@ pre {
     }
   }
 
+  &.xs {
+    font-size: 1.1rem !important;
+
+    code,
+    pre {
+      font-size: 0.995rem !important;
+    }
+  }
+
   @media screen and (max-width: $md) {
     font-size: 1.3rem;
   }

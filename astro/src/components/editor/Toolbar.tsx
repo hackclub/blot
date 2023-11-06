@@ -27,23 +27,6 @@ export default function Toolbar({ persistenceState }) {
   const { connected } = getStore()
 
   const [hidden, setHidden] = useState(true)
-  const [status, setStatus] = useState('')
-
-  useSignalEffect(() => {
-    let newStatus
-    switch (persistenceState.value.cloudSaveState) {
-      case 'SAVED':
-        newStatus = 'Saved'
-        break
-      case 'SAVING':
-        newStatus = 'Saving'
-        break
-      case 'ERROR':
-        newStatus = 'Error'
-        break
-    }
-    console.log(newStatus)
-  })
 
   return (
     <nav id="navbar">
@@ -61,7 +44,7 @@ export default function Toolbar({ persistenceState }) {
         <div class="navbar-links no-gap">
           <RunButton />
           <NewButton persistenceState={persistenceState} />
-          <OpenButton />
+          <OpenButton persistenceState={persistenceState} />
           <div
             style={{
               position: 'relative',
@@ -88,6 +71,7 @@ export default function Toolbar({ persistenceState }) {
               <DownloadPNG />
             </div>
           </div>
+          <Button variant="ghost">save</Button>
         </div>
       </div>
       {persistenceState ? (
@@ -113,10 +97,14 @@ export default function Toolbar({ persistenceState }) {
               }).catch(err => console.error(err))
             }}>
             <input
+              autoComplete="off"
               name="name"
               class={styles.nameInput}
               type="text"
               value={persistenceState.value.art.name}
+              onChange={event => {
+                event.target.setAttribute('size', event.target.value.length + 1)
+              }}
               onBlur={event => {
                 // POST onBlur
                 event.preventDefault()
@@ -133,7 +121,6 @@ export default function Toolbar({ persistenceState }) {
               }}
             />
           </form>
-          {status}
         </div>
       ) : null}
       <div
@@ -145,7 +132,7 @@ export default function Toolbar({ persistenceState }) {
         {persistenceState ? (
           <ShareLink persistenceState={persistenceState} />
         ) : (
-          <RemixLink />
+          <RemixLink persistenceState={persistenceState} />
         )}
       </div>
     </nav>
@@ -153,31 +140,64 @@ export default function Toolbar({ persistenceState }) {
 }
 
 export function ShareLink({ persistenceState }) {
+  const [hidden, setHidden] = useState(true)
+  const [snapshotId, setSnapshotId] = useState('')
+
+  return (
+    <div
+      style={{
+        position: 'relative',
+        cursor: 'default',
+        width: 'min-width'
+      }}>
+      <Button
+        variant="ghost"
+        onClick={() => {
+          fetch('/api/art/snapshot', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              artId: persistenceState.value.art.id
+            })
+          })
+            .then(res => res.json())
+            .then(json => {
+              setSnapshotId(json.snapshotId)
+              navigator.clipboard.writeText(
+                `https://blot.hackclub.com/editor/snapshot/${json.snapshotId}`
+              )
+              setHidden(false)
+            })
+            .catch(err => console.log(err))
+        }}>
+        share
+      </Button>
+      <div
+        style={{
+          display: hidden ? 'none' : '',
+          position: 'absolute',
+          background: 'var(--primary)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          zIndex: 9999,
+          width: '100%',
+          top: '100%',
+          padding: '5px',
+          borderRadius: '5px'
+        }}>
+        https://blot.hackclub.com/editor/snapshot/{snapshotId}
+      </div>
+    </div>
+  )
+}
+
+export function RemixLink({ persistenceState }) {
   return (
     <Button
       variant="ghost"
       onClick={() => {
-        fetch('/api/art/snapshot', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            artId: persistenceState.value.art.id
-          })
-        })
-          .then(res => res.json())
-          .then(json => {
-            console.log(json)
-          })
-          .then(err => console.error(err))
+        if (persistenceState && persistenceState.value?.session?.session.full)
+          persist(persistenceState)
       }}>
-      share
-    </Button>
-  )
-}
-
-export function RemixLink() {
-  return (
-    <Button variant="ghost" onClick={() => {}}>
       remix to save edits
     </Button>
   )

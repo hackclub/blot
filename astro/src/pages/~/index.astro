@@ -50,8 +50,10 @@ export const prerender = false
 
     #gallery {
       margin: auto;
+      align-items: center;
       justify-content: center;
       flex-wrap: wrap;
+      flex-direction: column;
       gap: var(--gallery-gap);
       width: var(--gallery-width-mobile);
       padding: 2rem 0;
@@ -123,10 +125,39 @@ export const prerender = false
     .piece {
       border: 1px solid var(--primary);
       font-size: 1.3rem;
-      padding: 3rem;
+      padding: 2rem;
+      padding-bottom: 1rem;
       width: calc(var(--gallery-width-desktop) / 3 - 28px);
       color: var(--primary);
       text-decoration: none;
+
+      h3 {
+        margin: 0;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .delete {
+      background-color: transparent;
+      border: 0;
+      float: right;
+      padding: 0;
+      cursor: pointer;
+      transition: color 0.1s;
+      position: relative;
+
+      &:hover,
+      &:focus {
+        color: var(--primary);
+      }
+
+      svg {
+        stroke-width: 2;
+        min-width: 24px;
+      }
     }
   </style>
 
@@ -161,61 +192,60 @@ export const prerender = false
                 </a>
               ))}
             </div>
-            <div class="gallery-section">
-              {unnamedArt.length > 0 && (
-                <div class="unnamed">
-                  <h2>Unnamed art</h2>
-                  <div class="art">
-                    {unnamedArt.map(piece => (
-                      <a class="piece" href={`/~/${piece.id}`}>
-                        <h3>{piece.name || 'Untitled'}</h3>
-                        <p class="modified-at">
-                          Edited{' '}
-                          {ms(
-                            Math.max(
-                              Date.now() - piece.modifiedAt.toMillis(),
-                              1000
-                            ),
-                            { long: true }
-                          )}{' '}
-                          ago
-                        </p>
-                        <button
-                          class="delete"
-                          data-id={piece.id}
-                          data-name={piece.name || 'Untitled'}>
-                          <TrashCanIcon />
-                        </button>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            <h2>Unnamed art</h2>
+            {unnamedArt.length > 0 && (
+              <div class="gallery-section">
+                {unnamedArt.map(piece => (
+                  <a class="piece" href={`/~/${piece.id}`}>
+                    <h3>{piece.name || 'Untitled'}</h3>
+                    <p class="modified-at">
+                      Edited{' '}
+                      {ms(
+                        Math.max(
+                          Date.now() - piece.modifiedAt.toMillis(),
+                          1000
+                        ),
+                        { long: true }
+                      )}{' '}
+                      ago
+                    </p>
+                    <button
+                      class="delete"
+                      data-id={piece.id}
+                      data-name={piece.name || 'Untitled'}>
+                      <TrashCanIcon />
+                    </button>
+                  </a>
+                ))}
+              </div>
+            )}
           </>
         )
       }
     </div>
-    {loggedIn === false ? <LoginModal client:only/> : (
-      <script>
-        document.body.addEventListener("click", async event => {
-          const deleteBtn = event.composedPath().find(item => item instanceof HTMLElement && item.matches(".delete") as HTMLElement | undefined)
-          if (!deleteBtn) return
-          event.preventDefault()
-          const artId = deleteBtn.dataset.id!
-          const artName = deleteBtn.dataset.name!
-          if (!confirm(`Are you sure you want to delete "${artName}"?`)) return
-          deleteBtn.closest('.art')!.remove()
-
-          const res = await fetch(`/api/art/delete`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ artId })
-          })
-          if (!res.ok) console.error(`Error deleting art: ${await res.text()}`)
-          window.location.reload()
+    {loggedIn === false && <LoginModal client:only />}
+    <script>
+      document.body.addEventListener('click', async event => {
+        const deleteBtn = event
+          .composedPath()
+          .find(
+            item =>
+              item instanceof HTMLElement &&
+              (item.matches('.delete') as HTMLElement | undefined)
+          )
+        if (!deleteBtn) return
+        event.preventDefault()
+        const artId = deleteBtn.dataset.id!
+        const artName = deleteBtn.dataset.name!
+        if (!confirm(`Are you sure you want to delete "${artName}"?`)) return
+        deleteBtn.closest('.piece')!.remove()
+        const res = await fetch(`/api/art/delete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ artId })
         })
-      </script>
-    )}
+        if (!res.ok) console.error(`Error deleting art: ${await res.text()}`)
+      })
+    </script>
   </div>
 </Layout>
