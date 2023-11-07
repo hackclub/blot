@@ -51,7 +51,6 @@ export interface Art {
   name: string
   code: string
   tutorialName?: string
-  tutorialIndex?: number
 }
 
 export interface LoginCode {
@@ -167,8 +166,7 @@ export const makeArt = async (
   unprotected: boolean,
   name?: string,
   code?: string,
-  tutorialName?: string,
-  tutorialIndex?: number
+  tutorialName?: string
 ): Promise<Art> => {
   const data = {
     ownerId,
@@ -177,8 +175,7 @@ export const makeArt = async (
     unprotected,
     name: name ?? generateName(),
     code: code ?? '',
-    tutorialName: tutorialName ?? null,
-    tutorialIndex: tutorialIndex ?? null
+    tutorialName: tutorialName ?? null
   }
   const _art = await firestore.collection('art').add(data)
   return { id: _art.id, ...data } as Art

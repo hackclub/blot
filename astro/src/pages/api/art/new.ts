@@ -16,7 +16,6 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   let partialSessionEmail: string | null // For temp programs
   let recaptchaToken: string
   let tutorialName: string | undefined
-  let tutorialIndex: number | undefined
   try {
     const body = await request.json()
     if (body.name && typeof body.name !== 'string') throw 'Invalid name'
@@ -35,9 +34,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     recaptchaToken = body.recaptchaToken
     tutorialName =
       typeof body.tutorialName === 'string' ? body.tutoralName : undefined
-    tutorialIndex =
-      typeof body.tutorialIndex === 'number' ? body.tutorialIndex : undefined
   } catch (error) {
+    console.error(error)
     return new Response(
       typeof error === 'string' ? error : 'Bad request body',
       { status: 400 }
@@ -71,8 +69,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     unprotected,
     name ?? undefined,
     code ?? undefined,
-    tutorialName,
-    tutorialIndex
+    tutorialName
   )
   if (unprotected) await mail(user.email, tempTemplate(user, art))
   return new Response(JSON.stringify({ art, sessionInfo }), { status: 200 })

@@ -10,7 +10,6 @@ export type PersistenceState = (
       cloudSaveState: 'SAVED' | 'SAVING' | 'ERROR'
       art: 'LOADING' | Art
       tutorial?: string[] | undefined
-      tutorialIndex?: number | undefined
     }
   | {
       kind: 'SHARED'
@@ -19,7 +18,6 @@ export type PersistenceState = (
       code: string
       tutorial?: string[] | undefined
       tutorialName?: string | undefined
-      tutorialIndex?: number | undefined
     }
 ) & {
   session: SessionInfo | null

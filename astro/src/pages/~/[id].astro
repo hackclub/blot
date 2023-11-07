@@ -18,7 +18,6 @@ const art = await getArt(Astro.params.id!)
 if (!art || art.ownerId !== session.user.id) return Astro.redirect('/404', 302)
 
 let tutorial: string[] | undefined
-let tutorialIndex: number | undefined
 if (art.tutorialName) {
   // Get tutorial and pass into editor
 }
@@ -38,7 +37,6 @@ if (session.session.full) {
     cloudSaveState: 'SAVED',
     art,
     tutorial,
-    tutorialIndex,
     stale: false
   }
 } else {
@@ -52,7 +50,6 @@ if (session.session.full) {
     cloudSaveState: 'SAVED',
     art,
     tutorial,
-    tutorialIndex,
     stale: false
   }
 }

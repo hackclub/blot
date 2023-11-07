@@ -23,8 +23,7 @@ export const saveArt = debounce(
           body: JSON.stringify({
             code,
             artId: art?.id,
-            tutorialName: art?.tutorialName,
-            tutorialIndex: art?.tutorialIndex
+            tutorialName: art?.tutorialName
           })
         })
         if (!res.ok) throw new Error(`Error saving game: ${await res.text()}`)

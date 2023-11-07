@@ -10,6 +10,11 @@ import TrashCanIcon from '../../ui/icons/TrashCanIcon'
 let loggedIn = true
 let art, allArt, unnamedArt
 
+const order = art => {
+  console.log(art)
+  return art
+}
+
 const session = await getSession(Astro.cookies)
 if (!session || !session.session.full) {
   loggedIn = false
@@ -20,8 +25,8 @@ if (!session || !session.session.full) {
     .get()
   allArt = _art.docs.map(doc => ({ id: doc.id, ...doc.data() }) as Art)
 
-  art = allArt.filter(art => !isRandomName(art.name))
-  unnamedArt = allArt.filter(art => isRandomName(art.name))
+  art = order(allArt.filter(art => !isRandomName(art.name)))
+  unnamedArt = order(allArt.filter(art => isRandomName(art.name)))
 
   if (art.length === 0 && unnamedArt.length > 0) {
     art = unnamedArt
@@ -50,7 +55,6 @@ export const prerender = false
 
     #gallery {
       margin: auto;
-      align-items: center;
       justify-content: center;
       flex-wrap: wrap;
       flex-direction: column;
@@ -59,6 +63,7 @@ export const prerender = false
       padding: 2rem 0;
       position: relative;
       display: flex;
+      height: 100%;
 
       @media screen and (max-width: $md) {
         flex-direction: column;

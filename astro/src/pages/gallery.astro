@@ -172,9 +172,13 @@ export const prerender = true
       width: var(--gallery-width-desktop);
       margin: auto;
       margin-top: 2rem;
+      margin-bottom: 0;
+      padding-inline: 3rem;
       font-family: var(--sans-serif);
+      line-height: 0;
 
       a {
+        color: var(--primary);
         text-decoration: none;
       }
     }
@@ -198,7 +202,9 @@ export const prerender = true
       type="text"
     />
   </header>
-  <h2 id="threed-link"><a href="/">3D gallery</a></h2>
+  <h2 id="threed-link">
+    <a href="https://blot-3dgallery.hackclub.dev/">3D gallery</a>
+  </h2>
   <div id="container">
     <div id="gallery">
       {

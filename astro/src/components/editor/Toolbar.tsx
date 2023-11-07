@@ -15,13 +15,15 @@ import {
   tryAutoConnect
 } from '../../lib/client/machine'
 import { throttle } from 'throttle-debounce'
-import { Signal, useSignal, useSignalEffect } from '@preact/signals'
+import { signal } from '@preact/signals'
 import BrightnessContrastIcon from '../../ui/icons/BrightnessContrastIcon'
 import SettingsIcon from '../../ui/icons/SettingsIcon'
 import KeyboardIcon from '../../ui/icons/KeyboardIcon'
 import GitHubIcon from '../../ui/icons/GitHubIcon'
 import SaveButton from './SaveButton'
-import { persist } from '../../db/auth-helper'
+import { altPersist, persist } from '../../db/auth-helper'
+import { generateName } from '../../lib/utils/words'
+import { useOnEditorChange } from '../../lib/events/events'
 
 export default function Toolbar({ persistenceState }) {
   const { connected } = getStore()
@@ -71,7 +73,7 @@ export default function Toolbar({ persistenceState }) {
               <DownloadPNG />
             </div>
           </div>
-          <Button variant="ghost">save</Button>
+          <SaveStatus persistenceState={persistenceState} />
         </div>
       </div>
       {persistenceState ? (
@@ -139,6 +141,10 @@ export default function Toolbar({ persistenceState }) {
   )
 }
 
+export function SaveStatus({ persistenceState }) {
+  return <Button variant="ghost">save</Button>
+}
+
 export function ShareLink({ persistenceState }) {
   const [hidden, setHidden] = useState(true)
   const [snapshotId, setSnapshotId] = useState('')
@@ -190,6 +196,10 @@ export function ShareLink({ persistenceState }) {
   )
 }
 
+export function searchParams(query) {
+  return new URL(window.location.href).searchParams.get(query)
+}
+
 export function RemixLink({ persistenceState }) {
   return (
     <Button
@@ -197,6 +207,26 @@ export function RemixLink({ persistenceState }) {
       onClick={() => {
         if (persistenceState && persistenceState.value?.session?.session.full)
           persist(persistenceState)
+        else {
+          // Create a new persistenceState
+          const { view } = getStore()
+          const code = view.state.doc.toString()
+          fetch('/api/art/new', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              code,
+              name: generateName(),
+              tutorialName: window.getGuide ? searchParams('guide') : null
+            })
+          })
+            .then(res => res.json())
+            .then(json => {
+              const { art } = json
+              window.history.replaceState(null, '', `/~/${art.id}`)
+              window.location.reload()
+            })
+        }
       }}>
       remix to save edits
     </Button>

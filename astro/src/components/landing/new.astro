@@ -1,0 +1,342 @@
+---
+import RotateIcon from '../../ui/icons/RotateIcon'
+import RefreshIcon from '../../ui/icons/RefreshIcon'
+---
+
+<style lang="scss" is:global>
+  #three-js-container {
+    background-color: white;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50vh;
+    position: relative;
+
+    .buttons {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+    }
+  }
+</style>
+
+<script>
+  import { OBJLoader } from 'three/addons/loaders/OBJLoader'
+  import { MTLLoader } from 'three/addons/loaders/MTLLoader'
+  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+  import * as THREE from 'three'
+  import { runTextReturnTurtles } from '../../lib/utils/runTextReturnTurtles'
+  import landingProgram from '../../lib/examples/landingProgram'
+
+  window.onload = () => {
+    // Constants
+    const machineRange = {
+      x: [-0.07031505489843565, 0.06585060696837623],
+      y: [-0.21385993884461388, -0.06802130646267329]
+    }
+    const initCamPos = {
+      x: -0.012060728422271984,
+      y: -0.10995465588219245,
+      z: 0.22370699843435427
+    }
+    const initCamAngle = {
+      x: 1.0095700038735655,
+      y: 0.0025350872263442863,
+      z: -0.004032504057447568
+    }
+    const machineWidth = machineRange.x[1] - machineRange.x[0]
+    const machineHeight = machineRange.y[1] - machineRange.y[0]
+
+    // Set up scene
+    const scene = new THREE.Scene()
+    scene.background = null
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    )
+
+    // Set up renderer
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true
+    })
+    const threeContainer: HTMLCanvasElement | null = document.querySelector(
+      '#three-js-container'
+    )
+    threeContainer?.appendChild(renderer.domElement)
+    renderer.setSize(window.innerWidth, threeContainer?.offsetHeight)
+
+    // Toggle orbit controls
+    let controls
+    document.getElementById('rotate')?.addEventListener('click', event => {
+      if (controls === undefined) {
+        event.target.style.color = 'var(--primary)'
+        controls = new OrbitControls(camera, renderer.domElement)
+      } else {
+        event.target.style.color = 'black'
+        controls.dispose()
+        controls = undefined
+      }
+    })
+
+    // Set up light
+    const light = new THREE.DirectionalLight(0xffffff)
+    light.position.set(-0.5, 0, 1)
+    scene.add(light)
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+    scene.add(ambientLight)
+
+    // Add the parts
+    let objects = {}
+
+    const objLoader = new OBJLoader().setPath('/model/')
+    const mtlLoader = new MTLLoader().setPath('/model/')
+
+    for (const k in initCamPos) camera.position[k] = initCamPos[k]
+    for (const k in initCamAngle) camera.rotation[k] = initCamAngle[k]
+
+    function addObj({ name, post }) {
+      mtlLoader.load(`${name}.mtl`, function (materials) {
+        materials.preload()
+        objLoader.setMaterials(materials).load(
+          `${name}.obj`,
+          function (object) {
+            scene.add(object)
+            objects[name] = object
+
+            const boundingBox = new THREE.Box3().setFromObject(object)
+            const yOffset = boundingBox.min.y
+            const xOffset = (boundingBox.min.x + boundingBox.max.x) / 2
+            const zOffset = (boundingBox.min.z + boundingBox.max.z) / 2
+
+            object.traverse(child => {
+              if (child instanceof THREE.Mesh)
+                child.position.set(-xOffset, -yOffset, -zOffset)
+            })
+
+            post(object)
+          },
+          function (xhr) {},
+          function (error) {
+            console.error(error)
+          }
+        )
+      })
+    }
+
+    ;[
+      {
+        name: 'feet',
+        post: obj => {
+          obj.position.z = 0.038
+        }
+      },
+      {
+        name: 'carriage',
+        post: obj => {
+          obj.position.z = 0.063
+        }
+      },
+      {
+        name: 'arm',
+        post: obj => {
+          obj.position.z = 0.065
+        }
+      },
+      {
+        name: 'penholder',
+        post: obj => {
+          obj.position.z = 0.065
+        }
+      }
+    ].map(addObj)
+
+    // Virtual canvas to mirror off
+    let texCanvas = document.createElement('canvas')
+    const texCanvasWidth = 512
+    const texCanvasHeight = (512 * machineHeight) / machineWidth
+    texCanvas.width = texCanvasWidth
+    texCanvas.height = texCanvasHeight
+    let ctx = texCanvas.getContext('2d')
+
+    const testTurtles = runTextReturnTurtles(landingProgram)
+    if (testTurtles.length > 1) {
+      const [first, ...rest] = testTurtles
+      rest.forEach(t => first.join(rest))
+    }
+
+    const oneTurtle = testTurtles.length > 0 ? testTurtles[0] : null
+    oneTurtle.translate([texCanvasWidth / 2, texCanvasHeight / 2], oneTurtle.cc)
+    oneTurtle.resample(5)
+    const totalN = oneTurtle.path.flat().length
+
+    const drawCanvasTexture = n => {
+      ctx.clearRect(0, 0, texCanvasWidth, texCanvasHeight)
+
+      let count = 0
+      let lastPoint = null
+      ctx.beginPath()
+      oneTurtle.path.forEach(p => {
+        p.forEach((point, i) => {
+          if (count > n) return
+
+          lastPoint = point
+
+          if (i === 0) ctx.moveTo(...point)
+          else ctx.lineTo(...point)
+
+          count++
+        })
+      })
+
+      const flipPoint = (p, pivot, vector) => {
+        // Step 1: Translate to origin
+        let translatedPoint = [p[0] - pivot[0], p[1] - pivot[1]]
+
+        // Step 2: Apply the flip
+        let flippedPoint = [
+          translatedPoint[0] * vector[0],
+          translatedPoint[1] * vector[1]
+        ]
+
+        return finalPoint
+      }
+
+      const moveMachine = (x, y) => {
+        if (Object.keys(objects).length < 4) return
+
+        x = Math.max(x, machineRange.x[1])
+        y = Math.max(y, machineRange.y[1])
+
+        objects.penholder.position.x = x
+        objects.penholder.position.y = y
+
+        objects.carriage.position.x = x
+        objects.carriage.position.y = 0.03
+
+        object.arm.position.x = x + 0.0175
+        objects.arm.position.y = y + 0.04
+      }
+
+      const flipped = flipPoint(
+        lastPoint,
+        [texCanvasWidth / 2, texCanvasHeight / 2],
+        [1, -1]
+      )
+      const xMachine =
+        (flipped[0] / texCanvasWidth) *
+          (machineRange.x[1] - machineRange.x[0]) +
+        machineRange.x[0]
+      const yMachine =
+        (flipped[1] / texCanvasHeight) *
+          (machineRange.y[1] - machineRange.y[0]) +
+        machineRange.y[0]
+      moveMachine(xMachine, yMachine)
+      texture.needsUpdate = true
+    }
+
+    // let drew = 0
+    // let id = setInterval(() => {
+    //   drawCanvasTexture(drew)
+
+    //   if (drew >= totalN) {
+    //     clearInterval(id)
+    //     id = false
+    //   }
+    //   drew++
+    // }, 30)
+
+    // Refresh
+    document.getElementById('refresh').addEventListener('click', () => {
+      if (id) clearInterval(id)
+      drew = 0
+      id = setInterval(() => {
+        drawCanvasTexture(drew)
+        if (drew >= totalN) {
+          clearInterval(id)
+          id = false
+        }
+        drew++
+      }, 30)
+    })
+
+    // Plane for drawing to sit upon
+    let texture = new THREE.CanvasTexture(texCanvas)
+    texture.needsUpdate = true
+    texture.minFilter = THREE.LinearFilter
+
+    let geometry = new THREE.PlaneGeometry(machineWidth, machineHeight)
+    let material = new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true
+    })
+
+    let plane = new THREE.Mesh(geometry, material)
+    plane.position.x = 0
+    plane.position.y = -0.135
+    plane.position.z = 0
+    scene.add(plane)
+
+    const animate = () => {
+      requestAnimationFrame(animate)
+      renderer.render(scene, camera)
+    }
+
+    animate()
+
+    // Handle resize
+    const onResize = entries => {
+      const bb = threeContainer.getBoundingClientRect()
+      for (let entry of entries) {
+        // For simplicity, using window dimensions, but can also use the container's dimensions
+        const width = bb.width
+        const height = bb.height
+
+        // Update the camera's aspect ratio and projection matrix
+        camera.aspect = width / height
+        camera.updateProjectionMatrix()
+
+        // Update the renderer's size
+        renderer.setSize(width, height)
+
+        // Optional: re-render the scene
+        renderer.render(scene, camera)
+      }
+    }
+
+    const resizeObserver = new ResizeObserver(onResize)
+    resizeObserver.observe(threeContainer)
+  }
+</script>
+
+<style lang="scss">
+  #three-js-container {
+    border: 1px solid var(--primary);
+  }
+
+  .buttons button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    transition: color 0.1s;
+
+    &:hover,
+    &:focus {
+      color: var(--primary);
+    }
+  }
+</style>
+
+<div id="three-js-container">
+  <div class="buttons">
+    <button id="rotate" title="Toggle rotate">
+      <RotateIcon />
+    </button>
+    <button id="refresh" title="Refresh">
+      <RefreshIcon />
+    </button>
+  </div>
+</div>
