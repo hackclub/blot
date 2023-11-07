@@ -32,13 +32,6 @@ export function render(options: RenderOptions | undefined) {
               : undefined
           }
         />
-        {window.getPersistenceState != undefined && (
-          <EditorAutosave
-            persistenceState={signal<PersistenceState>(
-              window.getPersistenceState()
-            )}
-          />
-        )}
       </>,
       root
     )
@@ -58,13 +51,6 @@ export function render(options: RenderOptions | undefined) {
                 : undefined
             }
           />
-          {window.getPersistenceState != undefined && (
-            <EditorAutosave
-              persistenceState={signal<PersistenceState>(
-                window.getPersistenceState()
-              )}
-            />
-          )}
         </>,
         root
       )

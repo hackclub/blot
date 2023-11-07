@@ -12,6 +12,50 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import styles from './Editor.module.scss'
 import Toolbar from './Toolbar'
 import { loadCodeFromString } from '../../lib/client/loadCodeFromString'
+import { debounce } from 'throttle-debounce'
+import { useOnEditorChange } from '../../lib/events/events'
+import { backup } from '../../lib/client/addLoadBackup'
+
+let lastSavePromise = Promise.resolve()
+let saveQueueSize = 0
+export const saveArt = debounce(
+  800,
+  (persistenceState: Signal<PersistenceState>, code: string) => {
+    const doSave = async () => {
+      let isError = false
+      try {
+        const art =
+          persistenceState.value.kind === 'PERSISTED' &&
+          persistenceState.value.art !== 'LOADING'
+            ? persistenceState.value.art
+            : null
+        const res = await fetch('/api/art/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            code,
+            artId: art?.id,
+            tutorialName: art?.tutorialName
+          })
+        })
+        if (!res.ok) throw new Error(`Error saving game: ${await res.text()}`)
+      } catch (error) {
+        console.error(error)
+        isError = true
+      }
+
+      saveQueueSize--
+      if (saveQueueSize === 0 && persistenceState.value.kind === 'PERSISTED')
+        persistenceState.value = {
+          ...persistenceState.value,
+          cloudSaveState: isError ? 'ERROR' : 'SAVED'
+        }
+    }
+
+    saveQueueSize++
+    lastSavePromise = (lastSavePromise ?? Promise.resolve()).then(doSave)
+  }
+)
 
 export default function Editor({
   guide,
@@ -24,6 +68,7 @@ export default function Editor({
 
   const [width, setWidth] = useState(50)
   const [tab, setTab] = useState('workshop')
+  const [status, setStatus] = useState('')
 
   const { theme } = getStore()
 
@@ -54,11 +99,32 @@ export default function Editor({
     if (source) loadCodeFromString(source)
   }, [])
 
+  useOnEditorChange(() => {
+    persistenceState.value = {
+      ...persistenceState.value,
+      stale: true
+    }
+    if (persistenceState.value.kind === 'PERSISTED') {
+      persistenceState.value = {
+        ...persistenceState.value,
+        cloudSaveState: 'SAVING'
+      }
+      const { view } = getStore()
+      saveArt(persistenceState, view.state.doc.toString())
+    }
+
+    if (persistenceState.value.kind === 'IN_MEMORY') {
+      backup()
+    }
+
+    setStatus(persistenceState.value.cloudSaveState)
+  })
+
   return (
     <>
       <GlobalStateDebugger />
       <div class={styles.root}>
-        <Toolbar persistenceState={persistenceState} />
+        <Toolbar persistenceState={persistenceState} status={status} />
         <div class={styles.inner} ref={editorContainer}>
           <div
             style={{

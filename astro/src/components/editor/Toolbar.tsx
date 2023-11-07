@@ -73,7 +73,9 @@ export default function Toolbar({ persistenceState }) {
               <DownloadPNG />
             </div>
           </div>
-          <SaveStatus persistenceState={persistenceState} />
+          <Button variant="ghost">
+            {persistenceState.value.cloudSaveState.toLowerCase()}
+          </Button>
         </div>
       </div>
       {persistenceState ? (
@@ -142,6 +144,9 @@ export default function Toolbar({ persistenceState }) {
 }
 
 export function SaveStatus({ persistenceState }) {
+  useEffect(() => {
+    console.log('useEffect', persistenceState)
+  }, [persistenceState])
   return <Button variant="ghost">save</Button>
 }
 

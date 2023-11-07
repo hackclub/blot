@@ -3,6 +3,7 @@ import type { PersistenceState } from '../../lib/state/persist'
 import { getStore } from '../../lib/state/state'
 import { debounce } from 'throttle-debounce'
 import { Signal, useSignalEffect } from '@preact/signals'
+import { backup } from '../../lib/client/addLoadBackup'
 
 let lastSavePromise = Promise.resolve()
 let saveQueueSize = 0
@@ -62,6 +63,7 @@ export default function EditorAutosave({ persistenceState }) {
 
     if (persistenceState.value.kind === 'IN_MEMORY') {
       // Save in memory!
+      backup()
     }
   })
 
