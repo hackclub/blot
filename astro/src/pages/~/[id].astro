@@ -57,6 +57,16 @@ if (session.session.full) {
 const persistenceState = signal<PersistenceState>(_persistenceState)
 const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
 
+let guide = persistenceState.value.art.tutorialName
+if (guide) {
+  const guides = await Astro.glob('/../guides/*.md')
+  guide = guides
+    .find(g => {
+      if (slug(g.file) == guide) return true
+    })
+    ?.compiledContent()
+}
+
 export const prerender = false
 ---
 
@@ -72,12 +82,14 @@ export const prerender = false
     <script
       define:vars={{
         toolkit,
+        guide,
         loggedIn: true,
         source: persistenceState.value.art?.code,
         persistenceState
       }}
     >
       window.getToolkit = () => toolkit
+      window.getGuide = () => guide
       window.getLoggedIn = () => loggedIn
       window.getSrc = () => source
       window.getPersistenceState = () => persistenceState

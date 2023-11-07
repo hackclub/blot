@@ -1,6 +1,5 @@
 import MobileUnsupported from '../components/MobileUnsupported.astro'
 import Editor from '../components/editor/Editor'
-import EditorAutosave from '../components/~/EditorAutosave'
 import { render as preactRender } from 'preact'
 import { signal } from '@preact/signals'
 import type { PersistenceState } from './state/persist'

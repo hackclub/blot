@@ -32,8 +32,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     if (body.recaptchaToken && typeof body.recaptchaToken !== 'string')
       throw 'Invalid recaptcha token'
     recaptchaToken = body.recaptchaToken
-    tutorialName =
-      typeof body.tutorialName === 'string' ? body.tutoralName : undefined
+    tutorialName = body.tutorialName
   } catch (error) {
     console.error(error)
     return new Response(
@@ -41,6 +40,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       { status: 400 }
     )
   }
+
+  console.log(tutorialName)
 
   let sessionInfo = await getSession(cookies)
   let user: User

@@ -9,6 +9,7 @@ import DropBox from './DropBox'
 import CodeMirror from './CodeMirror'
 import Help from './Help'
 import { useEffect, useRef, useState } from 'preact/hooks'
+import { useSignalEffect } from '@preact/signals'
 import styles from './Editor.module.scss'
 import Toolbar from './Toolbar'
 import { loadCodeFromString } from '../../lib/client/loadCodeFromString'
@@ -68,7 +69,6 @@ export default function Editor({
 
   const [width, setWidth] = useState(50)
   const [tab, setTab] = useState('workshop')
-  const [status, setStatus] = useState('')
 
   const { theme } = getStore()
 
@@ -99,32 +99,61 @@ export default function Editor({
     if (source) loadCodeFromString(source)
   }, [])
 
-  useOnEditorChange(() => {
-    persistenceState.value = {
-      ...persistenceState.value,
-      stale: true
+  // Warn before leave
+  useSignalEffect(() => {
+    const onBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      event.returnValue = ''
+      return ''
     }
-    if (persistenceState.value.kind === 'PERSISTED') {
+    let needsWarning = false
+    if (persistenceState !== undefined) {
+      if (['SHARED', 'IN_MEMORY'].includes(persistenceState.value.kind)) {
+        needsWarning = persistenceState.value.stale
+      } else if (
+        persistenceState.value.kind === 'PERSISTED' &&
+        persistenceState.value.stale &&
+        persistenceState.value.art !== 'LOADING'
+      ) {
+        needsWarning = persistenceState.value?.cloudSaveState !== 'SAVED'
+      }
+
+      if (needsWarning) {
+        window.addEventListener('beforeunload', onBeforeUnload)
+        return () => window.removeEventListener('beforeunload', onBeforeUnload)
+      } else return () => {}
+    } else {
+      window.addEventListener('beforeunload', onBeforeUnload)
+      return () => window.removeEventListener('beforeunload', onBeforeUnload)
+    }
+  })
+
+  useOnEditorChange(() => {
+    if (persistenceState !== undefined) {
       persistenceState.value = {
         ...persistenceState.value,
-        cloudSaveState: 'SAVING'
+        stale: true
       }
-      const { view } = getStore()
-      saveArt(persistenceState, view.state.doc.toString())
-    }
+      if (persistenceState.value.kind === 'PERSISTED') {
+        persistenceState.value = {
+          ...persistenceState.value,
+          cloudSaveState: 'SAVING'
+        }
+        const { view } = getStore()
+        saveArt(persistenceState, view.state.doc.toString())
+      }
 
-    if (persistenceState.value.kind === 'IN_MEMORY') {
-      backup()
+      if (persistenceState.value.kind === 'IN_MEMORY') {
+        backup()
+      }
     }
-
-    setStatus(persistenceState.value.cloudSaveState)
   })
 
   return (
     <>
       <GlobalStateDebugger />
       <div class={styles.root}>
-        <Toolbar persistenceState={persistenceState} status={status} />
+        <Toolbar persistenceState={persistenceState} />
         <div class={styles.inner} ref={editorContainer}>
           <div
             style={{

@@ -3,27 +3,21 @@ import download from '../../lib/client/download'
 import runCode from '../../lib/run'
 import defaultProgram from '../../lib/examples/defaultProgram'
 import { patchStore, getStore } from '../../lib/state/state'
-import { type PersistenceState } from '../../lib/state/persist'
 import { loadCodeFromString } from '../../lib/client/loadCodeFromString'
 import styles from './Toolbar.module.scss'
 import Button from '../../ui/editor/Button'
-import cx from 'classnames'
 import {
   connect,
   disconnect,
   runMachine,
   tryAutoConnect
 } from '../../lib/client/machine'
-import { throttle } from 'throttle-debounce'
-import { signal } from '@preact/signals'
 import BrightnessContrastIcon from '../../ui/icons/BrightnessContrastIcon'
 import SettingsIcon from '../../ui/icons/SettingsIcon'
 import KeyboardIcon from '../../ui/icons/KeyboardIcon'
 import GitHubIcon from '../../ui/icons/GitHubIcon'
-import SaveButton from './SaveButton'
-import { altPersist, persist } from '../../db/auth-helper'
+import { persist } from '../../db/auth-helper'
 import { generateName } from '../../lib/utils/words'
-import { useOnEditorChange } from '../../lib/events/events'
 
 export default function Toolbar({ persistenceState }) {
   const { connected } = getStore()
@@ -73,12 +67,14 @@ export default function Toolbar({ persistenceState }) {
               <DownloadPNG />
             </div>
           </div>
-          <Button variant="ghost">
-            {persistenceState.value.cloudSaveState.toLowerCase()}
-          </Button>
+          {persistenceState !== undefined && (
+            <Button variant="ghost">
+              {persistenceState.value.cloudSaveState.toLowerCase()}
+            </Button>
+          )}
         </div>
       </div>
-      {persistenceState ? (
+      {persistenceState !== undefined ? (
         <div
           class="navbar-links no-gap"
           style={{
@@ -133,7 +129,7 @@ export default function Toolbar({ persistenceState }) {
         <MachineControls />
         <GitHubLink />
         <SettingsButton />
-        {persistenceState ? (
+        {persistenceState !== undefined ? (
           <ShareLink persistenceState={persistenceState} />
         ) : (
           <RemixLink persistenceState={persistenceState} />
@@ -193,7 +189,10 @@ export function ShareLink({ persistenceState }) {
           width: '100%',
           top: '100%',
           padding: '5px',
-          borderRadius: '5px'
+          borderRadius: '5px',
+          left: 0,
+          right: 0,
+          minWidth: '200px'
         }}>
         https://blot.hackclub.com/editor/snapshot/{snapshotId}
       </div>
