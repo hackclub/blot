@@ -149,7 +149,9 @@ export function SaveToEmail() {
 
   return (
     <div>
-      <Button variant="ghost" onClick={() => setHidden(false)}></Button>
+      <Button variant="ghost" onClick={() => setHidden(false)}>
+        save to email
+      </Button>
       <div
         style={{
           display: hidden ? 'none' : '',
