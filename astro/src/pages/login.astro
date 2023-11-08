@@ -1,9 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { getSession } from '../db/account'
-import LoginComponent from '../components/~/LoginModal.tsx'
+import LoginModal from '../components/~/LoginModal'
 
-const to = Astro.url.searchParams.get('to') ?? '/~'
+const to = Astro.url.searchParams.get('to') || '/~'
 const session = await getSession(Astro.cookies)
 if (session?.session.full) return Astro.redirect(to, 302)
 const email = Astro.url.searchParams.get('email') ?? session?.user.email ?? ''
@@ -73,8 +73,11 @@ const email = Astro.url.searchParams.get('email') ?? session?.user.email ?? ''
   }
 </style>
 
-<Layout title="Login" description="Log in and start making some art!">
+<Layout
+  title="Login"
+  description="Log in and start making some art!"
+  navbar={true}>
   <div id="login-wrapper">
-    <LoginComponent client:load to={to} email={email} session={session} />
+    <LoginModal client:only />
   </div>
 </Layout>

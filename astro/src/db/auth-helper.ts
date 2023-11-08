@@ -7,7 +7,7 @@ import {
 import type { Art, SessionInfo } from './account.ts'
 import { isValidEmail } from './email.ts'
 import { executeCaptcha } from '../lib/utils/recaptcha.ts'
-import { getStore } from '../lib/state/state.ts'
+// import { getStore } from '../lib/state/state.ts'
 
 export type AuthState =
   | 'IDLE'

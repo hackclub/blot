@@ -41,8 +41,6 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     )
   }
 
-  console.log(tutorialName)
-
   let sessionInfo = await getSession(cookies)
   let user: User
   let unprotected: boolean

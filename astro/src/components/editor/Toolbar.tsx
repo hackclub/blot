@@ -224,7 +224,12 @@ export function RemixLink({ persistenceState }) {
               tutorialName: window.getGuide ? searchParams('guide') : null
             })
           })
-            .then(res => res.json())
+            .then(res => {
+              if (!res.ok) {
+                // 401 Unauthorized - save to email instead by opening modal
+              }
+              res.json()
+            })
             .then(json => {
               const { art } = json
               window.history.replaceState(null, '', `/~/${art.id}`)

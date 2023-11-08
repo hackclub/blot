@@ -17,7 +17,7 @@ const order = art => {
 
 const session = await getSession(Astro.cookies)
 if (!session || !session.session.full) {
-  loggedIn = false
+  return Astro.redirect('/login', 302)
 } else {
   const _art = await firestore
     .collection('art')
@@ -164,11 +164,27 @@ export const prerender = false
         min-width: 24px;
       }
     }
+
+    #menu {
+      border-bottom: 1px solid #ddd;
+      width: var(--gallery-width-desktop);
+      margin: auto;
+
+      h2 {
+        a {
+          color: black;
+          font-family: var(--sans-serif);
+        }
+      }
+    }
   </style>
 
   <header>
     <h1>My Art</h1>
   </header>
+  <section id="menu">
+    <h2><a href="/logout">logout</a></h2>
+  </section>
   <div id="container">
     <div id="gallery">
       {
@@ -228,7 +244,6 @@ export const prerender = false
         )
       }
     </div>
-    {loggedIn === false && <LoginModal client:only />}
     <script>
       document.body.addEventListener('click', async event => {
         const deleteBtn = event

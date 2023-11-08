@@ -1,4 +1,4 @@
-import { useSignalEffect, Signal } from '@preact/signals'
+import { useSignalEffect } from '@preact/signals'
 import { useAuthHelper } from '../../db/auth-helper'
 import type { SessionInfo } from '../../db/account.ts'
 import Input from '../../ui/design-system/Input'
@@ -12,7 +12,7 @@ interface LoginProps {
   email: string
 }
 
-export default function Login({ email, to }: LoginProps) {
+export default function LoginModal({ email, to }: LoginProps) {
   const auth = useAuthHelper('EMAIL_ENTRY', email)
   useSignalEffect(() => {
     if (auth.stage.value === 'LOGGED_IN') window.location.replace(to)
@@ -57,6 +57,7 @@ export default function Login({ email, to }: LoginProps) {
                 Wrong email?{' '}
                 <LinkButton
                   class="link-button"
+                  style={{ color: 'var(--primary)', cursor: 'pointer' }}
                   onClick={() => auth.wrongEmail()}
                   disabled={auth.isLoading.value}>
                   Go back

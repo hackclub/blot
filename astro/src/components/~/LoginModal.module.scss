@@ -12,8 +12,22 @@
 
 .form {
   background-color: white;
-  background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
-    linear-gradient(to bottom, #ddd 1px, transparent 1px);
   background-size: 40px 40px;
   margin: 0 auto;
+
+  > div {
+    display: flex;
+  }
+
+  button,
+  input {
+    padding: 7px 14px;
+  }
+
+  input {
+    border: 1px solid var(--primary);
+    border-right: 0;
+    font-family: inherit;
+    font-size: inherit;
+  }
 }
