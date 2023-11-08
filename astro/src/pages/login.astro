@@ -78,6 +78,6 @@ const email = Astro.url.searchParams.get('email') ?? session?.user.email ?? ''
   description="Log in and start making some art!"
   navbar={true}>
   <div id="login-wrapper">
-    <LoginModal client:only />
+    <LoginModal email={email} to={to} client:only />
   </div>
 </Layout>

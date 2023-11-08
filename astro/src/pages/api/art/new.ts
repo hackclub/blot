@@ -45,11 +45,12 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   let user: User
   let unprotected: boolean
   if (partialSessionEmail) {
-    const recaptchaScore = await assessCaptcha(recaptchaToken, 'PERSIST_ART')
-    if (recaptchaScore < 0.3)
-      return new Response(`Recaptcha score too low (${recaptchaScore})`, {
-        status: 400
-      })
+    // TODO: Deal with this
+    // const recaptchaScore = await assessCaptcha(recaptchaToken, 'PERSIST_ART')
+    // if (recaptchaScore < 0.3)
+    //   return new Response(`Recaptcha score too low (${recaptchaScore})`, {
+    //     status: 400
+    //   })
 
     user =
       (await getUserByEmail(partialSessionEmail)) ??

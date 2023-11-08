@@ -34,7 +34,6 @@
 .dropdownEntry {
   cursor: default;
   padding: 5px;
-  border-radius: 5px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -51,7 +50,6 @@
   right: 0;
   background-color: var(--primary);
   color: white;
-  border-radius: 0.25rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 1;
   padding: 0.25rem;

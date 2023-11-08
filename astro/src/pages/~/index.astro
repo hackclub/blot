@@ -6,13 +6,16 @@ import { isRandomName } from '../../lib/utils/words'
 import type { Art } from '../../db/account'
 import Layout from '../../layouts/Layout.astro'
 import TrashCanIcon from '../../ui/icons/TrashCanIcon'
+import { Timestamp } from 'firebase-admin/firestore'
 
 let loggedIn = true
 let art, allArt, unnamedArt
 
 const order = art => {
-  console.log(art)
-  return art
+  return art.sort((a, b) => {
+    if (a.modifiedAt < b.modifiedAt) return 1
+    return -1
+  })
 }
 
 const session = await getSession(Astro.cookies)
