@@ -16,7 +16,7 @@ A piece of art made for Blot can be the first program you ever write, but it can
 **A custom CNC drawing machine** designed from scratch to introduce you to digital fabrication. 
 It's made of 6 unique 3D printed parts with a custom control board and easy to understand firmware, which can be interfaced with through JavaScript in the browser.
 Blot is designed in OnShape. Check out the [3D model of the project](https://cad.onshape.com/documents/0bcd2f50d2614ea26189f43b/w/23913e7defc94fc29f7833e6/e/72ea852bfc1822955e506e37?renderMode=0&uiState=6538235d42737a70b1996741).
-You can find the [bill of materials here](https://blot.hackclub.dev/assembly) if you'd like to 3D print your Blot [the parts are here](https://github.com/hackclub/blot/tree/main/hardware/mechanical/drawing-thing-v4). The entire build costs about $150 dollars. If you're a teen we will give you all the parts for a PR with your an art piece you coded yourself.
+You can find the [bill of materials here](https://blot.hackclub.dev/assembly) if you'd like to 3D print your Blot. [The parts are here](https://github.com/hackclub/blot/tree/main/hardware/mechanical/drawing-thing-v4). The entire build costs about $150 dollars. If you're a teen we will give you all the parts for a PR with an art piece you coded yourself.
 
 <img width="250" alt="parts" src="https://github.com/hackclub/blot/assets/27078897/04ab7345-03fa-4b60-9870-64a99327e8cd">
 
@@ -26,7 +26,7 @@ You can find the [bill of materials here](https://blot.hackclub.dev/assembly) if
 We practiced programmatic pen plotting with [some](https://github.com/LingDong-) [amazing artists](https://static1.squarespace.com/static/63fbc39db5b01b5fa30423db/t/649b424d33b2ce3e0d5b63a5/1687896656015/June+Cohort+Zine.pdf). 
 There is so much to learn and explore on the programming and the aesthetic side. 
 
-<img width="500" alt="editor" src="https://github.com/hackclub/blot/assets/27078897/6f444dcf-cd44-4e49-986a-3bd9b57e6593">
+<img width="500" alt="editor" src="/astro/public/landing/editor.png">
 
 # To get started
 
@@ -56,11 +56,9 @@ The Blot editor is made with astro. To run the project locally.
 
 You'll need:
 
-```
-Git
-Node.js
-Yarn
-```
+* Git
+* Node.js
+* Yarn
 
 After installing those, clone the repo.
 
