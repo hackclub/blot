@@ -48,7 +48,7 @@ So, let's start making something! Boot up the editor at [blot.hackclub.com](http
 
 Let's start by defining a constant `t`: this will represent our turtle. The turtle is basically our pen - we can send it instructions like `t.up()` or `t.goTo([x,y])` to move it around. For example, calling `t.down()` places the pen on the paper, and `t.goTo([0, 0])` moves the pen to the position `0, 0`.
 
-```
+```js
 const t = new Turtle();
 ```
 
@@ -56,26 +56,26 @@ Directly below that, write `drawTurtles(t);`. This function makes it so that we 
 
 Now, we can declare two more constants, to represent the size and spacing of our grid. It'll be useful to have these things as constants, because then we can easily change them later in the code to tweak the final image. The `gridSpacing` constant just dictates how far apart each slash of our drawing should be. A lower `gridSpacing` value means the pattern is more detailed, but you can change this value to whatever you want. The `gridSize` represents how large the final image should be.
 
-```
+```js
 const gridSize = 10;
 const gridSpacing = 0.5;
 ```
 
 Now, we can get to building up the artwork. To be able to draw each line, we can create a `draw` function. This is a block of code that takes in 4 parameters: The x and y position to draw to, along with the width and height of the slash we're going to draw.
 
-```
+```js
 function draw(x, y, width, height) {
 ```
 
 First, randomly choose whether to draw a forwards or backwards slash. This can be done in code by calling `rand()` - a function that returns a random number between 0 and 1. If it's greater than 0.5, (this will be true 50% of the time), we draw a backslash.
 
-```
+```js
   if(Math.random() >= 0.5) {
 ```
 
 To actually draw the slash, we need to give the turtle a few instructions. Start by raising the pen with `t.up()`, then go to our start position at `x, y`. Lower the pen, and move to the bottom-right a little bit, by adding `width` and `height` to the turtle position.
 
-```
+```js
     t.up();
     t.goTo([x, y]);
     t.down();
@@ -84,13 +84,13 @@ To actually draw the slash, we need to give the turtle a few instructions. Start
 
 If the random number was instead below 0.5, then we can draw a forward slash. This is done in an `else` statement:
 
-```
+```js
   } else {
 ```
 
 Raise the pen, but this time, start out a bit to the right of `x, y`. Lower the pen, and then move down by `height` from `x, y`. That's a forward slash!
 
-```
+```js
     t.up();
     t.goTo([x + width, y]);
     t.down();
@@ -107,7 +107,7 @@ We've finished the drawing function, but we still need to call it. To run some c
 
 If you need a refresher on how for loops work, the syntax is like this:
 
-```
+```js
 for (code to run at the start of the loop;
 	keep looping as long as this code is true;
 	do this every loop) {
@@ -117,13 +117,13 @@ for (code to run at the start of the loop;
 
 We'll want to loop through every row in the grid. By setting `y` to negative `gridSize`, we effectively shift the whole image down the screen. We do this to ensure that it's within range for the Blot to draw. To move to the next row, we add `gridSpacing` to `y` every time we loop. We only break once `y` reaches zero, because that means it's traveled a total distance of `gridSize`, and we've drawn the image.
 
-```
+```js
 for (let y = -gridSize; y < 0; y += gridSpacing) {
 ```
 
 Each time we're at a new row, start moving horizontally by increasing `x`. At every `x` position draw a slash there by calling our `draw` function at that point.
 
-```
+```js
   for (let x = 0; x < gridSize; x += gridSpacing) {
     draw(x, y, gridSpacing, gridSpacing);
   }
