@@ -284,8 +284,9 @@ export function RemixLink({ persistenceState }) {
                 if (!res.ok) {
                   // 401 Unauthorized - save to email instead by opening modal
                   setHidden(false)
+                  return
                 }
-                res.json()
+                return res.json()
               })
               .then(json => {
                 const { art } = json
