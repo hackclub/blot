@@ -20,7 +20,7 @@ function drawSq(len, xpos, ypos){
     testTurtle.cc
   );
   drawTurtles(
-    testTurtle
+    [testTurtle]
   );
 }
 //draws a circle with radius "rad", with the coords (xpos, ypos)
@@ -32,7 +32,7 @@ function drawCi(rad, xpos, ypos){
     testTurtle.cc
   );
   drawTurtles(
-    testTurtle
+    [testTurtle]
   );
 }
 
@@ -46,7 +46,7 @@ function drawArc(xpos, ypos, angle, rangle, radius) {
   );
   testTurtle.rotate(rangle);
   drawTurtles(
-    testTurtle
+    [testTurtle]
   );
 }
 
