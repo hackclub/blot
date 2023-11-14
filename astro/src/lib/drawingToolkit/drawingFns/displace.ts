@@ -1,4 +1,4 @@
-import { Point } from '../types'
+import { type Point } from '../types'
 
 export function displace(pts: Point[], fn: (t: number) => number) {
   for (let i = 0; i < pts.length - 1; i++) {

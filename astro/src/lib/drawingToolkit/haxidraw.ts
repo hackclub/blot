@@ -1,6 +1,6 @@
 import { floatsToBytes, intsToBytes } from './comms/converters'
 import { WebSerialPort, createWebSerialPort } from './comms/webSerialPort'
-import { Point } from './types'
+import type { Point } from './types'
 
 export class Haxidraw {
   port: WebSerialPort = null!

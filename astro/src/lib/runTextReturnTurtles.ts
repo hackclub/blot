@@ -1,4 +1,4 @@
-import { Turtle, Point } from './drawingToolkit/index.js'
+import { Turtle, type Point } from './drawingToolkit/index.js'
 import * as drawingUtils from './drawingToolkit/utils.js'
 
 let _returnTurtles: Turtle[] = []

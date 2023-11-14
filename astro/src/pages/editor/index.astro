@@ -1,5 +1,4 @@
 ---
-import '../../ui/globals.scss'
 import MobileUnsupported from '../../components/MobileUnsupported.astro'
 import { slug } from '../../lib/utils/guide'
 import { getSession, getSnapshotData } from '../../db/account'
@@ -54,6 +53,6 @@ export const prerender = false
       window.getSrc = () => source
       window.getGuide = () => guide
     </script>
-    <script src="../../lib/client/initApp.js"></script>
+    <script src="../../lib/initApp.js"></script>
   </body>
 </html>

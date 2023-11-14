@@ -1,4 +1,4 @@
-import { Point, Polyline } from '../types'
+import type { Point, Polyline } from '../types'
 
 export function isPointInPolyline(point: Point, polyline: Polyline) {
   if (!isClosed(polyline)) {

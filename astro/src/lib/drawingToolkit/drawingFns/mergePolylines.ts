@@ -1,4 +1,4 @@
-import { Point, Polyline } from '../types'
+import type { Point, Polyline } from '../types'
 
 function calculateDistance(point1: Point, point2: Point) {
   // Use Euclidean distance formula
