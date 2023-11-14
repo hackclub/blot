@@ -1,14 +1,14 @@
 import styles from './Help.module.css'
 import { useState, useEffect } from 'preact/hooks'
 import { marked } from 'marked'
-import { loadCodeFromString } from "../lib/loadCodeFromString.ts";
+import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
 
 marked.setOptions({
-    highlight: function (code, language) {
-        const validLanguage = Prism.languages[language] ? language : 'markup';
-        return Prism.highlight(code, Prism.languages[validLanguage], validLanguage);
-    }
-});
+  highlight: function (code, language) {
+    const validLanguage = Prism.languages[language] ? language : 'markup'
+    return Prism.highlight(code, Prism.languages[validLanguage], validLanguage)
+  }
+})
 
 export default function Help({
   toggleClose,
@@ -28,7 +28,7 @@ export default function Help({
     htmlContent: ''
   })
 
-  const [helpContent, setHelpContent] = useState("");
+  const [helpContent, setHelpContent] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,13 +37,11 @@ export default function Help({
       )
       const helpData = await helpRes.text()
 
-      setHelpContent(marked(helpData));
+      setHelpContent(marked(helpData))
 
       if (workshop === null) return
 
-
-      if (confirm("Clear text editor?")) loadCodeFromString("");
-
+      if (confirm('Clear text editor?')) loadCodeFromString('')
 
       const res = await fetch(
         `https://raw.githubusercontent.com/hackclub/blot/main/guides/${workshop}.md`
@@ -52,8 +50,8 @@ export default function Help({
 
       const result = parseMDFrontMatter(data)
 
-      setWorkshopContent(result);
-      setTab('workshop');
+      setWorkshopContent(result)
+      setTab('workshop')
     }
 
     fetchData()
@@ -61,7 +59,9 @@ export default function Help({
 
   return (
     <>
-      <div class={[styles.helpSection, "help-section"].join(" ")} style={{ height: `${helpHeight}%` }}>
+      <div
+        class={[styles.helpSection, 'help-section'].join(' ')}
+        style={{ height: `${helpHeight}%` }}>
         <div class={styles.helpSectionToolbar}>
           {workshop && (
             <a

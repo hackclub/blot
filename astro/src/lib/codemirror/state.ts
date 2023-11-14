@@ -23,11 +23,11 @@ const autocompleteRemoved = basicSetup.filter((_, i) => ![11, 12].includes(i))
 const theme = EditorView.theme({
   '.cm-content': {
     fontFamily: 'var(--font-mono)',
-    fontSize: 'var(--font-0)',
+    fontSize: 'var(--font-0)'
   },
   '.cm-gutter': {
     fontFamily: 'var(--font-mono)',
-    fontSize: 'var(--font-0)',
+    fontSize: 'var(--font-0)'
   }
 })
 

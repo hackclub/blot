@@ -48,7 +48,7 @@ function rect(w, h) {
 
 Let's use it to add a square to our drawing.
 
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/6a9b273c-391e-4ee7-9036-114524589d09" width="50%"/>
+<img src="https://github.com/hackclub/blot/assets/27078897/6a9b273c-391e-4ee7-9036-114524589d09" width="50%"/>
 
 
 <details>
@@ -79,11 +79,11 @@ for (let i = 0; i < gridWidth; i++) {
 }
 ```
 
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/df700565-f80b-434b-ae92-1b6a4ecbc36b" width="50%"/>
+<img src="https://github.com/hackclub/blot/assets/27078897/df700565-f80b-434b-ae92-1b6a4ecbc36b" width="50%"/>
 
 We can't see any change because they are on top of eachother! Space them out.
 
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/367f376f-a903-44ec-8e31-db7e8090782b" width="50%"/>
+<img src="https://github.com/hackclub/blot/assets/27078897/367f376f-a903-44ec-8e31-db7e8090782b" width="50%"/>
 
 <details>
 <summary>Hint</summary>
@@ -100,7 +100,7 @@ for (let i = 0; i < 3; i++) {
 
 If we want the spacing to be perfect, each square should move by the width of a square.
 
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/4e9e02da-20e3-4b83-ba27-5e384163148f" width="50%"/>
+<img src="https://github.com/hackclub/blot/assets/27078897/4e9e02da-20e3-4b83-ba27-5e384163148f" width="50%"/>
 
 <details>
 <summary>Hint</summary>
@@ -118,7 +118,7 @@ for (let i = 0; i < 3; i++) {
 
 To make it a grid add another loop.
 
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/9b0fea0d-2b04-492b-9c3e-018bde669099" width="50%"/>
+<img src="https://github.com/hackclub/blot/assets/27078897/9b0fea0d-2b04-492b-9c3e-018bde669099" width="50%"/>
 
 <details>
 <summary>Hint</summary>
@@ -139,13 +139,13 @@ for (let i = 0; i < 3; i++) {
 
 Increase the loop range for a bigger grid.
 
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/5408832c-2125-47af-9e84-0dd88c2fab67" width="50%"/>
+<img src="https://github.com/hackclub/blot/assets/27078897/5408832c-2125-47af-9e84-0dd88c2fab67" width="50%"/>
 
 # Add Some Disarray
 
 We can randomly translate each square.
 
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/8f64548c-08dc-4709-85a8-cd941baf8438" width="50%"/>
+<img src="https://github.com/hackclub/blot/assets/27078897/8f64548c-08dc-4709-85a8-cd941baf8438" width="50%"/>
 
 <details>
 <summary>Hint</summary>
@@ -168,7 +168,7 @@ for (let i = 0; i < 10; i++) {
 
 Scale the randomness with the x location.
 
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/fb392a9b-4ec8-4eec-9f1f-035d67c4ea50" width="50%"/>
+<img src="https://github.com/hackclub/blot/assets/27078897/fb392a9b-4ec8-4eec-9f1f-035d67c4ea50" width="50%"/>
 
 <details>
 <summary>Hint</summary>
@@ -181,7 +181,7 @@ t.translate([(randInRange(-1, 1) * i) / 6, (randInRange(-1, 1) * i) / 6])
 
 Now rotate each square in a similar manner.
 
-<img src="https://github.com/hackclub/haxidraw/assets/27078897/1a0902f1-084d-4651-a188-c1dbe6995289" width="50%"/>
+<img src="https://github.com/hackclub/blot/assets/27078897/1a0902f1-084d-4651-a188-c1dbe6995289" width="50%"/>
 
 <details>
 <summary>Hint</summary>

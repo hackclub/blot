@@ -19,7 +19,7 @@ import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
-import { saveFile } from "../lib/saveFile.ts";
+import { saveFile } from '../lib/saveFile.ts'
 
 export default function Toolbar() {
   const { connected, needsSaving } = getStore()
@@ -31,15 +31,15 @@ export default function Toolbar() {
       <div class="flex items-center h-full">
         <h1 class={styles.heading}>
           <a href="/">
-            <img src="/blot.svg" style="width: 30px"/>
+            <img src="/blot.svg" style="width: 30px" />
             <span style="font-weight: 700;">blot</span>
           </a>
         </h1>
         <RunButton />
-        <div 
+        <div
           class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
           onClick={() => saveFile(getCode())}>
-          { needsSaving ? "save* (ctrl/cmd+s)" : "save (ctrl/cmd+s)" }
+          {needsSaving ? 'save* (ctrl/cmd+s)' : 'save (ctrl/cmd+s)'}
         </div>
         <NewButton />
         <OpenButton />
@@ -51,18 +51,17 @@ export default function Toolbar() {
           <div
             class={[
               hidden ? 'hidden' : '',
-              "border border-white border-opacity-10",
-              "bg-[--primary] absolute z-50 top-full p-1 rounded-md"
-            ].join(" ")}
-            >
+              'border border-white border-opacity-10',
+              'bg-[--primary] absolute z-50 top-full p-1 rounded-md'
+            ].join(' ')}>
             <DownloadButton />
             <DownloadSVG />
             <DownloadPNG />
-            <div 
+            <div
               class="w-max p-1 rounded hover:bg-white hover:bg-opacity-10"
               onClick={e => {
-                const { turtles } = getStore();
-                console.log(turtles);
+                const { turtles } = getStore()
+                console.log(turtles)
               }}>
               cull hidden lines
             </div>
@@ -381,7 +380,7 @@ function SettingsButton() {
           'padding': '5px',
           'border-radius': '5px'
         }}>
-{/*        <Button
+        {/*        <Button
           class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
@@ -414,4 +413,3 @@ function SettingsButton() {
     </div>
   )
 }
-

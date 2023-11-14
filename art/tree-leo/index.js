@@ -84,8 +84,4 @@ for (let i = 0; i < 100000; i++) {
 
 randomWalk.rotate(randInRange(-5, 5)).translate([-0.1, -0.6])
 
-const final = [trunk, randomWalk].reduce((acc, cur) => acc.join(cur), createTurtle());
-final.scale(110/final.height);
-final.translate([125/2, 0], final.cb);
-
-drawTurtles([final]);
+drawTurtles(trunk, randomWalk)

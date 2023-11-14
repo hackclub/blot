@@ -1,0 +1,274 @@
+---
+import LoginModal from '../../components/~/LoginModal'
+import { firestore, getSession } from '../../db/account'
+import ms from 'ms'
+import { isRandomName } from '../../lib/utils/words'
+import type { Art } from '../../db/account'
+import Layout from '../../layouts/Layout.astro'
+import TrashCanIcon from '../../ui/icons/TrashCanIcon'
+import { Timestamp } from 'firebase-admin/firestore'
+
+let loggedIn = true
+let art, allArt, unnamedArt
+
+const order = art => {
+  return art.sort((a, b) => {
+    if (a.modifiedAt < b.modifiedAt) return 1
+    return -1
+  })
+}
+
+const session = await getSession(Astro.cookies)
+if (!session || !session.session.full) {
+  return Astro.redirect('/login', 302)
+} else {
+  const _art = await firestore
+    .collection('art')
+    .where('ownerId', '==', session.user.id)
+    .get()
+  allArt = _art.docs.map(doc => ({ id: doc.id, ...doc.data() }) as Art)
+
+  art = order(allArt.filter(art => !isRandomName(art.name)))
+  unnamedArt = order(allArt.filter(art => isRandomName(art.name)))
+
+  if (art.length === 0 && unnamedArt.length > 0) {
+    art = unnamedArt
+    unnamedArt = []
+  }
+}
+
+export const prerender = false
+---
+
+<Layout navbar={true} loginLink={false}>
+  <style is:global lang="scss">
+    @import '../../ui/variables.scss';
+
+    :root {
+      --gallery-width-desktop: 80vw;
+      --gallery-width-mobile: calc(100vw - 2rem);
+      --gallery-gap: 7px;
+    }
+
+    #container {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    #gallery {
+      margin: auto;
+      justify-content: center;
+      flex-wrap: wrap;
+      flex-direction: column;
+      gap: var(--gallery-gap);
+      width: var(--gallery-width-mobile);
+      padding: 2rem 0;
+      position: relative;
+      display: flex;
+      height: 100%;
+
+      @media screen and (max-width: $md) {
+        flex-direction: column;
+      }
+
+      @media screen and (min-width: $lg) {
+        width: var(--gallery-width-desktop);
+      }
+    }
+
+    .frame {
+      border: 0.5px solid var(--primary);
+      position: relative;
+    }
+
+    header {
+      line-height: 1;
+      padding: 3rem 2rem;
+      background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+        linear-gradient(to bottom, #ddd 1px, transparent 1px);
+      background-size: 40px 40px;
+      box-shadow: inset 0 4px 8px 8px rgba(0, 0, 0, 0.1);
+      margin: auto;
+      text-align: center;
+
+      h1 {
+        margin: 0;
+        margin-bottom: 0.75rem;
+        letter-spacing: -4px;
+      }
+
+      @media screen and (max-width: $lg) {
+        font-size: 2rem;
+      }
+
+      @media screen and (min-width: $lg) {
+        font-size: 3rem;
+      }
+
+      p {
+        font-family: var(--sans-serif);
+        font-size: 1.5rem;
+        line-height: 1.3;
+        letter-spacing: -1px;
+        margin: auto;
+
+        @media screen and (max-width: $lg) {
+          font-size: 1.3rem;
+          margin-bottom: 0.5rem;
+        }
+
+        @media screen and (min-width: $md) {
+          max-width: 50vw;
+        }
+      }
+    }
+
+    .gallery-section {
+      display: flex;
+      gap: var(--gallery-gap);
+      flex-wrap: wrap;
+    }
+
+    .piece {
+      border: 1px solid var(--primary);
+      font-size: 1.3rem;
+      padding: 2rem;
+      padding-bottom: 1rem;
+      width: calc(var(--gallery-width-desktop) / 3 - 28px);
+      color: var(--primary);
+      text-decoration: none;
+
+      h3 {
+        margin: 0;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .delete {
+      background-color: transparent;
+      border: 0;
+      float: right;
+      padding: 0;
+      cursor: pointer;
+      transition: color 0.1s;
+      position: relative;
+
+      &:hover,
+      &:focus {
+        color: var(--primary);
+      }
+
+      svg {
+        stroke-width: 2;
+        min-width: 24px;
+      }
+    }
+
+    #menu {
+      border-bottom: 1px solid #ddd;
+      width: var(--gallery-width-desktop);
+      margin: auto;
+
+      h2 {
+        a {
+          color: black;
+          font-family: var(--sans-serif);
+        }
+      }
+    }
+  </style>
+
+  <header>
+    <h1>My Art</h1>
+  </header>
+  <section id="menu">
+    <h2><a href="/logout">logout</a></h2>
+  </section>
+  <div id="container">
+    <div id="gallery">
+      {
+        loggedIn === true && (
+          <>
+            <div class="gallery-section">
+              {art.map(piece => (
+                <a class="piece" href={`/~/${piece.id}`}>
+                  <h3>{piece.name || 'Untitled'}</h3>
+                  <p class="modified-at">
+                    Edited{' '}
+                    {ms(
+                      Math.max(Date.now() - piece.modifiedAt.toMillis(), 1000),
+                      {
+                        long: true
+                      }
+                    )}{' '}
+                    ago
+                  </p>
+                  <button
+                    class="delete"
+                    data-id={piece.id}
+                    data-name={piece.name || 'Untitled'}>
+                    <TrashCanIcon />
+                  </button>
+                </a>
+              ))}
+            </div>
+            <h2>Unnamed art</h2>
+            {unnamedArt.length > 0 && (
+              <div class="gallery-section">
+                {unnamedArt.map(piece => (
+                  <a class="piece" href={`/~/${piece.id}`}>
+                    <h3>{piece.name || 'Untitled'}</h3>
+                    <p class="modified-at">
+                      Edited{' '}
+                      {ms(
+                        Math.max(
+                          Date.now() - piece.modifiedAt.toMillis(),
+                          1000
+                        ),
+                        { long: true }
+                      )}{' '}
+                      ago
+                    </p>
+                    <button
+                      class="delete"
+                      data-id={piece.id}
+                      data-name={piece.name || 'Untitled'}>
+                      <TrashCanIcon />
+                    </button>
+                  </a>
+                ))}
+              </div>
+            )}
+          </>
+        )
+      }
+    </div>
+    <script>
+      document.body.addEventListener('click', async event => {
+        const deleteBtn = event
+          .composedPath()
+          .find(
+            item =>
+              item instanceof HTMLElement &&
+              (item.matches('.delete') as HTMLElement | undefined)
+          )
+        if (!deleteBtn) return
+        event.preventDefault()
+        const artId = deleteBtn.dataset.id!
+        const artName = deleteBtn.dataset.name!
+        if (!confirm(`Are you sure you want to delete "${artName}"?`)) return
+        deleteBtn.closest('.piece')!.remove()
+        const res = await fetch(`/api/art/delete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ artId })
+        })
+        if (!res.ok) console.error(`Error deleting art: ${await res.text()}`)
+      })
+    </script>
+  </div>
+</Layout>

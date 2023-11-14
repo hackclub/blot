@@ -37,8 +37,8 @@ export type GlobalState = {
   running: boolean
   view: EditorView | null
   theme: 'light' | 'dark'
-  vimMode: boolean,
-  fileHandle: any,
+  vimMode: boolean
+  fileHandle: any
   needsSaving: boolean
 }
 

@@ -3,7 +3,7 @@ const screenHeight = 2
 const dx = 0.01
 const dy = 0.01
 
-const t = createTurtle()
+const t = new Turtle()
 
 class Vec3 {
   constructor(x, y, z) {
@@ -263,4 +263,4 @@ world.objects = [
   new Plane(new Vec3(0, -3, 0))
 ]
 renderFrame(cam)
-drawTurtles([t])
+drawTurtles(t)

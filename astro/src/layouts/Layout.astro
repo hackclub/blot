@@ -25,11 +25,11 @@ showNav = showNav || 'true'
     <title>{title}</title>
   </head>
   <body data-shownav={showNav}>
-    <Navbar/>
+    <Navbar />
     <slot />
     <script client:load>
-      const showNav = document.body.dataset.shownav;
-      if (showNav === "true") document.querySelector("nav").style.opacity = 1;
+      const showNav = document.body.dataset.shownav
+      if (showNav === 'true') document.querySelector('nav').style.opacity = 1
     </script>
   </body>
 </html>

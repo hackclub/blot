@@ -4,7 +4,7 @@ thumbnail: https://cloud-7rdff2vjy-hack-club-bot.vercel.app/0250635645-9ce96217-
 contributors: leomcelroy
 ---
 
-> You can follow along in this editor: https://editor.haxidraw.hackclub.com/
+> You can follow along in this editor: https://editor.blot.hackclub.com/
 
 ---
 
@@ -25,7 +25,7 @@ We'll start with the outline of the leaf.
 <img
   width="382"
   alt="Screen Shot 2023-07-03 at 2 16 33 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/7027b27a-cc5f-4565-9357-2c8fd1b21e6f"
+  src="https://github.com/hackclub/blot/assets/27078897/7027b27a-cc5f-4565-9357-2c8fd1b21e6f"
 />
 
 First let's lay down a line which will become the top edge.
@@ -45,7 +45,7 @@ drawTurtles([ leaf ])
 <img
   width="366"
   alt="Screen Shot 2023-07-03 at 2 17 32 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/aa904051-d23a-4542-9da9-025cd658fc28"
+  src="https://github.com/hackclub/blot/assets/27078897/aa904051-d23a-4542-9da9-025cd658fc28"
 />
 
 Now we can warp the line by resampling points and then using `warp` with a bezier curve.
@@ -60,7 +60,7 @@ const edge = createTurtle()
 <img
   width="374"
   alt="Screen Shot 2023-07-03 at 2 19 18 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/1ed396a9-41bd-42d6-bd60-95dd8eea3719"
+  src="https://github.com/hackclub/blot/assets/27078897/1ed396a9-41bd-42d6-bd60-95dd8eea3719"
 />
 
 Let's make the bottom edge too.
@@ -76,7 +76,7 @@ drawTurtles([ leaf ])
 <img
   width="378"
   alt="Screen Shot 2023-07-03 at 2 22 51 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/88b1ccfb-0811-49bf-80f5-ce3cf7c93609"
+  src="https://github.com/hackclub/blot/assets/27078897/88b1ccfb-0811-49bf-80f5-ce3cf7c93609"
 />
 
 Now we can add some noise to make the leaf look a bit more organic.
@@ -96,7 +96,7 @@ Try playing with the multiplication terms.
 <img
   width="358"
   alt="Screen Shot 2023-07-03 at 2 23 45 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/d547cd78-ec67-4fbe-8c72-78363c611946"
+  src="https://github.com/hackclub/blot/assets/27078897/d547cd78-ec67-4fbe-8c72-78363c611946"
 />
 
 Now we have an outline let's do the veins of the leaf.
@@ -108,7 +108,7 @@ After adding the veins our leaf will look like this.
 <img
   width="347"
   alt="Screen Shot 2023-07-03 at 2 25 44 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/ad810112-ca58-48f4-8961-311cb7d44ec7"
+  src="https://github.com/hackclub/blot/assets/27078897/ad810112-ca58-48f4-8961-311cb7d44ec7"
 />
 
 We'll start with the top side by drawing some lines the follow the distribution of the edge.
@@ -154,7 +154,7 @@ leaf.join(veins())
 <img
   width="370"
   alt="Screen Shot 2023-07-03 at 2 28 37 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/cfed6d56-3b16-4ecc-9daf-bc7c33045ba8"
+  src="https://github.com/hackclub/blot/assets/27078897/cfed6d56-3b16-4ecc-9daf-bc7c33045ba8"
 />
 
 If we add back in the randomness term `randInRange(-4, 4)` to the angle of the line we can start to make a more natural image.
@@ -162,7 +162,7 @@ If we add back in the randomness term `randInRange(-4, 4)` to the angle of the l
 <img
   width="344"
   alt="Screen Shot 2023-07-03 at 2 30 53 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/2a5b649d-e8ed-47f8-afae-8a3ff9e7dc12"
+  src="https://github.com/hackclub/blot/assets/27078897/2a5b649d-e8ed-47f8-afae-8a3ff9e7dc12"
 />
 
 Now let's bend the lines with our warping function again.
@@ -180,7 +180,7 @@ line
 <img
   width="363"
   alt="Screen Shot 2023-07-03 at 2 32 08 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/03698576-c5ec-4aaf-9168-7bcaa90274bf"
+  src="https://github.com/hackclub/blot/assets/27078897/03698576-c5ec-4aaf-9168-7bcaa90274bf"
 />
 
 Let's randomly trim each vein with every fifth being a bite longer.
@@ -205,7 +205,7 @@ line
 <img
   width="350"
   alt="Screen Shot 2023-07-03 at 2 33 06 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/46cfb081-9b3c-4e1f-bca6-336be48e1828"
+  src="https://github.com/hackclub/blot/assets/27078897/46cfb081-9b3c-4e1f-bca6-336be48e1828"
 />
 
 And let's randomly break up these lines.
@@ -219,7 +219,7 @@ line.iteratePath(pt => {
 <img
   width="346"
   alt="Screen Shot 2023-07-03 at 2 33 49 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/98c82e8e-aa3c-4d5a-a24e-74d13cd5d4a6"
+  src="https://github.com/hackclub/blot/assets/27078897/98c82e8e-aa3c-4d5a-a24e-74d13cd5d4a6"
 />
 
 Then call veins again and flip it over for the bottom side.
@@ -231,7 +231,7 @@ leaf.join(veins().scale([1, -1], [0, 0]))
 <img
   width="352"
   alt="Screen Shot 2023-07-03 at 2 34 39 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/b7a4bf33-5598-4ee3-9787-6b57de6cdae4"
+  src="https://github.com/hackclub/blot/assets/27078897/b7a4bf33-5598-4ee3-9787-6b57de6cdae4"
 />
 
 ## The Stem
@@ -251,7 +251,7 @@ leaf.join(lineStem)
 <img
   width="426"
   alt="Screen Shot 2023-07-03 at 2 35 26 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/7cf0afbc-af28-439b-a672-17e60080b8bb"
+  src="https://github.com/hackclub/blot/assets/27078897/7cf0afbc-af28-439b-a672-17e60080b8bb"
 />
 
 ## Finishing Up
@@ -272,7 +272,7 @@ And now we have a leaf!
 <img
   width="416"
   alt="Screen Shot 2023-07-03 at 2 37 02 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/ced13771-b8e6-4eb0-a035-5528c9e38cde"
+  src="https://github.com/hackclub/blot/assets/27078897/ced13771-b8e6-4eb0-a035-5528c9e38cde"
 />
 
 ## Acknowledgements

@@ -1,5 +1,5 @@
 import { loadCodeFromString } from '../loadCodeFromString.ts'
-import { removeQueryParam } from "../removeQueryParam.js";
+import { removeQueryParam } from '../removeQueryParam.js'
 
 export async function addSrcURLParam() {
   const currentUrl = new URL(window.location.href)
@@ -13,7 +13,7 @@ export async function addSrcURLParam() {
     const content = await response.text()
 
     loadCodeFromString(content)
-    removeQueryParam("src")
+    removeQueryParam('src')
   } catch (error) {
     console.error('Error fetching content:', error)
   }

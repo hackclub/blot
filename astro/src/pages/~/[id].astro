@@ -1,0 +1,99 @@
+---
+import '../../ui/globals.scss'
+import { firestore, getArt, getSession } from '../../db/account'
+import { signal } from '@preact/signals'
+import type { PersistenceState } from '../../lib/state/persist'
+import { mobileUserAgent } from '../../lib/utils/mobile'
+import MobileUnsupported from '../../components/MobileUnsupported.astro'
+import { persist } from '../../db/auth-helper'
+import { slug } from '../../lib/utils/guide'
+import EditorAutosave from '../../components/~/EditorAutosave'
+
+let toolkit = (await Astro.glob('/../docs/TOOLKIT.md'))[0].compiledContent()
+
+const session = await getSession(Astro.cookies)
+if (!session) return Astro.redirect(`/login?to=${Astro.request.url}`, 302)
+
+const art = await getArt(Astro.params.id!)
+if (!art || art.ownerId !== session.user.id) return Astro.redirect('/404', 302)
+
+let tutorial: string[] | undefined
+if (art.tutorialName) {
+  // Get tutorial and pass into editor
+}
+
+let _persistenceState: PersistenceState
+if (session.session.full) {
+  if (art.unprotected) {
+    await firestore.collection('art').doc(art.id).update({ unprotected: false })
+    art.unprotected = false
+  }
+  if (Astro.cookies.get('blotTempArt')?.value === art.id)
+    Astro.cookies.delete('blotTempArt', { path: '/' })
+
+  _persistenceState = {
+    kind: 'PERSISTED',
+    session,
+    cloudSaveState: 'SAVED',
+    art,
+    tutorial,
+    stale: false
+  }
+} else {
+  if (!art.unprotected)
+    return Astro.redirect(`/login?to=${Astro.request.url}`, 302)
+  if (art.ownerId !== session.user.id) return Astro.redirect('/404', 302)
+
+  _persistenceState = {
+    kind: 'PERSISTED',
+    session,
+    cloudSaveState: 'SAVED',
+    art,
+    tutorial,
+    stale: false
+  }
+}
+
+const persistenceState = signal<PersistenceState>(_persistenceState)
+const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
+
+let guide = persistenceState.value.art.tutorialName
+if (guide) {
+  const guides = await Astro.glob('/../guides/*.md')
+  guide = guides
+    .find(g => {
+      if (slug(g.file) == guide) return true
+    })
+    ?.compiledContent()
+}
+
+export const prerender = false
+---
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Blot editor!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <main></main>
+    <script
+      define:vars={{
+        toolkit,
+        guide,
+        loggedIn: true,
+        source: persistenceState.value.art?.code,
+        persistenceState
+      }}
+    >
+      window.getToolkit = () => toolkit
+      window.getGuide = () => guide
+      window.getLoggedIn = () => loggedIn
+      window.getSrc = () => source
+      window.getPersistenceState = () => persistenceState
+    </script>
+    <script src="../../lib/client/initApp.js"></script>
+  </body>
+</html>

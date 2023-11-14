@@ -3,7 +3,7 @@
 const WIDTH = 10
 const HEIGHT = 20
 
-const t = createTurtle([WIDTH / 2, 0])
+const t = new Turtle([WIDTH / 2, 0])
 t.right(90)
 
 // Manage array of turtles that need to be drawn
@@ -88,7 +88,7 @@ function thicken(turtle, startingTime) {
       const deltaX = rightPoint[0] - leftPoint[0]
       const deltaY = rightPoint[1] - leftPoint[1]
 
-      const ring = createTurtle(leftPoint)
+      const ring = new Turtle(leftPoint)
         .setAngle((Math.atan2(deltaY, deltaX) / Math.PI) * 180)
         .forward(Math.sqrt(deltaX * deltaX + deltaY * deltaY)) // Straight line from left to right
         .resample(0.01) // Resample so we can modulate individual points
@@ -103,6 +103,8 @@ function thicken(turtle, startingTime) {
 
       // Add noise
       ring.iteratePath((ringPoint, ringT) => {
+        const normal = ring.getNormal(ringT)
+
         // Smoothstep so more noisy in middle, less at edges
         const s =
           0.9 * smoothstep(-0.1, 0.4, 0.5 - Math.abs(ringT - 0.5)) * thickness // Scale with thickness, as there's more/less room
@@ -160,7 +162,7 @@ function makeBranch(turtle, length, startingT) {
       pt[0] += parentThickness * Math.cos(curAngleRad - a)
       pt[1] += parentThickness * Math.sin(curAngleRad - a)
 
-      const newBranch = createTurtle(pt)
+      const newBranch = new Turtle(pt)
       newBranch.setAngle(curAngleDeg)
 
       newBranch.right(a)
@@ -178,11 +180,5 @@ function makeBranch(turtle, length, startingT) {
 // Make initial branch
 makeBranch(t, 0.1, 0)
 
-// Center piece
-const final = createTurtle();
-turtles.forEach(t => final.join(t));
-final.scale(115/final.height)
-final.translate([125/2, 125/2], final.cc)
-
 // Draw turtles array
-drawTurtles([ final ])
+drawTurtles(...turtles)

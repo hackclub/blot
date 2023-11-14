@@ -15,8 +15,8 @@ export class Turtle {
   angle: number
   path: Polyline[]
   style: {
-    fill: string,
-    stroke: string,
+    fill: string
+    stroke: string
   }
 
   constructor(start: Point = [0, 0]) {
@@ -25,8 +25,8 @@ export class Turtle {
     this.angle = 0
     this.path = [[[...start]]]
     this.style = {
-      fill: "none",
-      stroke: "black"
+      fill: 'none',
+      stroke: 'black'
     }
   }
 
@@ -59,10 +59,10 @@ export class Turtle {
   }
 
   jump(pt: Point) {
-    this.up();
-    this.goTo(pt);
-    this.down();
-    return this;
+    this.up()
+    this.goTo(pt)
+    this.down()
+    return this
   }
 
   forward(distance: number) {
@@ -189,18 +189,18 @@ export class Turtle {
   }
 
   copy() {
-    const copy = obj => JSON.parse(JSON.stringify(obj));
+    const copy = obj => JSON.parse(JSON.stringify(obj))
 
-    const t = new Turtle();
+    const t = new Turtle()
 
-    t.path = copy(this.path);
-    t.drawing = copy(t.drawing);
-    t.position = copy(t.position);
-    t.angle = copy(t.angle);
-    t.path = copy(t.path);
-    t.style = copy(t.style);
+    t.path = copy(this.path)
+    t.drawing = copy(t.drawing)
+    t.position = copy(t.position)
+    t.angle = copy(t.angle)
+    t.path = copy(t.path)
+    t.style = copy(t.style)
 
-    return t;
+    return t
   }
 
   resample(resolution: number) {
@@ -475,7 +475,7 @@ function tValuesForPoints(polylines: Polyline[]) {
   let lengths = []
   let tValues = []
 
-  let segmentLength = 0;
+  let segmentLength = 0
   for (let i = 0; i < polylines.length; i++) {
     let polyline = polylines[i]
     for (let j = 0; j < polyline.length; j++) {

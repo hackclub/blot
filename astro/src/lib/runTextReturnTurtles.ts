@@ -21,12 +21,12 @@ const customGlobal = {
   },
   drawTurtles: (turtlesToDraw: Turtle[], style = {}) => {
     turtlesToDraw.forEach(t => {
-      const temp = t.copy();
-      if (style.fill === undefined) style.fill = "none";
-      if (style.stroke === undefined) style.stroke = "black";
-      temp.style = style;
-      turtles.push(temp);
-    });
+      const temp = t.copy()
+      if (style.fill === undefined) style.fill = 'none'
+      if (style.stroke === undefined) style.stroke = 'black'
+      temp.style = style
+      turtles.push(temp)
+    })
   },
   setDocDimensions(w: number, h: number) {}
 }

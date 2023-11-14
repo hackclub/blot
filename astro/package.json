@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",
-    "format": "prettier --ignore-path ../.prettierignore --write . --plugin=prettier-plugin-astro"
+    "format": "prettier --ignore-path ./.prettierignore --write . --plugin=prettier-plugin-astro"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.0",
@@ -27,6 +27,7 @@
     "@lezer/common": "^1.0.3",
     "@replit/codemirror-vim": "^6.0.14",
     "@rollup/browser": "^3.26.0",
+    "@sendgrid/mail": "^7.7.0",
     "astro": "^3.1.1",
     "classnames": "^2.3.2",
     "cm6-theme-basic-dark": "^0.2.0",
