@@ -19,10 +19,14 @@ import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
-import { saveFile } from "../lib/saveFile.ts";
+import { saveFile } from '../lib/saveFile.ts'
+import * as prettier from 'prettier'
+import js_beautify from 'js-beautify'
+import { createMask } from "../lib/getBitmap.js";
+import { Turtle } from '../lib/drawingToolkit/index.js'
 
 export default function Toolbar() {
-  const { connected, needsSaving } = getStore()
+  const { connected, needsSaving, view } = getStore()
 
   const [hidden, setHidden] = useState(true)
 
@@ -31,18 +35,33 @@ export default function Toolbar() {
       <div class="flex items-center h-full">
         <h1 class={styles.heading}>
           <a href="/">
-            <img src="/blot.svg" style="width: 30px"/>
+            <img src="/blot.svg" style="width: 30px" />
             <span style="font-weight: 700;">blot</span>
           </a>
         </h1>
         <RunButton />
-        <div 
+        <div
           class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
           onClick={() => saveFile(getCode())}>
-          { needsSaving ? "save* (ctrl/cmd+s)" : "save (ctrl/cmd+s)" }
+          {needsSaving ? 'save* (ctrl/cmd+s)' : 'save (ctrl/cmd+s)'}
         </div>
         <NewButton />
         <OpenButton />
+        <div
+          class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
+          onClick={() => {
+            const ogCode = getCode()
+            const formatted = formatCode(ogCode)
+            view.dispatch({
+              changes: {
+                from: 0,
+                to: ogCode.length,
+                insert: formatted
+              }
+            })
+          }}>
+          tidy code
+        </div>
         <div
           class="relative cursor-default w-max h-full flex items-center p-1"
           onMouseEnter={() => setHidden(false)}
@@ -51,18 +70,59 @@ export default function Toolbar() {
           <div
             class={[
               hidden ? 'hidden' : '',
-              "border border-white border-opacity-10",
-              "bg-[--primary] absolute z-50 top-full p-1 rounded-md"
-            ].join(" ")}
-            >
+              'border border-white border-opacity-10',
+              'bg-[--primary] absolute z-50 top-full p-1 rounded-md'
+            ].join(' ')}>
             <DownloadButton />
             <DownloadSVG />
             <DownloadPNG />
-            <div 
+            <div
               class="w-max p-1 rounded hover:bg-white hover:bg-opacity-10"
               onClick={e => {
                 const { turtles } = getStore();
-                console.log(turtles);
+                const { isVisible }  = createMask();
+
+                // const newTurtle = new Turtle();
+                // let lastVisible = false;
+
+                // turtles.forEach(turtle => {
+                //   turtle
+                //   .resample(0.1)
+                //   .path.forEach(pl => {
+                //     pl.forEach((pt, i) => {
+                //       const [x, y] = pt;
+                //       const visible = isVisible(x, y);
+
+                //       if (lastVisible && i > 0 && visible) newTurtle.goTo([x, y]);
+                //       else newTurtle.jump([x, y]);
+                //       lastVisible = visible;
+                //     })
+                //   })
+                // })
+
+                // newTurtle.simplify(.01);
+                // newTurtle.style.fill ="none";
+                // newTurtle.style.stroke = "black";
+
+                // patchStore({
+                //   turtles: [newTurtle]
+                // })
+
+                turtles.forEach(turtle => {
+                  turtle
+                  .resample(0.01)
+                  .iteratePath(([x, y], t) => {
+                    const visible = isVisible(x, y);
+
+                    if (!visible) return "BREAK";
+                  })
+
+                  // turtle.simplify(0.01);
+                  turtle.style.fill = "none";
+                })
+
+                patchStore({ turtles });
+                
               }}>
               cull hidden lines
             </div>
@@ -320,6 +380,18 @@ function OpenButton() {
   )
 }
 
+function formatCode(code) {
+  try {
+    const options = {
+      indent_size: 2
+    }
+    return js_beautify(code, options)
+  } catch (error) {
+    console.log(error)
+    return code // return the original code if there's an error
+  }
+}
+
 function MachineControls() {
   const { inst, running } = getStore()
 
@@ -381,7 +453,7 @@ function SettingsButton() {
           'padding': '5px',
           'border-radius': '5px'
         }}>
-{/*        <Button
+        {/*        <Button
           class={styles.dropdownEntry}
           variant="ghost"
           onClick={() => {
@@ -414,4 +486,3 @@ function SettingsButton() {
     </div>
   )
 }
-

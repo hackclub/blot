@@ -5,6 +5,7 @@ import { addBezierControl } from './events/addBezierControl.js'
 import { addMachineControl } from './events/addMachineControl.js'
 import { addLoadBackup } from './events/addLoadBackup.js'
 import { addSrcURLParam } from './events/addSrcURLParam.js'
+import { addNumberScrubbing } from './events/addNumberScrubbing.ts'
 import { saveFile } from "./saveFile.ts";
 import { useOnEditorChange } from "./events.ts";
 
@@ -24,6 +25,7 @@ export function init() {
 
   addBezierControl()
   addMachineControl()
+  addNumberScrubbing()
 
   window.addEventListener("keydown", e => {
 
