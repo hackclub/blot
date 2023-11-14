@@ -42,7 +42,26 @@ export default function Help({
       if (workshop === null) return
 
 
-      if (confirm("Clear text editor?")) loadCodeFromString("");
+      if (confirm("Clear text editor?")) loadCodeFromString(`// Check the workshop tab to get started
+
+const width = 125;
+const height = 125;
+
+setDocDimensions(width, height);
+
+const testTurtle = createTurtle();
+
+testTurtle.forward(100);
+
+testTurtle.translate(
+  [width/2, height/2], 
+  testTurtle.cc
+);
+
+drawTurtles([
+    testTurtle
+]);
+`);
 
 
       const res = await fetch(
