@@ -4,7 +4,7 @@ thumbnail: https://github.com/hackclub/haxidraw/assets/27078897/b2b3b319-1b0f-4c
 ---
 
 > You can follow along in this editor: [https://blot.hackclub.dev/editor/
-](https://blot.hackclub.dev/editor)
+](https://blot.hackclub.dev/editor?guide=tree)
 We're going to use abstract scribbles to make a tree that looks like this.
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/b2b3b319-1b0f-4c0e-bf78-d8323ab577d4" height="512"/>
