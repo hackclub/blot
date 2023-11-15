@@ -41,7 +41,7 @@
   },
   {
     "directory": "blotfont-geschmit",
-    "snapshots": ["blotfont_cover.png"],
+    "snapshots": ["blotfont_logo.png"],
     "source": "index.js"
   }
 ]
