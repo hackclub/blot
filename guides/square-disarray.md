@@ -4,7 +4,7 @@ thumbnail: https://cloud-qogbw3upi-hack-club-bot.vercel.app/0260524306-bcaf04e7-
 contributors: leomcelroy
 ---
 
-> You can follow along in [this editor](https://blot.hackclub.dev/editor).
+> You can follow along in [this editor](https://blot.hackclub.dev/editor?guide=square-disarray).
 
 Let's something like draw this:
 
