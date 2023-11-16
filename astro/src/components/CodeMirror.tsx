@@ -32,7 +32,7 @@ export default function CodeMirror() {
 
   useEffect(() => {
     if (!view) return
-    const line = error?.stack[0].line
+    const line = error?.pos.line
     setErrorPos(view, line ? view.state.doc.line(line).from : null)
   })
 

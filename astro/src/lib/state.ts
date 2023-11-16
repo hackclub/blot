@@ -10,10 +10,10 @@ export type CodePosition = {
 }
 
 export type ErrorState = {
-  stack: CodePosition[]
   code: string
   name: string
   message: string
+  pos: CodePosition
 }
 
 export type ConsoleMessage = {

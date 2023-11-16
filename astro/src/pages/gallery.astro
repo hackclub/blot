@@ -5,7 +5,7 @@ import { slug } from '../lib/guide.ts'
 
 let images = [];
 try {
-  const list = (await Astro.glob('/../art/list.json'))[0].default
+  const list = (await Astro.glob('/../art/!metadata.json'))[0].default
   list.forEach(folder => {
     const snapshot = folder.snapshots[0];
     

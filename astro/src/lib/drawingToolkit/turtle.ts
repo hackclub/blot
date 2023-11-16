@@ -1,6 +1,7 @@
 import { flattenSVG } from './flatten-svg/index'
 import { displace } from './drawingFns/displace'
 import { resample } from './drawingFns/resample'
+import { simplify } from './drawingFns/simplify'
 import { interpolatePolylines } from './drawingFns/interpolatePolylines'
 import { getAngle } from './drawingFns/getAngle'
 import { getNormal } from './drawingFns/getNormal'
@@ -214,6 +215,17 @@ export class Turtle {
     })
 
     return this
+  }
+
+  simplify(tolerance, hq = true) {
+    this.path.forEach(pl => {
+      const newPl = simplify(pl, tolerance, hq);
+      while (pl.length > 0) pl.pop()
+
+      while (newPl.length > 0) {
+        pl.push(newPl.shift()!)
+      }
+    })
   }
 
   interpolate(t: number) {

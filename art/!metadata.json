@@ -20,11 +20,6 @@
     "source": "index.js"
   },
   {
-    "directory": "tidal-flats-leo",
-    "snapshots": ["tidalFlats.png"],
-    "source": "index.js"
-  },
-  {
     "directory": "eca-henry",
     "snapshots": ["eca1.png", "eca2.png", "eca3.png", "eca4.png"],
     "source": "eca.js"

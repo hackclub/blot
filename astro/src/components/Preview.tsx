@@ -90,6 +90,15 @@ function init() {
     { passive: false }
   )
 
+  let mousedown = false;
+  canvasListener("mousedown", "", e => {
+    mousedown = true;
+  })
+
+  canvasListener("mouseup", "", e => {
+    mousedown = false;
+  })
+
   canvasListener('mousemove', '', (e: MouseEvent) => {
     // update mousepos
     const mousePos = document.querySelector('.mouse-position') // mousePosRef.current;
@@ -109,7 +118,7 @@ function init() {
       )}mm`
     }
 
-    if (e.buttons !== 1) return
+    if (e.buttons !== 1 || !mousedown) return
     e.preventDefault()
 
     panZoomParams.panX += e.movementX

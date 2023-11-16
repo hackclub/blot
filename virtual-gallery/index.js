@@ -698,7 +698,7 @@ export function raycastMap(state) {
     mode: 'no-cors'
   }
 
-  fetch('https://haxidraw-art.hackclub.dev/list.json')
+  fetch('https://haxidraw-art.hackclub.dev/!metadata.json')
     .then(response => response.text())
     .then(text => {
       console.log(text)
