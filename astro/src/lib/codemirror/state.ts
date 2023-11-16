@@ -6,14 +6,12 @@ import { indentWithTab } from '@codemirror/commands'
 import { indentUnit } from '@codemirror/language'
 import { patchStore } from '../state.js'
 import { EditorState, Transaction } from '@codemirror/state'
-import { manualChangeSinceLiveUpdate } from './liveUpdate.js'
 import { dispatchEditorChange } from '../events.js'
 import { themeExtension } from './cmTheme.js'
 import { vimModeExtension } from './cmVimMode.js'
-import { numberScrubbingPlugin } from './numberScrubbing.js'
 import { errorIndicatorPlugin } from './errorIndicator.js'
-import { widgetsPlugin } from './widgets.js'
 import { createEvent } from '../events.ts'
+import { widgetButtons } from "./widgetButtons.ts";
 
 // this is a terrible hack but strange bugs are about this one
 //@ts-expect-error
@@ -39,20 +37,13 @@ const cmExtensions = [
   theme,
   EditorView.updateListener.of((v: ViewUpdate) => {
     if (v.docChanged) {
-      if (
-        v.transactions.find(
-          t => t.annotation(Transaction.userEvent) !== undefined
-        )
-      )
-        manualChangeSinceLiveUpdate.value = true
       dispatchEditorChange()
     }
   }),
   themeExtension(),
   vimModeExtension(),
-  numberScrubbingPlugin,
   errorIndicatorPlugin(),
-  widgetsPlugin
+  widgetButtons
 ]
 
 export const createCMState = (doc = '') =>

@@ -4,7 +4,7 @@ thumbnail: https://cloud-7rdff2vjy-hack-club-bot.vercel.app/0250635645-9ce96217-
 contributors: leomcelroy
 ---
 
-> You can follow along in this editor: https://editor.blot.hackclub.com/
+> You can follow along in this editor: https://blot.hackclub.dev/editor?guide=leaf
 
 ---
 

@@ -2,9 +2,15 @@
 import Layout from '../layouts/Layout.astro'
 import { slug } from '../lib/guide.ts'
 
+<<<<<<< HEAD
 const list = (await Astro.glob('/../guides/complete_list.json'))[0].default.map(
   x => x.title
 )
+=======
+const list = (await Astro.glob('/../guides/!metadata.json'))[0]
+  .default
+  .map(x => x.title)
+>>>>>>> 6158dc609ed916990626f6b9e726c95d8ee6cdf9
 
 const workshops = await Astro.glob('/../guides/*.md')
 

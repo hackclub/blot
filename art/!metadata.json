@@ -23,9 +23,7 @@
   {
     "directory": "square-disarray-leo",
     "snapshots": ["0.png"],
-    "source": "index.js",
-    "title": "Square Disarray",
-    "artist": "leomcelroy"
+    "source": "index.js"
   },
   {
     "directory": "eca-henry",

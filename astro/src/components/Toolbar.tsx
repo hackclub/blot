@@ -40,11 +40,19 @@ export default function Toolbar({ persistenceState }) {
           </a>
         </h1>
         <RunButton />
+<<<<<<< HEAD
         {/* {<div
           class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
           onClick={() => saveFile(getCode())}>
           {needsSaving ? 'save* (ctrl/cmd+s)' : 'save (ctrl/cmd+s)'}
         </div>} */}
+=======
+        <div
+          class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
+          onClick={() => saveFile(getCode())}>
+          {needsSaving ? 'save* (ctrl/cmd+s)' : 'save (ctrl/cmd+s)'}
+        </div>
+>>>>>>> 6158dc609ed916990626f6b9e726c95d8ee6cdf9
         <NewButton />
         <OpenButton />
         <div
@@ -79,6 +87,7 @@ export default function Toolbar({ persistenceState }) {
             <div
               class="w-max p-1 rounded hover:bg-white hover:bg-opacity-10"
               onClick={e => {
+<<<<<<< HEAD
                 const { turtles } = getStore()
                 const { isVisible } = createMask()
 
@@ -93,6 +102,52 @@ export default function Toolbar({ persistenceState }) {
                 })
 
                 patchStore({ turtles })
+=======
+                const { turtles } = getStore();
+                const { isVisible }  = createMask();
+
+                // const newTurtle = new Turtle();
+                // let lastVisible = false;
+
+                // turtles.forEach(turtle => {
+                //   turtle
+                //   .resample(0.1)
+                //   .path.forEach(pl => {
+                //     pl.forEach((pt, i) => {
+                //       const [x, y] = pt;
+                //       const visible = isVisible(x, y);
+
+                //       if (lastVisible && i > 0 && visible) newTurtle.goTo([x, y]);
+                //       else newTurtle.jump([x, y]);
+                //       lastVisible = visible;
+                //     })
+                //   })
+                // })
+
+                // newTurtle.simplify(.01);
+                // newTurtle.style.fill ="none";
+                // newTurtle.style.stroke = "black";
+
+                // patchStore({
+                //   turtles: [newTurtle]
+                // })
+
+                turtles.forEach(turtle => {
+                  turtle
+                  .resample(0.01)
+                  .iteratePath(([x, y], t) => {
+                    const visible = isVisible(x, y);
+
+                    if (!visible) return "BREAK";
+                  })
+
+                  // turtle.simplify(0.01);
+                  turtle.style.fill = "none";
+                })
+
+                patchStore({ turtles });
+                
+>>>>>>> 6158dc609ed916990626f6b9e726c95d8ee6cdf9
               }}>
               cull hidden lines
             </div>
