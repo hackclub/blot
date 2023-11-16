@@ -1,4 +1,4 @@
-import { Point, createHaxidraw } from './drawingToolkit/index.js'
+import { type Point, createHaxidraw } from './drawingToolkit/index.js'
 import { getStore, patchStore } from './state.ts'
 
 export async function connect() {

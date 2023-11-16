@@ -1,28 +1,32 @@
 import { useEffect, useState } from 'preact/hooks'
-import download from '../lib/download.ts'
-import runCode from '../lib/run.ts'
-import { defaultProgram } from '../lib/defaultProgram.js'
-import { patchStore, getStore } from '../lib/state.ts'
-import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
-import styles from './Toolbar.module.css'
+import download from '../lib/download'
+import runCode from '../lib/run'
+import defaultProgram from '../lib/examples/defaultProgram'
+import { patchStore, getStore } from '../lib/state'
+import { loadCodeFromString } from '../lib/loadCodeFromString'
 import Button from '../ui/Button.tsx'
-import cx from 'classnames'
-// import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
-import PlugIcon from '../ui/PlugIcon.tsx'
 import {
   connect,
   disconnect,
   runMachine,
   tryAutoConnect
 } from '../lib/machine.ts'
-import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
-import SettingsIcon from '../ui/SettingsIcon.tsx'
-import KeyboardIcon from '../ui/KeyboardIcon.tsx'
-import GitHubIcon from '../ui/GitHubIcon.tsx'
+import BrightnessContrastIcon from '../ui/BrightnessContrastIcon'
+import SettingsIcon from '../ui/SettingsIcon'
+import KeyboardIcon from '../ui/KeyboardIcon'
+import GitHubIcon from '../ui/GitHubIcon'
+import { persist } from '../db/auth-helper'
+import { generateName } from '../lib/utils/words'
+import styles from './Toolbar.module.css'
 import { saveFile } from '../lib/saveFile.ts'
+import { createMask } from '../lib/getBitmap.js'
 
-export default function Toolbar() {
-  const { connected, needsSaving } = getStore()
+export function searchParams(query) {
+  return new URL(window.location.href).searchParams.get(query)
+}
+
+export default function Toolbar({ persistenceState }) {
+  const { connected } = getStore()
 
   const [hidden, setHidden] = useState(true)
 
@@ -36,13 +40,28 @@ export default function Toolbar() {
           </a>
         </h1>
         <RunButton />
-        <div
+        {/* {<div
           class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
           onClick={() => saveFile(getCode())}>
           {needsSaving ? 'save* (ctrl/cmd+s)' : 'save (ctrl/cmd+s)'}
-        </div>
+        </div>} */}
         <NewButton />
         <OpenButton />
+        <div
+          class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
+          onClick={() => {
+            const ogCode = getCode()
+            const formatted = formatCode(ogCode)
+            view.dispatch({
+              changes: {
+                from: 0,
+                to: ogCode.length,
+                insert: formatted
+              }
+            })
+          }}>
+          tidy code
+        </div>
         <div
           class="relative cursor-default w-max h-full flex items-center p-1"
           onMouseEnter={() => setHidden(false)}
@@ -61,26 +80,36 @@ export default function Toolbar() {
               class="w-max p-1 rounded hover:bg-white hover:bg-opacity-10"
               onClick={e => {
                 const { turtles } = getStore()
-                console.log(turtles)
+                const { isVisible } = createMask()
+
+                turtles.forEach(turtle => {
+                  turtle.resample(0.01).iteratePath(([x, y], t) => {
+                    const visible = isVisible(x, y)
+
+                    if (!visible) return 'BREAK'
+                  })
+
+                  turtle.style.fill = 'none'
+                })
+
+                patchStore({ turtles })
               }}>
               cull hidden lines
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="flex items-center">
-        <Button variant="ghost" class="connect-trigger">
-          {connected ? 'disconnect from' : 'connect to'} machine
-        </Button>
-        {connected && (
-          <Button variant="ghost" class="run-machine-trigger">
-            run machine
+        <div class="flex items-center">
+          <Button variant="ghost" class="connect-trigger">
+            {connected ? 'disconnect from' : 'connect to'} machine
           </Button>
-        )}
-        {/*<MachineControls />*/}
-        <GitHubLink />
-        <SettingsButton />
+          {connected && (
+            <Button variant="ghost" class="run-machine-trigger">
+              run machine
+            </Button>
+          )}
+          <GitHubLink />
+          <SettingsButton />
+        </div>
       </div>
     </div>
   )
@@ -317,6 +346,18 @@ function OpenButton() {
       open
     </Button>
   )
+}
+
+function formatCode(code) {
+  try {
+    const options = {
+      indent_size: 2
+    }
+    return js_beautify(code, options)
+  } catch (error) {
+    console.log(error)
+    return code // return the original code if there's an error
+  }
 }
 
 function MachineControls() {

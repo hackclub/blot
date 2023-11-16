@@ -1,4 +1,4 @@
-import { Polyline } from '../types'
+import type { Polyline } from '../types'
 
 export function trimPolylines(polylines: Polyline[], t1: number, t2: number) {
   t1 = Math.min(1, t1)

@@ -3,6 +3,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Bellefair&family=JetBrains+Mono&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
+  --serif: 'Alegreya', serif;
+  --sans-serif: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', 'IBM Plex Mono', 'Menlo', monospace;
+
+  --font-serif: 'Alegreya', serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', 'Menlo', monospace;
+
   --background: #f8f6f3;
   --primary: #33e;
   --primary-rgb: 51, 51, 238;

@@ -1,4 +1,4 @@
-import { CodePosition, getStore } from '../lib/state.ts'
+import { type CodePosition, getStore } from '../lib/state.ts'
 import styles from './Error.module.css'
 import { useCallback, useEffect, useRef } from 'preact/hooks'
 import { EditorView } from 'codemirror'

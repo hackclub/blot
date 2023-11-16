@@ -1,5 +1,4 @@
 ---
-import '../../ui/globals.scss'
 import { firestore, getArt, getSession } from '../../db/account'
 import { signal } from '@preact/signals'
 import type { PersistenceState } from '../../lib/state/persist'
@@ -94,6 +93,6 @@ export const prerender = false
       window.getSrc = () => source
       window.getPersistenceState = () => persistenceState
     </script>
-    <script src="../../lib/client/initApp.js"></script>
+    <script src="../../lib/initApp.js"></script>
   </body>
 </html>

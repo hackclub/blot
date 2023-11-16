@@ -1,4 +1,4 @@
-import { Polyline } from '../types'
+import type { Polyline } from '../types'
 
 export function getAngle(polylines: Polyline[], t: number) {
   // Calculate the total length of all polylines

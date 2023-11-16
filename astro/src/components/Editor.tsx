@@ -1,17 +1,16 @@
-import { getStore } from '../lib/state.js'
-import { createListener } from '../lib/createListener.js'
+import { getStore } from '../lib/state'
+import { createListener } from '../lib/createListener'
 import styles from './Editor.module.css'
-import CompatWarning from './CompatWarning.jsx'
-import Preview from './Preview.jsx'
-import Toolbar from './Toolbar.jsx'
-import Error from './Error.jsx'
-import Console from './Console.jsx'
-import GlobalStateDebugger from './GlobalStateDebugger.jsx'
-import DropBox from './DropBox.jsx'
-import CodeMirror from './CodeMirror.jsx'
+import CompatWarning from './CompatWarning'
+import Preview from './Preview'
+import Toolbar from './Toolbar'
+import Error from './Error'
+import Console from './Console'
+import GlobalStateDebugger from './GlobalStateDebugger'
+import DropBox from './DropBox'
+import CodeMirror from './CodeMirror'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import Help from './Help.jsx'
-import preview from '@astrojs/node/preview.js'
+import Help from './Help'
 
 export default function Editor() {
   const [width, setWidth] = useState(50)
@@ -34,9 +33,8 @@ export default function Editor() {
     const intervalId = setInterval(() => {
       setHelpHeight(helpHeight + count)
 
-      if (helpHeight + count >= INIT_HELP_HEIGHT && closed) {
+      if (helpHeight + count >= INIT_HELP_HEIGHT && closed)
         clearInterval(intervalId)
-      }
 
       if (helpHeight + count <= 0 && !closed) {
         setHelpHeight(0)
@@ -57,10 +55,10 @@ export default function Editor() {
         <div class={styles.inner} ref={editorContainer}>
           <div
             style={{
-              'width': `${width}%`,
-              'display': 'flex',
-              'height': '100%',
-              'flex-direction': 'column'
+              width: `${width}%`,
+              display: 'flex',
+              height: '100%',
+              flexDirection: 'column'
             }}>
             <div style={{ flex: 1, overflow: 'scroll' }}>
               <CodeMirror />
@@ -77,10 +75,7 @@ export default function Editor() {
             <Preview />
             <div
               class={`${styles.horizBar} resize-help-trigger`}
-              style={{
-                top: `${100 - helpHeight}%`,
-                width: `${100 - width}%`
-              }}></div>
+              style={{ top: `${100 - helpHeight}` }}></div>
             <Help toggleClose={closeHelpPane} helpHeight={helpHeight} />
           </div>
         </div>

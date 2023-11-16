@@ -1,4 +1,4 @@
-import { Polyline } from '../types'
+import type { Polyline } from '../types'
 
 export function interpolatePolylines(polylines: Polyline[], t: number) {
   t = Math.max(t, 0)
