@@ -38,6 +38,31 @@ function init() {
 
   const bodyListener = createListener(document.body)
   const canvasListener = createListener(canvas)
+  const { docDimensions } = getStore()
+  if (!canvas) return
+
+    const br = canvas.getBoundingClientRect()
+    panZoomParams.scale = Math.min(
+      (br.width - 20) / docDimensions.width,
+      (br.height - 20) / docDimensions.height
+    )
+
+    panZoomParams.panX =
+      br.width / 2 - (docDimensions.width * panZoomParams.scale) / 2
+    panZoomParams.panY =
+      br.height / 2 + (docDimensions.height * panZoomParams.scale) / 2
+
+    requestRedraw(canvas)
+  })
+
+  const resizeObserver = new ResizeObserver(entries => {
+    const { width, height } = entries[0].contentRect
+    dpr = window.devicePixelRatio || 1
+    canvas.width = width * dpr
+    canvas.height = height * dpr
+    setCtxProperties() // setting width/height clears ctx state
+
+    requestRedraw(canvas)
 
   canvasListener(
     'wheel',
