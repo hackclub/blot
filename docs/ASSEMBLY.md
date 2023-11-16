@@ -217,4 +217,13 @@ Create another belt bearing assembly and ensure the belt is behind it.
 Here comes the hardest part: routing the belt. Ensure it goes around the shafts of both motors, and runs between the belt bearings within the carriage. 
 
 ---
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/final.png" alt="aaa" width="300"/><br>
 At the belt clip, bend the belt around on itself (with the teeth facing outwards) in order to hold it tight. 	
+
+---
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0088.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0089.png" alt="aaa" width="300"/><br>
+Attach the pcb to its mount. Ensure all corners are clipped on.
+
+---
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0090.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0091.png" alt="aaa" width="300"/><br>
+Finally, Screw the mount onto the lower rail using m5x10mm screws and t-nuts.
