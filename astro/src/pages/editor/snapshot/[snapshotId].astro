@@ -1,11 +1,9 @@
 ---
-import '../../../ui/globals.scss'
+import '../../../css/global.css'
 import { slug } from '../../../lib/utils/guide'
 import { getSession, getSnapshotData } from '../../../db/account'
 import { mobileUserAgent } from '../../../lib/utils/mobile'
 import { signal } from '@preact/signals'
-
-import { AstroComponentInstance } from 'astro/dist/runtime/server'
 
 let toolkit = (await Astro.glob('/../docs/TOOLKIT.md'))[0].compiledContent()
 
@@ -36,6 +34,16 @@ export const prerender = false
     <meta charset="utf-8" />
     <meta name="description" content="Blot editor!" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Prism CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"
+      rel="stylesheet"
+    />
+    <!-- Prism JS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"
+    ></script>
   </head>
   <body>
     <main></main>

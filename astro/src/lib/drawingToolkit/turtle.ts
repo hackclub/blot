@@ -219,7 +219,7 @@ export class Turtle {
 
   simplify(tolerance, hq = true) {
     this.path.forEach(pl => {
-      const newPl = simplify(pl, tolerance, hq);
+      const newPl = simplify(pl, tolerance, hq)
       while (pl.length > 0) pl.pop()
 
       while (newPl.length > 0) {

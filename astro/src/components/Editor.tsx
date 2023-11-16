@@ -11,8 +11,15 @@ import DropBox from './DropBox'
 import CodeMirror from './CodeMirror'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import Help from './Help'
+import { loadCodeFromString } from '../lib/loadCodeFromString'
 
-export default function Editor() {
+export default function Editor({
+  guide,
+  toolkit,
+  source,
+  loggedIn,
+  persistenceState
+}) {
   const [width, setWidth] = useState(50)
   const [tab, setTab] = useState('workshop')
 
@@ -24,6 +31,7 @@ export default function Editor() {
   useEffect(() => {
     addEditorResizing(setWidth, theme)
     addHelpResizing(setHelpHeight, editorContainer, theme)
+    if (source) loadCodeFromString(source)
   }, [])
 
   const closeHelpPane = () => {
@@ -76,7 +84,12 @@ export default function Editor() {
             <div
               class={`${styles.horizBar} resize-help-trigger`}
               style={{ top: `${100 - helpHeight}` }}></div>
-            <Help toggleClose={closeHelpPane} helpHeight={helpHeight} />
+            <Help
+              toggleClose={closeHelpPane}
+              helpHeight={helpHeight}
+              guide={guide}
+              toolkit={toolkit}
+            />
           </div>
         </div>
       </div>

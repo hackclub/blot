@@ -38,6 +38,20 @@
   --font-7: 6rem;
 }
 
+body {
+  --astro-code-color-text: black;
+  --astro-code-token-keyword: #00c;
+  --astro-code-token-function: #167;
+  --astro-code-token-constant: #708;
+}
+
+body[data-theme='dark'] {
+  --astro-code-color-text: white;
+  --astro-code-token-keyword: #fda331;
+  --astro-code-token-function: #6fb3d2;
+  --astro-code-token-constant: #b5bd68;
+}
+
 h1,
 h2,
 h3,

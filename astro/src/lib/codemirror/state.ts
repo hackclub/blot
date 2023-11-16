@@ -11,7 +11,7 @@ import { themeExtension } from './cmTheme.js'
 import { vimModeExtension } from './cmVimMode.js'
 import { errorIndicatorPlugin } from './errorIndicator.js'
 import { createEvent } from '../events.ts'
-import { widgetButtons } from "./widgetButtons.ts";
+import { widgetButtons } from './widgetButtons.ts'
 
 // this is a terrible hack but strange bugs are about this one
 //@ts-expect-error

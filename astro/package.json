@@ -27,11 +27,8 @@
     "@lezer/common": "^1.0.3",
     "@replit/codemirror-vim": "^6.0.14",
     "@rollup/browser": "^3.26.0",
-<<<<<<< HEAD
     "@sendgrid/mail": "^7.7.0",
-=======
     "acorn": "^8.11.2",
->>>>>>> 6158dc609ed916990626f6b9e726c95d8ee6cdf9
     "astro": "^3.1.1",
     "classnames": "^2.3.2",
     "cm6-theme-basic-dark": "^0.2.0",

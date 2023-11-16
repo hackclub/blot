@@ -65,13 +65,13 @@ function init() {
     { passive: false }
   )
 
-  let mousedown = false;
-  canvasListener("mousedown", "", e => {
-    mousedown = true;
+  let mousedown = false
+  canvasListener('mousedown', '', e => {
+    mousedown = true
   })
 
-  canvasListener("mouseup", "", e => {
-    mousedown = false;
+  canvasListener('mouseup', '', e => {
+    mousedown = false
   })
 
   canvasListener('mousemove', '', (e: MouseEvent) => {

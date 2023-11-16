@@ -106,15 +106,11 @@ export default function Error() {
   const { error } = getStore()
 
   if (!error) return null
-    
+
   return (
     <div class={styles.root}>
       <span class={styles.name}>{error.name}</span>
-      <Snippet
-          pos={error.pos}
-          code={error.code}
-          message={error.message}
-        />
+      <Snippet pos={error.pos} code={error.code} message={error.message} />
     </div>
   )
 }
