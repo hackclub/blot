@@ -20,6 +20,8 @@ const int motor1DirPin = D9;
 const int motor2StepPin = D8;
 const int motor2DirPin = D7;
 
+const int enablePin = D1;
+
 void setup() {  
   servo.attach(PIN_SERVO);
 
@@ -28,11 +30,17 @@ void setup() {
   on("light", onLight);
   on("go", go);
   on("servo", moveServo);
+  on("motorsOn", motorsOn);
+  on("motorsOff", motorsOff);
+  on("moveTowardsOrigin", moveTowardsOrigin);
+  on("setOrigin", setOrigin);
 
   pinMode(motor1StepPin, OUTPUT);
   pinMode(motor1DirPin, OUTPUT);
   pinMode(motor2StepPin, OUTPUT);
   pinMode(motor2DirPin, OUTPUT);
+
+  pinMode(enablePin, OUTPUT); // enable pin
 
   pinMode(PIN_LED, OUTPUT);
 }
@@ -47,6 +55,36 @@ uint8_t onLight(uint8_t* payload, int length, uint8_t* reply) {
   // Serial.println("light it up");
 
   digitalWrite(PIN_LED, value);
+
+  return 0;
+}
+
+uint8_t motorsOn(uint8_t* payload, int length, uint8_t* reply) {
+  digitalWrite(enablePin, 0);
+  return 0;
+}
+
+uint8_t motorsOff(uint8_t* payload, int length, uint8_t* reply) {
+  digitalWrite(enablePin, 1);
+  return 0;
+}
+
+uint8_t moveTowardsOrigin(uint8_t* payload, int length, uint8_t* reply) {
+  float x = pos[0];
+  float y = pos[1];
+
+  // this ternary may not be neccesary
+  goTo(
+    x + ( x < 0 ? 10 : -10), 
+    y + ( y < 0 ? 10 : -10)
+  );
+
+  return 0;
+}
+
+uint8_t setOrigin(uint8_t* payload, int length, uint8_t* reply) {
+  pos[0] = 0;
+  pos[1] = 0;
 
   return 0;
 }

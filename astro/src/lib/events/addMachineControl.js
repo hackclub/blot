@@ -3,12 +3,14 @@ import { createListener } from '../createListener.js'
 import runCode from '../run.ts'
 import { getStore, patchStore } from '../state.ts'
 
+let cancelled = false;
+
 export function addMachineControl() {
   let haxidraw
 
   const listener = createListener(document.body)
 
-  listener('click', '.connect-trigger', async () => {
+  listener('click', '[data-evt-connectTrigger]', async () => {
     if (!navigator.serial) {
       alert(
         "Your browser doesn't seem to support the Web Serial API, which is required for the Haxidraw editor to connect to the machine. Chrome Version 89 or above is the recommended browser."
@@ -37,17 +39,83 @@ export function addMachineControl() {
     }
   })
 
-  listener('click', '.run-machine-trigger', () => {
+  listener('click', '[data-evt-machineTrigger]', (e) => {
     const { turtles } = getStore()
     const runMachine = () => runMachineHelper(haxidraw, turtles)
 
-    runCode().then(() => {
-      if (!haxidraw) {
-        console.log('not connected')
-        return
-      }
-      runMachine()
+    if (!haxidraw) {
+      console.log('not connected')
+      return
+    }
+
+    if (e.target.innerText.toLowerCase().includes("stop")) {
+      cancelled = true;
+      patchStore({ machineRunning: false });
+      console.log("cancelled");
+      return;
+    }
+
+    runMachine().then(() => {
+      patchStore({ machineRunning: false });
+      cancelled = false;
     })
+  
+    patchStore({ machineRunning: true });
+    
+  })
+
+  listener('click', '[data-evt-penUp]', () => {
+    if (!haxidraw) {
+      console.log('not connected')
+      return
+    }
+
+    haxidraw.servo(1000);
+  })
+
+  listener('click', '[data-evt-penDown]', () => {
+    if (!haxidraw) {
+      console.log('not connected')
+      return
+    }
+
+    haxidraw.servo(1700);
+  })
+
+  listener('click', '[data-evt-motorsOn]', () => {
+    if (!haxidraw) {
+      console.log('not connected')
+      return
+    }
+
+    haxidraw.port.send("motorsOn");
+  })
+
+  listener('click', '[data-evt-motorsOff]', () => {
+    if (!haxidraw) {
+      console.log('not connected')
+      return
+    }
+
+    haxidraw.port.send("motorsOff");
+  });
+
+  listener('click', '[data-evt-setOrigin]', () => {
+    if (!haxidraw) {
+      console.log('not connected')
+      return
+    }
+
+    haxidraw.port.send("setOrigin");
+  });
+
+  listener('click', '[data-evt-moveTowardsOrigin]', () => {
+    if (!haxidraw) {
+      console.log('not connected')
+      return
+    }
+
+    haxidraw.port.send("moveTowardsOrigin");
   })
 
   async function automaticallyConnect() {
@@ -70,11 +138,20 @@ export function addMachineControl() {
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export async function runMachineHelper(haxidraw, turtles) {
+
   await haxidraw.servo(1000)
   await delay(200)
   const polylines = turtles.map(x => x.path).flat()
   for (const polyline of polylines) {
     for (let i = 0; i < polyline.length; i++) {
+
+      if (cancelled) {
+        await haxidraw.servo(1000)
+        await delay(200)
+        await haxidraw.goTo(0, 0)
+        return;
+      };
+
       const [x, y] = polyline[i]
       if (i === 0) {
         await haxidraw.servo(1000)
