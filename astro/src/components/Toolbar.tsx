@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'preact/hooks'
-import download from '../lib/download'
-import runCode from '../lib/run'
-import defaultProgram from '../lib/examples/defaultProgram'
-import { patchStore, getStore } from '../lib/state'
-import { loadCodeFromString } from '../lib/loadCodeFromString'
+import download from '../lib/download.ts'
+import runCode from '../lib/run.ts'
+import defaultProgram from '../lib/examples/defaultProgram.js'
+import { patchStore, getStore } from '../lib/state.ts'
+import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
 import Button from '../ui/Button.tsx'
 import {
   connect,
@@ -11,22 +11,22 @@ import {
   runMachine,
   tryAutoConnect
 } from '../lib/machine.ts'
-import BrightnessContrastIcon from '../ui/BrightnessContrastIcon'
-import SettingsIcon from '../ui/SettingsIcon'
-import KeyboardIcon from '../ui/KeyboardIcon'
-import GitHubIcon from '../ui/GitHubIcon'
-import { persist } from '../db/auth-helper'
-import { generateName } from '../lib/utils/words'
+import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
+import SettingsIcon from '../ui/SettingsIcon.tsx'
+import KeyboardIcon from '../ui/KeyboardIcon.tsx'
+import GitHubIcon from '../ui/GitHubIcon.tsx'
+import { persist } from '../db/auth-helper.ts'
+import { generateName } from '../lib/utils/words.ts'
 import styles from './Toolbar.module.css'
-import { saveFile } from '../lib/saveFile.ts'
 import { createMask } from '../lib/getBitmap.js'
+import js_beautify from 'js-beautify'
 
 export function searchParams(query) {
   return new URL(window.location.href).searchParams.get(query)
 }
 
 export default function Toolbar({ persistenceState }) {
-  const { connected } = getStore()
+  const { connected, needsSaving, view } = getStore()
 
   const [hidden, setHidden] = useState(true)
 
@@ -45,7 +45,7 @@ export default function Toolbar({ persistenceState }) {
           onClick={() => saveFile(getCode())}>
           {needsSaving ? 'save* (ctrl/cmd+s)' : 'save (ctrl/cmd+s)'}
         </div>} */}
-        <NewButton />
+        <NewButton persistenceState={persistenceState} />
         <OpenButton />
         <div
           class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
@@ -98,7 +98,55 @@ export default function Toolbar({ persistenceState }) {
             </div>
           </div>
         </div>
+        {persistenceState !== undefined && (
+          <Button variant="ghost" disabled>
+            {persistenceState.value.cloudSaveState.toLowerCase()}
+          </Button>
+        )}
       </div>
+      {persistenceState !== undefined ? (
+        <div class="flex items-center">
+          <form
+            onSubmit={event => {
+              event.preventDefault()
+              const name =
+                event.target.name?.value || persistenceState.value.art.name
+              fetch('/api/art/rename', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  artId: persistenceState.value.art.id,
+                  newName: name
+                })
+              }).catch(err => console.error(err))
+            }}>
+            <input
+              autoComplete="off"
+              name="name"
+              class={styles.nameInput}
+              type="text"
+              value={persistenceState.value.art.name}
+              onChange={event => {
+                event.target.setAttribute('size', event.target.value.length + 1)
+              }}
+              onBlur={event => {
+                // POST onBlur
+                event.preventDefault()
+                const name =
+                  event.target.value || persistenceState.value.art.name
+                fetch('/api/art/rename', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    artId: persistenceState.value.art.id,
+                    newName: name
+                  })
+                }).catch(err => console.error(err))
+              }}
+            />
+          </form>
+        </div>
+      ) : null}
       <div class="flex items-center">
         <Button variant="ghost" class="connect-trigger">
           {connected ? 'disconnect from' : 'connect to'} machine
@@ -110,6 +158,203 @@ export default function Toolbar({ persistenceState }) {
         )}
         <GitHubLink />
         <SettingsButton />
+        {searchParams('guide') || searchParams('src') ? (
+          <RemixLink persistenceState={persistenceState} />
+        ) : persistenceState !== undefined ? (
+          <ShareLink persistenceState={persistenceState} />
+        ) : (
+          <SaveToEmail />
+        )}
+      </div>
+    </div>
+  )
+}
+
+export function SaveToEmail() {
+  const [hidden, setHidden] = useState(true)
+
+  return (
+    <div>
+      <Button variant="ghost" onClick={() => setHidden(false)}>
+        save to email
+      </Button>
+      <div
+        style={{
+          display: hidden ? 'none' : '',
+          position: 'absolute',
+          right: '5px',
+          background: 'var(--primary)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          zIndex: 9999,
+          padding: '5px',
+          borderRadius: '5px'
+        }}>
+        <form
+          onSubmit={event => {
+            event.preventDefault()
+            const email = event.target.email.value
+            if (email) {
+              // Pass in as partial email
+              const { view } = getStore()
+              const code = view.state.doc.toString()
+              fetch('/api/art/new', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  code,
+                  name: generateName(),
+                  partialSessionEmail: email
+                })
+              })
+                .then(res => res.json())
+                .then(json => {
+                  console.log(json)
+                })
+                .catch(err => console.log(err))
+            }
+          }}>
+          <input placeholder="Save" name="email" type="text" />
+          <Button variant="ghost" type="submit">
+            save
+          </Button>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+export function SaveStatus({ persistenceState }) {
+  return <Button variant="ghost">save</Button>
+}
+
+export function ShareLink({ persistenceState }) {
+  const [hidden, setHidden] = useState(true)
+  const [snapshotId, setSnapshotId] = useState('')
+
+  return (
+    <div
+      style={{ position: 'relative', cursor: 'default', width: 'min-width' }}>
+      <Button
+        variant="ghost"
+        onClick={() => {
+          fetch('/api/art/snapshot', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              artId: persistenceState.value.art.id
+            })
+          })
+            .then(res => res.json())
+            .then(json => {
+              setSnapshotId(json.snapshotId)
+              navigator.clipboard.writeText(
+                `https://blot.hackclub.com/editor/snapshot/${json.snapshotId}`
+              )
+              setHidden(false)
+            })
+            .catch(err => console.log(err))
+        }}>
+        share
+      </Button>
+      <div
+        style={{
+          display: hidden ? 'none' : '',
+          position: 'absolute',
+          background: 'var(--primary)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          zIndex: 9999,
+          width: '100%',
+          top: '100%',
+          padding: '5px',
+          left: 0,
+          right: '100vw',
+          minWidth: '200px'
+        }}>
+        https://blot.hackclub.com/editor/snapshot/{snapshotId}
+      </div>
+    </div>
+  )
+}
+
+export function RemixLink({ persistenceState }) {
+  const [hidden, setHidden] = useState(true)
+
+  return (
+    <div>
+      <Button
+        variant="ghost"
+        onClick={() => {
+          if (persistenceState && persistenceState.value?.session?.session.full)
+            persist(persistenceState)
+          else {
+            // Create a new persistenceState
+            const { view } = getStore()
+            const code = view.state.doc.toString()
+            fetch('/api/art/new', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                code,
+                name: generateName(),
+                tutorialName: window.getGuide ? searchParams('guide') : null
+              })
+            })
+              .then(res => {
+                if (!res.ok) {
+                  // 401 Unauthorized - save to email instead by opening modal
+                  setHidden(false)
+                  return
+                }
+                return res.json()
+              })
+              .then(json => {
+                const { art } = json
+                window.history.replaceState(null, '', `/~/${art.id}`)
+                window.location.reload()
+              })
+          }
+        }}>
+        remix to save edits
+      </Button>
+      <div
+        style={{
+          display: hidden ? 'none' : '',
+          position: 'absolute',
+          right: '5px',
+          background: 'var(--primary)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          zIndex: 9999,
+          padding: '5px',
+          borderRadius: '5px'
+        }}>
+        <form
+          onSubmit={event => {
+            event.preventDefault()
+            const email = event.target.email.value
+            if (email) {
+              // Pass in as partial email
+              const { view } = getStore()
+              const code = view.state.doc.toString()
+              fetch('/api/art/new', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  code,
+                  name: generateName(),
+                  tutorialName: window.getGuide ? searchParams('guide') : null,
+                  partialSessionEmail: email
+                })
+              })
+                .then(res => res.json())
+                .then(json => console.log(json))
+                .catch(err => console.log(err))
+            }
+          }}>
+          <input placeholder="Remix" name="email" type="text" />
+          <Button variant="ghost" type="submit">
+            remix
+          </Button>
+        </form>
       </div>
     </div>
   )
@@ -170,12 +415,15 @@ function DownloadButton() {
   )
 }
 
-function NewButton() {
+function NewButton({ persistenceState }) {
   return (
     <Button
       variant="ghost"
       onClick={() => {
-        loadCodeFromString(defaultProgram)
+        if (persistenceState) {
+          // Check save state of persistenceState
+          window.location.href = '/~/new'
+        } else loadCodeFromString(defaultProgram)
       }}>
       new
     </Button>

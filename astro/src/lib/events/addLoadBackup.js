@@ -18,7 +18,7 @@ export function addLoadBackup() {
   useOnEditorChange(backup)
 }
 
-function backup() {
+export function backup() {
   const { view } = getStore()
 
   const code = view.state.doc.toString()

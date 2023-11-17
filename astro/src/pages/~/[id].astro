@@ -1,4 +1,5 @@
 ---
+import '../../css/global.css'
 import { firestore, getArt, getSession } from '../../db/account'
 import { signal } from '@preact/signals'
 import type { PersistenceState } from '../../lib/state/persist'
@@ -6,7 +7,6 @@ import { mobileUserAgent } from '../../lib/utils/mobile'
 import MobileUnsupported from '../../components/MobileUnsupported.astro'
 import { persist } from '../../db/auth-helper'
 import { slug } from '../../lib/utils/guide'
-import EditorAutosave from '../../components/~/EditorAutosave'
 
 let toolkit = (await Astro.glob('/../docs/TOOLKIT.md'))[0].compiledContent()
 

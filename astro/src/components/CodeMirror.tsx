@@ -5,7 +5,7 @@ import styles from './CodeMirror.module.css'
 import { patchStore, getStore } from '../lib/state.ts'
 import { useCMTheme } from '../lib/codemirror/cmTheme.ts'
 import { useVimMode } from '../lib/codemirror/cmVimMode.ts'
-import { setErrorPos } from '../lib/codemirror/errorIndicator.js'
+import { setErrorPos } from '../lib/codemirror/errorIndicator.ts'
 import {
   createCMState,
   useOnJumpTo,

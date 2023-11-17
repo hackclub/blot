@@ -85,3 +85,18 @@
   justify-content: space-between;
   font-weight: 500;
 }
+
+.nameInput {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  font-size: inherit;
+  color: white;
+  width: auto;
+  letter-spacing: inherit;
+  text-align: center;
+}
+
+.nameInput:focus {
+  border-bottom: 1px solid white;
+}
