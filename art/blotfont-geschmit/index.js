@@ -254,7 +254,7 @@ DrawText(
 The Blot is an experimental, DIY drawing machine, created by 
 Hack Club to demonstrate programatic art creation. Although
 it is possible to 3D print all the parts needed, kits are 
-avalible for all high schoolers who can submit a piece of 
+available for all high schoolers who can submit a piece of 
 artwork to the Blot website!
 
 
