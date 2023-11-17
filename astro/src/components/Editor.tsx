@@ -175,7 +175,7 @@ export default function Editor({
             <Preview />
             <div
               class={`${styles.horizBar} resize-help-trigger`}
-              style={{ top: `${100 - helpHeight}` }}></div>
+              style={{ top: `${100 - helpHeight}%`, width: `${width}%` }}></div>
             <Help
               toggleClose={closeHelpPane}
               helpHeight={helpHeight}

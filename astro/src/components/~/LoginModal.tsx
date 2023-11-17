@@ -1,6 +1,6 @@
 import { useSignalEffect } from '@preact/signals'
-import { useAuthHelper } from '../../../../old/src/db/auth-helper.ts'
-import type { SessionInfo } from '../../../../old/src/db/account.ts'
+import { useAuthHelper } from '../../db/auth-helper.ts'
+import type { Session } from '../../db/account.ts'
 import Input from '../../ui/design-system/Input.tsx'
 import LinkButton from '../../ui/design-system/LinkButton.tsx'
 import Button from '../../ui/Button.tsx'

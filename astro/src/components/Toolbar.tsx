@@ -11,7 +11,6 @@ import {
   runMachine,
   tryAutoConnect
 } from '../lib/machine.ts'
-import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
@@ -98,42 +97,27 @@ export default function Toolbar({ persistenceState }) {
             </div>
           </div>
         </div>
-        {persistenceState !== undefined && (
-          <Button variant="ghost" disabled>
-            {persistenceState.value.cloudSaveState.toLowerCase()}
-          </Button>
-        )}
+        {persistenceState !== undefined &&
+          persistenceState.value.kind !== 'SHARED' && (
+            <Button variant="ghost" disabled>
+              {persistenceState.value.cloudSaveState.toLowerCase()}
+            </Button>
+          )}
       </div>
       {persistenceState !== undefined ? (
         <div class="flex items-center">
-          <form
-            onSubmit={event => {
-              event.preventDefault()
-              const name =
-                event.target.name?.value || persistenceState.value.art.name
-              fetch('/api/art/rename', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  artId: persistenceState.value.art.id,
-                  newName: name
-                })
-              }).catch(err => console.error(err))
-            }}>
+          {persistenceState.value.kind === 'SHARED' ? (
             <input
-              autoComplete="off"
-              name="name"
-              class={styles.nameInput}
-              type="text"
-              value={persistenceState.value.art.name}
-              onChange={event => {
-                event.target.setAttribute('size', event.target.value.length + 1)
-              }}
-              onBlur={event => {
-                // POST onBlur
+              className={styles.nameInput}
+              disabled
+              value={persistenceState.value.name}
+            />
+          ) : (
+            <form
+              onSubmit={event => {
                 event.preventDefault()
                 const name =
-                  event.target.value || persistenceState.value.art.name
+                  event.target.name?.value || persistenceState.value.art.name
                 fetch('/api/art/rename', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
@@ -142,9 +126,36 @@ export default function Toolbar({ persistenceState }) {
                     newName: name
                   })
                 }).catch(err => console.error(err))
-              }}
-            />
-          </form>
+              }}>
+              <input
+                autoComplete="off"
+                name="name"
+                class={styles.nameInput}
+                type="text"
+                value={persistenceState.value.art.name}
+                onChange={event => {
+                  event.target.setAttribute(
+                    'size',
+                    event.target.value.length + 1
+                  )
+                }}
+                onBlur={event => {
+                  // POST onBlur
+                  event.preventDefault()
+                  const name =
+                    event.target.value || persistenceState.value.art.name
+                  fetch('/api/art/rename', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      artId: persistenceState.value.art.id,
+                      newName: name
+                    })
+                  }).catch(err => console.error(err))
+                }}
+              />
+            </form>
+          )}
         </div>
       ) : null}
       <div class="flex items-center">
@@ -158,7 +169,9 @@ export default function Toolbar({ persistenceState }) {
         )}
         <GitHubLink />
         <SettingsButton />
-        {searchParams('guide') || searchParams('src') ? (
+        {searchParams('guide') ||
+        searchParams('src') ||
+        persistenceState.value.kind === 'SHARED' ? (
           <RemixLink persistenceState={persistenceState} />
         ) : persistenceState !== undefined ? (
           <ShareLink persistenceState={persistenceState} />

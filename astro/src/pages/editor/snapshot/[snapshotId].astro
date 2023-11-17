@@ -23,6 +23,8 @@ const persistenceState = signal<PersistenceState>({
   session
 })
 
+console.log(persistenceState.value)
+
 // Check if on mobile
 const isMobile = mobileUserAgent(Astro.request.headers.get('user-agent') ?? '')
 
@@ -60,6 +62,6 @@ export const prerender = false
       window.getSrc = () => source
       window.getPersistenceState = () => persistenceState
     </script>
-    <script src="../../../lib/client/initApp.js"></script>
+    <script src="../../../lib/initApp.js"></script>
   </body>
 </html>
