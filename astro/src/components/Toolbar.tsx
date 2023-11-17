@@ -26,7 +26,7 @@ import { createMask } from "../lib/getBitmap.js";
 import { Turtle } from '../lib/drawingToolkit/index.js'
 
 export default function Toolbar() {
-  const { connected, needsSaving, view } = getStore()
+  const { connected, needsSaving, view, machineRunning } = getStore()
 
   const [hidden, setHidden] = useState(true)
 
@@ -130,15 +130,52 @@ export default function Toolbar() {
         </div>
       </div>
 
-      <div class="flex items-center">
-        <Button variant="ghost" class="connect-trigger">
-          {connected ? 'disconnect from' : 'connect to'} machine
-        </Button>
-        {connected && (
-          <Button variant="ghost" class="run-machine-trigger">
-            run machine
-          </Button>
-        )}
+      <div class="flex items-center h-full">
+        <div class="group flex items-center relative h-full cursor-pointer p-1">
+          machine control
+          <div class="hidden group-hover:flex flex-col absolute top-full right-0 bg-[var(--primary)] w-max z-[99999]">
+            <div class="p-2 hover:bg-white hover:bg-opacity-10" data-evt-connectTrigger>
+              {connected ? 'disconnect from' : 'connect to'} machine
+            </div>
+
+            <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-machineTrigger>
+              {machineRunning ? 'stop' : 'run'} machine
+            </div>
+
+            <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-penUp>
+              pen up
+            </div>
+
+            <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-penDown>
+              pen down
+            </div>
+
+            <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-motorsOn>
+              motors on
+            </div>
+
+            <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-motorsOff>
+              motors off
+            </div>
+
+            <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-moveTowardsOrigin>
+              move towards origin
+            </div>
+
+            <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-setOrigin>
+              set origin
+            </div>
+
+           {/* <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-goToOrigin>
+              go to origin
+            </div>*/}
+
+           {/* <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-homeMachine>
+              home machine
+            </div>*/}
+
+          </div>
+        </div>
         {/*<MachineControls />*/}
         <GitHubLink />
         <SettingsButton />
