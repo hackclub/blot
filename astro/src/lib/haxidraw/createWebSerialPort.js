@@ -52,7 +52,7 @@ export async function createWebSerialPort(rawPort) {
     msgHandlers[msg] = func
   }
 
-  function send(msg, payload) {
+  function send(msg, payload = []) {
     let packedMsg = pack(msg, payload, msgCount)
     packedMsg = cobs.encode(packedMsg)
 
