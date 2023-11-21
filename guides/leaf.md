@@ -126,7 +126,7 @@ function veins() {
 
     // try playing with the `0.1` term
     // interpolate returns a point and we take `[1]` to get the y value
-    y = edge.interpolate(t + 0.1)[1]
+    const y = edge.interpolate(t + 0.1)[1]
 
     const line = createTurtle([x0, y0])
 
