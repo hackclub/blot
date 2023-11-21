@@ -60,9 +60,10 @@ export default function Editor() {
               'width': `${width}%`,
               'display': 'flex',
               'height': '100%',
-              'flex-direction': 'column'
+              'flex-direction': 'column',
+              'overflow': 'none'
             }}>
-            <div style={{ flex: 1, overflow: 'scroll' }}>
+            <div style={{ flex: 1, overflow: "auto" }}>
               <CodeMirror />
             </div>
             <div>
