@@ -171,7 +171,8 @@ export default function Toolbar({ persistenceState }) {
         <SettingsButton />
         {searchParams('guide') ||
         searchParams('src') ||
-        persistenceState.value.kind === 'SHARED' ? (
+        (persistenceState !== undefined &&
+          persistenceState?.value.kind === 'SHARED') ? (
           <RemixLink persistenceState={persistenceState} />
         ) : persistenceState !== undefined ? (
           <ShareLink persistenceState={persistenceState} />
