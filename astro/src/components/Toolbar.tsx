@@ -246,6 +246,7 @@ export function SaveToEmail() {
             }
           }}>
           <input
+            autoComplete="off"
             class="bg-transparent px-1"
             placeholder="Email"
             name="email"
@@ -339,9 +340,29 @@ export function ShareLink({ persistenceState, clicked }) {
 
 export function RemixLink({ persistenceState }) {
   const [hidden, setHidden] = useState(true)
+  const [status, setStatus] = useState('')
+
+  useEffect(() => {
+    if (!hidden) {
+      document.body.addEventListener('click', event => {
+        const modal = document.getElementById('remix-link')
+        const onModal = event.composedPath().find(item => item == modal)
+        if (!onModal) setHidden(true)
+      })
+      return () => {
+        document.body.removeEventListener('click', event => {
+          const modal = document.getElementById('remix-link')
+          const onModal = event.composedPath().find(item => item == modal)
+          if (!onModal) setHidden(true)
+        })
+      }
+    }
+  }, [hidden])
 
   return (
-    <div>
+    <div
+      id="remix-link"
+      style={{ position: 'relative', cursor: 'default', width: 'min-width' }}>
       <Button
         variant="ghost"
         onClick={() => {
@@ -389,8 +410,10 @@ export function RemixLink({ persistenceState }) {
           borderRadius: '5px'
         }}>
         <form
+          class="flex gap-2"
           onSubmit={event => {
             event.preventDefault()
+            setStatus('Remixing to email...')
             const email = event.target.email.value
             if (email) {
               // Pass in as partial email
@@ -407,15 +430,24 @@ export function RemixLink({ persistenceState }) {
                 })
               })
                 .then(res => res.json())
-                .then(json => console.log(json))
+                .then(json => {
+                  setStatus(`Remixed to ${email}!`)
+                })
                 .catch(err => console.log(err))
             }
           }}>
-          <input placeholder="Remix" name="email" type="text" />
-          <Button variant="ghost" type="submit">
+          <input
+            autoComplete="off"
+            class="bg-transparent px-1"
+            placeholder="Remix"
+            name="email"
+            type="text"
+          />
+          <Button class="!p-1 rounded-md" variant="ghost" type="submit">
             remix
           </Button>
         </form>
+        {status !== '' && <p class="max-w-full">{status}</p>}
       </div>
     </div>
   )
