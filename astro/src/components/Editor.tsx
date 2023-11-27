@@ -16,6 +16,7 @@ import { debounce } from 'throttle-debounce'
 import { backup } from '../lib/events/addLoadBackup'
 import { useSignalEffect } from '@preact/signals'
 import { useOnEditorChange } from '../lib/events'
+import { searchParams } from '../lib/utils/url'
 
 let lastSavePromise = Promise.resolve()
 let saveQueueSize = 0
@@ -123,6 +124,9 @@ export default function Editor({
         window.addEventListener('beforeunload', onBeforeUnload)
         return () => window.removeEventListener('beforeunload', onBeforeUnload)
       }
+    } else {
+      window.addEventListener('beforeunload', onBeforeUnload)
+      return () => window.removeEventListener('beforeunload', onBeforeUnload)
     }
   })
 

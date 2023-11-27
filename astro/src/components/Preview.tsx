@@ -53,7 +53,6 @@ function init() {
     br.height / 2 + (docDimensions.height * panZoomParams.scale) / 2
 
   requestRedraw(canvas)
-  
 
   canvasListener(
     'wheel',

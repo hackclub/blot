@@ -19,10 +19,7 @@ import { generateName } from '../lib/utils/words.ts'
 import styles from './Toolbar.module.css'
 import { createMask } from '../lib/getBitmap.js'
 import js_beautify from 'js-beautify'
-
-export function searchParams(query) {
-  return new URL(window.location.href).searchParams.get(query)
-}
+import { searchParams } from '../lib/utils/url.ts'
 
 export default function Toolbar({ persistenceState }) {
   const { connected, needsSaving, view } = getStore()
