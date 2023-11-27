@@ -38,6 +38,23 @@ function init() {
   const bodyListener = createListener(document.body)
   const canvasListener = createListener(canvas)
 
+  // center view
+  const { docDimensions } = getStore()
+
+  const br = canvas.getBoundingClientRect()
+  panZoomParams.scale = Math.min(
+    (br.width - 20) / docDimensions.width,
+    (br.height - 20) / docDimensions.height
+  )
+
+  panZoomParams.panX =
+    br.width / 2 - (docDimensions.width * panZoomParams.scale) / 2
+  panZoomParams.panY =
+    br.height / 2 + (docDimensions.height * panZoomParams.scale) / 2
+
+  requestRedraw(canvas)
+  
+
   canvasListener(
     'wheel',
     '',

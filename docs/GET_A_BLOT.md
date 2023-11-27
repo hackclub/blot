@@ -61,7 +61,7 @@ Refer to [this example](https://github.com/hackclub/blot/tree/main/art/square-di
 - Open the "art" folder within your fork
 - Click "Add File"
 - Select "Upload Files"
-- Add your direcotry and click "Commit changes"
+- Add your directory and click "Commit changes"
   
 <img width="1273" alt="Screenshot 2023-09-15 at 3 40 12 PM" src="https://github.com/hackclub/blot/assets/27078897/161ca980-c100-41c7-8252-bf3602cff072">
 

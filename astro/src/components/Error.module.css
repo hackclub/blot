@@ -36,11 +36,12 @@
 .snippet {
   font-family: var(--font-mono);
   padding: 0.5rem;
+  padding-top: 2rem;
   border-radius: 0.25rem;
   background-color: white;
   display: flex;
   position: relative;
-  overflow-x: auto;
+  overflow: auto;
 }
 
 body[data-theme='dark'] .snippet {
@@ -83,6 +84,10 @@ body[data-theme='dark'] .snippet > :first-child > :first-child {
 
 body[data-theme='dark'] .context {
   color: rgba(255, 255, 255, 0.7);
+}
+
+.cm {
+  width: min-content;
 }
 
 .cm > div {
