@@ -27,11 +27,7 @@ export default function Toolbar({ persistenceState }) {
   const [hidden, setHidden] = useState(true)
 
   return (
-    <div
-      class={styles.root}
-      onClick={event => {
-        event.stopPropagation()
-      }}>
+    <div class={styles.root}>
       <div class="flex items-center h-full">
         <h1 class={styles.heading}>
           <a href="/">
@@ -190,11 +186,25 @@ export function SaveToEmail() {
   const [status, setStatus] = useState('')
 
   useEffect(() => {
-    if (!hidden) setStatus('')
+    if (hidden) {
+    } else {
+      document.body.addEventListener('click', event => {
+        const modal = document.getElementById('save-to-email')
+        const onModal = event.composedPath().find(item => item == modal)
+        if (!onModal) setHidden(true)
+      })
+      return () => {
+        document.body.removeEventListener('click', event => {
+          const modal = document.getElementById('save-to-email')
+          const onModal = event.composedPath().find(item => item == modal)
+          if (!onModal) setHidden(true)
+        })
+      }
+    }
   }, [hidden])
 
   return (
-    <div>
+    <div id="save-to-email">
       <Button variant="ghost" onClick={() => setHidden(false)}>
         save to email
       </Button>
@@ -237,7 +247,7 @@ export function SaveToEmail() {
           }}>
           <input
             class="bg-transparent px-1"
-            placeholder="Save"
+            placeholder="Email"
             name="email"
             type="text"
           />
@@ -260,16 +270,29 @@ export function ShareLink({ persistenceState, clicked }) {
   const [snapshotId, setSnapshotId] = useState('')
 
   useEffect(() => {
-    if (hidden) setSnapshotId('')
+    if (!hidden) {
+      document.body.addEventListener('click', event => {
+        const modal = document.getElementById('share-link')
+        const onModal = event.composedPath().find(item => item == modal)
+        if (!onModal) setHidden(true)
+      })
+      return () => {
+        document.body.removeEventListener('click', event => {
+          const modal = document.getElementById('share-link')
+          const onModal = event.composedPath().find(item => item == modal)
+          if (!onModal) setHidden(true)
+        })
+      }
+    }
   }, [hidden])
 
   return (
     <div
+      id="share-link"
       style={{ position: 'relative', cursor: 'default', width: 'min-width' }}>
       <Button
         variant="ghost"
         onClick={() => {
-          setHidden(false)
           fetch('/api/art/snapshot', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -283,6 +306,7 @@ export function ShareLink({ persistenceState, clicked }) {
               navigator.clipboard.writeText(
                 `https://blot.hackclub.com/editor/snapshot/${json.snapshotId}`
               )
+              setHidden(false)
             })
             .catch(err => console.log(err))
         }}>
@@ -290,7 +314,7 @@ export function ShareLink({ persistenceState, clicked }) {
       </Button>
       <div
         style={{
-          display: hidden || snapshotId === '' ? 'none' : '',
+          display: hidden ? 'none' : '',
           position: 'absolute',
           background: 'var(--primary)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
