@@ -27,7 +27,11 @@ export default function Toolbar({ persistenceState }) {
   const [hidden, setHidden] = useState(true)
 
   return (
-    <div class={styles.root}>
+    <div
+      class={styles.root}
+      onClick={event => {
+        event.stopPropagation()
+      }}>
       <div class="flex items-center h-full">
         <h1 class={styles.heading}>
           <a href="/">
@@ -183,6 +187,11 @@ export default function Toolbar({ persistenceState }) {
 
 export function SaveToEmail() {
   const [hidden, setHidden] = useState(true)
+  const [status, setStatus] = useState('')
+
+  useEffect(() => {
+    if (!hidden) setStatus('')
+  }, [hidden])
 
   return (
     <div>
@@ -201,11 +210,13 @@ export function SaveToEmail() {
           borderRadius: '5px'
         }}>
         <form
+          class="flex gap-2"
           onSubmit={event => {
             event.preventDefault()
             const email = event.target.email.value
             if (email) {
               // Pass in as partial email
+              setStatus('Sending...')
               const { view } = getStore()
               const code = view.state.doc.toString()
               fetch('/api/art/new', {
@@ -219,16 +230,22 @@ export function SaveToEmail() {
               })
                 .then(res => res.json())
                 .then(json => {
-                  console.log(json)
+                  setStatus(`Sent email to ${email}!`)
                 })
                 .catch(err => console.log(err))
             }
           }}>
-          <input placeholder="Save" name="email" type="text" />
-          <Button variant="ghost" type="submit">
+          <input
+            class="bg-transparent px-1"
+            placeholder="Save"
+            name="email"
+            type="text"
+          />
+          <Button class="!p-1 rounded-md" variant="ghost" type="submit">
             save
           </Button>
         </form>
+        {status !== '' && <p class="max-w-full">{status}</p>}
       </div>
     </div>
   )
@@ -238,9 +255,13 @@ export function SaveStatus({ persistenceState }) {
   return <Button variant="ghost">save</Button>
 }
 
-export function ShareLink({ persistenceState }) {
+export function ShareLink({ persistenceState, clicked }) {
   const [hidden, setHidden] = useState(true)
   const [snapshotId, setSnapshotId] = useState('')
+
+  useEffect(() => {
+    if (hidden) setSnapshotId('')
+  }, [hidden])
 
   return (
     <div
@@ -248,6 +269,7 @@ export function ShareLink({ persistenceState }) {
       <Button
         variant="ghost"
         onClick={() => {
+          setHidden(false)
           fetch('/api/art/snapshot', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -261,7 +283,6 @@ export function ShareLink({ persistenceState }) {
               navigator.clipboard.writeText(
                 `https://blot.hackclub.com/editor/snapshot/${json.snapshotId}`
               )
-              setHidden(false)
             })
             .catch(err => console.log(err))
         }}>
@@ -269,7 +290,7 @@ export function ShareLink({ persistenceState }) {
       </Button>
       <div
         style={{
-          display: hidden ? 'none' : '',
+          display: hidden || snapshotId === '' ? 'none' : '',
           position: 'absolute',
           background: 'var(--primary)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -277,11 +298,16 @@ export function ShareLink({ persistenceState }) {
           width: '100%',
           top: '100%',
           padding: '5px',
-          left: 0,
-          right: '100vw',
+          right: 0,
           minWidth: '200px'
         }}>
-        https://blot.hackclub.com/editor/snapshot/{snapshotId}
+        <p>
+          Copied to clipboard:{' '}
+          <a href={`https://blot.hackclub.com/editor/snapshot/${snapshotId}`}>
+            https://blot.hackclub.com/editor/snapshot/
+            {snapshotId}
+          </a>
+        </p>
       </div>
     </div>
   )
