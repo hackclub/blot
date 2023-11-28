@@ -20,7 +20,7 @@ export default function Preview(props: { className?: string }) {
 
   return (
     <div class={styles.root}>
-      <canvas class={`${styles.canvas} ${props.className} main-canvas`} />
+      <canvas class={`${styles.canvas} main-canvas`} />
       <div class={`${styles.mousePosition} mouse-position`} />
       <Button
         class={`${styles.centerButton} center-view-trigger`}
