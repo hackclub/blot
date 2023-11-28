@@ -5,7 +5,7 @@
 Create programmatic art in our web-based editor and submit it to the gallery and we'll send you a CNC machine which can make that art.
 Blot is a **"You Ship, We Ship"** project from [Hack Club](https://hackclub.com) (like [Sprig](https://github.com/hackclub/sprig)). 
 
-<img width="500" src="https://github.com/hackclub/blot/assets/27078897/2a3d89c5-79b0-4d1d-98b7-a2c4b285fde5"/>
+![blot-clear-bg](https://github.com/hackclub/blot/assets/27078897/38f394aa-643b-4eb0-926f-06c798f500e0)
 
 A piece of art made for Blot can be the first program you ever write, but it can also be a challenge for a master programmer. Check out some of the art made already in our [gallery](https://blot.hackclub.dev/gallery). Every piece of are you see is actually a program. Many of them create unique pieces everytime the art is run. So you may be looking at an artwork which has never been seen before, even by the creator.
 
