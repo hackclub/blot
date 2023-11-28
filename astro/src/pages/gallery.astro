@@ -2,37 +2,43 @@
 import Layout from '../layouts/Layout.astro'
 import { slug } from '../lib/guide.ts'
 
-
-let images = [];
+let images = []
 try {
   const list = (await Astro.glob('/../art/!metadata.json'))[0].default
   list.forEach(folder => {
-    const snapshot = folder.snapshots[0];
-    
+    const snapshot = folder.snapshots[0]
+
     images.push({
       dir: folder.directory,
-      img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/snapshots/${snapshot}`, 
+      img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/snapshots/${snapshot}`,
       href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/${folder.source}`,
       alt: folder.directory
     })
   })
-
 } catch (error) {
   console.log(error)
 }
-
 ---
 
 <style is:global>
-  body, html {
+  body,
+  html {
     background-size: 40px 40px;
-    background-image: linear-gradient(to right, #ddd 1px, transparent 1px), linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
     min-height: 100vh;
-    font-family: "Phantom Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family:
+      'Phantom Sans',
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      sans-serif;
   }
 
   .description {
-    padding: .3rem;
+    padding: 0.3rem;
     margin-left: 40px;
     width: 60%;
     margin: auto;
@@ -121,7 +127,6 @@ try {
   a:hover {
     text-decoration-style: wavy;
   }
-
 </style>
 
 <Layout
@@ -131,10 +136,15 @@ try {
     <div class="description">
       <div class="guides-title">Gallery</div>
       <div class="guides-sub-title">
-        A gallery of various art pieces created by Hack Clubbers, with an interactive 3D gallery mode!
+        A gallery of various art pieces created by Hack Clubbers, with an
+        interactive 3D gallery mode!
       </div>
       <div class="guides-sub-title">
-        Teenagers can submit art to the gallery to get their own Blot. Guide to submission is <a href="https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md">here</a>.
+        Teenagers can submit art to the gallery to get their own Blot. Guide to
+        submission is <a
+          href="https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md"
+          >here</a
+        >.
       </div>
     </div>
     <div id="gallery">
@@ -142,9 +152,7 @@ try {
         images.map(img => {
           return (
             <div class="frame">
-              <a
-                class="border"
-                href={img.href}>
+              <a class="border" href={img.href}>
                 <img class="thumbnail" alt={img.alt} src={img.img} />
               </a>
             </div>

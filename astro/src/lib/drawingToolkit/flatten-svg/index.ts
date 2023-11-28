@@ -239,8 +239,8 @@ export function flattenSVG(
           fS === 0 && dt_ > 0
             ? dt_ - Math.PI * 2
             : fS === 1 && dt_ < 0
-            ? dt_ + Math.PI * 2
-            : dt_
+              ? dt_ + Math.PI * 2
+              : dt_
 
         // now:
         // - (cx, cy) is the center of the ellipse

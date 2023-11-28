@@ -1,7 +1,7 @@
 import { Turtle, Point } from './drawingToolkit/index.js'
 import * as drawingUtils from './drawingToolkit/utils.js'
 import { CodePosition, ErrorState, getStore, patchStore } from './state.ts'
-import { parse } from "acorn";
+import { parse } from 'acorn'
 
 function getCode() {
   const { view } = getStore()
@@ -14,7 +14,7 @@ const baseLogger = (type: 'log' | 'error' | 'warn', ...args: [any, ...any]) => {
   console[type](...args)
 
   // get code location
-  const pos = getPosFromErr(new Error());
+  const pos = getPosFromErr(new Error())
 
   patchStore(
     {
@@ -38,8 +38,8 @@ const hConsole = {
   warn: (...args: [any, ...any[]]) => baseLogger('warn', ...args)
 }
 
-let intervals: number[] = [];
-let timeouts: number[] = []; 
+let intervals: number[] = []
+let timeouts: number[] = []
 const patchedInterval = (
   callback: (...args: any[]) => void,
   time: number,
@@ -61,7 +61,7 @@ const patchedTimeout = (
 }
 
 // inject items into global scope, or replace existing properties with our own
-let turtles = [];
+let turtles = []
 const customGlobal = {
   setTimeout: patchedTimeout,
   setInterval: patchedInterval,
@@ -109,15 +109,15 @@ const args = {
 }
 
 export default async function runCode() {
-  const code = getCode();
+  const code = getCode()
 
   try {
-    const ast = parse(code, { sourceType: "module" });
+    const ast = parse(code, { sourceType: 'module' })
   } catch (err) {
-    console.log(err);
+    console.log(err)
 
-    const sliceAt = err.message.indexOf("(") - 1;
-    err.message    
+    const sliceAt = err.message.indexOf('(') - 1
+    err.message
     const error = {
       pos: err.loc,
       code: getCode(),
@@ -125,15 +125,15 @@ export default async function runCode() {
       message: err.message.slice(0, sliceAt)
     }
 
-    patchStore({ error });
+    patchStore({ error })
 
-    return;
+    return
   }
 
   try {
-    await runCodeInner(code, args);
+    await runCodeInner(code, args)
   } catch (err) {
-    console.log(err);
+    console.log(err)
     const error = {
       pos: getPosFromErr(err),
       code: getCode(),
@@ -141,23 +141,21 @@ export default async function runCode() {
       message: err.message
     }
 
-    patchStore({ error });
+    patchStore({ error })
   }
-  
-} 
-
+}
 
 async function runCodeInner(str, globalScope) {
   intervals.forEach(clearInterval)
   timeouts.forEach(clearTimeout)
-  intervals = [];
-  timeouts = [];
-  turtles = [];
+  intervals = []
+  timeouts = []
+  turtles = []
 
   patchStore(
     {
       console: [],
-      error: null,
+      error: null
     },
     false
   )
@@ -176,34 +174,29 @@ async function runCodeInner(str, globalScope) {
 
   const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor
 
-  str = `"use strict"\n${str}`;
+  str = `"use strict"\n${str}`
 
   const fn = new AsyncFunction(...Object.keys(globalScope), str)
 
   await fn(...Object.values(globalScope)).catch(err => {
-    console.log("about to throw error")
-    throw err;
+    console.log('about to throw error')
+    throw err
   })
 
   patchStore({
     turtles,
-    turtlePos: turtles.at(-1)?.position ?? [0, 0],
+    turtlePos: turtles.at(-1)?.position ?? [0, 0]
   })
 }
 
 function getPosFromErr(err) {
-  const match = err
-    .stack
-    .match(/<anonymous>:(\d+):(\d+)/);
+  const match = err.stack.match(/<anonymous>:(\d+):(\d+)/)
 
-  const pos = { line: Number(match[1]) - 2, column: Number(match[2]) };
-  
+  const pos = { line: Number(match[1]) - 2, column: Number(match[2]) }
+
   // to account for "use strict\n"
-  pos.line -= 1;
-  pos.column -= 1;
- 
-  return pos;
+  pos.line -= 1
+  pos.column -= 1
+
+  return pos
 }
-
-
-

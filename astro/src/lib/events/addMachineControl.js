@@ -3,7 +3,7 @@ import { createListener } from '../createListener.js'
 import runCode from '../run.ts'
 import { getStore, patchStore } from '../state.ts'
 
-let cancelled = false;
+let cancelled = false
 
 export function addMachineControl() {
   let haxidraw
@@ -39,7 +39,7 @@ export function addMachineControl() {
     }
   })
 
-  listener('click', '[data-evt-machineTrigger]', (e) => {
+  listener('click', '[data-evt-machineTrigger]', e => {
     const { turtles } = getStore()
     const runMachine = () => runMachineHelper(haxidraw, turtles)
 
@@ -48,20 +48,19 @@ export function addMachineControl() {
       return
     }
 
-    if (e.target.innerText.toLowerCase().includes("stop")) {
-      cancelled = true;
-      patchStore({ machineRunning: false });
-      console.log("cancelled");
-      return;
+    if (e.target.innerText.toLowerCase().includes('stop')) {
+      cancelled = true
+      patchStore({ machineRunning: false })
+      console.log('cancelled')
+      return
     }
 
     runMachine().then(() => {
-      patchStore({ machineRunning: false });
-      cancelled = false;
+      patchStore({ machineRunning: false })
+      cancelled = false
     })
-  
-    patchStore({ machineRunning: true });
-    
+
+    patchStore({ machineRunning: true })
   })
 
   listener('click', '[data-evt-penUp]', () => {
@@ -70,7 +69,7 @@ export function addMachineControl() {
       return
     }
 
-    haxidraw.servo(1000);
+    haxidraw.servo(1000)
   })
 
   listener('click', '[data-evt-penDown]', () => {
@@ -79,7 +78,7 @@ export function addMachineControl() {
       return
     }
 
-    haxidraw.servo(1700);
+    haxidraw.servo(1700)
   })
 
   listener('click', '[data-evt-motorsOn]', () => {
@@ -88,7 +87,7 @@ export function addMachineControl() {
       return
     }
 
-    haxidraw.port.send("motorsOn");
+    haxidraw.port.send('motorsOn')
   })
 
   listener('click', '[data-evt-motorsOff]', () => {
@@ -97,8 +96,8 @@ export function addMachineControl() {
       return
     }
 
-    haxidraw.port.send("motorsOff");
-  });
+    haxidraw.port.send('motorsOff')
+  })
 
   listener('click', '[data-evt-setOrigin]', () => {
     if (!haxidraw) {
@@ -106,8 +105,8 @@ export function addMachineControl() {
       return
     }
 
-    haxidraw.port.send("setOrigin");
-  });
+    haxidraw.port.send('setOrigin')
+  })
 
   listener('click', '[data-evt-moveTowardsOrigin]', () => {
     if (!haxidraw) {
@@ -115,7 +114,7 @@ export function addMachineControl() {
       return
     }
 
-    haxidraw.port.send("moveTowardsOrigin");
+    haxidraw.port.send('moveTowardsOrigin')
   })
 
   async function automaticallyConnect() {
@@ -138,19 +137,17 @@ export function addMachineControl() {
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export async function runMachineHelper(haxidraw, turtles) {
-
   await haxidraw.servo(1000)
   await delay(200)
   const polylines = turtles.map(x => x.path).flat()
   for (const polyline of polylines) {
     for (let i = 0; i < polyline.length; i++) {
-
       if (cancelled) {
         await haxidraw.servo(1000)
         await delay(200)
         await haxidraw.goTo(0, 0)
-        return;
-      };
+        return
+      }
 
       const [x, y] = polyline[i]
       if (i === 0) {

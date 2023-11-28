@@ -30,10 +30,10 @@ export default function Button(props: ButtonProps) {
         props.variant === 'secondary'
           ? styles.secondary
           : props.variant === 'accent'
-          ? styles.accent
-          : props.variant === 'ghost'
-          ? styles.ghost
-          : '',
+            ? styles.accent
+            : props.variant === 'ghost'
+              ? styles.ghost
+              : '',
         props.loading ? styles.loading : '',
         props.icon && styles.icon,
         props.class ?? ''

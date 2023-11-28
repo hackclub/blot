@@ -9,7 +9,8 @@ export default function DropBox() {
   }, []) // Empty dependency array means this effect runs once after initial render
 
   return (
-    <div class="
+    <div
+      class="
       drop 
       droparea 
       
@@ -79,9 +80,8 @@ function addDragDrop() {
   window.addEventListener('dragover', function (evt) {
     droparea.classList.remove('hidden')
     pauseEvent(evt)
-  });
-
-  ['mouseout'].forEach(trigger =>
+  })
+  ;['mouseout'].forEach(trigger =>
     window.addEventListener(trigger, function (evt) {
       droparea.classList.add('hidden')
     })
