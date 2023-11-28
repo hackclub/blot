@@ -1,0 +1,40 @@
+---
+import { firestore, getSession } from '../../db/account'
+import ms from 'ms'
+import { isRandomName } from '../../lib/utils/words'
+import type { Art } from '../../db/account'
+import Layout from '../../../../src/layouts/Layout.astro'
+import TrashCanIcon from '../../ui/TrashCanIcon'
+
+let loggedIn = true
+let art, allArt, unnamedArt
+
+const order = art =>
+  art.sort((a, b) => {
+    if (a.modifiedAt < b.modifiedAt) return 1
+    return -1
+  })
+
+const session = await getSession(Astro.cookies)
+if (!session || !session.session.full) return Astro.redirect('/login', 302)
+else {
+  const _art = await firestore
+    .collection('art')
+    .where('ownerId', '==', session.user.id)
+    .get()
+  allArt = _art.docs.map(doc => ({ id: doc.id, ...doc.data() }) as Art)
+
+  art = order(allArt.filter(art => !isRandomName(art.name)))
+  unnamedArt = order(allArt.filter(art => isRandomName(art.name)))
+
+  if (art.length === 0 && unnamedArt.length > 0) {
+    art = unnamedArt
+    unnamedArt = []
+  }
+}
+
+export const prerender = false
+---
+
+logged in
+<h2><a href="/logout">logout</a></h2>
