@@ -9,7 +9,7 @@ Blot is a **"You Ship, We Ship"** project from [Hack Club](https://hackclub.com)
 
 A piece of art made for Blot can be the first program you ever write, but it can also be a challenge for a master programmer. Check out some of the art made already in our [gallery](https://blot.hackclub.dev/gallery). Every piece of are you see is actually a program. Many of them create unique pieces everytime the art is run. So you may be looking at an artwork which has never been seen before, even by the creator.
 
-[<img width="500" src="https://github.com/hackclub/blot/assets/27078897/5666011a-089e-44d9-8956-5c283f00ff14"/>](https://blot.hackclub.dev/gallery)
+![blot-clear-bg](https://github.com/hackclub/blot/assets/27078897/38f394aa-643b-4eb0-926f-06c798f500e0)
 
 # Blot is...
 
