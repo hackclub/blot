@@ -61,7 +61,7 @@
         controls = undefined
       }
     })
-    
+
     const threeContainer = document.querySelector('.three-js-container')
     threeContainer.appendChild(renderer.domElement)
     renderer.setSize(window.innerWidth, threeContainer.offsetHeight)
@@ -83,15 +83,23 @@
     // camera.rotation.z = Math.PI
     // camera.position.y = -0.055
 
-    const initCamPos = {x: -0.012060728422271984, y: -0.30995465588219245, z: 0.22370699843435427};
-    const initCamAngle = {x: 1.0095700038735655, y: 0.0025350872263442863, z: -0.004032504057447568 };
+    const initCamPos = {
+      x: -0.012060728422271984,
+      y: -0.30995465588219245,
+      z: 0.22370699843435427
+    }
+    const initCamAngle = {
+      x: 1.0095700038735655,
+      y: 0.0025350872263442863,
+      z: -0.004032504057447568
+    }
 
     for (const k in initCamPos) {
-      camera.position[k] = initCamPos[k];
+      camera.position[k] = initCamPos[k]
     }
 
     for (const k in initCamAngle) {
-      camera.rotation[k] = initCamAngle[k];
+      camera.rotation[k] = initCamAngle[k]
     }
 
     /*
@@ -536,11 +544,9 @@ drawTurtles([t])`)
         stroke-linecap="round"
         stroke-linejoin="round"
         class="lucide lucide-rotate-ccw"
-        ><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path
-          d="M3 3v5h5"></path></svg
+        ><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+        ></path><path d="M3 3v5h5"></path></svg
       >
     </button>
   </div>
-
 </div>
-

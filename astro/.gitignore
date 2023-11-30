@@ -2,3 +2,4 @@ node_modules
 .vercel
 .astro
 dist
+yarn-error.log
