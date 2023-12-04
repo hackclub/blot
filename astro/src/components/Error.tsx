@@ -84,8 +84,8 @@ const Snippet = ({
       <div>
         <div>{pos.line}</div>
       </div>
-      <code style={ {width: "100%", overflow: "auto" } }>
-        <div ref={cmRef} class={styles.cm}/>
+      <code style={{ width: '100%', overflow: 'auto' }}>
+        <div ref={cmRef} class={styles.cm} />
         {' '.repeat(pos.column)}
         <span class={styles.arrow}>↑</span>
         {message && <span class={styles.message}>{message}</span>}
@@ -106,15 +106,11 @@ export default function Error() {
   const { error } = getStore()
 
   if (!error) return null
-    
+
   return (
     <div class={styles.root}>
       <span class={styles.name}>{error.name}</span>
-      <Snippet
-          pos={error.pos}
-          code={error.code}
-          message={error.message}
-        />
+      <Snippet pos={error.pos} code={error.code} message={error.message} />
     </div>
   )
 }

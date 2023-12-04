@@ -1,4 +1,4 @@
-@import url("./reset.css");
+@import url('./reset.css');
 
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Bellefair&family=JetBrains+Mono&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
@@ -131,7 +131,7 @@ code {
 }
 
 .background {
-  position: absolute; 
+  position: absolute;
   left: 0;
   top: 0;
   width: 100%;

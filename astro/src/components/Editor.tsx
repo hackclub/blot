@@ -1,16 +1,16 @@
 import { getStore } from '../lib/state.js'
 import { createListener } from '../lib/createListener.js'
 import styles from './Editor.module.css'
-import CompatWarning from './CompatWarning.jsx'
-import Preview from './Preview.jsx'
-import Toolbar from './Toolbar.jsx'
-import Error from './Error.jsx'
-import Console from './Console.jsx'
-import GlobalStateDebugger from './GlobalStateDebugger.jsx'
-import DropBox from './DropBox.jsx'
-import CodeMirror from './CodeMirror.jsx'
+import CompatWarning from './CompatWarning.js'
+import Preview from './Preview.js'
+import Toolbar from './Toolbar.js'
+import Error from './Error.js'
+import Console from './Console.js'
+import GlobalStateDebugger from './GlobalStateDebugger.js'
+import DropBox from './DropBox.js'
+import CodeMirror from './CodeMirror.js'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import Help from './Help.jsx'
+import Help from './Help.js'
 import preview from '@astrojs/node/preview.js'
 
 export default function Editor() {
@@ -63,7 +63,7 @@ export default function Editor() {
               'flex-direction': 'column',
               'overflow': 'none'
             }}>
-            <div style={{ flex: 1, overflow: "auto" }}>
+            <div style={{ flex: 1, overflow: 'auto' }}>
               <CodeMirror />
             </div>
             <div>
