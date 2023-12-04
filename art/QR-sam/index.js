@@ -11,8 +11,8 @@ I tried my best to not look at existing code, so this will be messy!
 
 const message = "👋🏼 Hello from Sam's Blot QR Code generator! I ❤️ blot + hack club!"
 const errorCorrection = "H" // L/M/Q/H
-const penWidth = 0.5;
-const drawingSize = 200;
+const penWidth = 0.4;
+const drawingSize = 100;
 
 function qrCode(text, ecc = "M") {
   let encoding = encodingMode(text);
@@ -970,7 +970,7 @@ function draw(code, lineWidth, drawingSize) {
       if (pxSize - heightDrawn > 0) {
         t.forward(pxSize - lineWidth * 3)
         t.right(90)
-        t.forward(lineWidth);
+        t.forward(spacing);
         t.right(90);
         t.forward(pxSize - lineWidth * 3)
         t.right(180)
