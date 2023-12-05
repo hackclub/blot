@@ -43,5 +43,15 @@
     "directory": "blotfont-geschmit",
     "snapshots": ["blotfont_logo.png"],
     "source": "index.js"
+  },
+  {
+    "directory": "french-fries-eric",
+    "snapshots": ["0.png"],
+    "source": "index.js"
+  },
+  {
+    "directory": "QR-sam",
+    "snapshots": ["0.png"],
+    "source": "index.js"
   }
 ]
