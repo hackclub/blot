@@ -1,50 +1,45 @@
 import { createListener } from '../createListener.js'
-import { BezierEditor } from "../../components/BezierEditor.tsx";
-import { getStore } from "../state.ts";
-import runCode from "../run.ts";
-import { render } from "preact";
+import { BezierEditor } from '../../components/BezierEditor.tsx'
+import { getStore } from '../state.ts'
+import runCode from '../run.ts'
+import { render } from 'preact'
 
 export function addBezierControl() {
   const listen = createListener(document.body)
 
-  const { view } = getStore();
+  const { view } = getStore()
 
-  let realEl = null;
+  let realEl = null
 
-  listen("mousedown", "", e => {
-    if (realEl === null) return;
-    if (e.target.closest("[data-bezier-editor]")) return;
+  listen('mousedown', '', e => {
+    if (realEl === null) return
+    if (e.target.closest('[data-bezier-editor]')) return
 
-    realEl.remove();
-    realEl = null;
+    realEl.remove()
+    realEl = null
   })
 
-  listen("mousedown", "[data-beziereasing]", e => {
-    if (realEl !== null) realEl.remove();
+  listen('mousedown', '[data-beziereasing]', e => {
+    if (realEl !== null) realEl.remove()
 
-    const { startIndex, endIndex, argsString, argsStart, argsEnd } = e.target.dataset;
+    const { startIndex, endIndex, argsString, argsStart, argsEnd } =
+      e.target.dataset
 
-    
-    let parsedJSON;
+    let parsedJSON
     try {
       const parseAttempt = argsString
-        .replaceAll(/[\[\]\s]/g, "")
-        .split(",")
-        .map(Number);
+        .replaceAll(/[\[\]\s]/g, '')
+        .split(',')
+        .map(Number)
 
-      if (parseAttempt.some(x => isNaN(x))) throw new Error();
+      if (parseAttempt.some(x => isNaN(x))) throw new Error()
 
-      const [ yStart, p0x, p0y, p1x, p1y, yEnd ] = parseAttempt;
+      const [yStart, p0x, p0y, p1x, p1y, yEnd] = parseAttempt
 
-      parsedJSON = [
-        yStart,
-        [p0x, p0y],
-        [p1x, p1y],
-        yEnd
-      ]
+      parsedJSON = [yStart, [p0x, p0y], [p1x, p1y], yEnd]
     } catch (err) {
-      console.log(err);
-      parsedJSON = [0, [.5, .5], [.5, .5], 0];
+      console.log(err)
+      parsedJSON = [0, [0.5, 0.5], [0.5, 0.5], 0]
     }
 
     const bezierInitialValue = {
@@ -54,33 +49,35 @@ export function addBezierControl() {
       yEnd: parsedJSON[3]
     }
 
-    let end = Number(argsEnd);
-    const bezierOnChange = (value) => {
-      const str = `${value.yStart.toFixed(3)}, [${value.p0.map(x => x.toFixed(3)).join(",")}], [${value.p1.map(x => x.toFixed(3)).join(",")}], ${value.yEnd.toFixed(3)}`
+    let end = Number(argsEnd)
+    const bezierOnChange = value => {
+      const str = `${value.yStart.toFixed(3)}, [${value.p0
+        .map(x => x.toFixed(3))
+        .join(',')}], [${value.p1
+        .map(x => x.toFixed(3))
+        .join(',')}], ${value.yEnd.toFixed(3)}`
       view.dispatch({
         changes: {
           from: argsStart,
           to: end,
-          insert: str,
+          insert: str
         }
-      });
+      })
 
       // run code
-      runCode();
+      runCode()
 
-      end = Number(argsStart) + str.length;
+      end = Number(argsStart) + str.length
     }
 
     realEl = jsxToDOM(
       <BezierEditor
-        initialValue={bezierInitialValue} 
-        onChange={bezierOnChange}>
-        </BezierEditor>
+        initialValue={bezierInitialValue}
+        onChange={bezierOnChange}></BezierEditor>
     )
 
-    positionElementUnderneath(realEl, e.target);
+    positionElementUnderneath(realEl, e.target)
   })
-
 
   let draggedElement = null
   let svg = null
@@ -132,8 +129,8 @@ export function addBezierControl() {
       container.change()
     }
 
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
   })
 
   listen('mouseup', '', () => {
@@ -144,38 +141,38 @@ export function addBezierControl() {
 }
 
 function positionElementUnderneath(el1, el2) {
-    if (!el1 || !el2) return;
+  if (!el1 || !el2) return
 
-    document.body.appendChild(el1);
+  document.body.appendChild(el1)
 
-    const positionElement = () => {
-        const rect = el2.getBoundingClientRect();
+  const positionElement = () => {
+    const rect = el2.getBoundingClientRect()
 
-        el1.style.position = 'absolute';
-        el1.style.top = `${rect.bottom + window.scrollY}px`;
-        el1.style.left = `${rect.left + window.scrollX}px`;
-    };
+    el1.style.position = 'absolute'
+    el1.style.top = `${rect.bottom + window.scrollY}px`
+    el1.style.left = `${rect.left + window.scrollX}px`
+  }
 
-    positionElement(); // Initial position
+  positionElement() // Initial position
 
-    document.addEventListener('scroll', positionElement, true);
-    window.addEventListener('resize', positionElement);
+  document.addEventListener('scroll', positionElement, true)
+  window.addEventListener('resize', positionElement)
 
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (!document.contains(el1) || !document.contains(el2)) {
-                document.removeEventListener('scroll', positionElement, true);
-                window.removeEventListener('resize', positionElement);
-                observer.disconnect();
-            }
-        });
-    });
-    
-    observer.observe(document.body, { childList: true, subtree: true });
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      if (!document.contains(el1) || !document.contains(el2)) {
+        document.removeEventListener('scroll', positionElement, true)
+        window.removeEventListener('resize', positionElement)
+        observer.disconnect()
+      }
+    })
+  })
+
+  observer.observe(document.body, { childList: true, subtree: true })
 }
 
 function jsxToDOM(jsx) {
-  const container = document.createElement('div');
-  render(jsx, container);
-  return container.firstChild;
+  const container = document.createElement('div')
+  render(jsx, container)
+  return container.firstChild
 }

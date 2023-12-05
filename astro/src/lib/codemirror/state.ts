@@ -11,7 +11,7 @@ import { themeExtension } from './cmTheme.js'
 import { vimModeExtension } from './cmVimMode.js'
 import { errorIndicatorPlugin } from './errorIndicator.js'
 import { createEvent } from '../events.ts'
-import { widgetButtons } from "./widgetButtons.ts";
+import { widgetButtons } from './widgetButtons.ts'
 
 // this is a terrible hack but strange bugs are about this one
 //@ts-expect-error
@@ -21,11 +21,11 @@ const autocompleteRemoved = basicSetup.filter((_, i) => ![11, 12].includes(i))
 const theme = EditorView.theme({
   '.cm-content': {
     fontFamily: 'var(--font-mono)',
-    fontSize: 'var(--font-0)',
+    fontSize: 'var(--font-0)'
   },
   '.cm-gutter': {
     fontFamily: 'var(--font-mono)',
-    fontSize: 'var(--font-0)',
+    fontSize: 'var(--font-0)'
   }
 })
 

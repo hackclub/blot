@@ -38,5 +38,10 @@
     "directory": "landscape-henry",
     "snapshots": ["landscape.png"],
     "source": "index.js"
+  },
+  {
+    "directory": "blotfont-geschmit",
+    "snapshots": ["blotfont_logo.png"],
+    "source": "index.js"
   }
 ]
