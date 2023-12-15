@@ -29,7 +29,6 @@ function sprinkles(topFrosting, topIC, leftIC, rightIC) {
     // avoid frosting range for y-axis
     let y = randInRange(topFrosting, plotShift + radius - sprinkleLength)
     // now limit the location of the x-axis to within the ellipse
-    // syntax?
     let xBoundry = Math.sqrt((radius ** 2 - ((y - plotShift) ** 2))) * 1.6
     let x = randInRange(plotShift - xBoundry + sprinkleLength, plotShift + xBoundry - sprinkleLength)
     sprinkle.translate([x, y])
@@ -45,7 +44,6 @@ function sprinkles(topFrosting, topIC, leftIC, rightIC) {
 function frosting() {
   let allofthem = createTurtle()
   // number of frosting curves
-  // we can put this in the frosting function because it is not used anywhere else
   let waves = randIntInRange(3, 7)
   // odd number of frosting for better looking
   if (waves % 2 == 0) {
@@ -56,15 +54,11 @@ function frosting() {
     let wave = createTurtle()
     wave.arc(180, radius / 4)
     let scale = 1.11 * (5 / waves)
-    //wave.scale([1.5,1])
-    //wave.translate([plotShift,plotShift])
-
     wave.translate([plotShift, plotShift])
     wave.rotate(90, [plotShift, plotShift])
     wave.scale([scale, 1])
     wave.translate([(radius / 4) * scale - (radius / 4), 0])
     wave.translate([(-1.4 * radius), -1 * (radius / 2)])
-
     for (let j = 0; j < i; j++) {
       if (j % 2 == 0) {
         wave.rotate(180, [wave.rb[0], wave.rb[1]])
@@ -81,8 +75,6 @@ function frosting() {
 // donut outer ring
 t.arc(360, radius)
 t.translate([plotShift, plotShift + radius])
-// change circle to ellipse for better look
-// (x/scale)^2+y^2=radius^2 or x^2/scale+y^2=radius^2?
 t.scale([scale, 1])
 // donut inner ring
 let t1 = createTurtle() //bottom arc
