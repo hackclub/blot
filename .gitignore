@@ -1,10 +1,8 @@
+*.env
 .DS_Store
-node_modules/.yarn-integrity
-node_modules
-.next
-astro/.astro/types.d.ts
 .astro
+.next
 .vercel
-*/node_modules
-astro/.env
-.env
+yarn-error.log
+dist
+node_modules
