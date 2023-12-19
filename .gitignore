@@ -1,5 +1,4 @@
 .DS_Store
-yarn.lock
 node_modules/.yarn-integrity
 node_modules
 .next
