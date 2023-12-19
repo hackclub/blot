@@ -38,6 +38,18 @@ const hConsole = {
   warn: (...args: [any, ...any[]]) => baseLogger('warn', ...args)
 }
 
+let DETECTED_RANDOM_USAGE = false
+const patchedRandom = (() => {
+  if (!DETECTED_RANDOM_USAGE) {
+    hConsole.warn(`Math.random() called! This could cause issues if done unintentionally.
+    https://github.com/hackclub/blot/issues/161`)
+    DETECTED_RANDOM_USAGE = true
+  }
+  return Math.__proto__.unpatchedRandom()
+})
+Math.__proto__.unpatchedRandom = Math.random
+Math.random = patchedRandom
+
 let intervals: number[] = []
 let timeouts: number[] = []
 const patchedInterval = (
