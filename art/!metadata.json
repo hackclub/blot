@@ -58,5 +58,5 @@
     "directory": "self_portrait-kieran",
     "snapshots": ["snapshot-1.png"],
     "source": "index.js"
-  },
+  }
 ]
