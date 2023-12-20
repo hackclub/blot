@@ -19,7 +19,7 @@
 }
 
 body[data-theme='dark'] .canvas {
-  background-color: #Eeeeee;
+  background-color: #E6e6e6;
   filter: invert(1);
   
   color: black;
