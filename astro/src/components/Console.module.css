@@ -13,7 +13,7 @@ body:not([data-theme='dark']) .root {
   background-color: white;
 }
 body[data-theme='dark'] .root {
-  background-color: #181717;
+  background-color: #2e3135;
 }
 
 .lines {
