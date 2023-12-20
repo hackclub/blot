@@ -2,7 +2,7 @@ import { Turtle, Point } from './drawingToolkit/index.js'
 import * as drawingUtils from './drawingToolkit/utils.js'
 import { CodePosition, ErrorState, getStore, patchStore } from './state.ts'
 import { parse } from 'acorn'
-
+import { useEffect } from 'preact/hooks'
 function getCode() {
   const { view } = getStore()
   const code = view.state.doc.toString()
@@ -74,6 +74,14 @@ const patchedTimeout = (
 
 // inject items into global scope, or replace existing properties with our own
 let turtles = []
+
+let theme = getStore().theme
+setTimeout(()=>{theme = getStore().theme},100)
+console.log(theme)
+// useEffect(() => {
+ 
+//  theme = getStore().theme
+// })
 const customGlobal = {
   setTimeout: patchedTimeout,
   setInterval: patchedInterval,
@@ -89,7 +97,9 @@ const customGlobal = {
     turtlesToDraw.forEach(t => {
       const temp = t.copy()
       if (style.fill === undefined) style.fill = 'none'
-      if (style.stroke === undefined) style.stroke = 'black'
+      if (style.stroke === undefined && theme === 'light' ) style.stroke = 'black'
+      if (style.stroke === undefined && theme === 'dark' ) style.stroke = 'white'
+   
       temp.style = style
       turtles.push(temp)
     })

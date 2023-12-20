@@ -31,7 +31,7 @@ export default function Console() {
           <TrashCanIcon />
         </Button>
       </div>
-      <div class={styles.lines} ref={lines}>
+      <div class={'dark'} ref={lines}>
         {console.map(({ type, time, values, pos }, index) => (
           <div
             class={cx(

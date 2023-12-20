@@ -3,13 +3,17 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-
+  
   max-height: min(15rem, 40vh);
   padding-bottom: 1rem;
 }
 
 body:not([data-theme='dark']) .root {
-  background-color: rgba(var(--primary-rgb), 0.1);
+  /* background-color: rgba(var(--primary-rgb), 0.1); */
+  background-color: white;
+}
+body[data-theme='dark'] .root {
+  background-color: #181717;
 }
 
 .lines {
@@ -26,6 +30,13 @@ body:not([data-theme='dark']) .root {
   color: var(--text);
   align-items: center;
 }
+body[data-theme='dark'] .header{
+  padding: 1rem;
+  padding-bottom: 0;
+  display: flex;
+  color: white;
+  align-items: center;
+}
 .header span {
   font-weight: bold;
   flex: 1;
@@ -39,6 +50,9 @@ body:not([data-theme='dark']) .root {
   margin: -0.2rem 0.5rem;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
+}
+body[data-theme='dark'] .line {
+  color: #ffffff;
 }
 
 .line:first-child {
@@ -56,6 +70,9 @@ body:not([data-theme='dark']) .root {
   text-decoration: underline;
   color: inherit;
 }
+body[data-theme='dark'] .pos {
+  color: #ffffff;
+}
 
 body:not([data-theme='dark']) .pos {
   color: var(--primary);
@@ -70,6 +87,9 @@ body:not([data-theme='dark']) .pos {
 .time {
   color: rgba(var(--text-rgb), 0.5);
   font-size: 0.8rem;
+}
+body[data-theme='dark'] .time {
+  color: #ffffff;
 }
 
 .clearButton svg {

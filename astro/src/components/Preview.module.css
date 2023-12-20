@@ -7,16 +7,25 @@
 }
 
 .canvas {
+  
+  
   width: 100%;
   height: 100%;
   image-rendering: crisp-edges;
   overflow-x: auto; /* fix resizing the canvas */
+  
 }
 
 body[data-theme='dark'] .canvas {
-  filter: invert(1);
+  background-color: #000000;
+  
+  color: white;
 }
-
+body[data-theme='dark'] .mousePosition {
+  background-color: 'black';
+ 
+  color: black;
+}
 .mousePosition {
   border-top-left-radius: 0.25rem;
   position: absolute;

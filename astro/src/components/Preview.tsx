@@ -10,7 +10,8 @@ import { createListener } from '../lib/createListener.js'
 
 export default function Preview(props: { className?: string }) {
   const { turtles, docDimensions } = getStore()
-
+  const theme = getStore().theme
+  console.log(theme)
   useEffect(init, [])
 
   useEffect(() => {
@@ -19,9 +20,9 @@ export default function Preview(props: { className?: string }) {
   })
 
   return (
-    <div class={styles.root}>
+    <div class={theme}>
       <canvas class={`${styles.canvas} main-canvas`} />
-      <div class={`${styles.mousePosition} mouse-position`} />
+      {/* <div class={`${styles.mousePosition} mouse-position`} /> */}
       <Button
         class={`${styles.centerButton} center-view-trigger`}
         variant="ghost"
@@ -34,6 +35,7 @@ export default function Preview(props: { className?: string }) {
 }
 
 function init() {
+  const theme = getStore().theme
   const canvas = document.querySelector('.main-canvas')
 
   const bodyListener = createListener(document.body)
@@ -218,9 +220,12 @@ const _redraw = (canvas: HTMLCanvasElement) => {
   // ctx.fill();
 
   // draw document
-
-  ctx.strokeStyle = '#3333ee'
-
+  const theme = getStore().theme
+  if(theme=='dark'){
+    ctx.strokeStyle = 'white'
+  }else{
+  ctx.strokeStyle = 'black'
+  }
   ctx.strokeRect(
     dpr * panZoomParams.panX,
     dpr * panZoomParams.panY,
