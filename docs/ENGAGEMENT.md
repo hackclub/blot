@@ -45,7 +45,7 @@ Make several pieces which are thematically connected.
 
 This could be done manually or with a program which parametrically generates art.
 
-Submit this collection to our virtual museum to receive a Haxidraw kit.
+Submit this collection to our virtual museum to receive a Blot kit.
 
 ## Drawing Machine
 
