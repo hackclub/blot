@@ -8,7 +8,7 @@ contributors: henrybass
 
 <img alt="landscape" src="https://cloud-bxuqstv0l-hack-club-bot.vercel.app/00image-2.webp" width="512"/>
 
-This is an explainer on how to create art like the image above in the [Haxidraw editor](https://haxidraw.hackclub.dev/). It assumes some knowledge of programming in JavaScript and how Haxidraw works, but nothing beyond that.
+This is an explainer on how to create art like the image above in the [Blot editor](https://blot.hackclub.dev/). It assumes some knowledge of programming in JavaScript and how Blot works, but nothing beyond that.
 
 #### Steps:
 
@@ -40,7 +40,7 @@ This is much closer, but it's missing an essential aspect: Detail. Hills on a la
 
 That looks a lot closer! As a note, the amount we change the frequency, amplitude, and blur with respect to each octave is arbitrary, and tweaking those functions can lead to interesting variations of our noise. The name of this technique is: _Fractal Noise_.
 
-In fact, the Haxidraw editor actually has a function for fractal noise built in!
+In fact, the Blot editor actually has a function for fractal noise built in!
 
 ```js
 // y and z are optional
@@ -85,7 +85,7 @@ for (let y = 0; y < 15; y += dy) {
 }
 ```
 
-Using the `t.goTo([x, y])` function in Haxidraw, we can create straight lines. If we want to replicate a smooth curve, we have to use many `goTo` commands with very small changes in the x and y.
+Using the `t.goTo([x, y])` function in Blot, we can create straight lines. If we want to replicate a smooth curve, we have to use many `goTo` commands with very small changes in the x and y.
 
 If we just call `t.goTo([x, y])` at every x and y in our loop, we'll get straight lines. Instead, let's add the noise height to this, with `t.goTo([x, y + height])`.
 
