@@ -5,6 +5,13 @@
   overflow: hidden;
 }
 
+
+.light{
+  color-scheme: light;
+}
+body[data-theme='dark'] .light {
+  color-scheme: dark;
+}
 .inner {
   display: flex;
   flex: 1;

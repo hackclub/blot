@@ -10,6 +10,7 @@ function getCode() {
   return code
 }
 
+
 const baseLogger = (type: 'log' | 'error' | 'warn', ...args: [any, ...any]) => {
   console[type](...args)
 
@@ -50,6 +51,19 @@ const patchedRandom = (() => {
 Math.__proto__.unpatchedRandom = Math.random
 Math.random = patchedRandom
 
+let DETECTED_PRINT_USAGE = false
+const PrintWarning = (() => {
+  if (!DETECTED_PRINT_USAGE) {
+    hConsole.error(`print() called! Print activates a print page dialouge! If
+      you wish to log to the console, please use console.log!
+    `)
+    DETECTED_PRINT_USAGE = true
+   
+  }
+  
+})
+print = PrintWarning
+
 let intervals: number[] = []
 let timeouts: number[] = []
 const patchedInterval = (
@@ -75,14 +89,14 @@ const patchedTimeout = (
 // inject items into global scope, or replace existing properties with our own
 let turtles = []
 
-let theme = getStore().theme
-setTimeout(()=>{theme = getStore().theme},100)
-console.log(theme)
+
 // useEffect(() => {
  
 //  theme = getStore().theme
 // })
+
 const customGlobal = {
+  
   setTimeout: patchedTimeout,
   setInterval: patchedInterval,
   // drawing functions
@@ -97,8 +111,8 @@ const customGlobal = {
     turtlesToDraw.forEach(t => {
       const temp = t.copy()
       if (style.fill === undefined) style.fill = 'none'
-      if (style.stroke === undefined && theme === 'light' ) style.stroke = 'black'
-      if (style.stroke === undefined && theme === 'dark' ) style.stroke = 'white'
+      if (style.stroke === undefined ) style.stroke = 'black'
+  
    
       temp.style = style
       turtles.push(temp)

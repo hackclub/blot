@@ -20,7 +20,7 @@ export default function Preview(props: { className?: string }) {
   })
 
   return (
-    <div class={theme}>
+    <div class={styles.root}>
       <canvas class={`${styles.canvas} main-canvas`} />
       {/* <div class={`${styles.mousePosition} mouse-position`} /> */}
       <Button
@@ -220,12 +220,7 @@ const _redraw = (canvas: HTMLCanvasElement) => {
   // ctx.fill();
 
   // draw document
-  const theme = getStore().theme
-  if(theme=='dark'){
-    ctx.strokeStyle = 'white'
-  }else{
-  ctx.strokeStyle = 'black'
-  }
+
   ctx.strokeRect(
     dpr * panZoomParams.panX,
     dpr * panZoomParams.panY,

@@ -19,13 +19,33 @@ export default function Editor() {
 
   const { theme } = getStore()
 
+  let { dark } = getStore().theme
+  setTimeout(()=>{ dark = getStore().theme},100)
+
   const INIT_HELP_HEIGHT = 40
   const [helpHeight, setHelpHeight] = useState(INIT_HELP_HEIGHT)
+  let darkmode = styles.light
+  //console.log(dark)
 
+  useState(()=>{
+      
+    dark  = getStore().theme
+    console.log(dark)
+     if(dark == 'dark'){
+    
+    darkmode = styles.dark
+  }else{
+    darkmode = styles.light
+  }
+  })
   useEffect(() => {
+   
+
+  
     addEditorResizing(setWidth, theme)
     addHelpResizing(setHelpHeight, editorContainer, theme)
-  }, [])
+
+  }, [darkmode,dark,styles.dark, styles.light])
 
   const closeHelpPane = () => {
     const closed = helpHeight <= 0
@@ -52,6 +72,7 @@ export default function Editor() {
   return (
     <>
       <GlobalStateDebugger />
+    
       <div class={styles.root}>
         <Toolbar />
         <div class={styles.inner} ref={editorContainer}>
@@ -63,9 +84,11 @@ export default function Editor() {
               'flex-direction': 'column',
               'overflow': 'none'
             }}>
-            <div style={{ flex: 1, overflow: 'auto' }}>
+             
+            <div class = {darkmode}style={{ flex: 1, overflow: 'auto' }}>
               <CodeMirror />
             </div>
+       
             <div>
               <Console />
               <Error />
@@ -86,6 +109,7 @@ export default function Editor() {
           </div>
         </div>
       </div>
+      
       <CompatWarning />
       <DropBox />
     </>
