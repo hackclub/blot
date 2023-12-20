@@ -72,7 +72,9 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
+body[data-theme='dark'] . helpSectionTab{
+  background-color:1E7898
+}
 body[data-theme='dark'] .helpContent {
   color: white;
 }
