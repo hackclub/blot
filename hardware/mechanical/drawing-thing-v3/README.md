@@ -1,8 +1,8 @@
-# Haxidraw
+# Blot
 
 <img width="500" alt="drawing machine with a turtle illustration" src="https://cloud-g6sk6by5j-hack-club-bot.vercel.app/0screenshot_2023-04-06_at_1.50.17_pm.png" align="right" />
 
-The Haxidraw is a "you ship, we ship" project, similar to [Sprig](https://sprig.hackclub.com). This time if you make some digital art we'll send you the parts to build a robot which can make that art real.
+ Blot is a "you ship, we ship" project, similar to [Sprig](https://sprig.hackclub.com). This time if you make some digital art we'll send you the parts to build a robot which can make that art real.
 
 We're also working with some researchers at MIT to make digital fabrication machines like this much more open and hackable. We're doing this by taking functionality which would ordinarily be inaccessible in the firmware and lifting it up to the user in a programmable browser editor. We call it [Modular Things](https://github.com/modular-things/modular-things).
 

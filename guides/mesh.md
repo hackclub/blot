@@ -39,7 +39,7 @@ for(var y = gap / 2; y <= size; y+= gap) {
     dot = {x: x + (odd ? gap/2 : 0), y: y};
 ```
 
-Then, use the built-in haxidraw noise function to offset the points again, this time randomly. Also, add an offset on the x axis if we're drawing an odd-numbered line.
+Then, use the built-in blot noise function to offset the points again, this time randomly. Also, add an offset on the x axis if we're drawing an odd-numbered line.
 
 ```js
     let n = noise([x * 0.1, y * 0.1])
