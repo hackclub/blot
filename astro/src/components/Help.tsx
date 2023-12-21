@@ -2,6 +2,7 @@ import styles from './Help.module.css'
 import { useState, useEffect } from 'preact/hooks'
 import { marked } from 'marked'
 import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
+import { Prism } from "prism.js";
 
 marked.setOptions({
   highlight: function (code, language) {
