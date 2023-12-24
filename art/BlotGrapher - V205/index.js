@@ -1,6 +1,5 @@
 /*
 Blot Grapher
-V205
 
 Q: What is this? A: This is a WIP graphing tool.
 Q: What can this do? A: This program can currently graph lines.
@@ -8,6 +7,7 @@ Q: What can this do? A: This program can currently graph lines.
 
 V 0.5
 Changelog:
+12/23/23 Added comments V 0.6
 12/23/23 Added maxY and minY V 0.5
 12/22/23 Added maxX and minX V 0.4
 12/21/23 Added resolution V 0.3
@@ -23,7 +23,7 @@ const height = 125;
 
 setDocDimensions(width, height);
 
-const testTurtle = createTurtle();
+
 
 
 
@@ -33,6 +33,7 @@ const testTurtle = createTurtle();
 
 
 function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
+  const graphTurtle = createTurtle();
   // if you are exploring this code, I would advise you to start from here and go down, closing those little arrows for collapsing code as you go.
   // Sorry for the mess.
 
@@ -54,7 +55,7 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
     minX = 0;
   }
   // is resolution a non zero positive number?
-  
+
   if (resolution <= 0 || !resolution) {
     console.log("Please use positive numbers for resolution. Resolution = " + resolution);
     console.log("resolution defaulting to 0.1")
@@ -64,7 +65,7 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
   var x = minX;
   const originalX = x;
 
-  
+
 
 
   while (x <= maxX) {
@@ -80,8 +81,8 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
       // if so, use jump not goto to not make a extra line.
 
 
-      testTurtle.jump([testTurtle.lb[0], testTurtle.lb[1]])
-      testTurtle.jump([originalX, yActual])
+      graphTurtle.jump([graphTurtle.lb[0], graphTurtle.lb[1]])
+      graphTurtle.jump([originalX, yActual])
 
     } else {
       // is yActual not a real number or is out of the bounds(maxY,minY)
@@ -98,11 +99,11 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
         // lots of conditions, probably way too many.
         if (previousY <= maxY && previousY >= minY && yActual <= maxY && yActual >= minY) {
 
-          testTurtle.down()
-          testTurtle.goTo([x, yActual]);
+          graphTurtle.down()
+          graphTurtle.goTo([x, yActual]);
         } else {
 
-          testTurtle.jump([x, yActual]);
+          graphTurtle.jump([x, yActual]);
         }
       }
     }
@@ -110,6 +111,9 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
 
 
   }
+  drawTurtles([
+    graphTurtle
+  ]);
 }
 
 // this is the format to use this program:
@@ -128,37 +132,43 @@ var formulaName = function(n) {
 
 // Draw it!
 
-drawEquation(formulaName )
+drawEquation(formulaName)
 // if you don't see anything, your equation is probably in the negatives or is very large
 
 // these names should explain them self.
 drawEquation(formula,resolution,maxX,minX,maxY,minY)
 */
 
+// draws a simple linear line.
+// y = mx+b
+// y = 2n + 2
 var linearLine = function(n) {
   return (2 * n + 2) //Math.sin(n) +
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 drawEquation(linearLine);
 
-
+//draws a sine wave
+// y = a * sin(n+ b) or something like that, I can't remeber
+// y = sin(n) + 9
 var sineWave = function(n) {
   return (Math.sin(n) + 9) //Math.sin(n) +
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 drawEquation(sineWave);
 
 // another sine wave, but modified slightly.
-
-var sineWave2 = function(n){
+// y = sin(n) + 21
+var sineWave2 = function(n) {
   // similar to sineWave1, but adds 12.
   // it looks very different because of the additional parameters called(see below).
   return sineWave(n) + 12; // lazy way :) 
-  
+
 }
 // here is a test of the maxX, minX, maxY, and minY parameters.
 // the left, right, top and bottom are cut off.
 drawEquation(sineWave2, 0.1, 39, 20, 21, 20.4)
 
-
+// a quadratic equation
+// y = ax^2 + bx + c
 var quadratic = function(n) {
   return (1 / 4 * n * n - 2 * n - 2)
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
@@ -174,7 +184,4 @@ drawEquation(quadratic, 0.1, 100, 0, 18, 0)
 
 
 
-
-drawTurtles([
-  testTurtle
-]);
+// well, need to use a turtle.
