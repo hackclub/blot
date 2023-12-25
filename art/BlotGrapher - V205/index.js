@@ -1,6 +1,7 @@
 /*
 Blot Grapher
-
+Credit
+V205 and Bright Li
 Q: What is this? A: This is a WIP graphing tool.
 Q: What can this do? A: This program can currently graph lines.
 
