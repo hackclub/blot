@@ -119,7 +119,7 @@ class MazeDrawer {
             currentRowY += columSegmentLength
         }
 
-        //Some how borken, WIP
+        //Colums
         let currentColumX = X
         directionToggle = false
         for (let colum = 0; colum < maze.walls.colums[0].length; colum++) {
