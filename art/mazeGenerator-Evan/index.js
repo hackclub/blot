@@ -75,7 +75,7 @@ var MazeDrawer = /** @class */ (function () {
             }
             currentRowY += columSegmentLength;
         }
-        //Some how borken, WIP
+        //Colums
         var currentColumX = X;
         directionToggle = false;
         for (var colum = 0; colum < maze.walls.colums[0].length; colum++) {
@@ -128,7 +128,7 @@ var MazeImplementation = /** @class */ (function () {
         this.grid.grid[row][colum].generated = true;
         while (((_b = (_a = this.grid.grid[row - 1]) === null || _a === void 0 ? void 0 : _a[colum]) === null || _b === void 0 ? void 0 : _b.generated) === false || ((_d = (_c = this.grid.grid[row + 1]) === null || _c === void 0 ? void 0 : _c[colum]) === null || _d === void 0 ? void 0 : _d.generated) === false || ((_f = (_e = this.grid.grid[row]) === null || _e === void 0 ? void 0 : _e[colum - 1]) === null || _f === void 0 ? void 0 : _f.generated) === false || ((_h = (_g = this.grid.grid[row]) === null || _g === void 0 ? void 0 : _g[colum + 1]) === null || _h === void 0 ? void 0 : _h.generated) === false) {
             //Math.floor(Math.random() * (max - min + 1) + min)
-            var randomNumber = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+            var randomNumber = randInRange(1,4);
             //up,down,left,right
             if (randomNumber === 1 && ((_j = this.grid.grid[row - 1]) === null || _j === void 0 ? void 0 : _j[colum]) != undefined && this.grid.grid[row - 1][colum].generated === false) {
                 this.grid.grid[row][colum].boderingWall.up.isWall = false;
