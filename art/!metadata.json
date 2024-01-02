@@ -61,12 +61,12 @@
   },
   {
     "directory": "mazeGenerator-Evan",
-    "snapshots": ["20x10_maze.svg"],
+    "snapshots": ["10x10_maze.svg"],
     "source": "index.js"
   },
   {
     "directory": "SudokuGenerator-Ivan",
-    "snapshots": ["0png"],
+    "snapshots": ["0.png"],
     "source": "index.js"
   }
 ]
