@@ -60,8 +60,13 @@
     "source": "index.js"
   },
   {
-    "directory": "maxeGenerator-Evan",
+    "directory": "mazeGenerator-Evan",
     "snapshots": ["20x10_maze.svg"],
     "source": "index.js"
   },
+  {
+    "directory": "SudokuGenerator-Ivan",
+    "snapshots": ["0png"],
+    "source": "index.js"
+  }
 ]
