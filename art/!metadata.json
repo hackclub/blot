@@ -58,5 +58,10 @@
     "directory": "self_portrait-kieran",
     "snapshots": ["snapshot-1.png"],
     "source": "index.js"
-  }
+  },
+  {
+    "directory": "maxeGenerator-Evan",
+    "snapshots": ["20x10_maze.svg"],
+    "source": "index.js"
+  },
 ]
