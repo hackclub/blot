@@ -19,6 +19,8 @@ The power delivery board provides a fixed output of 9V1A using the CYPD3177 chip
 
 During prototyping, we used an off-the-shelf module from Amazon. These only had four 2.54mm pins on the edge of the board and were hard to mount onto the board securely. Building our own also gave us better control over supply of these boards. 
 
+*As a precaution: while this board is breadboard friendly, typical solderless breadboards are only rated up to _5V @ 1A_. Do _not_ use this on a solderless breadboard.*
+
 ![KiCAD Render of PD Board](https://cloud-msqq36tmv-hack-club-bot.vercel.app/1cypd_usb-pd_9v1a.png)
 
 ## Additional Relevant Reading

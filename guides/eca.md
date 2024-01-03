@@ -108,7 +108,7 @@ We then check if the state matches, and if it does, follow the rule defined:
 ```
 
 Now, how should we draw this?
-Since the Haxidraw can't directly render pixels, we'll have to be a _bit_ more creative with how we do this.
+Since the Blot can't directly render pixels, we'll have to be a _bit_ more creative with how we do this.
 
 By using the following rendering method, we can some visually interesting results:
 

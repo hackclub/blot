@@ -1,6 +1,6 @@
-# Getting a Haxidraw
+# Getting a Blot
 
-Haxidraw is a "you ship, we ship" project. That means we will send the machine to people you build projects with the machine. And the way to start this engagement is just by getting started building.
+Blot is a "you ship, we ship" project. That means we will send the machine to people you build projects with the machine. And the way to start this engagement is just by getting started building.
 
 A well designed "you ship, we ship" should feel like everyone is contributing to a coherent project while not having contributors be dependent on each other. Each contribution is self-contained and satisfying to develop on its own but the aggregate results in something greater than the sum of its parts.
 
@@ -14,7 +14,7 @@ Let's explore some ideas to address this.
 
 Let's create a collectively developed physical/digital art exhibit for the Museum of Modern Art in NYC.
 
-Hack Club will produce a microworld web-based environment for creating generative line drawings which can be fabricated on the Haxidraw. We will encourage students to create a collection of digital art which can be submitted to our virtual or AR gallery space where they can see their work alongside pieces created by thousands of teens around the world. When they have curated their own exhibit (collection) in this virtual gallery we send them a machine so they can run a physical pop-up exhibit in their high school, printed using the haxidraw machines that they have assembled. We will do this for one year.
+Hack Club will produce a microworld web-based environment for creating generative line drawings which can be fabricated on the Blot. We will encourage students to create a collection of digital art which can be submitted to our virtual or AR gallery space where they can see their work alongside pieces created by thousands of teens around the world. When they have curated their own exhibit (collection) in this virtual gallery we send them a machine so they can run a physical pop-up exhibit in their high school, printed using the haxidraw machines that they have assembled. We will do this for one year.
 
 After that year, we will host a physical installation of these pop-up exhibits at a museum we partner with and fly out many contributors from around the world to celebrate their collective creation together.
 
@@ -45,7 +45,7 @@ Make several pieces which are thematically connected.
 
 This could be done manually or with a program which parametrically generates art.
 
-Submit this collection to our virtual museum to receive a Haxidraw kit.
+Submit this collection to our virtual museum to receive a Blot kit.
 
 ## Drawing Machine
 
