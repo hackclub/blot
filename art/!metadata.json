@@ -68,5 +68,15 @@
     "directory": "SudokuGenerator-Ivan",
     "snapshots": ["0.png"],
     "source": "index.js"
+  },
+  {
+    "directory": "Donut-BrightLi",
+    "snapshots": ["snapshot1.png"],
+    "source": "index.js"
+  },
+  {
+    "directory": "lines+circles-yutaro",
+    "snapshots": ["s1.png"],
+    "source": "lines+circles.js"
   }
 ]
