@@ -71,7 +71,7 @@
   },
   {
     "directory": "Donut-BrightLi",
-    "snapshots": ["snapshot-1.png"],
+    "snapshots": ["snapshot1.png"],
     "source": "index.js"
   },
   {
