@@ -1,14 +1,17 @@
 // Generative Word Search (words and size are changable)
 
-// Changable
-const Words = ['hope', 'you', 'have', 'lots', 'of', 'fun', '!']
-const Width = 210;
-const Height = 297;
-const Size = 18;
 
-// Unchangable
+
+// Customize Words and Word Search Size
+const Words = ['hope', 'you', 'have', 'lots', 'of', 'fun']
+const Size = 16;
+
+
+
 const Padding = 12;
 const LetterPadding = 1.5;
+const Width = 210;
+const Height = 297;
 
 // ============================ Text Engine ============================
 // instructions.ts
@@ -254,28 +257,6 @@ for (let i = 0; i < 2; i++) {
   Board.left(90);
 }
 
-// 44 char limit per line
-let wordBankw = "";
-let c = 0;
-DrawText("Word Bank:", [20, 246], 2);
-DrawText("WORD SEARCH", [65, 266], 3);
-
-for (let i = 0; i < Words.length; i++) {
-  if (wordBankw.length + Words[i].length < 44) {
-    if (wordBankw == "") {
-      wordBankw += Words[i]
-    } else {
-      wordBankw += "  " + Words[i]
-    }
-  } else {
-    DrawText(wordBankw, [20, 230 - 11 * c], 1.5);
-    wordBankw = Words[i]
-    c += 1
-  }
-}
-
-DrawText(wordBankw, [20, 230 - 11 * c], 1.5);
-
 
 const CheckIfWorks = (word, x, y, dir) => {
   if (dir == 1) {
@@ -324,14 +305,19 @@ const CheckIfWorks = (word, x, y, dir) => {
   }
 }
 
+let WordsCopy = Words;
 // Generate Directions
 for (let i = 0; i < Words.length; i++) {
-  for (let abs = 0; abs < 100; abs++) {
+  for (let abs = 0; abs < 1000; abs++) {
     let x = randIntInRange(0, Size - 1);
     let y = randIntInRange(0, Size - 1);
     let dir = randIntInRange(0, 5);
-    //let dir = 1;
     let word = Words[i];
+    if (abs == 999) {
+      console.log(WordsCopy.length);
+      WordsCopy.splice(WordsCopy.indexOf(word),1);
+      console.log(WordsCopy.length);
+    }
     if (CheckIfWorks(word, x, y, dir)) {
       if (dir == 1) {
         for (let v = 0; v < word.length; v++) {
@@ -358,6 +344,32 @@ for (let i = 0; i < Words.length; i++) {
     }
   }
 }
+
+
+
+// 44 char limit per line
+let wordBankw = "";
+let c = 0;
+DrawText("Word Bank:", [20, 246], 1.8);
+DrawText("WORD SEARCH", [65, 266], 3);
+
+for (let i = 0; i < WordsCopy.length; i++) {
+  if (wordBankw.length + WordsCopy[i].length < 44) {
+    if (wordBankw == "") {
+      wordBankw += WordsCopy[i]
+    } else {
+      wordBankw += "  " + WordsCopy[i]
+    }
+  } else {
+    DrawText(wordBankw, [20, 230 - 11 * c], 1.5);
+    wordBankw = WordsCopy[i]
+    c += 1
+  }
+}
+
+DrawText(wordBankw, [20, 230 - 11 * c], 1.5);
+
+
 
 for (let i = 0; i < Size; i++) {
   for (let t = 0; t < Size; t++) {
