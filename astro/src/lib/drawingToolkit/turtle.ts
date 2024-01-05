@@ -18,6 +18,7 @@ export class Turtle {
   style: {
     fill: string
     stroke: string
+    width: number
   }
 
   constructor(start: Point = [0, 0]) {
@@ -27,7 +28,8 @@ export class Turtle {
     this.path = [[[...start]]]
     this.style = {
       fill: 'none',
-      stroke: 'black'
+      stroke: 'black',
+      width: .25
     }
   }
 

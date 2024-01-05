@@ -90,6 +90,7 @@ const customGlobal = {
       const temp = t.copy()
       if (style.fill === undefined) style.fill = 'none'
       if (style.stroke === undefined) style.stroke = 'black'
+      if (style.width === undefined) style.width = 1
       temp.style = style
       turtles.push(temp)
     })
