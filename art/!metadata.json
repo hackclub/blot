@@ -78,5 +78,10 @@
     "directory": "linesCircles-yutaro",
     "snapshots": ["s1.png"],
     "source": "linesCircles.js"
+  },
+  {
+    "directory": "word_search-scott_c",
+    "snapshots": ["snapshot01.png"],
+    "source": "index.js"
   }
 ]
