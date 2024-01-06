@@ -168,25 +168,27 @@ drawEquation(formulaName)
 drawEquation(formula,resolution,maxX,minX,maxY,minY)
 */
 }
-
+// This is the straight line near the top, it is cropped with the parameters.
 var linearLine = function(n) {
   return (90) //Math.sin(n) +
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 drawEquation(linearLine, 1, 100, 20);
 drawEquation(linearLine, 1, 100, 20);
+
+// this is the other straight line at the top, this is the one at the very top.
 var linearLine2 = function(n) {
   return (100) //Math.sin(n) +
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 drawEquation(linearLine2, 1, 100, 20, 200);
 
-
+// the left top corner
 var leftTop = function(n) {
   return (-1 / 11 * Math.pow(n - 20, 2) + 100)
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 
 // a quadratic.
 drawEquation(leftTop, 0.1, 20, 5, 900.1)
-
+// the other left top corner part
 var leftTop2 = function(n) {
   return (-1 / 20 * Math.pow(n - 20, 2) + 90)
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
@@ -194,13 +196,14 @@ var leftTop2 = function(n) {
 // a quadratic.
 drawEquation(leftTop2, 0.1, 20, 5, 900.1)
 
+// the right top corner 
 var rightTop = function(n) {
   return (1 / 20 * Math.pow(n - 100, 2) + 100)
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 
 // a quadratic.
 drawEquation(rightTop, 0.1, 115, 100, 900.1)
-
+// the other right top corner
 var rightTop2 = function(n) {
   return (1 / 11 * Math.pow(n - 100, 2) + 90)
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
@@ -209,14 +212,14 @@ var rightTop2 = function(n) {
 drawEquation(rightTop2, 0.1, 115, 100, 900.1)
 
 // y = ax^2 + bx + c
-
+// the bottom left left leg
 var bottomLeftLeft = function(n) {
   return (1 / 8 * Math.pow(n - 5, 2)+ 5)
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 
 // a quadratic.
 drawEquation(bottomLeftLeft, 0.1, 100, 8.2, 90.1)
-
+// the bottom left right leg
 
 var bottomLeftRight = function(n) {
   return (1 / 8 * Math.pow(n - 15, 2))
@@ -225,7 +228,7 @@ var bottomLeftRight = function(n) {
 // a quadratic.
 drawEquation(bottomLeftRight, 0.1, 100, 8.2, 90.1)
 
-
+// bottom right left corner
 
 // y = ax^2 + bx + c
 var bottomRightLeft = function(n) {
@@ -234,7 +237,7 @@ var bottomRightLeft = function(n) {
 
 // a quadratic.
 drawEquation(bottomRightLeft, 0.1, 100, 0, 90)
-
+// bottom right right corner
 
 
 // y = ax^2 + bx + c
@@ -245,6 +248,16 @@ var bottomRightRight = function(n) {
 // a quadratic.
 drawEquation(bottomRightRight, 0.1, 110, 0, 90)
 
+
+
+
+
+
+
+
+
+
+// the very bottom
 
 
 
