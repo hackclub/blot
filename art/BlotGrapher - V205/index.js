@@ -6,21 +6,25 @@ Q: What is this? A: This is a WIP graphing tool.
 Q: What can this do? A: This program can currently graph lines.
 
 
+
+
 V 0.5
 Changelog:
+1/5/24 made a drawing of pi. update readme.
 12/23/23 Added comments V 0.6
 12/23/23 Added maxY and minY V 0.5
 12/22/23 Added maxX and minX V 0.4
 12/21/23 Added resolution V 0.3
 12/18/23 Basic versions V 0.1 and V 0.2
 
+
 */
 
 
 // welcome to blot!
 
-const width = 125;
-const height = 125;
+const width = 150;
+const height = 150;
 
 setDocDimensions(width, height);
 
@@ -116,7 +120,8 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
     graphTurtle
   ]);
 }
-
+// hide tags thingy:
+{
 // this is the format to use this program:
 /*
 //NOTE: The floating point decimal things will give you some drift.
@@ -139,46 +144,83 @@ drawEquation(formulaName)
 // these names should explain them self.
 drawEquation(formula,resolution,maxX,minX,maxY,minY)
 */
-
-// draws a simple linear line.
-// y = mx+b
-// y = 2n + 2
-var linearLine = function(n) {
-  return (2 * n + 2) //Math.sin(n) +
-} //v+Math.sqrt(r-Math.pow(n-v,2)))
-drawEquation(linearLine);
-
-//draws a sine wave
-// y = a * sin(n+ b) or something like that, I can't remeber
-// y = sin(n) + 9
-var sineWave = function(n) {
-  return (Math.sin(n) + 9) //Math.sin(n) +
-} //v+Math.sqrt(r-Math.pow(n-v,2)))
-drawEquation(sineWave);
-
-// another sine wave, but modified slightly.
-// y = sin(n) + 21
-var sineWave2 = function(n) {
-  // similar to sineWave1, but adds 12.
-  // it looks very different because of the additional parameters called(see below).
-  return sineWave(n) + 12; // lazy way :) 
-
 }
-// here is a test of the maxX, minX, maxY, and minY parameters.
-// the left, right, top and bottom are cut off.
-drawEquation(sineWave2, 0.1, 39, 20, 21, 20.4)
 
-// a quadratic equation
-// y = ax^2 + bx + c
-var quadratic = function(n) {
-  return (1 / 4 * n * n - 2 * n - 2)
+var linearLine = function(n) {
+  return (90) //Math.sin(n) +
+} //v+Math.sqrt(r-Math.pow(n-v,2)))
+drawEquation(linearLine, 1, 100, 20);
+drawEquation(linearLine, 1, 100, 20);
+var linearLine2 = function(n) {
+  return (100) //Math.sin(n) +
+} //v+Math.sqrt(r-Math.pow(n-v,2)))
+drawEquation(linearLine2, 1, 100, 20, 200);
+
+
+var leftTop = function(n) {
+  return (-1 / 11 * Math.pow(n - 20, 2) + 100)
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 
 // a quadratic.
-drawEquation(quadratic, 0.1, 100, 0, 18, 0)
+drawEquation(leftTop, 0.1, 20, 5, 900.1)
+
+var leftTop2 = function(n) {
+  return (-1 / 20 * Math.pow(n - 20, 2) + 90)
+} //v+Math.sqrt(r-Math.pow(n-v,2)))
+
+// a quadratic.
+drawEquation(leftTop2, 0.1, 20, 5, 900.1)
+
+var rightTop = function(n) {
+  return (1 / 20 * Math.pow(n - 100, 2) + 100)
+} //v+Math.sqrt(r-Math.pow(n-v,2)))
+
+// a quadratic.
+drawEquation(rightTop, 0.1, 115, 100, 900.1)
+
+var rightTop2 = function(n) {
+  return (1 / 11 * Math.pow(n - 100, 2) + 90)
+} //v+Math.sqrt(r-Math.pow(n-v,2)))
+
+// a quadratic.
+drawEquation(rightTop2, 0.1, 115, 100, 900.1)
+
+// y = ax^2 + bx + c
+
+var bottomLeftLeft = function(n) {
+  return (1 / 8 * Math.pow(n - 5, 2)+ 5)
+} //v+Math.sqrt(r-Math.pow(n-v,2)))
+
+// a quadratic.
+drawEquation(bottomLeftLeft, 0.1, 100, 8.2, 90.1)
+
+
+var bottomLeftRight = function(n) {
+  return (1 / 8 * Math.pow(n - 15, 2))
+} //v+Math.sqrt(r-Math.pow(n-v,2)))
+
+// a quadratic.
+drawEquation(bottomLeftRight, 0.1, 100, 8.2, 90.1)
 
 
 
+// y = ax^2 + bx + c
+var bottomRightLeft = function(n) {
+  return (1 / 8 * Math.pow(n - 100, 2))
+} //v+Math.sqrt(r-Math.pow(n-v,2)))
+
+// a quadratic.
+drawEquation(bottomRightLeft, 0.1, 100, 0, 90)
+
+
+
+// y = ax^2 + bx + c
+var bottomRightRight = function(n) {
+  return (1 / 8 * Math.pow(n - 110, 2))
+} //v+Math.sqrt(r-Math.pow(n-v,2)))
+
+// a quadratic.
+drawEquation(bottomRightRight, 0.1, 110, 0, 90)
 
 
 
