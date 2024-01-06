@@ -6,7 +6,7 @@
   //   referenceHeight
   // )
 
-  function splitPathIntoSubpathsAndAddCSS(pathData, rateOfDrawing = 10) {
+  function splitPathIntoSubpathsAndAddCSS(pathData, rateOfDrawing = 15) {
     // units/second
     const subpaths = pathData.split(/(?=M)/)
     let styleContent = ''
@@ -82,11 +82,11 @@
   subpathElements.forEach(element => svgElement.appendChild(element))
 
   setTimeout(() => {
-    fadeIn(document.querySelector('nav'), 1500)
+    fadeIn(document.querySelector('nav'), 1100)
     document.querySelectorAll('.fade-in').forEach(el => {
-      fadeIn(el, 1500)
+      fadeIn(el, 1100)
     })
-  }, 1000)
+  }, 500)
 
   function fadeIn(el, duration = 2000) {
     let start

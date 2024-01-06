@@ -19,6 +19,7 @@ import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
+import BorpheusIcon from '../ui/BorpheusIcon.tsx'
 import { saveFile } from '../lib/saveFile.ts'
 import * as prettier from 'prettier'
 import js_beautify from 'js-beautify'
@@ -35,8 +36,9 @@ export default function Toolbar() {
       <div class="flex items-center h-full">
         <h1 class={styles.heading}>
           <a href="/">
-            <img src="/blot.svg" style="width: 30px" />
-            <span style="font-weight: 700;">blot</span>
+            {/*<BorpheusIcon style="width: 30px;" />*/}
+            <img src="/borpheus.svg" style="width: 30px; translate: 3px -3px;" />
+            <span style="font-weight: 700;">lot</span>
           </a>
         </h1>
         <RunButton />
@@ -303,7 +305,7 @@ function DownloadSVG() {
 
           return `<path 
                     d="${d}" 
-                    stroke-width="0.25" 
+                    stroke-width="${t.style.width}" 
                     stroke="${t.style.stroke}" 
                     fill="${t.style.fill}" 
                     stroke-linecap="round"
@@ -357,7 +359,7 @@ function DownloadPNG() {
 
           return `<path 
                     d="${d}" 
-                    stroke-width="0.25" 
+                    stroke-width="${t.style.width}" 
                     stroke="${t.style.stroke}" 
                     fill="${t.style.fill}" 
                     stroke-linecap="round"

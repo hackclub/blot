@@ -49,7 +49,7 @@ testTurtle.translate(
   testTurtle.cc
 );
 
-testTurtle.jump(testTurtle.ct);
+testTurtle.jump(testTurtle.cb);
 testTurtle.arc(360,radius);
 
 drawTurtles([

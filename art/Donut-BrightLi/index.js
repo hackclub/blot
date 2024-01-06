@@ -52,7 +52,7 @@ function frosting() {
 
   for (let i = 0; i < waves; i++) {
     let wave = createTurtle()
-    wave.arc(180, radius / 4)
+    wave.arc(-180, radius / 4)
     let scale = 1.11 * (5 / waves)
     wave.translate([plotShift, plotShift])
     wave.rotate(90, [plotShift, plotShift])
@@ -73,18 +73,18 @@ function frosting() {
 
 
 // donut outer ring
-t.arc(360, radius)
+t.arc(-360, radius)
 t.translate([plotShift, plotShift + radius])
 t.scale([scale, 1])
 // donut inner ring
 let t1 = createTurtle() //bottom arc
-t1.arc(178, radius / 3)
+t1.arc(-178, radius / 3)
 t1.rotate(270, [0, -radius / 3.5])
 t1.scale([1.4, 0.5])
 t1.translate([plotShift, plotShift + (radius / 3)])
 
 let t2 = createTurtle() //top arc
-t2.arc(178, radius / 3)
+t2.arc(-178, radius / 3)
 t2.rotate(90, [0, -radius / 3.5])
 t2.scale([0.9, 0.3])
 t2.translate([t.cc[0] - radius / 10, plotShift])

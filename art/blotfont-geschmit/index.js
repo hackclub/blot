@@ -39,7 +39,7 @@ var RunInstructions = (inst, org, scale = 1) => {
         break;
       case "arc":
         data = ParseCoords(args);
-        turtle.arc(data[0], data[1] * scale);
+        turtle.arc(-data[0], data[1] * scale);
         break;
       case "jmp":
         data = ParseCoords(args);

@@ -253,8 +253,12 @@ const _redraw = (canvas: HTMLCanvasElement) => {
         else ctx.lineTo(x, y)
       })
     }
+
+    ctx.lineWidth = turtle.style.width
     ctx.strokeStyle = turtle.style.stroke
     ctx.stroke()
+
+    ctx.lineWidth = 1;
 
     ctx.fillStyle = turtle.style.fill
     if (turtle.style.fill !== 'none') ctx.fill()

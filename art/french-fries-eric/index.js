@@ -12,13 +12,13 @@ function createContainer(translate = [0, 0], rotate = 0) {
   const t = createTurtle()
 
   t.right(158)
-  t.arc(40, 13.6)
+  t.arc(-40, 13.6)
 
   t.right(263)
   t.forward(15)
 
   t.right(248)
-  t.arc(20, 41)
+  t.arc(-20, 41)
 
 
   t.right(253)
@@ -52,7 +52,7 @@ function createh() {
   t.right(90)
   t.forward(3.50)
   t.right(26)
-  t.arc(101, 1.6)
+  t.arc(-101, 1.6)
   t.right(-127)
   t.forward(2.5)
   t.right(110)
