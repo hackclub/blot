@@ -6,8 +6,31 @@ Q: What is this? A: This is a WIP graphing tool.
 Q: What can this do? A: This program can currently graph lines.
 
 
+Commands:
+
+// this is the format to use this program:
+/*
+//NOTE: The floating point decimal things will give you some drift.
+//NOTE: If it is a formula that can have two y values for one x, it will probably not work properly.I'll try to fix it later
+
+var formulaName = function(n) {
+  return (n) // now, modify the returned value to something!
+} 
 
 
+//You can use Math(.sin and other things) tools to help.
+
+
+
+// Draw it!
+
+drawEquation(formulaName)
+// if you don't see anything, your equation is probably in the negatives or is very large
+
+// these names should explain them self.
+drawEquation(formula,resolution,maxX,minX,maxY,minY)
+*/
+}
 V 0.5
 Changelog:
 1/5/24 made a drawing of pi. update readme.
@@ -21,7 +44,7 @@ Changelog:
 */
 
 
-// welcome to blot!
+
 
 const width = 150;
 const height = 150;
