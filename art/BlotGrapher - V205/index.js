@@ -46,8 +46,8 @@ Changelog:
 
 
 
-const width = 150;
-const height = 150;
+const width = 125;
+const height = 125;
 
 setDocDimensions(width, height);
 
@@ -143,8 +143,8 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
     graphTurtle
   ]);
 }
-// hide tags thingy:
-{
+
+
 // this is the format to use this program:
 /*
 //NOTE: The floating point decimal things will give you some drift.
@@ -167,7 +167,7 @@ drawEquation(formulaName)
 // these names should explain them self.
 drawEquation(formula,resolution,maxX,minX,maxY,minY)
 */
-}
+
 // This is the straight line near the top, it is cropped with the parameters.
 var linearLine = function(n) {
   return (90) //Math.sin(n) +
