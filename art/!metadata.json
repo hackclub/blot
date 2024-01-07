@@ -83,5 +83,10 @@
     "directory": "word_search-scott_c",
     "snapshots": ["snapshot01.png"],
     "source": "index.js"
+  },
+  {
+    "directory": "sunset-ameya",
+    "snapshots": ["sample1.png"],
+    "source": "index.js"
   }
 ]
