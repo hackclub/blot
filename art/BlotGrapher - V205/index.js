@@ -13,6 +13,11 @@ Commands:
 //NOTE: The floating point decimal things will give you some drift.
 //NOTE: If it is a formula that can have two y values for one x, it will probably not work properly.I'll try to fix it later
 
+// this is the format to use this program:
+/*
+//NOTE: The floating point decimal things will give you some drift.
+//NOTE: If it is a formula that can have two y values for one x, it will probably not work properly.I'll try to fix it later
+
 var formulaName = function(n) {
   return (n) // now, modify the returned value to something!
 } 
@@ -22,15 +27,20 @@ var formulaName = function(n) {
 
 
 
-// Draw it!
+// Draw it! I made it return a turtle
 
-drawEquation(formulaName)
+drawTurtles([
+  drawEquation(formulaName)
+])
+//seperate more equations with comas on new lines
 // if you don't see anything, your equation is probably in the negatives or is very large
 
 // these names should explain them self.
 drawEquation(formula,resolution,maxX,minX,maxY,minY)
 */
-}
+
+
+/*
 V 0.5
 Changelog:
 1/5/24 made a drawing of pi. update readme.
@@ -139,9 +149,12 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
 
 
   }
+  /*
   drawTurtles([
     graphTurtle
   ]);
+  */
+  return graphTurtle
 }
 
 
@@ -159,9 +172,12 @@ var formulaName = function(n) {
 
 
 
-// Draw it!
+// Draw it! I made it return a turtle
 
-drawEquation(formulaName)
+drawTurtles([
+  drawEquation(formulaName)
+])
+//add more equations with comas on new lines
 // if you don't see anything, your equation is probably in the negatives or is very large
 
 // these names should explain them self.
@@ -171,62 +187,60 @@ drawEquation(formula,resolution,maxX,minX,maxY,minY)
 // This is the straight line near the top, it is cropped with the parameters.
 var linearLine = function(n) {
   return (90) //Math.sin(n) +
-} //v+Math.sqrt(r-Math.pow(n-v,2)))
-drawEquation(linearLine, 1, 100, 20);
-drawEquation(linearLine, 1, 100, 20);
+
+}
+
 
 // this is the other straight line at the top, this is the one at the very top.
 var linearLine2 = function(n) {
   return (100) //Math.sin(n) +
-} //v+Math.sqrt(r-Math.pow(n-v,2)))
-drawEquation(linearLine2, 1, 100, 20, 200);
+}
+
+
 
 // the left top corner
 var leftTop = function(n) {
   return (-1 / 11 * Math.pow(n - 20, 2) + 100)
-} //v+Math.sqrt(r-Math.pow(n-v,2)))
+} 
 
-// a quadratic.
-drawEquation(leftTop, 0.1, 20, 5, 900.1)
+
 // the other left top corner part
 var leftTop2 = function(n) {
   return (-1 / 20 * Math.pow(n - 20, 2) + 90)
-} //v+Math.sqrt(r-Math.pow(n-v,2)))
+} 
 
-// a quadratic.
-drawEquation(leftTop2, 0.1, 20, 5, 900.1)
+
+
 
 // the right top corner 
 var rightTop = function(n) {
   return (1 / 20 * Math.pow(n - 100, 2) + 100)
-} //v+Math.sqrt(r-Math.pow(n-v,2)))
+} 
 
-// a quadratic.
-drawEquation(rightTop, 0.1, 115, 100, 900.1)
+
+
 // the other right top corner
 var rightTop2 = function(n) {
   return (1 / 11 * Math.pow(n - 100, 2) + 90)
-} //v+Math.sqrt(r-Math.pow(n-v,2)))
+} 
 
-// a quadratic.
-drawEquation(rightTop2, 0.1, 115, 100, 900.1)
 
-// y = ax^2 + bx + c
+
 // the bottom left left leg
 var bottomLeftLeft = function(n) {
-  return (1 / 8 * Math.pow(n - 5, 2)+ 5)
-} //v+Math.sqrt(r-Math.pow(n-v,2)))
+  return (1 / 8 * Math.pow(n - 5, 2) + 5)
+} 
 
-// a quadratic.
-drawEquation(bottomLeftLeft, 0.1, 100, 8.2, 90.1)
+
+
 // the bottom left right leg
 
 var bottomLeftRight = function(n) {
   return (1 / 8 * Math.pow(n - 15, 2))
-} //v+Math.sqrt(r-Math.pow(n-v,2)))
+} 
 
-// a quadratic.
-drawEquation(bottomLeftRight, 0.1, 100, 8.2, 90.1)
+
+
 
 // bottom right left corner
 
@@ -235,8 +249,8 @@ var bottomRightLeft = function(n) {
   return (1 / 8 * Math.pow(n - 100, 2))
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 
-// a quadratic.
-drawEquation(bottomRightLeft, 0.1, 100, 0, 90)
+
+
 // bottom right right corner
 
 
@@ -245,8 +259,7 @@ var bottomRightRight = function(n) {
   return (1 / 8 * Math.pow(n - 110, 2))
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 
-// a quadratic.
-drawEquation(bottomRightRight, 0.1, 110, 0, 90)
+
 
 
 
@@ -262,5 +275,17 @@ drawEquation(bottomRightRight, 0.1, 110, 0, 90)
 
 
 
+drawTurtles([
+  drawEquation(linearLine, 1, 100, 20),
+  drawEquation(linearLine2, 1, 100, 20, 200),
+  drawEquation(leftTop, 0.1, 20, 5, 900.1),
+  drawEquation(leftTop2, 0.1, 20, 5, 900.1),
+  drawEquation(rightTop, 0.1, 115, 100, 900.1),
+  drawEquation(rightTop2, 0.1, 115, 100, 900.1),
+  drawEquation(bottomLeftLeft, 0.1, 100, 8.2, 90.1),
+  drawEquation(bottomLeftRight, 0.1, 100, 8.2, 90.1),
+  drawEquation(bottomRightLeft, 0.1, 100, 0, 90),
+  drawEquation(bottomRightRight, 0.1, 110, 0, 90)
 
-// well, need to use a turtle.
+]);
+
