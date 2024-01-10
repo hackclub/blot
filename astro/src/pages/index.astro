@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Background from '../components/landing/Background.astro'
+import BackgroundFull from '../components/landing/BackgroundFull.astro'
 import { slug } from '../lib/guide.ts'
 
 const workshops = await Astro.glob('/../guides/*.md')
@@ -282,7 +283,8 @@ try {
     </div>
     <div class="background center-inner" style="z-index: -5; opacity: .4;">
       <div class="mobile-bg-scale" style="width: 100%;">
-        <Background />
+        <!-- <Background /> -->
+        <BackgroundFull client:load />
       </div>
     </div>
 
