@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo } from 'preact/hooks'
 import styles from './Dialog.module.css'
 import cx from 'classnames'
-import type { VNode } from 'preact'
+import type { ComponentChildren, VNode } from 'preact'
 
 type DialogProps = {
   title: string
   className?: string
-  children: React.ReactNode
+  children: ComponentChildren
   show: boolean
   actions: VNode
   close: () => void
@@ -22,8 +22,10 @@ export default function Dialog({
 }: DialogProps) {
   const id = useMemo(() => `_${Date.now()}`, [])
 
-  const keyHandler = useCallback(() => {
-    close()
+  const keyHandler = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      close()
+    }
   }, [])
 
   useEffect(() => {

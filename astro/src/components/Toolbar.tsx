@@ -25,6 +25,7 @@ import * as prettier from 'prettier'
 import js_beautify from 'js-beautify'
 import { createMask } from '../lib/getBitmap.js'
 import { Turtle } from '../lib/drawingToolkit/index.js'
+import AccountIndicator from './AccountIndicator.tsx'
 
 export default function Toolbar() {
   const { connected, needsSaving, view, machineRunning } = getStore()
@@ -205,6 +206,7 @@ export default function Toolbar() {
           </div>
         </div>
         {/*<MachineControls />*/}
+        <AccountIndicator />
         <GitHubLink />
         <SettingsButton />
       </div>

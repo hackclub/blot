@@ -1,0 +1,12 @@
+.highlighted {
+    background-color: var(--muted);
+    color: var(--text);
+    padding: 4px;
+    border-radius: 4px;
+    font-style: italic;
+}
+
+.root {
+    position: relative;
+    color: var(--text);
+}
