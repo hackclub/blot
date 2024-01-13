@@ -73,10 +73,11 @@
   margin-bottom: 10px;
 }
 body[data-theme='dark'] .helpSectionTab{
-  background-color:1E7898
+  background-color:rgb(30, 120, 152);
 }
 body[data-theme='dark'] .helpContent {
-  color: white;
+  color: rgb(255, 255, 255);
+  background-color: rgba(46,50,53,255)
 }
 
 body[data-theme='dark'] .helpContent a {
@@ -84,6 +85,11 @@ body[data-theme='dark'] .helpContent a {
 }
 
 body[data-theme='dark'] .helpContent hr {
+
+}
+body[data-theme='dark'] .helpContent pre{
+  color: rgb(0, 0, 0);
+  -webkit-filter: invert(100%);
   background-color: rgba(255, 255, 255, 0.25);
 }
 

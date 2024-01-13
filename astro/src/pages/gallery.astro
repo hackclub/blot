@@ -3,21 +3,33 @@ import Layout from '../layouts/Layout.astro'
 import { slug } from '../lib/guide.ts'
 
 let images = []
+
 try {
   const list = (await Astro.glob('/../art/!metadata.json'))[0].default
   list.forEach(folder => {
     const snapshot = folder.snapshots[0]
+    let project = String(folder.directory).split('-')
+    let name = project[project.length-1]
+    project.pop()
+    let project_name =project.join(' ')
+
+   
 
     images.push({
       dir: folder.directory,
       img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/snapshots/${snapshot}`,
       href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/${folder.source}`,
+      code: `https://raw.githubusercotenent.com/hackclub/blot/main/art/${folder.directory}/${folder.source}`,
+      name:name,
+      project: project_name,
       alt: folder.directory
     })
   })
+  
 } catch (error) {
   console.log(error)
 }
+console.log(images)
 ---
 
 <style is:global>
@@ -72,26 +84,21 @@ try {
     font-size: 1.1rem;
   }
 
-  .frame {
+  .flip-card-inner {
     padding: 0;
     margin: 0.5rem;
     border: solid 15px #555;
-    box-shadow: -3px -3px 12px #999;
+    background-color: white;
     width: 30%;
     min-width: 300px;
     aspect-ratio: 1;
     float: left;
     margin-bottom: 1rem;
-    z-index: 1;
+   
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    transition: all 0.2s;
-  }
-
-  .frame:hover {
-    transform: scale(101%);
+    /* overflow: hidden; */
   }
 
   img {
@@ -100,6 +107,7 @@ try {
     max-height: 100%;
     height: 100%;
     object-fit: contain;
+    align-self: center;
     border: 1px solid #aaa;
   }
 
@@ -111,7 +119,7 @@ try {
     background-color: white;
     margin: 0;
     border: solid 10px white;
-    box-shadow: -3px -3px 12px #999;
+    
   }
 
   a {
@@ -127,6 +135,65 @@ try {
   a:hover {
     text-decoration-style: wavy;
   }
+  .flip-card {
+ 
+  perspective: 1000px; 
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 30%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.border, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.border {
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  position: absolute;
+  display: grid;
+  transform: rotateY(180deg);
+}
+.tag{
+  background: rgba(255, 255, 255, 0.7);
+  height: 25%;
+  position: relative;
+  z-index: 2;
+  color: #000000;
+}
+.tag:hover {
+    text-decoration-style: solid;
+  }
+.testimage{
+  position: relative;
+  z-index: 1;
+}
+.tag, .testimage {
+  grid-area: 1 / 1;
+}
 </style>
 
 <Layout
@@ -151,11 +218,29 @@ try {
       {
         images.map(img => {
           return (
-            <div class="frame">
-              <a class="border" href={img.href}>
-                <img class="thumbnail" alt={img.alt} src={img.img} />
-              </a>
-            </div>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+             
+                <a class="border" href={img.href}>
+                 <img class="thumbnail" alt={img.alt} src={img.img} />
+               </a>
+              
+              <div class="flip-card-back">
+                <a class="tag" href ={img.href}>
+                  <h1>{img.project}</h1>
+                 <p>by {img.name}</p>
+           
+               
+               </a>
+               <a class="testimage" href={img.href}>
+                 <img class="thumbnail" alt={img.alt} src={img.img} />
+               </a>
+                
+             </div>
+           </div>
+          </div>
+
+   
           )
         })
       }
