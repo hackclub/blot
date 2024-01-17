@@ -2,13 +2,11 @@ const createComplexEmoji = () => {
   const emojiTurtle = createTurtle();
 
   // Draw the face
-  emojiTurtle.jump([60, 20]);
-  emojiTurtle.arc(360, 50);
+  emojiTurtle.jump([60, 20]).arc(360, 50);
 
   // Draw the eyes
   const eyeOffsetX = 10;
   const eyeOffsetY = 10;
-
   const eyeExpression = Math.floor(Math.random() * 8);
   drawEyes(emojiTurtle, eyeExpression, eyeOffsetX, eyeOffsetY);
 
@@ -17,6 +15,7 @@ const createComplexEmoji = () => {
   const mouthExpression = Math.floor(Math.random() * 11);
   drawMouth(emojiTurtle, mouthExpression);
 
+  // Draw the nose
   const nosexp = Math.floor(Math.random() * 4);
   drawNose(emojiTurtle, nosexp);
 
@@ -24,246 +23,119 @@ const createComplexEmoji = () => {
   drawTurtles([emojiTurtle]);
 };
 
-// Function to draw different mouth expressions
 const drawMouth = (turtle, expression) => {
   turtle.jump([60, 40]);
 
   switch (expression) {
     case 0:
-
-      turtle.jump([40, 50]);
-      turtle.setAngle(270);
-      turtle.arc(180, 20);
+      turtle.jump([40, 50]).setAngle(270).arc(180, 20);
       break;
     case 1:
-
-      turtle.setAngle(270);
-      turtle.arc(180, 5);
+      turtle.setAngle(270).arc(180, 5);
       break;
     case 2:
-
-      turtle.jump([80, 40])
-      turtle.setAngle(90);
-      turtle.arc(180, 20);
+      turtle.jump([80, 40]).setAngle(90).arc(180, 20);
       break;
     case 3:
-
-      turtle.jump([60, 30]);
-      turtle.arc(360, 15);
+      turtle.jump([60, 30]).arc(360, 15);
       break;
     case 4:
-      turtle.jump([75, 40]);
-      turtle.setAngle(180);
-      turtle.forward(30);
-      turtle.jump([65, 40]);
-      turtle.setAngle(270);
-      turtle.arc(180, 5)
-
+      turtle.jump([75, 40]).setAngle(180).forward(30).jump([65, 40]).setAngle(270).arc(180, 5);
       break;
     case 5:
-      turtle.jump([75, 40]);
-      turtle.setAngle(180);
-      turtle.forward(30);
+      turtle.jump([75, 40]).setAngle(180).forward(30);
       break;
-
-
     case 6:
-
-      turtle.jump([75, 40]);
-      turtle.setAngle(180);
-      turtle.forward(30);
-      turtle.setAngle(270)
-      turtle.forward(10)
-      turtle.setAngle(0)
-      turtle.forward(30);
-      turtle.setAngle(90)
-      turtle.forward(10)
-      turtle.jump([75, 35]);
-      turtle.setAngle(180);
-      turtle.forward(30);
+      turtle.jump([75, 40]).setAngle(180).forward(30).setAngle(270).forward(10).setAngle(0).forward(30).setAngle(90).forward(10).jump([75, 35]).setAngle(180).forward(30);
       break;
     case 7:
-
-      turtle.jump([40, 55]);
-      turtle.setAngle(270);
-      turtle.arc(180, 20);
-      turtle.jump([80, 55]);
-      turtle.setAngle(180);
-      turtle.forward(40);
+      turtle.jump([40, 55]).setAngle(270).arc(180, 20).jump([80, 55]).setAngle(180).forward(40);
       break;
     case 8:
-      turtle.jump([75, 40]);
-      turtle.setAngle(180);
-      turtle.forward(30);
-      turtle.jump([55, 40]);
-      turtle.setAngle(90);
-      turtle.arc(180, 5)
+      turtle.jump([75, 40]).setAngle(180).forward(30).jump([55, 40]).setAngle(90).arc(180, 5);
       break;
-
     case 9:
-
-      turtle.jump([60, 40]);
-      turtle.setAngle(270);
+      turtle.jump([60, 40]).setAngle(270);
       for (let i = 0; i < 4; i++) {
-        turtle.forward(5);
-        turtle.left(90);
+        turtle.forward(5).left(90);
       }
       break;
     case 10:
-      turtle.jump([45, 45]);
-
-      turtle.down();
+      turtle.jump([45, 45]).down();
       for (let x = 0; x <= (4 * Math.PI) / 2; x += 0.1) {
         const y = Math.sin(x) * 4;
-        turtle.forward(2);
-        turtle.jump([45 + x * 4, 45 + y]);
+        turtle.forward(2).jump([45 + x * 4, 45 + y]);
       }
       break;
-
-
   }
 };
 
-// Function to draw a rectangle
-const drawRectangle = (turtle, width, height) => {
-  for (let i = 0; i < 2; i++) {
-    turtle.forward(i === 0 ? width : height);
-    turtle.left(90);
-    turtle.forward(i === 0 ? height : width);
-    turtle.left(90);
-  }
-};
-
-// Function to draw different eye expressions
 const drawEyes = (turtle, expression, eyeOffsetX, eyeOffsetY) => {
   switch (expression) {
     case 0:
-      // Normal
-      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]);
-      drawEllipse(turtle, 10, 5); // Draw ellipse for normal eyes
-      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]);
-      drawEllipse(turtle, 10, 5);
+      drawEllipse(turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]), 10, 5);
+      drawEllipse(turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]), 10, 5);
       break;
     case 1:
-      // Raised eyebrows
-      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY - 2]);
-      turtle.setAngle(90);
-      turtle.arc(180, 5);
-      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY - 2]);
-      turtle.setAngle(90);
-      turtle.arc(180, 5);
+      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY - 2]).setAngle(90).arc(180, 5);
+      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY - 2]).setAngle(90).arc(180, 5);
       break;
     case 2:
-      // Closed eyes
-      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.arc(360, 7);
-      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.arc(360, 7);
+      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]).arc(360, 7);
+      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]).arc(360, 7);
       break;
     case 3:
-      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.forward(7);
-      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.forward(7);
+      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]).forward(7);
+      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]).forward(7);
       break;
     case 4:
-      // Cross
-      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.setAngle(45);
-      turtle.forward(8);
-      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.setAngle(135);
-      turtle.forward(8);
-
-      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.setAngle(45);
-      turtle.forward(8);
-      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.setAngle(135);
-      turtle.forward(8);
+      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]).setAngle(45).forward(8);
+      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]).setAngle(135).forward(8);
+      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]).setAngle(45).forward(8);
+      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]).setAngle(135).forward(8);
       break;
     case 5:
-      // One Circle, One Straight Line
-      turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]);
-      drawEllipse(turtle, 8, 8);
-      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.setAngle(0);
-      turtle.forward(8);
+      drawEllipse(turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY]), 8, 8);
+      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]).setAngle(0).forward(8);
       break;
     case 6:
-      turtle.jump([50 - eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.setAngle(0);
-      turtle.arc(10, 70);
-      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]);
-      turtle.setAngle(0);
-      turtle.arc(10, 70);
+      turtle.jump([50 - eyeOffsetX, 90 + eyeOffsetY]).setAngle(0).arc(10, 70);
+      turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY]).setAngle(0).arc(10, 70);
       break;
     case 7:
-      turtle.jump([35, 85]);
-      turtle.setAngle(45);
-      turtle.forward(20);
-      turtle.jump([35, 100]);
-      turtle.setAngle(-45);
-      turtle.forward(20);
-      turtle.jump([70, 85]);
-      turtle.setAngle(45);
-      turtle.forward(20);
-      turtle.jump([75, 100]);
-      turtle.setAngle(-45);
-      turtle.forward(20);
-
+      turtle.jump([35, 85]).setAngle(45).forward(20);
+      turtle.jump([35, 100]).setAngle(-45).forward(20);
+      turtle.jump([70, 85]).setAngle(45).forward(20);
+      turtle.jump([75, 100]).setAngle(-45).forward(20);
+      break;
   }
 };
-
 
 const drawEyebrows = (turtle, expression, eyeOffsetX, eyeOffsetY) => {
   if (expression === 1) {
-    // Draw raised eyebrows for the "Raised eyebrows" expression
-    turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY - 2]);
-    turtle.setAngle(90);
-    turtle.arc(180, 7);
-    turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY - 2]);
-    turtle.setAngle(90);
-    turtle.arc(180, 7);
+    turtle.jump([60 - eyeOffsetX, 90 + eyeOffsetY - 2]).setAngle(90).arc(180, 7);
+    turtle.jump([60 + eyeOffsetX, 90 + eyeOffsetY - 2]).setAngle(90).arc(180, 7);
   }
 };
 
-// Function to draw nose
 const drawNose = (turtle, exp) => {
   switch (exp) {
     case 0:
-      turtle.jump([60, 85]);
-      turtle.setAngle(270);
-      turtle.forward(15);
+      turtle.jump([60, 85]).setAngle(270).forward(15);
       break;
     case 1:
-      turtle.jump([60, 70]);
-      turtle.setAngle(0);
-      turtle.arc(180, 4 * 2);
-    case 2:
+      turtle.jump([60, 70]).setAngle(0).arc(180, 4 * 2);
       break;
     case 3:
-      turtle.jump([50, 75]);
-      turtle.setAngle(60);
-      turtle.forward(20);
-      turtle.setAngle(-60);
-      turtle.forward(20);
-      turtle.setAngle(180);
-      turtle.forward(20);
+      turtle.jump([50, 75]).setAngle(60).forward(20).setAngle(-60).forward(20).setAngle(180).forward(20);
       break;
   }
 };
 
-// Function to draw ellipse
 const drawEllipse = (turtle, width, height) => {
   for (let i = 0; i < 2; i++) {
-    turtle.forward(i === 0 ? width : height);
-    turtle.left(90);
-    turtle.forward(i === 0 ? height : width);
-    turtle.left(90);
+    turtle.forward(i === 0 ? width : height).left(90).forward(i === 0 ? height : width).left(90);
   }
 };
 
-
-// Render the complex emoji
 createComplexEmoji();
