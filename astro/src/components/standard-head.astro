@@ -1,0 +1,46 @@
+---
+interface Props {
+    title: string | undefined
+    socialImage?: string | undefined
+    description: string | undefined
+}
+
+let { title, description, socialImage } = Astro.props
+
+title = `Blot | ${title}` || 'Blot'
+
+description = description || 'Blot editor!'
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
+const image = socialImage ?? 'https://blot.hackclub.dev/landing/blot-clear-bg.png'
+
+---
+
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel='icon' href='/borpheus.svg'>
+
+
+
+<title>{title}</title>
+<link rel='canonical' href={canonicalUrl} />
+<meta property='og:title' content={title} />
+<meta property='og:site_name' content='Blot' />
+<meta
+	name='description'
+	content={description}
+/>
+<meta
+	property='og:description'
+	content={description}
+/>
+<meta name="generator" content={Astro.generator} />
+<meta name='keywords' content='Blot, hack club' />
+<meta name='author' content='@hackclub' />
+<meta name='twitter:creator' content='@hackclub' />
+<meta name='theme-color' content='#0a0a16' />
+<meta property='og:url' content={canonicalUrl} />
+<meta property='og:type' content='website' />
+<meta property='og:image' content={image} />
+<meta property='twitter:image' content={image} />
+<meta name='twitter:card' content='summary_large_image'>
