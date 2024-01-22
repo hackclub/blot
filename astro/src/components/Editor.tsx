@@ -8,6 +8,7 @@ import Error from './Error.js'
 import Console from './Console.js'
 import GlobalStateDebugger from './GlobalStateDebugger.js'
 import DropBox from './DropBox.js'
+import LoginModal from './LoginModal.js'
 import CodeMirror from './CodeMirror.js'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import Help from './Help.js'
@@ -87,6 +88,7 @@ export default function Editor() {
         </div>
       </div>
       <CompatWarning />
+      <LoginModal />
       <DropBox />
     </>
   )

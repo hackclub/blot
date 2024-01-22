@@ -33,6 +33,21 @@ export function init() {
     ) {
       e.preventDefault()
 
+      // if logged in save to cloud
+      console.log("save to cloud")
+      // else log in
+
+    }
+  })
+
+  window.addEventListener('keydown', e => {
+    if (
+      (event.shiftKey) &&
+      (event.ctrlKey || event.metaKey) &&
+      (event.key === 's' || event.key === 'S')
+    ) {
+      e.preventDefault()
+
       const { fileHandle, view } = getStore()
       const code = view.state.doc.toString()
 

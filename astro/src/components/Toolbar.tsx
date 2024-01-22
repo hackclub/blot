@@ -21,15 +21,50 @@ import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
 import BorpheusIcon from '../ui/BorpheusIcon.tsx'
 import { saveFile } from '../lib/saveFile.ts'
+import { saveToCloud } from '../lib/saveToCloud.js'
 import * as prettier from 'prettier'
 import js_beautify from 'js-beautify'
 import { createMask } from '../lib/getBitmap.js'
 import { Turtle } from '../lib/drawingToolkit/index.js'
 
-export default function Toolbar() {
-  const { connected, needsSaving, view, machineRunning } = getStore()
+const menuItemClasses = `
+  relative
+  cursor-pointer
+  w-max
+  h-full
+  flex
+  items-center
+  p-2
+  hover:bg-white
+  hover:bg-opacity-10
+`;
 
-  const [hidden, setHidden] = useState(true)
+const dropdownContainer = `
+  group 
+  flex 
+  items-center 
+  relative 
+  h-full 
+  cursor-pointer 
+  p-2 
+  hover:bg-white 
+  hover:bg-opacity-10
+`
+
+const dropdownClasses =`
+  hidden
+  group-hover:flex
+  flex-col
+  absolute
+  top-full
+  bg-[var(--primary)]
+  w-max
+  z-[99999]
+  rounded-b-lg
+`;
+
+export default function Toolbar() {
+  const { connected, needsSaving, view, machineRunning, loginName } = getStore()
 
   return (
     <div class={styles.root}>
@@ -42,15 +77,63 @@ export default function Toolbar() {
           </a>
         </h1>
         <RunButton />
-        <div
-          class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
-          onClick={() => saveFile(getCode())}>
-          {needsSaving ? 'save* (ctrl/cmd+s)' : 'save (ctrl/cmd+s)'}
+        <div class={dropdownContainer}>
+          {needsSaving ? 'file*' : "file"}
+          <div class={dropdownClasses + " left-0"}>
+            <div
+              class={menuItemClasses + " w-full"}
+              onClick={() => saveToCloud(getCode())}>
+              save to cloud
+            </div>
+            <div
+              class={menuItemClasses}
+              onClick={() => saveFile(getCode())}>
+              save to disk (ctrl/cmd+s)
+            </div>
+            <div
+              class={menuItemClasses + " w-full"}
+              onClick={() => {
+                loadCodeFromString(defaultProgram)
+              }}>
+              new
+            </div>
+            <div
+              class={menuItemClasses + " w-full"}
+              onClick={() => {
+                // if not logged in then ask to log in
+
+                // if logged in then show all files
+              }}>
+              open from cloud
+            </div>
+            <div
+              class={menuItemClasses + " w-full"}
+              onClick={() => {
+                const input = document.createElement('input')
+                input.type = 'file'
+                input.accept = '.js'
+                input.onchange = () => {
+                  if (input.files?.length) {
+                    const file = input.files[0]
+                    const reader = new FileReader()
+                    reader.onload = () => {
+                      if (typeof reader.result === 'string') {
+                        loadCodeFromString(reader.result)
+                      }
+                    }
+                    reader.readAsText(file)
+                  }
+                }
+                input.click()
+              }}>
+              open from disk
+            </div>
+
+          </div>
+
         </div>
-        <NewButton />
-        <OpenButton />
         <div
-          class="relative cursor-pointer w-max h-full flex items-center p-1 hover:bg-white hover:bg-opacity-10"
+          class={menuItemClasses}
           onClick={() => {
             const ogCode = getCode()
             const formatted = formatCode(ogCode)
@@ -65,21 +148,17 @@ export default function Toolbar() {
           tidy code
         </div>
         <div
-          class="relative cursor-default w-max h-full flex items-center p-1"
-          onMouseEnter={() => setHidden(false)}
-          onMouseLeave={() => setHidden(true)}>
+          class={dropdownContainer}
+          >
           <div>download</div>
           <div
-            class={[
-              hidden ? 'hidden' : '',
-              'border border-white border-opacity-10',
-              'bg-[--primary] absolute z-50 top-full p-1 rounded-md'
-            ].join(' ')}>
+            class={dropdownClasses + " left-0"}
+            >
             <DownloadButton />
             <DownloadSVG />
             <DownloadPNG />
             <div
-              class="w-max p-1 rounded hover:bg-white hover:bg-opacity-10"
+              class={menuItemClasses}
               onClick={e => {
                 const { turtles } = getStore()
                 const { isVisible } = createMask()
@@ -130,9 +209,20 @@ export default function Toolbar() {
       </div>
 
       <div class="flex items-center h-full">
-        <div class="group flex items-center relative h-full cursor-pointer p-1">
+        <div 
+          class="text-sm text-gray-300 px-3 translate-y-[1px] underline cursor-pointer"
+          onClick={() => {
+            if (loginName === "") {
+              // log in
+            } else {
+              // log out or change account
+            }
+          }}>
+          {loginName === "" ? "log in to save" : "logged in as: " + loginName}
+        </div>
+        <div class={dropdownContainer}>
           machine control
-          <div class="hidden group-hover:flex flex-col absolute top-full right-0 bg-[var(--primary)] w-max z-[99999]">
+          <div class={dropdownClasses + " right-0"}>
             <div
               class="p-2 hover:bg-white hover:bg-opacity-10"
               data-evt-connectTrigger>
@@ -260,7 +350,7 @@ function getCode() {
 function DownloadButton() {
   return (
     <div
-      class={styles.dropdownEntry}
+      class={menuItemClasses + " w-full"}
       onClick={() => download('project.js', getCode())}>
       js
     </div>
@@ -269,20 +359,20 @@ function DownloadButton() {
 
 function NewButton() {
   return (
-    <Button
-      variant="ghost"
+    <div
+      class="p-2 hover:bg-white hover:bg-opacity-10"
       onClick={() => {
         loadCodeFromString(defaultProgram)
       }}>
       new
-    </Button>
+    </div>
   )
 }
 
 function DownloadSVG() {
   return (
     <div
-      class={styles.dropdownEntry}
+      class={menuItemClasses + " w-full"}
       onClick={() => {
         const { turtles, docDimensions } = getStore()
 
@@ -336,7 +426,7 @@ function DownloadSVG() {
 function DownloadPNG() {
   return (
     <div
-      class={styles.dropdownEntry}
+      class={menuItemClasses + " w-full"}
       onClick={() => {
         const { turtles, docDimensions } = getStore()
 
@@ -492,61 +582,24 @@ function MachineControls() {
 
 function SettingsButton() {
   const { theme, vimMode } = getStore()
-  const [hidden, setHidden] = useState(true)
 
   return (
-    <div
-      style={{
-        cursor: 'default',
-        width: 'min-width'
-      }}
-      onMouseEnter={() => setHidden(false)}
-      onMouseLeave={() => setHidden(true)}>
-      <Button variant="ghost">
+    <div class={dropdownContainer}>
+      <div>
         <a style={{ all: 'unset' }}>
           <SettingsIcon className={styles.icon} />
         </a>
-      </Button>
-      <div
-        style={{
-          'display': hidden ? 'none' : '',
-          'position': 'absolute',
-          'right': '5px',
-          'background': 'var(--primary)',
-          'border': '1px solid rgba(255, 255, 255, 0.1)',
-          'z-index': 9999,
-          'padding': '5px',
-          'border-radius': '5px'
-        }}>
-        {/*        <Button
-          class={styles.dropdownEntry}
-          variant="ghost"
-          onClick={() => {
-            const newTheme = theme === 'dark' ? 'light' : 'dark'
-            patchStore({
-              theme: newTheme
-            })
-
-            document.body.dataset.theme = newTheme
-
-            localStorage.setItem('colorTheme', newTheme)
-
-            setHidden(false)
-          }}>
-          <BrightnessContrastIcon className={styles.icon} />
-          <span>toggle theme</span>
-        </Button>*/}
-        <Button
-          class={styles.dropdownEntry}
-          variant="ghost"
+      </div>
+      <div class={dropdownClasses + " right-0"}>
+        <div
+          class={menuItemClasses}
           onClick={() => {
             patchStore({ vimMode: !vimMode })
             localStorage.setItem('vimMode', (!vimMode).toString())
-            setHidden(false)
           }}>
           <KeyboardIcon className={styles.icon} />
-          <span>{vimMode ? 'disable' : 'enable'} vim mode</span>
-        </Button>
+          <span class="px-2">{vimMode ? 'disable' : 'enable'} vim mode</span>
+        </div>
       </div>
     </div>
   )

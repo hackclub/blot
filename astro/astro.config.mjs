@@ -6,5 +6,6 @@ import tailwind from '@astrojs/tailwind'
 // https://astro.build/config
 export default defineConfig({
   site: 'https://blot.hackclub.com',
+  output: "server",
   integrations: [preact(), tailwind()]
 })

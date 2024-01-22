@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro'
-import { getUserByEmail, makeLoginCode, makeUser } from '../../../db/account'
+import { getUserByEmail, makeLoginCode } from '../../../db/account'
 import { isValidEmail, loginCodeTemplate, mail } from '../../../db/email'
 
 export const POST: APIRoute = async ({ request }) => {
@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request }) => {
     )
   }
 
-  const user = (await getUserByEmail(email)) ?? (await makeUser(email, null))
+  const user = await getUserByEmail(email);
   const code = await makeLoginCode(user.id)
   await mail(user.email, loginCodeTemplate(code))
   return new Response(JSON.stringify({}), { status: 200 })
