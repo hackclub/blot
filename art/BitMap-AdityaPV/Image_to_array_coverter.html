@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing</title>
+</head>
+<body>
+    <input type="file" id="imageInput" accept="image/*" onchange="processImage()">
+    <canvas id="outputCanvas"></canvas>
+    <div id="outputInfo"></div>
+
+    <script>
+        function processImage() {
+            const input = document.getElementById('imageInput');
+            const canvas = document.getElementById('outputCanvas');
+            const ctx = canvas.getContext('2d');
+            const outputInfo = document.getElementById('outputInfo');
+            outputInfo.innerHTML = '';
+
+            const maxWidth = 200;
+            const maxHeight = 200;
+
+            const img = new Image();
+            img.onload = function() {
+                // Resize the image while maintaining aspect ratio
+                let newWidth, newHeight;
+
+                if (img.width > img.height) {
+                    newWidth = Math.min(img.width, maxWidth);
+                    newHeight = Math.round((newWidth / img.width) * img.height);
+                } else {
+                    newHeight = Math.min(img.height, maxHeight);
+                    newWidth = Math.round((newHeight / img.height) * img.width);
+                }
+
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+                // Convert the image to black and white
+                const imageData = ctx.getImageData(0, 0, newWidth, newHeight);
+                const data = imageData.data;
+
+                // Create a list specifying the coordinates of black pixels
+                const blackPixels = [];
+                for (let i = 0; i < data.length; i += 4) {
+                    const isBlack = (data[i] + data[i + 1] + data[i + 2]) / 3 < 128;
+                    if (isBlack) {
+                        const x = Math.round((i / 4) % newWidth);
+                        const y = Math.round(Math.floor((i / 4) / newWidth));
+                        blackPixels.push([x, newHeight - y]);
+                    }
+                }
+
+                outputInfo.innerHTML += `<p>Resized Width: ${newWidth}</p>`;
+                outputInfo.innerHTML += `<p>Resized Height: ${newHeight}</p>`;
+                outputInfo.innerHTML += `<p>Black Pixels: ${JSON.stringify(blackPixels)}</p>`;
+            };
+
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
