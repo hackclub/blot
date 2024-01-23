@@ -1,12 +1,17 @@
 # Blot Control Board
 
-There are the two boards we designed to drive the blot machine. The first one is the Carrier Board that holds everything together, and the second one is a USB-C Power Delivery Decoy board. 
+The assembled blot control board is a main board with a set of smaller boards attached to it's headers:
+
+- 1x Blot Control Board ([designed in house](./circuit/controller/))
+    - 2x A4988 stepper motor drivers
+    - 1x Seeeduino XIAO RP2040
+    - 1x USB-C Power Delivery board ([designed in house](./circuit/power-delivery/))
+    - 1x Stepper motor breakout board ([designed in house](./circuit/stepper-motor-headers/))
 
 ![A set of three assembled control boards and decoy boards](https://cloud-1qtfaazar-hack-club-bot.vercel.app/0image_from_ios.jpg)
 
-To drive the stepper motors, we're using a pair of A4988 stepper motor drivers from Allegro Microsystems, controlled by a Seeeduino XIAO RP2040 and powered by a custom USB-C PD board using the Cypress Semiconductor CYPD3177. 
-
 The KiCAD project files are provided in the repo and are designed with KiCAD v7. This may not be compatible with previous versions, but you can get the latest version [here](https://www.kicad.org/download/). 
+
 ## Carrier Board
 
 The carrier board wires the breakouts together, provides external power circuitry for the A4988 and steppers, and a convenient way to mount the board to the blot machine. It's a simple 2-layer 1.6mm PCB measured at 50x70mm. It also has a pin header breaking out 5 unused GPIO pins, including 1 DAC channel, 2 analog-capable pins, and one I2C bus. 
