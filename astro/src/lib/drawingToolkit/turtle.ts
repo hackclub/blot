@@ -104,7 +104,7 @@ export class Turtle {
 
     pts.slice(1).forEach(pt => this.goTo(pt));
 
-    this.setAngle(la - angle+180);
+    this.setAngle(la - angle-180);
 
     return this;
   } 
