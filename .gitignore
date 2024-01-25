@@ -6,3 +6,4 @@
 yarn-error.log
 dist
 node_modules
+astro/creds.json

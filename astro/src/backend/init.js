@@ -78,23 +78,23 @@ export async function makeLoginCode(email) {
 
   console.log("id", id);
 
-  console.log("db", db);
+  console.log("db", db, db.constructor.name);
 
 
   let newDoc;
   try {
-    newDoc = doc(db, "loginCodes", id);
+    newDoc = doc(db, "loginCodes", "test");
   } catch (err) {
-    console.log(err);
+    console.log("erred", err);
   }
 
   console.log(newDoc);
 
-  await setDoc(newDoc, {
-    code,
-    email,
-    createdAt: Timestamp.now()
-  });
+  // await setDoc(newDoc, {
+  //   code,
+  //   email,
+  //   createdAt: Timestamp.now()
+  // });
 
   return code;
 }
