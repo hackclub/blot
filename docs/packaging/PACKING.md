@@ -9,6 +9,7 @@ Here's a quick checklist of what to include:
 - [ ] Box 4: nuts
 - [ ] Box 5: electronics
 - [ ] Tool bundle
+- [ ] Floating parts
 
 Each box should be pre-assembled before packing a blot box & each of the parts should be QA tested before going into their respective boxes. Each box has a checklist of parts, and a following section on how to test the parts. Not all parts need to be tested.
 
@@ -100,3 +101,20 @@ The taped-together tool bundle should contain:
 **Testing**
 
 Try to fit each allen key into a screw of a corresponding size. There are many allen keys around the office and we want to make sure we haven't mixed up a slightly different size into the bundle.
+
+## Floating parts
+
+In addition to all the smaller boxes, there are a few parts that go directly into the main package:
+- [ ] 2 stepper motors
+- [ ] wrapping/stuffing paper for padding(optional)
+- [ ] aluminum parts:
+  - [ ] carriage plate
+  - [ ] 2020x250mm extrusion (x2)
+- [ ] The 3d printed components
+  - The full list can be found on [the assembly instructions](../ASSEMBLY.md)
+
+**Testing**
+
+The aluminum parts are a little roughly cut. Run your finger over them for signs of sharp edges/burrs. If you find any, use another or file it down to smooth it out.
+
+The aluminum extrusion should be measured to ensure it's from good stock. We have multiple sizes in the office and we want to make sure we don't pack the wrong size. The bar should be roughly 1ft long.
