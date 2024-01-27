@@ -100,7 +100,7 @@
     "source": "script.js"
   },
   {
-    "directory": "factures-msw",
+    "directory": "fractures-msw",
     "snapshots": ["image (16).png"],
     "source": "index.js"
   },
