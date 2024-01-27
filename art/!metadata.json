@@ -96,8 +96,8 @@
   },
   {
     "directory": "dexter_sunnyhouse",
-    "snapshots": ["Snapshot1.jpeg"],
-    "source": "index.js"
+    "snapshots": ["image (3).png"],
+    "source": "script.js"
   },
   {
     "directory": "BlotGrapher-V205",
