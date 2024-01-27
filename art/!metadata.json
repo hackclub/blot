@@ -100,13 +100,13 @@
     "source": "script.js"
   },
   {
-    "directory": "BlotGrapher-V205",
-    "snapshots": ["Snapshot1.jpeg"],
+    "directory": "factures-msw",
+    "snapshots": ["image (16).png"],
     "source": "index.js"
   },
   {
-    "directory": "BlotGrapher-V205",
-    "snapshots": ["Snapshot1.jpeg"],
+    "directory": "BitMap-AdityaPV",
+    "snapshots": ["sprig.jpeg"],
     "source": "index.js"
   }
 ]
