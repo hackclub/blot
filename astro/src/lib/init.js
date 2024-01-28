@@ -1,7 +1,7 @@
 import { patchStore, getStore } from './state.ts'
 import { render } from './render.tsx'
 
-import { addBezierControl } from './events/addBezierControl.js'
+import { addBezierControl } from './events/addBezierControl.jsx'
 import { addMachineControl } from './events/addMachineControl.js'
 import { addLoadBackup } from './events/addLoadBackup.js'
 import { addSrcURLParam } from './events/addSrcURLParam.js'

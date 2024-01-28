@@ -3,26 +3,23 @@ import '../css/global.css'
 
 import Navbar from '../components/Navbar.astro'
 
+import StandardHead from '../components/standard-head.astro'
+
 export interface Props {
   title: string | undefined
   description: string | undefined
   showNav: string | undefined
+  
 }
 
 let { title, description, showNav } = Astro.props
-title = `Blot | ${title}` || 'Blot'
-description = description || 'Blot editor!'
 showNav = showNav || 'true'
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <StandardHead title={title}  description={description}/>
   </head>
   <body data-shownav={showNav}>
     <Navbar />

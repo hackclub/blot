@@ -18,6 +18,7 @@ export class Turtle {
   style: {
     fill: string
     stroke: string
+    width: number
   }
 
   constructor(start: Point = [0, 0]) {
@@ -27,7 +28,8 @@ export class Turtle {
     this.path = [[[...start]]]
     this.style = {
       fill: 'none',
-      stroke: 'black'
+      stroke: 'black',
+      width: .25
     }
   }
 
@@ -63,6 +65,7 @@ export class Turtle {
     this.up()
     this.goTo(pt)
     this.down()
+    // TODO: if last path is one point, remove it
     return this
   }
 
@@ -77,27 +80,56 @@ export class Turtle {
     return this
   }
 
-  arc(angle: number, radius: number) {
-    const theta = Math.abs(angle)
+  arc(angle, radius) {
+    if (angle === 0 || radius === 0) return this;
+    
+    const n = 64;
+    let pts = [ ];
+    const a = angle/180*Math.PI;
+    const lp = this.position;
+    const la = this.angle;
 
-    const length = ((radius * theta) / 180) * Math.PI
+    const getX = (theta, r) => r*Math.cos(theta);
+    const getY = (theta, r) => r*Math.sin(theta);
 
-    const ogAngle = this.angle
-    const thetaStep = 1
-    const steps = theta / thetaStep
-    const distanceStep = length / steps
-
-    for (let i = 0; i < steps; i++) {
-      if (angle >= 0) this.right(thetaStep)
-      else this.left(thetaStep)
-
-      this.forward(distanceStep)
+    for ( let i = 0; i <= n; i++) {
+      const theta = a/n*i;
+      const x = getX(theta, radius);
+      const y = getY(theta, radius);
+      pts.push([ x, y ]);
     }
 
-    this.setAngle(ogAngle - angle)
+    pts = pts.map(pt => translate(pt, lp, pts[0]));
+    pts = pts.map(pt => rotate(pt, la + (angle < 0 ? 90 : -90), pts[0]));
 
-    return this
-  }
+    pts.slice(1).forEach(pt => this.goTo(pt));
+
+    this.setAngle(la + angle);
+
+    return this;
+  } 
+
+  // arc(angle: number, radius: number) {
+  //   const theta = Math.abs(angle)
+
+  //   const length = ((radius * theta) / 180) * Math.PI
+
+  //   const ogAngle = this.angle
+  //   const thetaStep = 1
+  //   const steps = theta / thetaStep
+  //   const distanceStep = length / steps
+
+  //   for (let i = 0; i < steps; i++) {
+  //     if (angle >= 0) this.right(thetaStep)
+  //     else this.left(thetaStep)
+
+  //     this.forward(distanceStep)
+  //   }
+
+  //   this.setAngle(ogAngle - angle)
+
+  //   return this
+  // }
 
   setAngle(theta: number) {
     this.angle = theta

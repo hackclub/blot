@@ -49,7 +49,7 @@ let height = Math.random();
 
 You'll quickly notice that this doesn't look too good - the offset is _too_ random. A good compromise is smooth noise. This kind of noise is random on large scales, but smooth when looked at close up. It's good for natural-looking curves, and matches the randomness seen on the Joy Division album cover.
 
-We can call this in the Haxidraw editor with `noise([x, y], {octaves:n, falloff:k})`. The octaves dictate how intricate this noise is, and the falloff dictates how much the small scale detail should affect the final value.
+We can call this in the Blot editor with `noise([x, y], {octaves:n, falloff:k})`. The octaves dictate how intricate this noise is, and the falloff dictates how much the small scale detail should affect the final value.
 
 We don't want pure smooth noise, and we'll instead want to modify how we sample it a bit. Set `height` equal to `line + sampleNoise(x, line)`, and define that function:
 

@@ -13,7 +13,7 @@ export function addMachineControl() {
   listener('click', '[data-evt-connectTrigger]', async () => {
     if (!navigator.serial) {
       alert(
-        "Your browser doesn't seem to support the Web Serial API, which is required for the Haxidraw editor to connect to the machine. Chrome Version 89 or above is the recommended browser."
+        "Your browser doesn't seem to support the Web Serial API, which is required for the Blot editor to connect to the machine. Chrome Version 89 or above is the recommended browser."
       )
     }
     if (!haxidraw) {

@@ -20,6 +20,12 @@ Below is a list of all parts needed to construct your Blot. Keep in mind that th
 ---
 Carriage assembly
 ---
+
+<img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0092.png" alt="aaa" width="300"/><br>
+Align the aluminum plate with the bottom of the carriage. the holes in the alumnium plate will only properly align with the holes of the bottom of the carriage in one direction. 
+
+---
+
 <img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0001.png" alt="aaa" width="300"/><br>
 Insert 4 nuts into the nut traps on the back of the carriage. Nut traps are hexagonal holes which nuts fit into.
 

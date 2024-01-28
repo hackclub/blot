@@ -20,9 +20,9 @@ From just that one line, the following intricate pattern is be created:
   width="512px"
 />
 
-There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Haxidraw_**. (This tutorial works fine if you don't have one!)
+There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Blot_**. (This tutorial works fine if you don't have one!)
 
-A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
+A Blot is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
 
 <img
   src="https://cloud-imp7l9zfa-hack-club-bot.vercel.app/0232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg"
@@ -34,7 +34,7 @@ A Haxidraw is a small drawing robot that can be programed from a browser. You se
   width="512px"
 />
 
-Here are some examples of art people have made with Haxidraw:
+Here are some examples of art people have made with Blot:
 
 <img
   src="https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true"

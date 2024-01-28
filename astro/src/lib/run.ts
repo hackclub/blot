@@ -38,6 +38,21 @@ const hConsole = {
   warn: (...args: [any, ...any[]]) => baseLogger('warn', ...args)
 }
 
+
+// TODO this casues bugs
+
+// let DETECTED_RANDOM_USAGE = false
+// const patchedRandom = (() => {
+//   if (!DETECTED_RANDOM_USAGE) {
+//     hConsole.warn(`Math.random() called! This could cause issues if done unintentionally.
+//     https://github.com/hackclub/blot/issues/161`)
+//     DETECTED_RANDOM_USAGE = true
+//   }
+//   return Math.__proto__.unpatchedRandom()
+// })
+// Math.__proto__.unpatchedRandom = Math.random
+// Math.random = patchedRandom
+
 let intervals: number[] = []
 let timeouts: number[] = []
 const patchedInterval = (
@@ -78,6 +93,7 @@ const customGlobal = {
       const temp = t.copy()
       if (style.fill === undefined) style.fill = 'none'
       if (style.stroke === undefined) style.stroke = 'black'
+      if (style.width === undefined) style.width = 1
       temp.style = style
       turtles.push(temp)
     })
@@ -190,13 +206,20 @@ async function runCodeInner(str, globalScope) {
 }
 
 function getPosFromErr(err) {
-  const match = err.stack.match(/<anonymous>:(\d+):(\d+)/)
+  try {
+    const match = err.stack.match(/<anonymous>:(\d+):(\d+)/)
 
-  const pos = { line: Number(match[1]) - 2, column: Number(match[2]) }
+    const pos = { line: Number(match[1]) - 2, column: Number(match[2]) }
 
-  // to account for "use strict\n"
-  pos.line -= 1
-  pos.column -= 1
+    // to account for "use strict\n"
+    pos.line -= 1
+    pos.column -= 1
 
-  return pos
+    return pos
+  } catch (e) {
+    // An error in the error handler?!
+    // that's embarassing.
+    console.log('Unable to catch error position:', e)
+    return { line: 1, column: 1 }
+  }
 }

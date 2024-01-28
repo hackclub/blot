@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Background from '../components/landing/Background.astro'
+import BackgroundFull from '../components/landing/BackgroundFull.astro'
 import { slug } from '../lib/guide.ts'
 
 const workshops = await Astro.glob('/../guides/*.md')
@@ -281,8 +282,13 @@ try {
       </div>
     </div>
     <div class="background center-inner" style="z-index: -5; opacity: .4;">
-      <div class="mobile-bg-scale" style="width: 100%;">
-        <Background />
+      <div class="mobile-bg-scale w-100">
+        <video id="myVideo" width="100%" autoplay muted>
+            <source src="/landing/output-movie.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <Background /> 
+        <!-- <BackgroundFull client:load /> -->
       </div>
     </div>
 
