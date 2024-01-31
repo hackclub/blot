@@ -85,7 +85,10 @@ The electronics box should contain:
 
 **Testing**
 
-To test the electonics, plug the steppers and servo into the main board, and try to run any of the art examples in the gallery.
+To test the electonics, plug the steppers and servo into the main board, and try to run any of the art examples in the gallery.  [^1]
+
+[^1]: If your xiao rp2040 isn't flashed, or acting strangly, use the flashing instructions provided in [the hardware instructions](../../hardware/motor-control-board/SETUP.md).
+
 The computer should connect properly to the board.
 The steppers should move firmly without clicking, and should resist the user pushing them. To test resistance, you may need to attach the Timing belt pulley from [box 4](#box-4-spacers-and-pulleys-box) to the stepper motor.
 
