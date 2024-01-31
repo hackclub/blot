@@ -19,6 +19,100 @@ const createComplexEmoji = () => {
   const nosexp = Math.floor(Math.random() * 4);
   drawNose(emojiTurtle, nosexp);
 
+
+  for (let i = 0; i < 2; i++) {
+    const noiseface = createTurtle();
+    noiseface.scale([0.0475 + (i * 0.0002), 0.0475 + (i * 0.0002)]);
+    noiseface.translate([-2631, -2847]);
+    noiseface.iteratePath((pt, tValue) => {
+      const [x, y] = pt;
+      pt[0] += noise(y * 7.3) * rand() * (i * 3 + 4) + Math.sin(y * 0.42);
+      if (rand() < 0.97) return pt;
+      if (rand() < lerp(0, 1, 0.20 * tValue ** 2)) return 'BREAK';
+      if (rand() < 0.44) return 'BREAK';
+    });
+    emojiTurtle.join(noiseface);
+    emojiTurtle.resample(randInRange(1, i * 5));
+  }
+
+
+
+
+  const background = createTurtle();
+  const maxX = 125; // Maximum x-coordinate
+  const maxY = 125; // Maximum y-coordinate
+
+  function isPointInsidePolygon(pt, polygon) {
+    const x = pt[0];
+    const y = pt[1];
+    let inside = false;
+
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+      const xi = polygon[i][0];
+      const yi = polygon[i][1];
+      const xj = polygon[j][0];
+      const yj = polygon[j][1];
+
+      const intersect =
+        yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
+
+      if (intersect) {
+        inside = !inside;
+      }
+    }
+
+    return inside;
+  }
+
+  // Draw shading only outside the polygon
+  for (let i = 0; i < 75; i++) {
+    for (let n = 0; n < 75; n++) {
+      const polygonVertices = [
+        [60, 120],
+        [80, 115],
+        [100, 100],
+        [110, 70],
+        [100, 40],
+        [80, 25],
+        [60, 20],
+        [40, 25],
+        [20, 40],
+        [10, 70],
+        [20, 100],
+        [35, 115],
+      ];
+
+      const pointToCheck = [1 + i * 4, 2 + n * 4];
+
+      if (!isPointInsidePolygon(pointToCheck, polygonVertices)) {
+        const numIterations = Math.floor(Math.random() * 1) + 1; // Random number of iterations
+        for (let m = 0; m < numIterations; m++) {
+          const newX = 1 + i * 4;
+          const newY = 2 + n * 4;
+
+          // Ensure the new position stays within the specified dimensions
+          if (newX < maxX && newY < maxY) {
+            background.jump([newX, newY]);
+            const distance = Math.random() * 5 + 1; // Random distance
+            const angle = Math.random() * 360; // Random angle
+            background.setAngle(angle).forward(distance);
+          }
+        }
+      }
+    }
+  }
+
+
+
+  // Resample the background turtle's path
+  background.resample(1);
+
+  // Optionally, render the background turtle
+  drawTurtles([background]);
+
+
+
+
   // Render the turtle
   drawTurtles([emojiTurtle]);
 };
@@ -61,11 +155,22 @@ const drawMouth = (turtle, expression) => {
       }
       break;
     case 10:
-      turtle.jump([45, 45]).down();
-      for (let x = 0; x <= (4 * Math.PI) / 2; x += 0.1) {
-        const y = Math.sin(x) * 4;
-        turtle.forward(2).jump([45 + x * 4, 45 + y]);
-      }
+      const t = createTurtle()
+      const edge = createTurtle()
+        .forward(5)
+        .resample(0.01)
+        .warp(bezierEasing(0.654, [0.400,2.290], [0.520,0.310], 0.9720))
+      const n = createTurtle()
+
+
+
+      n.join(edge)
+
+      n.translate([60, 45])
+      n.scale(4)
+
+      drawTurtles([n])
+      console.log("test")
       break;
   }
 };
