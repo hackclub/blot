@@ -1,8 +1,6 @@
-[title]
-"Blot BOM"
+title = "Blot BOM"
 
-[notes]
-md = """
+notes = """
 What cable does the stepper motor use?
 
 CA will make box.
@@ -21,9 +19,9 @@ exampleSource = "string"
 findLocalSupplier = "boolean"
 notes = "string"
 image = "string"
-tags = [tool", "3d-Printer", "laser cut", "circuit"]
+tags = ["tool", "3d-Printer", "laser cut", "circuit"]
 designFiles = ["stl", "dxf", "gerber + bom"]
-itemId = uuid # to identify the part
+itemId = "uuid" # to identify the part
 
 [[items]]
 part = "5mm allen key"
