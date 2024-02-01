@@ -187,18 +187,16 @@ tags = ["3D-printed"]
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0065.png"
 
 [[items]]
-part = "625zz V-Wheel"
+part = "625zz V-Wheel" # TODO: what is the dimension
 exampleSource = "https://www.amazon.com/gp/product/B09CGJZYPK/"
 quantity = 8
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0053.png"
 findLocalSupplier = true
-question? = what is the dimension
 
 [[items]]
-part = "300mm long GT2 Timing Belt"
+part = "125mm long GT2 Timing Belt"
 quantity = 1
 findLocalSupplier = true
-question? = what is the length
 
 [[items]]
 part = "Belt Clip"
@@ -239,12 +237,11 @@ image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImage
 findLocalSupplier = true
 
 [[items]]
-part = "50mm Stepper motor cables"
+part = "20mm Stepper motor cables"
 quantity = 2
 findLocalSupplier = true
 purpose = "to connect steppers to control board"
 notes = "can't be too long or too short"
-question? = what is the length
 
 [[items]]
 part = "PCB"
@@ -270,8 +267,7 @@ quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0080.png"
 findLocalSupplier = true
 purpose = "moves pen holder up and down"
-notes = "must have long enough cable to connect to control board"
-question? = what is the length
+notes = "must have long enough cable (25mm) to connect to control board"
 
 [[items]]
 part = "Carriage Plate"
