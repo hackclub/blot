@@ -98,9 +98,10 @@ The steppers should move firmly without clicking, and should resist the user pus
 ## Tool bundle
 
 The taped-together tool bundle should contain:
-- [ ] 3mm allen key
+- [ ] 2mm allen key
+- [ ] 2.5mm allen key
 - [ ] 5mm allen key
-- [ ] 8mm wrench
+- [ ] 10mm wrench
 - [ ] 1 retractable/ballpoint pen
 
 **Testing**
