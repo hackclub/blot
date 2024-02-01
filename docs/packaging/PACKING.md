@@ -1,5 +1,7 @@
 Hey there! If you're reading this, you're probably trying to pack a blot to ship out to a hack clubber.
 
+You'll probably want to familiarize yourself with the [BOM](../BOM.toml) before packing.
+
 Here's a quick checklist of what to include:
 
 - [ ] Welcome to blot letter
@@ -19,7 +21,7 @@ This is a letter that accompanies every blot. It's a quick, friendly message and
 
 ![](https://cloud-m6norcnvl-hack-club-bot.vercel.app/0img_2588.jpg)
 
-The code for drawing this on a blot can be found in [notecard.js](./notecard.js). Please make sure to increment the blot number on the card before shipping. At the time of writing there is no source of truth for the incremented number.
+The code for drawing this on a blot can be found in [notecard.js](./notecard.js). Please make sure to increment the blot number on the card before shipping & documenting on Airtable's list of Blot orders when you send a Blot with a specific number.
 
 ## Box 1: screws
 
@@ -96,9 +98,10 @@ The steppers should move firmly without clicking, and should resist the user pus
 ## Tool bundle
 
 The taped-together tool bundle should contain:
-- [ ] 3mm allen key
+- [ ] 2mm allen key
+- [ ] 2.5mm allen key
 - [ ] 5mm allen key
-- [ ] 8mm wrench
+- [ ] 10mm wrench
 - [ ] 1 retractable/ballpoint pen
 
 **Testing**
@@ -114,7 +117,7 @@ In addition to all the smaller boxes, there are a few parts that go directly int
   - [ ] carriage plate
   - [ ] 2020x250mm extrusion (x2)
 - [ ] The 3d printed components
-  - The full list can be found on [the assembly instructions](../ASSEMBLY.md)
+  - The full list can be found on [the bom](../BOM.toml)
 
 **Testing**
 
