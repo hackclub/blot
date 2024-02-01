@@ -21,7 +21,7 @@ This is a letter that accompanies every blot. It's a quick, friendly message and
 
 ![](https://cloud-m6norcnvl-hack-club-bot.vercel.app/0img_2588.jpg)
 
-The code for drawing this on a blot can be found in [notecard.js](./notecard.js). Please make sure to increment the blot number on the card before shipping. At the time of writing there is no source of truth for the incremented number.
+The code for drawing this on a blot can be found in [notecard.js](./notecard.js). Please make sure to increment the blot number on the card before shipping & documenting on Airtable's list of Blot orders when you send a Blot with a specific number.
 
 ## Box 1: screws
 
