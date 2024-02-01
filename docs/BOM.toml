@@ -18,6 +18,7 @@ extra = "number"
 exampleSource = "string"
 findLocalSupplier = "boolean"
 notes = "string"
+purpose = "string"
 image = "string"
 tags = ["tool", "3d-Printer", "laser cut", "circuit"]
 designFiles = ["stl", "dxf", "gerber + bom"]
@@ -48,7 +49,7 @@ findLocalSupplier = true
 tags = ["tool"]
 
 [[items]]
-part = "8mm wrench"
+part = "10mm wrench"
 notes = "for adjusting eccentric nuts"
 exampleSource = "https://www.amazon.com/TEKTON-18277-Combination-Wrench/dp/B01F510Q1Q?th=1"
 quantity = 1
@@ -89,7 +90,7 @@ findLocalSupplier = true
 part = "M5 T-nut"
 notes = "for attaching feet, belt holder, pen rail to extrusions"
 exampleSource = "https://www.amazon.com/Fastener-Nickel-Plated-Sliding-Aluminum-Profile/dp/B086MKNYDS/"
-quantity = 11
+quantity = 13
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0085.png"
 findLocalSupplier = true
 
@@ -112,7 +113,7 @@ findLocalSupplier = true
 part = "M5x10 Button Cap Screw"
 notes = "for attaching parts to alumnium extrusion"
 exampleSource = "https://www.mcmaster.com/92095A208/"
-quantity = 11
+quantity = 13
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0059.png"
 findLocalSupplier = true
 
@@ -187,7 +188,7 @@ image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImage
 [[items]]
 part = "625zz V-Wheel" # TODO: what is the dimension
 exampleSource = "https://www.amazon.com/gp/product/B09CGJZYPK/"
-quantity = 8
+quantity = 11
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0053.png"
 findLocalSupplier = true
 
@@ -265,7 +266,7 @@ quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0080.png"
 findLocalSupplier = true
 purpose = "moves pen holder up and down"
-notes = "must have long enough cable (25mm) to connect to control board"
+notes = "must have long enough cable (25mm) to connect to control board; also needs to have servo arm"
 
 [[items]]
 part = "Carriage Plate"
