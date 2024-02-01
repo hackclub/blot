@@ -1,5 +1,7 @@
 Hey there! If you're reading this, you're probably trying to pack a blot to ship out to a hack clubber.
 
+You'll probably want to familiarize yourself with the [BOM](../BOM.toml) before packing.
+
 Here's a quick checklist of what to include:
 
 - [ ] Welcome to blot letter
@@ -114,7 +116,7 @@ In addition to all the smaller boxes, there are a few parts that go directly int
   - [ ] carriage plate
   - [ ] 2020x250mm extrusion (x2)
 - [ ] The 3d printed components
-  - The full list can be found on [the assembly instructions](../ASSEMBLY.md)
+  - The full list can be found on [the bom](../BOM.toml)
 
 **Testing**
 
