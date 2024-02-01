@@ -15,11 +15,11 @@ Philips head for adjusting pot?
 part = "string"
 quantity = "number"
 extra = "number"
-exampleSource = "string"
+exampleSource = "link"
 findLocalSupplier = "boolean"
 notes = "string"
 purpose = "string"
-image = "string"
+image = "image"
 tags = ["tool", "3d-Printer", "laser cut", "circuit"]
 designFiles = ["stl", "dxf", "gerber + bom"]
 itemId = "uuid" # to identify the part
