@@ -93,5 +93,20 @@
     "directory": "BlotGrapher-V205",
     "snapshots": ["Snapshot1.jpeg"],
     "source": "index.js"
+  },
+  {
+    "directory": "dexter_sunnyhouse",
+    "snapshots": ["image (3).png"],
+    "source": "script.js"
+  },
+  {
+    "directory": "fractures-msw",
+    "snapshots": ["image (16).png"],
+    "source": "index.js"
+  },
+  {
+    "directory": "BitMap-AdityaPV",
+    "snapshots": ["sprig.png"],
+    "source": "index.js"
   }
 ]

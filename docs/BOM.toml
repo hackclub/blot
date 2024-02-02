@@ -1,0 +1,320 @@
+title = "Blot BOM"
+
+notes = """
+What cable does the stepper motor use?
+
+CA will make box.
+Specify how much room we need in the box.
+
+Add picture of all parts
+
+Philips head for adjusting pot?
+"""
+
+[schema]
+part = "string"
+quantity = "number"
+extra = "number"
+exampleSource = "link"
+findLocalSupplier = "boolean"
+notes = "string"
+purpose = "string"
+image = "image"
+container = ["box #1", "box #2", "box #3", "box #4", "electronics box", "free floating", "small parts bag", "tool bundle"]
+tags = ["tool", "3d-Printer", "laser cut", "circuit"]
+designFiles = ["stl", "dxf", "gerber + bom"]
+itemId = "uuid" # to identify the part
+
+[[items]]
+part = "5mm allen key"
+notes = "for tightening most screws"
+exampleSource = "https://www.mcmaster.com/7289A16"
+quantity = 1
+findLocalSupplier = true
+tags = ["tool"]
+container = "tool bundle"
+
+[[items]]
+part = "2.5mm allen key"
+notes = "for attaching stepper motors"
+exampleSource = "https://www.mcmaster.com/7289A13"
+quantity = 1
+findLocalSupplier = true
+tags = ["tool"]
+container = "tool bundle"
+
+[[items]]
+part = "2mm allen key"
+notes = "for tightening gears on stepper motors"
+exampleSource = "https://www.mcmaster.com/7289A12"
+quantity = 1
+findLocalSupplier = true
+tags = ["tool"]
+container = "tool bundle"
+
+[[items]]
+part = "10mm wrench"
+notes = "for adjusting eccentric nuts"
+exampleSource = "https://www.amazon.com/TEKTON-18277-Combination-Wrench/dp/B01F510Q1Q?th=1"
+quantity = 1
+findLocalSupplier = true
+tags = ["tool"]
+container = "tool bundle"
+
+[[items]]
+part = "M5x35 Button Cap Screw"
+notes = "for attaching wheels to carriage"
+exampleSource = "https://www.mcmaster.com/92095A220/"
+quantity = 8
+extra = 1
+findLocalSupplier = true
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0056.png"
+container = "box #1"
+
+[[items]]
+part = "M5x25 Button Cap Screw"
+notes = "for attaching wheels to pen holder"
+exampleSource = "https://www.mcmaster.com/92095A216/"
+quantity = 3
+extra = 1
+findLocalSupplier = true
+container = "box #1"
+
+[[items]]
+part = "M5 Nut"
+exampleSource = "https://www.mcmaster.com/90591A260/"
+quantity = 17
+extra = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0084.png"
+findLocalSupplier = true
+container = "box #4"
+
+[[items]]
+part = "M5x20 Button Cap Screw"
+notes = "for attaching idlers to carriage and pen holder rail"
+exampleSource = "https://www.mcmaster.com/92095A214/"
+quantity = 5
+extra = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0058.png"
+findLocalSupplier = true
+container = "box #1"
+
+[[items]]
+part = "M5 T-nut"
+notes = "for attaching feet, belt holder, pen rail to extrusions"
+exampleSource = "https://www.amazon.com/Fastener-Nickel-Plated-Sliding-Aluminum-Profile/dp/B086MKNYDS/"
+quantity = 13
+extra = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0085.png"
+findLocalSupplier = true
+container = "box #4"
+
+[[items]]
+part = "M5x20, knurled cylinder head"
+notes = "for holding in pen"
+exampleSource = "https://www.mcmaster.com/91292A128/"
+quantity = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0095.png"
+findLocalSupplier = true
+container = "box #1"
+
+[[items]]
+part = "Timing Belt Pulley"
+exampleSource = "https://www.amazon.com/gp/product/B085XLRXS1/"
+quantity = 2
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0068.png"
+findLocalSupplier = true
+container = "box #4"
+
+[[items]]
+part = "M5x10 Button Cap Screw"
+notes = "for attaching parts to alumnium extrusion"
+exampleSource = "https://www.mcmaster.com/92095A208/"
+quantity = 13
+extra = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0059.png"
+findLocalSupplier = true
+container = "box #1"
+
+[[items]]
+part = "less than .5in diameter Rubber Feet"
+exampleSource = "https://www.amazon.com/gp/product/B0BFHTGKNM/"
+quantity = 4
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0078.png"
+findLocalSupplier = true
+container = "box #4"
+
+[[items]]
+part = "M3x10 Button Cap Screw"
+notes = "for attaching stepper motors to feet"
+exampleSource = "https://www.mcmaster.com/91292A113/"
+quantity = 8
+extra = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0057.png"
+findLocalSupplier = true
+container = "small parts bag"
+
+[[items]]
+part = "Carriage"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_ReinforcedCarriage.stl"
+quantity = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0094.png"
+tags = ["3D-printed"]
+findLocalSupplier = true
+container = "free floating"
+
+[[items]]
+part = "1mm tall x 8mm OD x M5 inner Alumninum Spacer"
+notes = "for idler assemblies"
+exampleSource = "https://www.mcmaster.com/98089A375/"
+quantity = 5
+extra = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0060.png"
+findLocalSupplier = true
+container = "small parts bag"
+
+[[items]]
+part = "Tool Head"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_ToolHead.stl"
+quantity = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0063.png"
+tags = ["3D-printed"]
+findLocalSupplier = true
+container = "free floating"
+
+[[items]]
+part = "6mm tall x M5 inner Eccentric Spacer"
+exampleSource = "https://www.amazon.com/Micro-Traders-Eccentric-Aluminium-Extrusion/dp/B09CYK9P43/"
+quantity = 5
+extra = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0055.png"
+findLocalSupplier = true
+container = "bag #4"
+
+[[items]]
+part = "Printed Rail"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_PrintedRail.stl"
+quantity = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0064.png"
+tags = ["3D-printed"]
+findLocalSupplier = true
+container = "free floating"
+
+[[items]]
+part = "6mm tall x 8mm OD x M5 inner Alumnium Spacer"
+exampleSource = "https://www.mcmaster.com/94669A042/"
+quantity = 4
+extra = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0061.png"
+findLocalSupplier = true
+container = "bag #4"
+
+[[items]]
+part = "Motor Leg"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/2x_Legs.stl"
+quantity = 2
+tags = ["3D-printed"]
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0065.png"
+container = "free floating"
+findLocalSupplier = true
+
+[[items]]
+part = "625zz V-Wheel" # TODO: what is the dimension
+exampleSource = "https://www.amazon.com/gp/product/B09CGJZYPK/"
+quantity = 11
+extra = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0053.png"
+findLocalSupplier = true
+container = "box #3"
+
+[[items]]
+part = "125mm long GT2 Timing Belt"
+quantity = 1
+findLocalSupplier = true
+container = "box #2"
+
+[[items]]
+part = "Belt Clip"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_BeltClip.stl"
+quantity = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0066.png"
+findLocalSupplier = true
+tags = ["3D-printed"]
+container = "free floating"
+
+[[items]]
+part = "5x16x5mm flanged bearing"
+exampleSource = "https://www.amazon.com/gp/product/B07Z3DXF14/"
+quantity = 10
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0054.png"
+findLocalSupplier = true
+container = "box #2"
+
+[[items]]
+part = "PCB Mount"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_PCBMount.stl"
+quantity = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0087.png"
+findLocalSupplier = true
+tags = ["3D-printed"]
+container = "free floating"
+
+[[items]]
+part = "20mm x 20mm (face) x 250mm (tall) Aluminum Extrusion"
+quantity = 2
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0081.png"
+exampleSource = "https://openbuildspartstore.com/v-slot-20x20-linear-rail/"
+findLocalSupplier = true
+notes = "must have this profile"
+container = "free floating"
+
+[[items]]
+part = "42mm x 42mm (face) x 38mm (tall) Stepper Motor"
+exampleSource = "https://www.amazon.com/gp/product/B0B38H2ZMR/"
+quantity = 2
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0067.png"
+findLocalSupplier = true
+container = "free floating"
+
+[[items]]
+part = "20mm Stepper motor cables"
+quantity = 2
+findLocalSupplier = true
+notes = "to connect steppers to control board; can't be too long or too short"
+container = "electronics box"
+
+[[items]]
+part = "PCB - control board"
+exampleSource = "https://github.com/hackclub/blot/tree/main/hardware/motor-control-board"
+quantity = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0086.png"
+findLocalSupplier = true
+notes = "manufacture in china"
+tags = ["homemade", "circuit"]
+container = "electronics box"
+
+[[items]]
+part = "xiao RP2040"
+quantity = 1
+findLocalSupplier = false
+notes = "brains of the control board; purchase from Seeed Studios with header soldered on"
+container = "electronics box"
+
+[[items]]
+part = "Servo (25mm cable) + arm"
+exampleSource = "https://www.amazon.com/gp/product/B07L2SF3R4/"
+quantity = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0080.png"
+findLocalSupplier = true
+notes = "moves pen holder up and down; must have long enough cable (25mm) to connect to control board; also needs to have servo arm"
+container = "electronics box"
+
+[[items]]
+part = "Carriage Plate"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_CarriagePlate.stl"
+quantity = 1
+image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0093.png"
+findLocalSupplier = false
+notes = "helps make the carriage rigid; manufactured by SendCutSend"
+tags = ["laser cut"]
+container = "free floating"
