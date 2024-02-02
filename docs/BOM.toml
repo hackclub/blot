@@ -285,7 +285,7 @@ container = "electronics box"
 
 [[items]]
 part = "PCB - control board"
-exampleSorce = "https://github.com/hackclub/blot/tree/main/hardware/motor-control-board"
+exampleSource = "https://github.com/hackclub/blot/tree/main/hardware/motor-control-board"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0086.png"
 findLocalSupplier = true
