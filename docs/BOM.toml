@@ -252,7 +252,7 @@ container = "box #2"
 
 [[items]]
 part = "PCB Mount"
-designFiles = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_PCBMount.stl"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_PCBMount.stl"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0087.png"
 findLocalSupplier = true
@@ -280,37 +280,33 @@ container = "free floating"
 part = "20mm Stepper motor cables"
 quantity = 2
 findLocalSupplier = true
-purpose = "to connect steppers to control board"
-notes = "can't be too long or too short"
+notes = "to connect steppers to control board; can't be too long or too short"
 container = "electronics box"
 
 [[items]]
-part = "PCB"
-designFiles = "https://github.com/hackclub/blot/tree/main/hardware/motor-control-board"
+part = "PCB - control board"
+exampleSorce = "https://github.com/hackclub/blot/tree/main/hardware/motor-control-board"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0086.png"
 findLocalSupplier = true
-purpose = "control board"
 notes = "manufacture in china"
-tags = ["circuit"]
+tags = ["homemade", "circuit"]
 container = "electronics box"
 
 [[items]]
-part = "Xiao RP2040"
+part = "xiao RP2040"
 quantity = 1
 findLocalSupplier = false
-purpose = "brains of the control board"
-notes = "purchase from Seeed Studios with header soldered on"
+notes = "brains of the control board; purchase from Seeed Studios with header soldered on"
 container = "electronics box"
 
 [[items]]
-part = "Servo"
+part = "Servo (25mm cable) + arm"
 exampleSource = "https://www.amazon.com/gp/product/B07L2SF3R4/"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0080.png"
 findLocalSupplier = true
-purpose = "moves pen holder up and down"
-notes = "must have long enough cable (25mm) to connect to control board; also needs to have servo arm"
+notes = "moves pen holder up and down; must have long enough cable (25mm) to connect to control board; also needs to have servo arm"
 container = "electronics box"
 
 [[items]]
@@ -319,7 +315,6 @@ exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0093.png"
 findLocalSupplier = false
-purpose = "helps make the carriage rigid"
-notes = "manufactured by SendCutSend"
+notes = "helps make the carriage rigid; manufactured by SendCutSend"
 tags = ["laser cut"]
 container = "free floating"
