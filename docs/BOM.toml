@@ -206,6 +206,7 @@ quantity = 2
 tags = ["3D-printed"]
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0065.png"
 container = "free floating"
+findLocalSupplier = true
 
 [[items]]
 part = "625zz V-Wheel" # TODO: what is the dimension
