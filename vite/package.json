@@ -1,0 +1,52 @@
+{
+  "name": "editor",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@codemirror/commands": "^6.2.4",
+    "@codemirror/lang-javascript": "^6.1.9",
+    "@codemirror/language": "^6.8.0",
+    "@codemirror/state": "^6.2.1",
+    "@codemirror/view": "^6.14.0",
+    "@hackclub/icons": "^0.0.14",
+    "@lezer/common": "^1.0.3",
+    "@preact/preset-vite": "^2.8.1",
+    "@prisma/client": "5.9.1",
+    "@replit/codemirror-vim": "^6.0.14",
+    "@rollup/browser": "^3.26.0",
+    "@sendgrid/mail": "^7.7.0",
+    "acorn": "^8.11.2",
+    "classnames": "^2.3.2",
+    "cm6-theme-basic-dark": "^0.2.0",
+    "codemirror": "^6.0.1",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "firebase": "^10.3.1",
+    "firebase-admin": "^11.11.1",
+    "highlight.js": "^11.9.0",
+    "js-beautify": "^1.14.9",
+    "marked": "^7.0.4",
+    "marked-highlight": "^2.1.0",
+    "nanoid": "^5.0.3",
+    "preact": "^10.6.5",
+    "prisma": "^5.9.1",
+    "prismjs": "^1.29.0",
+    "source-map-js": "^1.0.2",
+    "tailwindcss": "^3.0.24",
+    "three": "^0.155.0",
+    "vite-express": "^0.14.1",
+    "vite-plugin-mix": "^0.4.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3",
+    "prettier-plugin-astro": "^0.11.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.12"
+  }
+}

@@ -1,0 +1,28 @@
+<script>
+  setTimeout(() => {
+    fadeIn(document.querySelector('nav'), 1100)
+    document.querySelectorAll('.fade-in').forEach(el => {
+      fadeIn(el, 1100)
+    })
+  }, 500)
+
+  function fadeIn(el, duration = 2000) {
+    let start
+
+    function animate(timestamp) {
+      if (!start) start = timestamp
+      const elapsed = timestamp - start
+
+      // Calculate the current opacity
+      el.style.opacity = Math.min(elapsed / duration, 1)
+
+      // Continue the animation until the duration is reached
+      if (elapsed < duration) {
+        requestAnimationFrame(animate)
+      }
+    }
+
+    // Start the animation
+    requestAnimationFrame(animate)
+  }
+</script>

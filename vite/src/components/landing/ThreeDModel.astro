@@ -1,0 +1,552 @@
+<style>
+  .three-js-container {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .buttons {
+    display: none;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+  }
+</style>
+
+<script>
+  import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
+  import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
+  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+  import * as THREE from 'three'
+  import { runTextReturnTurtles } from '../../lib/runTextReturnTurtles.ts'
+
+  window.onload = () => {
+    const navHeight = document.querySelector('nav')?.offsetHeight
+
+    let objects = {}
+
+    const machineRange = {
+      x: [-0.07031505489843565, 0.06585060696837623],
+      y: [-0.21385993884461388, -0.06802130646267329]
+    }
+
+    const machineWidth = machineRange.x[1] - machineRange.x[0]
+    const machineHeight = machineRange.y[1] - machineRange.y[0]
+
+    // Set up scene
+    const scene = new THREE.Scene()
+    scene.background = null
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    )
+    // Set up renderer
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true
+    })
+
+    let controls
+    document.getElementById('rotate').addEventListener('click', event => {
+      if (controls === undefined) {
+        event.target.style.color = 'var(--primary)'
+        controls = new OrbitControls(camera, renderer.domElement)
+      } else {
+        event.target.style.color = 'black'
+        controls.dispose()
+        controls = undefined
+      }
+    })
+
+    const threeContainer = document.querySelector('.three-js-container')
+    threeContainer.appendChild(renderer.domElement)
+    renderer.setSize(window.innerWidth, threeContainer.offsetHeight)
+
+    // Set up light
+    const light = new THREE.DirectionalLight(0xffffff)
+    light.position.set(-0.5, 0, 1)
+    scene.add(light)
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+    scene.add(ambientLight)
+
+    // Add the parts
+    const objLoader = new OBJLoader().setPath('/model/')
+    const mtlLoader = new MTLLoader().setPath('/model/')
+
+    // camera.position.z = 0.25
+    // camera.position.x = 0
+    // camera.rotation.z = Math.PI
+    // camera.position.y = -0.055
+
+    const initCamPos = {
+      x: -0.012060728422271984,
+      y: -0.30995465588219245,
+      z: 0.22370699843435427
+    }
+    const initCamAngle = {
+      x: 1.0095700038735655,
+      y: 0.0025350872263442863,
+      z: -0.004032504057447568
+    }
+
+    for (const k in initCamPos) {
+      camera.position[k] = initCamPos[k]
+    }
+
+    for (const k in initCamAngle) {
+      camera.rotation[k] = initCamAngle[k]
+    }
+
+    /*
+  const toolTip = addSphere({
+    radius: 0.005,
+    color: 'green'
+  })
+  */
+    ;[
+      {
+        name: 'feet',
+        post: obj => {
+          obj.position.z = 0.038
+        }
+      },
+      {
+        name: 'carriage',
+        post: obj => {
+          obj.position.z = 0.063
+        }
+      },
+      {
+        name: 'arm',
+        post: obj => {
+          obj.position.z = 0.065
+        }
+      },
+      {
+        name: 'penholder',
+        post: obj => {
+          obj.position.z = 0.065
+        }
+      }
+    ].map(addObj)
+
+    setTimeout(() => {
+      moveMachine(0, 0)
+    }, 1000)
+
+    function addObj({ name, post }) {
+      mtlLoader.load(`${name}.mtl`, function (materials) {
+        materials.preload()
+        objLoader.setMaterials(materials).load(
+          `${name}.obj`,
+          function (object) {
+            scene.add(object)
+            objects[name] = object
+
+            const boundingBox = new THREE.Box3().setFromObject(object)
+            const yOffset = boundingBox.min.y
+            const xOffset = (boundingBox.min.x + boundingBox.max.x) / 2
+            const zOffset = (boundingBox.min.z + boundingBox.max.z) / 2
+
+            object.traverse(child => {
+              if (child instanceof THREE.Mesh) {
+                child.position.set(-xOffset, -yOffset, -zOffset)
+              }
+            })
+
+            post(object)
+          },
+          function (xhr) {},
+          function (error) {}
+        )
+      })
+    }
+
+    let texCanvas = document.createElement('canvas')
+    // document.body.appendChild(texCanvas)
+    texCanvas.style = `
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 999999;
+      scale: .5;
+      transform-origin: left top;
+
+    `
+    const texCanvasWidth = 512
+    const texCanvasHeight = (512 * machineHeight) / machineWidth
+
+    texCanvas.width = texCanvasWidth
+    texCanvas.height = texCanvasHeight
+
+    let ctx = texCanvas.getContext('2d')
+
+    ctx.fillStyle = 'rgba(255, 100, 200, .5)'
+    ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight)
+    // ctx.fillStyle = 'blue';
+    // ctx.fillRect(0, 0, texCanvasWidth, texCanvasHeight)
+
+    const testTurtles = runTextReturnTurtles(`const leafLength = 5
+const leafW = 1.3
+
+const edge = createTurtle()
+  .forward(leafLength)
+  .resample(0.01)
+  .warp(bezierEasing(0, [0.4, 2.29], [0.52, 0.31], 0))
+
+function veins() {
+  const lines = createTurtle()
+
+  let littleLinesMax = 61
+  for (let i = 4; i < littleLinesMax - 5; i++) {
+    const t = i / (littleLinesMax - 1)
+    const x0 = t * leafLength
+    const y0 = 0
+
+    let y = edge.interpolate(t + 0.1)[1]
+
+    const line = createTurtle([x0, y0])
+
+    line.right(-70 + t * 37 + randInRange(-4, 4))
+
+    let r = y * 0.7
+
+    const trimTo = i % 5 === 0 ? randInRange(0.7, 0.9) : randInRange(0.1, 0.7)
+
+    if (r < 0.01) continue
+
+    const warper = bezierEasing(0, [0.28, y / 4], [0.58, y / 8], 0)
+
+    line.forward(r).resample(0.01).warp(warper).resample(0.05).trim(0, trimTo)
+
+    line.iteratePath(pt => {
+      return Math.random() < (i % 5 === 0 ? +0.17 : 0.56) ? 'BREAK' : pt
+    })
+
+    lines.join(line)
+  }
+
+  return lines
+}
+
+const t = createTurtle()
+
+const bottom = edge.copy().scale([1, -1], [0, 0])
+
+edge.warp(
+  t => noise(t * 20.4, { octaves: 2 }) * 0.09 * (t === 0 || t === 1 ? 0 : 1)
+)
+bottom.warp(
+  t => noise(t * 23.6, { octaves: 2 }) * -0.1 * (t === 0 || t === 1 ? 0 : 1)
+)
+
+t.join(edge)
+t.join(bottom)
+t.join(veins())
+t.join(veins().scale([1, -1], [0, 0]))
+
+const lineStem = createTurtle([-1, 0])
+  .forward(leafLength + 1)
+  .resample(0.1)
+
+t.join(lineStem)
+
+t.iteratePath(pt => {
+  let [x, y] = pt
+  y += x * x * 0.02
+  y += noise([x * 0.2]) * 0.3
+  return [x, y]
+})
+
+t.translate([125 / 2, 125 / 2], t.cc)
+t.scale(70)
+
+drawTurtles([t])`)
+
+    if (testTurtles.length > 1) {
+      const [first, ...rest] = testTurtles
+
+      rest.forEach(t => first.join(rest))
+    }
+
+    const oneTurtle = testTurtles.length > 0 ? testTurtles[0] : null
+
+    oneTurtle.translate([texCanvasWidth / 2, texCanvasHeight / 2], oneTurtle.cc)
+    oneTurtle.resample(5)
+    const totalN = oneTurtle.path.flat().length
+
+    function drawCanvasTexture(n) {
+      ctx.clearRect(0, 0, texCanvasWidth, texCanvasHeight)
+
+      let count = 0
+      let lastPoint = null
+      ctx.beginPath()
+      oneTurtle.path.forEach(p => {
+        p.forEach((point, i) => {
+          if (count > n) return
+
+          lastPoint = point
+
+          if (i === 0) ctx.moveTo(...point)
+          else ctx.lineTo(...point)
+
+          count += 1
+        })
+      })
+      ctx.strokeStyle = 'black'
+      ctx.strokeWidth = 4
+      ctx.stroke()
+
+      // map 0 512, 0 512*2
+
+      const flipped = flipPoint(
+        lastPoint,
+        [texCanvasWidth / 2, texCanvasHeight / 2],
+        [1, -1]
+      )
+      const xMachine =
+        (flipped[0] / texCanvasWidth) *
+          (machineRange.x[1] - machineRange.x[0]) +
+        machineRange.x[0]
+      const yMachine =
+        (flipped[1] / texCanvasHeight) *
+          (machineRange.y[1] - machineRange.y[0]) +
+        machineRange.y[0]
+      // console.log(xMachine, yMachine);
+      moveMachine(xMachine, yMachine)
+      texture.needsUpdate = true
+    }
+
+    let drew = 0
+    let id = setInterval(() => {
+      drawCanvasTexture(drew)
+
+      if (drew >= totalN) {
+        clearInterval(id)
+        id = false
+      }
+      drew += 1
+    }, 30)
+
+    document.getElementById('refresh').addEventListener('click', () => {
+      if (id) clearInterval(id)
+      drew = 0
+      id = setInterval(() => {
+        drawCanvasTexture(drew)
+        if (drew >= totalN) {
+          clearInterval(id)
+          id = false
+        }
+        drew++
+      }, 30)
+    })
+
+    let texture = new THREE.CanvasTexture(texCanvas)
+    texture.needsUpdate = true
+    texture.minFilter = THREE.LinearFilter
+
+    let geometry = new THREE.PlaneGeometry(machineWidth, machineHeight)
+    let material = new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true
+      // opacity: .4
+    })
+
+    let plane = new THREE.Mesh(geometry, material)
+    plane.position.x = 0
+    plane.position.y = -0.135
+    plane.position.z = 0
+    scene.add(plane)
+
+    // renderer.domElement.addEventListener('mousemove', e => {
+    //   const { x, y } = getRelativePoint(e, threeContainer)
+    //   const point = getIntersectedPoint(x, y, plane)
+
+    //   if (point) {
+    //     moveMachine(point.x, point.y)
+    //   }
+    // })
+
+    function dist(x1: number, y1: number, x2: number, y2: number) {
+      return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+    }
+
+    const lerp = (x, y, a) => x * (1 - a) + y * a
+    const clamp = (a, min = 0, max = 1) => Math.min(max, Math.max(min, a))
+    const invlerp = (x, y, a) => clamp((a - x) / (y - x))
+    const range = (x1, y1, x2, y2, a) => lerp(x2, y2, invlerp(x1, y1, a))
+
+    function animate() {
+      requestAnimationFrame(animate)
+      renderer.render(scene, camera)
+    }
+
+    animate()
+
+    // Function to handle resizing
+    function onResize(entries) {
+      const bb = threeContainer.getBoundingClientRect()
+      for (let entry of entries) {
+        // For simplicity, using window dimensions, but you can use the container's dimensions
+        const width = bb.width
+        const height = bb.height
+
+        // Update the camera's aspect ratio and projection matrix
+        camera.aspect = width / height
+        camera.updateProjectionMatrix()
+
+        // Update the renderer's size
+        renderer.setSize(width, height)
+
+        // Optional: re-render the scene
+        renderer.render(scene, camera)
+      }
+    }
+
+    const resizeObserver = new ResizeObserver(onResize)
+    resizeObserver.observe(threeContainer)
+
+    function addSphere({ radius, color, x, y }) {
+      x = x ?? 0
+      y = y ?? 0
+
+      const sphereRadius = radius
+      const sphereWidthSegments = 32 // Number of segmented faces around the circumference of the sphere.
+      const sphereHeightSegments = 32 // Number of rows of faces from the sphere's top to bottom.
+
+      const sphereGeometry = new THREE.SphereGeometry(
+        sphereRadius,
+        sphereWidthSegments,
+        sphereHeightSegments
+      )
+
+      const sphereMaterial = new THREE.MeshBasicMaterial({ color }) // green color
+
+      const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial)
+      scene.add(sphereMesh)
+
+      sphereMesh.position.x = x
+      sphereMesh.position.y = y
+
+      return sphereMesh
+    }
+
+    function getIntersectedPoint(x, y, targetObject) {
+      const raycaster = new THREE.Raycaster()
+      const mouse = new THREE.Vector2()
+
+      const rect = renderer.domElement.getBoundingClientRect()
+
+      // Update the mouse vector with passed x and y values
+      mouse.x = (x / rect.width) * 2 - 1
+      mouse.y = -(y / rect.height) * 2 + 1
+
+      // Update the picking ray with the camera and mouse position
+      raycaster.setFromCamera(mouse, camera)
+
+      // Calculate objects intersecting the picking ray
+      const intersects = raycaster.intersectObject(targetObject)
+
+      if (intersects.length > 0) {
+        return intersects[0].point // This is the Vector3 representing the intersection point in 3D space
+      } else {
+        return null // No intersection
+      }
+    }
+
+    function getRelativePoint(event, element) {
+      const rect = element.getBoundingClientRect()
+
+      return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+      }
+    }
+
+    function moveMachine(x, y) {
+      if (Object.keys(objects).length < 4) return
+
+      x = Math.max(x, machineRange.x[0])
+      y = Math.max(y, machineRange.y[0])
+
+      x = Math.min(x, machineRange.x[1])
+      y = Math.min(y, machineRange.y[1])
+
+      /*
+    toolTip.position.x = x
+    toolTip.position.y = y
+    toolTip.position.z = 0
+    */
+
+      objects.penholder.position.x = x
+      objects.penholder.position.y = y
+
+      objects.carriage.position.x = x
+      objects.carriage.position.y = 0.03
+
+      objects.arm.position.x = x + 0.0175
+      objects.arm.position.y = y + 0.04
+    }
+
+    function flipPoint(p, pivot, vector) {
+      // Step 1: Translate to origin
+      let translatedPoint = [p[0] - pivot[0], p[1] - pivot[1]]
+
+      // Step 2: Apply the flip
+      let flippedPoint = [
+        translatedPoint[0] * vector[0],
+        translatedPoint[1] * vector[1]
+      ]
+
+      // Step 3: Translate back to original position
+      let finalPoint = [flippedPoint[0] + pivot[0], flippedPoint[1] + pivot[1]]
+
+      return finalPoint
+    }
+  }
+</script>
+
+<div class="three-js-container">
+  <div class="buttons">
+    <button id="rotate" title="Toggle rotate">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-rotate-3d"
+        ><path
+          d="M16.466 7.5C15.643 4.237 13.952 2 12 2 9.239 2 7 6.477 7 12s2.239 10 5 10c.342 0 .677-.069 1-.2"
+        ></path><path d="m15.194 13.707 3.814 1.86-1.86 3.814"></path><path
+          d="M19 15.57c-1.804.885-4.274 1.43-7 1.43-5.523 0-10-2.239-10-5s4.477-5 10-5c4.838 0 8.873 1.718 9.8 4"
+        ></path></svg
+      >
+    </button>
+    <button id="refresh" title="Replay">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-rotate-ccw"
+        ><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+        ></path><path d="M3 3v5h5"></path></svg
+      >
+    </button>
+  </div>
+</div>

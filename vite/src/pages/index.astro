@@ -1,0 +1,471 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Background from '../components/landing/Background.astro'
+import BackgroundFull from '../components/landing/BackgroundFull.astro'
+import { slug } from '../lib/guide.ts'
+
+const workshops = await Astro.glob('/../guides/*.md')
+
+let curated = ['raymarching', 'mesh', 'square-disarray']
+curated = curated.map(name => {
+  let find = workshops.find(workshop => workshop.file.includes(name))
+  return find
+})
+
+let images = []
+try {
+  const list = (await Astro.glob('/../art/!metadata.json'))[0].default
+  list.forEach(folder => {
+    folder.snapshots.map(snapshot => {
+      images.push({
+        dir: folder.directory,
+        img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/snapshots/${snapshot}`,
+        href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${folder.directory}/${folder.source}`,
+        alt: folder.directory
+      })
+    })
+  })
+  console.log(images)
+} catch (error) {
+  console.log(error)
+}
+---
+
+<style is:global>
+  html,
+  body {
+    font-family:
+      'Phantom Sans',
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      sans-serif;
+  }
+
+  .fade-in {
+    opacity: 0;
+  }
+
+  .lead-section {
+    min-height: calc(100vh - 45px);
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .header-section {
+    margin-left: 7%;
+    margin-top: 30px;
+    padding: 15px;
+    background: rgba(242, 242, 242, 0.1);
+    backdrop-filter: blur(2px);
+    border-radius: 17px;
+    max-width: max-content;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .header-section {
+      margin-left: 0px;
+      margin-top: 0px;
+      margin: 5px;
+      max-width: 100%;
+    }
+  }
+
+  .step-item {
+    padding: 1rem;
+    padding-top: 5vh;
+  }
+
+  .step-text {
+    font-size: 2.2rem;
+    padding: 2vh;
+    background: #e7e9fe;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .step {
+    font-weight: 600;
+  }
+
+  a {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    color: #ec3750;
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-underline-position: under;
+  }
+
+  a:hover {
+    text-decoration-style: wavy;
+  }
+
+  .step-1-css .frame {
+    text-decoration: none;
+    color: inherit;
+    width: clamp(300px, 350px, 400px);
+    height: 360px;
+    aspect-ratio: 1;
+    background-image: linear-gradient(169deg, #cecef9, #e7f0fb);
+    border-radius: 27px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 17px;
+    margin: 5px;
+    box-shadow: 7px 6px 7px rgba(0, 0, 0, 0.1);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .step-1-css .frame:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .step-1-css .thumbnail {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 1rem;
+    transition: opacity 0.3s ease;
+  }
+
+  .step-1-css .frame:hover .thumbnail {
+    opacity: 0.9;
+  }
+
+  .step-1-css .prose {
+    padding: 10px;
+  }
+
+  .step-1-css {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+  }
+
+  .step-2-css .frame {
+    padding: 0;
+    margin: 0.5rem;
+    border: solid 15px #555;
+    box-shadow: -3px -3px 12px #999;
+    width: clamp(300px, 350px, 400px);
+    aspect-ratio: 1;
+    float: left;
+    margin-bottom: 1rem;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+
+  .step-2-css .frame:hover {
+    transform: scale(101%);
+  }
+
+  .step-2-css .thumbnail {
+    max-width: 100%;
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+    object-fit: contain;
+    border: 1px solid #aaa;
+  }
+
+  .step-2-css .border {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    background-color: white;
+    margin: 0;
+    border: solid 10px white;
+    box-shadow: -3px -3px 12px #999;
+  }
+
+  .step-2-css {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+  }
+
+  .machine-img-container {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+  }
+
+  .machine-img {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+  }
+
+  .steps {
+    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
+      linear-gradient(to bottom, #ddd 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .write-up {
+    background-image: url("data:image/svg+xml,%3Csvg width='1000' height='50' viewBox='0 0 1000 50' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1000' height='50' fill='white'/%3E%3Cline y1='25.5' x2='1000' y2='25.5' stroke='%239198E5'/%3E%3C/svg%3E");
+    background-size: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    transform: rotate(-1deg);
+    margin-top: 20px;
+    height: 400px;
+    width: 60%;
+    transform: translate(33%, 3%);
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  .half-to-full {
+    width: 50%;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .half-to-full {
+      width: 100%;
+    }
+  }
+
+  .arrow {
+    font-weight: 800;
+  }
+
+  .arrow::after {
+    content: '→';
+  }
+
+  @media only screen and (max-width: 700px) {
+    .arrow::after {
+      content: '↓';
+    }
+  }
+</style>
+
+<Layout
+  showNav="false"
+  title="Blot"
+  description="Blot, the plotter bot from Hack Club: you code art, we send you a machine.">
+  <div class="lead-section">
+    <div
+      class={[
+        'text-4xl sm:text-7xl sm:leading-snug leading-snug font-semibold tracking-tighter',
+        'fade-in',
+        'header-section'
+      ].join(' ')}>
+      <div>Blot, the plotter bot</div>
+      <div>
+        from <a
+          class="box-border m-0 min-w-0 p-0 px-1 bg-[#ec3750] rounded-lg text-white whitespace-nowrap no-underline"
+          href="https://www.hackclub.com">Hack Club</a
+        >
+      </div>
+      <div class="text-xl leading-none font-light tracking-tighter pt-2.5">
+        Write a program that creates art and we'll send you* a CNC machine that
+        can draw it.
+      </div>
+    </div>
+    <div class="background center-inner" style="z-index: -5; opacity: .4;">
+      <div class="mobile-bg-scale w-100">
+        <video id="myVideo" width="100%" autoplay muted>
+            <source src="/landing/output-movie.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <Background /> 
+        <!-- <BackgroundFull client:load /> -->
+      </div>
+    </div>
+
+    <div
+      class="row-to-col fade-in fill"
+      style="margin: 10px; justify-content: space-evenly; align-items: center;">
+      <div
+        class="col half-to-full overflow-clip h-4/5 border border-black rounded-md min-h-[300px] max-w-[450px] shadow-lg">
+        <div
+          class="w-100 text-center text-xl bg-[#8cc8fd] text-[#413c3c] p-2 text-[1.4rem]">
+          Code an art piece.
+        </div>
+        <div
+          class="fill"
+          style="background-position: center; background-repeat: no-repeat; background-size: cover; background-color: white; background-image: url('/landing/code2.webp');">
+        </div>
+      </div>
+
+      <div
+        class="arrow"
+        style="align-self: center; font-size: 3rem; padding: 35px;">
+      </div>
+
+      <div
+        class="col half-to-full overflow-clip h-4/5 border border-black rounded-md min-h-[300px] max-w-[450px] shadow-lg">
+        <div
+          class="w-100 text-center text-xl bg-[#8cc8fd] text-[#413c3c] p-2 text-[1.4rem]">
+          Get a machine to draw it.
+        </div>
+        <div
+          class="fill img-fill"
+          style="background-color: white; background-image: url('/landing/blot-clear-bg.png');">
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="fade-in"
+      style="background: rgba(242, 242, 242, 0.1); backdrop-filter: blur(2px); width: max-content; margin: 10px; padding: 5px;">
+      (*Must be a teenager to receive a free machine.)
+    </div>
+  </div>
+
+  <div class="steps">
+    <div style="padding-top: 50px;"></div>
+    <div
+      style="font-size: 1.7rem; font-weight: 500; text-align: center; margin-bottom: 30px;">
+      We built everything from scratch, with ❤️, and open source.
+    </div>
+
+    <div class="col" style="width: 80%; margin: 0px auto;">
+      <div
+        class="row-to-col"
+        style="width:100%; margin: 10px 0px; border-bottom: 1px grey solid; padding-bottom: 10px;">
+        <img
+          class="half-to-full"
+          style="align-self: center; border-radius: 5px; border: .5px grey solid; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);"
+          src="/landing/editor.png"
+        />
+        <div
+          style="margin: auto; padding: 25px 40px; font-size: 1.1rem; line-height: 1.3;">
+          <b>Custom editor for pen plotter art</b> with vector drawing library,
+          direct manipulation widgets, a split screen code/visualizer, and
+          direct from browser machine control.
+        </div>
+      </div>
+
+      <div
+        class="row-to-col"
+        style="width:100%; padding-top: 10px; border-bottom: 1px grey solid; padding-bottom: 10px;">
+        <img
+          class="half-to-full"
+          style="align-self: center; border-radius: 5px;"
+          src="/landing/parts.png"
+        />
+        <div
+          style="margin: auto; padding: 25px 40px; font-size: 1.1rem; line-height: 1.3;">
+          <b>CNC you build yourself</b>
+           made of six 3D printed parts, and standard DIY machine building
+          design patterns (aluminum extrusion, delrin v-wheels, flanged bearing
+          idlers...).
+        </div>
+      </div>
+
+      <div
+        class="row-to-col"
+        style="width:100%; padding-top: 10px; padding-bottom: 10px;">
+        <img
+          class="half-to-full"
+          style="align-self: center; border-radius: 5px;"
+          src="/landing/control-board.png"
+        />
+        <div
+          style="margin: auto; padding: 25px 40px; font-size: 1.1rem; line-height: 1.3;">
+          <b>Custom control board and firmware</b> so you can understand what
+          goes on in the brains of the machine.
+        </div>
+      </div>
+    </div>
+
+    <div
+      style={{
+        paddingTop: '30px',
+        background: '#f4f3fb'
+      }}>
+      <div
+        class="text-5xl p-3 font-semibold bg-[#3333ee] text-center text-white w-3/5 mx-auto rounded-md mt-2.5">
+        How do I get Blot?
+      </div>
+
+      <div class="step-item">
+        <div class="step-text">
+          <span class="step">Step 1)</span>Code an original art piece. Learn
+          from <a href="/guides">our guides</a>. For submission rules <a
+            href="https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md"
+            >read this.</a
+          >
+        </div>
+        <div class="step-1-css row-to-col">
+          {
+            curated.map(workshop => (
+              <a class="frame" href={`/editor?guide=${slug(workshop.file)}`}>
+                <div
+                  class="thumbnail img-fill"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    backgroundImage: `url(${workshop.frontmatter.thumbnail})`
+                  }}
+                />
+                <div class="prose">{workshop.frontmatter.title}</div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-text">
+          <span class="step">Step 2)</span>Submit it as a pull request to the <a
+            href="/gallery">art gallery</a
+          >.
+        </div>
+        <div class="step-2-css row-to-col">
+          {
+            images
+              .filter(img =>
+                ['leaf', 'tree', 'square-disarray'].some(x =>
+                  img.dir.includes(x)
+                )
+              )
+              .map(img => {
+                return (
+                  <div class="frame">
+                    <a class="border" href={img.href}>
+                      <img class="thumbnail" alt={img.alt} src={img.img} />
+                    </a>
+                  </div>
+                )
+              })
+          }
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-text">
+          <span class="step">Step 3)</span>Get parts for your Blot in the mail
+          and <a href="https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md">build your own machine</a>.
+        </div>
+        <div class="machine-img-container">
+          <img class="machine-img" src="/landing/blot-clear-bg.png" />
+        </div>
+      </div>
+    </div>
+
+    <footer class="p-2">
+      © 2023 Hack Club. 501(c)(3) nonprofit (EIN: 81-2908499)
+    </footer>
+  </div>
+</Layout>

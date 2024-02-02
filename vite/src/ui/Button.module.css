@@ -1,0 +1,90 @@
+.button {
+  box-sizing: border-box;
+  min-width: 0;
+  appearance: none;
+  display: inline-block;
+  text-align: center;
+  line-height: inherit;
+  text-decoration: none;
+  font-size: inherit;
+  padding: calc(8px + 0.15rem) 8px;
+  color: white;
+  background-color: var(--primary);
+  border: 0;
+  transition: all 0.1s ease-in-out;
+}
+
+.secondary {
+  color: var(--text);
+  background-color: var(--muted);
+}
+.secondary:hover,
+.icon:hover {
+  filter: brightness(0.9);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.button.loading {
+  cursor: wait;
+  animation: shimmer 2.2s linear infinite forwards;
+  background-image: linear-gradient(
+    to right,
+    transparent 8%,
+    #ffffffa1 18%,
+    transparent 33%
+  );
+  background-size: 1200px 100%;
+}
+
+.accent {
+  background: var(--accent);
+}
+
+.accent:not(:disabled):hover {
+  background: var(--accent-dark);
+}
+
+.ghost {
+  border: none;
+  background-color: transparent;
+  color: inherit;
+}
+
+.ghost:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.icon {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon svg {
+  width: 1.25rem;
+  fill: currentColor;
+  display: inline;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1200px 0;
+  }
+  100% {
+    background-position: 1200px 0;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: var(--base-transform) rotate(0deg);
+  }
+  100% {
+    transform: var(--base-transform) rotate(360deg);
+  }
+}

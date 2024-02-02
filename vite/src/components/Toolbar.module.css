@@ -1,0 +1,87 @@
+.heading {
+  font-size: 1.5rem !important;
+  padding: 0.4rem 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.heading a {
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+}
+
+.settingsDropdown > * {
+  min-width: max-content;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+}
+
+.disconnectedIcon * {
+  fill: red;
+}
+
+.connectedIcon * {
+  fill: lightgreen;
+}
+
+.separator {
+  width: 1px;
+  margin: 0.25rem 0.125rem;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.settingsWrapper {
+  position: relative;
+}
+
+.dropdownEntry {
+  cursor: default;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.dropdownEntry:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.settingsDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 0.25rem;
+  /* box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2); */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1;
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.root {
+  font-family: var(--font-sans);
+  display: flex;
+  background-color: var(--primary);
+  color: white;
+  font-size: 1.1rem;
+  padding: 0 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+}
