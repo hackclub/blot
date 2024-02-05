@@ -233,3 +233,9 @@ Attach the pcb to its mount. Ensure all corners are clipped on.
 ---
 <img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0090.png" alt="aaa" width="300"/><img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0091.png" alt="aaa" width="300"/><br>
 Finally, Screw the mount onto the lower rail using m5x10mm screws and t-nuts.
+
+## Using your blot
+
+Now that you have an assembled blot the next step is to do first-time tuning. You'll probably only have to do this right after assembly and every once-and-a-while (ie. if you pack your blot in a suitcase and take it to a hackathon).
+
+Follow the [Tuning guide](./TUNING.md) to get started.
