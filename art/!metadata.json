@@ -96,12 +96,12 @@
   },
   {
     "directory": "dexter_sunnyhouse",
-    "snapshots": ["image (3).png"],
+    "snapshots": ["image_3.png"],
     "source": "script.js"
   },
   {
     "directory": "fractures-msw",
-    "snapshots": ["image (16).png"],
+    "snapshots": ["image_16.png"],
     "source": "index.js"
   },
   {
