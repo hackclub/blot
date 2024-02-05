@@ -51,7 +51,7 @@ To test the flanged bearings inside the tube, make sure they take up most of the
 ## Box 3: v-wheel box
 
 This box should contain:
-- [ ] 9 V-wheels (1 more than required).
+- [ ] 12 V-wheels (1 more than required).
 
 **Testing**
 
