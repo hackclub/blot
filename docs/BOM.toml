@@ -318,3 +318,12 @@ findLocalSupplier = false
 notes = "helps make the carriage rigid; manufactured by SendCutSend"
 tags = ["laser cut"]
 container = "free floating"
+
+[[items]]
+part = "usb-c to usb-c cable (data and power)"
+quantity = "2"
+findLocalSupplier = true
+notes = "one is for data to the computer and one is for power"
+container = ["free floating"]
+tags = []
+designFiles = []
