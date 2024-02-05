@@ -1,0 +1,12 @@
+- port index page
+  - animate loading
+- port header
+- automatically generate bundled css import
+- make sure bundle path is correct
+- syntax highlighting of markdown
+- css modules -> tailwind?
+- remove 
+  - unused icons in src/ui
+  - unused assets in /public
+- add accounts
+- build tailwind

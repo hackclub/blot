@@ -13,11 +13,12 @@ import { wrapHTML } from "./backend/wrapHTML.js";
 import navBar from "./backend/navBar.js";
 import guides from "./backend/guides.js";
 import gallery from "./backend/gallery.js";
+import landing from "./backend/landing.js";
 
 build({
   index: wrapHTML(`
     ${navBar()}
-    <div class="bg-red-400">test another page</div>
+    ${landing()}
   `),
   editor: wrapHTML(`
     <!-- TODO: add automatically ehen building -->

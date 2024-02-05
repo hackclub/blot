@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Background from '../components/landing/Background.astro'
-import BackgroundFull from '../components/landing/BackgroundFull.astro'
 import { slug } from '../lib/guide.ts'
 
 const workshops = await Astro.glob('/../guides/*.md')
@@ -288,7 +287,6 @@ try {
             Your browser does not support the video tag.
         </video>
         <Background /> 
-        <!-- <BackgroundFull client:load /> -->
       </div>
     </div>
 

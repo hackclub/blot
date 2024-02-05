@@ -6,8 +6,6 @@ export default function() {
   let files = fs.readFileSync("../art/!metadata.json", 'utf8')
   files = JSON.parse(files);
 
-  console.log(files)
-
   files = files.map(file => ({
     dir: file.directory,
     img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${file.directory}/snapshots/${file.snapshots[0]}`,
