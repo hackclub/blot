@@ -1,17 +1,20 @@
 import fs from 'fs';
-
+import { extractFrontmatter } from "./extractFrontmatter.js";
 
 export default function() {
 
   let _ = fs.readFileSync("../guides/!metadata.json", 'utf8')
   let files = JSON.parse(_);
+  
+  const frontmatters = files.map(fileData => {
+    const fileName = fileData.title;
+    const file = fs.readFileSync(
+      `../guides/${fileName}`, 
+      'utf8'
+    );
 
-
-  console.log(files);
-    // .map(fileName => {
-    //   console.log(fileName);
-    //   // return fs.readFileSync(`../guides/${fileName}`, 'utf8')
-    // });
+    return extractFrontmatter(file)
+  });
 
   return `
     <style>
@@ -43,99 +46,24 @@ export default function() {
     <div
       class="flex flex-row flex-wrap items-center justify-around w-screen gap-y-6 my-5">
       ${
-        files.map(file => {
+        files.map((file, i) => {
             return (
               `<a
                 class="no-underline text-current w-[30%] min-w-[300px] max-w-[400px] aspect-[1] rounded-[27px] flex items-center flex-col justify-around p-[17px] shadow-md transition-transform duration-300 ease-in-out transition-shadow hover:scale-105 hover:shadow-lg"
-                style="background-image: linear-gradient(169deg, #cecef9, #e7f0fb);"
+                style="background-image: linear-gradient(170deg, #cecef9, #e7f0fb);"
                 href=${`/editor?guide=${file}`}>
                 <img
                   class="max-w-full max-h-full object-contain rounded-lg transition-opacity duration-300 ease-in-out group-hover:opacity-90"
-                  src=${"workshop.frontmatter.thumbnail"}
+                  src=${frontmatters[i].thumbnail}
                 />
-                <div class="p-2.5">${"workshop.frontmatter.title"}</div>
+                <div class="p-2.5">${frontmatters[i].title}</div>
               </a>`
             )
-          })
+          }).join(" ")
       }
     </div>
    
   `
 }
 
-/*
----
-import Layout from '../layouts/Layout.astro'
-import { slug } from '../lib/guide.ts'
 
-const list = (await Astro.glob('/../guides/!metadata.json'))[0].default.map(
-  x => x.title
-)
-
-const workshops = await Astro.glob('/../guides/*.md')
-
-const indices = {}
-
-workshops.forEach(x => {
-  const name = x.file.split('/').at(-1)
-  indices[name] = list.indexOf(name)
-})
----
-
-<style is:global>
-  body,
-  html {
-    background-size: 40px 40px;
-    background-image: linear-gradient(to right, #ddd 1px, transparent 1px),
-      linear-gradient(to bottom, #ddd 1px, transparent 1px);
-    min-height: 100vh;
-    font-family:
-      'Phantom Sans',
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      Roboto,
-      sans-serif;
-  }
-</style>
-
-<Layout
-  title="Guides"
-  description="A gallery of various guides created by Hack Clubbers.">
-  <div class="p-1 ml-10">
-    <div class="text-[3rem] font-[700]">Guides</div>
-    <div class="text-[1.7rem] font-[300]">
-      A collection of various guides created by Hack Clubbers that anyone can
-      learn from and contribute to!
-    </div>
-  </div>
-
-  <div
-    class="flex flex-row flex-wrap items-center justify-around w-screen gap-y-6 my-5">
-    {
-      workshops
-        .sort((a, b) => {
-          const aName = a.file.split('/').at(-1)
-          const bName = b.file.split('/').at(-1)
-          return indices[aName] - indices[bName]
-        })
-        .filter(x => indices[x.file.split('/').at(-1)] >= 0)
-        .map(workshop => {
-          return (
-            <a
-              class="no-underline text-current w-[30%] min-w-[300px] max-w-[400px] aspect-[1] rounded-[27px] flex items-center flex-col justify-around p-[17px] shadow-md transition-transform duration-300 ease-in-out transition-shadow hover:scale-105 hover:shadow-lg"
-              style="background-image: linear-gradient(169deg, #cecef9, #e7f0fb);"
-              href={`/editor?guide=${slug(workshop.file)}`}>
-              <img
-                class="max-w-full max-h-full object-contain rounded-lg transition-opacity duration-300 ease-in-out group-hover:opacity-90"
-                src={workshop.frontmatter.thumbnail}
-              />
-              <div class="p-2.5">{workshop.frontmatter.title}</div>
-            </a>
-          )
-        })
-    }
-  </div>
-</Layout>
-*/

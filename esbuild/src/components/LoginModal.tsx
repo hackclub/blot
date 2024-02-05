@@ -62,11 +62,12 @@ export default function LoginModal() {
       let res;
 
       try {
-        res = await fetch('/api/sendCode', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: inputValue })
-        })
+        // TODO
+        // res = await fetch('/api/sendCode', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({ email: inputValue })
+        // })
       } catch (err) {
 
       }
@@ -89,11 +90,12 @@ export default function LoginModal() {
 
     let res;
     try {
-      res = await fetch('/api/submitCode', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, code: inputValue })
-      });
+      // TODO
+      // res = await fetch('/api/submitCode', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email: email, code: inputValue })
+      // });
     } catch (err) {
 
     }

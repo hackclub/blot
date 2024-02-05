@@ -4,8 +4,8 @@ export default function() {
     <nav class="bg-[--primary] text-white flex items-center justify-between text-lg p-2 sticky top-0 z-50" style="font-family: var(--font-sans);">
       
       <a href="/" class="flex gap-1 items-center">
-        <img src="/borpheus.svg" class="w-7" />
-        <span class="text-2xl font-bold translate-x-[-2px] translate-y-1">lot</span>
+        <img src="/borpheus.svg" class="w-7 translate-x-1 translate-y-[-3px]" />
+        <span class="text-2xl font-bold">lot</span>
       </a>
 
       <div class="flex gap-4">

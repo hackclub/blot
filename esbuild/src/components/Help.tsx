@@ -1,27 +1,17 @@
 import styles from './Help.module.css'
 import { useState, useEffect } from 'preact/hooks'
-import { marked, Marked } from 'marked'
+import { marked } from 'marked'
 import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
 // import Prism from "prismjs";
 import hljs from 'highlight.js';
-import {markedHighlight} from "marked-highlight";
-
-// console.log(Marked);
-
-// const marked = new Marked(
-//   markedHighlight({
-//     langPrefix: 'hljs language-',
-//     highlight(code, lang, info) {
-//       const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-//       return hljs.highlight(code, { language }).value;
-//     }
-//   })
-// );
 
 marked.setOptions({
   highlight: function (code, lang) {
 
     const language = hljs.getLanguage(lang) ? lang : 'markup';
+    
+    console.log(code);
+
     return hljs.highlight(code, { language }).value;
 
     // const validLanguage = Prism.languages[language] ? language : 'markup'

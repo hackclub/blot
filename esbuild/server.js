@@ -12,26 +12,42 @@ import { wrapHTML } from "./backend/wrapHTML.js";
 
 import navBar from "./backend/navBar.js";
 import guides from "./backend/guides.js";
+import gallery from "./backend/gallery.js";
 
 build({
   index: wrapHTML(`
-    <link rel="stylesheet" href='./assets/initApp.css'>
-    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css'>
-    <main></main>
-    <script type="module" src="./src/lib/initApp.js"></script>
-  `),
-  test: wrapHTML(`
     ${navBar()}
     <div class="bg-red-400">test another page</div>
+  `),
+  editor: wrapHTML(`
+    <!-- TODO: add automatically ehen building -->
+    <link rel="stylesheet" href='./assets/initApp.css'>
+    
+    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css'>
+
+    <main></main>
+    <script type="module" src="./src/lib/initApp.js"></script>
   `),
   guides: wrapHTML(`
     ${navBar()}
     ${guides()}
   `),
+  gallery: wrapHTML(`
+    ${navBar()}
+    ${gallery()}
+  `),
   assembly: wrapHTML(`
     ${navBar()}
     Go <a class="underline decoration-sky-500" href="https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md">here</a>.
-  `)
+  `),
+  404: wrapHTML(`
+    ${navBar()}
+    <div class="p-2">nothing here</div>
+  `),
+  test: wrapHTML(`
+    ${navBar()}
+    <div class="bg-red-400">test another page</div>
+  `),
 
 });
 
@@ -58,6 +74,11 @@ app.use((req, res, next) => {
   } else {
       next();
   }
+});
+
+app.use((req, res, next) => {
+  const file = path.join(__dirname, 'dist', `404.html`);
+  res.status(404).sendFile(file);
 });
 
 app.listen(port, () => {

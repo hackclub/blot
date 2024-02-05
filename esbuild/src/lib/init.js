@@ -18,7 +18,8 @@ export function init() {
   const view = cm.view
   patchStore({ view })
 
-  checkCurrentUser();
+  // TODO
+  // checkCurrentUser();
 
   addLoadBackup()
   // load src if present after default loading behavior

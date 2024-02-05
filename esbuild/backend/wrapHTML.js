@@ -3,6 +3,7 @@ export function wrapHTML(inner) {
     <!DOCTYPE html>
     <html lang="en">
       <head>
+        <meta name="description" content="Blot!" />
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 

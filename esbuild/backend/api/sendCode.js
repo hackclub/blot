@@ -1,5 +1,4 @@
 import _sendgrid from '@sendgrid/mail';
-import { getUserByEmail, makeLoginCode } from '../../backend/init';
 
 const sendgrid = _sendgrid.setApiKey(import.meta.env.SENDGRID_API_KEY);
 
@@ -55,4 +54,10 @@ export const POST = async ({ request }) => {
       { status: 400 }
     )
   }
+}
+
+function makeLoginCode() {
+  // make random string
+
+  return "000000"
 }

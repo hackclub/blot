@@ -8,6 +8,8 @@
     "dev": "nodemon server.js"
   },
   "nodemonConfig": {
+    "watch": ["**/*"],
+    "ext": "ts js jsx tsx",
     "ignore": [
       "dist"
     ]
