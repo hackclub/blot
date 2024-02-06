@@ -12,7 +12,6 @@ import LoginModal from './LoginModal.js'
 import CodeMirror from './CodeMirror.js'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import Help from './Help.js'
-import preview from '@astrojs/node/preview.js'
 
 export default function Editor() {
   const [width, setWidth] = useState(50)

@@ -17,7 +17,7 @@ import landing from "./backend/landing.js";
 
 build({
   index: wrapHTML(`
-    ${navBar()}
+    ${navBar(true)}
     ${landing()}
   `),
   editor: wrapHTML(`

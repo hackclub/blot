@@ -1,5 +1,3 @@
-- port index page
-  - animate loading
 - port header
 - automatically generate bundled css import
 - make sure bundle path is correct
