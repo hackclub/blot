@@ -1,4 +1,7 @@
-#Creating Your First Blot Drawing
+# Using your blot
+
+_Now that your blot is assembled, the next step is to set it up for your first drawing & tune it._
+
 Start by moving the rails all the way to the right and forward, as shown below
 
 ![](https://cloud-lhuhtdwzz-hack-club-bot.vercel.app/020240206_201742.jpg)
