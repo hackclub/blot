@@ -125,10 +125,11 @@ const args = {
 }
 
 export default async function runCode() {
-  const code = getCode()
+  const code = getCode();
 
+  // this prevents me from using await top-level
   try {
-    const ast = parse(code, { sourceType: 'module' })
+    const ast = parse(code, { sourceType: 'module' });
   } catch (err) {
     console.log(err)
 
@@ -149,7 +150,7 @@ export default async function runCode() {
   try {
     await runCodeInner(code, args)
   } catch (err) {
-    console.log(err)
+    console.error(err)
     const error = {
       pos: getPosFromErr(err),
       code: getCode(),
@@ -176,16 +177,17 @@ async function runCodeInner(str, globalScope) {
     false
   )
 
-  const regex = /^\s*import\s+([\w*{},\s]+)\s+from\s+(['"`])(.*?)\2\s*;?/gm
+  // const regex = /import\s+([\w*{},\s]+)\s+from\s+(['"`])(.*?)\2\s*;?/gm
+  const regex = /import\s+([\s\S]+?)\s+from\s+"([\s\S]+?)"/gm
   let match
 
   while ((match = regex.exec(str))) {
-    const variables = match[1].trim()
-    const modulePath = match[3]
+    const variables = match[1];
+    const modulePath = match[2];
 
-    const dynamicImport = `const ${variables} = (await import('${modulePath}')).default;`
+    const dynamicImport = `const ${variables.replaceAll("as", ":")} = await (async () => { let temp = await import('${modulePath}'); return temp.default ? temp.default : temp; })();`
 
-    str = str.replace(match[0], dynamicImport)
+    str = str.replace(match[0], dynamicImport);
   }
 
   const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor
@@ -195,7 +197,6 @@ async function runCodeInner(str, globalScope) {
   const fn = new AsyncFunction(...Object.keys(globalScope), str)
 
   await fn(...Object.values(globalScope)).catch(err => {
-    console.log('about to throw error')
     throw err
   })
 
@@ -207,9 +208,11 @@ async function runCodeInner(str, globalScope) {
 
 function getPosFromErr(err) {
   try {
-    const match = err.stack.match(/<anonymous>:(\d+):(\d+)/)
+    const match = err.stack.match(/<anonymous>:(\d+):(\d+)/);
 
-    const pos = { line: Number(match[1]) - 2, column: Number(match[2]) }
+    const pos = { line: Number(match[1]), column: Number(match[2]) }
+
+    pos.line -= 2; // why?
 
     // to account for "use strict\n"
     pos.line -= 1
@@ -220,6 +223,6 @@ function getPosFromErr(err) {
     // An error in the error handler?!
     // that's embarassing.
     console.log('Unable to catch error position:', e)
-    return { line: 1, column: 1 }
+    return { line: 0, column: 0 }
   }
 }

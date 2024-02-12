@@ -1,22 +1,22 @@
-import { useEffect, useRef } from 'preact/hooks'
-import { patchStore, getStore } from '../lib/state.ts'
-import { dispatchJumpTo } from '../lib/codemirror/state.js'
-import styles from './Console.module.css'
-import cx from 'classnames'
-import Button from '../ui/Button.tsx'
-import TrashCanIcon from '../ui/TrashCanIcon.tsx'
+import { useEffect, useRef } from "preact/hooks";
+import { patchStore, getStore } from "../lib/state.ts";
+import { dispatchJumpTo } from "../lib/codemirror/state.js";
+import styles from "./Console.module.css";
+import cx from "classnames";
+import Button from "../ui/Button.tsx";
+import TrashCanIcon from "../ui/TrashCanIcon.tsx";
 
 export default function Console() {
-  const { console } = getStore()
-  const lines = useRef<HTMLDivElement>(null)
+  const { console } = getStore();
+  const lines = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!lines.current) return
+    if (!lines.current) return;
 
-    lines.current.scrollTop = lines.current.scrollHeight
-  })
+    lines.current.scrollTop = lines.current.scrollHeight;
+  });
 
-  if (console.length === 0) return null
+  if (console.length === 0) return null;
 
   return (
     <div class={styles.root}>
@@ -27,7 +27,8 @@ export default function Console() {
           variant="ghost"
           icon
           aria-label="clear"
-          onClick={() => patchStore({ console: [] })}>
+          onClick={() => patchStore({ console: [] })}
+        >
           <TrashCanIcon />
         </Button>
       </div>
@@ -36,14 +37,17 @@ export default function Console() {
           <div
             class={cx(
               styles.line,
-              type === 'warn' ? styles.tWarn : type === 'error' && styles.tError
+              type === "warn"
+                ? styles.tWarn
+                : type === "error" && styles.tError,
             )}
-            key={`${time},${index}`}>
+            key={`${time},${index}`}
+          >
             <div class={styles.time}>{new Date(time).toLocaleTimeString()}</div>
             <div class={styles.values}>
               {values.map((value, i) => (
                 <div key={i}>
-                  {typeof value === 'string' ? value : JSON.stringify(value)}
+                  {typeof value === "string" ? value : JSON.stringify(value)}
                 </div>
               ))}
             </div>
@@ -51,8 +55,9 @@ export default function Console() {
               <button
                 class={styles.pos}
                 onClick={() => {
-                  dispatchJumpTo(pos)
-                }}>
+                  dispatchJumpTo(pos);
+                }}
+              >
                 :{pos.line}:{pos.column}
               </button>
             )}
@@ -60,5 +65,5 @@ export default function Console() {
         ))}
       </div>
     </div>
-  )
+  );
 }

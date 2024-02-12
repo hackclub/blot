@@ -21,7 +21,6 @@ import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
 import BorpheusIcon from '../ui/BorpheusIcon.tsx'
 import { saveFile } from '../lib/saveFile.ts'
-import { saveToCloud } from '../lib/saveToCloud.js'
 import * as prettier from 'prettier'
 import js_beautify from 'js-beautify'
 import { createMask } from '../lib/getBitmap.js'
@@ -30,7 +29,6 @@ import { Turtle } from '../lib/drawingToolkit/index.js'
 const menuItemClasses = `
   relative
   cursor-pointer
-  w-max
   h-full
   flex
   items-center
@@ -64,7 +62,7 @@ const dropdownClasses =`
 `;
 
 export default function Toolbar() {
-  const { connected, needsSaving, view, machineRunning, loginName } = getStore()
+  const { connected, needsSaving, machineRunning, loginName } = getStore()
 
   return (
     <div class={styles.root}>
@@ -80,128 +78,34 @@ export default function Toolbar() {
         <div class={dropdownContainer}>
           {needsSaving ? 'file*' : "file"}
           <div class={dropdownClasses + " left-0"}>
-            <div
-              class={menuItemClasses + " w-full"}
-              onClick={() => saveToCloud(getCode())}>
-              save to cloud
+            <div class={menuItemClasses} onClick={() => patchStore({ saveToCloudModalOpen: true })}>
+              save to cloud (ctrl/cmd+s)
             </div>
-            <div
-              class={menuItemClasses}
-              onClick={() => saveFile(getCode())}>
-              save to disk (ctrl/cmd+s)
+            <div class={menuItemClasses} onClick={() => saveFile(getCode())}>
+              save to disk
             </div>
-            <div
-              class={menuItemClasses + " w-full"}
-              onClick={() => {
-                loadCodeFromString(defaultProgram)
-              }}>
+            <div class={menuItemClasses} onClick={() => loadCodeFromString(defaultProgram)}>
               new
             </div>
-            <div
-              class={menuItemClasses + " w-full"}
-              onClick={() => {
-                // if not logged in then ask to log in
-
-                // if logged in then show all files
-              }}>
+            <div class={menuItemClasses} onClick={() => patchStore({ cloudFilesModalOpen: true })}>
               open from cloud
             </div>
-            <div
-              class={menuItemClasses + " w-full"}
-              onClick={() => {
-                const input = document.createElement('input')
-                input.type = 'file'
-                input.accept = '.js'
-                input.onchange = () => {
-                  if (input.files?.length) {
-                    const file = input.files[0]
-                    const reader = new FileReader()
-                    reader.onload = () => {
-                      if (typeof reader.result === 'string') {
-                        loadCodeFromString(reader.result)
-                      }
-                    }
-                    reader.readAsText(file)
-                  }
-                }
-                input.click()
-              }}>
+            <div class={menuItemClasses} onClick={openFromDisk}>
               open from disk
             </div>
-
           </div>
 
         </div>
-        <div
-          class={menuItemClasses}
-          onClick={() => {
-            const ogCode = getCode()
-            const formatted = formatCode(ogCode)
-            view.dispatch({
-              changes: {
-                from: 0,
-                to: ogCode.length,
-                insert: formatted
-              }
-            })
-          }}>
+        <div class={menuItemClasses} onClick={tidyCode}>
           tidy code
         </div>
-        <div
-          class={dropdownContainer}
-          >
+        <div class={dropdownContainer}>
           <div>download</div>
-          <div
-            class={dropdownClasses + " left-0"}
-            >
+          <div class={dropdownClasses + " left-0"}>
             <DownloadButton />
             <DownloadSVG />
             <DownloadPNG />
-            <div
-              class={menuItemClasses}
-              onClick={e => {
-                const { turtles } = getStore()
-                const { isVisible } = createMask()
-
-                // const newTurtle = new Turtle();
-                // let lastVisible = false;
-
-                // turtles.forEach(turtle => {
-                //   turtle
-                //   .resample(0.1)
-                //   .path.forEach(pl => {
-                //     pl.forEach((pt, i) => {
-                //       const [x, y] = pt;
-                //       const visible = isVisible(x, y);
-
-                //       if (lastVisible && i > 0 && visible) newTurtle.goTo([x, y]);
-                //       else newTurtle.jump([x, y]);
-                //       lastVisible = visible;
-                //     })
-                //   })
-                // })
-
-                // newTurtle.simplify(.01);
-                // newTurtle.style.fill ="none";
-                // newTurtle.style.stroke = "black";
-
-                // patchStore({
-                //   turtles: [newTurtle]
-                // })
-
-                turtles.forEach(turtle => {
-                  turtle.resample(0.01).iteratePath(([x, y], t) => {
-                    const visible = isVisible(x, y)
-
-                    if (!visible) return 'BREAK'
-                  })
-
-                  // turtle.simplify(0.01);
-                  turtle.style.fill = 'none'
-                })
-
-                patchStore({ turtles })
-              }}>
+            <div class={menuItemClasses} onClick={cullHiddenLines}>
               cull hidden lines
             </div>
           </div>
@@ -209,79 +113,41 @@ export default function Toolbar() {
       </div>
 
       <div class="flex items-center h-full">
-        <div 
-          class="text-sm text-gray-300 px-3 translate-y-[1px] underline cursor-pointer"
-          onClick={() => {
-            if (loginName === "") {
-              // log in
-            } else {
-              // log out or change account
-            }
-          }}>
+        <div class="text-sm text-gray-300 px-3 translate-y-[1px] underline cursor-pointer" is-login-modal onClick={loginClick}>
           {loginName === "" ? "log in to save" : "logged in as: " + loginName}
         </div>
         <div class={dropdownContainer}>
           machine control
           <div class={dropdownClasses + " right-0"}>
-            <div
-              class="p-2 hover:bg-white hover:bg-opacity-10"
-              data-evt-connectTrigger>
+            <div class="p-2 hover:bg-white hover:bg-opacity-10" data-evt-connectTrigger>
               {connected ? 'disconnect from' : 'connect to'} machine
             </div>
 
-            <div
-              class={`${
-                connected ? '' : 'hidden'
-              } p-2 hover:bg-white hover:bg-opacity-10`}
-              data-evt-machineTrigger>
+            <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-machineTrigger>
               {machineRunning ? 'stop' : 'run'} machine
             </div>
 
-            <div
-              class={`${
-                connected ? '' : 'hidden'
-              } p-2 hover:bg-white hover:bg-opacity-10`}
-              data-evt-penUp>
+            <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-penUp>
               pen up
             </div>
 
-            <div
-              class={`${
-                connected ? '' : 'hidden'
-              } p-2 hover:bg-white hover:bg-opacity-10`}
-              data-evt-penDown>
+            <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-penDown>
               pen down
             </div>
 
-            <div
-              class={`${
-                connected ? '' : 'hidden'
-              } p-2 hover:bg-white hover:bg-opacity-10`}
-              data-evt-motorsOn>
+            <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-motorsOn>
               motors on
             </div>
 
-            <div
-              class={`${
-                connected ? '' : 'hidden'
-              } p-2 hover:bg-white hover:bg-opacity-10`}
-              data-evt-motorsOff>
+            <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-motorsOff>
               motors off
             </div>
 
-            <div
-              class={`${
-                connected ? '' : 'hidden'
-              } p-2 hover:bg-white hover:bg-opacity-10`}
-              data-evt-moveTowardsOrigin>
+            <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-moveTowardsOrigin>
               move towards origin
             </div>
 
-            <div
-              class={`${
-                connected ? '' : 'hidden'
-              } p-2 hover:bg-white hover:bg-opacity-10`}
-              data-evt-setOrigin>
+            <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-setOrigin>
               set origin
             </div>
 
@@ -350,7 +216,7 @@ function getCode() {
 function DownloadButton() {
   return (
     <div
-      class={menuItemClasses + " w-full"}
+      class={menuItemClasses}
       onClick={() => download('project.js', getCode())}>
       js
     </div>
@@ -372,7 +238,7 @@ function NewButton() {
 function DownloadSVG() {
   return (
     <div
-      class={menuItemClasses + " w-full"}
+      class={menuItemClasses}
       onClick={() => {
         const { turtles, docDimensions } = getStore()
 
@@ -426,7 +292,7 @@ function DownloadSVG() {
 function DownloadPNG() {
   return (
     <div
-      class={menuItemClasses + " w-full"}
+      class={menuItemClasses}
       onClick={() => {
         const { turtles, docDimensions } = getStore()
 
@@ -535,10 +401,55 @@ function OpenButton() {
   )
 }
 
+function cullHiddenLines(e) {
+  const { turtles } = getStore()
+  const { isVisible } = createMask()
+
+  // const newTurtle = new Turtle();
+  // let lastVisible = false;
+
+  // turtles.forEach(turtle => {
+  //   turtle
+  //   .resample(0.1)
+  //   .path.forEach(pl => {
+  //     pl.forEach((pt, i) => {
+  //       const [x, y] = pt;
+  //       const visible = isVisible(x, y);
+
+  //       if (lastVisible && i > 0 && visible) newTurtle.goTo([x, y]);
+  //       else newTurtle.jump([x, y]);
+  //       lastVisible = visible;
+  //     })
+  //   })
+  // })
+
+  // newTurtle.simplify(.01);
+  // newTurtle.style.fill ="none";
+  // newTurtle.style.stroke = "black";
+
+  // patchStore({
+  //   turtles: [newTurtle]
+  // })
+
+  turtles.forEach(turtle => {
+    turtle.resample(0.01).iteratePath(([x, y], t) => {
+      const visible = isVisible(x, y)
+
+      if (!visible) return 'BREAK'
+    })
+
+    // turtle.simplify(0.01);
+    turtle.style.fill = 'none'
+  })
+
+  patchStore({ turtles })
+}
+
 function formatCode(code) {
   try {
     const options = {
-      indent_size: 2
+      indent_size: 2,
+      "brace_style": "collapse,preserve-inline",
     }
     return js_beautify(code, options)
   } catch (error) {
@@ -604,3 +515,47 @@ function SettingsButton() {
     </div>
   )
 }
+
+function tidyCode() {
+  const { view } = getStore()
+
+  const ogCode = getCode()
+  const formatted = formatCode(ogCode)
+  view.dispatch({
+    changes: {
+      from: 0,
+      to: ogCode.length,
+      insert: formatted
+    }
+  })       
+}
+
+function openFromDisk() {
+  const input = document.createElement('input')
+  input.type = 'file'
+  input.accept = '.js'
+  input.onchange = () => {
+    if (input.files?.length) {
+      const file = input.files[0]
+      const reader = new FileReader()
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          loadCodeFromString(reader.result)
+        }
+      }
+      reader.readAsText(file)
+    }
+  }
+  input.click()
+}
+
+function loginClick() {
+  const { loginName } = getStore();
+
+  if (loginName === "") {
+    patchStore({ loginModalOpen: true });
+  } else {
+    // log out or change account
+  }
+}
+

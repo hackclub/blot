@@ -1,14 +1,14 @@
 import { render } from './render.tsx'
 
-export function createState(stateObj) {
+export function createStore(stateObj) {
   // const state = addGettersSetters(stateObj);
   const state = stateObj
 
-  const getState = () => {
+  const getStore = () => {
     return state
   }
 
-  const patchState = (newState, refreshRender = true) => {
+  const patchStore = (newState, refreshRender = true) => {
     for (const k in newState) {
       if (!(k in state)) {
         console.log('unknown key in patchState', k)
@@ -21,7 +21,16 @@ export function createState(stateObj) {
     if (refreshRender) render()
   }
 
-  return [patchState, getState]
+  const addToStore = (key, value) => {
+    if (key in state) {
+      console.log("already has state:", key);
+      return
+    }
+
+    state[key] = value;
+  }
+
+  return { patchStore, getStore, addToStore }
 }
 
 function addGettersSetters(inputObj) {

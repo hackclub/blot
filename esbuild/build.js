@@ -15,7 +15,7 @@ export const bundleHtmlScripts = async (name, htmlContent, outputPath = "./dist"
   for (const script of scripts) {
     const src = script.getAttribute('src');
 
-    if (src.includes("http")) continue;
+    if (src.includes("http") || script.hasAttribute("leave-it")) continue;
 
     const inputFile = path.resolve(src); // Assuming src is a relative path
     const outputFile = path.join(outputPath, 'assets', path.basename(src));
@@ -24,6 +24,7 @@ export const bundleHtmlScripts = async (name, htmlContent, outputPath = "./dist"
     await esbuild.build({
       entryPoints: [inputFile],
       bundle: true,
+      sourcemap: true,
       outfile: outputFile,
       jsxFactory: 'h',
       jsxFragment: 'Fragment',

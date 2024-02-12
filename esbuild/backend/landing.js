@@ -96,7 +96,7 @@ export default function() {
     </div>
 
     <div 
-      class="py-10"
+      class="pt-10"
       style="
         background-image: linear-gradient(to right,#ddd 1px,transparent 1px),linear-gradient(to bottom,#ddd 1px,transparent 1px);
         background-size: 40px 40px;

@@ -1,4 +1,4 @@
-import { createState } from './createState.js'
+import { createStore } from './createState.js'
 import { type Haxidraw, Turtle, type Point } from './drawingToolkit/index.js'
 import type { EditorView } from '@codemirror/view'
 
@@ -14,6 +14,11 @@ export type ErrorState = {
   name: string
   message: string
   pos: CodePosition
+}
+
+export type File = {
+  id: string
+  name: string
 }
 
 export type ConsoleMessage = {
@@ -41,8 +46,13 @@ export type GlobalState = {
   fileHandle: any
   needsSaving: boolean
   machineRunning: boolean
+  loginModalOpen: boolean,
+  cloudFilesModalOpen: boolean,
+  saveToCloudModalOpen: boolean,
   loginName: string
-  sessionKey: string
+  sessionKey: string,
+  files: File[],
+  cloudFileId: string
 }
 
 // setting/initializing state
@@ -66,7 +76,12 @@ const newState: Omit<GlobalState, 'code'> = {
   needsSaving: false,
   machineRunning: false,
   loginName: "",
-  sessionKey: ""
+  sessionKey: "",
+  loginModalOpen: false,
+  cloudFilesModalOpen: false,
+  saveToCloudModalOpen: true,
+  files: [],
+  cloudFileId: ""
 }
 
 export const makeNewState = (): GlobalState => {
@@ -75,4 +90,6 @@ export const makeNewState = (): GlobalState => {
   }
 }
 
-export const [patchStore, getStore] = createState<GlobalState>(makeNewState())
+export const { patchStore, getStore, addToStore } = createStore<GlobalState>(makeNewState())
+
+window.STATE = getStore();

@@ -4,11 +4,13 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node -r dotenv/config server.js",
+    "dev": "nodemon -r dotenv/config server.js"
   },
   "nodemonConfig": {
-    "watch": ["**/*"],
+    "watch": [
+      "**/*"
+    ],
     "ext": "ts js jsx tsx",
     "ignore": [
       "dist"
@@ -27,10 +29,12 @@
     "@replit/codemirror-vim": "^6.0.14",
     "@rollup/browser": "^3.26.0",
     "@sendgrid/mail": "^7.7.0",
+    "@supabase/supabase-js": "^2.39.3",
     "acorn": "^8.11.2",
     "classnames": "^2.3.2",
     "cm6-theme-basic-dark": "^0.2.0",
     "codemirror": "^6.0.1",
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.1",
     "esbuild": "^0.20.0",
     "esbuild-plugin-alias": "^0.2.1",

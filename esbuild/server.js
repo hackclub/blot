@@ -1,8 +1,6 @@
 // should be top directory of project
-
 import express from 'express';
 import path from 'path';
-import dotenv from 'dotenv';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -15,13 +13,19 @@ import guides from "./backend/guides.js";
 import gallery from "./backend/gallery.js";
 import landing from "./backend/landing.js";
 
+import checkSignIn from "./backend/api/checkSignIn.js";
+import saveFile from "./backend/api/saveFile.js";
+import getUser from "./backend/api/getUser.js";
+import submitCode from "./backend/api/submitCode.js";
+import getFiles from "./backend/api/getFiles.js";
+
 build({
   index: wrapHTML(`
     ${navBar(true)}
     ${landing()}
   `),
   editor: wrapHTML(`
-    <!-- TODO: add automatically ehen building -->
+    <!-- TODO: add automatically when building -->
     <link rel="stylesheet" href='./assets/initApp.css'>
     
     <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css'>
@@ -52,10 +56,16 @@ build({
 
 });
 
-dotenv.config();
-
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.post('/check-signed-in', checkSignIn);
+app.post('/get-files', getFiles);
+app.post('/save-file', saveFile);
+app.post('/get-user', getUser);
+app.post('/submit-code', submitCode);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

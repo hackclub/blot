@@ -8,3 +8,12 @@
   - unused assets in /public
 - add accounts
 - build tailwind
+- import errors don't have line numbers
+- errors without line numbers shouldn't highlight
+
+
+
+
+- comments and whitespace above import mess up error lines
+  - because I was taking white space before import
+- import mapping doesn't support "as" renaming

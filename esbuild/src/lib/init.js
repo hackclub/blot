@@ -1,4 +1,4 @@
-import { patchStore, getStore } from './state.ts'
+import { patchStore, getStore, addToStore } from './state.ts'
 import { render } from './render.tsx'
 
 import { addBezierControl } from './events/addBezierControl.jsx'
@@ -8,9 +8,11 @@ import { addSrcURLParam } from './events/addSrcURLParam.js'
 import { addNumberScrubbing } from './events/addNumberScrubbing.ts'
 import { saveFile } from './saveFile.ts'
 import { useOnEditorChange } from './events.ts'
+import { post } from './post.js'
 
 export function init() {
   console.log('init')
+  sessionStorage.setItem('session_secret_key', "f");
 
   render(true)
 
@@ -18,8 +20,7 @@ export function init() {
   const view = cm.view
   patchStore({ view })
 
-  // TODO
-  // checkCurrentUser();
+  checkCurrentUser();
 
   addLoadBackup()
   // load src if present after default loading behavior
@@ -28,6 +29,7 @@ export function init() {
   addBezierControl()
   addMachineControl()
   addNumberScrubbing()
+
 
   window.addEventListener('keydown', e => {
     if (
@@ -82,25 +84,31 @@ export function init() {
   document.body.dataset.theme = theme
 }
 
-
-async function checkCurrentUser() {
-  sessionStorage.setItem('session_secret_key', "00000");
-
+export async function checkCurrentUser() {
+  // sessionStorage.setItem('session_secret_key', "7d6283bf-74aa-4068-b7d0-1a096ce6b4be");
   const sessionKey = sessionStorage.getItem('session_secret_key');
 
-  if (sessionKey) {
-    patchStore({ sessionKey });
+  if (!sessionKey) return;
 
-    const loginEmail = await fetch("/api/currentUser", {
-      headers: { 
-        'Content-Type': 'application/json',
-        "Authentication": sessionKey
-      },
-    }).then(res => res.json());
+ 
+  patchStore({ sessionKey });
 
-    console.log(loginEmail);
-  } else {
+  const [ res, signInError ] = await post("/check-signed-in", { 
+    sessionKey 
+  });
 
-  }
+  if (signInError) return;
+
+  patchStore({ loginName: res.email })
+
+  const [ json, filesErr ] = await post('/get-files', { 
+    sessionKey 
+  });
+
+  if (filesErr) return;
+
+  patchStore({ files: json.files });
+
+
 
 }

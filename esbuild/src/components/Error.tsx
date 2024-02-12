@@ -1,34 +1,37 @@
-import { CodePosition, getStore } from '../lib/state.ts'
-import styles from './Error.module.css'
-import { useCallback, useEffect, useRef } from 'preact/hooks'
-import { EditorView } from 'codemirror'
-import { EditorState } from '@codemirror/state'
-import { javascript } from '@codemirror/lang-javascript'
-import { defaultHighlightStyle, syntaxHighlighting } from '@codemirror/language'
-import { themeExtension, useCMTheme } from '../lib/codemirror/cmTheme.ts'
-import JumpLinkIcon from '../ui/JumpLinkIcon.tsx'
-import { dispatchJumpTo } from '../lib/codemirror/state.js'
+import { CodePosition, getStore } from "../lib/state.ts";
+import styles from "./Error.module.css";
+import { useCallback, useEffect, useRef } from "preact/hooks";
+import { EditorView } from "codemirror";
+import { EditorState } from "@codemirror/state";
+import { javascript } from "@codemirror/lang-javascript";
+import {
+  defaultHighlightStyle,
+  syntaxHighlighting,
+} from "@codemirror/language";
+import { themeExtension, useCMTheme } from "../lib/codemirror/cmTheme.ts";
+import JumpLinkIcon from "../ui/JumpLinkIcon.tsx";
+import { dispatchJumpTo } from "../lib/codemirror/state.js";
 
 const Snippet = ({
   pos,
   code,
-  message
+  message,
 }: {
-  pos: CodePosition
-  code: string
-  message?: string
+  pos: CodePosition;
+  code: string;
+  message?: string;
 }) => {
-  const view = useRef<EditorView>()
-  useCMTheme(view.current)
+  const view = useRef<EditorView>();
+  useCMTheme(view.current);
 
   const cmRef = useCallback(
     (node: HTMLDivElement | null) => {
-      if (!node) return
+      if (!node) return;
 
       if (node.children[0]) {
         // destroy existing view
         //@ts-expect-error
-        if (node.children[0]) node.children[0]['view'].destroy()
+        if (node.children[0]) node.children[0]["view"].destroy();
       }
 
       const extensions = [
@@ -37,80 +40,81 @@ const Snippet = ({
         EditorState.readOnly.of(true),
         EditorView.editable.of(false),
         EditorView.theme({
-          '.cm-content': {
-            padding: '0'
+          ".cm-content": {
+            padding: "0",
           },
-          '.cm-line': {
-            padding: '0'
+          ".cm-line": {
+            padding: "0",
           },
-          '.cm-scroller': {
-            fontFamily: 'inherit',
-            lineHeight: 'inherit'
+          ".cm-scroller": {
+            fontFamily: "inherit",
+            lineHeight: "inherit",
           },
-          '.ͼp': {
-            backgroundColor: 'transparent'
-          }
+          ".ͼp": {
+            backgroundColor: "transparent",
+          },
         }),
-        themeExtension()
-      ]
+        themeExtension(),
+      ];
 
       const newView = new EditorView({
-        doc: code.split('\n')[pos.line - 1],
+        doc: code.split("\n")[pos.line - 1],
         parent: node,
-        extensions
-      })
+        extensions,
+      });
 
       //@ts-expect-error
-      node.children[0]['view'] = newView
-      view.current = newView
+      node.children[0]["view"] = newView;
+      view.current = newView;
     },
-    [code]
-  )
+    [code],
+  );
 
   useEffect(() => {
-    if (!view.current) return
+    if (!view.current) return;
     // set the document to current line
     view.current.dispatch({
       changes: {
         from: 0,
         to: view.current.state.doc.length,
-        insert: code.split('\n')[pos.line - 1]
-      }
-    })
-  })
+        insert: code.split("\n")[pos.line - 1],
+      },
+    });
+  });
 
   return (
     <pre class={styles.snippet}>
       <div>
         <div>{pos.line}</div>
       </div>
-      <code style={{ width: '100%', overflow: 'auto' }}>
+      <code style={{ width: "100%", overflow: "auto" }}>
         <div ref={cmRef} class={styles.cm} />
-        {' '.repeat(pos.column)}
+        {" ".repeat(pos.column)}
         <span class={styles.arrow}>↑</span>
         {message && <span class={styles.message}>{message}</span>}
       </code>
       <button
         class={styles.jumpTo}
         onClick={() => {
-          dispatchJumpTo(pos)
-        }}>
+          dispatchJumpTo(pos);
+        }}
+      >
         <JumpLinkIcon />
         Jump to line
       </button>
     </pre>
-  )
-}
+  );
+};
 
 export default function Error() {
-  const { error } = getStore()
+  const { error } = getStore();
 
-  if (!error) return null
+  if (!error) return null;
 
   return (
     <div class={styles.root}>
       <span class={styles.name}>{error.name}</span>
       <Snippet pos={error.pos} code={error.code} message={error.message} />
     </div>
-  )
+  );
 }

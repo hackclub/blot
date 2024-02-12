@@ -1,12 +1,12 @@
-import { useEffect } from 'preact/hooks'
-import { getStore } from '../lib/state.ts'
-import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
+import { useEffect } from "preact/hooks";
+import { getStore } from "../lib/state.ts";
+import { loadCodeFromString } from "../lib/loadCodeFromString.ts";
 
 export default function DropBox() {
   useEffect(() => {
     // Make sure the ref is defined
-    addDragDrop()
-  }, []) // Empty dependency array means this effect runs once after initial render
+    addDragDrop();
+  }, []); // Empty dependency array means this effect runs once after initial render
 
   return (
     <div
@@ -15,7 +15,7 @@ export default function DropBox() {
       droparea 
       
       hidden
-      w-100 
+      w-full
       h-full 
       absolute 
       bg-blue-200
@@ -28,70 +28,71 @@ export default function DropBox() {
       border-gray-800
       left-0 
       top-0 
-      z-50">
+      z-50"
+    >
       Drop an SVG or JS file.
     </div>
-  )
+  );
 }
 
 function addDragDrop() {
-  const droparea: HTMLElement | null = document.querySelector('.droparea')
+  const droparea: HTMLElement | null = document.querySelector(".droparea");
 
-  window.addEventListener('drop', function (evt) {
-    const { view } = getStore()
+  window.addEventListener("drop", function (evt) {
+    const { view } = getStore();
 
-    let dt = evt.dataTransfer
+    let dt = evt.dataTransfer;
 
-    if (dt === null || droparea === null) return
+    if (dt === null || droparea === null) return;
 
-    let files = dt.files
+    let files = dt.files;
 
-    droparea.classList.add('hidden')
+    droparea.classList.add("hidden");
 
-    const file = files[0]
-    const fileName = file.name.split('.')
-    const name = fileName[0]
-    const extension = fileName[fileName.length - 1]
+    const file = files[0];
+    const fileName = file.name.split(".");
+    const name = fileName[0];
+    const extension = fileName[fileName.length - 1];
 
-    var reader = new FileReader()
-    reader.readAsText(file)
+    var reader = new FileReader();
+    reader.readAsText(file);
 
-    reader.onloadend = event => {
-      let text = reader.result
+    reader.onloadend = (event) => {
+      let text = reader.result;
 
-      if (extension === 'js') {
-        loadCodeFromString(text)
-      } else if (extension === 'svg') {
-        text = text.replaceAll('\n', '')
+      if (extension === "js") {
+        loadCodeFromString(text);
+      } else if (extension === "svg") {
+        text = text.replaceAll("\n", "");
 
-        const newLines = `const importedSVG = createTurtle().fromSVG(String.raw\`${text}\`);\nimportedSVG.scale([1, -1]);\n`
+        const newLines = `const importedSVG = createTurtle().fromSVG(String.raw\`${text}\`);\nimportedSVG.scale([1, -1]);\n`;
 
         view.dispatch({
-          changes: { from: 0, insert: newLines }
-        })
+          changes: { from: 0, insert: newLines },
+        });
       } else {
-        throw Error('Unknown extension:' + extension)
+        throw Error("Unknown extension:" + extension);
       }
-    }
+    };
 
-    pauseEvent(evt)
-  })
+    pauseEvent(evt);
+  });
 
-  window.addEventListener('dragover', function (evt) {
-    droparea.classList.remove('hidden')
-    pauseEvent(evt)
-  })
-  ;['mouseout'].forEach(trigger =>
+  window.addEventListener("dragover", function (evt) {
+    droparea.classList.remove("hidden");
+    pauseEvent(evt);
+  });
+  ["mouseout"].forEach((trigger) =>
     window.addEventListener(trigger, function (evt) {
-      droparea.classList.add('hidden')
-    })
-  )
+      droparea.classList.add("hidden");
+    }),
+  );
 }
 
 function pauseEvent(e) {
-  if (e.stopPropagation) e.stopPropagation()
-  if (e.preventDefault) e.preventDefault()
-  e.cancelBubble = true
-  e.returnValue = false
-  return false
+  if (e.stopPropagation) e.stopPropagation();
+  if (e.preventDefault) e.preventDefault();
+  e.cancelBubble = true;
+  e.returnValue = false;
+  return false;
 }
