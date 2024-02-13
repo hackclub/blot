@@ -3,11 +3,11 @@ const height = 125;
 setDocDimensions(width, height);
 
 const t = createTurtle();
-  var petals = randIntInRange(5,13)
-  var rot = randIntInRange(0,205)
+  var petals = randIntInRange(5,31)
+  var rot = 0
       for(let i = 0; i < petals; i++){
         //this is to create flowers on the positive y axis and the negative y axis
-        const t1 = fatromb(72*i/(petals/5), [0,0], rot,2)
+        const t1 = fatromb(72*i/(petals/5), [0,0], rot,4)
 
         //this moves the flowers to the center of the canvas
         t1.translate([width/2,height/2])
@@ -17,12 +17,27 @@ const t = createTurtle();
 //l = number of rings
 for(let l = 1; l<4; l++){
     var size = 10
+    let r1 = randInRange(width/8.8,width/10.9) //radius
+    let r2 = randInRange(width/3.7,width/7.6) //radius
+    let r3 = randInRange(width/2.4,width/2.7) //radius
+    var r;//radius
+;
+    if(l===1){
+      r = r1;
+    }
+  else if(l===2){
+      r = r2;
+    }
+  else{
+    r = r3;
+  }
+  
+    let petal = randIntInRange(5,8)
+    let rotation = randIntInRange(size*2,size*6)
 
-    var r = randInRange(size,width/2.2) //radius
-    var rotation = randIntInRange(size*2,size*5)
-    var petal = randIntInRange(5,8)
     //r is the radius of the ring, r/3 is used so that there is a little bit of gap between flowers
   for(let x = -r; x < r; x=(r/3)+x){
+
       //r^2 = x^2 + y^2
       var y = Math.sqrt((r*r) - (x*x))
 
