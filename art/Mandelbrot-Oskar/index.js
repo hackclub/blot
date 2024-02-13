@@ -1,12 +1,11 @@
-const width = 125;
-const height = 125; // height and width of display (cloned from square disarray)
-const gridwidth = 250; // size of grid that lines are on
-const px_per_mm = gridwidth/width; // how many grid pixels per mm
+const size = 125; // width and height of display
+const gridsize = 250; // size of grid that lines are on
+const px_per_mm = gridsize/size; // how many grid pixels per mm
 const shaded = true // scan lines
 
 let xrange = [-2,0.5]
 let yrange = [-1.125,1.125]
-setDocDimensions(width, height);
+setDocDimensions(size, size);
 
 const shapes = createTurtle() // high level turtle
 
@@ -62,10 +61,10 @@ while (itr < 10000) { // checks a bunch of ranom points in the range
 
 let pixarr = [] // array of computed pixels
 
-for (let x = 0; x<gridwidth; x++) {
+for (let x = 0; x<gridsize; x++) {
   let row = []
-  for (let y = 0; y<gridwidth; y++) {
-    let thing = Math.round(Math.log(mandelbrot_px(map_linear(0, gridwidth, xrange[0], xrange[1], y), map_linear(0, gridwidth, yrange[0], yrange[1], x)), 1.05)) // calls mandelbrot_px on scaled coordinates
+  for (let y = 0; y<gridsize; y++) {
+    let thing = Math.round(Math.log(mandelbrot_px(map_linear(0, gridsize, xrange[0], xrange[1], y), map_linear(0, gridsize, yrange[0], yrange[1], x)), 1.05)) // calls mandelbrot_px on scaled coordinates
     // above line also takes the log base 1.05 of that and rounds it, to better render things up close (so that not everything is a border)
     row.push(thing)
   }
@@ -108,7 +107,7 @@ if (shaded == true) {
       t.up()
       t.goTo([block_begin/px_per_mm, y/px_per_mm])
       t.down()
-      t.goTo([gridwidth/px_per_mm, y/px_per_mm])
+      t.goTo([gridsize/px_per_mm, y/px_per_mm])
     }
   }
   shapes.join(t)
@@ -120,28 +119,28 @@ if (shaded == false) {
       if (pixels_to_render[y][x] != 0) { // ignore the 0s
         const t = createTurtle()
         // check if the pixel diagonally down and to the left to v is the same, and if it is draws a line to it
-        if (x > 0 && y < gridwidth-1 && pixels_to_render[y][x] == pixels_to_render[y+1][x-1]) {
+        if (x > 0 && y < gridsize-1 && pixels_to_render[y][x] == pixels_to_render[y+1][x-1]) {
           t.up()
           t.goTo([0,0])
           t.down()
           t.goTo([(-1)/px_per_mm,(1)/px_per_mm])
         }
         // check if the pixel diagonally down and to the right to v is the same, and if it is draws a line to it
-        if (x < gridwidth-1 && y < gridwidth-1 && pixels_to_render[y][x] == pixels_to_render[y+1][x+1]){
+        if (x < gridsize-1 && y < gridsize-1 && pixels_to_render[y][x] == pixels_to_render[y+1][x+1]){
           t.up()
           t.goTo([0,0])
           t.down()
           t.goTo([(1)/px_per_mm,(1)/px_per_mm])
         }
         // check if the pixel to the right of v is the same, and if it is draws a line to it
-        if (x < gridwidth-1 && pixels_to_render[y][x] == pixels_to_render[y][x+1]) {
+        if (x < gridsize-1 && pixels_to_render[y][x] == pixels_to_render[y][x+1]) {
           t.up()
           t.goTo([0,0])
           t.down()
           t.goTo([(1)/px_per_mm,0])
         }
         // check if the pixel below v is the same, and if it is draws a line to is
-        if (y < gridwidth-1 && pixels_to_render[y][x] == pixels_to_render[y+1][x]) {
+        if (y < gridsize-1 && pixels_to_render[y][x] == pixels_to_render[y+1][x]) {
           t.up()
           t.goTo([0,0])
           t.down()
@@ -153,5 +152,5 @@ if (shaded == false) {
     }
   }
 }
-shapes.translate([width / 2, height / 2], shapes.cc) // center it
+shapes.translate([size / 2, size / 2], shapes.cc) // center it
 drawTurtles([shapes]) // draw it
