@@ -1,19 +1,21 @@
 const width = 125;
 const height = 125; // height and width of display (cloned from square disarray)
-const gridwidth = 500; // size of grid that lines are on
+const gridwidth = 250; // size of grid that lines are on
 const px_per_mm = gridwidth/width; // how many grid pixels per mm
-const shaded = true
+const shaded = true // scan lines
 
+let xrange = [-2,0.5]
+let yrange = [-1.125,1.125]
 setDocDimensions(width, height);
 
 const shapes = createTurtle() // high level turtle
 
 function mandelbrot_px(x,y) { // calculates mandelbrot set inclusion for a complex number (x+iy)
-  let z1 = 0
+  let z1 = 0 
   let z2 = 0
   let c = 0
   let itr = 0
-  let max_itr = 100
+  let max_itr = 1000
   let newz1 = 0
   while (z2*z2 + z1*z1 <= 4 && itr <= max_itr) {
     newz1 = z1*z1 - z2 *z2 + x
@@ -42,12 +44,29 @@ function map_linear(f1, f2, t1, t2, val) { // simple linear mapping to make it e
   return val*mult + t1
 }
 
+let x_cent = 0
+let y_cent = 0 // x and y center to check
+let itr = 0
+while (itr < 10000) { // checks a bunch of ranom points in the range
+  x_cent = map_linear(0,1,-2,0.5,Math.random())
+  y_cent = map_linear(0,1,-1.125,1.125,Math.random())
+  itr++
+  let val = mandelbrot_px(x_cent,y_cent) // the mandelbrot value of the point
+  if (val < 1000 && val > 70) { // if point is classified as "interesting"
+    let zoom = Math.pow(0.1,Math.random()*5) // set a zoom and zoom in on it.
+    xrange = [x_cent-zoom, x_cent+zoom]
+    yrange = [y_cent-zoom, y_cent+zoom]
+    break; 
+  }
+}
+
 let pixarr = [] // array of computed pixels
 
 for (let x = 0; x<gridwidth; x++) {
   let row = []
   for (let y = 0; y<gridwidth; y++) {
-    let thing = mandelbrot_px(map_linear(0, gridwidth, -2, 0.5, y), map_linear(0, gridwidth, -1.12, 1.12, x)) // calls mandelbrot_px on scaled coordinates
+    let thing = Math.round(Math.log(mandelbrot_px(map_linear(0, gridwidth, xrange[0], xrange[1], y), map_linear(0, gridwidth, yrange[0], yrange[1], x)), 1.05)) // calls mandelbrot_px on scaled coordinates
+    // above line also takes the log base 1.05 of that and rounds it, to better render things up close (so that not everything is a border)
     row.push(thing)
   }
   pixarr.push(row)
@@ -83,7 +102,6 @@ if (shaded == true) {
         }
         block_begin = x
         block_val = !block_val
-        console.log("hi")
       }
     }
     if (block_val) {
@@ -92,7 +110,6 @@ if (shaded == true) {
       t.down()
       t.goTo([gridwidth/px_per_mm, y/px_per_mm])
     }
-    console.log("itr done")
   }
   shapes.join(t)
 }
@@ -136,8 +153,5 @@ if (shaded == false) {
     }
   }
 }
-console.log("hi")
 shapes.translate([width / 2, height / 2], shapes.cc) // center it
-console.log("hi")
 drawTurtles([shapes]) // draw it
-console.log("fin")
