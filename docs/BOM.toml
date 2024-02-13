@@ -25,9 +25,9 @@ designFiles = ["stl", "dxf", "gerber + bom"]
 itemId = "uuid" # to identify the part
 
 [[items]]
-part = "5mm allen key"
+part = "3mm allen key"
 notes = "for tightening most screws"
-exampleSource = "https://www.mcmaster.com/7289A16"
+exampleSource = "https://www.mcmaster.com/7289A14"
 quantity = 1
 findLocalSupplier = true
 tags = ["tool"]
