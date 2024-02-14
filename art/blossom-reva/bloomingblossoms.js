@@ -31,9 +31,11 @@ for(let l = 1; l<4; l++){
   else{
     r = r3;
   }
-  
+
     let petal = randIntInRange(5,8)
     let rotation = randIntInRange(size*2,size*6)
+    let turn = randIntInRange(70,168)
+
 
     //r is the radius of the ring, r/3 is used so that there is a little bit of gap between flowers
   for(let x = -r; x < r; x=(r/3)+x){
@@ -43,8 +45,9 @@ for(let l = 1; l<4; l++){
 
       for(let i = 0; i < petal; i++){
         //this is to create flowers on the positive y axis and the negative y axis
-        const t1 = fatromb(72*i/(petal/5), [x,y], rotation,r/size)
-        const t2 = fatromb(72*i/(petal/5), [-x,-y], rotation, r/size)
+       const t1 = fatromb(72*i/(petal/5), [x,y], rotation,r/size, turn)
+       const t2 = fatromb(72*i/(petal/5), [-x,-y], rotation, r/size, turn)
+        // r/8 is used for the size of the flower so it's smaller inwards, bigger outwards
         // r/8 is used for the size of the flower so it's smaller inwards, bigger outwards
 
         //more random sizing, this one is similar to earlier lines but it doesn't follow the "smaller inwards bigger outwards" rule
@@ -54,6 +57,7 @@ for(let l = 1; l<4; l++){
         //this moves the flowers to the center of the canvas
         t1.translate([width/2,height/2])
         t2.translate([width/2,height/2])
+      
         t.join(t2)
         t.join(t1)
       }
@@ -66,18 +70,18 @@ drawTurtles([
 ]);
 
 
-function fatromb(angle, tran = [0,0], rot = 0, size=4) {
+function fatromb(angle, tran = [0,0], rot = 0, size=4, turn = 72) {
   const t = createTurtle()
   //setup
   t.right(angle)
 
     //we choose 108 and 72 because their sum equals 180
   t.forward(size)
-  t.right(72)
+  t.right(turn)
   t.forward(size)
-  t.right(108)
+  t.right(180-turn)
   t.forward(size)
-  t.right(72)
+  t.right(turn)
   t.forward(size)
 
   t.translate(tran)
