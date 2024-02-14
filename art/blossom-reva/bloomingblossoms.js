@@ -15,11 +15,15 @@ const t = createTurtle();
       }
 
 //l = number of rings
-for(let l = 1; l<4; l++){
+for(let l = 1; l<7; l++){
     var size = 10
-    let r1 = randInRange(width/8.8,width/10.9) //radius
-    let r2 = randInRange(width/3.7,width/7.6) //radius
-    let r3 = randInRange(width/2.4,width/2.7) //radius
+    let r1 = randInRange(width/10.9,width/12.6) //radius
+    let r2 = randInRange(width/7.4,width/9.6) //radius
+    let r3 = randInRange(width/5.3,width/6.6) //radius
+    let r4 = randInRange(width/3.8,width/4.3) //radius
+    let r5 = randInRange(width/2.8,width/3.4) //radius
+    let r6 = randInRange(width/2.2,width/2.5) //radius
+
     var r;//radius
 ;
     if(l===1){
@@ -28,8 +32,17 @@ for(let l = 1; l<4; l++){
   else if(l===2){
       r = r2;
     }
-  else{
+  else if(l==3){
     r = r3;
+  }
+  else if(l==4){
+    r = r4;
+  }
+  else if(l==5){
+    r = r5;
+  }
+  else{
+    r = r6;
   }
 
     let petal = randIntInRange(5,8)
