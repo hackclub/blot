@@ -4,9 +4,9 @@ function drawEllipses() {
   const numEllipses = 1000;
   for (let k = 1; k <= numEllipses; k++) {
 
-    const A = Math.sin((12 * Math.PI * k) / numEllipses) * Math.cos((8 * Math.PI * k) / numEllipses);
-    const B = Math.cos((12 * Math.PI * k) / numEllipses) * Math.cos((8 * Math.PI * k) / numEllipses);
-    const C = 60 - (1 / 7) * Math.pow(Math.sin((10 * Math.PI * k) / numEllipses), 4); // 60 is the radius of the circle
+    const A = Math.sin((60 * Math.PI * k) / numEllipses) * Math.cos((60 * Math.PI * k) / numEllipses);
+    const B = Math.cos((60 * Math.PI * k) / numEllipses) * Math.cos((52 * Math.PI * k) / numEllipses);
+    const C = 60 - (1 / 7) * Math.pow(Math.sin((60 * Math.PI * k) / numEllipses), 60); // 60 is the radius of the circle
     const angleIncrement = (2 * Math.PI) / 100;
     const ellipsePoints = [];
     
