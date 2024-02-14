@@ -2,6 +2,7 @@
 const buildno = 7; // this is an example number, please change it for the build being packed
 
 // instructions.ts
+// instructions.ts
 var ParseCoords = (cstr, multScale = 1) => {
   const coordArray = [];
   for (const x of cstr.split(":")) {
@@ -29,7 +30,7 @@ var RunInstructions = (inst, org, scale = 1) => {
         break;
       case "arc":
         data = ParseCoords(args);
-        turtle.arc(data[0], data[1] * scale);
+        turtle.arc(-data[0], data[1] * scale);
         break;
       case "jmp":
         data = ParseCoords(args);
@@ -180,8 +181,6 @@ var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
         ],
         scale
       );
-      xInd += 1;
-      continue;
     } else {
       switch (x) {
         case "\r":
@@ -288,4 +287,3 @@ Happy Drawing!`, [4.22, 72.87], 0.47, [2.75, 5.1]);
 for (let i = 0; i <= 0; i++) {
   DrawText("blot.hackclub.dev/assembly", [41.58, 65.73], 0.47, [2.75, 5.1]);
 }
-
