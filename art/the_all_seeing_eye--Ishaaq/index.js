@@ -23,6 +23,7 @@ function drawEllipses() {
     t.goTo(ellipsePoints[0]);
     t.down();
     ellipsePoints.forEach(point => t.goTo(point));
+    t.goTo(ellipsePoints[0]); // go back to the start (Thanks "Oskar Pav")
   }
   // Render the turtles
   drawTurtles([t]);
