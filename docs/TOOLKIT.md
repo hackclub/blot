@@ -27,7 +27,7 @@ Can take a list of turtles to render.
    coordinates without drawing (basically goTo but always without
    drawing).
 
-> All functions under `Drawing` are in the drawing state at the end. 
+> All functions under `Drawing` end in the drawing state. 
 
 ## Orientation and Movement
 - **`t.up()`** - Lifts the blot's pen.
