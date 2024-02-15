@@ -1,3 +1,5 @@
+// The Mathmatical Eye, By Ishaaq Ollite
+
 const t = createTurtle();
 
 function drawEllipses() {
