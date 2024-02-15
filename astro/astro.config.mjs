@@ -11,6 +11,10 @@ export default defineConfig({
     '/assembly': {
       status: 302,
       destination: 'https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md'
+    },
+    '/tuning': {
+      status: 302,
+      destination: 'https://github.com/hackclub/blot/blob/main/docs/TUNING.md'
     }
   }
 })
