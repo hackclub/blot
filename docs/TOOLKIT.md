@@ -12,8 +12,6 @@ Initializes a new turtle object for drawing.
 #### Rendering the Turtle
 -   **`drawTurtles([turtles])`** - Renders the specified list of turtles onto the canvas.
 Can take a list of turtles to render.
-
-
 ## Drawing 
  - **`t.goTo([ x: number, y: number ])`**  - Moves the turtle to the
    specified coordinates, drawing a line (if the pen is down).
@@ -46,7 +44,6 @@ Can take a list of turtles to render.
 ## Importing SVGS
 **`t.fromSVG(svgString: string)`** - Imports an SVG
 > You can drag in SVG's, and the interface will generate a turtle for it. Keep in mind that SVG's are often imported far too large, and will need to be scaled and translated.
-
 
 ## Special Points and Dimensions
 These are all variables. You can get 9 points of interest from the turtle as get methods.
