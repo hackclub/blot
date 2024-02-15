@@ -3,16 +3,15 @@
 This is Blot's programmatic art IDE. For an introduction to the editor watch this video (coming soon!).
 
 ## Turtle
-Our main drawing primative is a turtle. It's a collection of polylines with an associated pen that has a location and direction.
+Our main drawing primitive is a turtle. It's a collection of polylines with an associated pen that has a location and direction.
 
 ## Creating a Turtle
 **`const t = createTurtle();`**
 Initializes a new turtle object for drawing.
 > The turtle object starts at points [0,0] by default with an initial angle of 0 degrees and begins in the drawing state.
 #### Rendering the Turtle
--   **`drawTurtles([turtles])`**
-Renders the specified list of turtles onto the canvas.
-Takes a list of turtles to render.
+-   **`drawTurtles([turtles])`** - Renders the specified list of turtles onto the canvas.
+Can take a list of turtles to render.
 
 
 ## Drawing 
@@ -28,7 +27,7 @@ Takes a list of turtles to render.
    coordinates without drawing (basically goTo but always without
    drawing).
 
-> All functions under `Drawing` up in the drawing state. 
+> All functions under `Drawing` are in the drawing state at the end. 
 
 ## Orientation and Movement
 - **`t.up()`** - Lifts the blot's pen.
