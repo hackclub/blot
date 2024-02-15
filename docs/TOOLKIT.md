@@ -50,10 +50,10 @@ Can take a list of turtles to render.
 
 ## Special Points and Dimensions
 These are all variables. You can get 9 points of interest from the turtle as get methods.
--   **`t.start`**
-- **`t.end`** - Access the start and end points of the turtle's path.
-- **`t.width`** - 
-- **`t.height`** -  Retrieve the width and height of the turtle's drawing area.
+- **`t.start`** - Access the start points of the turtle's path.
+- **`t.end`** - Access the end points of the turtle's path.
+- **`t.width`** - Retrieve the width of the turtle's drawing area.
+- **`t.height`** -  Retrieve the height of the turtle's drawing area.
 > l is left, r is right, c is center, b is bottom.
 ```js 
 lt -- ct -- rt
@@ -73,9 +73,9 @@ lb -- cb -- rb
 - **`t.getAngle(tValue)`** 0 takes value 0 - 1 and returns angle that far along paths
 
 > fn takes (pt, tValue) => { ... }
-> return [ x, y ] to replace the old point value with the new one
-> return "BREAK" to split path at that point
-> return "REMOVE" to filter out that point
+> - return [ x, y ] to replace the old point value with the new one
+> - return "BREAK" to split path at that point
+> - return "REMOVE" to filter out that point
 
 <!-- 
 displace
