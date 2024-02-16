@@ -71,7 +71,7 @@ export const toolkit = {
     const parser = new DOMParser();
     const doc = parser.parseFromString(svgString, 'image/svg+xml');
     const svg = doc.querySelector('svg');
-    const polylines = flattenSVG(svg, { maxError: 0.001 });
+    const polylines = flattenSVG(svg, { maxError: 0.001 }).map(pl => pl.points);
 
     return polylines;
   },

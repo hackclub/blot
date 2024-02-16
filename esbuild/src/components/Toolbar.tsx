@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect } from 'preact/hooks'
 import download from '../lib/download.ts'
 import runCode from '../lib/run.ts'
 import { defaultProgram } from '../lib/defaultProgram.js'
@@ -6,25 +6,15 @@ import { patchStore, getStore } from '../lib/state.ts'
 import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
 import styles from './Toolbar.module.css'
 import Button from '../ui/Button.tsx'
-import cx from 'classnames'
 // import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
-import PlugIcon from '../ui/PlugIcon.tsx'
-import {
-  connect,
-  disconnect,
-  runMachine,
-  tryAutoConnect
-} from '../lib/machine.ts'
-import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
+// import PlugIcon from '../ui/PlugIcon.tsx'
+// import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
-import BorpheusIcon from '../ui/BorpheusIcon.tsx'
 import { saveFile } from '../lib/saveFile.ts'
-import * as prettier from 'prettier'
+// import * as prettier from 'prettier'
 import js_beautify from 'js-beautify'
-import { createMask } from '../lib/getBitmap.js'
-import { Turtle } from '../lib/drawingToolkit/index.js'
 
 const menuItemClasses = `
   relative
@@ -105,9 +95,6 @@ export default function Toolbar() {
             <DownloadButton />
             <DownloadSVG />
             <DownloadPNG />
-            <div class={menuItemClasses} onClick={cullHiddenLines}>
-              cull hidden lines
-            </div>
           </div>
         </div>
       </div>
@@ -160,7 +147,6 @@ export default function Toolbar() {
             </div>*/}
           </div>
         </div>
-        {/*<MachineControls />*/}
         <GitHubLink />
         <SettingsButton />
       </div>
@@ -401,50 +387,6 @@ function OpenButton() {
   )
 }
 
-function cullHiddenLines(e) {
-  const { turtles } = getStore()
-  const { isVisible } = createMask()
-
-  // const newTurtle = new Turtle();
-  // let lastVisible = false;
-
-  // turtles.forEach(turtle => {
-  //   turtle
-  //   .resample(0.1)
-  //   .path.forEach(pl => {
-  //     pl.forEach((pt, i) => {
-  //       const [x, y] = pt;
-  //       const visible = isVisible(x, y);
-
-  //       if (lastVisible && i > 0 && visible) newTurtle.goTo([x, y]);
-  //       else newTurtle.jump([x, y]);
-  //       lastVisible = visible;
-  //     })
-  //   })
-  // })
-
-  // newTurtle.simplify(.01);
-  // newTurtle.style.fill ="none";
-  // newTurtle.style.stroke = "black";
-
-  // patchStore({
-  //   turtles: [newTurtle]
-  // })
-
-  turtles.forEach(turtle => {
-    turtle.resample(0.01).iteratePath(([x, y], t) => {
-      const visible = isVisible(x, y)
-
-      if (!visible) return 'BREAK'
-    })
-
-    // turtle.simplify(0.01);
-    turtle.style.fill = 'none'
-  })
-
-  patchStore({ turtles })
-}
-
 function formatCode(code) {
   try {
     const options = {
@@ -456,39 +398,6 @@ function formatCode(code) {
     console.log(error)
     return code // return the original code if there's an error
   }
-}
-
-function MachineControls() {
-  const { inst, running } = getStore()
-
-  useEffect(() => {
-    tryAutoConnect()
-
-    // connect here, set inst
-  }, [])
-
-  return (
-    <div>
-      {inst ? (
-        <>
-          <Button variant="ghost" onClick={disconnect}>
-            <PlugIcon className={cx(styles.icon, styles.connectedIcon)} />
-            <span>disconnect...</span>
-          </Button>
-          {/* separator */}
-          <div class={styles.separator} />
-          <Button variant="ghost" loading={running} onClick={runMachine}>
-            run machine
-          </Button>
-        </>
-      ) : (
-        <Button variant="ghost" onClick={connect}>
-          <PlugIcon className={cx(styles.icon, styles.disconnectedIcon)} />
-          <span>connect to machine...</span>
-        </Button>
-      )}
-    </div>
-  )
 }
 
 function SettingsButton() {

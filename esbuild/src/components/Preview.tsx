@@ -3,8 +3,6 @@ import styles from './Preview.module.css'
 import { getStore } from '../lib/state.ts'
 import CenterToFitIcon from '../ui/CenterToFitIcon.tsx'
 import Button from '../ui/Button.tsx'
-import type { Point } from '../lib/drawingToolkit/index.js'
-import lineclip from '../lib/lineclip.ts'
 
 import { createListener } from '../lib/createListener.js'
 
@@ -243,7 +241,6 @@ const _redraw = (canvas: HTMLCanvasElement) => {
       //   -(dpr * (-panY + y * scale))
       // ])
 
-      // paths = lineclip(paths, [0, 0, width, height])
 
       polyline.forEach((p, i) => {
         let [x, y] = p

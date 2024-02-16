@@ -1,5 +1,5 @@
-import { toolkit } from "./drawingToolkitV2/toolkit.js";
-import { Turtle } from './drawingToolkit/index.js'
+import { toolkit } from "./drawingToolkit/toolkit.js";
+import { Turtle } from './drawingToolkit/Turtle.js'
 import { getPosFromErr } from "./getPosFromErr.js";
 
 let intervals = [];

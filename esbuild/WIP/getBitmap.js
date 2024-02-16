@@ -1,4 +1,4 @@
-import { getStore } from './state.ts'
+import { getStore } from '../src/lib/state.ts'
 
 const DPI = 1000
 const SCALE = DPI / 25.4

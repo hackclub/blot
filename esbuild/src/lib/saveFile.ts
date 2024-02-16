@@ -1,6 +1,8 @@
 import { patchStore } from './state.ts'
 
-export async function saveFile(content, { filename, fileHandle } = {}) {
+export async function saveFile(content, ops = {}) {
+  let fileHandle = ops.fileHandle;
+  let filename = ops.filename ?? "";
   if (!isChrome()) {
     alert(
       'To save files to computer must use updated Chrome based browser. Please download files to store them.'

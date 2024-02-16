@@ -8,8 +8,20 @@ export function pointInPolylines(polylines, point, ops = {}) {
 
 export function pointInPolyline(point, polyline, ops = {}) {
   const edge = ops.edge ?? false;
+  const assumeClosed = ops.assumeClosed ?? true;
 
-  if (!isClosed(polyline)) return false;
+  let addedLastPoint = false;
+  if (!isClosed(polyline)) {
+    if (assumeClosed === false) return false;
+    const firstPt = [...polyline[0]];
+    polyline.push(firstPt);
+    console.log({
+      firstPt,
+      polyline,
+      lastPt: polyline.at(-1)
+    })
+    addedLastPoint = true;
+  }
 
   const x = point[0], y = point[1];
   let wn = 0;
@@ -36,6 +48,9 @@ export function pointInPolyline(point, polyline, ops = {}) {
       }
     }
   }
+
+  // if (addedLastPoint) polyline.pop();
+
   return wn !== 0;
 };
 

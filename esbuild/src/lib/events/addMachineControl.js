@@ -1,6 +1,5 @@
 import { createHaxidraw } from '../haxidraw/createHaxidraw.js'
 import { createListener } from '../createListener.js'
-import runCode from '../run.ts'
 import { getStore, patchStore } from '../state.ts'
 
 let cancelled = false

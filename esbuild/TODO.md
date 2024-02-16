@@ -12,9 +12,10 @@
 - remove 
   - unused icons in src/ui
   - unused assets in /public
-- add accounts
+- [ ] file renaming
+- [x] add accounts
 - build tailwind
-- import errors don't have line numbers
+- [x] import errors don't have line numbers
 - errors without line numbers shouldn't highlight
 
 
