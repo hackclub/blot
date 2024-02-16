@@ -2,7 +2,12 @@ import { bounds } from "./bounds.js";
 import { pointInPolylines } from "./pointInPolylines.js"
 import { mergePolylines } from "./mergePolylines.js";
 
-export const cut = (polylines0, polylines1) => {
+export const cut = (polylines0, polylines1, assumeClosed = true) => {
+  if (assumeClosed) polylines1.forEach(poly => {
+    const [x, y] = poly.at(0);
+    poly.push([x, y]);
+  })
+
   const result = [];
   polylines0.forEach(poly0 => {
     polylines1.forEach(poly1 => {
@@ -13,14 +18,26 @@ export const cut = (polylines0, polylines1) => {
   while (polylines0.length) polylines0.pop();
   result.forEach( p => polylines0.push(p));
 
+  if (assumeClosed) polylines1.forEach(poly => {
+    poly.pop();
+  })
+
   return polylines0;
 };
 
-export const cover = (polylines0, polylines1) => {
+export const cover = (polylines0, polylines1, assumeClosed = true) => {
+  if (assumeClosed) polylines1.forEach(poly => {
+    const [x, y] = poly.at(0);
+    poly.push([x, y]);
+  })
 
   polylines1.forEach(poly1 => {
     polylines0 = helper(polylines0, poly1);
   });
+
+  if (assumeClosed) polylines1.forEach(poly => {
+    poly.pop();
+  })
 
   return polylines0;
 
