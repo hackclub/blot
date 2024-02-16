@@ -79,7 +79,7 @@ const newState: Omit<GlobalState, 'code'> = {
   sessionKey: "",
   loginModalOpen: false,
   cloudFilesModalOpen: false,
-  saveToCloudModalOpen: true,
+  saveToCloudModalOpen: false,
   files: [],
   cloudFileId: ""
 }

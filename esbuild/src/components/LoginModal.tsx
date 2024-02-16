@@ -115,7 +115,7 @@ export default function LoginModal() {
           </div>
         )}
 
-        {state.loggedIn && (
+        {false && state.loggedIn && (
           <div class="text-gray-200 text-sm pt-2">
             <span class="underline cursor-pointer" onClick={logout}>
               Log out.

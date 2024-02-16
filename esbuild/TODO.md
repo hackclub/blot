@@ -1,3 +1,9 @@
+- cmd s save, auto save
+- check session length
+- sort by age
+- share link
+- error handling
+- delete and rename files
 - port header
 - automatically generate bundled css import
 - make sure bundle path is correct

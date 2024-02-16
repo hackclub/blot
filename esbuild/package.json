@@ -45,6 +45,8 @@
     "marked": "^7.0.4",
     "marked-highlight": "^2.1.0",
     "nanoid": "^5.0.3",
+    "polyclip-ts": "^0.16.3",
+    "polygon-clipping": "^0.15.7",
     "preact": "^10.6.5",
     "prisma": "^5.9.1",
     "prismjs": "^1.29.0",

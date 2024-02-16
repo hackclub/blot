@@ -1,11 +1,7 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = 'https://rowaxzeiscproyjbnrxs.supabase.co';
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from "./supabase.js";
 
 export default async function(req, res) {
-  const { sessionKey, email, file } = req.body;
+  const { sessionKey, email, file, name, fileId } = req.body;
 
   try {
     let { data: session, error: userError } = await supabase
@@ -20,17 +16,31 @@ export default async function(req, res) {
 
     if (session.user !== email) return;
 
-    const { data: fileData, error: newUserError } = await supabase
-        .from('files')
-        .insert([{ user: email, content: file }])
-        .single();
+    const { data: savedFile, error } = await supabase
+      .from("files")
+      .upsert({ 
+        id: fileId, 
+        content: file, 
+        name, 
+        user: email 
+      })
+      .select();
 
-    res.send({ ok: true });
+    if (savedFile !== null) {
+      res.send({ fileId: savedFile[0].id });
+      return;
+    }
 
-    // // TODO: check that session isn't expired
-    // console.log(session);
+    const { data: savedFile2, error: newUserError } = await supabase
+      .from('files')
+      .insert([{ 
+        content: file, 
+        name, 
+        user: email 
+      }])
+      .select();
 
-    // res.send({ email: session.user });
+    res.send({ fileId: savedFile2[0].id });
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ error: error.message });

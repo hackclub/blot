@@ -1,11 +1,9 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from "./supabase.js";
 import crypto from 'crypto';
-
-const supabaseUrl = 'https://rowaxzeiscproyjbnrxs.supabase.co';
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { sendCode } from "./sendCode.js";
 
 export default async function(req, res) {
+  // this should check session code
   const { email } = req.body;
 
   console.log("logging in:", email);
@@ -52,6 +50,7 @@ export default async function(req, res) {
     }
 
     // send login email
+    sendCode(email, login_code);
     console.log("sent login email", { email, login_code });
 
     res.send({ ok: true });

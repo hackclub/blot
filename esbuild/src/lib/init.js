@@ -12,7 +12,6 @@ import { post } from './post.js'
 
 export function init() {
   console.log('init')
-  sessionStorage.setItem('session_secret_key', "f");
 
   render(true)
 
@@ -85,7 +84,6 @@ export function init() {
 }
 
 export async function checkCurrentUser() {
-  // sessionStorage.setItem('session_secret_key', "7d6283bf-74aa-4068-b7d0-1a096ce6b4be");
   const sessionKey = sessionStorage.getItem('session_secret_key');
 
   if (!sessionKey) return;

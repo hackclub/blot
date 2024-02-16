@@ -1,127 +1,14 @@
-import { Turtle, Point } from './drawingToolkit/index.js'
-import * as drawingUtils from './drawingToolkit/utils.js'
-import { CodePosition, ErrorState, getStore, patchStore } from './state.ts'
+import { getStore, patchStore } from './state.ts'
 import { parse } from 'acorn'
+import { getPosFromErr } from "./getPosFromErr.js";
+import { runCodeInner } from "./runCodeInner.js"
+import { makeIncluded } from "./makeIncluded.js";
 
 function getCode() {
   const { view } = getStore()
   const code = view.state.doc.toString()
 
   return code
-}
-
-const baseLogger = (type: 'log' | 'error' | 'warn', ...args: [any, ...any]) => {
-  console[type](...args)
-
-  // get code location
-  const pos = getPosFromErr(new Error())
-
-  patchStore(
-    {
-      console: [
-        ...getStore().console,
-        {
-          type,
-          pos,
-          time: Number(new Date()),
-          values: args
-        }
-      ]
-    },
-    false
-  )
-}
-
-const hConsole = {
-  log: (...args: [any, ...any[]]) => baseLogger('log', ...args),
-  error: (...args: [any, ...any[]]) => baseLogger('error', ...args),
-  warn: (...args: [any, ...any[]]) => baseLogger('warn', ...args)
-}
-
-
-// TODO this casues bugs
-
-// let DETECTED_RANDOM_USAGE = false
-// const patchedRandom = (() => {
-//   if (!DETECTED_RANDOM_USAGE) {
-//     hConsole.warn(`Math.random() called! This could cause issues if done unintentionally.
-//     https://github.com/hackclub/blot/issues/161`)
-//     DETECTED_RANDOM_USAGE = true
-//   }
-//   return Math.__proto__.unpatchedRandom()
-// })
-// Math.__proto__.unpatchedRandom = Math.random
-// Math.random = patchedRandom
-
-let intervals: number[] = []
-let timeouts: number[] = []
-const patchedInterval = (
-  callback: (...args: any[]) => void,
-  time: number,
-  ...args: any[]
-) => {
-  const interval = window.setInterval(callback, time, ...args)
-  intervals.push(interval)
-  return interval
-}
-
-const patchedTimeout = (
-  callback: (...args: any[]) => void,
-  time: number,
-  ...args: any[]
-) => {
-  const timeout = window.setTimeout(callback, time, ...args)
-  timeouts.push(timeout)
-  return timeout
-}
-
-// inject items into global scope, or replace existing properties with our own
-let turtles = []
-const customGlobal = {
-  setTimeout: patchedTimeout,
-  setInterval: patchedInterval,
-  // drawing functions
-  Turtle,
-  createTurtle: (pt: Point) => new Turtle(pt),
-  console: hConsole,
-  ...drawingUtils,
-  lerp(start: number, end: number, t: number) {
-    return (1 - t) * start + t * end
-  },
-  drawTurtles: (turtlesToDraw: Turtle[], style = {}) => {
-    turtlesToDraw.forEach(t => {
-      const temp = t.copy()
-      if (style.fill === undefined) style.fill = 'none'
-      if (style.stroke === undefined) style.stroke = 'black'
-      if (style.width === undefined) style.width = 1
-      temp.style = style
-      turtles.push(temp)
-    })
-  },
-  setDocDimensions(w: number, h: number) {
-    patchStore(
-      {
-        docDimensions: {
-          width: w,
-          height: h
-        }
-      },
-      false
-    )
-  }
-}
-
-const globalProxy = new Proxy(window, {
-  get: (w, prop) =>
-    //@ts-ignore
-    prop in customGlobal ? customGlobal[prop] : w[prop].bind(w)
-})
-
-const args = {
-  ...customGlobal,
-  global: globalProxy,
-  globalThis: globalProxy,
-  window: globalProxy
 }
 
 export default async function runCode() {
@@ -147,8 +34,31 @@ export default async function runCode() {
     return
   }
 
+  patchStore(
+    {
+      console: [],
+      error: null
+    },
+    false
+  )
+
+
   try {
-    await runCodeInner(code, args)
+    // const { globalScope, turtles, logs, docDimensions } = makeIncluded();
+
+    // await runCodeInner(code, globalScope);
+
+    // patchStore({
+    //   turtles,
+    //   turtlePos: turtles.at(-1)?.position ?? [0, 0],
+    //   docDimensions,
+    //   console: [
+    //     ...getStore().console,
+    //     ...logs
+    //   ]
+    // });
+
+    runCodeWorker();
   } catch (err) {
     console.error(err)
     const error = {
@@ -162,67 +72,65 @@ export default async function runCode() {
   }
 }
 
-async function runCodeInner(str, globalScope) {
-  intervals.forEach(clearInterval)
-  timeouts.forEach(clearTimeout)
-  intervals = []
-  timeouts = []
-  turtles = []
+function runCodeWorker() {
+  const code = getCode();
+  const worker = createWorker();
+  // const worker = new Worker('./runWorker.js', { type: "module" });
 
-  patchStore(
-    {
-      console: [],
-      error: null
-    },
-    false
-  )
+  console.log(worker);
 
-  // const regex = /import\s+([\w*{},\s]+)\s+from\s+(['"`])(.*?)\2\s*;?/gm
-  const regex = /import\s+([\s\S]+?)\s+from\s+"([\s\S]+?)"/gm
-  let match
 
-  while ((match = regex.exec(str))) {
-    const variables = match[1];
-    const modulePath = match[2];
+  worker.onmessage = (e) => {
+    console.log("result", e);
+    // const { error, turtles, logs, docDimensions } = e.data;
+    // console.log("got message", error);
+    // if (error) {
+    //   console.error(error);
+    //   patchStore({ error });
+    // } else {
+    //   patchStore({
+    //     turtles,
+    //     turtlePos: turtles.at(-1)?.position ?? [0, 0],
+    //     docDimensions,
+    //     console: [
+    //       ...getStore().console,
+    //       ...logs
+    //     ]
+    //   });
+    // }
+  };
 
-    const dynamicImport = `const ${variables.replaceAll("as", ":")} = await (async () => { let temp = await import('${modulePath}'); return temp.default ? temp.default : temp; })();`
+  worker.postMessage("test");
 
-    str = str.replace(match[0], dynamicImport);
-  }
+  worker.onerror = (error) => {
+    console.error(error);
+  };
 
-  const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor
-
-  str = `"use strict"\n${str}`
-
-  const fn = new AsyncFunction(...Object.keys(globalScope), str)
-
-  await fn(...Object.values(globalScope)).catch(err => {
-    throw err
-  })
-
-  patchStore({
-    turtles,
-    turtlePos: turtles.at(-1)?.position ?? [0, 0]
-  })
+  return worker;
 }
 
-function getPosFromErr(err) {
-  try {
-    const match = err.stack.match(/<anonymous>:(\d+):(\d+)/);
+function createWorker() {
+    // Step 1: Worker code as a string
+  const workerCode = `
+  self.onmessage = function(e) {
+    console.log('Message received in worker:', e.data);
+    // Process the message...
+    const result = e.data * 2; // Example operation
+    self.postMessage(result);
+  };
+  `;
 
-    const pos = { line: Number(match[1]), column: Number(match[2]) }
+  // Step 2: Create a Blob from the string
+  const blob = new Blob([workerCode], { type: 'application/javascript' });
 
-    pos.line -= 2; // why?
+  // Step 3: Create a URL for the Blob
+  const workerUrl = URL.createObjectURL(blob);
 
-    // to account for "use strict\n"
-    pos.line -= 1
-    pos.column -= 1
+  // Step 4: Instantiate the WebWorker with the Blob URL
+  const worker = new Worker(workerUrl);
 
-    return pos
-  } catch (e) {
-    // An error in the error handler?!
-    // that's embarassing.
-    console.log('Unable to catch error position:', e)
-    return { line: 0, column: 0 }
-  }
+  // Important: Revoke the Blob URL after creating the worker to free up resources
+  URL.revokeObjectURL(workerUrl);
+
+  return worker;
 }

@@ -4,9 +4,14 @@ import { post } from "../lib/post.js";
 import { loadCodeFromString } from "../lib/loadCodeFromString.ts";
 
 export default function() {
-  const { files } = getStore();
+  const { files, loginName } = getStore();
 
   const closeModal = () => patchStore({ cloudFilesModalOpen: false });
+
+  if (loginName === "") {
+    closeModal();
+    alert("Log in to open files in the cloud.");
+  }
 
   const [selectedFile, setSelectedFile] = useState(-1);
   const selectFile = i => {
@@ -30,9 +35,9 @@ export default function() {
           <span class="cursor-pointer hover:text-red-500" onClick={closeModal}>x</span>
         </div>
       </div>
-      <div class="width-[80%] border-2 border-stone-400 h-[20rem] bg-gray-100 rounded mx-4 mt-4">
+      <div class="width-[80%] border-2 border-stone-400 h-[20rem] bg-gray-100 rounded mx-4 mt-4 overflow-auto">
         {files.map((file, i) => <>
-          <div class={`${selectedFile === i ? "bg-[var(--primary)] text-white" : ""} px-2 py-1`} onClick={e => selectFile(i)}>
+          <div class={`${i%2 === 1 && selectedFile !== i ? "bg-gray-200" : ""} ${selectedFile === i ? "bg-[var(--primary)] text-white" : ""} px-2 py-1`} onClick={e => selectFile(i)}>
             {file.name ? file.name : "anon"}
           </div>
         </>)}

@@ -46,7 +46,7 @@ export class Turtle {
   }
 
   goTo([x, y]: Point) {
-    const lastPath = this.path.at(-1)!
+    const lastPath = this.path.at(-1);
     if (this.drawing) {
       const [lastX, lastY] = this.position
       const dist = Math.sqrt((x - lastX) ** 2 + (y - lastY) ** 2)
@@ -100,11 +100,11 @@ export class Turtle {
     }
 
     pts = pts.map(pt => translate(pt, lp, pts[0]));
-    pts = pts.map(pt => rotate(pt, la + (angle < 0 ? 90 : -90), pts[0]));
+    // pts = pts.map(pt => rotate(pt, la + (angle < 0 ? 90 : -90), pts[0]));
 
     pts.slice(1).forEach(pt => this.goTo(pt));
 
-    this.setAngle(la + angle);
+    // this.setAngle(la + angle);
 
     return this;
   } 

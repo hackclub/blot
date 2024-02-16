@@ -12,6 +12,7 @@ import {
   viewJumpTo,
 } from "../lib/codemirror/state.js";
 
+let firstRun = true;
 export default function CodeMirror() {
   const { error } = getStore();
 

@@ -70,7 +70,7 @@ export default function Editor() {
               <CodeMirror />
             </div>
             <div>
-              <Console />
+              { false && <Console /> }
               <Error />
             </div>
           </div>

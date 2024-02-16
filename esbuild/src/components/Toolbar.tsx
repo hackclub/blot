@@ -492,7 +492,7 @@ function MachineControls() {
 }
 
 function SettingsButton() {
-  const { theme, vimMode } = getStore()
+  const { theme, vimMode, loginName } = getStore()
 
   return (
     <div class={dropdownContainer}>
@@ -511,9 +511,19 @@ function SettingsButton() {
           <KeyboardIcon className={styles.icon} />
           <span class="px-2">{vimMode ? 'disable' : 'enable'} vim mode</span>
         </div>
+        { loginName && 
+          <div class="p-2 hover:bg-white hover:bg-opacity-10" onClick={logOut}>
+            log out
+          </div>
+        }
       </div>
     </div>
   )
+}
+
+function logOut() {
+  sessionStorage.setItem('session_secret_key', "");
+  patchStore({ files: [], loginName: "", cloudFileId: "" });
 }
 
 function tidyCode() {

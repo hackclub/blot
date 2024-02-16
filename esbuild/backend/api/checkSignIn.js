@@ -1,8 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = 'https://rowaxzeiscproyjbnrxs.supabase.co';
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from "./supabase.js";
 
 export default async function(req, res) {
   const { sessionKey } = req.body;
