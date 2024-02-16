@@ -28,7 +28,7 @@ Initializes a new turtle object for drawing.
 
 ## Orientation and Movement
 - **`t.up()`** - Lifts the blot's pen.
-- **`t.down`** - Lowers the blot's pen. 
+- **`t.down()`** - Lowers the blot's pen. 
 - **`t.setAngle(theta: number)`** - Sets the turtle's current direction to the specified angle **in degrees**. 
 - **`t.right(theta: number)`** - Rotates the turtle's direction to the right (clockwise) by the specified angle **in degrees**.
 - **`t.left(theta: number)`** - Rotates the turtle's direction to the left (counterclockwise) by the specified angle **in degrees**.
