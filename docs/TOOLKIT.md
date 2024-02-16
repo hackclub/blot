@@ -38,7 +38,7 @@ Initializes a new turtle object for drawing.
 -   **`t.translate(from: pt, to: pt)`** - Translates the turtle's path from one point to another.
 -   **`t.rotate(angle: number, origin: pt)`** - Rotates the turtle's path around the specified origin point by the given angle **in degrees**.
 -   **`t.scale(factor: number, origin: pt)`** - Scales the turtle's path by the specified factor, relative to the given origin.
-> type pt = [ number, number ]
+> type pt = [ x: number, y: number ]
 
 ## Importing SVGS
 **`t.fromSVG(svgString: string)`** - Imports an SVG
