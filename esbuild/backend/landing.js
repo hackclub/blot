@@ -1,6 +1,3 @@
-// import fs from 'fs';
-// import { extractFrontmatter } from "./extractFrontmatter.js";
-
 export default function() {
 
   const linkClasses = "cursor-pointer text-lg box-border m-0 min-w-0 text-red-600 underline hover:decoration-wavy"
