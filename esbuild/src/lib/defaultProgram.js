@@ -1,24 +1,48 @@
 export const defaultProgram = `
 // welcome to blot!
+const {
+  iteratePolylines,
+  Turtle,
+  cut,
+  cover,
+  pointInPolylines,
+  scale,
+  rotate,
+  translate,
+  originate,
+  rand,
+  randInRange,
+  randIntInRange,
+  setRandSeed,
+  noise,
+  getAngleAtT,
+  getPointAtT,
+  getNormalAtT,
+  resample,
+  simplify,
+  trim,
+  svgToPolylines,
+  bounds,
+  displace
+} = toolkit;
 
 const width = 125;
 const height = 125;
-
 setDocDimensions(width, height);
 
-const testTurtle = createTurtle();
+setRandSeed(14);
 
-for (let i = 0; i < 86; i++) {
-    testTurtle.forward(i);
-    testTurtle.left(91);
+const finalPolylines = [];
+const t = new Turtle();
+
+for (let i = 0; i < 52; i++) {
+  t.forward(i);
+  t.right(91);
 }
 
-testTurtle.translate(
-  [width/2, height/2], 
-  testTurtle.cc
-);
+finalPolylines.push(...t.polylines());
+const cc = bounds(finalPolylines).cc;
+translate(finalPolylines, [width / 2, height / 2], cc);
 
-drawTurtles([
-    testTurtle
-]);
+drawPolylines(finalPolylines);
 `.trim()

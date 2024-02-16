@@ -42,23 +42,22 @@ export default async function runCode() {
     false
   )
 
-
   try {
-    // const { globalScope, turtles, logs, docDimensions } = makeIncluded();
+    const { globalScope, turtles, logs, docDimensions } = makeIncluded();
 
-    // await runCodeInner(code, globalScope);
+    await runCodeInner(code, globalScope);
 
-    // patchStore({
-    //   turtles,
-    //   turtlePos: turtles.at(-1)?.position ?? [0, 0],
-    //   docDimensions,
-    //   console: [
-    //     ...getStore().console,
-    //     ...logs
-    //   ]
-    // });
-
-    runCodeWorker();
+    patchStore({
+      turtles,
+      turtlePos: turtles.at(-1)?.position ?? [0, 0],
+      docDimensions,
+      console: [
+        ...getStore().console,
+        ...logs
+      ]
+    });
+    
+    // runCodeWorker();
   } catch (err) {
     console.error(err)
     const error = {
