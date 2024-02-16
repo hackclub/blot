@@ -8,7 +8,7 @@ Our main drawing primitive is a turtle. It's a collection of polylines with an a
 ## Creating a Turtle
 **`const t = createTurtle();`**
 Initializes a new turtle object for drawing.
-> The turtle object starts at points [0,0] by default with an initial angle of 0 degrees and begins in the drawing state.
+> By default, the turtle object starts at points [0,0] with an angle of 0 degrees (bottom left corner, facing right) and begins in the drawing state.
 #### Rendering the Turtle
 -   **`drawTurtles([turtles])`** - Renders the specified list of turtles onto the canvas.
 Can take a list of turtles to render.
