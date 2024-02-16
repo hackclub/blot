@@ -10,8 +10,7 @@ Our main drawing primitive is a turtle. It's a collection of polylines with an a
 Initializes a new turtle object for drawing.
 > By default, the turtle object starts at points [0,0] with an angle of 0 degrees (bottom left corner, facing right) and begins in the drawing state.
 #### Rendering the Turtle
--   **`drawTurtles([turtles])`** - Renders the specified list of turtles onto the canvas.
-Can take a list of turtles to render.
+-   **`drawTurtles([turtle])`** - Renders the specified list of turtles onto the canvas.
 ## Drawing 
  - **`t.goTo([ x: number, y: number ])`**  - Moves the turtle to the
    specified coordinates, drawing a line (if the pen is down).
