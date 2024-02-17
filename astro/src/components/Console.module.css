@@ -9,9 +9,12 @@
 }
 
 body:not([data-theme='dark']) .root {
-  background-color: rgba(var(--primary-rgb), 0.1);
+  /* background-color: rgba(var(--primary-rgb), 0.1); */
+  background-color: white;
 }
-
+body[data-theme='dark'] .root {
+  background-color: #2e3135;
+}
 .lines {
   overflow-y: auto;
   display: flex;
@@ -24,6 +27,13 @@ body:not([data-theme='dark']) .root {
   padding-bottom: 0;
   display: flex;
   color: var(--text);
+  align-items: center;
+}
+body[data-theme='dark'] .header{
+  padding: 1rem;
+  padding-bottom: 0;
+  display: flex;
+  color: white;
   align-items: center;
 }
 .header span {
@@ -48,7 +58,9 @@ body:not([data-theme='dark']) .root {
 .line:last-child {
   margin-bottom: 0;
 }
-
+body[data-theme='dark'] .line {
+  color: #ffffff;
+}
 .pos {
   border: none;
   background: none;
@@ -79,7 +91,9 @@ body:not([data-theme='dark']) .pos {
 .clearButton {
   padding: 0.25rem;
 }
-
+body[data-theme='dark'] .time {
+  color: #ffffff;
+}
 .tWarn {
   background-color: rgba(255, 255, 0, 0.1);
 }

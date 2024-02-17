@@ -14,9 +14,15 @@
 }
 
 body[data-theme='dark'] .canvas {
+  background-color: #E0e0e0;
   filter: invert(1);
+  color: black;
 }
+body[data-theme='dark'] .mousePosition {
+  background-color: 'black';
 
+  color: black;
+}
 .mousePosition {
   border-top-left-radius: 0.25rem;
   position: absolute;
