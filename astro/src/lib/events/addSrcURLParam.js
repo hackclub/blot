@@ -13,7 +13,7 @@ export async function addSrcURLParam() {
     const content = await response.text()
 
     loadCodeFromString(content)
-    removeQueryParam('src')
+
   } catch (error) {
     console.error('Error fetching content:', error)
   }
