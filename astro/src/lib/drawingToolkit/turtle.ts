@@ -357,7 +357,9 @@ export class Turtle {
 
     return [pt[0], pt[1]]
   }
-
+get pos():  Point{
+    return this.location
+  }
   get lt(): Point {
     const { xMin, xMax, yMin, yMax } = this.extrema()
 
