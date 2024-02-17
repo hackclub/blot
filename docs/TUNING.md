@@ -6,7 +6,9 @@ Start by moving the rails all the way to the right and forward, as shown below
 
 ![](https://cloud-lhuhtdwzz-hack-club-bot.vercel.app/020240206_201742.jpg)
 
-Next, connect the power adapter to the port labeled "Usb Power", and connect your computer or laptop to the other port
+Next, connect the power adapter to the port labeled "Usb Power", and connect your computer or laptop to the other port.
+Connect the servo motor wires to the 3 pins as seen at the top of the image. The brown wire should go to "B", the red to "R", etc.
+Connect the stepper motor wires to the adapter, which is connected to the board.
 
 ![](https://cloud-27tuag4xc-hack-club-bot.vercel.app/020240206_202109.jpg)
 
