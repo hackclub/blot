@@ -6,5 +6,15 @@ import tailwind from '@astrojs/tailwind'
 // https://astro.build/config
 export default defineConfig({
   site: 'https://blot.hackclub.com',
-  integrations: [preact(), tailwind()]
+  integrations: [preact(), tailwind()],
+  redirects: {
+    '/assembly': {
+      status: 302,
+      destination: 'https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md'
+    },
+    '/tuning': {
+      status: 302,
+      destination: 'https://github.com/hackclub/blot/blob/main/docs/TUNING.md'
+    }
+  }
 })
