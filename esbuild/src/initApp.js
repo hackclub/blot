@@ -3,7 +3,7 @@ import { init } from './init.js'
 
 
 // to initialize dom elements
-render()
+render(true)
 
 // to initialize delegation listeners and what not
 init()

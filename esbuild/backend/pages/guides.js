@@ -50,7 +50,7 @@ export default function() {
               `<a
                 class="no-underline text-current w-[30%] min-w-[300px] max-w-[400px] aspect-[1] rounded-[27px] flex items-center flex-col justify-around p-[17px] shadow-md transition-transform duration-300 ease-in-out transition-shadow hover:scale-105 hover:shadow-lg"
                 style="background-image: linear-gradient(170deg, #cecef9, #e7f0fb);"
-                href=${`/editor?guide=${file.title}`}>
+                href=${`/editor?guide=${file.title.split(".")[0]}`}>
                 <img
                   class="max-w-full max-h-full object-contain rounded-lg transition-opacity duration-300 ease-in-out group-hover:opacity-90"
                   src=${frontmatters[i].thumbnail}

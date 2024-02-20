@@ -6,6 +6,7 @@ import { makeIncluded } from "./makeIncluded.js";
 import RunWorker from './run.worker.js';
 
 let worker = null;
+let lastRun = Date.now();
 
 function getCode() {
   const { view } = getStore()
@@ -19,9 +20,11 @@ async function sleep(ms) {
 }
 
 export default async function runCode() {
-  // if (worker) {
-    // so you can see some intermediate steps, may be better way to do this
-    // await sleep(400);
+  /*  so you can see some intermediate steps, 
+      may be better way to do this 
+  */
+  // if (getStore().codeRunning && (Date.now() - lastRun < 400)) {
+  //   await sleep(400);
   // }
 
   const { runCodeInWorker } = getStore();
