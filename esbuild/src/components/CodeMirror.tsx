@@ -2,15 +2,15 @@ import { EditorView } from "codemirror";
 import { useCallback, useEffect, useState } from "preact/hooks";
 import cx from "classnames";
 import styles from "./CodeMirror.module.css";
-import { patchStore, getStore } from "../lib/state.ts";
-import { useCMTheme } from "../lib/codemirror/cmTheme.ts";
-import { useVimMode } from "../lib/codemirror/cmVimMode.ts";
-import { setErrorPos } from "../lib/codemirror/errorIndicator.js";
+import { patchStore, getStore } from "../state.ts";
+import { useCMTheme } from "../codemirror/cmTheme.ts";
+import { useVimMode } from "../codemirror/cmVimMode.ts";
+import { setErrorPos } from "../codemirror/errorIndicator.js";
 import {
   createCMState,
   useOnJumpTo,
   viewJumpTo,
-} from "../lib/codemirror/state.js";
+} from "../codemirror/state.js";
 
 export default function CodeMirror() {
   const { error } = getStore();

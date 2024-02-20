@@ -1,5 +1,5 @@
 import { createListener } from '../createListener.js'
-import { BezierEditor } from '../../components/BezierEditor.tsx'
+import { BezierEditor } from '../components/BezierEditor.tsx'
 import { getStore } from '../state.ts'
 import runCode from '../run.ts'
 import { render } from 'preact'

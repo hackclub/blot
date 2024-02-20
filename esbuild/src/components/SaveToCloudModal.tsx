@@ -1,6 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
-import { patchStore, getStore } from "../lib/state.ts";
-import { post } from "../lib/post.js";
+import { patchStore, getStore } from "../state.ts";
+import { post } from "../post.js";
 
 function getCode() {
   const { view } = getStore()

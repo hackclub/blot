@@ -1,4 +1,4 @@
-import { CodePosition, getStore } from "../lib/state.ts";
+import { CodePosition, getStore } from "../state.ts";
 import styles from "./Error.module.css";
 import { useCallback, useEffect, useRef } from "preact/hooks";
 import { EditorView } from "codemirror";
@@ -8,9 +8,9 @@ import {
   defaultHighlightStyle,
   syntaxHighlighting,
 } from "@codemirror/language";
-import { themeExtension, useCMTheme } from "../lib/codemirror/cmTheme.ts";
+import { themeExtension, useCMTheme } from "../codemirror/cmTheme.ts";
 import JumpLinkIcon from "../ui/JumpLinkIcon.tsx";
-import { dispatchJumpTo } from "../lib/codemirror/state.js";
+import { dispatchJumpTo } from "../codemirror/state.js";
 
 const Snippet = ({
   pos,

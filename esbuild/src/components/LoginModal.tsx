@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
-import { patchStore, getStore } from "../lib/state.ts";
+import { patchStore, getStore } from "../state.ts";
 
-import { checkCurrentUser } from "../lib/init.js";
+import { checkCurrentUser } from "../init.js";
 
 const isValidEmail = (email) => /^\S+@\S+\.\S+$/.test(email);
 
@@ -10,7 +10,7 @@ export default function LoginModal() {
   const [state, setState] = useState({
     isError: false,
     msg: "",
-    inputValue: "leo@hackclub.com",
+    inputValue: "",
     codeSent: false,
     headerText: "Enter your email to log in.",
     loggedIn: false,
@@ -115,21 +115,23 @@ export default function LoginModal() {
           </div>
         )}
 
-        {false && state.loggedIn && (
+        {false && state.loggedIn && 
           <div class="text-gray-200 text-sm pt-2">
             <span class="underline cursor-pointer" onClick={logout}>
               Log out.
             </span>
           </div>
-        )}
+        }
       </div>
-      <div class={`${state.loggedIn ? "hidden" : ""} w-full flex p-2 items-center justify-center flex-col`}>
-        <input value={state.inputValue} onInput={(e) => updateState({ isError: false, msg: "", inputValue: e.target.value })} class="p-1 w-[70%] border"/>
-        <button onClick={handleSendOrSubmitCode} class="m-3 p-2 w-[50%] text-center cursor-pointer bg-gray-700 hover:bg-gray-500 text-white rounded">
-          {state.codeSent ? "submit code" : "send code"}
-        </button>
-        <div class={`${state.isError ? "text-red-500" : ""}`}>{state.msg}</div>
-      </div>
+      { !state.loggedIn &&
+        <div class="w-full flex p-2 items-center justify-center flex-col">
+          <input value={state.inputValue} onInput={(e) => updateState({ isError: false, msg: "", inputValue: e.target.value })} class="p-1 w-[70%] border"/>
+          <button onClick={handleSendOrSubmitCode} class="m-3 p-2 w-[50%] text-center cursor-pointer bg-gray-700 hover:bg-gray-500 text-white rounded">
+            {state.codeSent ? "submit code" : "send code"}
+          </button>
+          <div class={`${state.isError ? "text-red-500" : ""}`}>{state.msg}</div>
+        </div> 
+      }
     </div>
   );
 }

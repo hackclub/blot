@@ -5,6 +5,7 @@ import esbuild from 'esbuild';
 import fs from 'fs';
 import path from 'path';
 import alias from 'esbuild-plugin-alias';
+import inlineWorkerPlugin from 'esbuild-plugin-inline-worker';
 
 // Function to bundle script sources found in HTML
 export const bundleHtmlScripts = async (name, htmlContent, outputPath = "./dist") => {
@@ -29,6 +30,7 @@ export const bundleHtmlScripts = async (name, htmlContent, outputPath = "./dist"
       jsxFactory: 'h',
       jsxFragment: 'Fragment',
       inject: ['./backend/preact-shim.js'],
+      plugins: [inlineWorkerPlugin()]
     }).catch(() => process.exit(1));;
 
     // Update script src to point to the new bundled file

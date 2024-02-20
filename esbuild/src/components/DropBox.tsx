@@ -1,6 +1,6 @@
 import { useEffect } from "preact/hooks";
-import { getStore } from "../lib/state.ts";
-import { loadCodeFromString } from "../lib/loadCodeFromString.ts";
+import { getStore } from "../state.ts";
+import { loadCodeFromString } from "../loadCodeFromString.ts";
 
 export default function DropBox() {
   useEffect(() => {

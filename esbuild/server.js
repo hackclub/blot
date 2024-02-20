@@ -8,10 +8,10 @@ import { dirname, join } from 'path';
 import { build } from "./build.js";
 import { wrapHTML } from "./backend/wrapHTML.js";
 
-import navBar from "./backend/navBar.js";
-import guides from "./backend/guides.js";
-import gallery from "./backend/gallery.js";
-import landing from "./backend/landing.js";
+import navBar from "./backend/pages/navBar.js";
+import guides from "./backend/pages/guides.js";
+import gallery from "./backend/pages/gallery.js";
+import landing from "./backend/pages/landing.js";
 
 import checkSignIn from "./backend/api/checkSignIn.js";
 import saveFile from "./backend/api/saveFile.js";
@@ -31,7 +31,7 @@ build({
     <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css'>
 
     <main></main>
-    <script type="module" src="./src/lib/initApp.js"></script>
+    <script type="module" src="./src/initApp.js"></script>
   `),
   guides: wrapHTML(`
     ${navBar()}

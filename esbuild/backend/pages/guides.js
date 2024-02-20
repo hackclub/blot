@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { extractFrontmatter } from "./extractFrontmatter.js";
+import { extractFrontmatter } from "../extractFrontmatter.js";
 
 export default function() {
 
@@ -43,8 +43,7 @@ export default function() {
       </div>
     </div>
 
-    <div
-      class="flex flex-row flex-wrap items-center justify-around w-screen gap-y-6 my-5">
+    <div class="flex flex-row flex-wrap items-center justify-around w-screen gap-y-6 my-5">
       ${
         files.map((file, i) => {
             return (

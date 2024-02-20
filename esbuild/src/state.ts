@@ -52,7 +52,9 @@ export type GlobalState = {
   loginName: string
   sessionKey: string,
   files: File[],
-  cloudFileId: string
+  cloudFileId: string,
+  runCodeInWorker: boolean,
+  codeRunning: boolean
 }
 
 // setting/initializing state
@@ -81,7 +83,9 @@ const newState: Omit<GlobalState, 'code'> = {
   cloudFilesModalOpen: false,
   saveToCloudModalOpen: false,
   files: [],
-  cloudFileId: ""
+  cloudFileId: "",
+  runCodeInWorker: true,
+  codeRunning: false
 }
 
 export const makeNewState = (): GlobalState => {

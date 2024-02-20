@@ -1,10 +1,10 @@
 import { useRef, useEffect, useCallback } from 'preact/hooks'
 import styles from './Preview.module.css'
-import { getStore } from '../lib/state.ts'
+import { getStore } from '../state.ts'
 import CenterToFitIcon from '../ui/CenterToFitIcon.tsx'
 import Button from '../ui/Button.tsx'
 
-import { createListener } from '../lib/createListener.js'
+import { createListener } from '../createListener.js'
 
 export default function Preview(props: { className?: string }) {
   const { turtles, docDimensions } = getStore()

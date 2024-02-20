@@ -1,9 +1,10 @@
 - cmd s save, auto save
 - check session length
-- sort by age
+- sort files by age
 - share link
 - error handling
 - delete and rename files
+- fix guide import
 - port header
 - automatically generate bundled css import
 - make sure bundle path is correct
@@ -11,7 +12,7 @@
 - css modules -> tailwind?
 - remove 
   - unused icons in src/ui
-  - unused assets in /public
+  - [x] unused assets in /public
 - [ ] file renaming
 - [x] add accounts
 - build tailwind

@@ -1,4 +1,4 @@
-import Editor from '../components/Editor.tsx'
+import Editor from './components/Editor.tsx'
 import { render as preactRender } from 'preact'
 
 export function render(hard = false) {

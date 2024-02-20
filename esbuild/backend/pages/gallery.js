@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { extractFrontmatter } from "./extractFrontmatter.js";
+import { extractFrontmatter } from "../extractFrontmatter.js";
 
 export default function() {
 

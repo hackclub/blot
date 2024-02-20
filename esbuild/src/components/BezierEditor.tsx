@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { addToRef } from "../lib/addToRef.js";
+import { addToRef } from "../addToRef.js";
 import styles from "./BezierEditor.module.css";
 
 export const BezierEditor = ({ initialValue, onChange }) => {

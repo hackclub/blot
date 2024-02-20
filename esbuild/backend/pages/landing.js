@@ -25,10 +25,10 @@ export default function() {
 
       </div>
 
-      <img data-fade-in style="opacity: 0;" class="h-[57%] mx-auto mt-[1.5rem]" src="/landing/blot-clear-bg.png">
+      <img data-fade-in style="opacity: 0;" class="h-[57%] mx-auto mt-[1.5rem]" src="/assets/blot-clear-bg.png">
 
       <video class="w-full h-full absolute inset-0 z-[-30] object-cover opacity-[.4]" autoplay muted>
-        <source src="/landing/output-movie.mp4" type="video/mp4">
+        <source src="/assets/output-movie.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
 
@@ -46,7 +46,7 @@ export default function() {
       <div class="flex flex-col md:flex-row">
 
         <div class="flex flex-col md:w-1/3 justify-center items-center">
-          <img src="/landing/code2.webp" class="h-[20rem] w-4/5 rounded border border-gray-300 shadow-md object-cover"/>
+          <img src="/assets/code2.webp" class="h-[20rem] w-4/5 rounded border border-gray-300 shadow-md object-cover"/>
           
           
           <div class="bg-[#e7e9fe] p-3 rounded my-5 flex items-center">
@@ -76,7 +76,7 @@ export default function() {
         </div>
 
         <div class="flex flex-col md:w-1/3 justify-center items-center">
-          <img src="/landing/code2.webp" class="h-[20rem] w-4/5 rounded border border-gray-300 shadow-md object-cover"/>
+          <img src="/assets/code2.webp" class="h-[20rem] w-4/5 rounded border border-gray-300 shadow-md object-cover"/>
 
           <div class="bg-[#e7e9fe] p-3 rounded my-5 flex items-center">
             <div class="text-2xl font-bold pr-5">3</div>
@@ -106,7 +106,7 @@ export default function() {
       <div class="flex flex-col w-4/5 m-auto text-lg leading-snug">
 
         <div class="flex flex-col md:flex-row justify-center align-center w-full py-8 border-b border-gray-300">
-          <img class="md:w-1/2 w-full rounded border border-gray-300 shadow-md" src="/landing/editor.png"/>
+          <img class="md:w-1/2 w-full rounded border border-gray-300 shadow-md" src="/assets/editor.png"/>
           <div class="m-auto py-6 px-10">
             <b>Custom editor for pen plotter art</b> with vector drawing library,
             direct manipulation widgets, a split screen code/visualizer, and
@@ -115,7 +115,7 @@ export default function() {
         </div>
 
         <div class="flex flex-col md:flex-row justify-center align-center w-full py-8 border-b border-gray-300">
-          <img class="md:w-1/2 w-full" src="/landing/parts.png"/>
+          <img class="md:w-1/2 w-full" src="/assets/parts.png"/>
           <div class="m-auto py-6 px-10">
             <b>CNC you build yourself</b>
             made of six 3D printed parts, and standard DIY machine building
@@ -125,7 +125,7 @@ export default function() {
         </div>
 
         <div class="flex flex-col md:flex-row justify-center align-center w-full py-8">
-          <img class="md:w-1/2 w-full" src="/landing/control-board.png"/>
+          <img class="md:w-1/2 w-full" src="/assets/control-board.png"/>
           <div class="m-auto py-6 px-10">
             <b>Custom control board and firmware</b> so you can understand what
             goes on in the brains of the machine.

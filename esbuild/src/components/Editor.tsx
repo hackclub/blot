@@ -1,12 +1,11 @@
-import { getStore } from "../lib/state.js";
-import { createListener } from "../lib/createListener.js";
+import { getStore } from "../state.js";
+import { createListener } from "../createListener.js";
 import styles from "./Editor.module.css";
 import CompatWarning from "./CompatWarning.js";
 import Preview from "./Preview.js";
 import Toolbar from "./Toolbar.js";
 import Error from "./Error.js";
 import Console from "./Console.js";
-import GlobalStateDebugger from "./GlobalStateDebugger.js";
 import DropBox from "./DropBox.js";
 import LoginModal from "./LoginModal.js";
 import SaveToCloudModal from "./SaveToCloudModal.js";
@@ -53,7 +52,6 @@ export default function Editor() {
 
   return (
     <>
-      <GlobalStateDebugger />
       <div class={styles.root}>
         <Toolbar />
         <div class={styles.inner} ref={editorContainer}>

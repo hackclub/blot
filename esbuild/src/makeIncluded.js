@@ -57,7 +57,7 @@ export function makeIncluded() {
         drawPolylines: (polylines = [], style = {}) => {
             if (polylines.length === 0) return;
         
-            const temp = new Turtle();
+            const temp = {};
             temp.path = JSON.parse(JSON.stringify(polylines));
             if (style.fill === undefined) style.fill = 'none';
             if (style.stroke === undefined) style.stroke = 'black';
@@ -86,17 +86,17 @@ export function makeIncluded() {
         // },
     }
     
-    const globalProxy = new Proxy(window, {
-        get: (w, prop) =>
-            prop in customGlobal ? customGlobal[prop] : w[prop].bind(w)
-        }
-    )
+    // const globalProxy = new Proxy(window, {
+    //     get: (w, prop) =>
+    //         prop in customGlobal ? customGlobal[prop] : w[prop].bind(w)
+    //     }
+    // )
         
     const args = {
         ...customGlobal,
-        global: globalProxy,
-        globalThis: globalProxy,
-        window: globalProxy
+        // global: globalProxy,
+        // globalThis: globalProxy,
+        // window: globalProxy
     }
 
     return {

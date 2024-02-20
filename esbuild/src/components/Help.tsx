@@ -1,7 +1,7 @@
 import styles from "./Help.module.css";
 import { useState, useEffect } from "preact/hooks";
 import { marked } from "marked";
-import { loadCodeFromString } from "../lib/loadCodeFromString.ts";
+import { loadCodeFromString } from "../loadCodeFromString.ts";
 // import Prism from "prismjs";
 import hljs from "highlight.js";
 

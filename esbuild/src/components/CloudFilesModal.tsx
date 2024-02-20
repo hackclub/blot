@@ -1,7 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
-import { patchStore, getStore } from "../lib/state.ts";
-import { post } from "../lib/post.js";
-import { loadCodeFromString } from "../lib/loadCodeFromString.ts";
+import { patchStore, getStore } from "../state.ts";
+import { loadCodeFromString } from "../loadCodeFromString.ts";
 
 export default function() {
   const { files, loginName } = getStore();

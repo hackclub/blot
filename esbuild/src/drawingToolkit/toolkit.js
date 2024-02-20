@@ -18,6 +18,7 @@ import { displacePolylines as displace } from "./displacePolylines.js";
 import { flattenSVG } from "./flatten-svg/index.ts";
 import { transform } from "./transform.js";
 import { bounds } from "./bounds.js";
+import { bezierEasing } from "./bezierEasing.js";
 import * as polyclip from 'polyclip-ts';
 
 export const toolkit = {
@@ -28,17 +29,18 @@ export const toolkit = {
   difference: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "difference", ops),
   xor: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "xor", ops),
   polygonClipping,
-  iteratePolylines,
+  iteratePoints: iteratePolylines,
   transform,
   bounds,
   displace,
   Turtle,
   cut,
   cover,
-  pointInPolylines,
+  pointInside: pointInPolylines,
   scale,
   rotate,
   translate,
+  bezierEasing,
   originate(polylines) {
     const cc = bounds(polylines).cc;
     translate(polylines, [0, 0], cc);
@@ -74,6 +76,19 @@ export const toolkit = {
     const polylines = flattenSVG(svg, { maxError: 0.001 }).map(pl => pl.points);
 
     return polylines;
+  },
+  join() {
+    const [first, ...rest] = arguments;
+    if (!first) return [];
+    if (!rest) return first;
+
+    rest.forEach(pls => {
+      pls.forEach(pl => {
+        first.push(pl);
+      })
+    });
+
+    return first;
   },
   rect(w, h) {
     return [

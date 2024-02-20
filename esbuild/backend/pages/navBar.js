@@ -3,7 +3,7 @@ export default function(fadeIn = false) {
     <nav ${fadeIn ? `data-fade-in style="opacity: 0;"` : ""} class="bg-[--primary] text-white flex items-center justify-between text-lg p-2 sticky top-0 z-50" style="font-family: var(--font-sans);">
 
       <a href="/" class="flex gap-1 items-center">
-        <img src="/borpheus.svg" class="w-7 translate-x-1 translate-y-[-3px]" />
+        <img src="/assets/borpheus.svg" class="w-7 translate-x-1 translate-y-[-3px]" />
         <span class="text-2xl font-bold">lot</span>
       </a>
 

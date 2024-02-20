@@ -1,9 +1,9 @@
 import { useEffect } from 'preact/hooks'
-import download from '../lib/download.ts'
-import runCode from '../lib/run.ts'
-import { defaultProgram } from '../lib/defaultProgram.js'
-import { patchStore, getStore } from '../lib/state.ts'
-import { loadCodeFromString } from '../lib/loadCodeFromString.ts'
+import download from '../download.ts'
+import runCode from '../run.ts'
+import { defaultProgram } from '../defaultProgram.js'
+import { patchStore, getStore } from '../state.ts'
+import { loadCodeFromString } from '../loadCodeFromString.ts'
 import styles from './Toolbar.module.css'
 import Button from '../ui/Button.tsx'
 // import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
@@ -12,7 +12,7 @@ import Button from '../ui/Button.tsx'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
-import { saveFile } from '../lib/saveFile.ts'
+import { saveFile } from '../saveFile.ts'
 // import * as prettier from 'prettier'
 import js_beautify from 'js-beautify'
 
@@ -60,7 +60,7 @@ export default function Toolbar() {
         <h1 class={styles.heading}>
           <a href="/">
             {/*<BorpheusIcon style="width: 30px;" />*/}
-            <img src="/borpheus.svg" style="width: 30px; translate: 3px -3px;" />
+            <img src="/assets/borpheus.svg" style="width: 30px; translate: 3px -3px;" />
             <span style="font-weight: 700;">lot</span>
           </a>
         </h1>
@@ -185,8 +185,13 @@ function RunButton() {
   }, [])
 
   return (
-    <Button variant="ghost" onClick={() => runCode()}>
+    <Button class="relative" variant="ghost" onClick={() => runCode()}>
       run (shift+enter)
+      { getStore().codeRunning  && 
+        <div class="absolute mx-auto bottom-0 left-0 right-0 text-xs text-gray-300">
+            running...
+        </div>
+      }
     </Button>
   )
 }
