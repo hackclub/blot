@@ -4,7 +4,7 @@ let ruleX = "+YF--ZF[---WF--XF]+";
 let ruleY = "-WF++XF[+++YF++ZF]-";
 let ruleZ = "--YF++++WF[+ZF++++XF]--XF";
 
-var startLength = randInRange(26,85)
+var startLength = randInRange(26,46)
 
 
 //var startLength = 21;
