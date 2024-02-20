@@ -50,16 +50,6 @@
   ClipperLib.use_xyz = false;
 
   var isNode = false;
-  if (typeof module !== 'undefined' && module.exports)
-  {
-    module.exports = ClipperLib;
-    isNode = true;
-  }
-  else
-  {
-    if (typeof (document) !== "undefined") window.ClipperLib = ClipperLib;
-    else self['ClipperLib'] = ClipperLib;
-  }
   var navigator_appName;
   if (!isNode)
   {
