@@ -4,9 +4,13 @@ let ruleX = "+YF--ZF[---WF--XF]+";
 let ruleY = "-WF++XF[+++YF++ZF]-";
 let ruleZ = "--YF++++WF[+ZF++++XF]--XF";
 
-var startLength = 21;
-var theta = 36; //36 degrees, try TWO_PI / 6.0, ...
+var startLength = randInRange(26,85)
 
+
+//var startLength = 21;
+//var theta = 36; //36 degrees, try TWO_PI / 6.0, ...
+
+var theta = randInRange(20,60)
 
 var production = "[+-WF++XF[+++YF++ZF]-F--ZF[---WF--XF]+]++[+-WF++XF[+++YF++ZF]-F--ZF[---WF--XF]+]++[+YF--ZF[---WF--XF]+]++[+-WF++XF[+++YF++ZF]-F--ZF[---WF--XF]+]++[+-WF++XF[+++YF++ZF]-F--ZF[---WF--XF]+]";
 //var production = axiom;
@@ -99,25 +103,4 @@ function render(t, prod) {
     }
   return t;
   
-}
-
-function fatromb(angle, x, y) {
-  const t = createTurtle()
-  //setup
-  t.right(angle)
-  t.jump([x,y])
-
-  //t.right(108)
-  t.forward(20)
-  
-  t.right(72)
-  t.forward(20)
-  
-  t.right(108)
-  t.forward(20)
-  
-  t.right(72)
-  t.forward(20)
-
-  return t
 }
