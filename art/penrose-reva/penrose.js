@@ -4,16 +4,15 @@ let ruleX = "+YF--ZF[---WF--XF]+";
 let ruleY = "-WF++XF[+++YF++ZF]-";
 let ruleZ = "--YF++++WF[+ZF++++XF]--XF";
 
-var startLength = randInRange(26,46)
+var startLength = 15
 
 
 //var startLength = 21;
-//var theta = 36; //36 degrees, try TWO_PI / 6.0, ...
+var theta = 36; //36 degrees, try TWO_PI / 6.0, ...
 
-var theta = randInRange(20,60)
+//var theta = randInRange(20,60)
 
-var production = "[+-WF++XF[+++YF++ZF]-F--ZF[---WF--XF]+]++[+-WF++XF[+++YF++ZF]-F--ZF[---WF--XF]+]++[+YF--ZF[---WF--XF]+]++[+-WF++XF[+++YF++ZF]-F--ZF[---WF--XF]+]++[+-WF++XF[+++YF++ZF]-F--ZF[---WF--XF]+]";
-//var production = axiom;
+var production = axiom;
 var drawLength = startLength;
 
 const width = 125;
@@ -22,7 +21,7 @@ const height = 125;
 setDocDimensions(width, height);
 
 const t = createTurtle();
-var prod = iterate(iterate(production));
+var prod = iterate(production);
 
 const t1 = render(t, prod);
 t.join(t1);
