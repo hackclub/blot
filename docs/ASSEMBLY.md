@@ -70,6 +70,8 @@ Flip over the carriage, and identify the larger set of circular holes as shown a
 <img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0006.png" alt="aaa" width="300"/><br>
 Assemble 2 V-wheel assemblies as shown above using V-wheels, m5x35 screws, and eccentric spacers. 
 
+NOTE: If the washer(little bronze ring) in the V-wheel looks misaligned(see image), use an allen key to re-align it.
+<img src="https://cloud-3c27vezml-hack-club-bot.vercel.app/00298195100-0d764b95-9bae-492b-a27d-121435d02bf7.jpg" alt="aaa" width="300"/><br>
 
 ---
 <img src="https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0013.png" alt="aaa" width="300"/><br>
