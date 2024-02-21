@@ -1,12 +1,12 @@
-var axiom = "[X]++[X]++[X]++[X]++[X]";
-let ruleW = "YF++ZF----XF[-YF----WF]++";
-let ruleX = "+YF--ZF[---WF--XF]+";
-let ruleY = "-WF++XF[+++YF++ZF]-";
-let ruleZ = "--YF++++WF[+ZF++++XF]--XF";
+var axiom = "[X] [Y]++[X] [Y]++[X] [Y]++[X] [Y]++[X] [Y]"
+let ruleW = "YF++ZF—XF[-YF—WF]++"
+let ruleX = "+YF--ZF[—WF--XF]+"
+let ruleY = "-WF++XF[+++YF++ZF]-"
+let ruleZ = "-YF++++WF[+ZF++++XF]--XF"
 
 var drawLength = 6;
 
-var theta = 36; //36 degrees, try TWO_PI / 6.0, ...
+var theta = 36; //36 degrees
 //var theta = randInRange(20,60)
 
 var production = axiom;
