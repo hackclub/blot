@@ -1,9 +1,6 @@
 *.env
-.DS_Store
-.astro
-.next
-.vercel
-yarn-error.log
 dist
 node_modules
-astro/creds.json
+
+.DS_Store
+yarn-error.log
