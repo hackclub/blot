@@ -4,7 +4,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "start": "node -r dotenv/config server.js",
+    "start": "node server.js",
     "dev": "nodemon -r dotenv/config server.js"
   },
   "nodemonConfig": {
