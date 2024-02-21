@@ -53,7 +53,7 @@ export default function Help({
   useEffect(() => {
     const fetchData = async () => {
       const helpRes = await fetch(
-        `https://raw.githubusercontent.com/hackclub/blot/main/docs/TOOLKIT.md`,
+        `/TOOLKIT.md`,
       );
       const helpData = await helpRes.text();
 

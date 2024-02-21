@@ -51,9 +51,9 @@ export const toolkit = {
   randIntInRange, 
   setRandSeed,
   noise,
-  getAngleAtT,
-  getPointAtT,
-  getNormalAtT,
+  getAngle: getAngleAtT,
+  getPoint: getPointAtT,
+  getNormal: getNormalAtT,
   resample: resamplePolylines,
   simplify(polylines, tolerance, hq = true) {
     polylines.forEach(pl => {

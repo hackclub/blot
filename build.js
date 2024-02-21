@@ -1,5 +1,4 @@
 // should be in same directory as server
-
 import { JSDOM } from 'jsdom';
 import esbuild from 'esbuild';
 import fs from 'fs';
@@ -61,11 +60,17 @@ export function deleteAllFiles(directory) {
 }
 
 export async function build(htmls) {
+  // console.time("DELETE")
   await deleteAllFiles("./dist");
+  // console.timeEnd("DELETE")
 
+  // console.time("BUILD")
   await Promise.all(Object.entries(htmls).map(async ([name, content]) => {
     return bundleHtmlScripts(name, content);
   }));
+  // console.timeEnd("BUILD")
 
+  // console.time("COPY")
   await fs.cpSync("./public", "./dist", { recursive: true });
+  // console.timeEnd("COPY")
 }
