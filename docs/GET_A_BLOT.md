@@ -47,6 +47,18 @@ Here are some examples of some pieces which would **not be accepted**:
 Once you have made some art you can make a pull request (PR) onto this repo with that program.
 These are the steps you need to take to make a PR.
 
+## 2.0) Add metadata to your `index.js` file
+
+Make sure to include this info in a comment at the top of your file.
+
+```js
+/*
+@title: yourTitle
+@author: yourName
+@snapshot: the name of the snapshot file you want in the gallery
+*/
+```
+
 ## 2.1) Download your program
 
 - Hover over `download`
@@ -60,6 +72,8 @@ These are the steps you need to take to make a PR.
 - Create a folder called `{yourArtworkName}-{yourName}`.
 - Inside that folder create a `snapshots` folder with **at least 3 screenshots** of your work.
 - Place the code for your artwork in an `index.js` file.
+
+**Make sure there are no spaces in your directory or file names!**
 
 The directory structure can be seen below:
 
