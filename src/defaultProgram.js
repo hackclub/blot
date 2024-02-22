@@ -24,9 +24,9 @@ const {
   xor,
 
   // take polylines return other
-  getAngleAtT, 
-  getPointAtT, 
-  getNormalAtT, 
+  getAngle, 
+  getPoint, 
+  getNormal, 
   bounds,
 
   // take other return polylines

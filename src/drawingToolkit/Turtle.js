@@ -144,4 +144,10 @@ export class Turtle {
     fn(this.path);
     return this;
   }
+
+  apply(fn) {
+    fn(this);
+    return this;
+  }
+  
 }

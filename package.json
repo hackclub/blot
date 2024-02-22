@@ -11,7 +11,7 @@
     "watch": [
       "**/*"
     ],
-    "ext": "ts js jsx tsx",
+    "ext": "ts js jsx tsx md",
     "ignore": [
       "dist"
     ]

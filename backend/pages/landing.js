@@ -161,6 +161,12 @@ export default function() {
           and most recently <a href="https://github.com/modular-things/modular-things" class="${linkClasses}">Modular Things</a>.
         </div>
 
+        <br/>
+
+        <div>
+          Also thanks to Paul Hamilton for his contributions to embedded designs.
+        </div>
+
         <div class="flex flex-row mx-auto w-full justify-center gap-20 my-8">
           <img style="width:100px;" src="https://assets.hackclub.com/flag-standalone.svg"/>
           
