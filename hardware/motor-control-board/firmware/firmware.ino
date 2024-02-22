@@ -43,10 +43,22 @@ void setup() {
   pinMode(enablePin, OUTPUT); // enable pin
 
   pinMode(PIN_LED, OUTPUT);
+
+  startupIndicator(); // once startup is finished, indicate to user
 }
 
 void loop() {
   readSerial();
+}
+
+void startupIndicator() {
+  // flash LED to indicate board is initialized
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(PIN_LED, 0);
+    delay(200);
+    digitalWrite(PIN_LED, 1);
+    delay(200);
+  }
 }
 
 uint8_t onLight(uint8_t* payload, int length, uint8_t* reply) {

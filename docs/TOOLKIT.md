@@ -2,87 +2,76 @@
 
 This is Blot's programmatic art IDE. For an introduction to the editor watch this video (coming soon!).
 
-### Turtle
+## Turtle
+Our main drawing primitive is a turtle. It's a collection of polylines with an associated pen that has a location and direction.
 
-Our main drawing primative is a turtle. It's a collection of polylines with an associated pen that has a location and direction.
+## Creating a Turtle
+**`const t = createTurtle();`**
+Initializes a new turtle object for drawing.
+> By default, the turtle object starts at points [0,0] with an angle of 0 degrees (bottom left corner, facing right) and begins in the drawing state.
+#### Rendering the Turtle
+-   **`drawTurtles([turtle])`** - Renders the specified list of turtles onto the canvas.
+## Drawing 
+ - **`t.goTo([ x: number, y: number ])`**  - Moves the turtle to the
+   specified coordinates, drawing a line (if the pen is down).
+ -  **`t.forward(distance: number)`** - Moves the turtle forward by the
+   specified distance, drawing a line (if the pen is down).
+-  **`t.arc(angle: number, radius: number)`** - Draws an arc with the given
+   angle **in degrees** and radius. The direction of the arc depends on
+   the sign of the angle (positive goes counterclockwise, negative goes
+   clockwise). 
+ - **`t.jump([x, y]):`** - Moves the turtle to specified
+   coordinates without drawing (basically goTo but always without
+   drawing).
 
-```js
-const t = createTurtle();
+> All functions under `Drawing` end in the drawing state. 
 
-// move turtle up and down
-t.up()
-t.down()
+## Orientation and Movement
+- **`t.up()`** - Lifts the blot's pen.
+- **`t.down()`** - Lowers the blot's pen. 
+- **`t.setAngle(theta: number)`** - Sets the turtle's current direction to the specified angle **in degrees**. 
+- **`t.right(theta: number)`** - Rotates the turtle's direction to the right (clockwise) by the specified angle **in degrees**.
+- **`t.left(theta: number)`** - Rotates the turtle's direction to the left (counterclockwise) by the specified angle **in degrees**.
+ 
+ ## Transformations
 
-// draw paths
-t.goTo([ x: number, y: number ])
-t.forward(distance: number)
-t.arc(angle: number, radius: number)
+-   **`t.translate(from: pt, to: pt)`** - Translates the turtle's path from one point to another.
+-   **`t.rotate(angle: number, origin: pt)`** - Rotates the turtle's path around the specified origin point by the given angle **in degrees**.
+-   **`t.scale(factor: number, origin: pt)`** - Scales the turtle's path by the specified factor, relative to the given origin.
+> type pt = [ x: number, y: number ]
 
-// to move to pt without drawing and end up in drawing position
-t.jump([ x: number, y: number ])
+## Importing SVGS
+**`t.fromSVG(svgString: string)`** - Imports an SVG
+> You can drag in SVG's, and the interface will generate a turtle for it. Keep in mind that SVG's are often imported far too large, and will need to be scaled and translated.
 
-// change angle
-t.setAngle(theta: number)
-t.right(theta: number)
-t.left(theta: number)
-
-// transform turtle path
-// type pt = [ number, number ]
-t.translate(from: pt, to: pt)
-t.rotate(angle: number, origin: pt)
-t.scale(factor: number, origin: pt)
-
-// import svgs
-t.fromSVG(svgString: string)
-
-// Turtle special points and dimensions
-/*
-You can get 9 points of interest from the turtle as get methods.
-l is left, r is right, c is center, b is bottom.
-The points are as such.
-
+## Special Points and Dimensions
+These are all variables. You can get 9 points of interest from the turtle as get methods.
+- **`t.start`** - Access the start points of the turtle's path.
+- **`t.end`** - Access the end points of the turtle's path.
+- **`t.width`** - Retrieve the width of the turtle's drawing area.
+- **`t.height`** -  Retrieve the height of the turtle's drawing area.
+> l is left, r is right, c is center, b is bottom.
+```js 
 lt -- ct -- rt
 |     |     |
 lc -- cc -- rc
 |     |     |
 lb -- cb -- rb
-
-You can also get the start, end, width, and height
-*/
-
-t.lt
-t.ct
-t.rt
-t.lc
-t.cc
-t.rc
-t.lb
-t.cb
-t.rb
-t.start
-t.end
-
-t.width
-t.height
-
-// to add turtles together
-t.join(anotherTurtle)
-
-// to apply a function to all pts in a turtle
-// fn takes (pt, tValue) => { ... }
-// return [ x, y ] to replace the old point value with the new one
-// return "BREAK" to split path at that point
-// return "REMOVE" to filter out that point
-t.iteratePath(fn)
-
-t.resample(resolution)
-
-// takes value 0 - 1 and returns point that far along paths
-t.interpolate(tValue)
-
-// takes value 0 - 1 and returns angle that far along paths
-t.getAngle(tValue)
 ```
+
+## Paths
+### Joining Paths
+- **`t.join(anotherTurtle)`** - Merges the paths of other Turtle instances into the current Turtle's path.
+### Modifying Paths
+- **`t.iteratePath(fn)`** - Apply a function to all pts in a turtle
+- **`t.resample(resolution)`** 
+- **`t.interpolate(tValue)`** - takes value 0 - 1 and returns point that far along paths
+- **`t.getAngle(tValue)`** 0 takes value 0 - 1 and returns angle that far along paths
+
+> fn takes (pt, tValue) => { ... }
+> - return [ x, y ] to replace the old point value with the new one
+> - return "BREAK" to split path at that point
+> - return "REMOVE" to filter out that point
 
 <!-- 
 displace
@@ -93,29 +82,23 @@ merge
 getNormal
 extrema
 copy
+orginate
+interpolate
 -->
 
-To render a turtle use `drawTurtles`, it takes a list of turtles to draw.
+## Randomness
 
-```js
-drawTurtles([ turtles ])
-```
+- **`rand()`** - Generates a number between 0 (inclusive) and 1 (exclusive).
+- **`setRandSeed(seed: number)`** - initializes the random number generator's seed, allowing for reproducible sequences of random numbers.
+- **`randInRange(min: number, max: number)`** - Generates a float-point number between `max` (inclusive) and `min` (exclusive).
+- **`randIntInRange(min: number, max: number)`** - Generates a integer between `max` (inclusive) and `min` (exclusive).
 
-You can drag in SVG's, and the interface will generate a turtle for it. Keep in mind that SVG's are often imported far too large, and will need to be scaled and translated.
-
-### Randomness
-
-```js
-rand()
-setRandSeed(seed: number)
-randInRange(min: number, max: number)
-randIntInRange(min: number, max: number)
-```
-
-### Noise
-
+## Noise
 Noise is one of the most powerful tools for making proceduarally generated natural looking things. It can be thought of as smooth randomness.
-
+`noise([x,y,z], {octaves, falloff})`
+- `octaves` and `falloff` control the complexity and smoothness 
+- `x`, `y`, `z` are the dimensions of noise
+#### eg:
 ```js
 // y and z are optional
 noise(
@@ -130,9 +113,7 @@ noise(
   }
 )
 ```
-
 Can be used like such
-
 ```js
 noise([2, 3])
 ```
