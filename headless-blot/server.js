@@ -4,7 +4,7 @@ import { runCodeInner } from "../src/runCodeInner.js";
 import { makeIncluded } from "../src/makeIncluded.js";
 
 import { createNodeSerialBuffer } from "../src/haxidraw/createNodeSerialBuffer.js";
-import { runMachineHelper } from "../src/events/addMachineControl.js";
+import { runMachineHelper } from "../src/runMachineHelper.js";
 
 async function runSync(code) {
 
