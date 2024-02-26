@@ -1,3 +1,9 @@
+/*
+@title: linesCircles
+@author: yutaro
+@snapshot: s1.png
+*/
+
 // welcome to blot!
 
 const width = 125;

@@ -1,3 +1,9 @@
+/*
+@title: raymarching
+@author: henrybass
+@snapshot: raymarching1.png
+*/
+
 const screenWidth = 4
 const screenHeight = 2
 const dx = 0.01

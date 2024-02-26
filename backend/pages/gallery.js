@@ -1,17 +1,44 @@
 import fs from 'fs';
 import { extractFrontmatter } from "../extractFrontmatter.js";
 
+function getDirectories(srcPath) {
+  return fs.readdirSync(srcPath, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+}
+
+function extractKeyValuePairs(str) {
+  const regex = /@(\w+):\s*(.+)/g;
+  const matches = [...str.matchAll(regex)];
+  return matches.reduce((acc, match) => {
+    acc[match[1]] = match[2];
+    return acc;
+  }, {});
+}
+
 export default function() {
 
-  let files = fs.readFileSync("./art/!metadata.json", 'utf8')
-  files = JSON.parse(files);
+  const directories = getDirectories("./art");
+  const files = [];
 
-  files = files.map(file => ({
-    dir: file.directory,
-    img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${file.directory}/snapshots/${file.snapshots[0]}`,
-    href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${file.directory}/${file.source}`,
-    alt: file.directory
-  }));
+
+  directories.forEach((dir, i) => {
+    const file = fs.readFileSync(`./art/${dir}/index.js`, 'utf8');
+
+    const metadata = extractKeyValuePairs(file);
+
+    if (Object.keys(metadata).length === 0) return; 
+
+    const result = {
+      dir: dir,
+      img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${dir}/snapshots/${metadata.snapshot}`,
+      href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${dir}/index.js`,
+      alt: dir
+    }
+
+    files.push(result);
+
+  })
 
   return `
     <style>

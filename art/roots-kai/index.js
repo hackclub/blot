@@ -1,3 +1,9 @@
+/*
+@title: roots
+@author: kai
+@snapshot: roots.png
+*/
+
 // Width and height of the document (10mm x 20mm).
 // Small, but can easily call turtles.map(turtle => turtle.scale(<scale>)) right before drawTurtles() if needed.
 const WIDTH = 10

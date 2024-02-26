@@ -1,3 +1,9 @@
+/*
+@title: BitMap
+@author: AdityaPV
+@snapshot: sprig.png
+*/
+
 // welcome to blot!
 
 const width =  200;

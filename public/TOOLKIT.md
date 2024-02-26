@@ -1,5 +1,12 @@
 # The Toolkit  
 
+### Environment Affecting
+
+```js
+setDocDimensions(width, height)
+drawLines(polylines, options = { fill, stroke, width })
+```
+
 ```js
 Turtle 
 
@@ -20,7 +27,7 @@ join(polylines, ... )
 copy(polylines, ... )
 union(polylines, ... )
 difference(polylines, ... )
-intersect(polylines, ... )
+intersection(polylines, ... )
 xor(polylines, ... )
 
 // take polylines return other
@@ -30,14 +37,11 @@ getNormal(polylines, t [0 to 1])
 bounds(polylines)
 
 // take other return polylines
-svgToPolylines 
+svgToPolylines(svgString)
 
 
 // curves
-bezierEasing
-
-// make pls
-rect
+bezierEasing(startY, controlPt0, controlPt1, endY)
 ```
 
 ### Randomness
@@ -63,6 +67,19 @@ noise(
 ### Idioms
 
 Useful common patterns.
+
+<details>
+<summary>imports in one line</summary>
+
+```js
+// common imports
+const { Turtle, cut, cover, copy, rotate, scale, translate, originate, iteratePoints, resample, join, getAngle, getNormal, getPoint, bounds, svgToPolylines, rand, setRandSeed, randInRange, noise, bezierEasing } = toolkit;
+
+// all imports
+const { Turtle, trim, merge, cut, cover, rotate, scale, translate, originate, iteratePoints, pointInside, resample, join, copy, union, difference, intersection, xor, getAngle, getPoint, getNormal, bounds, svgToPolylines, rand, setRandSeed, randInRange, randIntInRange, noise, bezierEasing } = toolkit;
+
+```
+</details>
 
 <details>
 <summary>Displace Along Normal</summary>
@@ -95,7 +112,7 @@ const noisyCircle = new Turtle()
 
 originate(noisyCircle);
 
-draw(noisyCircle);
+drawLines(noisyCircle);
 ```
 
 </details>
@@ -131,7 +148,7 @@ const noisyCircle = new Turtle()
 
 originate(noisyCircle);
 
-draw(noisyCircle);
+drawLines(noisyCircle);
 ```
 
 </details>
@@ -186,7 +203,7 @@ function createPoissonDisc(radius) {
 function L(pls) {
   const methods = {};
   
-  [ "iteratePoints", "cut", "cover", "scale", "rotate", "translate", "originate", "resample", "simplify", "trim", "merge", "join", "copy", "union", "difference", "intersect", "xor", "svgToPolylines" ].forEach(name => {
+  [ "iteratePoints", "cut", "cover", "scale", "rotate", "translate", "originate", "resample", "simplify", "trim", "merge", "join", "union", "difference", "intersection", "xor", "svgToPolylines" ].forEach(name => {
     methods[name] = (...args) => {
       toolkit[name](pls, ...args);
       return methods;
@@ -199,9 +216,14 @@ function L(pls) {
     };
   })
 
+  methods.copy = () => {
+    const copied = toolkit.copy(pls);
+    return L(copied);
+  }
+
   methods.polylines = pls;
   methods.draw = (...args) => {
-    draw(pls, ...args);
+    drawLines(pls, ...args);
     return methods;
   }
 
@@ -218,7 +240,7 @@ function createTurtle() {
   const t = new toolkit.Turtle();
   const pls = t.path;
     
-  [ "iteratePoints", "cut", "cover", "scale", "rotate", "translate", "originate", "resample", "simplify", "trim", "merge", "join", "copy", "union", "difference", "intersect", "xor", "svgToPolylines" ].forEach(name => {
+  [ "iteratePoints", "cut", "cover", "scale", "rotate", "translate", "originate", "resample", "simplify", "trim", "merge", "join", "copy", "union", "difference", "intersection", "xor", "svgToPolylines" ].forEach(name => {
     t[name] = (...args) => {
       toolkit[name](
         pls, 
@@ -235,7 +257,7 @@ function createTurtle() {
   })
 
   t.draw = (...args) => {
-    draw(pls, ...args);
+    drawLines(pls, ...args);
     return t;
   }
 
@@ -249,9 +271,49 @@ function createTurtle() {
 ```
 </details>
 
-Circle
+<details>
+<summary>Circle</summary>
 
-Rectangle
+```js
+function circle(r) {
+  const t = new Turtle();
+  t.arc(360, r);
+  const cc = bounds(t.path).cc;
+  translate(t.path, [0, 0], cc);
+
+  return t.polylines();
+}
+```
+</details>
+
+<details>
+<summary>Rectangle</summary>
+
+```js
+function rect(w, h) {
+  return [
+    [
+      [-w/2, h/2],
+      [-w/2, -h/2],
+      [w/2, -h/2],
+      [w/2, h/2],
+      [-w/2, h/2],
+    ]
+  ]
+}
+```
+</details>
+
+<details>
+<summary>length</summary>
+
+```js
+function length([x0, y0], [x1, y1]) {
+  return Math.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2)
+}
+```
+</details>
+
 
 Hatching
 

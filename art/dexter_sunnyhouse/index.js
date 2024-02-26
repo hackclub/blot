@@ -1,3 +1,9 @@
+/*
+@title: sunnyhouse
+@author: dexter
+@snapshot: image_3.png
+*/
+
 const width = 120;
 const height = 120;
 

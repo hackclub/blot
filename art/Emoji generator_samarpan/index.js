@@ -1,3 +1,9 @@
+/*
+@title: Emoji Generator
+@author: Samarpan
+@snapshot: 1.png
+*/
+
 const createComplexEmoji = () => {
   const emojiTurtle = createTurtle();
 

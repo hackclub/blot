@@ -54,7 +54,7 @@ export function makeIncluded() {
             docDimensions.width = w;
             docDimensions.height = h;
         },
-        draw: (polylines = [], style = {}) => {
+        drawLines: (polylines = [], style = {}) => {
             if (polylines.length === 0) return;
         
             const temp = {};

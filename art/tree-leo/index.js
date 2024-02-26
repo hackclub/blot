@@ -1,3 +1,9 @@
+/*
+@title: tree
+@author: leomcelroy
+@snapshot: tree.png
+*/
+
 setRandSeed(453)
 
 let trunk = createTurtle()

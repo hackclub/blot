@@ -49,7 +49,14 @@
   //ClipperLib.use_xyz: adds a Z member to FPoint. Adds a minor cost to performance.
   ClipperLib.use_xyz = false;
 
-  var isNode = false;
+  let isNode = false;
+
+  try {
+    navigator
+  } catch (err) {
+    isNode = true;
+  }
+
   var navigator_appName;
   if (!isNode)
   {

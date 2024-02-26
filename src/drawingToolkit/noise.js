@@ -1,4 +1,4 @@
-import { rand } from './rand'
+import { rand } from './rand.js'
 
 let PERLIN_YWRAPB = 4
 let PERLIN_YWRAP = 1 << PERLIN_YWRAPB

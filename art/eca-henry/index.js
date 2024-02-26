@@ -1,3 +1,9 @@
+/*
+@title: eca
+@author: henry
+@snapshot: eca1.png
+*/
+
 const t = createTurtle();
 
 const w = 50

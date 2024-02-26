@@ -1,3 +1,9 @@
+/*
+@title: spiderweb
+@author: michelle
+@snapshot: 1.png
+*/
+
 // making document
 const t = createTurtle();
 const width = 125;

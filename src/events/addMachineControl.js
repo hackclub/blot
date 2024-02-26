@@ -1,4 +1,5 @@
 import { createHaxidraw } from '../haxidraw/createHaxidraw.js'
+import { createWebSerialBuffer } from "./createWebSerialBuffer.js";
 import { createListener } from '../createListener.js'
 import { getStore, patchStore } from '../state.ts'
 
@@ -21,7 +22,8 @@ export function addMachineControl() {
         .requestPort({ filters: [] })
         .then(async port => {
           console.log('connecting')
-          haxidraw = await createHaxidraw(port)
+          const comsBuffer = await createWebSerialBuffer(port);
+          haxidraw = await createHaxidraw(comsBuffer)
 
           console.log(haxidraw)
           patchStore({ connected: true })
@@ -123,7 +125,8 @@ export function addMachineControl() {
       const info = port.getInfo()
 
       if (info.usbVendorId === 11914) {
-        haxidraw = await createHaxidraw(port)
+        const comsBuffer = await createWebSerialBuffer(port);
+        haxidraw = await createHaxidraw(comsBuffer)
         console.log(haxidraw)
         patchStore({ connected: true })
       }

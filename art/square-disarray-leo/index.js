@@ -1,5 +1,8 @@
-// square disarray
-// leo mcelroy
+/*
+@title: square disarray
+@author: leomcelroy
+@snapshot: 0.png
+*/
 
 const width = 120
 const height = 120

@@ -1,3 +1,9 @@
+/*
+@title: leaf
+@author: leomcelroy
+@snapshot: leaf.png
+*/
+
 const leafLength = 5
 const leafW = 1.3
 

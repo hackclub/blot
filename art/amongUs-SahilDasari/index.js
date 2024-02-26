@@ -1,3 +1,9 @@
+/*
+@title: among us
+@author: Sahil Dasari
+@snapshot: Original.png
+*/
+
 // welcome to blot!
 
 const width = 167;

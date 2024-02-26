@@ -1,3 +1,9 @@
+/*
+@title: Donut
+@author: Bright Li
+@snapshot: snapshot1.png
+*/
+
 let t = createTurtle()
 // shift from the bottom left to the center of the paper
 let plotShift = 62.5

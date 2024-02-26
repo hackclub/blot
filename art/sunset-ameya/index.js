@@ -1,3 +1,9 @@
+/*
+@title: sunset
+@author: ameya
+@snapshot: sample1.png
+*/
+
 // important consts
 
 const WIDTH = 125; 

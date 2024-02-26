@@ -1,8 +1,8 @@
-import { createWebSerialPort } from './createWebSerialPort.js'
+import { createComsManager } from './createComsManager.js'
 import { floatsToBytes, uint16ToBytes, intsToBytes } from './converters.js'
 
-export async function createHaxidraw(rawPort) {
-  const port = await createWebSerialPort(rawPort)
+export async function createHaxidraw(comsBuffer) {
+  const port = await createComsManager(comsBuffer)
 
   async function goTo(x, y) {
     const bytes = floatsToBytes([x, y])

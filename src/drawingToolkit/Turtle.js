@@ -123,7 +123,15 @@ export class Turtle {
     return this
   }
 
+  // TODO: do I want this
   polylines() {
+    const pls = copy(this.path);
+
+    return pls.filter(pl => pl.length > 1);
+  }
+
+  // TODO: do I want this
+  lines() {
     const pls = copy(this.path);
 
     return pls.filter(pl => pl.length > 1);
@@ -140,11 +148,13 @@ export class Turtle {
     return t
   }
 
+  // TODO: do i want this;
   applyToPath(fn) {
     fn(this.path);
     return this;
   }
 
+  // TODO: do i want this;
   apply(fn) {
     fn(this);
     return this;

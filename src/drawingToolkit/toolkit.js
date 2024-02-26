@@ -15,24 +15,24 @@ import { resamplePolylines } from "./resamplePolylines.js";
 import { simplify as simplifyPolyline } from "./simplify.js";
 import { trimPolylines } from "./trimPolylines.js";
 import { displacePolylines as displace } from "./displacePolylines.js";
-import { flattenSVG } from "./flatten-svg/index.ts";
+import { flattenSVG } from "./flatten-svg/index.js";
 import { transform } from "./transform.js";
 import { bounds } from "./bounds.js";
 import { bezierEasing } from "./bezierEasing.js";
 import * as polyclip from 'polyclip-ts';
 
 export const toolkit = {
-  polyclip,
-  boolean,
+  // polyclip, // NOT INCLUDED
+  // boolean, // NOT INCLUDED
+  // polygonClipping, // NOT INCLUDED
+  // displace, // NOT INCLUDED
   union: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "union", ops),
   intersection: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "intersection", ops),
   difference: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "difference", ops),
   xor: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "xor", ops),
-  polygonClipping,
   iteratePoints: iteratePolylines,
   transform,
   bounds,
-  displace,
   Turtle,
   cut,
   cover,
@@ -89,28 +89,6 @@ export const toolkit = {
     });
 
     return first;
-  },
-  rect(w, h) {
-    return [
-      [
-        [-w/2, h/2],
-        [-w/2, -h/2],
-        [w/2, -h/2],
-        [w/2, h/2],
-        [-w/2, h/2],
-      ]
-    ]
-  },
-  circle(r) {
-    const t = new Turtle();
-    t.arc(360, r);
-    const cc = bounds(t.path).cc;
-    translate(t.path, [0, 0], cc);
-
-    return t.polylines();
-  },
-  length([x0, y0], [x1, y1]) {
-    return Math.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2)
   },
   copy: obj => JSON.parse(JSON.stringify(obj))
 }

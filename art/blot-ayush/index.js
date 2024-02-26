@@ -1,3 +1,9 @@
+/*
+@title: Self Portrait
+@author: ayush
+@snapshot: blot1.png
+*/
+
 // Check the workshop tab to get started
 
 const x = 20 / 100;

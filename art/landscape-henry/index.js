@@ -1,3 +1,9 @@
+/*
+@title: landscape
+@author: henry bass
+@snapshot: landscape.png
+*/
+
 const t = createTurtle();
 
 const time = 106
