@@ -18,6 +18,8 @@ import { displacePolylines as displace } from "./displacePolylines.js";
 import { flattenSVG } from "./flatten-svg/index.js";
 import { transform } from "./transform.js";
 import { bounds } from "./bounds.js";
+import { catmullRom } from "./catmullRom.js";
+import { nurbs } from "./nurbs.js";
 import { bezierEasing } from "./bezierEasing.js";
 import * as polyclip from 'polyclip-ts';
 
@@ -41,6 +43,52 @@ export const toolkit = {
   rotate,
   translate,
   bezierEasing,
+  catmullRom,
+  nurbs(points, ops = {}) {
+    const degree = ops.degree ?? 2;
+    const steps = ops.steps ?? 100;
+    const boundary = isClosed(points) ? "closed" : "clamped";
+    
+    if (boundary === "closed") {
+      points.pop();
+    };
+
+    var curve = nurbs({
+      points,
+      degree,
+      boundary
+    });
+
+    const pl = [];
+    const domain = curve.domain[0];
+    const range = domain[1] - domain[0];
+    const stepSize = range/steps;
+
+    let i = domain[0]; 
+    while (i <= domain[1]) {
+
+      const pt = curve.evaluate([], i);
+      pl.push(pt);
+
+      i += stepSize;
+    }
+
+    if (i !== domain[1]) {
+      const pt = curve.evaluate([], domain[1]);
+      pl.push(pt);
+    }
+
+    return pl;
+
+    function isClosed(polyline, epsilon = 1e-3) {
+      let start = polyline[0]
+      let end = polyline[polyline.length - 1]
+      return (
+        Math.abs(start[0] - end[0]) < epsilon &&
+        Math.abs(start[1] - end[1]) < epsilon
+      )
+    }
+  },
   originate(polylines) {
     const cc = bounds(polylines).cc;
     translate(polylines, [0, 0], cc);
@@ -92,6 +140,8 @@ export const toolkit = {
   },
   copy: obj => JSON.parse(JSON.stringify(obj))
 }
+
+
 
 /*
 

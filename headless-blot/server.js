@@ -33,6 +33,7 @@ app.post("upload", async (req, res) => {
       ])
 `)
 
+
   } catch (err) {
     console.error(err);
   }
@@ -42,7 +43,7 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-/*
+// --- TEST ---
 
 const { turtles, docDimensions } = await runSync(`
     drawLines([
@@ -53,6 +54,8 @@ const { turtles, docDimensions } = await runSync(`
 `)
 
 console.log(turtles);
+
+/*
 
 const comsBuffer = await createNodeSerialBuffer(port);
 const haxidraw = await createHaxidraw(comsBuffer);
