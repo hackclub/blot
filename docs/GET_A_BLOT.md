@@ -2,7 +2,8 @@
 
 > Blot is not released yet and this criteria is still in flux. If you want to get an early start and help shape what it means to get a Blot I welcome and appreciate it.
 
-So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one.
+So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one. The blot is paid for by Hack Club and that includes shipping, but you should check for customs fees in your country before ordering. [^1]
+[^1]: Customs fees aren't covered by Hack Club, so please look into how much customs is for an electronics kit order being shipped from the US if you are based outside the US.
 
 # 1) Make a unique piece of generative art
 
