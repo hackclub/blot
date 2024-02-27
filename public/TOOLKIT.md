@@ -7,40 +7,88 @@ setDocDimensions(width, height)
 drawLines(polylines, options = { fill, stroke, width })
 ```
 
+### Modify Polylines
 ```js
-Turtle 
-
 // take and modify polylines return polylines
-iteratePoints(polylines, ... ) 
-cut(polylines, ... ) 
-cover(polylines, ... ) 
-pointInside(polylines, ... ) 
-scale(polylines, ... ) 
-rotate(polylines, ... ) 
-translate(polylines, ... ) 
-originate(polylines, ... ) 
-resample(polylines, ... ) 
-simplify(polylines, ... ) 
-trim(polylines, ... )
-merge(polylines, ... )  
-join(polylines, ... ) 
-copy(polylines, ... )
-union(polylines, ... )
-difference(polylines, ... )
-intersection(polylines, ... )
-xor(polylines, ... )
+iteratePoints(polylines0, (pt, t) => { ... } ) 
+scale(polylines0, scale : scaleXY | [scaleX, scaleY], ?origin: [ x, y ] ) 
+rotate(polylines0, degrees, ?origin: [ x, y ] ) 
+translate(polylines0, [dx, dy], ?origin: [ x, y ] ) 
+originate(polylines) // moves center to [0, 0] 
+resample(polylines0, sampleRate ) 
+simplify(polylines0, ... ) 
+trim(polylines0, tStart, tEnd )
+merge(polylines)  
+join(polylines0, ...morePolylines ) 
+copy(polylines )
+cut(polylines0, polylines1 ) 
+cover(polylines0, polylines1 ) 
+union(polylines0, polylines1 )
+difference(polylines0, polylines1 )
+intersection(polylines0, polylines1 )
+xor(polylines0,polylines1 )
 
+```
+
+### Get Data From Polylines
+
+```js
 // take polylines return other
-getAngle(polylines, t [0 to 1]) 
-getPoint(polylines, t [0 to 1]) 
-getNormal(polylines, t [0 to 1]) 
-bounds(polylines)
+getAngle(polylines, t [0 to 1]) // returns angle in degrees
+getPoint(polylines, t [0 to 1]) // returns point as [x, y]
+getNormal(polylines, t [0 to 1]) // returns normal vector as [x, y]
 
+pointInside(polylines, pt)
+
+bounds(polylines) 
+/*
+returns { 
+  xMin, xMax, 
+  yMin, yMax, 
+  lt, ct, rt, 
+  lc, cc, rc,
+  lb, cb, rb,
+  width, height
+}
+*/
+```
+
+### Generate Polylines
+
+```js
+const myTurtle = new Turtle()
+  .forward(distance: number)
+  .arc(angle, radius)
+  .goTo( [ x, y ] ) // move with up/down state
+  .jump( [ x, y ] ) // move but don't draw
+  .right(angle)
+  .left(angle)
+  .setAngle(angle)
+  .up() // sets drawing to false
+  .down() // sets drawing to true
+  .copy()
+  .apply(fn) // takes (turtle) => { }
+
+// data
+const position = myTurtle.pos;
+const angle = myTurtle.angle;
+const path = myTurtle.path; // is array of polylines
+const drawing = myTurtle.drawing;
+```
+
+```js
+catmullRom(points, steps = 1000)
+nurbs(points, ops = { steps: 100, degree: 2})
+```
+
+```js
 // take other return polylines
 svgToPolylines(svgString)
+```
 
+### Easing Curves
 
-// curves
+```js
 bezierEasing(startY, controlPt0, controlPt1, endY)
 ```
 
