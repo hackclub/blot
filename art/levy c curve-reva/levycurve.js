@@ -41,7 +41,7 @@ function iterate(production) {
       Newproduction = Newproduction + ruleR;
     }
   }
-  drawLength = drawLength * 0.75
+  drawLength = drawLength * 0.74
   return Newproduction;
 }
 
@@ -56,7 +56,6 @@ function render(t, prod) {
       t.left(theta)
   }
     else if (step == "R"){
-      //t.left(theta)
       t.forward(drawLength);
       t.right(theta)
     }
