@@ -4,26 +4,20 @@
 @snapshot: dragoncurve.png
 */
 
-//Levy C Curve
-var axiom = "A";
-let ruleA = "AAF"
-let ruleF = "F"
-
-var startLength = 16;
-var theta = 90;
-
 /*
-//curve 2
+//dragon curve
 var axiom = "F";
-let ruleA = "-F+AA++A+F--F-A"
-let ruleF = "F+A++A-F--FF-A+"
+let ruleA = "F-A"
+let ruleF = "F+A"
 
-var startLength = 4;
-var theta = 60;
+var startLength = 29;
+let n = 4;
+var theta = 360/n;
+let generations = 12;
 */
 
 /*
-//branches
+//branches (in progress)
 var axiom = "F";
 let ruleA = "A"
 let ruleF = "F[+F]F"
@@ -31,6 +25,7 @@ let ruleF = "F[+F]F"
 var startLength = 77;
 let n = 10;
 var theta = 360/n;
+let generations = 8;
 */
 
 
@@ -42,9 +37,11 @@ let ruleF = "F+F--F+F"
 
 var startLength = 77;
 var theta = 53;
+let generations = 6;
 */
 
-/*
+
+
 //curve
 var axiom = "F";
 let ruleA = "-F+AA++A+F--F-A"
@@ -52,16 +49,18 @@ let ruleF = "F+A++A-F--FF-A+"
 
 var startLength = 4;
 var theta = 60;
-*/
+let generations = 5;
+
 
 
 /*
-//Bush L-system (in progress)
+//Branch L-system
 var axiom = "++++F"
 let ruleF = "FF-[-F+F+F]+[+F-F-F]"
 var startLength = 5;
 let n = 16;
 var theta = 360/n;
+let generations = 3;
 */
 
 var production = axiom;
@@ -75,7 +74,6 @@ setDocDimensions(width, height);
 const t = createTurtle();
 
 var prod = production
-let generations = 3;
 for (let i = 0; i < generations; i++) {
   production = iterate(production);
 }
