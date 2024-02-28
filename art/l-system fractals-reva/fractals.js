@@ -22,6 +22,48 @@ var startLength = 4;
 var theta = 60;
 */
 
+/*
+//branches
+var axiom = "F";
+let ruleA = "A"
+let ruleF = "F[+F]F"
+
+var startLength = 77;
+let n = 10;
+var theta = 360/n;
+*/
+
+
+/*
+//Koch curve
+var axiom = "F";
+let ruleA = "A"
+let ruleF = "F+F--F+F"
+
+var startLength = 77;
+var theta = 53;
+*/
+
+/*
+//curve
+var axiom = "F";
+let ruleA = "-F+AA++A+F--F-A"
+let ruleF = "F+A++A-F--FF-A+"
+
+var startLength = 4;
+var theta = 60;
+*/
+
+
+/*
+//Bush L-system (in progress)
+var axiom = "++++F"
+let ruleF = "FF-[-F+F+F]+[+F-F-F]"
+var startLength = 5;
+let n = 16;
+var theta = 360/n;
+*/
+
 var production = axiom;
 var drawLength = startLength;
 
@@ -33,7 +75,7 @@ setDocDimensions(width, height);
 const t = createTurtle();
 
 var prod = production
-let generations = 11;
+let generations = 3;
 for (let i = 0; i < generations; i++) {
   production = iterate(production);
 }
@@ -55,6 +97,9 @@ function iterate(production) {
     } else if (step === 'A') {
       Newproduction = Newproduction + ruleA;
     }
+    else{
+      Newproduction = Newproduction + step;
+    }
   }
   drawLength = drawLength * 0.743
   return Newproduction;
@@ -64,15 +109,29 @@ function iterate(production) {
 //convert production string to a turtle graphic
 function render(t, prod) {
   t.jump([width/2, height/2])
+  var saved = t.position;
+
   for (let i = 0; i < prod.length; ++i) {
     var step = prod.charAt(i);
     if (step == 'A') {
       t.forward(drawLength);
-      t.left(theta)
   }
     else if (step == "F"){
       t.forward(drawLength);
-      t.right(theta)
+    }
+    else if (step == "+"){
+      theta = Math.abs(theta);
+      t.left(theta)
+    }
+    else if (step == "-"){
+      theta = -Math.abs(theta);
+      t.left(theta)
+    }
+    else if (step == "["){
+     saved = t.position;
+    }
+    else if (step == "]"){
+      t.jump(saved);
     }
   }
   return t;
