@@ -1,7 +1,7 @@
 /*
-@title: L-System Fractals
+@title: Lindenmayer Systems (Fractals)
 @author: Reva
-@snapshot: image2.png
+@snapshot: dragoncurve.png
 */
 
 //Levy C Curve
