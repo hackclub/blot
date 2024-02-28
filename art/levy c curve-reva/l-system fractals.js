@@ -1,3 +1,4 @@
+
 var axiom = "L";
 let ruleL = "LLR"
 let ruleR = "R"
