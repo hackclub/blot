@@ -4,7 +4,9 @@
 @snapshot: dragoncurve.png
 */
 
-/*
+//main axioms should be in A or F, other rules can be W, X, Y, Z
+
+
 //dragon curve
 var axiom = "F";
 let ruleA = "F-A"
@@ -14,7 +16,7 @@ var startLength = 29;
 let n = 4;
 var theta = 360/n;
 let generations = 12;
-*/
+
 
 /*
 //branches (in progress)
@@ -41,7 +43,7 @@ let generations = 6;
 */
 
 
-
+/*
 //curve
 var axiom = "F";
 let ruleA = "-F+AA++A+F--F-A"
@@ -50,17 +52,17 @@ let ruleF = "F+A++A-F--FF-A+"
 var startLength = 4;
 var theta = 60;
 let generations = 5;
-
+*/
 
 
 /*
-//Branch L-system
+//symmetrical bush L-system
 var axiom = "++++F"
 let ruleF = "FF-[-F+F+F]+[+F-F-F]"
 var startLength = 5;
 let n = 16;
 var theta = 360/n;
-let generations = 3;
+let generations = 6;
 */
 
 var production = axiom;
@@ -94,6 +96,7 @@ function iterate(production) {
       Newproduction = Newproduction + ruleF;
     } else if (step === 'A') {
       Newproduction = Newproduction + ruleA;
+    } else if (step == 'X'){
     }
     else{
       Newproduction = Newproduction + step;
@@ -107,6 +110,8 @@ function iterate(production) {
 //convert production string to a turtle graphic
 function render(t, prod) {
   t.jump([width/2, height/2])
+
+  var pos = t.position;
   var saved = t.position;
 
   for (let i = 0; i < prod.length; ++i) {
@@ -126,10 +131,13 @@ function render(t, prod) {
       t.left(theta)
     }
     else if (step == "["){
-     saved = t.position;
+     //saved = t.position;
+      saved.push(t.position);
     }
     else if (step == "]"){
-      t.jump(saved);
+      //t.jump(saved);
+      pos = saved.pop(t.position);
+      t.jump(pos);
     }
   }
   return t;
