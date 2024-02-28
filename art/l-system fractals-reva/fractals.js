@@ -7,6 +7,17 @@
 //main axioms should be in A or F, other rules can be W, X, Y, Z
 
 
+//square
+var axiom = "F+F+F+F"
+let ruleF = "FF+F+F+F+FF"
+
+var startLength = 29;
+let n = 4;
+var theta = 360/n;
+let generations = 3;
+
+
+/*
 //dragon curve
 var axiom = "F";
 let ruleA = "F-A"
@@ -16,7 +27,7 @@ var startLength = 29;
 let n = 4;
 var theta = 360/n;
 let generations = 12;
-
+*/
 
 /*
 //branches (in progress)
@@ -44,7 +55,7 @@ let generations = 6;
 
 
 /*
-//curve
+//geometric curve
 var axiom = "F";
 let ruleA = "-F+AA++A+F--F-A"
 let ruleF = "F+A++A-F--FF-A+"
@@ -62,7 +73,7 @@ let ruleF = "FF-[-F+F+F]+[+F-F-F]"
 var startLength = 5;
 let n = 16;
 var theta = 360/n;
-let generations = 6;
+let generations = 4;
 */
 
 var production = axiom;
