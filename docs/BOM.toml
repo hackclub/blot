@@ -21,7 +21,7 @@ notes = "string"
 image = "image"
 container = ["box #1", "box #2", "box #3", "box #4", "electronics box", "free floating", "small parts bag", "tool bundle"]
 tags = ["tool", "3d-Printer", "laser cut", "circuit"]
-designFiles = ["stl", "dxf", "gerber + bom"]
+# designFiles = ["stl", "dxf", "gerber + bom"]
 itemId = "uuid" # to identify the part
 
 [[items]]
@@ -159,6 +159,7 @@ exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0094.png"
 tags = ["3D-printed"]
+notes = "made of PLA"
 findLocalSupplier = true
 container = "free floating"
 
@@ -178,6 +179,7 @@ exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0063.png"
 tags = ["3D-printed"]
+notes = "made of PLA"
 findLocalSupplier = true
 container = "free floating"
 
@@ -196,6 +198,7 @@ exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0064.png"
 tags = ["3D-printed"]
+notes = "made of PLA"
 findLocalSupplier = true
 container = "free floating"
 
@@ -216,6 +219,7 @@ tags = ["3D-printed"]
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0065.png"
 container = "free floating"
 findLocalSupplier = true
+notes = "made of PLA"
 
 [[items]]
 part = "625zz V-Wheel" # TODO: what is the dimension
@@ -231,6 +235,7 @@ part = "125mm long GT2 Timing Belt"
 quantity = 1
 findLocalSupplier = true
 container = "box #2"
+exampleSource = "https://openbuildspartstore.com/gt2-2m-timing-belt-by-the-foot/"
 
 [[items]]
 part = "Belt Clip"
@@ -239,6 +244,7 @@ quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0066.png"
 findLocalSupplier = true
 tags = ["3D-printed"]
+notes = "made of PLA"
 container = "free floating"
 
 [[items]]
@@ -256,6 +262,7 @@ quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0087.png"
 findLocalSupplier = true
 tags = ["3D-printed"]
+notes = "made of PLA"
 container = "free floating"
 
 [[items]]
@@ -314,7 +321,7 @@ exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0093.png"
 findLocalSupplier = false
-notes = "helps make the carriage rigid; manufactured by SendCutSend"
+notes = "helps make the carriage rigid; manufactured by SendCutSend, 1/8 in. aluminium"
 tags = ["laser cut"]
 container = "free floating"
 
@@ -325,4 +332,3 @@ findLocalSupplier = true
 notes = "one is for data to the computer and one is for power"
 container = ["free floating"]
 tags = []
-designFiles = []
