@@ -321,8 +321,8 @@ part = "Carriage Plate"
 exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_CarriagePlate.stl"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0093.png"
-findLocalSupplier = false
-notes = "helps make the carriage rigid; manufactured by SendCutSend, 1/8 in. aluminium"
+findLocalSupplier = true
+notes = "helps make the carriage rigid; could be manufactured by SendCutSend, 1/8 in. aluminium"
 tags = ["laser cut"]
 container = "free floating"
 
