@@ -14,6 +14,7 @@ const t = createTurtle();
 
 //main axioms should be in A or F, other rules can be W, X, Y, Z
 
+
 //square
 var axiom = "F+F+F+F"
 let ruleF = "FF+F+F+F+FF"
@@ -88,7 +89,7 @@ var startLength = 5;
 let n = 16;
 var theta = 360/n;
 let generations = 4;
-let initpos = [20,20];
+let initpos = [52,24];
 */
 
 
