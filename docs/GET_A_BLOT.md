@@ -2,7 +2,8 @@
 
 > Blot is not released yet and this criteria is still in flux. If you want to get an early start and help shape what it means to get a Blot I welcome and appreciate it.
 
-So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one.
+So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one. The blot is paid for by Hack Club and that includes shipping, but you should check for customs fees in your country before ordering. [^1]
+[^1]: Customs fees aren't covered by Hack Club, so please look into how much customs is for an electronics kit order being shipped from the US if you are based outside the US.
 
 # 1) Make a unique piece of generative art
 
@@ -12,25 +13,52 @@ You can learn how to use the editor and make art by following some of [these gui
 
 Some criteria your art needs to meet:
 
-- Your artwork must be [figurative](https://en.wikipedia.org/wiki/Figurative_art)
-  - That means it must draw inspiration from depicting a real life thing.
-- Your art program must be able to produce multiple versions of the piece.
-  - You should be able to adjust a parameter to make another version of your artwork.
-  - To demonstrate this **submit 3 snapshots**.
-- For examples of meeting above criteria check out
-  - [Leaf](https://blot.hackclub.dev/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/leaf-leo/index.js)
-  - [Fishdraw](https://github.com/LingDong-/fishdraw)
-- Drawable by the machine.
-  - That means the lines can not be too dense.
+- Your artwork must be beautiful. It has to be something aestetically interesting.
+- Your artwork must be algorithmic.
+  - It must be able to create multiple versions. To demonstrate this **submit 3 snapshots**.
+  - You should expose some parameters at the top of your code which can adjust the art. This could be `setRandSeed` or some other variable used in your piece.
+- Your artwork must be original.
+- Your artwork must be drawable by the Blot machine.
+  - This means it can't be too busy and have many overlapping lines.
   - It should fit within the workarea.
-- You need to make your own original piece.
+- Your artwork must be original.
   - You can't just copy an existing piece of art and mess with the numbers.
   - That being said you can take inspiration from other art and remix a few pieces together.
+
+I reccomend trying to create a [figurative](https://en.wikipedia.org/wiki/Figurative_art) piece, which depicts a real life thing.
+A key to being successful is beign intentional with what you make. Sketch something out and have it in mind before you program it.
+
+Here are some examples of some **acceptable pieces**:
+
+![Screenshot 2024-02-16 at 3 02 04 PM](https://github.com/hackclub/blot/assets/27078897/f84f186b-6d9d-467b-baad-fd18eea89991)
+
+<img width="351" alt="Screenshot 2024-02-13 at 4 59 34 PM" src="https://github.com/hackclub/blot/assets/27078897/ea296584-5615-414f-93c9-5a4992928b72">
+
+Here are some examples of some pieces which would **not be accepted**:
+
+- a abstract piece generated in a very straightforward manner
+
+![Screenshot 2024-02-16 at 3 06 05 PM](https://github.com/hackclub/blot/assets/27078897/24e1d26b-1d09-4336-830d-b437ecf8bd10)
+
+- an svg just dropped into the editor with no algorithmic process
+
 
 # 2) Make a PR with your original artwork
 
 Once you have made some art you can make a pull request (PR) onto this repo with that program.
 These are the steps you need to take to make a PR.
+
+## 2.0) Add metadata to your `index.js` file
+
+Make sure to include this info in a comment at the top of your file.
+
+```js
+/*
+@title: yourTitle
+@author: yourName
+@snapshot: the name of the snapshot file you want in the gallery
+*/
+```
 
 ## 2.1) Download your program
 
@@ -45,6 +73,8 @@ These are the steps you need to take to make a PR.
 - Create a folder called `{yourArtworkName}-{yourName}`.
 - Inside that folder create a `snapshots` folder with **at least 3 screenshots** of your work.
 - Place the code for your artwork in an `index.js` file.
+
+**Make sure there are no spaces in your directory or file names!**
 
 The directory structure can be seen below:
 
@@ -71,15 +101,14 @@ Refer to [this example](https://github.com/hackclub/blot/tree/main/art/square-di
 - Select "Open Pull Request"
 - Click "Create Pull Request"
 - Name your pull request with the name of your directory (`{yourArtworkName}-{yourName}`)
-- In the body, describe your artwork and your experience coding
+- In the body, describe your artwork and your experience coding.
 - Please add an image of your artwork to the pull request.
 - Click "Create Pull Request"
 
 Your PR will be reviewed by people in the BLOT community. We aren't evaluating it based on style
 we're looking to see if you put effort and creativity into your work.
-Don't worry if this is the first program you have ever written, if you worked hard (at least ~5 hrs) and are proud of the result then it's probably good.
+Don't worry if this is the first program you have ever written, if you worked hard (at least ~8 hrs) and are proud of the result then it's probably good.
 If you are an experienced programmer then we challenge you to show us how nice generative art can be.
-Can you make a piece [like](lingdong) [the](zancan) [masters](someone else).
 
 # 3) Fill out the order form
 
@@ -88,4 +117,3 @@ Once your PR is merged we'll give you a link to fill out an order form so we can
 # 4) Build your blot
 
 Once you get your machine build it and have it make your art.
-Your fabricated piece will become your ticket to a very special event we are planning next summer.

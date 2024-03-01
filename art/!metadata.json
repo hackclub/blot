@@ -83,5 +83,30 @@
     "directory": "word_search-scott_c",
     "snapshots": ["snapshot01.png"],
     "source": "index.js"
+  },
+  {
+    "directory": "sunset-ameya",
+    "snapshots": ["sample1.png"],
+    "source": "index.js"
+  },
+  {
+    "directory": "BlotGrapher-V205",
+    "snapshots": ["Snapshot1.jpeg"],
+    "source": "index.js"
+  },
+  {
+    "directory": "dexter_sunnyhouse",
+    "snapshots": ["image_3.png"],
+    "source": "script.js"
+  },
+  {
+    "directory": "fractures-msw",
+    "snapshots": ["image_16.png"],
+    "source": "index.js"
+  },
+  {
+    "directory": "BitMap-AdityaPV",
+    "snapshots": ["sprig.png"],
+    "source": "index.js"
   }
 ]

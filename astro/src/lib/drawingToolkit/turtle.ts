@@ -83,7 +83,7 @@ export class Turtle {
   arc(angle, radius) {
     if (angle === 0 || radius === 0) return this;
     
-    const n = 32;
+    const n = 64;
     let pts = [ ];
     const a = angle/180*Math.PI;
     const lp = this.position;
@@ -100,11 +100,11 @@ export class Turtle {
     }
 
     pts = pts.map(pt => translate(pt, lp, pts[0]));
-    pts = pts.map(pt => rotate(pt, la+(angle < 0 ? 90 : -90), pts[0]));
+    pts = pts.map(pt => rotate(pt, la + (angle < 0 ? 90 : -90), pts[0]));
 
     pts.slice(1).forEach(pt => this.goTo(pt));
 
-    this.setAngle(la - angle);
+    this.setAngle(la + angle);
 
     return this;
   } 
@@ -357,7 +357,9 @@ export class Turtle {
 
     return [pt[0], pt[1]]
   }
-
+  get pos():  Point{
+    return this.location
+  }
   get lt(): Point {
     const { xMin, xMax, yMin, yMax } = this.extrema()
 
