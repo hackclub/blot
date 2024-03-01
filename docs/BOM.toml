@@ -21,7 +21,7 @@ notes = "string"
 image = "image"
 container = ["box #1", "box #2", "box #3", "box #4", "electronics box", "free floating", "small parts bag", "tool bundle"]
 tags = ["tool", "3d-Printer", "laser cut", "circuit"]
-designFiles = ["stl", "dxf", "gerber + bom"]
+# designFiles = ["stl", "dxf", "gerber + bom"]
 itemId = "uuid" # to identify the part
 
 [[items]]
@@ -159,6 +159,7 @@ exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0094.png"
 tags = ["3D-printed"]
+notes = "made of PLA"
 findLocalSupplier = true
 container = "free floating"
 
@@ -178,6 +179,7 @@ exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0063.png"
 tags = ["3D-printed"]
+notes = "made of PLA"
 findLocalSupplier = true
 container = "free floating"
 
@@ -196,6 +198,7 @@ exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0064.png"
 tags = ["3D-printed"]
+notes = "made of PLA"
 findLocalSupplier = true
 container = "free floating"
 
@@ -216,6 +219,7 @@ tags = ["3D-printed"]
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0065.png"
 container = "free floating"
 findLocalSupplier = true
+notes = "made of PLA"
 
 [[items]]
 part = "625zz V-Wheel" # TODO: what is the dimension
@@ -231,6 +235,7 @@ part = "125mm long GT2 Timing Belt"
 quantity = 1
 findLocalSupplier = true
 container = "box #2"
+exampleSource = "https://openbuildspartstore.com/gt2-2m-timing-belt-by-the-foot/"
 
 [[items]]
 part = "Belt Clip"
@@ -239,6 +244,7 @@ quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0066.png"
 findLocalSupplier = true
 tags = ["3D-printed"]
+notes = "made of PLA"
 container = "free floating"
 
 [[items]]
@@ -251,11 +257,12 @@ container = "box #2"
 
 [[items]]
 part = "PCB Mount"
-exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_PCBMount.stl"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_PcbMount.stl"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0087.png"
 findLocalSupplier = true
 tags = ["3D-printed"]
+notes = "made of PLA"
 container = "free floating"
 
 [[items]]
@@ -269,17 +276,18 @@ container = "free floating"
 
 [[items]]
 part = "42mm x 42mm (face) x 38mm (tall) Stepper Motor"
-exampleSource = "https://www.amazon.com/gp/product/B0B38H2ZMR/"
+exampleSource = "https://www.omc-stepperonline.com/e-series-nema-17-bipolar-42ncm-59-49oz-in-1-5a-42x42x38mm-4-wires-w-1m-cable-connector-17he15-1504s"
 quantity = 2
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0067.png"
 findLocalSupplier = true
+notes = "could also check out https://www.amazon.com/gp/product/B0B38H2ZMR/"
 container = "free floating"
 
 [[items]]
 part = "20mm Stepper motor cables"
 quantity = 2
 findLocalSupplier = true
-notes = "to connect steppers to control board; can't be too long or too short"
+notes = "to connect steppers to control board; can't be too long or too short; around 24 AWG"
 container = "electronics box"
 
 [[items]]
@@ -295,7 +303,7 @@ container = "electronics box"
 [[items]]
 part = "xiao RP2040"
 quantity = 1
-findLocalSupplier = false
+findLocalSupplier = true
 notes = "brains of the control board; purchase from Seeed Studios with header soldered on"
 container = "electronics box"
 
@@ -313,8 +321,8 @@ part = "Carriage Plate"
 exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_CarriagePlate.stl"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0093.png"
-findLocalSupplier = false
-notes = "helps make the carriage rigid; manufactured by SendCutSend"
+findLocalSupplier = true
+notes = "helps make the carriage rigid; could be manufactured by SendCutSend, 1/8 in. aluminium"
 tags = ["laser cut"]
 container = "free floating"
 
@@ -324,5 +332,5 @@ quantity = "2"
 findLocalSupplier = true
 notes = "one is for data to the computer and one is for power"
 container = ["free floating"]
+exampleSource = "https://www.amazon.com/Anker-Charger-Charge-Samsung-MacBook/dp/B0BPC6TTNX/ref=sr_1_4?crid=MFMY6EHF4YD4&dib=eyJ2IjoiMSJ9.M_O_Qv-JwLbNI5sT1Ur5uYgs1daGqR6YGwEQBckTevilVJ7IwpcrghaGDUk1AAvLz9XjADXFTEbq571L986R2i7_rd-mi1-wrgE7iZMEm-JKy58lv_NnQ2nLkiPBVOTSee1GTKWPYMqZV6Xpmy_thz-g3tjxVjAUllETPwR9p9KwgFQ4wc5RyP7CHGKa5YpKhTuPYtlvuaU6IvBoRPHPBBpNFuSgYS6lffh8yHOCaCCfVgJaGstQ1sTzIrsmu2Q6HAuKZ0p3fWymPJSDdBLF2mRd8GdpeEVBJ3k8u2GRoEQ.6J7Rv3_UhICDy0ThujHeO8oSj-bL0d5mclnurCv1ts4&dib_tag=se&keywords=usb%2Bc%2Bto%2Busb%2Bc%2Bcable%2B3%2Bft&qid=1709320007&s=industrial&sprefix=usb%2Bc%2Bto%2Busb%2Bc%2Bcable%2B3%2Bft%2Cindustrial%2C128&sr=1-4&th=1"
 tags = []
-designFiles = []
