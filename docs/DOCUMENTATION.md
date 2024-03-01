@@ -746,7 +746,7 @@ const y = ease(0.5); // Returns the Y value at X=0.5 on the Bezier curve
 
 **Description:** 
 
-Generates a random floating-point number between 0 (inclusive) and 1 (exclusive). This function does not require any parameters and provides a quick way to introduce randomness into your drawing or modifications.
+Generates a random floating-point number between 0 (inclusive) and 1 (inclusive). This function does not require any parameters and provides a quick way to introduce randomness into your drawing or modifications.
 
 **Example:**
 
@@ -760,7 +760,7 @@ rand(); // Might return 0.123456789
 
 **Parameters:**
 - `min` (number): The minimum value (inclusive).
-- `max` (number): The maximum value (exclusive).
+- `max` (number): The maximum value (inclusive).
 
 **Returns:** A random number between `min` and `max`.
 
