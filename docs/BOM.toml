@@ -303,7 +303,7 @@ container = "electronics box"
 [[items]]
 part = "xiao RP2040"
 quantity = 1
-findLocalSupplier = false
+findLocalSupplier = true
 notes = "brains of the control board; purchase from Seeed Studios with header soldered on"
 container = "electronics box"
 
