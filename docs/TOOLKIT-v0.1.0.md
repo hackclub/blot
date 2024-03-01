@@ -117,7 +117,3 @@ Can be used like such
 ```js
 noise([2, 3])
 ```
-
-## Examples
-
-To find examples check out [`/gallery`](/gallery).
