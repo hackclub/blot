@@ -257,7 +257,7 @@ container = "box #2"
 
 [[items]]
 part = "PCB Mount"
-exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_PCBMount.stl"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_PcbMount.stl"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0087.png"
 findLocalSupplier = true
