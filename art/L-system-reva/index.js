@@ -1,9 +1,10 @@
 /*
-@title: Lindenmayer Systems (Fractals)
+@title: L-System Fractals
 @author: Reva
 @snapshot: dragoncurve.png
 */
 
+//resource: L-System Fractal book by Mishra
 
 const width = 125;
 const height = 125;
