@@ -1,114 +1,120 @@
-/*
-@title: The Face
-@author: Ari
-@snapshot: snapshot0.png
-*/
+// Check the workshop tab to get started
 
 const width = 125;
 const height = 125;
+
+// The maximum amount a point can be transformed by on each axis 
+// For example max of 3 for X means the point can move at most 3 to the left or right
+// The lower the number, the closer to the original mapping (too high will lose structure)
+const maxTransformRadius = [3, 3]
+
 
 setDocDimensions(width, height);
 
 const t = createTurtle();
 
-function drawEye(pos) {
-  t.jump(pos);
-  t.arc(360, 7);
-  t.up();
-  t.arc(randInRange(0, 360), 7);
-  t.down();
-  t.arc(360, 3);
-  t.setAngle(0);
+t.jump([width / 2, height / 2]);
+
+let midline = width / 2
+
+const leftPoints = [
+  // Points 6-11 are the sides of the face
+  // Points 12+ Are internal facial features
+  // [[x, y], connectorIds]
+  [[midline - 15, 90], [7]], // 6
+  [[midline - 20, 85], [8]], // 7
+  [[midline - 20, 75], [2, 9]], // 8
+  [[midline - 20, 66], [10]], // 9
+  [[midline - 17, 55], [11]], // 10
+  [[midline - 10, 51], [5]], // 11
+  [[midline - 9, 84], [1, 6, 8]], // 12
+  [[midline - 9, 62], [3, 4, 10]], // 13
+  [[midline - 11, 55], [4, 10]], // 14
+  [[midline - 6, 79], [2, 8]], // 15
+]
+
+// These points do not move horizontally to maintain structure
+const midPoints = [
+  // [[x, y], connectorIds]
+  [[midline, 93], [6, 6 + leftPoints.length]],
+  [[midline, 80], [2]], 
+  [[midline, 70], []], 
+  [[midline, 65], []], 
+  [[midline, 57], []], 
+  [[midline, 48], []],
+]
+
+function radToDeg(rad) {
+  return (180 / Math.PI) * rad
 }
 
-// Used for symmetry, rotates depending on direction
-function directionalRotate(dir, angle) {
-  if (dir == "left") {
-    t.left(angle);
-  } else if (dir == "right") {
-    t.right(angle);
+function transformPoints(points, changeX, changeY) {
+  let newPoints = []
+  
+  for (const point of points) {
+    let newX = changeX ? (point[0][0] + randInRange(-maxTransformRadius[0], maxTransformRadius[0])) : point[0][0]
+    let newY = changeY ? (point[0][1] + randInRange(-maxTransformRadius[1], maxTransformRadius[1])) : point[0][1]
+    newPoints.push([[newX, newY], point[1]])
   }
+
+  return newPoints
 }
 
-function drawBody(dir) {
-  // Set inital direction for symmetrical body depending on direction
-  dir == "left" ? t.setAngle(180) : t.setAngle(0);
+// Applies transformations and creates right symmetric side of points
+function createFullTable() {
+  let table = []
 
-  // Initial position
-  t.jump([60, 100]);
-  t.forward(10);
+  // Transform midpoints and left points
+  let transformedMid = transformPoints(midPoints, false, true)
+  table = table.concat(transformedMid)
 
-  // Top curve
-  for (let i = 0; i < 4; i++) {
-    directionalRotate(dir, 20);
-    t.forward(10);
+  let transformedLeft = transformPoints(leftPoints, true, true) 
+  table = table.concat(transformedLeft)
+
+  // Generate right side
+  for(const p of transformedLeft) {
+    let midDiff = Math.abs(p[0][0] - midline)
+    let newX = midline + midDiff
+
+    let newConnections = []
+    for (const conn of p[1]) {
+      // If connected to a left point, adjust connector id to be on right
+      newConnections.push((conn < midPoints.length) ? conn : (conn + leftPoints.length))
+    }
+
+    // Add new right point to points table
+    table.push([[newX, p[0][1]], newConnections])
   }
 
-  // Move down
-  t.setAngle(-90);
-  t.forward(25);
-
-  // Bottom curve
-  directionalRotate(dir, 30);
-  t.forward(20);
-  directionalRotate(dir, 60);
-  t.forward(30);
+  return table
 }
 
-function drawMouth(dir, angle, size) {
-  t.jump([60, 55]);
-  t.forward(15);
+let basePoints = createFullTable()
 
-  for (let i = 0; i < 10; i++) {
-    directionalRotate(dir, angle);
-    t.forward(size);
-  }
+// Draws points 
+for (const pointData of basePoints) {
+  // Reset turtle data at each point and jump to it
+  t.setAngle(0)
+  // Adjust y value for lines to be in centre of circle
+  let adjustedPD = [pointData[0][0], pointData[0][1] - 1]
+  t.jump(adjustedPD)
+  t.arc(360, 1)
 
-  dir == "left" ? t.setAngle(0) : t.setAngle(180);
+  // Draw connections between points (lines)
+  for (const connector of pointData[1]) {
+    t.jump(pointData[0]) // Reset position
+    let targetPointData = basePoints[connector]
+    let xDist = (targetPointData[0][0] - pointData[0][0])
+    let yDist = (targetPointData[0][1] - pointData[0][1])
+    
+    let totalDist = Math.sqrt(xDist**2 + yDist**2)
+    let angle = Math.atan2(yDist, xDist)
 
-  t.forward(25);
-}
-
-function drawArm(dir) {
-  let initialXPos = dir == "right" ? 26.2 : 93.8;
-  t.jump([initialXPos, 60]);
-  let initialAngle = dir == "right" ? 0 : 180;
-  t.setAngle(initialAngle);
-
-  let angle = randInRange(110, 250);
-  directionalRotate(dir, angle);
-  t.forward(15);
-
-  if (angle < 0) {
-    directionalRotate(dir, 90);
-  } else {
-    directionalRotate(dir, -90);
-  }
-  t.forward(5);
-  directionalRotate(dir, -90);
-
-  // Move until side is reached
-  while (Math.abs(t.position[0] - initialXPos) > 0.05) {
-    t.forward(0.01);
+    t.setAngle(radToDeg(angle))
+    t.forward(totalDist)
   }
 }
-
-drawEye([50, 70]);
-drawEye([70, 70]);
-
-drawBody("left");
-drawBody("right");
-
-let mouthAngle = randInRange(10, 15);
-let mouthSize = randInRange(1, 2);
-
-drawMouth("left", mouthAngle, mouthSize);
-drawMouth("right", mouthAngle, mouthSize);
-
-drawArm("right");
-drawArm("left");
 
 drawTurtles([
-  t,
+    t
 ]);
-
