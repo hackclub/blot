@@ -372,7 +372,7 @@ const copiedPolylines = copy(originalPolylines);
 
 **Returns:** The modified `polylines0` array after being cut by `polylines1`.
 
-**Description**
+**Description:**
 
 Removes all points of the `basePolylines` outside of the `cuttingPolylines`.
 
@@ -394,7 +394,7 @@ cut(polylinesToCut, cuttingPolylines);
 
 **Returns:** The modified `polylines0` array after being covered by `polylines1`.
 
-**Description**
+**Description:**
 
 Removes all points of the `basePolylines` inside of the `coveringPolylines`.
 
@@ -416,7 +416,7 @@ cover(basePolylines, coveringPolylines);
 
 **Returns:** The modified `polylines0` array after union with `polylines1`.
 
-**Description**
+**Description:**
 
 Takes the boolean union of both sets of polylines.
 
@@ -438,7 +438,7 @@ union(subjectPolylines, clippingPolylines);
 
 **Returns:** The modified `polylines0` array after the difference operation with `polylines1`.
 
-**Description**
+**Description:**
 
 Subtracts the `clippingPolylines` from the `subjectPolylines`.
 
@@ -460,7 +460,7 @@ difference(subjectPolylines, clippingPolylines);
 
 **Returns:** The modified `polylines0` array after finding the intersection with `polylines1`.
 
-**Description**
+**Description:**
 
 Modifies the `subjectPolylines` to only the part that intersects with the `clippingPolylines`.
 
@@ -482,7 +482,7 @@ intersection(subjectPolylines, clippingPolylines);
 
 **Returns:** The modified `polylines0` array after the xor operation with `polylines1`.
 
-**Description**
+**Description:**
 
 Performs an exclusive or operation on two sets of polylines, leaving only the parts of each set that do not overlap with the other. This operation modifies the first set of polylines directly.
 
