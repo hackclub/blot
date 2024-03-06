@@ -8,7 +8,7 @@ This is the drawing library available in the Blot editor.
 
 These functions set properties of the Blot drawing environment.
 
-### setDocDimensions(width, height)
+### setDocDimensions
 
 **Function:** `setDocDimensions(width, height)`
 
@@ -32,7 +32,7 @@ The units are millimeters (mm).
 setDocDimensions(800, 600);
 ```
 
-### drawLines(polylines, ?options = { fill, stroke, width })
+### drawLines
 
 **Function:** `drawLines(polylines, options = { fill, stroke, width })`
 
