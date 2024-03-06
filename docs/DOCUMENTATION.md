@@ -34,7 +34,7 @@ setDocDimensions(800, 600);
 
 ### drawLines(polylines, ?options = { fill, stroke, width })
 
-**Function:** `drawLines(polylines, ?options = { fill, stroke, width })`
+**Function:** `drawLines(polylines, options = { fill, stroke, width })`
 
 **Parameters:**
 - `polylines` ([number, number][][]): A list of polylines
@@ -79,7 +79,7 @@ const { Turtle, trim, merge, cut, cover, rotate, scale, translate, originate, it
 
 ```js
 // common imports
-const { Turtle, cut, cover, copy, rotate, scale, translate, originate, iteratePoints, resample, join, getAngle, getNormal, getPoint, bounds, svgToPolylines, rand, setRandSeed, randInRange, noise, nurbs } = toolkit;
+const { Turtle, cut, cover, copy, rotate, scale, translate, originate, iteratePoints, resample, join, getAngle, getNormal, bounds, rand, setRandSeed, randInRange, noise, nurbs } = toolkit;
 ```
 
 ## Modify Polylines
@@ -122,7 +122,7 @@ const modifiedPolylines = iteratePoints(polylines, (pt, t) => {
 
 ### scale
 
-**Function:** `scale(polylines, scale, ?origin = [0, 0])`
+**Function:** `scale(polylines, scale, origin = [0, 0])`
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be scaled.
@@ -159,7 +159,7 @@ const customOriginScaled = scale(polylines, 2, [5, 5]);
 
 ### rotate
 
-**Function:** `rotate(polylines, degrees, ?origin = [0, 0])`
+**Function:** `rotate(polylines, degrees, origin = [0, 0])`
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be rotated.
@@ -184,7 +184,7 @@ rotate(polylines, degrees, [45, 0]);
 
 ### translate
 
-**Function:** `translate(polylines, [dx, dy], ?origin = [0, 0])`
+**Function:** `translate(polylines, [dx, dy], origin = [0, 0])`
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be translated.
@@ -239,7 +239,7 @@ originate(polylines);
 
 **Description:**
 Adjusts the density of points along the polylines according to a specified sample rate, effectively changing the resolution of the shape. This modification is applied directly to the provided array of polylines.
-The `resample` function is used to either increase or decrease the number of points along a polyline, based on the specified sample rate. This can be used to simplify complex shapes, prepare for smoothing operations, or achieve a more uniform appearance in rendered lines.
+The `resample` function is used to either increase or decrease the number of points along a polyline, based on the specified sample rate.
 
 **Example:**
 
