@@ -47,6 +47,7 @@ export class Turtle {
     const lastPath = this.path.at(-1);
     if (lastPath.length === 1) {
       lastPath[0] = [x, y];
+      this.position = [x, y];
       return this;
     }
 
