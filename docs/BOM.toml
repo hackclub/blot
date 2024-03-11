@@ -285,6 +285,7 @@ container = "free floating"
 
 [[items]]
 part = "20mm Stepper motor cables"
+exampleSource="https://www.amazon.com/STEPPERONLINE-Stepper-Extended-Connector-Machines/dp/B0991ZMPZY/ref=sr_1_6?dib=eyJ2IjoiMSJ9.nBzHIJIe9zbpBtF6qvScFKxiVt9UhDl3tXi8-U7LtEZ3rPaPZtK70kABHDpfeK-rAHymnIXRkUDPfh0MypKrCETB1T56kuw-XOHfGRJOTLD-IStoEmrXS_R3Oj8F-t5rpwYTKWr8ZcTMUu8whVZtK7yocoDunZJnTDou0QMDM9gK9O64IM6HF3-tYwpwFPnQ0WIcH_-kQJJkkgW-z3WZb9SyA4-GzInGS298SyF_TeU.nB4Yz5XApzuIzESRWhLGDvjZwrZ0wnYY7RM8thJTcMo&dib_tag=se&keywords=stepper%2Bmotor%2Bcable&qid=1710186192&sr=8-6&th=1"
 quantity = 2
 findLocalSupplier = true
 notes = "to connect steppers to control board; can't be too long or too short; around 24 AWG"
