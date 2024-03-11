@@ -76,7 +76,7 @@ export default function() {
         </div>
 
         <div class="flex flex-col md:w-1/3 justify-center items-center">
-          <img src="/assets/code2.webp" class="h-[20rem] w-4/5 rounded border border-gray-300 shadow-md object-cover"/>
+          <img src="/assets/all-parts.jpg" class="h-[20rem] w-4/5 rounded border border-gray-300 shadow-md object-cover"/>
 
           <div class="bg-[#e7e9fe] p-3 rounded my-5 flex items-center">
             <div class="text-2xl font-bold pr-5">3</div>

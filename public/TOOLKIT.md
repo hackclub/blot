@@ -11,7 +11,7 @@ drawLines(polylines: [number, number][][])
 
 ## Modify Polylines
 
-Take and modify polylines in place returns first passed polylines
+Take and modify polylines in place returns first passed polylines.
 
 ```js
 iteratePoints(polylines, (pt, t) => { ... }) // return pt to modify, "BREAK" to split, "REMOVE" to filter out point
@@ -20,7 +20,7 @@ rotate(polylines, degrees, ?origin: [ x, y ])
 translate(polylines, [dx, dy], ?origin: [ x, y ]) 
 originate(polylines) // moves center to [0, 0] 
 resample(polylines, sampleRate) 
-simplify(polylines, ...) 
+simplify(polylines, tolerance) 
 trim(polylines, tStart, tEnd)
 merge(polylines)  
 join(polylines0, ...morePolylines) 
@@ -137,7 +137,7 @@ Useful common patterns.
 
 ```js
 // common imports
-const { Turtle, cut, cover, copy, rotate, scale, translate, originate, iteratePoints, resample, join, getAngle, getNormal, getPoint, bounds, svgToPolylines, rand, setRandSeed, randInRange, noise, bezierEasing, nurbs } = toolkit;
+const { Turtle, cut, cover, copy, rotate, scale, translate, originate, iteratePoints, resample, join, getAngle, getNormal, getPoint, bounds, rand, setRandSeed, randInRange, noise, nurbs } = toolkit;
 
 // all imports
 const { Turtle, trim, merge, cut, cover, rotate, scale, translate, originate, iteratePoints, pointInside, resample, join, copy, union, difference, intersection, xor, getAngle, getPoint, getNormal, bounds, nurbs, catmullRom, svgToPolylines, rand, setRandSeed, randInRange, randIntInRange, noise, bezierEasing } = toolkit;
