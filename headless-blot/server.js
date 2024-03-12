@@ -64,16 +64,16 @@ const rpi = {
 }
 
 const webCam = {
-  id: '0',
-  baseUrl: () => `http://localhost:8080/${this.id}`,
+  baseUrl: 'http://127.0.0.1:8080/0',
   videoUrl: '',
   snapshotUrl: '',
   async command(str) {
-    await fetch(this.baseUrl + str)
+    console.log(this.baseUrl + str)
+    return await fetch(this.baseUrl + str)
   },
   async start() {
-    // TODO: test if webcam is connected
-    await this.command('/detection/connection');
+    const res = await this.command('/detection/connection');
+    console.log(res)
   },
   async startEvent() {
     await this.command('/detection/start')
@@ -92,7 +92,6 @@ async function runSync(code) {
 
 async function fetchSlackFile(fileUrl) {
   const response = await fetch(fileUrl, {
-    //TODO find right token
     headers: { 'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}` }
   });
   const body = await response.text()
@@ -154,10 +153,10 @@ async function onMessage(message) {
 
 (async () => {
   await app.start();
-  // await webCam.start();
+  await webCam.start();
   await rpi.setup();
   // await resetBlot();
-
+/*
   onMessage({
     files: [{
       url_private: 'https://files.slack.com/files-pri/T0266FRGM-F06PHTH3D40/test_pattern.js'
@@ -165,6 +164,7 @@ async function onMessage(message) {
   });
 
   console.log('⚡️ Bolt app is running!');
+*/
 })();
 
 app.message(async ({ message, say }) => {

@@ -3,6 +3,8 @@
 `yarn install`
 `sudo apt-get install motion`
 `sudo systemctl start motion`
+`sudo journalctl -f -u motion`
+`sudo mkdir /motion && sudo chown motion:motion /motion`
 
 ```
 .env requires:
