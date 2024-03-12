@@ -1,6 +1,6 @@
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-export async function runMachineHelper(haxidraw, turtles) {
+export async function runMachineHelper(haxidraw, turtles, cancelled=false) {
   await haxidraw.servo(1000)
   await delay(200)
   const polylines = turtles.map(x => x.path).flat()
