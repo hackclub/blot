@@ -1,6 +1,7 @@
 export function extractFrontmatter(markdown) {
   // Regular expression to match frontmatter: starts with ---, ends with ---, and captures content in-between
-  const frontmatterRegex = /^---\n([\s\S]+?)\n---/;
+  // with optional \r for Windows line endings
+  const frontmatterRegex = /^---\r?\n([\s\S]+?)\r?\n---/;
   const match = markdown.match(frontmatterRegex);
 
   if (!match) {

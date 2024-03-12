@@ -66,5 +66,5 @@ const cc = bounds(finalPolylines).cc;
 translate(finalPolylines, [width / 2, height / 2], cc);
 
 // draw it
-draw(finalPolylines);
+drawLines(finalPolylines);
 `.trim()
