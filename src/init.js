@@ -10,6 +10,9 @@ import { saveFile } from './saveFile.ts'
 import { useOnEditorChange } from './events.ts'
 import { post } from './post.js'
 
+import { loadCodeFromString } from './loadCodeFromString.js'
+import { removeQueryParam } from './removeQueryParam.js'
+
 export function init() {
   console.log('init')
 
@@ -24,6 +27,7 @@ export function init() {
   addLoadBackup()
   // load src if present after default loading behavior
   addSrcURLParam()
+  addShareIdURLParam();
 
   addBezierControl()
   addMachineControl()
@@ -104,8 +108,29 @@ export async function checkCurrentUser() {
 
   if (filesErr) return;
 
-  patchStore({ files: json.files });
+
+  patchStore({ 
+    files: json.files
+  });
 
 
 
+}
+
+async function addShareIdURLParam() {
+  const currentUrl = new URL(window.location.href)
+
+  const shareId = currentUrl.searchParams.get('shareId')
+
+  if (!shareId) return
+
+  try {
+    const response = await fetch(`/read-share-link?id=${shareId}`)
+    const content = await response.text()
+
+    loadCodeFromString(content)
+    removeQueryParam('shareId')
+  } catch (error) {
+    console.error('Error fetching content:', error)
+  }
 }

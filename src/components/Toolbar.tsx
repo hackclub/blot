@@ -15,6 +15,7 @@ import GitHubIcon from '../ui/GitHubIcon.tsx'
 import { saveFile } from '../saveFile.ts'
 // import * as prettier from 'prettier'
 import js_beautify from 'js-beautify'
+import { createShareLink } from "../createShareLink.js";
 
 const menuItemClasses = `
   relative
@@ -82,6 +83,9 @@ export default function Toolbar() {
             </div>
             <div class={menuItemClasses} onClick={openFromDisk}>
               open from disk
+            </div>
+            <div class={menuItemClasses} onClick={() => createShareLink(getCode())}>
+              create share link
             </div>
           </div>
 

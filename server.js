@@ -18,6 +18,9 @@ import saveFile from "./backend/api/saveFile.js";
 import getUser from "./backend/api/getUser.js";
 import submitCode from "./backend/api/submitCode.js";
 import getFiles from "./backend/api/getFiles.js";
+import createShareLink from "./backend/api/createShareLink.js";
+
+import { supabase } from "./backend/api/supabase.js";
 
 build({
   index: wrapHTML(`
@@ -66,6 +69,30 @@ app.post('/get-files', getFiles);
 app.post('/save-file', saveFile);
 app.post('/get-user', getUser);
 app.post('/submit-code', submitCode);
+app.post('/create-share-link', createShareLink);
+app.get('/read-share-link', async (req, res) => {
+  const { id } = req.query;
+
+  try {
+
+    console.log("check in database");
+    // check if email is in database
+    let { data: file, error: fileError } = await supabase
+      .from('share_link')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (fileError && fileError.message !== 'No rows found') {
+      res.send("no share link here");
+      return;
+    }
+
+    res.send(file.content);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
