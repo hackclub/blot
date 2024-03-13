@@ -88,3 +88,8 @@ body[data-theme='dark'] .helpContent hr {
 body[data-theme='dark'] .helpContent img {
   background-color: white;
 }
+
+.helpContent p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

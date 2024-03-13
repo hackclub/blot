@@ -71,9 +71,13 @@ export default function Help({
       if (confirm("Clear text editor?"))
         loadCodeFromString(`// check out the workshop tab to get started\n${defaultProgram}`);
 
-      const res = await fetch(
-        `https://raw.githubusercontent.com/hackclub/blot/main/guides/${workshop}.md`,
-      );
+      // TODO Oz added this hack 2024-03-13 to save his sanity while developing the
+      // getting started guide. But hey, wouldn't the sane thing be to serve from our own server
+      // anyway, ideally having already converted to html at compile time?
+      const path = workshop === 'start' ? '/getting-started/index.md' :
+        `https://raw.githubusercontent.com/hackclub/blot/main/guides/${workshop}.md`;
+
+      const res = await fetch(path);
       const data = await res.text();
 
       const result = parseMDFrontMatter(data);
