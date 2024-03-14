@@ -19,7 +19,7 @@ The "RPI-RP2" disk should show up on your computer if the above step was success
 > You'll need to have the latest version of the Arduino IDE installed. [Install it here.](https://www.arduino.cc/en/software/)
 
 1. Open the Arduino IDE.
-2. Add the Seeed Studio XIAO RP2040 board package to your IDE. Navigate to **Arduino IDE** > **Settings...** and add the following URLs to the **Additional Board Manager URLs** field.
+2. Add the Seeed Studio XIAO RP2040 board package to your IDE. Navigate to **Arduino IDE** > **Settings...** and add the following URLs to the **Additional Board Manager URLs** field. It's a single line, so you should combine the URLs with a comma.
 
 ```
 https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
