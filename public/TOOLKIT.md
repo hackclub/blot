@@ -96,6 +96,7 @@ const myTurtle = new tk.Turtle()
   .down() // sets drawing to true
   .copy()
   .apply(fn) // takes (turtle) => { }
+  .lines() // get copy of the Turtle's path
 
 // data
 const position = myTurtle.pos // [x: number, y: number]
