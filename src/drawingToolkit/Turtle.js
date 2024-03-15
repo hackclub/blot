@@ -97,8 +97,12 @@ export class Turtle {
     return this;
   } 
 
-  pos() {
+  get pos() {
     return this.position;
+  }
+
+  set pos(value) {
+    this.position = value;
   }
 
   // setHeading?
@@ -137,6 +141,15 @@ export class Turtle {
 
     return pls.filter(pl => pl.length > 1);
   }
+
+  // get lines() {
+  //   return this.path;
+  // }
+
+  // set lines(value) {
+  //   this.path = value;
+  // }
+
 
   copy() {
     const t = new Turtle()

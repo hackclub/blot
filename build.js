@@ -9,15 +9,6 @@ import inlineWorkerPlugin from 'esbuild-plugin-inline-worker';
 
 const OUTPUT_DIR = "./dist"; 
 
-if (!fs.existsSync(OUTPUT_DIR)) {
-    // If the folder does not exist, create it
-    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-    console.log(`Folder '${OUTPUT_DIR}' created.`);
-} else {
-    // If the folder exists, print a message
-    console.log(`Folder '${OUTPUT_DIR}' already exists.`);
-}
-
 // Function to bundle script sources found in HTML
 export const bundleHtmlScripts = async (name, htmlContent, outputPath = OUTPUT_DIR) => {
   const dom = new JSDOM(htmlContent);
@@ -72,6 +63,15 @@ export function deleteAllFiles(directory) {
 }
 
 export async function build(htmls) {
+
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    // If the folder does not exist, create it
+    fs.mkdirSync(OUTPUT_DIR);
+    console.log(`Folder '${OUTPUT_DIR}' created.`);
+  } else {
+    // If the folder exists, print a message
+    console.log(`Folder '${OUTPUT_DIR}' already exists.`);
+  }
 
 
   // console.time("DELETE")

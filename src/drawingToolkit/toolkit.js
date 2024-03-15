@@ -36,6 +36,9 @@ export const toolkit = {
   transform,
   bounds,
   Turtle,
+  // createTurtle() {
+  //   return new Turtle(...arguments);
+  // },
   cut,
   cover,
   pointInside: pointInPolylines,

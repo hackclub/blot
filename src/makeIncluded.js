@@ -67,6 +67,7 @@ export function makeIncluded() {
         },
         
         toolkit,
+        tk: toolkit,
         
         // createTurtle: (pt: Point) => new Turtle(pt),
         // Turtle,
