@@ -70,7 +70,14 @@ The functions below are available in the `toolkit` object.
 toolkit.scale(...)
 ```
 
-It's reccomended to destructure the functions from `toolkit`.
+`toolkit` is also available as the abbreviated `tk`. This is **the recommended way to reference the toolkit**.
+
+```js
+// like so
+tk.scale(...)
+```
+
+You can also destructure the functions from `toolkit`.
 
 ```js
 // all imports
@@ -113,7 +120,7 @@ Modifications are applied after all points are iterated through.
 
 ```js
 const polylines = [[[0, 0], [10, 10], [20, 20]]];
-const modifiedPolylines = iteratePoints(polylines, (pt, t) => {
+const modifiedPolylines = tk.iteratePoints(polylines, (pt, t) => {
   const [x, y] = pt;
   // Move each point up by 5mm
   return [x, y + 5];
@@ -148,13 +155,13 @@ const polylines = [
 ];
 
 // Scale uniformly by a factor of 2
-const uniformlyScaled = scale(polylines, 2);
+const uniformlyScaled = tk.scale(polylines, 2);
 
 // Scale non-uniformly (x by 2, y by 3)
-const nonUniformlyScaled = scale(polylines, [2, 3]);
+const nonUniformlyScaled = tk.scale(polylines, [2, 3]);
 
 // Scale uniformly around a custom origin (5, 5)
-const customOriginScaled = scale(polylines, 2, [5, 5]);
+const customOriginScaled = tk.scale(polylines, 2, [5, 5]);
 ```
 
 ### rotate
@@ -178,8 +185,8 @@ Rotates the provided polylines around a specified origin point by a given number
 const polylines = [[[10, 10], [20, 20], [30, 10]]];
 const degrees = 45; // Rotate 45 degrees clockwise
 
-rotate(polylines, degrees);
-rotate(polylines, degrees, [45, 0]);
+tk.rotate(polylines, degrees);
+tk.rotate(polylines, degrees, [45, 0]);
 ```
 
 ### translate
@@ -202,7 +209,7 @@ The `translate` function shifts the position of the given polylines without alte
 
 ```js
 const polylines = [[[0, 0], [10, 10], [20, 5]]];
-translate(polylines, [5, 10]);
+tk.translate(polylines, [5, 10]);
 ```
 
 ### originate
@@ -224,7 +231,7 @@ The `originate` function recalculates the bounding box of the given polylines an
 
 ```js
 const polylines = [[[10, 10], [20, 20], [30, 10]]];
-originate(polylines);
+tk.originate(polylines);
 ```
 
 ### resample
@@ -245,7 +252,7 @@ The `resample` function is used to either increase or decrease the number of poi
 
 ```js
 const polylines = [[[0, 0], [10, 10], [20, 5], [30, 10]]];
-resample(polylines, 5);
+tk.resample(polylines, 5);
 ```
 
 ### simplify
@@ -268,7 +275,7 @@ The `simplify` function is particularly useful for reducing the complexity of po
 
 ```js
 const polylines = [[[0, 0], [5, 5], [10, 10], [15, 15], [20, 20]]];
-simplify(polylines, 1);
+tk.simplify(polylines, 1);
 ```
 
 ### trim
@@ -291,7 +298,7 @@ The `trim` function reduces the length of each polyline according to the specifi
 
 ```js
 const polylines = [[[0, 0], [10, 10], [20, 20]]];
-trim(polylines, 0.25, 0.75);
+tk.trim(polylines, 0.25, 0.75);
 ```
 
 ### merge
@@ -314,7 +321,7 @@ The `merge` function combines several polyline paths into one continuous path, e
 const polyline1 = [[0, 0], [10, 10]];
 const polyline2 = [[10, 10], [20, 20]];
 const polylines = [polyline1, polyline2];
-merge(polylines);
+tk.merge(polylines);
 ```
 
 ### join
@@ -337,7 +344,7 @@ The `join` function is used to concatenate multiple arrays of polylines into a s
 ```js
 const polylines1 = [[[0, 0], [10, 10]]];
 const polylines2 = [[[20, 20], [30, 30]]];
-join(polylines1, polylines2);
+tk.join(polylines1, polylines2);
 ```
 
 ### copy
@@ -359,7 +366,7 @@ The `copy` function is useful when you need to duplicate polylines without alter
 
 ```js
 const originalPolylines = [[[0, 0], [10, 10]]];
-const copiedPolylines = copy(originalPolylines);
+const copiedPolylines = tk.copy(originalPolylines);
 ```
 
 ### cut
@@ -381,7 +388,7 @@ Removes all points of the `basePolylines` outside of the `cuttingPolylines`.
 ```js
 const polylinesToCut = [[[0, 0], [10, 10], [20, 0]]];
 const cuttingPolylines = [[[5, 5], [15, 5]]];
-cut(polylinesToCut, cuttingPolylines);
+tk.cut(polylinesToCut, cuttingPolylines);
 ```
 
 ### cover
@@ -403,7 +410,7 @@ Removes all points of the `basePolylines` inside of the `coveringPolylines`.
 ```js
 const basePolylines = [[[0, 0], [10, 10], [20, 0]]];
 const coveringPolylines = [[[5, -5], [15, 15]]];
-cover(basePolylines, coveringPolylines);
+tk.cover(basePolylines, coveringPolylines);
 ```
 
 ### union
@@ -425,7 +432,7 @@ Takes the boolean union of both sets of polylines.
 ```js
 const subjectPolylines = [[[0, 0], [10, 10], [20, 0]]];
 const clippingPolylines = [[[10, 10], [30, 10], [20, -10]]];
-union(subjectPolylines, clippingPolylines);
+tk.union(subjectPolylines, clippingPolylines);
 ```
 
 ### difference
@@ -447,7 +454,7 @@ Subtracts the `clippingPolylines` from the `subjectPolylines`.
 ```js
 const subjectPolylines = [[[0, 0], [20, 0], [10, 20]]];
 const clippingPolylines = [[[0, 10], [20, 10], [10, -10]]];
-difference(subjectPolylines, clippingPolylines);
+tk.difference(subjectPolylines, clippingPolylines);
 ```
 
 ### intersection
@@ -469,7 +476,7 @@ Modifies the `subjectPolylines` to only the part that intersects with the `clipp
 ```js
 const subjectPolylines = [[[0, 0], [10, 10], [20, 0]]];
 const clippingPolylines = [[[0, 10], [10, 0], [20, 10]]];
-intersection(subjectPolylines, clippingPolylines);
+tk.intersection(subjectPolylines, clippingPolylines);
 ```
 
 ### xor
@@ -491,7 +498,7 @@ Performs an exclusive or operation on two sets of polylines, leaving only the pa
 ```js
 const polylines0 = [[[0, 0], [10, 10], [20, 0]]];
 const polylines1 = [[[0, 10], [10, 0], [20, 10]]];
-xor(polylines0, polylines1);
+tk.xor(polylines0, polylines1);
 ```
 
 ## Get Data From Polylines
@@ -592,7 +599,7 @@ lb--cb--rb
 
 ```js
 const polylines = [[[0, 0], [10, 10], [20, 0]]];
-const bounds = bounds(polylines);
+const boundingBox = tk.bounds(polylines);
 /*
 returns { 
   xMin, xMax, 
@@ -604,7 +611,7 @@ returns {
 }
 */
 
-const center = bounds.cc;
+const center = boundingBox.cc;
 ```
 
 ## Generate Polylines
@@ -628,6 +635,7 @@ A `Turtle` class represents a cursor that moves around a canvas to draw shapes. 
 - `down()` Lowers the pen so that moving the turtle draws lines.
 - `copy()` Creates a copy of the turtle's current state.
 - `apply(fn)` Takes a function that receives the turtle as an argument and applies custom operations.
+- `lines()` Returns a copy of the Turtle's path.
 
 **Properties:**
 
@@ -639,7 +647,7 @@ A `Turtle` class represents a cursor that moves around a canvas to draw shapes. 
 **Example:**
 
 ```js
-const myTurtle = new Turtle()
+const myTurtle = new tk.Turtle()
   .down()
   .forward(100)
   .right(90)
@@ -665,7 +673,7 @@ Generates a Catmull-Rom spline, which is a type of interpolating curve, passing 
 **Example:**
 
 ```js
-catmullRom([[0, 0], [10, 15], [20, 5]], 100); // Returns a polyline with 100 points forming a smooth curve through the specified points
+tk.catmullRom([[0, 0], [10, 15], [20, 5]], 100); // Returns a polyline with 100 points forming a smooth curve through the specified points
 ```
 
 ### nurbs(points, ops = { steps: 100, degree: 2})
@@ -687,7 +695,7 @@ Generates a Non-Uniform Rational B-Spline (NURBS) curve, which provides great fl
 **Example:**
 
 ```js
-nurbs([[0, 0], [10, 15], [20, 5]], { steps: 50, degree: 3 }); // Returns a polyline forming a NURBS curve with specified degree and steps
+tk.nurbs([[0, 0], [10, 15], [20, 5]], { steps: 50, degree: 3 }); // Returns a polyline forming a NURBS curve with specified degree and steps
 ```
 
 ### svgToPolylines(svg: string)
@@ -706,7 +714,7 @@ Converts SVG path data into an array of polylines.
 **Example:**
 
 ```js
-svgToPolylines(`<svg><path d="M0,0 L10,10 Q15,15 20,5" /></svg>`); // Returns an array of polylines representing the SVG path
+tk.svgToPolylines(`<svg><path d="M0,0 L10,10 Q15,15 20,5" /></svg>`); // Returns an array of polylines representing the SVG path
 ```
 
 ## Easing Curves
@@ -732,7 +740,7 @@ The returned function maps an input X (ranging from 0 to 1) to a Y value on the 
 **Example:**
 
 ```js
-const ease = bezierEasing(0, [0.25, 0.1], [0.25, 1], 1);
+const ease = tk.bezierEasing(0, [0.25, 0.1], [0.25, 1], 1);
 const y = ease(0.5); // Returns the Y value at X=0.5 on the Bezier curve
 ```
 
@@ -751,7 +759,7 @@ Generates a random floating-point number between 0 (inclusive) and 1 (inclusive)
 **Example:**
 
 ```js
-rand(); // Might return 0.123456789
+tk.rand(); // Might return 0.123456789
 ```
 
 ### randInRange(min: number, max: number)
@@ -771,7 +779,7 @@ Generates a random floating-point number within a specified range. The function 
 **Example:**
 
 ```js
-randInRange(10, 20); // Might return 15.6789
+tk.randInRange(10, 20); // Might return 15.6789
 ```
 
 ### randIntInRange(min: number, max: number)
@@ -791,7 +799,7 @@ Generates a random integer within a specified range. This function is similar to
 **Example:**
 
 ```js
-randIntInRange(1, 10); // Might return 7
+tk.randIntInRange(1, 10); // Might return 7
 ```
 
 ### setRandSeed(seed: number)
@@ -810,7 +818,7 @@ Initializes the random number generator with a specific seed. This function is u
 **Example:**
 
 ```js
-setRandSeed(12345);
+tk.setRandSeed(12345);
 ```
 
 ### noise(input, options)
@@ -832,9 +840,9 @@ Generates Perlin noise or simplex noise based on the input coordinates and confi
 **Example:**
 
 ```js
-noise(0.5);
-noise([0.5, 2.4]);
-noise([0.5, 2.4, 3]);
-noise(0.5, { octaves: 4, falloff: 50 }); // Might return 0.3425
-noise([0.5, 1.2], { octaves: 3, falloff: 75 }); // Might return -0.5687
+tk.noise(0.5);
+tk.noise([0.5, 2.4]);
+tk.noise([0.5, 2.4, 3]);
+tk.noise(0.5, { octaves: 4, falloff: 50 }); // Might return 0.3425
+tk.noise([0.5, 1.2], { octaves: 3, falloff: 75 }); // Might return -0.5687
 ```

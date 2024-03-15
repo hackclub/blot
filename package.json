@@ -13,7 +13,8 @@
     ],
     "ext": "ts js jsx tsx md",
     "ignore": [
-      "dist"
+      "dist",
+      "dist/"
     ]
   },
   "dependencies": {
