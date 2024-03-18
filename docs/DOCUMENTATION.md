@@ -585,7 +585,7 @@ const center = boundingBox.cc;
 
 A collection of functions and classes for creating polylines.
 
-### Turtle Class
+### Turtle
 
 A `Turtle` class represents a cursor that moves around a canvas to draw shapes. It is inspired by the Logo programming language and can be used to create intricate designs and patterns programmatically.
 
