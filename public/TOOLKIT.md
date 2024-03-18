@@ -1,6 +1,6 @@
 # The Toolkit  
 
-> This is a quick reference sheet. For <a href="/documentation">full documentation refer to this</a>.
+> This is a quick reference sheet. For <a href="/docs">full documentation refer to this</a>.
 
 There are three names that provide functionality available in the Blot editor:
 `setDocDimensions`, `drawLines`, and `toolkit` (which can also be referenced as `tk`).
@@ -112,14 +112,6 @@ tk.nurbs(points, ?ops = { steps: 100, degree: 2}) // returns polyline [number, n
 
 ```js
 tk.svgToPolylines(svg: string) // returns array of polylines [number, number][][]
-```
-
-## Easing Curves
-
-These functions are available in the `toolkit` or `tk` object.
-
-```js
-tk.bezierEasing(startY, controlPt0, controlPt1, endY); // returns function which takes x (0 to 1) and returns y value
 ```
 
 ## Randomness

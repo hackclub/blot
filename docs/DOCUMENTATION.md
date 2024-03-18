@@ -8,9 +8,7 @@ This is the drawing library available in the Blot editor.
 
 These functions set properties of the Blot drawing environment.
 
-### setDocDimensions
-
-**Function:** `setDocDimensions(width, height)`
+### setDocDimensions(width, height)
 
 **Parameters:**
 - `width` (number): The width of the document.
@@ -32,9 +30,7 @@ The units are millimeters (mm).
 setDocDimensions(800, 600);
 ```
 
-### drawLines
-
-**Function:** `drawLines(polylines, options = { fill, stroke, width })`
+### drawLines(polylines, options = { fill, stroke, width })
 
 **Parameters:**
 - `polylines` ([number, number][][]): A list of polylines
@@ -81,7 +77,7 @@ You can also destructure the functions from `toolkit`.
 
 ```js
 // all imports
-const { Turtle, trim, merge, cut, cover, rotate, scale, translate, originate, iteratePoints, pointInside, resample, join, copy, union, difference, intersection, xor, getAngle, getPoint, getNormal, bounds, nurbs, catmullRom, svgToPolylines, rand, setRandSeed, randInRange, randIntInRange, noise, bezierEasing } = toolkit;
+const { Turtle, trim, merge, cut, cover, rotate, scale, translate, originate, iteratePoints, pointInside, resample, join, copy, union, difference, intersection, xor, getAngle, getPoint, getNormal, bounds, nurbs, catmullRom, svgToPolylines, rand, setRandSeed, randInRange, randIntInRange, noise } = toolkit;
 ```
 
 ```js
@@ -93,9 +89,7 @@ const { Turtle, cut, cover, copy, rotate, scale, translate, originate, iteratePo
 
 These functions modify a polyline that is passed as a first argument.
 
-### iteratePoints
-
-**Function:** `iteratePoints(polylines, callback)`
+### iteratePoints(polylines, callback)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to iterate over.
@@ -125,11 +119,24 @@ const modifiedPolylines = tk.iteratePoints(polylines, (pt, t) => {
   // Move each point up by 5mm
   return [x, y + 5];
 });
+
+// or 
+
+const modifiedPolylines2 = tk.iteratePoints(polylines, (pt, t) => {
+  const [x, y] = pt;
+
+  if (t < .2) {
+    return "REMOVE";
+  } else if (.5 > rand()) {
+    return "BREAK";
+  }
+
+  // Move each point up by 5mm
+  return [x, y + 5];
+});
 ```
 
-### scale
-
-**Function:** `scale(polylines, scale, origin = [0, 0])`
+### scale(polylines, scale, origin = [0, 0])
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be scaled.
@@ -164,9 +171,7 @@ const nonUniformlyScaled = tk.scale(polylines, [2, 3]);
 const customOriginScaled = tk.scale(polylines, 2, [5, 5]);
 ```
 
-### rotate
-
-**Function:** `rotate(polylines, degrees, origin = [0, 0])`
+### rotate(polylines, degrees, origin = [0, 0])
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be rotated.
@@ -189,9 +194,7 @@ tk.rotate(polylines, degrees);
 tk.rotate(polylines, degrees, [45, 0]);
 ```
 
-### translate
-
-**Function:** `translate(polylines, [dx, dy], origin = [0, 0])`
+### translate(polylines, [dx, dy], origin = [0, 0])
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be translated.
@@ -212,9 +215,7 @@ const polylines = [[[0, 0], [10, 10], [20, 5]]];
 tk.translate(polylines, [5, 10]);
 ```
 
-### originate
-
-**Function:** `originate(polylines)`
+### originate(polylines)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be centered.
@@ -234,9 +235,7 @@ const polylines = [[[10, 10], [20, 20], [30, 10]]];
 tk.originate(polylines);
 ```
 
-### resample
-
-**Function:** `resample(polylines, sampleRate)`
+### resample(polylines, sampleRate)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be resampled.
@@ -255,9 +254,7 @@ const polylines = [[[0, 0], [10, 10], [20, 5], [30, 10]]];
 tk.resample(polylines, 5);
 ```
 
-### simplify
-
-**Function:** `simplify(polylines, tolerance, highQuality = false)`
+### simplify(polylines, tolerance, highQuality = false)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be simplified.
@@ -278,9 +275,7 @@ const polylines = [[[0, 0], [5, 5], [10, 10], [15, 15], [20, 20]]];
 tk.simplify(polylines, 1);
 ```
 
-### trim
-
-**Function:** `trim(polylines, tStart, tEnd)`
+### trim(polylines, tStart, tEnd)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be trimmed.
@@ -301,9 +296,7 @@ const polylines = [[[0, 0], [10, 10], [20, 20]]];
 tk.trim(polylines, 0.25, 0.75);
 ```
 
-### merge
-
-**Function:** `merge(polylines)`
+### merge(polylines)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be merged.
@@ -324,9 +317,7 @@ const polylines = [polyline1, polyline2];
 tk.merge(polylines);
 ```
 
-### join
-
-**Function:** `join(polylines0, ...morePolylines)`
+### join(polylines0, ...morePolylines)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The primary array of polylines to which others will be joined.
@@ -347,9 +338,7 @@ const polylines2 = [[[20, 20], [30, 30]]];
 tk.join(polylines1, polylines2);
 ```
 
-### copy
-
-**Function:** `copy(polylines)`
+### copy(polylines)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be copied.
@@ -369,9 +358,7 @@ const originalPolylines = [[[0, 0], [10, 10]]];
 const copiedPolylines = tk.copy(originalPolylines);
 ```
 
-### cut
-
-**Function:** `cut(polylines0, polylines1)`
+### cut(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The primary array of polylines to be cut.
@@ -391,9 +378,7 @@ const cuttingPolylines = [[[5, 5], [15, 5]]];
 tk.cut(polylinesToCut, cuttingPolylines);
 ```
 
-### cover
-
-**Function:** `cover(polylines0, polylines1)`
+### cover(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The primary array of polylines to be covered.
@@ -413,9 +398,7 @@ const coveringPolylines = [[[5, -5], [15, 15]]];
 tk.cover(basePolylines, coveringPolylines);
 ```
 
-### union
-
-**Function:** `union(polylines0, polylines1)`
+### union(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The first array of polylines.
@@ -435,9 +418,7 @@ const clippingPolylines = [[[10, 10], [30, 10], [20, -10]]];
 tk.union(subjectPolylines, clippingPolylines);
 ```
 
-### difference
-
-**Function:** `difference(polylines0, polylines1)`
+### difference(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The primary array of polylines to be modified.
@@ -457,9 +438,7 @@ const clippingPolylines = [[[0, 10], [20, 10], [10, -10]]];
 tk.difference(subjectPolylines, clippingPolylines);
 ```
 
-### intersection
-
-**Function:** `intersection(polylines0, polylines1)`
+### intersection(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The first array of polylines.
@@ -479,9 +458,7 @@ const clippingPolylines = [[[0, 10], [10, 0], [20, 10]]];
 tk.intersection(subjectPolylines, clippingPolylines);
 ```
 
-### xor
-
-**Function:** `xor(polylines0, polylines1)`
+### xor(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The first array of polylines.
@@ -506,9 +483,7 @@ tk.xor(polylines0, polylines1);
 These functions take polylines and return other values. 
 They do not modify the polylines.
 
-### getAngle
-
-**Function:** `getAngle(polylines, t: [0 to 1])`
+### getAngle(polylines, t: [0 to 1])
 
 **Parameters:**
 - `polylines` ([number, number][][]): An array of polylines representing a shape.
@@ -521,9 +496,7 @@ They do not modify the polylines.
 Calculates the angle in degrees at the specified point along the polylines. 
 This function determines the angle of the tangent line to the shape at the given position `t`.
 
-### getPoint
-
-**Function:** `getPoint(polylines, t: [0 to 1])`
+### getPoint(polylines, t: [0 to 1])
 
 **Parameters:**
 - `polylines` ([number, number][][]): An array of polylines representing a shape.
@@ -535,9 +508,7 @@ This function determines the angle of the tangent line to the shape at the given
 
 Returns the coordinates of the point at the specified position `t` along the polylines. 
 
-### getNormal
-
-**Function:** `getNormal(polylines, t: [0 to 1])`
+### getNormal(polylines, t: [0 to 1])
 
 **Parameters:**
 - `polylines` ([number, number][][]): An array of polylines representing a shape.
@@ -550,9 +521,7 @@ Returns the coordinates of the point at the specified position `t` along the pol
 Calculates the normal vector at the specified point along the polylines. 
 The normal vector is a vector that is perpendicular to the tangent line at the given position `t`. 
 
-### pointInside
-
-**Function:** `pointInside(polylines, pt)`
+### pointInside(polylines, pt)
 
 **Parameters:**
 - `polylines` ([number, number][][]): An array of polylines representing a shape.
@@ -567,9 +536,7 @@ The normal vector is a vector that is perpendicular to the tangent line at the g
 Determines whether a point lies inside the provided shape defined by the polylines. 
 This function is useful for collision detection, hit testing, or determining containment of points within shapes.
 
-### bounds
-
-**Function:** `bounds(polylines)`
+### bounds(polylines)
 
 **Parameters:**
 - `polylines` ([number, number][][]): An array of polylines representing a shape.
@@ -658,8 +625,6 @@ const path = myTurtle.path; // Gets the path drawn by the turtle, use this to ge
 
 ### catmullRom(points, steps = 1000)
 
-**Function:** `catmullRom(points, steps)`
-
 **Parameters:**
 - `points` ([number, number][]): An array of points through which the curve should pass.
 - `steps` (number, optional): The number of steps to divide the curve into. Defaults to 1000.
@@ -677,8 +642,6 @@ tk.catmullRom([[0, 0], [10, 15], [20, 5]], 100); // Returns a polyline with 100 
 ```
 
 ### nurbs(points, ops = { steps: 100, degree: 2})
-
-**Function:** `nurbs(points, ops)`
 
 **Parameters:**
 - `points` ([number, number][]): An array of control points for the NURBS curve.
@@ -700,8 +663,6 @@ tk.nurbs([[0, 0], [10, 15], [20, 5]], { steps: 50, degree: 3 }); // Returns a po
 
 ### svgToPolylines(svg: string)
 
-**Function:** `svgToPolylines(svg)`
-
 **Parameters:**
 - `svg` (string): An SVG path string to be converted into polylines.
 
@@ -717,38 +678,9 @@ Converts SVG path data into an array of polylines.
 tk.svgToPolylines(`<svg><path d="M0,0 L10,10 Q15,15 20,5" /></svg>`); // Returns an array of polylines representing the SVG path
 ```
 
-## Easing Curves
-
-### bezierEasing(startY, controlPt0, controlPt1, endY)
-
-**Function:** `bezierEasing(startY, controlPt0, controlPt1, endY)`
-
-**Parameters:**
-- `startY` (number): The starting Y value of the Bezier curve.
-- `controlPt0` ([number, number]): The first control point as a 2D coordinate `[x, y]`, influencing the curve's shape.
-- `controlPt1` ([number, number]): The second control point as a 2D coordinate `[x, y]`, influencing the curve's shape.
-- `endY` (number): The ending Y value of the Bezier curve.
-
-**Returns:** A function that, when given an X value between 0 and 1, returns the corresponding Y value on the Bezier curve defined by the input parameters.
-
-**Description:** 
-
-Creates a Bezier easing function based on the provided start and end Y values and two control points. 
-This function is useful for generating smooth, customizable easing curves for interpolations between two values. 
-The returned function maps an input X (ranging from 0 to 1) to a Y value on the Bezier curve.
-
-**Example:**
-
-```js
-const ease = tk.bezierEasing(0, [0.25, 0.1], [0.25, 1], 1);
-const y = ease(0.5); // Returns the Y value at X=0.5 on the Bezier curve
-```
-
 ## Randomness
 
 ### rand()
-
-**Function:** `rand()`
 
 **Returns:** A random number between 0 and 1.
 
@@ -762,9 +694,7 @@ Generates a random floating-point number between 0 (inclusive) and 1 (inclusive)
 tk.rand(); // Might return 0.123456789
 ```
 
-### randInRange(min: number, max: number)
-
-**Function:** `randInRange(min, max)`
+### randInRange(min, max)
 
 **Parameters:**
 - `min` (number): The minimum value (inclusive).
@@ -782,9 +712,7 @@ Generates a random floating-point number within a specified range. The function 
 tk.randInRange(10, 20); // Might return 15.6789
 ```
 
-### randIntInRange(min: number, max: number)
-
-**Function:** `randIntInRange(min, max)`
+### randIntInRange(min, max)
 
 **Parameters:**
 - `min` (number): The minimum value (inclusive).
@@ -802,9 +730,7 @@ Generates a random integer within a specified range. This function is similar to
 tk.randIntInRange(1, 10); // Might return 7
 ```
 
-### setRandSeed(seed: number)
-
-**Function:** `setRandSeed(seed)`
+### setRandSeed(seed)
 
 **Parameters:**
 - `seed` (number): A seed value to initialize the random number generator.
@@ -821,9 +747,7 @@ Initializes the random number generator with a specific seed. This function is u
 tk.setRandSeed(12345);
 ```
 
-### noise(input, options)
-
-**Function:** `noise(input, { octaves, falloff })`
+### noise(input, options = { octaves, falloff })
 
 **Parameters:**
 - `input` (number | [number, ?number, ?number]): A single number or an array representing the coordinates (x, [y], [z]) in n-dimensional noise space.
@@ -846,3 +770,32 @@ tk.noise([0.5, 2.4, 3]);
 tk.noise(0.5, { octaves: 4, falloff: 50 }); // Might return 0.3425
 tk.noise([0.5, 1.2], { octaves: 3, falloff: 75 }); // Might return -0.5687
 ```
+
+<!--
+  
+## Easing Curves
+
+### bezierEasing(startY, controlPt0, controlPt1, endY)
+
+**Parameters:**
+- `startY` (number): The starting Y value of the Bezier curve.
+- `controlPt0` ([number, number]): The first control point as a 2D coordinate `[x, y]`, influencing the curve's shape.
+- `controlPt1` ([number, number]): The second control point as a 2D coordinate `[x, y]`, influencing the curve's shape.
+- `endY` (number): The ending Y value of the Bezier curve.
+
+**Returns:** A function that, when given an X value between 0 and 1, returns the corresponding Y value on the Bezier curve defined by the input parameters.
+
+**Description:** 
+
+Creates a Bezier easing function based on the provided start and end Y values and two control points. 
+This function is useful for generating smooth, customizable easing curves for interpolations between two values. 
+The returned function maps an input X (ranging from 0 to 1) to a Y value on the Bezier curve.
+
+**Example:**
+
+```js
+const ease = tk.bezierEasing(0, [0.25, 0.1], [0.25, 1], 1);
+const y = ease(0.5); // Returns the Y value at X=0.5 on the Bezier curve
+```
+
+-->

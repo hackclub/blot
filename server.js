@@ -12,6 +12,7 @@ import navBar from "./backend/pages/navBar.js";
 import guides from "./backend/pages/guides.js";
 import gallery from "./backend/pages/gallery.js";
 import landing from "./backend/pages/landing.js";
+import docs from "./backend/pages/docs.js";
 
 import checkSignIn from "./backend/api/checkSignIn.js";
 import saveFile from "./backend/api/saveFile.js";
@@ -26,6 +27,10 @@ build({
   index: wrapHTML(`
     ${navBar(true)}
     ${landing()}
+  `),
+  docs: wrapHTML(`
+    ${navBar()}
+    ${docs()}
   `),
   editor: wrapHTML(`
     <!-- TODO: add automatically when building -->
