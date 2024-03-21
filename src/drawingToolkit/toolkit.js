@@ -52,7 +52,7 @@ export const toolkit = {
     const steps = ops.steps ?? 100;
     const boundary = isClosed(points) ? "closed" : "clamped";
     
-    if (boundary === "closed") {
+    if (boundary === "closed" && points.length > 3) {
       points.pop();
     };
 
