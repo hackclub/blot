@@ -1,7 +1,7 @@
 import 'dotenv';
 import slackbolt from '@slack/bolt';
 const { App } = slackbolt;
-import 'fs';
+import { createReadStream } from 'fs';
 
 import rpigpio from 'rpi-gpio';
 const { promise: gpio } = rpigpio;
@@ -13,6 +13,8 @@ import { SerialPort, SerialPortMock } from 'serialport';
 import { createNodeSerialBuffer } from "../src/haxidraw/createNodeSerialBuffer.js";
 import { runMachineHelper } from "../src/runMachineHelper.js";
 import { createHaxidraw } from "../src/haxidraw/createHaxidraw.js";
+
+let running = false;
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -27,7 +29,11 @@ const config = {
   MOCK_SERIAL: true,
   SERIAL_PATH: '/dev/tty-usbserial1',
   BAUD: 9600,
-  BOARD_PIN: 7
+  BOARD_PIN: 7,
+  MOTION_URL: 'http://127.0.0.1:8081/0',
+  // MOTION_URL: 'http://192.168.100.227:8081/0/',
+  MOTION_FILEPATH: '/motion'
+  // MOTION_FILEPATH: '/Users/derrek/Downloads'
 }
 
 let port;
@@ -53,34 +59,35 @@ const resetTurtles = await runSync(`
 
 const rpi = {
   pin: config.BOARD_PIN,
-  async setup() {
+  setup() {
     if (!config.IS_RPI) return;
-    await gpio.setup(this.pin, gpio.DIR_OUT);
+    return gpio.setup(this.pin, gpio.DIR_OUT);
   },
-  async write(val) {
+  write(val) {
     if (!config.IS_RPI) return;
-    await gpio.write(this.pin, val);
+    return gpio.write(this.pin, val);
   }
 }
 
 const webCam = {
-  baseUrl: 'http://127.0.0.1:8080/0',
-  videoUrl: '',
-  snapshotUrl: '',
-  async command(str) {
-    console.log(this.baseUrl + str)
-    return await fetch(this.baseUrl + str)
+  baseUrl: config.MOTION_URL,
+  filePath: config.MOTION_FILEPATH,
+  command(str) {
+    return fetch(this.baseUrl + str);
   },
-  async start() {
-    const res = await this.command('/detection/connection');
-    console.log(res)
+  start() {
+    return this.command('/detection/connection');
   },
-  async startEvent() {
-    await this.command('/detection/start')
+  startEvent() {
+    return this.command('/action/eventstart');
   },
   async endEvent() {
-    await this.command('/detection/end')
-    await this.command('/detection/snapshot')
+    const datetime = new Date().toISOString()
+    await this.command('/config/set?movie_filename=' + datetime)
+    await this.command('/config/set?snapshot_filename=' + datetime)
+    await this.command('/action/eventend');
+    await this.command('/action/snapshot');
+    return datetime;
   }
 };
 
@@ -94,27 +101,26 @@ async function fetchSlackFile(fileUrl) {
   const response = await fetch(fileUrl, {
     headers: { 'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}` }
   });
-  const body = await response.text()
-
+  const body = await response.text();
   return body;
 }
 
-const sendSlackFile = async (channelId, fileName, comment = '') => (
-  await app.client.files.upload({
+const sendSlackFile = (channelId, fileName, comment = '') => (
+  app.client.files.upload({
     channels: channelId,
     initial_comment: comment,
-    file: fs.createReadStream(fileName)
+    file: createReadStream(fileName)
   })
 )
 
-const runBlot = async (turtles) => await runMachineHelper(haxidraw, turtles);
+const runMachine = (turtles) => runMachineHelper(haxidraw, turtles);
 
-async function resetBlot() {
-  await runBlot(resetTurtles);
+async function resetMachine() {
+  await runMachine(resetTurtles);
   await clearBoard();
 }
 
-const sleep = ms => (
+const sleep = (ms) => (
   new Promise((resolve) => {
     setTimeout(resolve, ms);
   })
@@ -127,55 +133,53 @@ async function clearBoard() {
 }
 
 async function onMessage(message) {
-  try {
-    if (!message.files) return;
+  if (!message.files) return;
 
-    const fileUrl = message.files[0].url_private;
-    const code = await fetchSlackFile(fileUrl);
-    console.log(code);
+  const fileUrl = message.files[0].url_private;
+  const code = await fetchSlackFile(fileUrl);
 
-    const turtles = await runSync(code);
+  const turtles = await runSync(code);
 
-    // await webCam.startEvent();
-    await runBlot(turtles);
-    // await webCam.endEvent();
+  await webCam.startEvent();
+  // await runMachine(turtles);
+  let filename = await webCam.endEvent();
 
-    await sendSlackFile(message.channel, webCam.videoUrl);
-    await sendSlackFile(message.channel, webCam.snapshotUrl);
-  }
-  catch (error) {
-    console.log(error);
-  }
-  finally {
-    // await resetBlot();
-  }
+  filename = webCam.filePath + '/' + filename;
+  sendSlackFile(message.channel, filename + '.mp4');
+  sendSlackFile(message.channel, filename + '.jpg');
 }
 
 (async () => {
   await app.start();
   await webCam.start();
   await rpi.setup();
-  // await resetBlot();
-/*
-  onMessage({
-    files: [{
-      url_private: 'https://files.slack.com/files-pri/T0266FRGM-F06PHTH3D40/test_pattern.js'
-    }]
-  });
 
+  await resetMachine();
+
+  /*
+    onMessage({
+      files: [{
+        url_private: 'https://files.slack.com/files-pri/T0266FRGM-F06PHTH3D40/test_pattern.js'
+      }]
+    });
+  */
   console.log('⚡️ Bolt app is running!');
-*/
 })();
 
 app.message(async ({ message, say }) => {
   try {
-    onMessage(message);
+    if (running) {
+      throw new Error("The blot is currently drawing, please try again later.")
+    }
+    running = true;
+    await onMessage(message);
+    running = false;
   }
   catch (error) {
-    say(error);
+    say(error.message);
   }
   finally {
-    await resetBlot();
+    resetMachine();
   }
 })
 
