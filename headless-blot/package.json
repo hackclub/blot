@@ -17,10 +17,13 @@
     ]
   },
   "dependencies": {
+    "@slack/bolt": "^3.17.1",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "polyclip-ts": "^0.16.3",
-    "polygon-clipping": "^0.15.7"
+    "polygon-clipping": "^0.15.7",
+    "rpi-gpio": "^2.1.7",
+    "serialport": "^12.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.3",
