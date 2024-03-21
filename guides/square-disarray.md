@@ -205,7 +205,7 @@ Scale the randomness with the x location.
 <summary>Hint</summary>
   
 ```js
-tk.translate(square, [(randInRange(-1, 1) * i) / 6, (randInRange(-1, 1) * i) / 6])
+tk.translate(square, [(tk.randInRange(-1, 1) * i) / 6, (tk.randInRange(-1, 1) * i) / 6])
 ```
 
 </details>
@@ -218,7 +218,7 @@ Now rotate each square in a similar manner.
 <summary>Hint</summary>
 
 ```js
-tk.rotate(square, randInRange(-1, 1) * 2 * i)
+tk.rotate(square, tk.randInRange(-1, 1) * 2 * i)
 ```
 
 </details>
