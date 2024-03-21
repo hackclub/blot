@@ -31,30 +31,56 @@ We'll start with the outline of the leaf.
 First let's lay down a line which will become the top edge.
 
 ```js
+// welcome to blot!
+
+const width = 125;
+const height = 125;
+
+setDocDimensions(width, height);
+
 const leafLength = 5
-const leafW = 1.3
+const leafW = 1.8
 
-const edge = createTurtle().forward(leafLength)
+const finalLines = [];
 
-// render the final leaf like such
-const leaf = createTurtle().join(edge)
+const topEdge = [
+  [
+    [0, 0],
+    [leafLength*0.3, leafW],
+    [leafLength*0.8, leafW*.01],
+    [leafLength, 0]
+  ]
+]
 
-drawTurtles([ leaf ])
+tk.join(finalLines, topEdge);
+
+// center piece
+const finalBounds = tk.bounds(finalLines);
+const finalScale = width/finalBounds.width*.85;
+tk.scale(finalLines, finalScale);
+tk.translate(finalLines, [width / 2, height / 2], tk.bounds(finalLines).cc);
+
+// draw it
+drawLines(finalLines);
 ```
 
 <img
   width="366"
   alt="Screen Shot 2023-07-03 at 2 17 32 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/aa904051-d23a-4542-9da9-025cd658fc28"
+  src="https://github.com/hackclub/blot/assets/27078897/c919b844-9106-488c-840f-a93bb48d0729"
 />
 
-Now we can warp the line by resampling points and then using `warp` with a bezier curve.
+We can make this line smooth using a NURBS curve.
 
 ```js
-const edge = createTurtle()
-  .forward(leafLength)
-  .resample(0.01) // we resample to have points to bend
-  .warp(bezierEasing(0, [0.4, 2.58], [0.52, 0.31], 0)) // bezierEasing takes a start y, control point, control point, end y
+const topEdge = [
+  tk.nurbs([
+    [0, 0],
+    [leafLength*0.3, leafW],
+    [leafLength*0.8, leafW*.01],
+    [leafLength, 0]
+  ])
+]
 ```
 
 <img
@@ -66,11 +92,25 @@ const edge = createTurtle()
 Let's make the bottom edge too.
 
 ```js
-const bottom = edge.copy().scale([1, -1], [0, 0])
+...
 
-const leaf = createTurtle().join(edge).join(bottom)
+const topEdge = [
+  tk.nurbs([
+    [0, 0],
+    [leafLength*0.3, leafW],
+    [leafLength*0.8, leafW*.01],
+    [leafLength, 0]
+  ])
+]
 
-drawTurtles([ leaf ])
+// add our code here
+const bottomEdge = tk.copy(topEdge);
+tk.scale(bottomEdge, [1, -1], [0, 0]);
+tk.join(finalLines, bottomEdge);
+
+tk.join(finalLines, topEdge);
+
+...
 ```
 
 <img
@@ -82,12 +122,22 @@ drawTurtles([ leaf ])
 Now we can add some noise to make the leaf look a bit more organic.
 
 ```js
-edge.warp(
-  t => noise(t * 20.4, { octaves: 2 }) * 0.09 * (t === 0 || t === 1 ? 0 : 1)
-)
-bottom.warp(
-  t => noise(t * 23.6, { octaves: 2 }) * -0.1 * (t === 0 || t === 1 ? 0 : 1)
-)
+tk.iteratePoints(topEdge, (pt, t) => {
+  const [x, y] = pt;
+  const freq = 2.84;
+  const dy = tk.noise(t * 20.4, { octaves: 2 }) * 0.15 * (t === 0 || t === 1 ? 0 : 1)
+  return [x, y + dy]
+})
+
+tk.iteratePoints(bottomEdge, (pt, t) => {
+  const [x, y] = pt;
+  const dy = tk.noise(t * 20.8, { octaves: 2 }) * -0.2 * (t === 0 || t === 1 ? 0 : 1)
+  return [x, y + dy]
+})
+
+tk.join(finalLines, topEdge);
+
+...
 ```
 
 This term `(t===0 || t === 1 ? 0 : 1)` makes sure that the endpoints stay the same on the curve.
@@ -115,66 +165,48 @@ We'll start with the top side by drawing some lines the follow the distribution 
 Let's make a veins function which will return some lines we can add to our main drawing.
 
 ```js
-function veins() {
-  const lines = createTurtle()
+
+function makeVeins() {
+  const veins = [];
 
   let littleLinesMax = 61
   for (let i = 4; i < littleLinesMax - 5; i++) {
-    const t = i / (littleLinesMax - 1) // this line to get t values 0 to 1 while iterating is very common
-    const x0 = t * leafLength
-    const y0 = 0
-
-    // try playing with the `0.1` term
-    // interpolate returns a point and we take `[1]` to get the y value
-    const y = edge.interpolate(t + 0.1)[1]
-
-    const line = createTurtle([x0, y0])
-
-    line.right(-70 + t * 37 + randInRange(-4, 4))
-
-    let r = y * 0.7
-
-    if (r < 0.01) continue
-
-    line.forward(r)
-
-    lines.join(line)
+    const t = i / (littleLinesMax - 1); // this line to get t values 0 to 1 while iterating is very common
+    const x0 = t * leafLength;
+    const y0 = 0;
+  
+    const y = tk.getPoint(topEdge, t + 0.1)[1]
+  
+    const angle = (-70 + t * 37 + tk.randInRange(-4, 4)) / 180 * Math.PI;
+    let r = y * 0.8;
+  
+    const line = [
+      tk.nurbs([
+        [x0, y0],
+        [
+          x0 + Math.cos(angle) * r / 2 - y / 4,
+          -(y0 + Math.sin(angle) * r / 2)
+        ],
+        [
+          x0 + Math.cos(angle) * r,
+          -(y0 + Math.sin(angle) * r)
+        ]
+      ])
+    ];
+  
+    if (r < 0.01) continue;
+  
+    tk.join(veins, line);
   }
 
-  return lines
+  return veins;
 }
 ```
 
-Which we add to the drawing like such.
+Which we can add to the drawing like such:
 
 ```js
-leaf.join(veins())
-```
-
-<img
-  width="370"
-  alt="Screen Shot 2023-07-03 at 2 28 37 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/cfed6d56-3b16-4ecc-9daf-bc7c33045ba8"
-/>
-
-If we add back in the randomness term `randInRange(-4, 4)` to the angle of the line we can start to make a more natural image.
-
-<img
-  width="344"
-  alt="Screen Shot 2023-07-03 at 2 30 53 PM"
-  src="https://github.com/hackclub/haxidraw/assets/27078897/2a5b649d-e8ed-47f8-afae-8a3ff9e7dc12"
-/>
-
-Now let's bend the lines with our warping function again.
-
-```js
-// try removing the y scaling and see what happens
-const warper = bezierEasing(0, [0.28, y / 4], [0.58, y / 8], 0)
-
-line
-  .forward(r)
-  .resample(0.01) // we resample so there are points to warp, see what happens when this is removed
-  .warp(warper)
+tk.join(finalLines, makeVeins());
 ```
 
 <img
@@ -186,20 +218,15 @@ line
 Let's randomly trim each vein with every fifth being a bite longer.
 
 ```js
-// the ternary makes evey fifth line trimmed up to 0.7 to 0.9 and all the others between 0.1 and 0.7
-const trimTo = (i % 5 === 0)
-  ? randInRange(0.7, 0.9)
-  : randInRange(0.1, 0.7);
-
 if (r < 0.01) continue;
 
-const warper = bezierEasing(0, [0.28, y/4], [0.58, y/8], 0);
+// the ternary makes evey fifth line trimmed up to 0.7 to 0.9 and all the others between 0.1 and 0.7
+const trimTo = (i % 5 === 0) ?
+  tk.randInRange(0.7, 0.9) :
+  tk.randInRange(0.1, 0.7);
 
-line
-  .forward(r)
-  .resample(0.01)
-  .warp(warper)
-  .trim(0, trimTo);
+tk.trim(line, 0, trimTo);
+
 ```
 
 <img
@@ -211,9 +238,11 @@ line
 And let's randomly break up these lines.
 
 ```js
-line.iteratePath(pt => {
-  return Math.random() < (i % 5 === 0 ? +0.17 : 0.56) ? 'BREAK' : pt
-})
+tk.resample(line, .03);
+
+tk.iteratePoints(line, pt => {
+  return Math.random() < (i % 5 === 0 ? 0.28 : 0.40) ? 'BREAK' : pt;
+});
 ```
 
 <img
@@ -225,7 +254,9 @@ line.iteratePath(pt => {
 Then call veins again and flip it over for the bottom side.
 
 ```js
-leaf.join(veins().scale([1, -1], [0, 0]))
+const bottomVeins = makeVeins();
+tk.scale(bottomVeins, [1, -1], [0, 0]);
+leaf.join(bottomVeins);
 ```
 
 <img
@@ -241,11 +272,14 @@ The stem is the easiest part.
 We just need to draw a line.
 
 ```js
-const lineStem = createTurtle([-1, 0])
-  .forward(leafLength + 1)
-  .resample(0.1)
-
-leaf.join(lineStem)
+const stem = [
+  [
+    [-leafLength*.2, 0],
+    [leafLength, 0]
+  ]
+];
+tk.resample(stem, 0.01);
+tk.join(finalLines, stem);
 ```
 
 <img
@@ -259,12 +293,12 @@ leaf.join(lineStem)
 To Finish our leaf let's go through all the points and add a little noise and a bend upwards.
 
 ```js
-leaf.iteratePath(pt => {
+tk.iteratePoints(finalLines, pt => {
   let [x, y] = pt
   y += x * x * 0.02
-  y += noise([x * 0.2]) * 0.3
+  y += tk.noise([x * 0.2]) * 0.3
   return [x, y]
-})
+});
 ```
 
 And now we have a leaf!
