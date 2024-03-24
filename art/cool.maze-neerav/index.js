@@ -1,4 +1,12 @@
-// Check the workshop tab to get started
+
+
+/*
+@title: Cool Maze
+@author: Neerav
+@snapshot: 1.png
+*/
+
+
 
 const width = 100;
 const height = 100;
