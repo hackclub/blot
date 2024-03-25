@@ -1,4 +1,6 @@
 export const defaultProgram = `// welcome to blot!
+// check out this guide to learn how to program here
+// https://blot.hackclub.com/editor?guide=start
 
 const width = 125;
 const height = 125;
