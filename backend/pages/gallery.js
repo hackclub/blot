@@ -3,7 +3,8 @@ import { extractFrontmatter } from "../extractFrontmatter.js";
 
 const GALLERY_TO_DISPLAY = [
   "amongUs-SahilDasari",
-  "leaf-leo"
+  "leaf-leo",
+  "Donut-BrightLi"
 ]
 
 function getDirectories(srcPath) {

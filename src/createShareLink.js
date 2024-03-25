@@ -4,6 +4,11 @@ import { post } from "./post.js";
 export async function createShareLink(content) {
   const { loginName, sessionKey } = getStore();
 
+  if (loginName === "") {
+    alert("Log in to create share links.");
+    return;
+  }
+
   const [ res, err] = await post("/create-share-link", { 
     sessionKey,
     email: loginName,
