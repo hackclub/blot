@@ -268,7 +268,7 @@ artwork to the Blot website!
 
   
 1. Create it!
-    Go to https://blot.hackclub.dev/ to learn how to
+    Go to https://blot.hackclub.com/ to learn how to
     draw using the Blot's easy to use code framework.
     
 2. PR it!
