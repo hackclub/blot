@@ -1,5 +1,5 @@
 ---
-title: Raymarching in Haxidraw
+title: Raymarching in Blot
 thumbnail: https://cloud-79ah2o72z-hack-club-bot.vercel.app/00image.webp
 contributors: henrybass
 pinned: true
@@ -8,7 +8,7 @@ pinned: true
 The goal of this guide will be to simulate 3D environments, with realistic lighting and shadows. By the end, you should have something like this:
 
 <img 
-  alt="Raymarching in Haxidraw"
+  alt="Raymarching in Blot"
   src="https://cloud-79ah2o72z-hack-club-bot.vercel.app/00image.webp"
   width="512"
 />

@@ -2,7 +2,8 @@
 
 > Blot is not released yet and this criteria is still in flux. If you want to get an early start and help shape what it means to get a Blot I welcome and appreciate it.
 
-So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one.
+So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one. The blot is paid for by Hack Club and that includes shipping, but you should check for customs fees in your country before ordering. [^1]
+[^1]: Customs fees aren't covered by Hack Club, so please look into how much customs is for an electronics kit order being shipped from the US if you are based outside the US.
 
 # 1) Make a unique piece of generative art
 
@@ -47,6 +48,18 @@ Here are some examples of some pieces which would **not be accepted**:
 Once you have made some art you can make a pull request (PR) onto this repo with that program.
 These are the steps you need to take to make a PR.
 
+## 2.0) Add metadata to your `index.js` file
+
+Make sure to include this info in a comment at the top of your file.
+
+```js
+/*
+@title: yourTitle
+@author: yourName
+@snapshot: the name of the snapshot file you want in the gallery
+*/
+```
+
 ## 2.1) Download your program
 
 - Hover over `download`
@@ -60,6 +73,8 @@ These are the steps you need to take to make a PR.
 - Create a folder called `{yourArtworkName}-{yourName}`.
 - Inside that folder create a `snapshots` folder with **at least 3 screenshots** of your work.
 - Place the code for your artwork in an `index.js` file.
+
+**Make sure there are no spaces in your directory or file names!**
 
 The directory structure can be seen below:
 
