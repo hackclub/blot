@@ -221,7 +221,7 @@ function footer() {
   return `
     <footer class="bg-gray-900 text-white">
       <div>
-        <article class="flex  h-[400px] gap-[5rem] flex items-center">
+        <article class="sm:flex hidden h-[400px] gap-[5rem] items-center">
           <div class="flex flex-col px-4 gap-[1rem]">
             <h2 class="font-bold text-xl mb-4">Hack&nbsp;Club</h2>
             <a href="https://hackclub.com/philosophy/" class="text-white-400 hover:underline">Philosophy</a>
