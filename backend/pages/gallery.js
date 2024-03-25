@@ -1,6 +1,11 @@
 import fs from 'fs';
 import { extractFrontmatter } from "../extractFrontmatter.js";
 
+const GALLERY_TO_DISPLAY = [
+  "amongUs-SahilDasari",
+  "leaf-leo"
+]
+
 function getDirectories(srcPath) {
   return fs.readdirSync(srcPath, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
@@ -23,6 +28,7 @@ export default function() {
 
 
   directories.forEach((dir, i) => {
+    if (!GALLERY_TO_DISPLAY.includes(dir)) return;
     const file = fs.readFileSync(`./art/${dir}/index.js`, 'utf8');
 
     const metadata = extractKeyValuePairs(file);
