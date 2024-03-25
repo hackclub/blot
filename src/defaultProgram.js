@@ -16,7 +16,7 @@ for (let i = 0; i < 52; i++) {
 }
 
 // add turtle to final lines
-finalPolylines.push(...t.lines());
+tk.join(finalPolylines, t.lines());
 
 // center piece
 const cc = tk.bounds(finalPolylines).cc;
