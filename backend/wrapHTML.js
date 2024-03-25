@@ -7,6 +7,26 @@ export function wrapHTML(inner) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <link rel="icon" type="image/svg+xml" href="/assets/borpheus.svg" id="favicon">
+        <script>
+          function changeFavicon() {
+            const favicon = document.getElementById('favicon');
+            const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            if (darkModeMediaQuery.matches) {
+              favicon.href = '/assets/borpheus.svg'; // White favicon for dark mode
+            } else {
+              favicon.href = '/assets/black-borpheus.svg'; // Black favicon for light mode
+            }
+          }
+
+          // Initial check
+          changeFavicon();
+
+          // Listener for changes in color scheme
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', changeFavicon);
+        </script>
+
         <link rel="stylesheet" href="./styles.css">
         <script src="https://cdn.tailwindcss.com"></script>
         
