@@ -53,9 +53,7 @@ You're also welcome to participate and use our tools if you aren't a teen (like 
 
 Join the `#blot` channel on the [Hack Club Slack](https://hackclub.com/slack). 
 
-The Blot editor is made with astro. To run the project locally.
-
-You'll need:
+The Blot editor is run with an express server.
 
 ```
 Git
@@ -67,7 +65,6 @@ After installing those, clone the repo.
 
 ```
 git clone https://github.com/hackclub/blot/
-cd blot/astro
 yarn install
 ```
 
