@@ -1,10 +1,42 @@
 import fs from 'fs';
 import { extractFrontmatter } from "../extractFrontmatter.js";
 
-const GALLERY_TO_DISPLAY = [
-  "amongUs-SahilDasari",
-  "leaf-leo",
-  "Donut-BrightLi"
+const GALLERY_NOT_TO_DISPLAY = [
+  // "amongUs-SahilDasari",
+  // "leaf-leo",
+  // "Donut-BrightLi",
+  // "blot-ayush",
+
+  "BitMap-AdityaPV",
+  "blotfont-geschmit",
+  "BlotGrapher-V205",
+  "dexter_sunnyhouse",
+  "eca-henry",
+  "emoji_generator_samarpan",
+  "flower-sahitid",
+  "fractalTree-maggieClaireBelle",
+  "fractures-msw",
+  "french-fries-eric",
+  "hilbert_golf-henry",
+  "L-system-reva",
+  "lampda-snipchu",
+  "landscape-henry",
+  "linesCircles-yutaro",
+  "Mandelbrot-Oskar",
+  "mazeGenerator-Evan",
+  "Minesweeper-LiterallyEverything",
+  "QR-sam",
+  "raymarching-henry",
+  "roots-kai",
+  "self_portrait-kieran",
+  "SpiderWeb-Michelle",
+  "square-disarray-leo",
+  "SudokuGenerator-Ivan",
+  "sunset-ameya",
+  "tidal-flats-leo",
+  "tree-leo",
+  "weatherreport-rivques",
+  "word_search-scott_c"
 ]
 
 function getDirectories(srcPath) {
@@ -29,7 +61,7 @@ export default function() {
 
 
   directories.forEach((dir, i) => {
-    if (!GALLERY_TO_DISPLAY.includes(dir)) return;
+    if (GALLERY_NOT_TO_DISPLAY.includes(dir)) return;
     const file = fs.readFileSync(`./art/${dir}/index.js`, 'utf8');
 
     const metadata = extractKeyValuePairs(file);

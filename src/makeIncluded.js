@@ -15,7 +15,7 @@ export function makeIncluded() {
 
     const baseLogger = (type, ...args) => {
         console[type](...args)
-        
+
         // get code location
         const pos = getPosFromErr(new Error())
         

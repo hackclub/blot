@@ -8,10 +8,11 @@ onmessage = async (e) => {
   if (action === 'runCode') {
       try {
         let { globalScope, turtles, logs, docDimensions } = makeIncluded();
-        logs = logs.map(JSON.stringify);
         
         await runCodeInner(code, globalScope, basePath);
-    
+        
+        logs = logs.map(JSON.stringify);
+
         self.postMessage({
           type: "OK",
           turtles,
