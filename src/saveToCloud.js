@@ -3,7 +3,7 @@ import { patchStore, getStore } from './state.ts'
 
 export async function saveToCloud({ content, name }) {
   const { loginName } = getStore();
-  const sessionKey = sessionStorage.getItem('session_secret_key');
+  const sessionKey = localStorage.getItem('session_secret_key');
 
   if (loginName === "") {
     patchStore({ loginModalOpen: true });

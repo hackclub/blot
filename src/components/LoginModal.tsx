@@ -88,7 +88,8 @@ export default function LoginModal() {
           inputValue: "",
           loggedIn: true,
         });
-        sessionStorage.setItem('session_secret_key', res.sessionKey);
+
+        localStorage.setItem('session_secret_key', res.sessionKey);
 
         checkCurrentUser();
       } else {

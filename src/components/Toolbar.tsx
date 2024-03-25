@@ -440,7 +440,7 @@ function SettingsButton() {
 }
 
 function logOut() {
-  sessionStorage.setItem('session_secret_key', "");
+  localStorage.setItem('session_secret_key', "");
   patchStore({ files: [], loginName: "", cloudFileId: "" });
 }
 

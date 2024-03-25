@@ -87,8 +87,8 @@ export function init() {
 }
 
 export async function checkCurrentUser() {
-  const sessionKey = sessionStorage.getItem('session_secret_key');
-
+  const sessionKey = localStorage.getItem('session_secret_key');
+  console.log(sessionKey);
   if (!sessionKey) return;
 
  
