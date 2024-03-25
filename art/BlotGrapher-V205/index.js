@@ -1,7 +1,9 @@
 /*
-Blot Grapher
-Credits:
-V205 and Bright Li
+
+@title: Blot Grapher
+@author: V205 and Bright Li
+@snapshot: Snapshot1.jpeg
+
 Q: What is this? A: This is a WIP graphing tool.
 Q: What can this do? A: This program can currently graph lines.
 

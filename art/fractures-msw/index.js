@@ -1,5 +1,8 @@
-// Fractures
-// by @MaxWofford
+/* 
+@title: Fractures
+@author: MaxWofford
+@snapshot: image_16.png
+*/
 
 const t = createTurtle()
 

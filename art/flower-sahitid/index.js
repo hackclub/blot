@@ -1,3 +1,9 @@
+/*
+@title: flower
+@author: sahitid
+@snapshot: 1.png
+*/
+
 const t = createTurtle();
 
 function drawPetal() {

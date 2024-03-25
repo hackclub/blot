@@ -1,9 +1,6 @@
 *.env
-.DS_Store
-.astro
-.next
-.vercel
-yarn-error.log
 dist
 node_modules
-hardware/motor-control-board/firmware/build/
+
+.DS_Store
+yarn-error.log

@@ -1,3 +1,9 @@
+/*
+@title: word search
+@author: Scott C
+@snapshot: snapshot01.png
+*/
+
 // Generative Word Search (words and size are changable)
 
 

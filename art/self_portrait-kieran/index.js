@@ -1,3 +1,9 @@
+/*
+@title: self_portrait
+@author: kieran
+@snapshot: snapshot-1.png
+*/
+
 // a self portrait by kieran
 
 const width = 300

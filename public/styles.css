@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Bellefair&family=JetBrains+Mono&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  --background: #f8f6f3;
+  --primary: #33e;
+  --primary-rgb: 51, 51, 238;
+  --text: #000;
+  --text-rgb: 0, 0, 0;
+  --background: #fff;
+  --background-rgb: 255, 255, 255;
+  --muted: #e5e5e5;
+  --muted-rgb: 229, 229, 229;
+  --accent: #f0f;
+  --accent-rgb: 255, 0, 255;
+  --accent-dark: #900090;
+  --accent-dark-rgb: 144, 0, 144;
+  --font-sans: 'Atkinson Hyperlegible', sans-serif;
+  --font-serif: 'PT Serif', serif;
+  --font-mono: monospace;
+
+  --font-0: 1rem;
+  --font-1: 1.125rem;
+  --font-2: 1.25rem;
+  --font-3: 1.5rem;
+  --font-4: 2rem;
+  --font-5: 3rem;
+  --font-6: 4rem;
+  --font-7: 6rem;
+}
+
+
+/*
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre {
+  margin: 0;
+  font-family: var(--font-sans);
+}
+
+h1 {
+  font-size: var(--font-4);
+}
+
+h2 {
+  font-size: var(--font-3);
+}
+
+h3 {
+  font-size: var(--font-2);
+}
+
+h4 {
+  font-size: var(--font-1);
+}
+
+h5 {
+  font-size: var(--font-0);
+  color: var(--primary);
+}
+
+h6 {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+pre,
+code {
+  font-family: var(--font-mono);
+  overflow: auto;
+}
+
+*/
+
+/*
+
+.hidden {
+  display: none;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.row-to-col {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 700px) {
+  .row-to-col {
+    flex-direction: column;
+  }
+}
+
+.mobile-bg-scale {
+  transform: scale(1.5);
+}
+
+@media only screen and (max-width: 700px) {
+  .mobile-bg-scale {
+    transform: scale(3) rotate(90deg);
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+.center-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-self {
+  justify-self: center;
+  align-self: center;
+}
+
+.background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.fill {
+  flex-grow: 1;
+}
+
+.img-fill {
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
+
+*/

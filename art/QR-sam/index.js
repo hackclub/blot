@@ -1,6 +1,7 @@
 /*
-QR Blot
-by Sam Liu (@samliu)
+@title: QR Blot
+@author: Sam Liu (@samliu)
+@snapshot: 0.png
 
 This is a custom implementation of https://www.nayuki.io/page/creating-a-qr-code-step-by-step, 
 https://www.thonky.com/qr-code-tutorial/, https://www.qrcode.com/, and 

@@ -1,3 +1,9 @@
+/*
+@title: Blot Font
+@author: geschmit
+@snapshot: blotfont_logo.png
+*/
+
 /**
  * BlotFont - A demo of the BlotFont library
  * This is a demo of my BlotFont library I wrote for the Hack Club Blot, which
