@@ -72,7 +72,7 @@ Here is how you might draw a triangle, for instance, remembering that a turtle w
 
 
 ```js
-const t = new tk.Turtle()
+const t = new bt.Turtle()
 const size = 100
 
 t.forward(size)
@@ -92,7 +92,7 @@ One way to draw a pentagon might be to write code much like the above, but turn 
 
 ```js
 const shape = (n, size) => {
-  const t = new tk.Turtle()
+  const t = new bt.Turtle()
   for (let i = 0; i < n; i++) t.forward(size).right(360/n)
   return t.lines()
 }
@@ -130,7 +130,7 @@ const shth = 3  // shaft thickness
 const shl = 120  // shaft length
 const cl = 30  // calamus length (part without vanes)
 const vw = 20  // vane width, per vane
-const t = new tk.Turtle()
+const t = new bt.Turtle()
 
 // start pointing diagonally, and further within drawing area
 t.left(45).jump([20, 20])
@@ -172,11 +172,11 @@ const height = 125
 
 setDocDimensions(width, height)
 
-const sq = new tk.Turtle()
+const sq = new bt.Turtle()
 for (let i = 0; i < 4; i++) sq.forward(1).right(90)
 
-const rect = tk.scale(sq.lines(), [50, 80])
-tk.translate(rect, [width/2, height/2], tk.bounds(rect).cc)
+const rect = bt.scale(sq.lines(), [50, 80])
+bt.translate(rect, [width/2, height/2], bt.bounds(rect).cc)
 
 drawLines(rect)
 ```
@@ -197,25 +197,25 @@ setDocDimensions(width, height)
 
 // Generate any polygon
 const shape = (n) => {
-  const t = new tk.Turtle()
+  const t = new bt.Turtle()
   for (let i = 0; i < n; i++) t.forward(1).right(360/n)
   return t.lines()
 }
 
 // Draw shaft as a stretched triangle
-const shaft = tk.scale(shape(3), [2, 150])
+const shaft = bt.scale(shape(3), [2, 150])
 
 // Draw vanes as a hendecagaon (!?)
-const vanes = tk.scale(shape(11), [8, 30])
+const vanes = bt.scale(shape(11), [8, 30])
 
 // move the vanes to the end of the shaft
-tk.translate(vanes, [0, tk.bounds(shaft).cb[1] - tk.bounds(vanes).cb[1]])
+bt.translate(vanes, [0, bt.bounds(shaft).cb[1] - bt.bounds(vanes).cb[1]])
 
 // combine the two shapes, then move and rotate them together!
 // (this "destructuring" syntax in JavaScript combines the two arrayws)
 const feather = [...shaft, ...vanes]
-tk.translate(feather, [width / 2, height / 2], tk.bounds(feather).cc)
-tk.rotate(feather, 135)
+bt.translate(feather, [width / 2, height / 2], bt.bounds(feather).cc)
+bt.rotate(feather, 135)
 drawLines(feather)
 ```
 
@@ -233,11 +233,11 @@ This approach uses `iteratePoints` to consider each [x, y] co-ordinate one by on
 // -- define and translate the feather, but don't rotate it yet
 
 // resample, to increase number of points that we'll nudge
-tk.resample(feather, 4)
+bt.resample(feather, 4)
 
 // nudge the x value of each point, based on where it is in the doc, to make
 // the whole thing curvy
-tk.iteratePoints(feather, ([x, y]) => [x - 0.002*(width/2-y)*(width/2-y), y])
+bt.iteratePoints(feather, ([x, y]) => [x - 0.002*(width/2-y)*(width/2-y), y])
 
 // -- now, rotate and draw it 
 ```
@@ -261,12 +261,12 @@ const height = 125
 
 setDocDimensions(width, height)
 
-const curve = tk.catmullRom([[0, 0], [30, 20], [50, 100], [125, 125]])
+const curve = bt.catmullRom([[0, 0], [30, 20], [50, 100], [125, 125]])
 
 drawLines([curve])
 ```
 
-Note that `tk.catmullRom` returns a single polyline, so we need to wrap it in a JavaScript array to pass it to `drawLines`. The above code generates this curve:
+Note that `bt.catmullRom` returns a single polyline, so we need to wrap it in a JavaScript array to pass it to `drawLines`. The above code generates this curve:
 
 <img src="/getting-started/curve.png" width="40%" style="margin:auto;border:1px solid blue" />
 
@@ -283,19 +283,19 @@ const height = 125
 setDocDimensions(width, height)
 
 // Shaft is a stretched triangle
-const shaft = tk.resample([[[0, 0], [1, 0], [0, -130], [-1, 0], [0, 0]]], 4)
+const shaft = bt.resample([[[0, 0], [1, 0], [0, -130], [-1, 0], [0, 0]]], 4)
 
 // Vanes are a Catmull-Rom curve
-const vanes = [tk.catmullRom([[0, 0], [-14, 16], [-22, 77], [0, 100], [15, 79], [14, 31], [0, 0]])]
+const vanes = [bt.catmullRom([[0, 0], [-14, 16], [-22, 77], [0, 100], [15, 79], [14, 31], [0, 0]])]
 
 // move the vanes nearer to the end of the shaft
-tk.translate(vanes, [0, tk.bounds(shaft).cb[1] - tk.bounds(vanes).cb[1] - 8])
+bt.translate(vanes, [0, bt.bounds(shaft).cb[1] - bt.bounds(vanes).cb[1] - 8])
 
 // combine the two shapes, then move and rotate them together!
 const feather = [...shaft, ...vanes]
-tk.translate(feather, [width / 2, height / 2], tk.bounds(feather).cc)
-tk.iteratePoints(feather, ([x, y]) => [x - 0.002*(width/2-y)*(width/2-y), y])
-tk.rotate(feather, 135)
+bt.translate(feather, [width / 2, height / 2], bt.bounds(feather).cc)
+bt.iteratePoints(feather, ([x, y]) => [x - 0.002*(width/2-y)*(width/2-y), y])
+bt.rotate(feather, 135)
 drawLines(feather)
 ```
 
@@ -318,31 +318,31 @@ const height = 125
 setDocDimensions(width, height)
 
 // Shaft is a stretched triangle
-const shaft = tk.resample([[[0, 0], [1, 0], [0, -130], [-1, 0], [0, 0]]], 1)
+const shaft = bt.resample([[[0, 0], [1, 0], [0, -130], [-1, 0], [0, 0]]], 1)
 
 // Vanes are a Catmull-Rom curve
-const vanes = [tk.catmullRom([[0, 0], [-14, 16], [-22, 77], [0, 100], [15, 79], [14, 31], [0, 0]])]
+const vanes = [bt.catmullRom([[0, 0], [-14, 16], [-22, 77], [0, 100], [15, 79], [14, 31], [0, 0]])]
 
 // Barbs are Catmull-Rom curves originating at the shaft
 const barbs = []
 for (let i = 0; i < shaft[0].length; i++) {
   const parity = i > shaft[0].length/2 ? -1 : 1
   const [x, y] = shaft[0][i]
-  barbs.push(tk.catmullRom(
+  barbs.push(bt.catmullRom(
     [[x, y], [x + parity * 10, y - 2], [x + parity * 30, y]]))
 }
 
 // move the vanes nearer to the end of the shaft
-tk.translate(vanes, [0, tk.bounds(shaft).cb[1] - tk.bounds(vanes).cb[1]])
+bt.translate(vanes, [0, bt.bounds(shaft).cb[1] - bt.bounds(vanes).cb[1]])
 
 // Use the vane shape to trim the barbs!
-tk.cut(barbs, vanes)
+bt.cut(barbs, vanes)
 
 // combine the two shapes, then move and rotate them together!
 const feather = [...shaft, ...barbs]
-tk.translate(feather, [width / 2, height / 2], tk.bounds(feather).cc)
-tk.iteratePoints(feather, ([x, y]) => [x - 0.002*(width/2-y)*(width/2-y), y])
-tk.rotate(feather, 135)
+bt.translate(feather, [width / 2, height / 2], bt.bounds(feather).cc)
+bt.iteratePoints(feather, ([x, y]) => [x - 0.002*(width/2-y)*(width/2-y), y])
+bt.rotate(feather, 135)
 drawLines(feather)
 ```
 
@@ -374,7 +374,7 @@ const height = 125
 
 setDocDimensions(width, height)
 
-const rr = tk.randInRange
+const rr = bt.randInRange
 
 const shaftLength = rr(0.5, 0.8) * Math.sqrt(width * width + height * height)
 const vaneLength = rr(0.7, 0.8) * shaftLength
@@ -382,9 +382,9 @@ const vaneWidth = rr(0.2, 0.3) * vaneLength
 const barbCurviness = rr(1, 4)
 const numClumps = rr(1, 6)
 
-const shaft = tk.resample([[[0, 0], [0.8, 0], [0, -shaftLength], [-0.8, 0], [0, 0]]], 1)
+const shaft = bt.resample([[[0, 0], [0.8, 0], [0, -shaftLength], [-0.8, 0], [0, 0]]], 1)
 
-const vanes = tk.scale([tk.catmullRom([
+const vanes = bt.scale([bt.catmullRom([
   [0, 0],
   [rr(-1, -0.5), rr(0.15, 0.3)],
   [rr(-1, -0.5), rr(0.7, 0.9)],
@@ -400,7 +400,7 @@ const len = shaft[0].length
 for (let i = 0; i < len; i++) {
   const parity = i > len / 2 ? -1 : 1
   const [x, y] = shaft[0][i]
-  barbs.push(tk.catmullRom([
+  barbs.push(bt.catmullRom([
     [x, y],
     [x + parity * vaneWidth * 0.3, y - barbCurviness],
     [x + parity * vaneWidth, y]
@@ -408,10 +408,10 @@ for (let i = 0; i < len; i++) {
 }
 
 // move the vanes to the end of the shaft
-tk.translate(vanes, [0, tk.bounds(shaft).cb[1] - tk.bounds(vanes).cb[1]])
+bt.translate(vanes, [0, bt.bounds(shaft).cb[1] - bt.bounds(vanes).cb[1]])
 
 // Use the vane shape to trim the barbs!
-tk.cut(barbs, vanes)
+bt.cut(barbs, vanes)
 
 // Clump some of the trimmed barbs together, like nature intended
 for (let i = 0; i < numClumps; i++) {
@@ -424,7 +424,7 @@ for (let i = 0; i < numClumps; i++) {
     const [tx, ty] = target[Math.floor((target.length - 1) * 0.9)]
     const [bx, by] = barb[Math.floor((barb.length - 1) * 0.9)]
     const mid = [tx * (1 - t) + bx * t, ty * (1 - t) + by * t] 
-    barbs[start + j] = tk.catmullRom([
+    barbs[start + j] = bt.catmullRom([
       barb[0],
       mid,
       target[target.length-1]
@@ -434,9 +434,9 @@ for (let i = 0; i < numClumps; i++) {
 
 // combine the shaft with the barbs
 const feather = [...shaft, ...barbs]
-tk.translate(feather, [width / 2, height / 2], tk.bounds(feather).cc)
-tk.iteratePoints(feather, ([x, y]) => [x - 0.001*(width/2-y)*(width/2-y), y])
-tk.rotate(feather, tk.randInRange(120, 150))
+bt.translate(feather, [width / 2, height / 2], bt.bounds(feather).cc)
+bt.iteratePoints(feather, ([x, y]) => [x - 0.001*(width/2-y)*(width/2-y), y])
+bt.rotate(feather, bt.randInRange(120, 150))
 drawLines(feather)
 ```
 

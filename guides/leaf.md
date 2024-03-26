@@ -52,13 +52,13 @@ const topEdge = [
   ]
 ]
 
-tk.join(finalLines, topEdge);
+bt.join(finalLines, topEdge);
 
 // center piece
-const finalBounds = tk.bounds(finalLines);
+const finalBounds = bt.bounds(finalLines);
 const finalScale = width/finalBounds.width*.85;
-tk.scale(finalLines, finalScale);
-tk.translate(finalLines, [width / 2, height / 2], tk.bounds(finalLines).cc);
+bt.scale(finalLines, finalScale);
+bt.translate(finalLines, [width / 2, height / 2], bt.bounds(finalLines).cc);
 
 // draw it
 drawLines(finalLines);
@@ -74,7 +74,7 @@ We can make this line smooth using a NURBS curve.
 
 ```js
 const topEdge = [
-  tk.nurbs([
+  bt.nurbs([
     [0, 0],
     [leafLength*0.3, leafW],
     [leafLength*0.8, leafW*.01],
@@ -95,7 +95,7 @@ Let's make the bottom edge too.
 ...
 
 const topEdge = [
-  tk.nurbs([
+  bt.nurbs([
     [0, 0],
     [leafLength*0.3, leafW],
     [leafLength*0.8, leafW*.01],
@@ -104,11 +104,11 @@ const topEdge = [
 ]
 
 // add our code here
-const bottomEdge = tk.copy(topEdge);
-tk.scale(bottomEdge, [1, -1], [0, 0]);
-tk.join(finalLines, bottomEdge);
+const bottomEdge = bt.copy(topEdge);
+bt.scale(bottomEdge, [1, -1], [0, 0]);
+bt.join(finalLines, bottomEdge);
 
-tk.join(finalLines, topEdge);
+bt.join(finalLines, topEdge);
 
 ...
 ```
@@ -122,20 +122,20 @@ tk.join(finalLines, topEdge);
 Now we can add some noise to make the leaf look a bit more organic.
 
 ```js
-tk.iteratePoints(topEdge, (pt, t) => {
+bt.iteratePoints(topEdge, (pt, t) => {
   const [x, y] = pt;
   const freq = 2.84;
-  const dy = tk.noise(t * 20.4, { octaves: 2 }) * 0.15 * (t === 0 || t === 1 ? 0 : 1)
+  const dy = bt.noise(t * 20.4, { octaves: 2 }) * 0.15 * (t === 0 || t === 1 ? 0 : 1)
   return [x, y + dy]
 })
 
-tk.iteratePoints(bottomEdge, (pt, t) => {
+bt.iteratePoints(bottomEdge, (pt, t) => {
   const [x, y] = pt;
-  const dy = tk.noise(t * 20.8, { octaves: 2 }) * -0.2 * (t === 0 || t === 1 ? 0 : 1)
+  const dy = bt.noise(t * 20.8, { octaves: 2 }) * -0.2 * (t === 0 || t === 1 ? 0 : 1)
   return [x, y + dy]
 })
 
-tk.join(finalLines, topEdge);
+bt.join(finalLines, topEdge);
 
 ...
 ```
@@ -175,13 +175,13 @@ function makeVeins() {
     const x0 = t * leafLength;
     const y0 = 0;
   
-    const y = tk.getPoint(topEdge, t + 0.1)[1]
+    const y = bt.getPoint(topEdge, t + 0.1)[1]
   
-    const angle = (-70 + t * 37 + tk.randInRange(-4, 4)) / 180 * Math.PI;
+    const angle = (-70 + t * 37 + bt.randInRange(-4, 4)) / 180 * Math.PI;
     let r = y * 0.8;
   
     const line = [
-      tk.nurbs([
+      bt.nurbs([
         [x0, y0],
         [
           x0 + Math.cos(angle) * r / 2 - y / 4,
@@ -196,7 +196,7 @@ function makeVeins() {
   
     if (r < 0.01) continue;
   
-    tk.join(veins, line);
+    bt.join(veins, line);
   }
 
   return veins;
@@ -206,7 +206,7 @@ function makeVeins() {
 Which we can add to the drawing like such:
 
 ```js
-tk.join(finalLines, makeVeins());
+bt.join(finalLines, makeVeins());
 ```
 
 <img
@@ -222,10 +222,10 @@ if (r < 0.01) continue;
 
 // the ternary makes evey fifth line trimmed up to 0.7 to 0.9 and all the others between 0.1 and 0.7
 const trimTo = (i % 5 === 0) ?
-  tk.randInRange(0.7, 0.9) :
-  tk.randInRange(0.1, 0.7);
+  bt.randInRange(0.7, 0.9) :
+  bt.randInRange(0.1, 0.7);
 
-tk.trim(line, 0, trimTo);
+bt.trim(line, 0, trimTo);
 
 ```
 
@@ -238,9 +238,9 @@ tk.trim(line, 0, trimTo);
 And let's randomly break up these lines.
 
 ```js
-tk.resample(line, .03);
+bt.resample(line, .03);
 
-tk.iteratePoints(line, pt => {
+bt.iteratePoints(line, pt => {
   return Math.random() < (i % 5 === 0 ? 0.28 : 0.40) ? 'BREAK' : pt;
 });
 ```
@@ -255,7 +255,7 @@ Then call veins again and flip it over for the bottom side.
 
 ```js
 const bottomVeins = makeVeins();
-tk.scale(bottomVeins, [1, -1], [0, 0]);
+bt.scale(bottomVeins, [1, -1], [0, 0]);
 leaf.join(bottomVeins);
 ```
 
@@ -278,8 +278,8 @@ const stem = [
     [leafLength, 0]
   ]
 ];
-tk.resample(stem, 0.01);
-tk.join(finalLines, stem);
+bt.resample(stem, 0.01);
+bt.join(finalLines, stem);
 ```
 
 <img
@@ -293,10 +293,10 @@ tk.join(finalLines, stem);
 To Finish our leaf let's go through all the points and add a little noise and a bend upwards.
 
 ```js
-tk.iteratePoints(finalLines, pt => {
+bt.iteratePoints(finalLines, pt => {
   let [x, y] = pt
   y += x * x * 0.02
-  y += tk.noise([x * 0.2]) * 0.3
+  y += bt.noise([x * 0.2]) * 0.3
   return [x, y]
 });
 ```

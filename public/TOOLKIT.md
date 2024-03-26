@@ -4,9 +4,9 @@
 > For an introduction to Blot check out <a href="/editor?guide=start">this guide</a>. 
 
 There are three names that provide functionality available in the Blot editor:
-`setDocDimensions`, `drawLines`, and `toolkit` (which can also be referenced as `tk`).
+`setDocDimensions`, `drawLines`, and `blotToolkit` (which can also be referenced as `bt`).
 
-The first two affect the drawing environment itself, and the toolkit is used for creating line drawings.
+The first two affect the drawing environment itself, and the `blotToolkit` is used for creating line drawings.
 
 ## Environment Affecting
 
@@ -19,41 +19,41 @@ drawLines(polylines: [number, number][][])
 
 Take and modify polylines in place returns first passed polylines.
 
-These functions are available in the `toolkit` or `tk` object.
+These functions are available in the `blotToolkit` or `bt` object.
 
 ```js
-tk.iteratePoints(polylines, (pt, t) => { ... }) // return pt to modify, "BREAK" to split, "REMOVE" to filter out point
-tk.scale(polylines, scale : scaleXY | [scaleX, scaleY], ?origin: [ x, y ]) 
-tk.rotate(polylines, degrees, ?origin: [ x, y ]) 
-tk.translate(polylines, [dx, dy], ?origin: [ x, y ]) 
-tk.originate(polylines) // moves center to [0, 0] 
-tk.resample(polylines, sampleRate) 
-tk.simplify(polylines, tolerance) 
-tk.trim(polylines, tStart, tEnd)
-tk.merge(polylines)  
-tk.join(polylines0, ...morePolylines) 
-tk.copy(polylines)
-tk.cut(polylines0, polylines1) 
-tk.cover(polylines0, polylines1) 
-tk.union(polylines0, polylines1)
-tk.difference(polylines0, polylines1)
-tk.intersection(polylines0, polylines1)
-tk.xor(polylines0, polylines1)
+bt.iteratePoints(polylines, (pt, t) => { ... }) // return pt to modify, "BREAK" to split, "REMOVE" to filter out point
+bt.scale(polylines, scale : scaleXY | [scaleX, scaleY], ?origin: [ x, y ]) 
+bt.rotate(polylines, degrees, ?origin: [ x, y ]) 
+bt.translate(polylines, [dx, dy], ?origin: [ x, y ]) 
+bt.originate(polylines) // moves center to [0, 0] 
+bt.resample(polylines, sampleRate) 
+bt.simplify(polylines, tolerance) 
+bt.trim(polylines, tStart, tEnd)
+bt.merge(polylines)  
+bt.join(polylines0, ...morePolylines) 
+bt.copy(polylines)
+bt.cut(polylines0, polylines1) 
+bt.cover(polylines0, polylines1) 
+bt.union(polylines0, polylines1)
+bt.difference(polylines0, polylines1)
+bt.intersection(polylines0, polylines1)
+bt.xor(polylines0, polylines1)
 ```
 
 ## Get Data From Polylines
 
-These functions are available in the `toolkit` or `tk` object.
+These functions are available in the `blotToolkit` or `bt` object.
 
 ```js
 // take polylines return other
-tk.getAngle(polylines, t: [0 to 1]) // returns angle in degrees
-tk.getPoint(polylines, t: [0 to 1]) // returns point as [x, y]
-tk.getNormal(polylines, t: [0 to 1]) // returns normal vector as [x, y]
+bt.getAngle(polylines, t: [0 to 1]) // returns angle in degrees
+bt.getPoint(polylines, t: [0 to 1]) // returns point as [x, y]
+bt.getNormal(polylines, t: [0 to 1]) // returns normal vector as [x, y]
 
-tk.pointInside(polylines, pt)
+bt.pointInside(polylines, pt)
 
-tk.bounds(polylines) 
+bt.bounds(polylines) 
 /*
 returns { 
   xMin, xMax, 
@@ -82,10 +82,10 @@ lb--cb--rb
 
 ## Generate Polylines
 
-These functions are available in the `toolkit` or `tk` object.
+These functions are available in the `blotToolkit` or `bt` object.
 
 ```js
-const myTurtle = new tk.Turtle()
+const myTurtle = new bt.Turtle()
   .forward(distance: number)
   .arc(angle: number, radius: number)
   .goTo( [ x: number, y: number ] ) // move with up/down state
@@ -107,28 +107,28 @@ const drawing = myTurtle.drawing // boolean
 ```
 
 ```js
-tk.catmullRom(points, ?steps = 1000) // returns polyline [number, number][]
-tk.nurbs(points, ?ops = { steps: 100, degree: 2}) // returns polyline [number, number][]
+bt.catmullRom(points, ?steps = 1000) // returns polyline [number, number][]
+bt.nurbs(points, ?ops = { steps: 100, degree: 2}) // returns polyline [number, number][]
 ```
 
 ```js
-tk.svgToPolylines(svg: string) // returns array of polylines [number, number][][]
+bt.svgToPolylines(svg: string) // returns array of polylines [number, number][][]
 ```
 
 ## Randomness
 
-These functions are available in the `toolkit` or `tk` object.
+These functions are available in the `blotToolkit` or `bt` object.
 
 ```js
-tk.rand();
+bt.rand();
 
-tk.randInRange(min: number, max: number);
+bt.randInRange(min: number, max: number);
 
-tk.randIntInRange(min: number, max: number); 
+bt.randIntInRange(min: number, max: number); 
 
-tk.setRandSeed(seed: number);
+bt.setRandSeed(seed: number);
 
-tk.noise(
+bt.noise(
   number | [ x:number , ?y: number , ?z: number ], 
   { 
     octaves: number [0 to 8], 

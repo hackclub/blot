@@ -20,7 +20,7 @@ there are three built in names
 
 setDocDimensions
 drawLines
-toolkit (also called tk)
+blotToolkit (also called bt)
 
 the toolkit has lots of useful functions we can access
 */
@@ -33,10 +33,10 @@ setDocDimensions(width, height);
 const finalLines = []; // we will put our shapes here
 
 // let's get the bounds of our final lines
-const finalLinesBounds = tk.bounds(finalLines);
+const finalLinesBounds = bt.bounds(finalLines);
 
 // this moves the center of our drawing to the center of our doc
-tk.translate(
+bt.translate(
   finalLines,
   [ width / 2, height / 2 ], 
   finalLinesBounds.cc
@@ -78,7 +78,7 @@ Let's use it to add a square to our drawing.
 
 const finalLines = []; // we will put our shapes here
 
-tk.join(finalLines, rect(10, 10)); // here is the new line
+bt.join(finalLines, rect(10, 10)); // here is the new line
 
 // ...
 ```
@@ -94,7 +94,7 @@ const gridWidth = 10
 
 for (let i = 0; i < gridWidth; i++) {
   const square = rect(10, 10);
-  tk.join(finalLines, square);
+  bt.join(finalLines, square);
 }
 ```
 
@@ -110,8 +110,8 @@ We can't see any change because they are on top of eachother! Space them out.
 ```js
 for (let i = 0; i < 3; i++) {
   const square = rect(10, 10);
-  tk.translate(square, [23 * i, 0]);
-  tk.join(finalLines, square);
+  bt.translate(square, [23 * i, 0]);
+  bt.join(finalLines, square);
 }
 ```
 
@@ -128,8 +128,8 @@ If we want the spacing to be perfect, each square should move by the width of a 
 const squareWidth = 10
 for (let i = 0; i < 3; i++) {
   const square = rect(squareWidth, 10);
-  tk.translate(square, [squareWidth * i, 0]);
-  tk.join(finalLines, square);
+  bt.translate(square, [squareWidth * i, 0]);
+  bt.join(finalLines, square);
 }
 ```
 
@@ -148,8 +148,8 @@ const squareHeight = 10
 for (let i = 0; i < 3; i++) {
   for (let j = 0; j < 3; j++) {
     const square = rect(squareWidth, squareHeight)
-    tk.translate(square, [squareWidth * i, squareHeight * j])
-    tk.join(finalLines, square);
+    bt.translate(square, [squareWidth * i, squareHeight * j])
+    bt.join(finalLines, square);
   }
 }
 ```
@@ -173,7 +173,7 @@ We can randomly translate each square.
 for (let i = 0; i < 10; i++) {
   for (let j = 0; j < 10; j++) {
     const square = rect(squareWidth, squareHeight);
-    tk.translate(
+    bt.translate(
       square, 
       [
         squareWidth * i, 
@@ -182,15 +182,15 @@ for (let i = 0; i < 10; i++) {
     );
 
     // randomness added here
-    tk.translate(
+    bt.translate(
       square, 
       [
-        tk.randInRange(-1, 1), 
-        tk.randInRange(-1, 1)
+        bt.randInRange(-1, 1), 
+        bt.randInRange(-1, 1)
       ]
     );
 
-    tk.join(finalLines, square);
+    bt.join(finalLines, square);
   }
 }
 ```
@@ -205,7 +205,7 @@ Scale the randomness with the x location.
 <summary>Hint</summary>
   
 ```js
-tk.translate(square, [(tk.randInRange(-1, 1) * i) / 6, (tk.randInRange(-1, 1) * i) / 6])
+bt.translate(square, [(bt.randInRange(-1, 1) * i) / 6, (bt.randInRange(-1, 1) * i) / 6])
 ```
 
 </details>
@@ -218,7 +218,7 @@ Now rotate each square in a similar manner.
 <summary>Hint</summary>
 
 ```js
-tk.rotate(square, tk.randInRange(-1, 1) * 2 * i)
+bt.rotate(square, bt.randInRange(-1, 1) * 2 * i)
 ```
 
 </details>

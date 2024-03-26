@@ -11,7 +11,7 @@ const height = 232;
 
 setDocDimensions(width, height);
 
-const t = new tk.Turtle();
+const t = new bt.Turtle();
 t.jump([71, 53])
 t.right(90)
 t.arc(-180, 17)

@@ -19,7 +19,7 @@ const fillRepeat = 1;
 setDocDimensions(width, height);
 
 function createExtrusion(extrusionWidth, extrusionLength, fillRepeat) {
-  const t = new tk.Turtle();
+  const t = new bt.Turtle();
 
   t.left(90);
   t.forward(extrusionLength);
@@ -56,7 +56,7 @@ function createExtrusion(extrusionWidth, extrusionLength, fillRepeat) {
 }
 
 function endCap(padding, stepperSize, extrusionWidth, legSize) {
-  const t = new tk.Turtle();
+  const t = new bt.Turtle();
   t.left(90);
 
   const paddedStepper = stepperSize + padding;
@@ -90,7 +90,7 @@ function endCap(padding, stepperSize, extrusionWidth, legSize) {
 }
 
 function cube(sideLength) {
-  const t = new tk.Turtle();
+  const t = new bt.Turtle();
   for (let i = 0; i < 4; i++) {
     t.forward(sideLength);
     t.right(90);
@@ -99,7 +99,7 @@ function cube(sideLength) {
 }
 
 function createHolder(padding, extrusionWidth, penRad) {
-  const t = new tk.Turtle();
+  const t = new bt.Turtle();
   t.left(90);
   t.forward(extrusionWidth * 2);
   t.right(90);
@@ -115,7 +115,7 @@ function createHolder(padding, extrusionWidth, penRad) {
 }
 
 function carriageSide(padding, extrusionWidth, wheelRad) {
-  let t = new tk.Turtle();
+  let t = new bt.Turtle();
   t.left(90);
   const width = 2 * (padding + wheelRad * 2) + extrusionWidth;
   const length = padding + wheelRad * 2;
@@ -139,41 +139,41 @@ function carriageSide(padding, extrusionWidth, wheelRad) {
 }
 
 const leftCap = endCap(padding, 12, extrusionWidth, 7);
-tk.translate(leftCap, [width / 6, height / 2], tk.bounds(leftCap).cc);
+bt.translate(leftCap, [width / 6, height / 2], bt.bounds(leftCap).cc);
 
 const leftCarriage = carriageSide(2, extrusionWidth, 2);
 const center = createExtrusion(extrusionWidth, extrusionLength, fillRepeat);
 
 const uncoveredLength =
-  extrusionLength - (tk.bounds(leftCarriage).width * 2 + tk.bounds(center).width);
+  extrusionLength - (bt.bounds(leftCarriage).width * 2 + bt.bounds(center).width);
 
 const left = createExtrusion(extrusionWidth, uncoveredLength * x, fillRepeat);
-tk.rotate(left, 90, tk.bounds(left).cc);
-tk.translate(left, tk.bounds(leftCap).rc, tk.bounds(left).lc);
+bt.rotate(left, 90, bt.bounds(left).cc);
+bt.translate(left, bt.bounds(leftCap).rc, bt.bounds(left).lc);
 
-tk.translate(leftCarriage, tk.bounds(left).rc, tk.bounds(leftCarriage).lc);
-tk.translate(
+bt.translate(leftCarriage, bt.bounds(left).rc, bt.bounds(leftCarriage).lc);
+bt.translate(
   center,
-  tk.bounds(leftCarriage).rt,
+  bt.bounds(leftCarriage).rt,
   [
-    tk.bounds(center).lc[0],
-    tk.bounds(center).lc[1] + tk.bounds(center).height * y,
+    bt.bounds(center).lc[0],
+    bt.bounds(center).lc[1] + bt.bounds(center).height * y,
   ]
 );
 
 const rightCarriage = carriageSide(2, extrusionWidth, 2);
-tk.rotate(
+bt.rotate(
   rightCarriage,
   180,
   rightCarriage.cc
 );
-tk.translate(
+bt.translate(
   rightCarriage,
   [
-    tk.bounds(leftCarriage).rc[0] + tk.bounds(center).width,
-    tk.bounds(leftCarriage).rc[1]
+    bt.bounds(leftCarriage).rc[0] + bt.bounds(center).width,
+    bt.bounds(leftCarriage).rc[1]
   ],
-  tk.bounds(rightCarriage).lc
+  bt.bounds(rightCarriage).lc
 );
 
 const right = createExtrusion(
@@ -181,19 +181,19 @@ const right = createExtrusion(
   uncoveredLength * (1 - x),
   fillRepeat
 );
-tk.rotate(right, 90, tk.bounds(right).cc);
-tk.translate(right, tk.bounds(rightCarriage).rc, tk.bounds(right).lc);
+bt.rotate(right, 90, bt.bounds(right).cc);
+bt.translate(right, bt.bounds(rightCarriage).rc, bt.bounds(right).lc);
 
 const topCap = cube(padding + extrusionWidth);
-tk.translate(topCap, tk.bounds(center).ct, tk.bounds(topCap).cb);
+bt.translate(topCap, bt.bounds(center).ct, bt.bounds(topCap).cb);
 
 const rightCap = endCap(padding, 12, extrusionWidth, 7);
-tk.rotate(rightCap, 180, tk.bounds(rightCap).cc);
-tk.translate(rightCap, tk.bounds(right).rc, tk.bounds(rightCap).lc);
+bt.rotate(rightCap, 180, bt.bounds(rightCap).cc);
+bt.translate(rightCap, bt.bounds(right).rc, bt.bounds(rightCap).lc);
 
 const holder = createHolder(padding, extrusionWidth, 1);
-tk.rotate(holder, 180, tk.bounds(holder).cc);
-tk.translate(holder, tk.bounds(center).cb, tk.bounds(holder).ct);
+bt.rotate(holder, 180, bt.bounds(holder).cc);
+bt.translate(holder, bt.bounds(center).cb, bt.bounds(holder).ct);
 
 drawLines([
   ...center,
