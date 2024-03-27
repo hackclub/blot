@@ -1,24 +1,22 @@
-
-
 /*
 @title: Cool Maze
 @author: Neerav
 @snapshot: 1.png
 */
 
-
-
 const width = 100;
 const height = 100;
 
 setDocDimensions(width, height);
 
-const t = createTurtle();
+const finalLines = [];
+
+const t = new tk.Turtle();
 
 for(var h = 0; h<=100; h++){
-  
+
   for(var i = 1; i<= 100; i++){
-    var yee =  randIntInRange(0,2)
+    var yee =  tk.randIntInRange(0,2)
     if(yee > 1){
       t.up()
     }
@@ -32,9 +30,9 @@ for(var h = 0; h<=100; h++){
 t.jump([0,0]);
 t.left(90);
 for(var h = 0; h<=100; h++){
-  
+
   for(var i = 1; i<= 100; i++){
-    var yee =  randIntInRange(0,2)
+    var yee =  tk.randIntInRange(0,2)
     if(yee > 1){
       t.up()
     }
@@ -45,11 +43,13 @@ for(var h = 0; h<=100; h++){
   }
   t.jump([h, 0]);
 }
-t.translate(
+
+tk.join(finalLines, t.lines());
+
+tk.translate(
+  finalLines,
   [width/2, height/2], 
-  t.cc
+  tk.bounds(finalLines).cc
 );
 
-drawTurtles([
-    t
-]);
+drawLines(finalLines);
