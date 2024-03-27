@@ -164,7 +164,7 @@ findLocalSupplier = true
 container = "free floating"
 
 [[items]]
-part = "1mm tall x 8mm OD x M5 inner Alumninum Spacer"
+part = "1mm tall x 10mm OD x M5 inner Alumninum Spacer"
 notes = "for idler assemblies"
 exampleSource = "https://www.mcmaster.com/98089A375/"
 quantity = 5
@@ -328,19 +328,19 @@ tags = ["laser cut"]
 container = "free floating"
 
 [[items]]
-part = "usb-c to usb-c cable (data)"
-quantity = "1"
+part = "usb-c to usb-c cable"
+quantity = "2"
 findLocalSupplier = true
-notes = "one is for data to the computer and one is for power"
+notes = "one is for data and one is for power"
 container = ["free floating"]
 exampleSource = "https://www.amazon.com/Anker-Charger-Charge-Samsung-MacBook/dp/B0BPC6TTNX/ref=sr_1_4?crid=MFMY6EHF4YD4&dib=eyJ2IjoiMSJ9.M_O_Qv-JwLbNI5sT1Ur5uYgs1daGqR6YGwEQBckTevilVJ7IwpcrghaGDUk1AAvLz9XjADXFTEbq571L986R2i7_rd-mi1-wrgE7iZMEm-JKy58lv_NnQ2nLkiPBVOTSee1GTKWPYMqZV6Xpmy_thz-g3tjxVjAUllETPwR9p9KwgFQ4wc5RyP7CHGKa5YpKhTuPYtlvuaU6IvBoRPHPBBpNFuSgYS6lffh8yHOCaCCfVgJaGstQ1sTzIrsmu2Q6HAuKZ0p3fWymPJSDdBLF2mRd8GdpeEVBJ3k8u2GRoEQ.6J7Rv3_UhICDy0ThujHeO8oSj-bL0d5mclnurCv1ts4&dib_tag=se&keywords=usb%2Bc%2Bto%2Busb%2Bc%2Bcable%2B3%2Bft&qid=1709320007&s=industrial&sprefix=usb%2Bc%2Bto%2Busb%2Bc%2Bcable%2B3%2Bft%2Cindustrial%2C128&sr=1-4&th=1"
 tags = []
 
 [[items]]
-part = "usb-c charger (brick and cable)"
+part = "usb-c charger (brick)"
 quantity = "1"
 findLocalSupplier = true
-notes = "20w+ is ideal, but anything over 15w can still work"
+notes = "30w+ is ideal, but anything over 20w can still work"
 container = ["free floating"]
 exampleSource = "https://www.amazon.com/3-Pack-Wall-Charger-Type-Power/dp/B0CDWLK1NG/ref=sr_1_1_sspa?crid=29EGJIM7AE9SM&dib=eyJ2IjoiMSJ9.7ou9qnO76ifgV04Xj_sOkRLlL5pgUeb2SXTmbVh4HI_RBEBJpHBs8_B256KEpt_-2w69DNolOk3PLMJ9yNNE9Rntw53xCLShXaGKb0Ob1mdRCLkfslrMzkvpkUOfqRkY05HG8cljbJ9wk8JWxCzr-GJtEZT6FZm60W1YA3_JL5r8EVmNaC_be1NG4aBJP-nA5L1-EhdPVk7YQ905Jzl_D7TVt9a4VQFHSMHI-tMTiTQIfhZxg1jxE4l21OM_RfDGWsdOTkPAY-xhoBYSuduejvXXOGN9EXybJzlPefaX3nM.MvMmBQ3YMB5EYjF-qFkQpaKqir0M-9hAG5VWGLFHFdU&dib_tag=se&keywords=20w+usb-c&qid=1709663916&s=industrial&sprefix=20w+usb-c%2Cindustrial%2C125&sr=1-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1&smid=A3T7NGXH3L1OEM"
 tags = []
