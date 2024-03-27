@@ -1,3 +1,9 @@
+/*
+@title: mandelbrot
+@author: oskar
+@snapshot: 1.png
+*/
+
 const size = 125; // width and height of display
 const gridsize = 250; // size of grid that lines are on
 const px_per_mm = gridsize/size; // how many grid pixels per mm

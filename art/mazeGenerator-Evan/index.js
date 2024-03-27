@@ -1,3 +1,9 @@
+/*
+@title: mazeGenerator
+@author: evan
+@snapshot: 10x10_maze.svg
+*/
+
 //+------------------------------------+
 //| SEE BOTTOM FOR RUN CODE & SETTINGS |
 //+------------------------------------+

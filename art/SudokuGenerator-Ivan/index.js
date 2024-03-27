@@ -1,5 +1,8 @@
-// Sudoku Generator
-// Made by Ivan S.
+/*
+@title: Sudoku Generator
+@author: Ivan S.
+@snapshot: 0.png
+*/
 
 const width = 120
 const height = 120

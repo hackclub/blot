@@ -1,3 +1,9 @@
+/*
+@title: Blot Font
+@author: geschmit
+@snapshot: blotfont_logo.png
+*/
+
 /**
  * BlotFont - A demo of the BlotFont library
  * This is a demo of my BlotFont library I wrote for the Hack Club Blot, which
@@ -262,7 +268,7 @@ artwork to the Blot website!
 
   
 1. Create it!
-    Go to https://blot.hackclub.dev/ to learn how to
+    Go to https://blot.hackclub.com/ to learn how to
     draw using the Blot's easy to use code framework.
     
 2. PR it!

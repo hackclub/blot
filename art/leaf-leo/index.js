@@ -1,76 +1,122 @@
+/*
+@title: leaf
+@author: leomcelroy
+@snapshot: leaf.png
+*/
+
+const width = 125;
+const height = 125;
+
+setDocDimensions(width, height);
+
 const leafLength = 5
-const leafW = 1.3
+const leafW = 1.8
 
-const edge = createTurtle()
-  .forward(leafLength)
-  .resample(0.01)
-  .warp(bezierEasing(0, [0.4, 2.29], [0.52, 0.31], 0))
+bt.setRandSeed(10);
 
-function veins() {
-  const lines = createTurtle()
+const finalLines = [];
 
-  let littleLinesMax = 61
-  for (let i = 4; i < littleLinesMax - 5; i++) {
-    const t = i / (littleLinesMax - 1)
-    const x0 = t * leafLength
-    const y0 = 0
+const topEdge = [
+  bt.nurbs([
+    [0, 0],
+    [leafLength*0.3, leafW],
+    [leafLength*0.8, leafW*.01],
+    [leafLength, 0]
+  ])
+]
 
-    let y = edge.interpolate(t + 0.1)[1]
+const bottomEdge = bt.copy(topEdge);
+bt.scale(bottomEdge, [1, -1], [0, 0]);
+bt.join(finalLines, bottomEdge);
 
-    const line = createTurtle([x0, y0])
+bt.iteratePoints(topEdge, (pt, t) => {
+  const [x, y] = pt;
+  const freq = 2.84;
+  const dy = bt.noise(t * 20.4, { octaves: 2 }) * 0.15 * (t === 0 || t === 1 ? 0 : 1)
+  return [x, y + dy]
+})
 
-    line.right(-70 + t * 37 + randInRange(-4, 4))
+bt.iteratePoints(bottomEdge, (pt, t) => {
+  const [x, y] = pt;
+  const dy = bt.noise(t * 20.8, { octaves: 2 }) * -0.2 * (t === 0 || t === 1 ? 0 : 1)
+  return [x, y + dy]
+})
 
-    let r = y * 0.7
+bt.join(finalLines, topEdge);
 
-    const trimTo = i % 5 === 0 ? randInRange(0.7, 0.9) : randInRange(0.1, 0.7)
+const veins = [];
 
-    if (r < 0.01) continue
+let littleLinesMax = 61
+for (let i = 4; i < littleLinesMax - 5; i++) {
+  const t = i / (littleLinesMax - 1) // this line to get t values 0 to 1 while iterating is very common
+  const x0 = t * leafLength
+  const y0 = 0
 
-    const warper = bezierEasing(0, [0.28, y / 4], [0.58, y / 8], 0)
+  const y = bt.getPoint(topEdge, t + 0.1)[1]
 
-    line.forward(r).resample(0.01).warp(warper).resample(0.05).trim(0, trimTo)
+  const angle = (-70 + t * 37 + bt.randInRange(-4, 4)) / 180 * Math.PI;
+  let r = y * 0.8;
 
-    line.iteratePath(pt => {
-      return Math.random() < (i % 5 === 0 ? +0.17 : 0.56) ? 'BREAK' : pt
-    })
+  const line = [
+    bt.nurbs([
+      [x0, y0],
+      [
+        x0 + Math.cos(angle) * r / 2 - y / 4,
+        -(y0 + Math.sin(angle) * r / 2)
+      ],
+      [
+        x0 + Math.cos(angle) * r,
+        -(y0 + Math.sin(angle) * r)
+      ]
+    ])
+  ];
 
-    lines.join(line)
-  }
+  if (r < 0.01) continue
 
-  return lines
+  const trimTo = (i % 5 === 0) ?
+    bt.randInRange(0.7, 0.9) :
+    bt.randInRange(0.1, 0.7);
+
+  bt.trim(line, 0, trimTo);
+
+  bt.resample(line, .03)
+
+  bt.iteratePoints(line, pt => {
+    return Math.random() < (i % 5 === 0 ? 0.28 : 0.40) ? 'BREAK' : pt
+  });
+
+
+  bt.join(veins, line);
 }
 
-const t = createTurtle()
+bt.join(finalLines, veins)
 
-const bottom = edge.copy().scale([1, -1], [0, 0])
+const bottomVeins = bt.copy(veins);
+bt.scale(bottomVeins, [1, -1], [0, 0])
+bt.join(finalLines, bottomVeins)
 
-edge.warp(
-  t => noise(t * 20.4, { octaves: 2 }) * 0.09 * (t === 0 || t === 1 ? 0 : 1)
-)
-bottom.warp(
-  t => noise(t * 23.6, { octaves: 2 }) * -0.1 * (t === 0 || t === 1 ? 0 : 1)
-)
 
-t.join(edge)
-t.join(bottom)
-t.join(veins())
-t.join(veins().scale([1, -1], [0, 0]))
+const stem = [
+  [
+    [-leafLength*.2, 0],
+    [leafLength, 0]
+  ]
+];
+bt.resample(stem, 0.01);
+bt.join(finalLines, stem);
 
-const lineStem = createTurtle([-1, 0])
-  .forward(leafLength + 1)
-  .resample(0.1)
-
-t.join(lineStem)
-
-t.iteratePath(pt => {
+bt.iteratePoints(finalLines, pt => {
   let [x, y] = pt
   y += x * x * 0.02
-  y += noise([x * 0.2]) * 0.3
+  y += bt.noise([x * 0.2]) * 0.3
   return [x, y]
 })
 
-t.translate([125 / 2, 125 / 2], t.cc)
-t.scale(17.2)
+// center piece
+const finalBounds = bt.bounds(finalLines);
+const finalScale = width/finalBounds.width*.85;
+bt.scale(finalLines, finalScale);
+bt.translate(finalLines, [width / 2, height / 2], bt.bounds(finalLines).cc);
 
-drawTurtles([t])
+// draw it
+drawLines(finalLines);

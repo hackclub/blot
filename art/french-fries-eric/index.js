@@ -1,5 +1,8 @@
-// hackclub french fries
-// xiexiedev
+/*
+@title: hackclub french fries
+@author: xiexiedev
+@snapshot: 0.png
+*/
 
 const width = 120
 const height = 120

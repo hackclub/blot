@@ -1,5 +1,8 @@
-// Fractal trees by Maggie, Claire and Belle
-
+/*
+@title: Fractal trees 
+@author: Maggie, Claire and Belle
+@snapshot: 0.png
+*/
 const t = createTurtle();
 
 const MAX_ITERATION = randInRange(7, 10)

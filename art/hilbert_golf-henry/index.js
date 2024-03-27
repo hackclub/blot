@@ -1,3 +1,9 @@
+/*
+@title: hilbert
+@author: henry bass
+@snapshot: hilbert_golf.png
+*/
+
 let t = createTurtle([7, -7])
 for (let i of eval(
   `'A'` + `.replace(/[AB]/g,c=>c=='A'?'-BF+AFA+FB-':'+AF-BFB-FA+')`.repeat(5)

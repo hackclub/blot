@@ -27,7 +27,7 @@ void setup() {
 
   Serial.begin(9600);
 
-  on("light", onLight);
+  // on("light", onLight);
   on("go", go);
   on("servo", moveServo);
   on("motorsOn", motorsOn);
@@ -42,9 +42,9 @@ void setup() {
 
   pinMode(enablePin, OUTPUT); // enable pin
 
-  pinMode(PIN_LED, OUTPUT);
+  // pinMode(PIN_LED, OUTPUT);
 
-  startupIndicator(); // once startup is finished, indicate to user
+  // startupIndicator(); // once startup is finished, indicate to user
 }
 
 void loop() {

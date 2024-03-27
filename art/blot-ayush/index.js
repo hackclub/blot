@@ -1,3 +1,9 @@
+/*
+@title: Self Portrait
+@author: ayush
+@snapshot: blot1.png
+*/
+
 // Check the workshop tab to get started
 
 const x = 20 / 100;
@@ -13,7 +19,7 @@ const fillRepeat = 1;
 setDocDimensions(width, height);
 
 function createExtrusion(extrusionWidth, extrusionLength, fillRepeat) {
-  const t = createTurtle();
+  const t = new bt.Turtle();
 
   t.left(90);
   t.forward(extrusionLength);
@@ -46,11 +52,11 @@ function createExtrusion(extrusionWidth, extrusionLength, fillRepeat) {
   t.right(90);
   t.forward(extrusionWidth / 4);
 
-  return t;
+  return t.lines();
 }
 
 function endCap(padding, stepperSize, extrusionWidth, legSize) {
-  const t = createTurtle();
+  const t = new bt.Turtle();
   t.left(90);
 
   const paddedStepper = stepperSize + padding;
@@ -80,20 +86,20 @@ function endCap(padding, stepperSize, extrusionWidth, legSize) {
   t.forward(legSize);
   t.left(90);
   t.forward(paddedStepper - legWidth);
-  return t;
+  return t.lines();
 }
 
 function cube(sideLength) {
-  const t = createTurtle();
+  const t = new bt.Turtle();
   for (let i = 0; i < 4; i++) {
     t.forward(sideLength);
     t.right(90);
   }
-  return t;
+  return t.lines();
 }
 
 function createHolder(padding, extrusionWidth, penRad) {
-  const t = createTurtle();
+  const t = new bt.Turtle();
   t.left(90);
   t.forward(extrusionWidth * 2);
   t.right(90);
@@ -105,11 +111,11 @@ function createHolder(padding, extrusionWidth, penRad) {
 
   t.jump([(padding + extrusionWidth) / 2, extrusionWidth * 2 - padding]);
   t.arc(360, penRad);
-  return t;
+  return t.lines();
 }
 
 function carriageSide(padding, extrusionWidth, wheelRad) {
-  let t = createTurtle();
+  let t = new bt.Turtle();
   t.left(90);
   const width = 2 * (padding + wheelRad * 2) + extrusionWidth;
   const length = padding + wheelRad * 2;
@@ -129,33 +135,45 @@ function carriageSide(padding, extrusionWidth, wheelRad) {
   t.jump([length, width - (wheelRad + padding)]);
   t.arc(360, wheelRad);
 
-  return t;
+  return t.lines();
 }
 
 const leftCap = endCap(padding, 12, extrusionWidth, 7);
-leftCap.translate([width / 6, height / 2], leftCap.cc);
+bt.translate(leftCap, [width / 6, height / 2], bt.bounds(leftCap).cc);
 
 const leftCarriage = carriageSide(2, extrusionWidth, 2);
 const center = createExtrusion(extrusionWidth, extrusionLength, fillRepeat);
 
 const uncoveredLength =
-  extrusionLength - (leftCarriage.width * 2 + center.width);
+  extrusionLength - (bt.bounds(leftCarriage).width * 2 + bt.bounds(center).width);
 
 const left = createExtrusion(extrusionWidth, uncoveredLength * x, fillRepeat);
-left.rotate(90, left.cc);
-left.translate(leftCap.rc, left.lc);
+bt.rotate(left, 90, bt.bounds(left).cc);
+bt.translate(left, bt.bounds(leftCap).rc, bt.bounds(left).lc);
 
-leftCarriage.translate(left.rc, leftCarriage.lc);
-center.translate(leftCarriage.rt, [
-  center.lc[0],
-  center.lc[1] + center.height * y,
-]);
+bt.translate(leftCarriage, bt.bounds(left).rc, bt.bounds(leftCarriage).lc);
+bt.translate(
+  center,
+  bt.bounds(leftCarriage).rt,
+  [
+    bt.bounds(center).lc[0],
+    bt.bounds(center).lc[1] + bt.bounds(center).height * y,
+  ]
+);
 
 const rightCarriage = carriageSide(2, extrusionWidth, 2);
-rightCarriage.rotate(180, rightCarriage.cc);
-rightCarriage.translate(
-  [leftCarriage.rc[0] + center.width, leftCarriage.rc[1]],
-  rightCarriage.lc
+bt.rotate(
+  rightCarriage,
+  180,
+  rightCarriage.cc
+);
+bt.translate(
+  rightCarriage,
+  [
+    bt.bounds(leftCarriage).rc[0] + bt.bounds(center).width,
+    bt.bounds(leftCarriage).rc[1]
+  ],
+  bt.bounds(rightCarriage).lc
 );
 
 const right = createExtrusion(
@@ -163,28 +181,28 @@ const right = createExtrusion(
   uncoveredLength * (1 - x),
   fillRepeat
 );
-right.rotate(90, right.cc);
-right.translate(rightCarriage.rc, right.lc);
+bt.rotate(right, 90, bt.bounds(right).cc);
+bt.translate(right, bt.bounds(rightCarriage).rc, bt.bounds(right).lc);
 
 const topCap = cube(padding + extrusionWidth);
-topCap.translate(center.ct, topCap.cb);
+bt.translate(topCap, bt.bounds(center).ct, bt.bounds(topCap).cb);
 
 const rightCap = endCap(padding, 12, extrusionWidth, 7);
-rightCap.rotate(180, rightCap.cc);
-rightCap.translate(right.rc, rightCap.lc);
+bt.rotate(rightCap, 180, bt.bounds(rightCap).cc);
+bt.translate(rightCap, bt.bounds(right).rc, bt.bounds(rightCap).lc);
 
 const holder = createHolder(padding, extrusionWidth, 1);
-holder.rotate(180, holder.cc);
-holder.translate(center.cb, holder.ct);
+bt.rotate(holder, 180, bt.bounds(holder).cc);
+bt.translate(holder, bt.bounds(center).cb, bt.bounds(holder).ct);
 
-drawTurtles([
-  center,
-  leftCarriage,
-  rightCarriage,
-  left,
-  right,
-  topCap,
-  leftCap,
-  rightCap,
-  holder,
+drawLines([
+  ...center,
+  ...leftCarriage,
+  ...rightCarriage,
+  ...left,
+  ...right,
+  ...topCap,
+  ...leftCap,
+  ...rightCap,
+  ...holder,
 ]);

@@ -426,7 +426,7 @@ DrawBorpheus([55.3, 57.4], 0.2)
 DrawText(`-> Your blot device is finally here to assemble! It's now
 up to you what your drawing machine's limits are.
 
--> Follow the build guide on blot.hackclub.dev/assembly - the
+-> Follow the build guide on blot.hackclub.com/assembly - the
 lines on the side of this card match with yours in the kit!
 
 -> Please keep in mind that the Blot is not a consumer

@@ -1,0 +1,143 @@
+<style>
+  .main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: scale(1, -1);
+    transform-origin: center;
+  }
+
+  #myPath {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 100s forwards;
+    stroke-width: 0.01;
+    fill: "none";
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+</style>
+
+<div class="main">
+  <svg
+    class="svg-container"
+    viewbox="0 0 115 72"
+    xmlns="http://www.w3.org/2000/svg"
+  ></svg>
+</div>
+
+<script defer type="module">
+  function splitPathIntoSubpathsAndAddCSS(pathData, rateOfDrawing = 10) {
+    // units/second
+    const subpaths = pathData.split(/(?=M)/);
+    let styleContent = "";
+    let cumulativeAnimationTime = 0;
+
+    // Create a temporary SVG to compute path lengths
+    const tempSvg = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "svg",
+    );
+
+    console.log(document.body);
+    document.body.appendChild(tempSvg);
+
+    const subpathElements = subpaths.map((subpath, index) => {
+      const pathElement = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path",
+      );
+      pathElement.setAttribute("d", subpath.trim());
+      pathElement.setAttribute("fill", "none");
+      pathElement.setAttribute("stroke", "black");
+
+      // Append to tempSvg to compute its length
+      tempSvg.appendChild(pathElement);
+      const pathLength = pathElement.getTotalLength();
+      tempSvg.removeChild(pathElement);
+
+      pathElement.setAttribute("id", `line${index + 1}`);
+
+      const animationDurationForThisPath = pathLength / rateOfDrawing;
+
+      // Create the style for this path
+      styleContent += `
+              #line${index + 1} {
+                  stroke-dasharray: ${pathLength}; 
+                  stroke-dashoffset: ${pathLength};
+                  animation-name: drawLine${index + 1};
+                  animation-duration: ${animationDurationForThisPath}s;
+                  animation-delay: ${cumulativeAnimationTime % 1.4}s;
+                  animation-fill-mode: forwards;
+                  stroke-width: .1;
+              }
+
+              @keyframes drawLine${index + 1} {
+                  to {
+                      stroke-dashoffset: 0;
+                  }
+              }
+            `;
+
+      // Update cumulative animation time for the next iteration
+      cumulativeAnimationTime += animationDurationForThisPath;
+
+      return pathElement;
+    });
+
+    // Remove the temporary SVG
+    document.body.removeChild(tempSvg);
+
+    // Add the styles
+    const styleElement = document.createElement("style");
+    styleElement.textContent = styleContent;
+    document.head.appendChild(styleElement);
+
+    return subpathElements;
+  }
+
+  const pathData = ``;
+
+  const subpathElements = splitPathIntoSubpathsAndAddCSS(pathData);
+
+  const svgElement = document.querySelector(".svg-container");
+  subpathElements.forEach((element) => svgElement.appendChild(element));
+
+  setTimeout(() => {
+    fadeIn(document.querySelector("nav"), 1500);
+    document.querySelectorAll(".fade-in").forEach((el) => {
+      fadeIn(el, 1500);
+    });
+  }, 1000);
+
+  function fadeIn(el, duration = 2000) {
+    let start;
+
+    function animate(timestamp) {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+
+      // Calculate the current opacity
+      const opacity = Math.min(elapsed / duration, 1);
+      el.style.opacity = opacity;
+
+      // Continue the animation until the duration is reached
+      if (elapsed < duration) {
+        requestAnimationFrame(animate);
+      }
+    }
+
+    // Start the animation
+    requestAnimationFrame(animate);
+  }
+</script>

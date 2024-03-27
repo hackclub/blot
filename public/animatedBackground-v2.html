@@ -1,0 +1,498 @@
+<style>
+  html, body {
+    padding: 0;
+    margin: 0;
+  }
+
+  canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<canvas></canvas>
+
+
+<script defer type="module">
+
+  const pathData = ``;
+
+  let subpaths = pathData.split("M").map(pl => pl.split("L").map(pair => pair.trim().split(" ").map(Number)));
+  const newSubpaths = [];
+  subpaths.forEach(pl => {
+    const newPl = [];
+    pl.forEach(pt => {
+      newPl.push(pt)
+    }) 
+
+    if (newPl.length > 1) newSubpaths.push(newPl);
+  })
+
+  subpaths = newSubpaths;
+
+  resample(subpaths, .05);
+
+  function draw() {
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const boundingBox = canvas.getBoundingClientRect();
+    const w = boundingBox.width;
+    const h = boundingBox.height;
+    canvas.width = w;
+    canvas.height = h;
+
+    const bb = () => bounds(subpaths);
+
+    const aspectRatioWindow = w/h;
+    const aspectRatioArt = bb().width/bb().height;
+
+    const scaleFactor = aspectRatioWindow < aspectRatioArt 
+      ? w/bb().width*.95
+      : h/bb().height*.95;
+
+    translate(subpaths, [0, 0], bb().cc);
+    scale(subpaths, [scaleFactor, -scaleFactor], [0, 0]);
+    translate(subpaths, [w/2, h/2]);
+
+    function drawPolylines(pls) {
+      // ctx.fillStyle = "white";
+      // ctx.fillRect(0, 0, w, h);
+
+      pls.forEach(pl => {
+        pl.forEach((pt, i) => {
+          if (i === 0) ctx.moveTo(...pt);
+          else ctx.lineTo(...pt);
+
+        })
+      })
+
+      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = "grey";
+      ctx.stroke();
+    }
+
+
+    // ctx.beginPath();
+    // ctx.arc(...bb().lc, 5, 0, 2 * Math.PI, false);
+    // ctx.fillStyle = 'red';
+    // ctx.fill();
+
+    const groupIndices = splitIntoEvenArrays(subpaths.length, 20);
+    const groups = groupIndices.map(group => group.map(index => subpaths[index]));
+    console.log({ groups, groupIndices });
+
+    const totalTime = 3000;
+    const delta = 100;
+
+    const frames = [];
+
+    for (let i = 0; i < totalTime; i += delta) {
+      let copiedPls = copy(groups).flat();
+      console.log({ t: i/totalTime });
+      trim(copiedPls, 0, i/totalTime)
+      // copiedPls = copiedPls.map( pl => trim([ copy(pl) ], 0, i/totalTime));
+      // copiedPls.forEach(pl => trim([ pl ], 0, i/totalTime));
+      frames.push(copiedPls);
+    }
+
+    console.log(copy(frames));
+
+    frames.push(copy(groups).flat());
+
+    // let lastPerct = 0;
+    let count = 0;
+
+    const intervalId = setInterval(() => {
+      console.log(count);
+      const frame = frames[count];
+      console.log({ frames, frame, count });
+
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, w, h);
+      drawPolylines(frame);
+
+      count++;
+      if (count > totalTime/delta) clearInterval(intervalId);
+    }, delta)
+    
+    // drawPolylines(subpaths);
+    // let start = performance.now();
+
+    // let last = performance.now();
+    // const drawAnim = () => {
+    //   const elapsedTime = performance.now() - last;
+
+    //   if (delta > elapsedTime) {
+    //     requestAnimationFrame(drawAnim);
+    //   } else {
+
+    //     const totalElapsed = performance.now() - start;
+        
+    //     if (totalElapsed <= totalTime) {
+    //       const percent = totalElapsed/totalTime;
+    //       // console.time();
+    //       console.log(frames[count], count)
+    //       frames[count].forEach(pls => {
+    //         drawPolylines(pls);
+    //       })
+    //       // console.timeEnd();
+    //       lastPerct = percent;
+    //       count++;
+    //       requestAnimationFrame(drawAnim);
+    //     } else {
+    //       // drawPolylines(subpaths);
+    //       frames.at(-1).forEach(pls => {
+    //         drawPolylines(pls);
+    //       })
+    //       console.log("ended in", (performance.now() - start)/1000);
+    //     }
+
+    //     last = performance.now();
+    //   }
+    // };
+
+    // drawPolylines(subpaths);
+    // drawAnim();
+  }
+
+function splitIntoEvenArrays(n, numArrays) {
+  const arrays = Array.from({ length: numArrays }, () => []);
+  const numbers = Array.from({ length: n }, (_, index) => index).sort(() => Math.random() - 0.5);
+  numbers.forEach((number, index) => {
+    arrays[index % numArrays].push(number);
+  });
+  return arrays;
+}
+
+  window.addEventListener("load", draw);
+  window.addEventListener("resize", draw);
+  
+
+function copy(json) {
+  return JSON.parse(JSON.stringify(json));
+}
+
+function bounds(polylines) {
+  const { xMin, xMax, yMin, yMax } = extrema(polylines.flat());
+
+  const width = xMax - xMin;
+  const height = yMax - yMin;
+  const lt = [xMin, yMax];
+  const lc = [xMin, (yMax + yMin) / 2];
+  const lb = [xMin, yMin];
+  const ct = [(xMax + xMin) / 2, yMax];
+  const cc = [(xMax + xMin) / 2, (yMax + yMin) / 2]
+  const cb = [(xMax + xMin) / 2, yMin];
+  const rt = [xMax, yMax];
+  const rc = [xMax, (yMax + yMin) / 2];
+  const rb = [xMax, yMin];
+
+  return {
+    width,
+    height,
+    lt,
+    lc,
+    lb,
+    ct,
+    cc,
+    cb,
+    rt,
+    rc,
+    rb,
+    xMin,
+    xMax,
+    yMin,
+    yMax
+  }
+}
+
+function extrema(pts) {
+  let xMin = Number.POSITIVE_INFINITY
+  let xMax = Number.NEGATIVE_INFINITY
+  let yMin = Number.POSITIVE_INFINITY
+  let yMax = Number.NEGATIVE_INFINITY
+
+  pts.forEach(p => {
+    const [x, y] = p
+
+    if (xMin > x) xMin = x
+    if (xMax < x) xMax = x
+    if (yMin > y) yMin = y
+    if (yMax < y) yMax = y
+  })
+
+  return {
+    xMin,
+    xMax,
+    yMin,
+    yMax
+  }
+}
+
+function isect_circ_line(
+  cx,
+  cy,
+  r,
+  x0,
+  y0,
+  x1,
+  y1
+) {
+  //https://stackoverflow.com/a/1084899
+  let dx = x1 - x0
+  let dy = y1 - y0
+  let fx = x0 - cx
+  let fy = y0 - cy
+  let a = dx * dx + dy * dy
+  let b = 2 * (fx * dx + fy * dy)
+  let c = fx * fx + fy * fy - r * r
+  let discriminant = b * b - 4 * a * c
+  if (discriminant < 0) {
+    return null
+  }
+  discriminant = Math.sqrt(discriminant)
+  let t0 = (-b - discriminant) / (2 * a)
+  if (0 <= t0 && t0 <= 1) {
+    return t0
+  }
+  let t = (-b + discriminant) / (2 * a)
+  if (t > 1 || t < 0) {
+    return null
+  }
+  return t
+}
+
+function resamplePolyline(polyline, step) {
+  if (polyline.length < 2) {
+    return polyline.slice()
+  }
+  polyline = polyline.slice()
+  let out = [polyline[0].slice()]
+  let next = null
+  let i = 0
+  while (i < polyline.length - 1) {
+    let a = polyline[i]
+    let b = polyline[i + 1]
+    let dx = b[0] - a[0]
+    let dy = b[1] - a[1]
+    let d = Math.sqrt(dx * dx + dy * dy)
+    if (d == 0) {
+      i++
+      continue
+    }
+    let n = ~~(d / step)
+    let rest = (n * step) / d
+    let rpx = a[0] * (1 - rest) + b[0] * rest
+    let rpy = a[1] * (1 - rest) + b[1] * rest
+    for (let j = 1; j <= n; j++) {
+      let t = j / n
+      let x = a[0] * (1 - t) + rpx * t
+      let y = a[1] * (1 - t) + rpy * t
+      let xy = [x, y]
+      for (let k = 2; k < a.length; k++) {
+        xy.push(a[k] * (1 - t) + (a[k] * (1 - rest) + b[k] * rest) * t)
+      }
+      out.push(xy)
+    }
+
+    next = null
+    for (let j = i + 2; j < polyline.length; j++) {
+      let b = polyline[j - 1]
+      let c = polyline[j]
+      if (b[0] == c[0] && b[1] == c[1]) {
+        continue
+      }
+      let t = isect_circ_line(rpx, rpy, step, b[0], b[1], c[0], c[1])
+      if (t == null) {
+        continue
+      }
+
+      let q = [b[0] * (1 - t) + c[0] * t, b[1] * (1 - t) + c[1] * t]
+      for (let k = 2; k < b.length; k++) {
+        q.push(b[k] * (1 - t) + c[k] * t)
+      }
+      out.push(q)
+      polyline[j - 1] = q
+      next = j - 1
+      break
+    }
+    if (next == null) {
+      break
+    }
+    i = next
+  }
+
+  if (out.length > 1) {
+    let lx = out[out.length - 1][0]
+    let ly = out[out.length - 1][1]
+    let mx = polyline[polyline.length - 1][0]
+    let my = polyline[polyline.length - 1][1]
+    let d = Math.sqrt((mx - lx) ** 2 + (my - ly) ** 2)
+    if (d < step * 0.5) {
+      out.pop()
+    }
+  }
+  out.push(polyline[polyline.length - 1].slice())
+  return out
+}
+
+function resample(polylines, resolution) {
+  polylines.forEach(pl => {
+    const newPl = resamplePolyline(pl, resolution)
+    while (pl.length > 0) pl.pop()
+
+    while (newPl.length > 0) {
+      pl.push(newPl.shift())
+    }
+  })
+
+  return polylines
+}
+
+
+function translate(polylines, to, origin = [0, 0]) {
+  polylines.flat().forEach(pt => {
+    const [x, y] = translatePt(pt, to, origin);
+    pt[0] = x;
+    pt[1] = y;
+  });
+
+  return polylines;
+}
+
+function rotate(polylines, angle, origin) {
+  if (!origin) origin = bounds(polylines).cc
+
+  polylines.flat().forEach(pt => {
+    const [x, y] = rotatePt(pt, angle, origin);
+    pt[0] = x;
+    pt[1] = y;
+  });
+
+  return polylines
+}
+
+function scale(polylines, factor, origin) {
+  if (!origin) origin = bounds(polylines).cc
+
+  polylines.flat().forEach(pt => {
+    const [x, y] = scalePt(pt, factor, origin);
+    pt[0] = x;
+    pt[1] = y;
+  });
+
+  return polylines
+}
+
+function translatePt(pt, [x, y], origin = [0, 0]) {
+  return [pt[0] + x - origin[0], pt[1] + y - origin[1]]
+}
+
+function rotatePt(pt, angle, origin = [0, 0]) {
+  let delta = (angle / 180) * Math.PI
+
+  let hereX = pt[0] - origin[0]
+  let hereY = pt[1] - origin[1]
+
+  let newPoint = [
+    hereX * Math.cos(delta) - hereY * Math.sin(delta) + origin[0],
+    hereY * Math.cos(delta) + hereX * Math.sin(delta) + origin[1]
+  ]
+
+  return newPoint
+}
+
+function scalePt(pt, factor, origin) {
+  if (typeof factor === 'number') factor = [factor, factor]
+  const [xFactor, yFactor] = factor
+  const [x, y] = origin
+  const newPoint = [(pt[0] - x) * xFactor + x, (pt[1] - y) * yFactor + y]
+
+  return newPoint
+}
+
+function trim(polylines, t1, t2) {
+  t1 = Math.max(0, Math.min(1, t1));
+  t2 = Math.max(0, Math.min(1, t2));
+
+  let totalLength = getTotalLength(polylines);
+  let targetLength1 = totalLength * t1;
+  let targetLength2 = totalLength * t2;
+
+  let newPolylines = [];
+  let accumulatedLength = 0;
+
+  for (let i = 0; i < polylines.length; i++) {
+    let polyline = polylines[i];
+    let newPolyline = [];
+
+    for (let j = 1; j < polyline.length; j++) {
+      let segment = [polyline[j - 1], polyline[j]];
+      let dx = segment[1][0] - segment[0][0];
+      let dy = segment[1][1] - segment[0][1];
+      let segmentLength = Math.sqrt(dx * dx + dy * dy);
+
+      let nextAccumulatedLength = accumulatedLength + segmentLength;
+
+      if (nextAccumulatedLength >= targetLength1 && accumulatedLength <= targetLength2) {
+        if (accumulatedLength < targetLength1) {
+          // Interpolate start point
+          let t = (targetLength1 - accumulatedLength) / segmentLength;
+          newPolyline.push([
+            segment[0][0] + t * dx,
+            segment[0][1] + t * dy,
+          ]);
+        } else if (newPolyline.length === 0) {
+          // If this is the first segment after targetLength1, add the start point
+          newPolyline.push(segment[0]);
+        }
+
+        if (nextAccumulatedLength > targetLength2) {
+          // Interpolate end point and break
+          let t = (targetLength2 - accumulatedLength) / segmentLength;
+          newPolyline.push([
+            segment[0][0] + t * dx,
+            segment[0][1] + t * dy,
+          ]);
+          break;
+        } else {
+          newPolyline.push(segment[1]);
+        }
+      }
+
+      accumulatedLength += segmentLength;
+
+      if (accumulatedLength >= targetLength2) break;
+    }
+
+    if (newPolyline.length > 0) {
+      newPolylines.push(newPolyline);
+    }
+
+    if (accumulatedLength >= targetLength2) break;
+  }
+
+  while (polylines.length) polylines.pop();
+  newPolylines.forEach(pl => polylines.push(pl));
+
+  return polylines;
+}
+
+function getTotalLength(polylines) {
+  let totalLength = 0;
+  for (let polyline of polylines) {
+    for (let i = 1; i < polyline.length; i++) {
+      let dx = polyline[i][0] - polyline[i - 1][0];
+      let dy = polyline[i][1] - polyline[i - 1][1];
+      totalLength += Math.sqrt(dx * dx + dy * dy);
+    }
+  }
+  return totalLength;
+}
+
+
+</script>
