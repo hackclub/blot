@@ -256,7 +256,7 @@ Then call veins again and flip it over for the bottom side.
 ```js
 const bottomVeins = makeVeins();
 bt.scale(bottomVeins, [1, -1], [0, 0]);
-leaf.join(bottomVeins);
+bt.join(finalLines, bottomVeins);
 ```
 
 <img

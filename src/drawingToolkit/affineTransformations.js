@@ -1,4 +1,3 @@
-import { iteratePolylines } from "./iteratePolylines.js";
 import { bounds } from "./bounds.js";
 
 export const translate = (polylines, to, origin = [0, 0]) => {

@@ -1,5 +1,6 @@
 export const defaultProgram = `// welcome to blot!
-// check out this guide to learn how to program here
+
+// check out this guide to learn how to program in blot
 // https://blot.hackclub.com/editor?guide=start
 
 const width = 125;
@@ -7,10 +8,10 @@ const height = 125;
 
 setDocDimensions(width, height);
 
-tk.setRandSeed(14);
+bt.setRandSeed(14);
 
-const finalPolylines = [];
-const t = new tk.Turtle();
+const finalLines = [];
+const t = new bt.Turtle();
 
 for (let i = 0; i < 52; i++) {
   t.forward(i);
@@ -18,12 +19,12 @@ for (let i = 0; i < 52; i++) {
 }
 
 // add turtle to final lines
-tk.join(finalPolylines, t.lines());
+bt.join(finalLines, t.lines());
 
 // center piece
-const cc = tk.bounds(finalPolylines).cc;
-tk.translate(finalPolylines, [width / 2, height / 2], cc);
+const cc = bt.bounds(finalLines).cc;
+bt.translate(finalLines, [width / 2, height / 2], cc);
 
 // draw it
-drawLines(finalPolylines);
+drawLines(finalLines);
 `.trim()

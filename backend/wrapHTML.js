@@ -6,6 +6,7 @@ export function wrapHTML(inner) {
         <meta name="description" content="Blot!" />
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="title" content="blot">
 
         <link rel="icon" type="image/svg+xml" href="/assets/borpheus.svg" id="favicon">
         <script>
@@ -36,7 +37,7 @@ export function wrapHTML(inner) {
 
         <!-- <script leave-it src="./tailwindjit.js"></script> -->
       </head>
-      <body>
+      <body class="overflow-x-hidden">
         ${inner}
       </body>
     </html>

@@ -27,7 +27,7 @@ export default function() {
 
       <img data-fade-in style="opacity: 0;" class="h-[57%] mx-auto mt-[1.5rem]" src="/assets/blot-clear-bg.png">
 
-      <video class="w-full h-full absolute inset-0 z-[-30] object-cover opacity-[.4]" autoplay muted>
+      <video class="w-full h-full absolute inset-0 z-[-30] object-cover opacity-[.4] scale-[1.15]" autoplay muted>
         <source src="/assets/output-movie.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -219,9 +219,48 @@ function footer() {
   // </footer>
 
   return `
+    <style>
+      @font-face {
+        font-family: 'Phantom Sans';
+        src: url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff')
+            format('woff'),
+          url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff2')
+            format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Phantom Sans';
+        src: url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff')
+            format('woff'),
+          url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff2')
+            format('woff2');
+        font-weight: normal;
+        font-style: italic;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Phantom Sans';
+        src: url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff')
+            format('woff'),
+          url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff2')
+            format('woff2');
+        font-weight: bold;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      footer {
+        font-family: "Phantom Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 20px;
+        line-height: 1.5;
+        font-weight: 400;
+      }
+    </style>
     <footer class="bg-gray-900 text-white">
       <div>
-        <article class="sm:flex hidden h-[400px] gap-[5rem] items-center">
+        <article class="sm:flex hidden h-[400px] gap-[5rem] items-center  justify-center">
           <div class="flex flex-col px-4 gap-[1rem]">
             <h2 class="font-bold text-xl mb-4">Hack&nbsp;Club</h2>
             <a href="https://hackclub.com/philosophy/" class="text-white-400 hover:underline">Philosophy</a>
@@ -272,10 +311,10 @@ function footer() {
             </div>
           </div>
 
-          <span class="css-w392fy">
+          <span>
             <a href="tel:1-855-625-HACK" class="text-white-400 hover:underline">1-855-625-HACK</a>
             <br>
-            <span class="css-1hqcz08">(call toll-free)</span>
+            <span>(call toll-free)</span>
           </span>
 
           </div>

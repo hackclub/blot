@@ -28,6 +28,10 @@
   --font-7: 6rem;
 }
 
+html, body {
+  overscroll-behavior: none; /*this stops the back swipe*/
+}
+
 
 /*
 
