@@ -1,6 +1,7 @@
 import { useEffect } from "preact/hooks";
 import { getStore } from "../state.ts";
 import { loadCodeFromString } from "../loadCodeFromString.ts";
+import { toolkit as tk } from "../drawingToolkit/toolkit.js";
 
 export default function DropBox() {
   useEffect(() => {
@@ -65,7 +66,9 @@ function addDragDrop() {
       } else if (extension === "svg") {
         text = text.replaceAll("\n", "");
 
-        const newLines = `const importedSVG = svgToPolylines(String.raw\`${text}\`);\n`;
+        const polylines = JSON.stringify(tk.svgToPolylines(text));
+
+        const newLines = `const importedSVG = ${polylines};\n`;
 
         view.dispatch({
           changes: { from: 0, insert: newLines },

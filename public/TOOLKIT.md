@@ -112,9 +112,11 @@ bt.catmullRom(points, ?steps = 1000) // returns polyline [number, number][]
 bt.nurbs(points, ?ops = { steps: 100, degree: 2}) // returns polyline [number, number][]
 ```
 
+<!-- 
 ```js
 bt.svgToPolylines(svg: string) // returns array of polylines [number, number][][]
-```
+``` 
+-->
 
 ## Randomness
 

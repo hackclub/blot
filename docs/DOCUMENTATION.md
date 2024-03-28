@@ -77,7 +77,7 @@ You can also destructure the functions from `toolkit`.
 
 ```js
 // all imports
-const { Turtle, trim, merge, cut, cover, rotate, scale, translate, originate, iteratePoints, pointInside, resample, join, copy, union, difference, intersection, xor, getAngle, getPoint, getNormal, bounds, nurbs, catmullRom, svgToPolylines, rand, setRandSeed, randInRange, randIntInRange, noise } = toolkit;
+const { Turtle, trim, merge, cut, cover, rotate, scale, translate, originate, iteratePoints, pointInside, resample, join, copy, union, difference, intersection, xor, getAngle, getPoint, getNormal, bounds, nurbs, catmullRom, rand, setRandSeed, randInRange, randIntInRange, noise } = toolkit;
 ```
 
 ```js
@@ -661,6 +661,7 @@ Generates a Non-Uniform Rational B-Spline (NURBS) curve, which provides great fl
 tk.nurbs([[0, 0], [10, 15], [20, 5]], { steps: 50, degree: 3 }); // Returns a polyline forming a NURBS curve with specified degree and steps
 ```
 
+<!--
 ### svgToPolylines(svg: string)
 
 **Parameters:**
@@ -677,6 +678,7 @@ Converts SVG path data into an array of polylines.
 ```js
 tk.svgToPolylines(`<svg><path d="M0,0 L10,10 Q15,15 20,5" /></svg>`); // Returns an array of polylines representing the SVG path
 ```
+-->
 
 ## Randomness
 

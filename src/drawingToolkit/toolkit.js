@@ -121,12 +121,17 @@ export const toolkit = {
   trim: trimPolylines,
   merge: mergePolylines,
   svgToPolylines(svgString) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(svgString, 'image/svg+xml');
-    const svg = doc.querySelector('svg');
-    const polylines = flattenSVG(svg, { maxError: 0.001 }).map(pl => pl.points);
+    try {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgString, 'image/svg+xml');
+      const svg = doc.querySelector('svg');
+      const polylines = flattenSVG(svg, { maxError: 0.001 }).map(pl => pl.points);
 
-    return polylines;
+      return polylines;
+    } catch (err) {
+      throw new Error("SVGs can not be parsed in web workers.");
+    }
+    
   },
   join() {
     const [first, ...rest] = arguments;
