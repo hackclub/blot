@@ -7,7 +7,7 @@
 const width = 125;
 const height = 125;
 setDocDimensions(width, height);
-const t = createTurtle();
+const t = new bt.Turtle();
 
 let reverselamp = false;
 // leg 1 parameters
@@ -106,7 +106,7 @@ t.down();
 t.forward(wire_len);
   
 //lampbox
-t.jump(t.end);
+t.jump(t.path.at(-1).at(-1));
 t.left(90);
 t.right(lamp_degree);
 lenlist = [lampbox_width/2, lampbox_height, lampbox_width, lampbox_height, lampbox_width/2];
@@ -118,7 +118,7 @@ t.right(90);
 //lamp
 let flip = 1;
 if (reverselamp) {flip=-1;}
-t.jump(t.end);
+t.jump(t.path.at(-1).at(-1));
 t.left(90);
 t.up();
 if (!reverselamp) {
@@ -136,12 +136,12 @@ t.arc(90,lamp_radius);
 t.forward(lamp_height);
 t.arc(90,lamp_radius);
 t.forward(lamp_width);
-const arcend = t.end;
+const arcend = t.path.at(-1).at(-1);
 t.right(-90);
 t.forward(lamp_radius*2+lamp_height);
 
 //light
-t.jump(t.end);
+t.jump(t.path.at(-1).at(-1));
 t.right(90);
 t.left(light_size);
 t.forward(light_width);
@@ -149,8 +149,9 @@ t.jump(arcend);
 t.right(light_size*2);
 t.forward(light_width);
 
-t.translate(
+bt.translate(
+  t.path,
   [width/2, height/2], 
-  t.cc
+  bt.bounds(t.path).cc
 );
-drawTurtles([t]);
+drawLines(t.lines());

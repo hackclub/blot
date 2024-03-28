@@ -18,7 +18,7 @@ const GALLERY_NOT_TO_DISPLAY = [
   "french-fries-eric",
   "hilbert_golf-henry",
   "L-system-reva",
-  "lampda-snipchu",
+  // "lampda-snipchu",
   // "landscape-henry",
   // "linesCircles-yutaro",
   "Mandelbrot-Oskar",
