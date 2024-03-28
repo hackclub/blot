@@ -1,6 +1,8 @@
 import { patchStore, getStore, addToStore } from './state.ts'
 import { render } from './render.tsx'
 
+import runCode from './run.ts'
+
 import { addBezierControl } from './events/addBezierControl.jsx'
 import { addMachineControl } from './events/addMachineControl.js'
 import { addLoadBackup } from './events/addLoadBackup.js'
@@ -84,7 +86,11 @@ export function init() {
   })
 
   document.body.dataset.theme = theme
-}
+
+  setTimeout(() => {
+    runCode();
+  }, 1500)
+} 
 
 export async function checkCurrentUser() {
   const sessionKey = localStorage.getItem('session_secret_key');
