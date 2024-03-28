@@ -42,7 +42,7 @@ function sprinkles(topFrosting, topIC, leftIC, rightIC) {
     // now limit the location of the x-axis to within the ellipse
     let xBoundry = Math.sqrt((radius ** 2 - ((y - plotShift) ** 2))) * 1.6
     let x = randInRange(plotShift - xBoundry + sprinkleLength, plotShift + xBoundry - sprinkleLength)
-    sprinklepoly.push(...sprinkle.polylines())
+    sprinklepoly.push(...sprinkle.lines())
     translate(sprinklepoly,[x, y])
     // no sprinkles within the inner circle
     if (y < (topIC) && (leftIC < x < rightIC)) {
@@ -67,7 +67,7 @@ function frosting() {
     let wave = new Turtle()
     let wavepoly = []
     wave.arc(-180, radius / 4)
-    wavepoly.push(...wave.polylines())
+    wavepoly.push(...wave.lines())
     let scaler = 1.11 * (5 / waves)
     translate(wavepoly,[plotShift, plotShift])
     rotate(wavepoly,90, [plotShift, plotShift])
@@ -90,21 +90,21 @@ let tpoly = []
 
 // donut outer ring
 t.arc(-360, radius)
-tpoly.push(...t.polylines());
+tpoly.push(...t.lines());
 translate(tpoly, [plotShift, plotShift + radius])
 scale(tpoly,[scaler, 1])
 // donut inner ring
 let t1poly = []
 let t1 = new Turtle() //bottom arc
 t1.arc(-178, radius / 3)
-t1poly.push(...t1.polylines());
+t1poly.push(...t1.lines());
 rotate(t1poly, 270, [0, -radius / 3.5])
 scale(t1poly, [1.4, 0.5])
 translate(t1poly, [plotShift, plotShift + (radius / 3)])
 let t2poly = []
 let t2 = new Turtle() //top arc
 t2.arc(-178, radius / 3)
-t2poly.push(...t2.polylines());
+t2poly.push(...t2.lines());
 rotate(t2poly,90, [0, -radius / 3.5])
 scale(t2poly,[0.9, 0.3])
 translate(t2poly,[(bounds(t1poly).cc[0] - radius / 10)+1.0, plotShift])
