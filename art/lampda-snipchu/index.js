@@ -1,7 +1,7 @@
 /*
 @title: lampda
 @author: snipchu
-@snapshot: lampielampda
+@snapshot: lampielampda0.png
 */
 
 const width = 125;
