@@ -63,17 +63,8 @@ const height = 125;
 
 setDocDimensions(width, height);
 
-
-
-
-
-
-
-
-
-
 function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
-  const graphTurtle = createTurtle();
+  const graphTurtle = new bt.Turtle();
   // if you are exploring this code, I would advise you to start from here and go down, closing those little arrows for collapsing code as you go.
   // Sorry for the mess.
 
@@ -105,9 +96,6 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
   var x = minX;
   const originalX = x;
 
-
-
-
   while (x <= maxX) {
 
     let yActual = formulaa(x);
@@ -120,8 +108,9 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
     if (x == originalX) { // is x the original value of x(or the minimum value?)?
       // if so, use jump not goto to not make a extra line.
 
-
-      graphTurtle.jump([graphTurtle.lb[0], graphTurtle.lb[1]])
+      const bb = () => bt.bounds(graphTurtle.path);
+      
+      graphTurtle.jump([bb().lb[0], bb().lb[1]])
       graphTurtle.jump([originalX, yActual])
 
     } else {
@@ -151,12 +140,8 @@ function drawEquation(formulaa, resolution, maxX, minX, maxY, minY) {
 
 
   }
-  /*
-  drawTurtles([
-    graphTurtle
-  ]);
-  */
-  return graphTurtle
+
+  return graphTurtle.lines()
 }
 
 
@@ -203,13 +188,13 @@ var linearLine2 = function(n) {
 // the left top corner
 var leftTop = function(n) {
   return (-1 / 11 * Math.pow(n - 20, 2) + 100)
-} 
+}
 
 
 // the other left top corner part
 var leftTop2 = function(n) {
   return (-1 / 20 * Math.pow(n - 20, 2) + 90)
-} 
+}
 
 
 
@@ -217,21 +202,21 @@ var leftTop2 = function(n) {
 // the right top corner 
 var rightTop = function(n) {
   return (1 / 20 * Math.pow(n - 100, 2) + 100)
-} 
+}
 
 
 
 // the other right top corner
 var rightTop2 = function(n) {
   return (1 / 11 * Math.pow(n - 100, 2) + 90)
-} 
+}
 
 
 
 // the bottom left left leg
 var bottomLeftLeft = function(n) {
   return (1 / 8 * Math.pow(n - 5, 2) + 5)
-} 
+}
 
 
 
@@ -239,7 +224,7 @@ var bottomLeftLeft = function(n) {
 
 var bottomLeftRight = function(n) {
   return (1 / 8 * Math.pow(n - 15, 2))
-} 
+}
 
 
 
@@ -262,32 +247,18 @@ var bottomRightRight = function(n) {
 } //v+Math.sqrt(r-Math.pow(n-v,2)))
 
 
-
-
-
-
-
-
-
-
-
-
 // the very bottom
 
-
-
-
-drawTurtles([
-  drawEquation(linearLine, 1, 100, 20),
-  drawEquation(linearLine2, 1, 100, 20, 200),
-  drawEquation(leftTop, 0.1, 20, 5, 900.1),
-  drawEquation(leftTop2, 0.1, 20, 5, 900.1),
-  drawEquation(rightTop, 0.1, 115, 100, 900.1),
-  drawEquation(rightTop2, 0.1, 115, 100, 900.1),
-  drawEquation(bottomLeftLeft, 0.1, 100, 8.2, 90.1),
-  drawEquation(bottomLeftRight, 0.1, 100, 8.2, 90.1),
-  drawEquation(bottomRightLeft, 0.1, 100, 0, 90),
-  drawEquation(bottomRightRight, 0.1, 110, 0, 90)
+drawLines([
+  ...drawEquation(linearLine, 1, 100, 20),
+  ...drawEquation(linearLine2, 1, 100, 20, 200),
+  ...drawEquation(leftTop, 0.1, 20, 5, 900.1),
+  ...drawEquation(leftTop2, 0.1, 20, 5, 900.1),
+  ...drawEquation(rightTop, 0.1, 115, 100, 900.1),
+  ...drawEquation(rightTop2, 0.1, 115, 100, 900.1),
+  ...drawEquation(bottomLeftLeft, 0.1, 100, 8.2, 90.1),
+  ...drawEquation(bottomLeftRight, 0.1, 100, 8.2, 90.1),
+  ...drawEquation(bottomRightLeft, 0.1, 100, 0, 90),
+  ...drawEquation(bottomRightRight, 0.1, 110, 0, 90)
 
 ]);
-

@@ -9,7 +9,8 @@
 const WIDTH = 10
 const HEIGHT = 20
 
-const t = createTurtle([WIDTH / 2, 0])
+const t = new bt.Turtle()
+t.jump([WIDTH / 2, 0])
 t.right(90)
 
 // Manage array of turtles that need to be drawn
@@ -62,9 +63,9 @@ function thicken(turtle, startingTime) {
   const left = []
   const right = []
 
-  turtle.iteratePath((pt, t) => {
+  bt.iteratePoints(turtle.path, (pt, t) => {
     // getAngle() returns degrees, convert to radians
-    const angleAtPoint = (turtle.getAngle(t) / 180) * Math.PI
+    const angleAtPoint = (bt.getAngle(turtle.path, t) / 180) * Math.PI
 
     const thickness = thicknessAt(t + startingTime)
 
@@ -94,11 +95,12 @@ function thicken(turtle, startingTime) {
       const deltaX = rightPoint[0] - leftPoint[0]
       const deltaY = rightPoint[1] - leftPoint[1]
 
-      const ring = createTurtle(leftPoint)
+      const ring = new bt.Turtle();
+      ring.jump(leftPoint)
         .setAngle((Math.atan2(deltaY, deltaX) / Math.PI) * 180)
         .forward(Math.sqrt(deltaX * deltaX + deltaY * deltaY)) // Straight line from left to right
-        .resample(0.01) // Resample so we can modulate individual points
-
+        // .resample(0.01) // Resample so we can modulate individual points
+      bt.resample(ring.path, 0.01)
       // Seed for noise
       const ringSeed = 1
 
@@ -108,11 +110,11 @@ function thicken(turtle, startingTime) {
       const normalY = deltaX / normalMag
 
       // Add noise
-      ring.iteratePath((ringPoint, ringT) => {
+      bt.iteratePoints(ring.path, (ringPoint, ringT) => {
         // Smoothstep so more noisy in middle, less at edges
         const s =
           0.9 * smoothstep(-0.1, 0.4, 0.5 - Math.abs(ringT - 0.5)) * thickness // Scale with thickness, as there's more/less room
-        const noiseMag = 2 * (noise([2 * ringT, ringSeed]) - 0.5) * s
+        const noiseMag = 2 * (bt.noise([2 * ringT, ringSeed]) - 0.5) * s
 
         ringPoint[0] += normalX * noiseMag
         ringPoint[1] += normalY * noiseMag
@@ -150,12 +152,12 @@ function makeBranch(turtle, length, startingT) {
   }
 
   if (length > +0.05) {
-    const nBranches = Math.floor(randInRange(1, 4)) // 1-3
+    const nBranches = Math.floor(bt.randInRange(1, 4)) // 1-3
 
     for (let i = 0; i < nBranches; i++) {
-      const time = randInRange(0.02, 1)
-      const pt = turtle.interpolate(time)
-      const curAngleDeg = turtle.getAngle(time),
+      const time = bt.randInRange(0.02, 1)
+      const pt = bt.getPoint(turtle.path, time)
+      const curAngleDeg = bt.getAngle(turtle.path, time),
         curAngleRad = (curAngleDeg / 180) * Math.PI
       const parentThickness = thicknessAt(time + startingT)
 
@@ -166,7 +168,8 @@ function makeBranch(turtle, length, startingT) {
       pt[0] += parentThickness * Math.cos(curAngleRad - a)
       pt[1] += parentThickness * Math.sin(curAngleRad - a)
 
-      const newBranch = createTurtle(pt)
+      const newBranch = new bt.Turtle()
+      newBranch.jump(pt)
       newBranch.setAngle(curAngleDeg)
 
       newBranch.right(a)
@@ -185,10 +188,10 @@ function makeBranch(turtle, length, startingT) {
 makeBranch(t, 0.1, 0)
 
 // Center piece
-const final = createTurtle();
-turtles.forEach(t => final.join(t));
-final.scale(115/final.height)
-final.translate([125/2, 125/2], final.cc)
+const final = new bt.Turtle();
+turtles.forEach(t => bt.join(final.path, t.path));
+bt.scale(final.path, 115/bt.bounds(final.path).height)
+bt.translate(final.path, [125/2, 125/2], bt.bounds(final.path).cc)
 
 // Draw turtles array
-drawTurtles([ final ])
+drawLines(final.lines())

@@ -4,7 +4,9 @@
 @snapshot: eca1.png
 */
 
-const t = createTurtle();
+setDocDimensions(125, 125);
+
+const t = new bt.Turtle();
 
 const w = 50
 
@@ -74,7 +76,8 @@ for (let gen = 0; gen < w * 2; gen++) {
   drawGen(allGens[gen + 1], -gen)
 }
 
-t.scale(110/t.height);
-t.translate([125/2, 125/2], t.cc);
+const bb = () => bt.bounds(t.path);
+bt.scale(t.path, 110/bb().height);
+bt.translate(t.path, [125/2, 125/2], bb().cc);
 
-drawTurtles([t]);
+drawLines(t.lines());

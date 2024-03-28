@@ -4,8 +4,10 @@
 @snapshot: 1.png
 */
 
+setDocDimensions(125, 125);
+
 const createComplexEmoji = () => {
-  const emojiTurtle = createTurtle();
+  const emojiTurtle = new bt.Turtle();
 
   // Draw the face
   emojiTurtle.jump([60, 20]).arc(360, 50);
@@ -27,24 +29,24 @@ const createComplexEmoji = () => {
 
 
   for (let i = 0; i < 2; i++) {
-    const noiseface = createTurtle();
-    noiseface.scale([0.0475 + (i * 0.0002), 0.0475 + (i * 0.0002)]);
-    noiseface.translate([-2631, -2847]);
-    noiseface.iteratePath((pt, tValue) => {
+    const noiseface = new bt.Turtle();
+    bt.scale(noiseface.path, [0.0475 + (i * 0.0002), 0.0475 + (i * 0.0002)]);
+    bt.translate(noiseface.path, [-2631, -2847]);
+    bt.iteratePoints(noiseface.path, (pt, tValue) => {
       const [x, y] = pt;
-      pt[0] += noise(y * 7.3) * rand() * (i * 3 + 4) + Math.sin(y * 0.42);
-      if (rand() < 0.97) return pt;
-      if (rand() < lerp(0, 1, 0.20 * tValue ** 2)) return 'BREAK';
-      if (rand() < 0.44) return 'BREAK';
+      pt[0] += bt.noise(y * 7.3) * bt.rand() * (i * 3 + 4) + Math.sin(y * 0.42);
+      if (bt.rand() < 0.97) return pt;
+      if (bt.rand() < lerp(0, 1, 0.20 * tValue ** 2)) return 'BREAK';
+      if (bt.rand() < 0.44) return 'BREAK';
     });
-    emojiTurtle.join(noiseface);
-    emojiTurtle.resample(randInRange(1, i * 5));
+    bt.join(emojiTurtle.path, noiseface.path);
+    bt.resample(emojiTurtle.path, bt.randInRange(1, i * 5));
   }
 
 
 
 
-  const background = createTurtle();
+  const background = new bt.Turtle();
   const maxX = 125; // Maximum x-coordinate
   const maxY = 125; // Maximum y-coordinate
 
@@ -111,16 +113,16 @@ const createComplexEmoji = () => {
 
 
   // Resample the background turtle's path
-  background.resample(1);
+  bt.resample(background.path, 1);
 
   // Optionally, render the background turtle
-  drawTurtles([background]);
+  drawLines(background.lines());
 
 
 
 
   // Render the turtle
-  drawTurtles([emojiTurtle]);
+  drawLines(emojiTurtle.lines());
 };
 
 const drawMouth = (turtle, expression) => {
@@ -161,21 +163,22 @@ const drawMouth = (turtle, expression) => {
       }
       break;
     case 10:
-      const t = createTurtle()
-      const edge = createTurtle()
+      const t = new bt.Turtle()
+      const edge = new bt.Turtle()
         .forward(5)
-        .resample(0.01)
-        .warp(bezierEasing(0.654, [0.400,2.290], [0.520,0.310], 0.9720))
-      const n = createTurtle()
+      
+      bt.resample(edge.path, 0.01)
+      warp(edge, bezierEasing(0.654, [0.400,2.290], [0.520,0.310], 0.9720))
+      const n = []
 
 
 
-      n.join(edge)
+      bt.join(n, edge.lines())
 
-      n.translate([60, 45])
-      n.scale(4)
+      bt.translate(n, [60, 45])
+      bt.scale(n, 4)
 
-      drawTurtles([n])
+      drawLines(n)
       console.log("test")
       break;
   }
@@ -250,3 +253,121 @@ const drawEllipse = (turtle, width, height) => {
 };
 
 createComplexEmoji();
+
+// helper functions - added by Leo when porting piece from old library
+
+function lerp( a, b, alpha ) {
+ return a + alpha * ( b - a );
+}
+
+function calculateBezierPoint(t, p0, p1, p2, p3) {
+  let u = 1 - t
+  let tt = t * t
+  let uu = u * u
+  let uuu = uu * u
+  let ttt = tt * t
+
+  let p = [uuu * p0[0], uuu * p0[1]] // u^3 * p0
+  p[0] += 3 * uu * t * p1[0] // 3u^2t * p1
+  p[1] += 3 * uu * t * p1[1]
+  p[0] += 3 * u * tt * p2[0] // 3ut^2 * p2
+  p[1] += 3 * u * tt * p2[1]
+  p[0] += ttt * p3[0] // t^3 * p3
+  p[1] += ttt * p3[1]
+
+  return p
+}
+
+function findTForGivenX(xTarget, p0, p1, p2, p3) {
+  let tolerance = 0.00001
+  let t = 0.5 // Start with approximate solution
+  let iterations = 0
+
+  while (iterations < 1000) {
+    // Max iterations to prevent infinite loop
+    let p = calculateBezierPoint(t, p0, p1, p2, p3)
+    let difference = p[0] - xTarget
+    if (Math.abs(difference) < tolerance) {
+      return t
+    } else {
+      t = t - difference / 2 // Approximate a new t value
+    }
+    iterations++
+  }
+  return t // Return the approximate t value
+}
+
+function getYForX(x, p0, p1, p2, p3) {
+  let t = findTForGivenX(x, p0, p1, p2, p3)
+  let p = calculateBezierPoint(t, p0, p1, p2, p3)
+  return p[1]
+}
+
+function bezierEasing(initial, p0, p1, final) {
+  return (x) =>
+    getYForX(
+      x,
+      [0, initial],
+      [Math.min(Math.max(0, p0[0]), 1), p0[1]],
+      [Math.min(Math.max(0, p1[0]), 1), p1[1]],
+      [1, final]
+    )
+}
+
+function warp(turtle, fn, baseAngle = null) {
+  const tValues = tValuesForPoints(turtle.path);
+  const newPts = [];
+  tValues.forEach((t, i) => {
+    const pt = turtle.path.flat()[i];
+    let angle = baseAngle ?? bt.getAngle(turtle.path, t);
+    if (typeof angle === "function") {
+      angle = angle(bt.getAngle(turtle.path, t));
+    } else if (typeof angle === "number") {
+      angle = angle;
+    }
+    const y = fn(t);
+    const newPoint = rotate([0, y], angle);
+    newPts.push([pt[0] + newPoint[0], pt[1] + newPoint[1]]);
+  });
+  turtle.path.flat().forEach((pt, i, arr) => {
+    pt[0] = newPts[i][0];
+    pt[1] = newPts[i][1];
+  });
+  return turtle
+
+  function rotate(pt, angle, origin = [0, 0]) {
+    let delta = angle / 180 * Math.PI;
+    let hereX = pt[0] - origin[0];
+    let hereY = pt[1] - origin[1];
+    let newPoint = [
+      hereX * Math.cos(delta) - hereY * Math.sin(delta) + origin[0],
+      hereY * Math.cos(delta) + hereX * Math.sin(delta) + origin[1]
+    ];
+    return newPoint;
+  }
+}
+
+function tValuesForPoints(polylines) {
+  let totalLength = 0;
+  let lengths = [];
+  let tValues = [];
+  let segmentLength = 0;
+  for (let i = 0; i < polylines.length; i++) {
+    let polyline2 = polylines[i];
+    for (let j = 0; j < polyline2.length; j++) {
+      if (j > 0) {
+        let dx = polyline2[j][0] - polyline2[j - 1][0];
+        let dy = polyline2[j][1] - polyline2[j - 1][1];
+        segmentLength = Math.sqrt(dx * dx + dy * dy);
+        totalLength += segmentLength;
+      }
+      lengths.push(segmentLength);
+    }
+  }
+  let accumulatedLength = 0;
+  for (let i = 0; i < lengths.length; i++) {
+    accumulatedLength += lengths[i];
+    tValues.push(accumulatedLength / totalLength);
+  }
+  return tValues;
+};

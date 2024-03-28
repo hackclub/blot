@@ -41,6 +41,11 @@ details {
   font-family: sans-serif;
 }
 
+code {
+  background: #f4f4f4;
+  padding: 0.25em;
+}
+
 
 /*
 

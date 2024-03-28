@@ -4,12 +4,14 @@
 @snapshot: raymarching1.png
 */
 
+setDocDimensions(125, 125)
+
 const screenWidth = 4
 const screenHeight = 2
 const dx = 0.01
 const dy = 0.01
 
-const t = createTurtle()
+const t = new bt.Turtle()
 
 class Vec3 {
   constructor(x, y, z) {
@@ -269,4 +271,8 @@ world.objects = [
   new Plane(new Vec3(0, -3, 0))
 ]
 renderFrame(cam)
-drawTurtles([t])
+
+bt.scale(t.path, 125/bt.bounds(t.path).width);
+bt.translate(t.path, [125/2 - 15, 125/2+10], bt.bounds(t.path).cc);
+
+drawLines(t.lines())
