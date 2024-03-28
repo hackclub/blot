@@ -69,15 +69,13 @@ export function init() {
   })
 
   window.addEventListener("beforeunload", e => {
-    
+
     if (getStore().needsSaving) {
     
       e.preventDefault();
       e.returnValue = '';
     }
 
-    // e.preventDefault();
-    // e.returnValue = '';
   })
 
   useOnEditorChange(() => {
