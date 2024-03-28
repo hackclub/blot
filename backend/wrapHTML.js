@@ -9,8 +9,8 @@ export function wrapHTML(inner) {
         <meta name="title" content="blot">
 
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Your Website Title" />
-        <meta property="og:description" content="A brief description of your website." />
+        <meta property="og:title" content="Blot" />
+        <meta property="og:description" content="Blot the plotter bot, from Hack Club." />
         <meta property="og:url" content="https://www.blot.hackclub.com" />
         <meta property="og:image" content="https://www.blot.hackclub.com/assets/blot-clear-bg.png" />
 
