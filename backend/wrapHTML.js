@@ -7,6 +7,13 @@ export function wrapHTML(inner) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="title" content="blot">
+
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Your Website Title" />
+        <meta property="og:description" content="A brief description of your website." />
+        <meta property="og:url" content="https://www.blot.hackclub.com" />
+        <meta property="og:image" content="https://www.blot.hackclub.com/assets/blot-clear-bg.png" />
+
         <script defer data-domain="blot.hackclub.com" src="https://plausible.io/js/script.js"></script>
 
         <link rel="icon" type="image/svg+xml" href="/assets/borpheus.svg" id="favicon">
