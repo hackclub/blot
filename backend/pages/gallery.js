@@ -7,35 +7,37 @@ const GALLERY_NOT_TO_DISPLAY = [
   // "Donut-BrightLi",
   // "blot-ayush",
   // "BitMap-AdityaPV",
-  "blotfont-geschmit", // need to fix svg import
   // "BlotGrapher-V205",
   // "dexter_sunnyhouse",
   // "eca-henry",
   // "emoji_generator_samarpan",
   // "flower-sahitid",
+  // "lampda-snipchu",
+  // "landscape-henry",
+  // "linesCircles-yutaro",
+  // "raymarching-henry",
+  // "roots-kai",
+  // "square-disarray-leo",
+  // "sunset-ameya",
+  
+  "blotfont-geschmit", // need to fix svg import
   "fractalTree-maggieClaireBelle",
   "fractures-msw",
   "french-fries-eric",
   "hilbert_golf-henry",
   "L-system-reva",
-  // "lampda-snipchu",
-  // "landscape-henry",
-  // "linesCircles-yutaro",
   "Mandelbrot-Oskar",
   "mazeGenerator-Evan",
   "Minesweeper-LiterallyEverything",
   "QR-sam",
-  // "raymarching-henry",
-  // "roots-kai",
   "self_portrait-kieran",
   "SpiderWeb-Michelle",
-  // "square-disarray-leo",
   "SudokuGenerator-Ivan",
-  // "sunset-ameya",
-  "tidal-flats-leo",
   "tree-leo",
   "weatherreport-rivques",
-  "word_search-scott_c"
+  "word_search-scott_c",
+
+  "tidal-flats-leo",
 ]
 
 function getDirectories(srcPath) {

@@ -4,7 +4,7 @@
 @snapshot: snapshot1.png
 */
 
-const {Turtle,join,bounds,rotate,scale, translate, randInRange, randIntInRange} = toolkit
+const {Turtle,join,bounds,rotate,scale, translate, randInRange, randIntInRange} = blotToolkit
 
 let t = new Turtle()
 // shift from the bottom left to the center of the paper
