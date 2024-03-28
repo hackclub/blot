@@ -89,7 +89,7 @@ export function init() {
 
   setTimeout(() => {
     runCode();
-  }, 1500)
+  }, 500)
 } 
 
 export async function checkCurrentUser() {

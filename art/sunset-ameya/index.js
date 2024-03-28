@@ -4,6 +4,8 @@
 @snapshot: sample1.png
 */
 
+setDocDimensions(125, 125);
+
 // important consts
 
 const WIDTH = 125; 
