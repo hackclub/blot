@@ -1,6 +1,7 @@
 # The Toolkit  
 
 > This is a quick reference sheet. For <a href="/docs">full documentation refer to this</a>.
+
 > For an introduction to Blot check out <a href="/editor?guide=start">this guide</a>. 
 
 There are three names that provide functionality available in the Blot editor:

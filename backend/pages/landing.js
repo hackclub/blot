@@ -7,7 +7,7 @@ export default function() {
       <div data-fade-in style="opacity: 0;" class="sm:text-7xl sm:leading-[1.3] text-3xl font-semibold tracking-tighter mt-2 mx-auto bg-[rgba(242,242,242,0.1)] backdrop-blur-[2px] rounded-xl max-w-max p-3">
         
         <div>
-          Blot, the plotter Bot
+          Blot, the plotter bot
         </div>
 
         <div>
@@ -27,7 +27,7 @@ export default function() {
 
       <img data-fade-in style="opacity: 0;" class="h-[57%] mx-auto mt-[1.5rem]" src="/assets/blot-clear-bg.png">
 
-      <video class="w-full h-full absolute inset-0 z-[-30] object-cover opacity-[.4] scale-[1.15]" autoplay muted>
+      <video class="w-full h-full absolute inset-0 z-[-30] object-cover opacity-[.4]" autoplay muted style="max-width: 100%; width: 100%; min-width: 100%;" >
         <source src="/assets/output-movie.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>

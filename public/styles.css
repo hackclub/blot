@@ -32,6 +32,15 @@ html, body {
   overscroll-behavior: none; /*this stops the back swipe*/
 }
 
+details {
+  margin-top: .4em;
+  margin-bottom: .4em;
+  background: #c7c7fa;
+  padding: 0.4em;
+  border-radius: 0.5em;
+  font-family: sans-serif;
+}
+
 
 /*
 
