@@ -33,9 +33,8 @@ const GALLERY_NOT_TO_DISPLAY = [
   // "word_search-scott_c",
   // "tree-leo",
   // "self_portrait-kieran", // need to fix svgs
+  // "blotfont-geschmit", // need to fix svg import
 
-
-  "blotfont-geschmit", // need to fix svg import
   "mazeGenerator-Evan", // built from source
 
   "tidal-flats-leo",

@@ -8,9 +8,8 @@ const height = 125;
 
 setDocDimensions(width, height);
 
-bt.setRandSeed(14);
-
 const finalLines = [];
+
 const t = new bt.Turtle();
 
 for (let i = 0; i < 52; i++) {
