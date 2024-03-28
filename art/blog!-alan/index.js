@@ -6,7 +6,7 @@
 /*
 @title: funny text generator
 @author: Alan An
-@snapshot: 0.0.0.1
+@snapshot: blog!2.png
 */
 
 const width = 400;
