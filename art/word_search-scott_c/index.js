@@ -31,7 +31,8 @@ var ParseCoords = (cstr, multScale = 1) => {
   return coordArray;
 };
 var RunInstructions = (inst, org, scale = 1) => {
-  const turtle = createTurtle(org);
+  const turtle = new bt.Turtle();
+  turtle.jump(org)
   for (const x of inst.split(",")) {
     const cmd = x.split("$")[0];
     const args = x.split("$")[1];
@@ -48,7 +49,7 @@ var RunInstructions = (inst, org, scale = 1) => {
         break;
       case "arc":
         data = ParseCoords(args);
-        turtle.arc(data[0], data[1] * scale);
+        turtle.arc(-data[0], data[1] * scale);
         break;
       case "jmp":
         data = ParseCoords(args);
@@ -67,7 +68,7 @@ var RunInstructions = (inst, org, scale = 1) => {
         break;
     }
   }
-  drawTurtles([turtle]);
+  drawLines(turtle.lines());
   return turtle.position;
 };
 
@@ -175,17 +176,19 @@ var allLetters = Object.keys(letters).join("");
 
 // funcs.ts
 var DrawBezier = (org, ang, scale, bezfunc, curveSizes, instructions) => {
-  const turtle = createTurtle(org);
+  const turtle = new bt.Turtle();
+  turtle.jump(org);
   if (instructions) {
     turtle.jump(RunInstructions(instructions, org, scale));
   }
   turtle.setAngle(ang);
   turtle.forward(curveSizes[0] * scale);
-  turtle.resample(0.1);
-  turtle.warp((x) => bezfunc(x) * curveSizes[1] * scale);
-  drawTurtles([turtle]);
+  bt.resample(turtle.path, 0.1);
+  warp(turtle, (x) => bezfunc(x) * curveSizes[1] * scale);
+  drawLines(turtle.lines());
   return;
 };
+
 var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
   let xInd = 0;
   let yInd = 0;
@@ -238,7 +241,7 @@ var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
 
 setDocDimensions(Width, Height);
 
-const Board = createTurtle();
+const Board = new bt.Turtle();
 const Letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 const blah = 1.3;
@@ -255,7 +258,6 @@ for (let i = 0; i < Size; i++) {
   }
 }
 
-Board.jump([0, 150]);
 for (let i = 0; i < 2; i++) {
   Board.forward(180);
   Board.left(90);
@@ -315,13 +317,13 @@ let WordsCopy = Words;
 // Generate Directions
 for (let i = 0; i < Words.length; i++) {
   for (let abs = 0; abs < 1000; abs++) {
-    let x = randIntInRange(0, Size - 1);
-    let y = randIntInRange(0, Size - 1);
-    let dir = randIntInRange(0, 5);
+    let x = bt.randIntInRange(0, Size - 1);
+    let y = bt.randIntInRange(0, Size - 1);
+    let dir = bt.randIntInRange(0, 5);
     let word = Words[i];
     if (abs == 999) {
       console.log(WordsCopy.length);
-      WordsCopy.splice(WordsCopy.indexOf(word),1);
+      WordsCopy.splice(WordsCopy.indexOf(word), 1);
       console.log(WordsCopy.length);
     }
     if (CheckIfWorks(word, x, y, dir)) {
@@ -380,7 +382,7 @@ DrawText(wordBankw, [20, 230 - 11 * c], 1.5);
 for (let i = 0; i < Size; i++) {
   for (let t = 0; t < Size; t++) {
     if (WordSearch[i][t] == " ") {
-      WordSearch[i][t] = Letters[randIntInRange(0, 25)];
+      WordSearch[i][t] = Letters[bt.randIntInRange(0, 25)];
     }
   }
 }
@@ -388,15 +390,130 @@ for (let i = 0; i < Size; i++) {
 // Draw Board
 for (let i = 0; i < Size; i++) {
   for (let t = 0; t < Size; t++) {
-    DrawLetter(Padding + LetterPadding + i * ((Width - 2 * Padding) / Size), Padding + LetterPadding / 3 + t * ((Width - 2 * Padding) / Size), WordSearch[i][t]); //WordSearch[i][t]    Letters[randIntInRange(0,25)]
+    DrawLetter(Padding + LetterPadding + i * ((Width - 2 * Padding) / Size), Padding + LetterPadding / 3 + t * ((Width - 2 * Padding) / Size), WordSearch[i][t]); //WordSearch[i][t]    Letters[bt.randIntInRange(0,25)]
   }
 }
 
-Board.translate(
-  [Width / 2, Height / 2],
-  Board.cc
+bt.translate(
+  Board.path,
+  [Width / 2, 220],
+  bt.bounds(Board.path).cc
 );
 
-drawTurtles([
-  Board
-]);
+drawLines(
+  Board.lines()
+);
+
+// helper functions - added by Leo when porting piece from old library
+
+function calculateBezierPoint(t, p0, p1, p2, p3) {
+  let u = 1 - t
+  let tt = t * t
+  let uu = u * u
+  let uuu = uu * u
+  let ttt = tt * t
+
+  let p = [uuu * p0[0], uuu * p0[1]] // u^3 * p0
+  p[0] += 3 * uu * t * p1[0] // 3u^2t * p1
+  p[1] += 3 * uu * t * p1[1]
+  p[0] += 3 * u * tt * p2[0] // 3ut^2 * p2
+  p[1] += 3 * u * tt * p2[1]
+  p[0] += ttt * p3[0] // t^3 * p3
+  p[1] += ttt * p3[1]
+
+  return p
+}
+
+function findTForGivenX(xTarget, p0, p1, p2, p3) {
+  let tolerance = 0.00001
+  let t = 0.5 // Start with approximate solution
+  let iterations = 0
+
+  while (iterations < 1000) {
+    // Max iterations to prevent infinite loop
+    let p = calculateBezierPoint(t, p0, p1, p2, p3)
+    let difference = p[0] - xTarget
+    if (Math.abs(difference) < tolerance) {
+      return t
+    } else {
+      t = t - difference / 2 // Approximate a new t value
+    }
+    iterations++
+  }
+  return t // Return the approximate t value
+}
+
+function getYForX(x, p0, p1, p2, p3) {
+  let t = findTForGivenX(x, p0, p1, p2, p3)
+  let p = calculateBezierPoint(t, p0, p1, p2, p3)
+  return p[1]
+}
+
+function bezierEasing(initial, p0, p1, final) {
+  return (x) =>
+    getYForX(
+      x,
+      [0, initial],
+      [Math.min(Math.max(0, p0[0]), 1), p0[1]],
+      [Math.min(Math.max(0, p1[0]), 1), p1[1]],
+      [1, final]
+    )
+}
+
+function warp(turtle, fn, baseAngle = null) {
+  const tValues = tValuesForPoints(turtle.path);
+  const newPts = [];
+  tValues.forEach((t, i) => {
+    const pt = turtle.path.flat()[i];
+    let angle = baseAngle ?? bt.getAngle(turtle.path, t);
+    if (typeof angle === "function") {
+      angle = angle(bt.getAngle(turtle.path, t));
+    } else if (typeof angle === "number") {
+      angle = angle;
+    }
+    const y = fn(t);
+    const newPoint = rotate([0, y], angle);
+    newPts.push([pt[0] + newPoint[0], pt[1] + newPoint[1]]);
+  });
+  turtle.path.flat().forEach((pt, i, arr) => {
+    pt[0] = newPts[i][0];
+    pt[1] = newPts[i][1];
+  });
+  return turtle
+
+  function rotate(pt, angle, origin = [0, 0]) {
+    let delta = angle / 180 * Math.PI;
+    let hereX = pt[0] - origin[0];
+    let hereY = pt[1] - origin[1];
+    let newPoint = [
+      hereX * Math.cos(delta) - hereY * Math.sin(delta) + origin[0],
+      hereY * Math.cos(delta) + hereX * Math.sin(delta) + origin[1]
+    ];
+    return newPoint;
+  }
+}
+
+function tValuesForPoints(polylines) {
+  let totalLength = 0;
+  let lengths = [];
+  let tValues = [];
+  let segmentLength = 0;
+  for (let i = 0; i < polylines.length; i++) {
+    let polyline2 = polylines[i];
+    for (let j = 0; j < polyline2.length; j++) {
+      if (j > 0) {
+        let dx = polyline2[j][0] - polyline2[j - 1][0];
+        let dy = polyline2[j][1] - polyline2[j - 1][1];
+        segmentLength = Math.sqrt(dx * dx + dy * dy);
+        totalLength += segmentLength;
+      }
+      lengths.push(segmentLength);
+    }
+  }
+  let accumulatedLength = 0;
+  for (let i = 0; i < lengths.length; i++) {
+    accumulatedLength += lengths[i];
+    tValues.push(accumulatedLength / totalLength);
+  }
+  return tValues;
+};

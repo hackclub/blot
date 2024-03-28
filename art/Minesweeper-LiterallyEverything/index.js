@@ -8,7 +8,7 @@ const width = 100;
 const height = 100;
 setDocDimensions(width, height);
 
-const t = createTurtle();
+const t = new bt.Turtle();
 
 function drawTile(char, x_pos, y_pos) {
   t.jump([x_pos, y_pos])
@@ -145,7 +145,7 @@ for (let i = 0; i < brd_size; i++) {
   map[i] = ["", "", "", "", "", "", "", "", "", ""];
 }
 for (let i = 0; i < mine_nums; i++) {
-  pos = [randIntInRange(0, brd_size - 1), randIntInRange(0, brd_size - 1)]
+  pos = [bt.randIntInRange(0, brd_size - 1), bt.randIntInRange(0, brd_size - 1)]
   map[pos[0]][pos[1]] = "-1";
 }
 for (let i = 0; i < brd_size; i++) {
@@ -158,4 +158,4 @@ for (let i = 0; i < brd_size; i++) {
   }
 }
 
-drawTurtles([t])
+drawLines(t.lines())

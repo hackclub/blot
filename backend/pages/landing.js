@@ -25,7 +25,7 @@ export default function() {
 
       </div>
 
-      <img data-fade-in style="opacity: 0;" class="h-[57%] mx-auto mt-[1.5rem]" src="/assets/blot-clear-bg.png">
+      <img data-fade-in style="opacity: 0;" class="h-[50%] mx-auto mt-[2.5rem]" src="/assets/blot-clear-bg.png">
 
       <video class="w-full h-full absolute inset-0 z-[-30] object-cover opacity-[.4]" autoplay muted style="max-width: 100%; width: 100%; min-width: 100%;" >
         <source src="/assets/output-movie.mp4" type="video/mp4">

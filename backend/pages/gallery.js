@@ -19,23 +19,23 @@ const GALLERY_NOT_TO_DISPLAY = [
   // "roots-kai",
   // "square-disarray-leo",
   // "sunset-ameya",
-  
+  // "fractalTree-maggieClaireBelle",
+  // "fractures-msw",
+  // "french-fries-eric",
+  // "hilbert_golf-henry",
+  // "L-system-reva",
+  // "Mandelbrot-Oskar",
+  // "Minesweeper-LiterallyEverything",
+  // "QR-sam",
+  // "SpiderWeb-Michelle",
+  // "SudokuGenerator-Ivan",
+  // "weatherreport-rivques",
+  // "word_search-scott_c",
+  // "tree-leo",
+
   "blotfont-geschmit", // need to fix svg import
-  "fractalTree-maggieClaireBelle",
-  "fractures-msw",
-  "french-fries-eric",
-  "hilbert_golf-henry",
-  "L-system-reva",
-  "Mandelbrot-Oskar",
-  "mazeGenerator-Evan",
-  "Minesweeper-LiterallyEverything",
-  "QR-sam",
-  "self_portrait-kieran",
-  "SpiderWeb-Michelle",
-  "SudokuGenerator-Ivan",
-  "tree-leo",
-  "weatherreport-rivques",
-  "word_search-scott_c",
+  "mazeGenerator-Evan", // built from source
+  "self_portrait-kieran", // need to fix svgs
 
   "tidal-flats-leo",
 ]

@@ -5,15 +5,15 @@
 */
 
 // making document
-const t = createTurtle();
+const t = new bt.Turtle();
 const width = 125;
 const height = 125;
 setDocDimensions(width, height);
 
 const center = [width / 2, height / 2];
 const radius = width / 2;
-const lines = randIntInRange(8, 16); // # vertical lines
-const spirals = randIntInRange(3, 8); // # horizontal lines
+const lines = bt.randIntInRange(8, 16); // # vertical lines
+const spirals = bt.randIntInRange(3, 8); // # horizontal lines
 
 // drawing the vertical lines
 for (let i = 0; i < lines; i++) {
@@ -29,7 +29,7 @@ for (let s = 1; s < spirals; s++) {
     const angle = (360 / lines) * i;
     const nextAngle = (360 / lines) * ((i + 1) % lines);
     //random spacing between horizontal lines
-    const randomSpacing = s * (radius / spirals) + randInRange(-5, 5);
+    const randomSpacing = s * (radius / spirals) + bt.randInRange(-5, 5);
     const sp = pointCircle(center, randomSpacing, angle);
     const ep = pointCircle(center, randomSpacing, nextAngle);
     t.jump(sp);
@@ -63,4 +63,4 @@ function distance(from, to) {
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-drawTurtles([t]);
+drawLines(t.lines());

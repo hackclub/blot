@@ -4,7 +4,9 @@
 @snapshot: image_16.png
 */
 
-const t = createTurtle()
+setDocDimensions(125, 125);
+
+const t = new bt.Turtle()
 
 // Helper for iterating
 Number.prototype.times = function(fn) {
@@ -15,7 +17,7 @@ Number.prototype.times = function(fn) {
 
 // Helper for random
 function randomInt(min, max) {
-  return Math.floor(rand() * (max - min + 1)) + min
+  return Math.floor(bt.rand() * (max - min + 1)) + min
 }
 
 function KMeans(opts) {
@@ -139,7 +141,7 @@ KMeans.prototype.seeds = function() {
     var mean = [];
 
     for (var i = 0; i < this.extents.length; i++) {
-      mean[i] = this.extents[i].min + (rand() * this.ranges[i]);
+      mean[i] = this.extents[i].min + (bt.rand() * this.ranges[i]);
     }
 
     means.push(mean);
@@ -241,7 +243,7 @@ KMeans.prototype.moveMeans = function() {
       sums[meanIndex] = this.means[meanIndex];
 
       for (dim = 0; dim < this.extents.length; dim++) {
-        sums[meanIndex][dim] = this.extents[dim].min + (rand() * this.ranges[dim]);
+        sums[meanIndex][dim] = this.extents[dim].min + (bt.rand() * this.ranges[dim]);
       }
       continue;
     }
@@ -297,7 +299,7 @@ KMeans.prototype.run = function() {
    */
   if (meansMoved) {
     // this.draw();
-    this.timer = setTimeout(this.run.bind(this), this.drawDelay);
+    this.run.bind(this)
   } else {
     // Otherwise task has completed.
     console.log('Iteration took for completion: ' + this.iterations);
@@ -446,7 +448,7 @@ function createFragment(depth = 0, bounds = [], startTime = new Date()) {
       hullSet.add(point);
     }
     let hullArray = Array.from(hullSet)
-    let fragmentFurther = (index < 3 && (depth == 0 || rand() > 0.6) && depth < 2)
+    let fragmentFurther = (index < 3 && (depth == 0 || bt.rand() > 0.6) && depth < 2)
     if (fragmentFurther) {
       createFragment(depth + 1, hullArray.map(p => [p.x, p.y]))
     } else {
@@ -464,4 +466,6 @@ function createFragment(depth = 0, bounds = [], startTime = new Date()) {
 
 createFragment()
 
-drawTurtles([t])
+bt.translate(t.path, [ 125/2, 125/2 ], bt.bounds(t.path).cc)
+
+drawLines(t.lines())

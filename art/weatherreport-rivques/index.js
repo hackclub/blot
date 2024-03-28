@@ -37,7 +37,7 @@ let mintemp_f = 69;
 // the following monstrosity is a conversion from weatherapi's condition codes to my icon parameters
 const ICON_DATA = JSON.parse(`{"1000":{"doSun":true,"doCloud":false,"doRain":false,"doSnow":false,"doLightning":false,"desc":"Clear"},"1003":{"doSun":true,"doCloud":true,"doRain":false,"doSnow":false,"doLightning":false,"desc":"Partly cloudy"},"1006":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":false,"doLightning":false,"desc":"Cloudy"},"1009":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":false,"doLightning":false,"desc":"Cloudy"},"1030":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":false,"doLightning":false,"desc":"Mist"},"1063":{"doSun":true,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Rain possible"},"1066":{"doSun":true,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Snow possible"},"1069":{"doSun":true,"doCloud":true,"doRain":true,"doSnow":true,"doLightning":false,"desc":"Sleet possible"},"1072":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Frz. rain poss."},"1087":{"doSun":true,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":true,"desc":"Thunder poss."},"1114":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Snow"},"1117":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Blizzard"},"1135":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":false,"doLightning":false,"desc":"Fog"},"1147":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":false,"doLightning":false,"desc":"Freezing fog"},"1150":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Light rain"},"1153":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Light rain"},"1168":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Freezing rain"},"1171":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Hvy. frz. rain"},"1180":{"doSun":true,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Light rain poss."},"1183":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Light rain"},"1186":{"doSun":true,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Moderate rain"},"1189":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Moderate rain"},"1192":{"doSun":true,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Heavy rain poss."},"1195":{"doSun":true,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Heavy rain"},"1198":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Lght. frz. rain"},"1201":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Freezing rain"},"1204":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":true,"doLightning":false,"desc":"Light sleet"},"1207":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":true,"doLightning":false,"desc":"Sleet"},"1210":{"doSun":true,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Snow poss."},"1213":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Light snow"},"1216":{"doSun":true,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Snow poss."},"1219":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Snow"},"1222":{"doSun":true,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Heavy snow"},"1225":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Heavy snow"},"1237":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Ice"},"1240":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Light rain"},"1243":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Rain"},"1246":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":false,"desc":"Heavy Rain"},"1249":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":true,"doLightning":false,"desc":"Light Sleet"},"1252":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":true,"doLightning":false,"desc":"Sleet"},"1255":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Light snow"},"1258":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Snow"},"1261":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Sleet"},"1264":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":false,"desc":"Heavy sleet"},"1273":{"doSun":true,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":true,"desc":"Light thunder"},"1276":{"doSun":false,"doCloud":true,"doRain":true,"doSnow":false,"doLightning":true,"desc":"Thunderstorm"},"1279":{"doSun":true,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":true,"desc":"Thundersnow"},"1282":{"doSun":false,"doCloud":true,"doRain":false,"doSnow":true,"doLightning":true,"desc":"Thundersnow"}}`)
 
-function getSunTurtle(isFullSun){
+function getSunTurtle(isFullSun) {
   // settings
   const origin = [1, 0];
   const startAngle = 50;
@@ -48,8 +48,8 @@ function getSunTurtle(isFullSun){
   const raySpacing = 4;
 
   // setup
-  const turtle = createTurtle();
-  const circleAngle = partialEndAngle-startAngle
+  const turtle = new bt.Turtle();
+  const circleAngle = partialEndAngle - startAngle
 
   // drawing inner circle
 
@@ -63,9 +63,9 @@ function getSunTurtle(isFullSun){
   turtle.up();
 
   // drawing outer rays
-  for(let i = 0; i < numRays; i++){
-    const thisAngle = i*(360/numRays);
-    if(isFullSun|| ((thisAngle >= Math.min(startAngle, startAngle+circleAngle)) && (thisAngle <= Math.max(startAngle, startAngle+circleAngle)))){
+  for (let i = 0; i < numRays; i++) {
+    const thisAngle = i * (360 / numRays);
+    if (isFullSun || ((thisAngle >= Math.min(startAngle, startAngle + circleAngle)) && (thisAngle <= Math.max(startAngle, startAngle + circleAngle)))) {
       // ^ that's an inelegant check to see if this ray should be drawn
       turtle.goTo(origin);
       turtle.setAngle(thisAngle);
@@ -75,16 +75,16 @@ function getSunTurtle(isFullSun){
       turtle.up();
     }
   }
-  
+
   return turtle;
 }
 
-function getCloudTurtle(){
+function getCloudTurtle() {
   // settings
   const origin = [0, -17];
-  
+
   // setup
-  const turtle = createTurtle();
+  const turtle = new bt.Turtle();
 
   // drawing
   turtle.up();
@@ -94,16 +94,16 @@ function getCloudTurtle(){
   turtle.setAngle(5);
   turtle.arc(143, 9);
   turtle.setAngle(106);
-  turtle.arc(129,16);
+  turtle.arc(129, 16);
   turtle.setAngle(151);
-  turtle.arc(117,10);
+  turtle.arc(117, 10);
   turtle.setAngle(210);
-  turtle.arc(145,7);
-  
+  turtle.arc(145, 7);
+
   return turtle;
 }
 
-function getRainTurtle(isSharing){
+function getRainTurtle(isSharing) {
   // settings
   const origin = [6, -20];
   const numLinesFull = 6;
@@ -113,12 +113,12 @@ function getRainTurtle(isSharing){
   const lineSpacing = 5;
 
   // setup
-  const turtle = createTurtle();
+  const turtle = new bt.Turtle();
   const numLines = isSharing ? numLinesSharing : numLinesFull;
 
   // drawing
   turtle.up();
-  for(let i = 0; i < numLines; i++){
+  for (let i = 0; i < numLines; i++) {
     const startPoint = [origin[0] + (i * lineSpacing), origin[1]];
     turtle.goTo(startPoint);
     turtle.setAngle(lineAngle);
@@ -130,14 +130,14 @@ function getRainTurtle(isSharing){
   return turtle;
 }
 
-function getSnowTurtle(isSharing, isPushedRight){
+function getSnowTurtle(isSharing, isPushedRight) {
   // settings
   let origin = [29, -27];
   const numFlakesFull = 2;
   const numFlakesSharing = 1;
   const lineLength = 6;
   const flakeSpacing = -18;
-  if(isPushedRight){
+  if (isPushedRight) {
     origin[0] = origin[0] + flakeSpacing;
   }
 
@@ -147,22 +147,22 @@ function getSnowTurtle(isSharing, isPushedRight){
 
   // drawing
   turtle.up();
-  for(let i = 0; i < numFlakes; i++){
+  for (let i = 0; i < numFlakes; i++) {
     const flakeOrigin = [origin[0] + (i * flakeSpacing), origin[1]];
-    for(let j = 0; j < 6; j++){
+    for (let j = 0; j < 6; j++) {
       const startAngle = j * 60;
       turtle.goTo(flakeOrigin);
       turtle.setAngle(startAngle);
       turtle.down();
       turtle.forward(lineLength);
       turtle.up();
-      for(let k = -1; k < 2; k+= 2) {
+      for (let k = -1; k < 2; k += 2) {
         turtle.goTo(flakeOrigin); // a little flair on the snowflakes
         turtle.setAngle(startAngle); // i don't love the 3-nested for loop but it works
-        turtle.forward(lineLength*0.6);
-        turtle.setAngle(startAngle + (54*k));
+        turtle.forward(lineLength * 0.6);
+        turtle.setAngle(startAngle + (54 * k));
         turtle.down();
-        turtle.forward(lineLength*0.4);
+        turtle.forward(lineLength * 0.4);
         turtle.up();
       }
     }
@@ -171,7 +171,7 @@ function getSnowTurtle(isSharing, isPushedRight){
   return turtle;
 }
 
-function getLightningTurtle(){
+function getLightningTurtle() {
   // settings
   const origin = [25, -21];
 
@@ -194,11 +194,11 @@ function getLightningTurtle(){
   turtle.setAngle(192);
   turtle.forward(3);
   turtle.goTo(origin);
-  
+
   return turtle;
 }
 
-function drawText(){
+function drawText() {
   const textOrigin = [35 + globalOrigin[0], 79 + globalOrigin[1]];
   const date = new Date();
   let weatherString = "";
@@ -223,7 +223,8 @@ var ParseCoords = (cstr, multScale = 1) => {
   return coordArray;
 };
 var RunInstructions = (inst, org, scale = 1) => {
-  const turtle = createTurtle(org);
+  const turtle = new bt.Turtle();
+  turtle.jump(org);
   for (const x of inst.split(",")) {
     const cmd = x.split("$")[0];
     const args = x.split("$")[1];
@@ -259,7 +260,7 @@ var RunInstructions = (inst, org, scale = 1) => {
         break;
     }
   }
-  drawTurtles([turtle]);
+  drawLines(turtle.lines());
   return turtle.position;
 };
 
@@ -367,15 +368,16 @@ var allLetters = Object.keys(letters).join("");
 
 // funcs.ts
 var DrawBezier = (org, ang, scale, bezfunc, curveSizes, instructions) => {
-  const turtle = createTurtle(org);
+  const turtle = new bt.Turtle();
+  turtle.jump(org);
   if (instructions) {
     turtle.jump(RunInstructions(instructions, org, scale));
   }
   turtle.setAngle(ang);
   turtle.forward(curveSizes[0] * scale);
-  turtle.resample(0.1);
-  turtle.warp((x) => bezfunc(x) * curveSizes[1] * scale);
-  drawTurtles([turtle]);
+  bt.resample(turtle.path, 0.1);
+  warp(turtle, (x) => bezfunc(x) * curveSizes[1] * scale);
+  drawLines(turtle.lines());
   return;
 };
 var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
@@ -427,7 +429,7 @@ var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
 
 
 // talk to weatherapi
-if(API_KEY != ""){
+if (API_KEY != "") {
   //console.log("HEY RIV, YOU FORGOT TO REMOVE YOUR API KEY BEFORE PUSHING, YOU SHOULD PROBABLY REMOVE THAT"); // save future me from inconvenience
   const url = "https://api.weatherapi.com/v1/forecast.json?q=auto:ip&days=1&aqi=no&alerts=no&key=" + API_KEY;
   const req = new XMLHttpRequest();
@@ -449,29 +451,143 @@ if(API_KEY != ""){
 // collect everything together
 let turtlesToDraw = [];
 
-if (doSun){
+if (doSun) {
   turtlesToDraw.push(getSunTurtle(!doCloud));
 }
-if(doCloud){
+if (doCloud) {
   turtlesToDraw.push(getCloudTurtle());
 }
-if(doRain){
+if (doRain) {
   turtlesToDraw.push(getRainTurtle(doSnow || doLightning));
 }
-if(doSnow){
+if (doSnow) {
   turtlesToDraw.push(getSnowTurtle(doRain || doLightning, doLightning))
 }
-if(doLightning){
+if (doLightning) {
   turtlesToDraw.push(getLightningTurtle());
 }
 
-const finalTurtle = createTurtle();
-for (let turtle of turtlesToDraw){
-  finalTurtle.join(turtle);
+const finalLines = [];
+for (let turtle of turtlesToDraw) {
+  bt.join(finalLines, turtle.lines());
 }
 
-finalTurtle.translate([width/2+globalOrigin[0], height/2+globalOrigin[1]], finalTurtle.ct); // center the final result
-finalTurtle.scale(scalingFactor, [width/2+globalOrigin[0], height/2+globalOrigin[1]]);
-drawTurtles([finalTurtle]);
+bt.translate(finalLines, [width / 2 + globalOrigin[0], height / 2 + globalOrigin[1]], bt.bounds(finalLines).ct); // center the final result
+bt.scale(finalLines, scalingFactor, [width / 2 + globalOrigin[0], height / 2 + globalOrigin[1]]);
+drawLines(finalLines);
 
 drawText();
+
+// helper functions - added by Leo when porting piece from old library
+
+function calculateBezierPoint(t, p0, p1, p2, p3) {
+  let u = 1 - t
+  let tt = t * t
+  let uu = u * u
+  let uuu = uu * u
+  let ttt = tt * t
+
+  let p = [uuu * p0[0], uuu * p0[1]] // u^3 * p0
+  p[0] += 3 * uu * t * p1[0] // 3u^2t * p1
+  p[1] += 3 * uu * t * p1[1]
+  p[0] += 3 * u * tt * p2[0] // 3ut^2 * p2
+  p[1] += 3 * u * tt * p2[1]
+  p[0] += ttt * p3[0] // t^3 * p3
+  p[1] += ttt * p3[1]
+
+  return p
+}
+
+function findTForGivenX(xTarget, p0, p1, p2, p3) {
+  let tolerance = 0.00001
+  let t = 0.5 // Start with approximate solution
+  let iterations = 0
+
+  while (iterations < 1000) {
+    // Max iterations to prevent infinite loop
+    let p = calculateBezierPoint(t, p0, p1, p2, p3)
+    let difference = p[0] - xTarget
+    if (Math.abs(difference) < tolerance) {
+      return t
+    } else {
+      t = t - difference / 2 // Approximate a new t value
+    }
+    iterations++
+  }
+  return t // Return the approximate t value
+}
+
+function getYForX(x, p0, p1, p2, p3) {
+  let t = findTForGivenX(x, p0, p1, p2, p3)
+  let p = calculateBezierPoint(t, p0, p1, p2, p3)
+  return p[1]
+}
+
+function bezierEasing(initial, p0, p1, final) {
+  return (x) =>
+    getYForX(
+      x,
+      [0, initial],
+      [Math.min(Math.max(0, p0[0]), 1), p0[1]],
+      [Math.min(Math.max(0, p1[0]), 1), p1[1]],
+      [1, final]
+    )
+}
+
+function warp(turtle, fn, baseAngle = null) {
+  const tValues = tValuesForPoints(turtle.path);
+  const newPts = [];
+  tValues.forEach((t, i) => {
+    const pt = turtle.path.flat()[i];
+    let angle = baseAngle ?? bt.getAngle(turtle.path, t);
+    if (typeof angle === "function") {
+      angle = angle(bt.getAngle(turtle.path, t));
+    } else if (typeof angle === "number") {
+      angle = angle;
+    }
+    const y = fn(t);
+    const newPoint = rotate([0, y], angle);
+    newPts.push([pt[0] + newPoint[0], pt[1] + newPoint[1]]);
+  });
+  turtle.path.flat().forEach((pt, i, arr) => {
+    pt[0] = newPts[i][0];
+    pt[1] = newPts[i][1];
+  });
+  return turtle
+
+  function rotate(pt, angle, origin = [0, 0]) {
+    let delta = angle / 180 * Math.PI;
+    let hereX = pt[0] - origin[0];
+    let hereY = pt[1] - origin[1];
+    let newPoint = [
+      hereX * Math.cos(delta) - hereY * Math.sin(delta) + origin[0],
+      hereY * Math.cos(delta) + hereX * Math.sin(delta) + origin[1]
+    ];
+    return newPoint;
+  }
+}
+
+function tValuesForPoints(polylines) {
+  let totalLength = 0;
+  let lengths = [];
+  let tValues = [];
+  let segmentLength = 0;
+  for (let i = 0; i < polylines.length; i++) {
+    let polyline2 = polylines[i];
+    for (let j = 0; j < polyline2.length; j++) {
+      if (j > 0) {
+        let dx = polyline2[j][0] - polyline2[j - 1][0];
+        let dy = polyline2[j][1] - polyline2[j - 1][1];
+        segmentLength = Math.sqrt(dx * dx + dy * dy);
+        totalLength += segmentLength;
+      }
+      lengths.push(segmentLength);
+    }
+  }
+  let accumulatedLength = 0;
+  for (let i = 0; i < lengths.length; i++) {
+    accumulatedLength += lengths[i];
+    tValues.push(accumulatedLength / totalLength);
+  }
+  return tValues;
+};

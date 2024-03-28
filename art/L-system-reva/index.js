@@ -11,7 +11,7 @@ const height = 125;
 
 setDocDimensions(width, height);
 
-const t = createTurtle();
+const t = new bt.Turtle();
 
 //main axioms should be in A or F, other rules can be W, X, Y, Z
 
@@ -149,8 +149,8 @@ for (let i = 0; i < generations; i++) {
 
 
 const t1 = render(t, production, initpos);
-t.join(t1);
-drawTurtles([t]);
+bt.join(t.path, t1.path);
+drawLines(t.path);
 
 
 //apply substitution rules to create new iteration of production string
