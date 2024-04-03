@@ -37,13 +37,11 @@ export function wrapHTML(inner) {
         </script>
 
         <link rel="stylesheet" href="./styles.css">
+        
         <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-        
         <!-- <link rel="stylesheet" href="../tailwind.css"> -->
-        
         <!-- <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script> -->
-
-        <script leave-it src="./libs/tailwindjit.js"></script>
+        <!-- <script leave-it src="./libs/tailwindjit.js"></script> -->
       </head>
       <body class="overflow-x-hidden">
         ${inner}

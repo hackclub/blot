@@ -6,6 +6,10 @@ import path from 'path';
 import alias from 'esbuild-plugin-alias';
 import inlineWorkerPlugin from 'esbuild-plugin-inline-worker';
 
+import { spawn } from 'child_process';
+
+
+spawn('npx', ['tailwindcss', '-i', './styles.css', '-o', './dist/styles.css']);
 
 const OUTPUT_DIR = "./dist"; 
 

@@ -25,7 +25,7 @@ export default function() {
 
       </div>
 
-      <img data-fade-in style="opacity: 0;" class="h-[50%] mx-auto mt-[2.5rem]" src="/assets/blot-clear-bg.png">
+      <img data-fade-in style="opacity: 0;" class="h-[50%] mx-auto mt-[2.5rem]" src="/assets/blot-clear-bg.webp">
 
       <video class="w-full h-full absolute inset-0 z-[-30] object-cover opacity-[.4]" autoplay muted style="max-width: 100%; width: 100%; min-width: 100%;" >
         <source src="/assets/output-movie.mp4" type="video/mp4">
@@ -125,7 +125,7 @@ export default function() {
         </div>
 
         <div class="flex flex-col md:flex-row justify-center align-center w-full py-8">
-          <img class="md:w-1/2 w-full" src="/assets/control-board.png"/>
+          <img class="md:w-1/2 w-full" src="/assets/control-board.webp"/>
           <div class="m-auto py-6 px-10">
             <b>Custom control board and firmware</b> so you can understand what
             goes on in the brains of the machine.
