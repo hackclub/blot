@@ -68,7 +68,7 @@ export default function Help({
 
       if (workshop === null) return;
 
-      if (confirm("Clear text editor?"))
+      if (confirm("Reset text editor?"))
         loadCodeFromString(`// check out the workshop tab to get started\n${defaultProgram}`);
 
       // TODO Oz added this hack 2024-03-13 to save his sanity while developing the

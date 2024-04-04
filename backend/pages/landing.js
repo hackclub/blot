@@ -23,9 +23,20 @@ export default function() {
           Write a program that creates art and we'll send you* a CNC machine that can draw it.
         </div>
 
+        <div onclick="window.location.href='/editor?guide=start';" class="text-white w-max text-lg p-1 pl-2.5 pr-2.5 rounded-lg mt-[10px] cursor-pointer bg-[#3a3939] hover:scale-105 hover:shadow-md transition" style="letter-spacing: 0px;">
+          Get started making art!
+        </div>
+
       </div>
 
-      <img data-fade-in style="opacity: 0;" class="h-[50%] mx-auto mt-[2.5rem]" src="/assets/blot-clear-bg.webp">
+      <div data-fade-in class="relative h-[50%] mx-auto mt-[.5rem]" style="opacity: 0; width: max-content; max-width: 100vw;">
+        <!--
+        <div class="sm:flex hidden absolute right-[0px] text-white w-max text-lg p-1 pl-2.5 pr-2.5 rounded-lg mt-[10px] cursor-pointer bg-[#3a3939] hover:scale-105 hover:shadow-md transition" style="letter-spacing: 0px; rotate: 5deg;">
+          Get started making art!
+        </div>
+        -->
+        <img class="h-full mx-auto" src="/assets/blot-clear-bg.webp">
+      </div>
 
       <video class="scale-[1.25] w-full h-full absolute inset-0 z-[-30] object-cover opacity-[.4]" autoplay muted style="max-width: 100%; width: 100%; min-width: 100%;" >
         <source src="/assets/output-movie.mp4" type="video/mp4">

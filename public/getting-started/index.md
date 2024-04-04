@@ -6,6 +6,8 @@ Blot is a way to make art with code. The instructions you write in this editor c
 
 This guide will introduce you to some of the main tools in the toolkit, and help you make your first artwork. As you work through it, you will see **text in bold, with suggested challenges**, but you should also feel free to just tinker with your own ideas. Along the way, we'll also use the example of drawing a feather, just to demonstrate what can be achieved with each set of tools.
 
+If you are a complete beginner to JavaScript we reccomend watching [this short introduction to programming](https://blot.hackclub.com).
+
 <img src="/getting-started/steps.png" style="margin:auto" />
 
 ### Drawing lines
