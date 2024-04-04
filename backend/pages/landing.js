@@ -3,7 +3,7 @@ export default function() {
   const linkClasses = "cursor-pointer text-lg box-border m-0 min-w-0 text-red-600 underline hover:decoration-wavy"
 
   return `
-    <div class="w-full h-[93vh] inset-0">
+    <div class="w-full h-[93vh]">
       <div data-fade-in style="opacity: 0;" class="sm:text-7xl sm:leading-[1.3] text-3xl font-semibold tracking-tighter mt-2 mx-auto bg-[rgba(242,242,242,0.1)] backdrop-blur-[2px] rounded-xl max-w-max p-3">
         
         <div>
@@ -38,7 +38,7 @@ export default function() {
         <img class="h-full mx-auto" src="/assets/blot-clear-bg.webp">
       </div>
 
-      <video class="scale-[1.25] h-full fixed z-[-30] object-cover opacity-[.4]" autoplay muted style="left: -10px; top: -10px;">
+      <video class="scale-[1.25] h-full fixed z-[-30] object-cover opacity-[.4]" autoplay muted style="left:0px; top:0px;">
         <source src="/assets/output-movie.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
