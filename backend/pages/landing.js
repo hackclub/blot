@@ -38,7 +38,7 @@ export default function() {
         <img class="h-full mx-auto" src="/assets/blot-clear-bg.webp">
       </div>
 
-      <video class="scale-[1.25] w-full h-full absolute inset-0 z-[-30] object-cover opacity-[.4]" autoplay muted style="max-width: 100%; width: 100%; min-width: 100%;" >
+      <video class="scale-[1.25] w-full h-full fixed inset-0 z-[-30] object-cover opacity-[.4]" autoplay muted style="max-width: 100%; width: 100%; min-width: 100%;" >
         <source src="/assets/output-movie.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
