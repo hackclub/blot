@@ -21,23 +21,17 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   appToken: process.env.SLACK_APP_TOKEN,
   socketMode: true,
-  port: process.env.PORT || 3000
+  port: process.env.PORT
 });
 
 const config = {
-  IS_RPI: false,
   MOCK_SERIAL: true,
-  SERIAL_PATH: '/dev/tty-usbserial1',
   BAUD: 9600,
   BOARD_PIN: 7,
-  MOTION_URL: 'http://127.0.0.1:8081/0',
-  // MOTION_URL: 'http://192.168.100.227:8081/0/',
-  MOTION_FILEPATH: '/motion'
-  // MOTION_FILEPATH: '/Users/derrek/Downloads'
 }
 
 let port;
-const path = config.SERIAL_PATH;
+const path = process.env.SERIAL_PATH;
 if (config.MOCK_SERIAL) {
   SerialPortMock.binding.createPort(path);
   port = new SerialPortMock({ path, baudRate: config.BAUD, autoOpen: false });
@@ -60,18 +54,16 @@ const resetTurtles = await runSync(`
 const rpi = {
   pin: config.BOARD_PIN,
   setup() {
-    if (!config.IS_RPI) return;
     return gpio.setup(this.pin, gpio.DIR_OUT);
   },
   write(val) {
-    if (!config.IS_RPI) return;
     return gpio.write(this.pin, val);
   }
 }
 
 const webCam = {
-  baseUrl: config.MOTION_URL,
-  filePath: config.MOTION_FILEPATH,
+  baseUrl: process.env.MOTION_URL,
+  filePath: process.env.MOTION_FILEPATH,
   command(str) {
     return fetch(this.baseUrl + str);
   },
@@ -133,7 +125,7 @@ async function clearBoard() {
 }
 
 async function onMessage(message) {
-  if (!message.files) return;
+  if (!length(message.files)) return;
 
   const fileUrl = message.files[0].url_private;
   const code = await fetchSlackFile(fileUrl);
@@ -141,7 +133,7 @@ async function onMessage(message) {
   const turtles = await runSync(code);
 
   await webCam.startEvent();
-  // await runMachine(turtles);
+  await runMachine(turtles);
   let filename = await webCam.endEvent();
 
   filename = webCam.filePath + '/' + filename;
@@ -156,14 +148,7 @@ async function onMessage(message) {
 
   await resetMachine();
 
-  /*
-    onMessage({
-      files: [{
-        url_private: 'https://files.slack.com/files-pri/T0266FRGM-F06PHTH3D40/test_pattern.js'
-      }]
-    });
-  */
-  console.log('⚡️ Bolt app is running!');
+  console.log('Server running');
 })();
 
 app.message(async ({ message, say }) => {
