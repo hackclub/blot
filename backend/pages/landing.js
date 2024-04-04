@@ -104,7 +104,7 @@ export default function() {
     </div>
 
     <div 
-      class="pt-10"
+      class="pt-10 bg-white"
       style="
         background-image: linear-gradient(to right,#ddd 1px,transparent 1px),linear-gradient(to bottom,#ddd 1px,transparent 1px);
         background-size: 40px 40px;
@@ -146,8 +146,8 @@ export default function() {
       </div>
     </div>
 
-    <div>
-      <div class="text-3xl font-bold text-center my-6">
+    <div class="bg-white">
+      <div class="text-3xl font-bold text-center py-6">
         Much thanks to..
       </div>
 
@@ -178,7 +178,7 @@ export default function() {
           Also thanks to Paul Hamilton for his contributions to embedded designs.
         </div>
 
-        <div class="flex flex-row mx-auto w-full justify-center gap-20 my-8">
+        <div class="flex flex-row mx-auto w-full justify-center gap-20 py-8">
           <div class="flex flex-row justify-center" style="transform: translateX(-27px);">
             <img style="width:130px;" src="/assets/mit-logo.jpg"/>
             <img style="width:50px; height: 50px; transform: translate(0, 17px);" src="https://www.fablabs.io/media/W1siZiIsIjIwMTcvMDEvMjgvMTEvMTMvMDgvZjBlZmVkNjAtM2RlMi00MDUzLWI2NjYtOGE3NjdiOWIxYTRhL01JVCBDZW50ZXIgZm9yIEJpdHMgYW5kIEF0b21zLSBDbG9zZWQgdG8gdGhlIFB1YmxpYy5qcGciXSxbInAiLCJ0aHVtYiIsIjMwMHgzMDAiXV0/MIT%20Center%20for%20Bits%20and%20Atoms-%20Closed%20to%20the%20Public.jpg?sha=08191d35d2986519"/>
