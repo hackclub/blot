@@ -38,7 +38,7 @@ export default function() {
         <img class="h-full mx-auto" src="/assets/blot-clear-bg.webp">
       </div>
 
-      <video playsinline autoplay muted class="scale-[1.25] w-full h-full fixed z-[-30] object-cover opacity-[.4]" style="left:0px; top:-10px;">
+      <video id="tidal-flats" playsinline autoplay muted class="scale-[1.25] w-full h-full fixed z-[-30] object-cover opacity-[.4]" style="left:0px; top:-10px;">
         <source src="/assets/output-movie.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -215,6 +215,13 @@ export default function() {
         // Start the animation
         requestAnimationFrame(animate)
       }
+
+      document.addEventListener('touchstart', function() {
+          var myVideo = document.getElementById('tidal-flats');
+          if (myVideo.paused) {
+              myVideo.play();
+          }
+      }, {once: true});
     </script>
     
     <img class="sm:block hidden" style="position: fixed; bottom: 0px; right: 15px; width:100px;" src="https://assets.hackclub.com/flag-standalone.svg"/>
