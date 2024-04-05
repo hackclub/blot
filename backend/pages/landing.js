@@ -219,6 +219,7 @@ export default function() {
       window.addEventListener("load", () => {
         const video = document.getElementById('tidal-flats');
         video.setAttribute("playsinline", true);
+        video.play();
       });
 
       document.addEventListener('touchstart', function() {
