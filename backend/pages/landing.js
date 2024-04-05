@@ -3,7 +3,7 @@ export default function() {
   const linkClasses = "cursor-pointer text-lg box-border m-0 min-w-0 text-red-600 underline hover:decoration-wavy"
 
   return `
-    <div class="flex flex-col w-full" style="height: calc(100vh - 51px)">
+    <div class="relative flex flex-col w-full" style="height: calc(100vh - 51px); min-height: 600px;">
       <div data-fade-in style="opacity: 0;" class="sm:text-7xl sm:leading-[1.3] text-3xl font-semibold tracking-tighter pt-2 mx-auto bg-[rgba(242,242,242,0.1)] backdrop-blur-[2px] rounded-xl max-w-max p-3">
         
         <div>
@@ -43,7 +43,7 @@ export default function() {
         Your browser does not support the video tag.
       </video>
 
-      <div data-fade-in class="flex items-end" style="flex: 1; opacity: 0; background: rgba(242, 242, 242, 0.1); backdrop-filter: blur(2px); width: max-content; margin: 10px; padding: 5px;">
+      <div data-fade-in class="absolute" style="bottom: 5px; opacity: 0; background: rgba(242, 242, 242, 0.1); backdrop-filter: blur(2px); width: max-content; margin: 10px; padding: 5px;">
         (*Must be a teenager to receive a free machine.)
       </div>
     </div>
