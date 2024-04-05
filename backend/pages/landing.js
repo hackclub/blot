@@ -3,8 +3,8 @@ export default function() {
   const linkClasses = "cursor-pointer text-lg box-border m-0 min-w-0 text-red-600 underline hover:decoration-wavy"
 
   return `
-    <div class="w-full h-[93vh]">
-      <div data-fade-in style="opacity: 0;" class="sm:text-7xl sm:leading-[1.3] text-3xl font-semibold tracking-tighter mt-2 mx-auto bg-[rgba(242,242,242,0.1)] backdrop-blur-[2px] rounded-xl max-w-max p-3">
+    <div class="flex flex-col w-full" style="height: calc(100vh - 51px)">
+      <div data-fade-in style="opacity: 0;" class="sm:text-7xl sm:leading-[1.3] text-3xl font-semibold tracking-tighter pt-2 mx-auto bg-[rgba(242,242,242,0.1)] backdrop-blur-[2px] rounded-xl max-w-max p-3">
         
         <div>
           Blot, the plotter bot
@@ -29,13 +29,13 @@ export default function() {
 
       </div>
 
-      <div data-fade-in class="relative h-[50%] mx-auto mt-[.5rem]" style="opacity: 0; width: max-content; max-width: 100vw;">
+      <div data-fade-in class="flex items-center justify-center w-full h-[50%] pt-[.5rem]" style="opacity: 0;">
         <!--
         <div class="sm:flex hidden absolute right-[0px] text-white w-max text-lg p-1 pl-2.5 pr-2.5 rounded-lg mt-[10px] cursor-pointer bg-[#3a3939] hover:scale-105 hover:shadow-md transition" style="letter-spacing: 0px; rotate: 5deg;">
           Get started making art!
         </div>
         -->
-        <img class="h-full mx-auto" src="/assets/blot-clear-bg.webp">
+        <img style="min-width: 320px; max-width: 100%;" class="h-full" src="/assets/blot-clear-bg.webp">
       </div>
 
       <video id="tidal-flats" playsinline autoplay muted class="scale-[1.25] w-full h-full fixed z-[-30] object-cover opacity-[.4]" style="left:0px; top:-10px;">
@@ -43,7 +43,7 @@ export default function() {
         Your browser does not support the video tag.
       </video>
 
-      <div data-fade-in class="absolute bottom-[3px]" style="opacity: 0; background: rgba(242, 242, 242, 0.1); backdrop-filter: blur(2px); width: max-content; margin: 10px; padding: 5px;">
+      <div data-fade-in class="flex items-end" style="flex: 1; opacity: 0; background: rgba(242, 242, 242, 0.1); backdrop-filter: blur(2px); width: max-content; margin: 10px; padding: 5px;">
         (*Must be a teenager to receive a free machine.)
       </div>
     </div>

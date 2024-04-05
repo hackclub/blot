@@ -32,6 +32,12 @@
   --font-7: 6rem;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html, body {
   overscroll-behavior: none; /*this stops the back swipe*/
 }
