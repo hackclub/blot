@@ -216,10 +216,15 @@ export default function() {
         requestAnimationFrame(animate)
       }
 
+      window.addEventListener("load", () => {
+        const video = document.getElementById('tidal-flats');
+        video.setAttribute("playsinline", true);
+      });
+
       document.addEventListener('touchstart', function() {
-          var myVideo = document.getElementById('tidal-flats');
-          if (myVideo.paused) {
-              myVideo.play();
+          var video = document.getElementById('tidal-flats');
+          if (video.paused) {
+              video.play();
           }
       }, {once: true});
     </script>
