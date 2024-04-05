@@ -219,7 +219,12 @@ export default function() {
       window.addEventListener("load", () => {
         const video = document.getElementById('tidal-flats');
         video.setAttribute("playsinline", true);
-        video.play();
+        if (isRunningOniOS()) video.play();
+
+        function isRunningOniOS() {
+            const userAgent = window.navigator.userAgent;
+            return /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        }
       });
 
       document.addEventListener('touchstart', function() {
