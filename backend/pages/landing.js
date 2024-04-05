@@ -216,21 +216,21 @@ export default function() {
         requestAnimationFrame(animate)
       }
 
-      window.addEventListener("load", () => {
-        const video = document.getElementById('tidal-flats');
-        video.setAttribute("playsinline", true);
-        if (isRunningOniOS()) video.play();
-
         function isRunningOniOS() {
             const userAgent = window.navigator.userAgent;
             return /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
         }
+
+      window.addEventListener("load", () => {
+        const video = document.getElementById('tidal-flats');
+        video.setAttribute("playsinline", true);
+        if (isRunningOniOS()) video.play();
       });
 
       document.addEventListener('touchstart', function() {
           var video = document.getElementById('tidal-flats');
           if (video.paused) {
-              video.play();
+             if (isRunningOniOS()) video.play();
           }
       }, {once: true});
     </script>
