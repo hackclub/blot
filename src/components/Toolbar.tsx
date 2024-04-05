@@ -16,6 +16,7 @@ import { saveFile } from '../saveFile.ts'
 // import * as prettier from 'prettier'
 import js_beautify from 'js-beautify'
 import { createShareLink } from "../createShareLink.js";
+import { toolkit as tk } from "../drawingToolkit/toolkit.js";
 
 const menuItemClasses = `
   relative
@@ -92,6 +93,9 @@ export default function Toolbar() {
         </div>
         <div class={menuItemClasses} onClick={tidyCode}>
           tidy code
+        </div>
+        <div class={menuItemClasses} onClick={animateLines}>
+          animate
         </div>
         <div class={dropdownContainer}>
           <div>download</div>
@@ -484,6 +488,85 @@ function loginClick() {
     patchStore({ loginModalOpen: true });
   } else {
     // log out or change account
+  }
+}
+
+let animateState = {
+  animating: false,
+  ogTurtles: [],
+  intervalId: null,
+}
+
+function animateLines() {
+
+  if (animateState.animating) {
+    clearInterval(animateState.intervalId);
+  }
+
+  const turtles = animateState.animating
+    ? animateState.ogTurtles
+    : getStore().turtles;
+
+  animateState.animating = true;
+  animateState.ogTurtles = turtles;
+
+  console.log({
+    turtles,
+    tk
+  })
+
+  const styleMap = {};
+
+  let plIndex = 0;
+  turtles.forEach(t => {
+    t.path.forEach(pl => {
+      styleMap[plIndex] = t.style;
+      plIndex++;
+    })
+  })
+
+  const pls = turtles.map(t => t.path).flat();
+
+  const ogPls = tk.copy(pls);
+
+  const resampled = tk.resample(pls, 0.1);
+
+  let totalTime = 5000; // should be determined by length of line and timePerMM
+  let deltaTime = 30;
+
+  // console.time()
+  let elapsedTime = 0;
+  animateState.intervalId = setInterval(() => {
+    if (elapsedTime >= totalTime) {
+      clearInterval(animateState.intervalId);
+      animateState.animating = false;
+
+      // console.timeEnd();
+      return;
+    }
+    const turtles = mapPlsToTurtles(elapsedTime/totalTime)
+    // console.log({ turtles, totalT });
+
+    patchStore({
+      turtles
+    });
+
+    elapsedTime += deltaTime;
+
+  }, deltaTime);
+
+  function mapPlsToTurtles(t) {
+    const tempPls = tk.trim(tk.copy(resampled), 0, t);
+    const tempTurtles = [];
+
+    tempPls.forEach((pl, i) => {
+      tempTurtles.push({
+        path: [ pl ],
+        style: styleMap[i]
+      })
+    }) 
+
+    return tempTurtles;
   }
 }
 
