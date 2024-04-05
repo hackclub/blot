@@ -1,3 +1,8 @@
+/*
+@title: Tesla
+@author: Sabyasachi
+@snapshot: new.png
+*/
 setDocDimensions(329, 138);
 
 const createCybertruckFrame = () => {
