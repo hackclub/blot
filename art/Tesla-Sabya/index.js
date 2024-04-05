@@ -1,7 +1,7 @@
 /*
 @title: Tesla
 @author: Sabyasachi
-@snapshot: new.png
+@snapshot: 1.png
 */
 setDocDimensions(329, 138);
 
