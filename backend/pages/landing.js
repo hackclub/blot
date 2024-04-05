@@ -111,7 +111,7 @@ export default function() {
       "
       >
       <div class="text-3xl font-bold text-center mb-2">
-        We built everything from scratch, with ❤️, and open source.
+        We built everything from scratch, with ❤️, and <a class="cursor-pointer box-border m-0 min-w-0 text-red-600 underline hover:decoration-wavy" href="https://github.com/hackclub/blot">open source</a>.
       </div>
 
       <div class="flex flex-col w-4/5 m-auto text-lg leading-snug">
