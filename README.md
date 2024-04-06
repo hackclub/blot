@@ -17,7 +17,7 @@ A piece of art made for Blot can be the first program you ever write, but it can
 **A custom CNC drawing machine** designed from scratch to introduce you to digital fabrication. 
 It's made of 6 unique 3D printed parts with a custom control board and easy to understand firmware, which can be interfaced with through JavaScript in the browser.
 Blot is designed in OnShape. Check out the [3D model of the project](https://cad.onshape.com/documents/0bcd2f50d2614ea26189f43b/w/23913e7defc94fc29f7833e6/e/72ea852bfc1822955e506e37?renderMode=0&uiState=6538235d42737a70b1996741).
-You can find the [bill of materials here](https://blot.hackclub.com/assembly) if you'd like to 3D print your Blot [the parts are here](https://github.com/hackclub/blot/tree/main/hardware/mechanical/drawing-thing-v4). The entire build costs about $150 dollars. If you're a teen we will give you all the parts for a PR with your an art piece you coded yourself.
+You can find the [bill of materials here](https://blot.hackclub.com/assembly) and, if you'd like to 3D print your Blot, [the parts are here](https://github.com/hackclub/blot/tree/main/hardware/mechanical/drawing-thing-v4). The entire build costs about $150 dollars. If you're a teen we will give you all the parts for a PR with your an art piece you coded yourself.
 
 <img width="250" alt="parts" src="https://github.com/hackclub/blot/assets/27078897/04ab7345-03fa-4b60-9870-64a99327e8cd">
 
@@ -37,7 +37,7 @@ Check out the examples in the [gallery](https://blot.hackclub.com/gallery) and t
 
 The guides are designed to work like visual coding puzzles, which incrementally bring you through building generative art pieces.
 
-The [submission rules to get a Blot for a PR are here](https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md). **You must be a teenager (or younger to qualify)** but anyone can make art and make a PR. Also...
+The [submission rules to get a Blot for a PR are here](https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md). **You must be a teenager (or younger) to qualify**, but anyone can make art and make a PR. Also...
 
 # It's all Open Source
 
@@ -45,30 +45,24 @@ Every part of Blot is freely available for you to investigate and discover.
 That includes the editor, the hardware design, the electronics, and even the finances around the project.
 We think people deserve tools they can take ownership of. That's why we give away the source for free. 
 
-Our projects at Hack Club have hundreds of teenage contributors from all over the world, if you want to learn how to program we invite you to jump in and start building tools used by thousands.
+Our projects at Hack Club have hundreds of teenage contributors from all over the world. If you want to learn how to program, we invite you to jump in and start building tools used by thousands.
 
-You're also welcome to participate and use our tools if you aren't a teen (like making art or building your own blot). But our [online community](https://hackclub.com/slack) is for teens only.
+You're also welcome to participate and use our tools if you aren't a teen (like making art or building your own blot), but our [online community](https://hackclub.com/slack) is for teens only.
 
 # Development
 
 Join the `#blot` channel on the [Hack Club Slack](https://hackclub.com/slack). 
 
-The Blot editor is run with an express server.
+The Blot editor is run with an Express server.
 
-```
-Git
-Node.js
-Yarn
-```
-
-After installing those, clone the repo.
+After installing `Git`, `Node.js`, and `Yarn`, clone the repo.
 
 ```
 git clone https://github.com/hackclub/blot/
 yarn install
 ```
 
-To run the development server.
+To run the development server:
 
 ```
 yarn dev
