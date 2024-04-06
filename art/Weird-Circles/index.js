@@ -1,5 +1,5 @@
 /*
-@title: Circles
+@title: Weird Circles
 @author: Anshuman Mishra
 @snapshot: Original.png
 */
