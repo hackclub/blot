@@ -54,7 +54,7 @@ container = "tool bundle"
 [[items]]
 part = "10mm wrench"
 notes = "for adjusting eccentric nuts"
-exampleSource = "https://www.amazon.com/TEKTON-18277-Combination-Wrench/dp/B01F510Q1Q?th=1"
+exampleSource = "https://www.amazon.com/TEKTON-18277-Combination-Wrench/dp/B01F510Q2U?th=1"
 quantity = 1
 findLocalSupplier = true
 tags = ["tool"]
