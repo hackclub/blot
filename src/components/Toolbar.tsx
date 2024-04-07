@@ -510,10 +510,10 @@ function animateLines() {
   animateState.animating = true;
   animateState.ogTurtles = turtles;
 
-  console.log({
-    turtles,
-    tk
-  })
+  // console.log({
+  //   turtles,
+  //   tk
+  // })
 
   const styleMap = {};
 
@@ -531,8 +531,8 @@ function animateLines() {
 
   const resampled = tk.resample(pls, 0.1);
 
-  let totalTime = 5000; // should be determined by length of line and timePerMM
-  let deltaTime = 30;
+  let totalTime = 10000; // should be determined by length of line and timePerMM
+  let deltaTime = 10;
 
   // console.time()
   let elapsedTime = 0;
