@@ -35,7 +35,7 @@ Type in the code from above, run it, and make sure that you see something like t
 
 **Next, try changing it. Can you draw a line from top left to bottom right, instead? Could you draw a square?**
 
-By the way, we are setting the document dimensions to 125x125 because that is a sensible limit, in millimeters, when using a physical Blot machine. See [setDocDimensions](/docs#setDocDimensions) for more info.
+By the way, we are setting the document dimensions to 125x125 because that is a sensible limit, in millimeters, when using a physical Blot machine. 0,0 is located in the bottom left. See [setDocDimensions](/docs#setDocDimensions) for more info.
 
 You can generate lines in a number of different ways, including plain JavaScript. One way to draw a square with sides of length `s` could be:
 
@@ -207,14 +207,14 @@ const shape = (n) => {
 // Draw shaft as a stretched triangle
 const shaft = bt.scale(shape(3), [2, 150])
 
-// Draw vanes as a hendecagaon (!?)
+// Draw vanes as a hendecagon (!?)
 const vanes = bt.scale(shape(11), [8, 30])
 
 // move the vanes to the end of the shaft
 bt.translate(vanes, [0, bt.bounds(shaft).cb[1] - bt.bounds(vanes).cb[1]])
 
 // combine the two shapes, then move and rotate them together!
-// (this "destructuring" syntax in JavaScript combines the two arrayws)
+// (this "destructuring" syntax in JavaScript combines the two arrays)
 const feather = [...shaft, ...vanes]
 bt.translate(feather, [width / 2, height / 2], bt.bounds(feather).cc)
 bt.rotate(feather, 135)
@@ -229,6 +229,7 @@ This is another improvement, but still looking pretty rigid! **See if you can ma
 
 <details>
 <summary>Show</summary>
+
 This approach uses `iteratePoints` to consider each [x, y] co-ordinate one by one, and change the x value by an amount that corresponds to its position. We can also [`resample`](/docs#resample) the points on our line (increase the number of points along the line) to emphasize this effect:
 
 ```js
@@ -257,7 +258,7 @@ While it was fun to use the word "hendecagon" above, it will often be preferable
 
 Thankfully there are toolkit functions to help us with this. Here's an example of using the [`catmullRom`](/docs#catmullRom) function, which tries to draw a nice curve passing through all the points you provide. Here we specify just 4 points, but end up drawing enough tiny line segments to see a curve:
 
-```
+```js
 const width = 125
 const height = 125
 

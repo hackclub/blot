@@ -623,6 +623,8 @@ const position = myTurtle.pos; // Gets the current position of the turtle
 const path = myTurtle.path; // Gets the path drawn by the turtle, use this to get polylines
 ```
 
+## Curves
+
 ### catmullRom(points, steps = 1000)
 
 **Parameters:**
@@ -706,7 +708,7 @@ bt.rand(); // Might return 0.123456789
 
 **Description:** 
 
-Generates a random floating-point number within a specified range. The function takes two parameters: the minimum value (inclusive) and the maximum value (exclusive), and returns a random number within this range.
+Generates a random floating-point number within a specified range. The function takes two parameters: the minimum value (inclusive) and the maximum value (inclusive), and returns a random number within this range.
 
 **Example:**
 
