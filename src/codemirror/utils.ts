@@ -36,7 +36,6 @@ export const nodeIsNumber = (node: SyntaxNode, view: EditorView): boolean => {
     const num = node.getChild("Number");
     if (num === null) return false;
     const a = node.getChild('ArithOp');
-    console.log({ num, a });
     return a && view.state.doc.sliceString(a.from, a.to) === '-'
   }
   return false
