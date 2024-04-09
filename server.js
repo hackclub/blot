@@ -14,6 +14,7 @@ import gallery from "./backend/pages/gallery.js";
 import landing from "./backend/pages/landing.js";
 import docs from "./backend/pages/docs.js";
 
+import signUpEmail from "./backend/api/signUpEmail.js";
 import checkSignIn from "./backend/api/checkSignIn.js";
 import saveFile from "./backend/api/saveFile.js";
 import getUser from "./backend/api/getUser.js";
@@ -69,6 +70,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.post('/signUpEmail', signUpEmail);
 app.post('/check-signed-in', checkSignIn);
 app.post('/get-files', getFiles);
 app.post('/save-file', saveFile);

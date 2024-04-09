@@ -7,7 +7,7 @@ const renderer = new marked.Renderer();
 
 renderer.heading = (text, level, raw, slugger) => {
   if (level === 1) return `<h1 class="text-3xl font-sans font-semibold text-gray-800 py-2">${text}</h1>`;
-  if (level === 2) return `<h2 class="text-2xl font-sans font-semibold text-gray-800 py-2">${text}</h1>`;
+  if (level === 2) return `<h2 id="${text.toLowerCase()}" class="text-2xl font-sans font-semibold text-gray-800 py-2">${text}</h1>`;
   if (level === 3) return `<h3 id="${text.slice(0, text.indexOf("("))}" class="text-xl font-sans font-semibold text-blue-500 py-2">${text}</h1>`;
   else return `<h1>${text}</h1>`
 };
@@ -17,7 +17,6 @@ renderer.paragraph = (text) => {
 };
 
 renderer.list = (...args) => {
-  console.log(args);
   return `${args[0]}`
 };
 

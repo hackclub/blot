@@ -5,7 +5,9 @@ import { nodeIsNumber } from './utils.ts'
 
 // TODO: make this a widget so I can insert stuff into it's dom
 
-const CALLNAME_BUTTONS = ['bezierEasing']
+const CALLNAME_BUTTONS = [
+  // 'bezierEasing'
+]
 
 function decorate(view) {
   let builder = new RangeSetBuilder()

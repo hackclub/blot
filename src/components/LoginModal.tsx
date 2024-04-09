@@ -100,6 +100,17 @@ export default function LoginModal() {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendOrSubmitCode();
+    }
+
+    // if (e.key === 'Esc') {
+    //   reset(); 
+    //   patchStore({ loginModalOpen: false });
+    // }
+  };
+
   return (
     <div class={`absolute top-20 z-[9999999] left-[50%] overflow-hidden translate-x-[-50%] border-black w-96 shadow-lg rounded-md bg-white`}>
       <div class="bg-[var(--primary)] p-3 text-white overflow">
@@ -126,7 +137,7 @@ export default function LoginModal() {
       </div>
       { !state.loggedIn &&
         <div class="w-full flex p-2 items-center justify-center flex-col">
-          <input value={state.inputValue} onInput={(e) => updateState({ isError: false, msg: "", inputValue: e.target.value })} class="p-1 w-[70%] border"/>
+          <input value={state.inputValue} onKeyDown={handleKeyPress} onInput={(e) => updateState({ isError: false, msg: "", inputValue: e.target.value })} class="p-1 w-[70%] border"/>
           <button onClick={handleSendOrSubmitCode} class="m-3 p-2 w-[50%] text-center cursor-pointer bg-gray-700 hover:bg-gray-500 text-white rounded">
             {state.codeSent ? "submit code" : "send code"}
           </button>

@@ -17,7 +17,7 @@ export default function Preview(props: { className?: string }) {
   })
 
   return (
-    <div class={styles.root}>
+    <div class={styles.root + " cursor-grab"}>
       <canvas class={`${styles.canvas} main-canvas`} />
       <div class={`${styles.mousePosition} mouse-position`} />
       <Button

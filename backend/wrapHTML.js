@@ -7,6 +7,7 @@ export function wrapHTML(inner) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="title" content="blot">
+        <title>Blot</title>
 
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Blot" />
