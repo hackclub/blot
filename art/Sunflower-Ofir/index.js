@@ -14,49 +14,54 @@ const arcTwoCount = bt.randIntInRange(1, 2)
 
 const pedalsCount = bt.randIntInRange(1, 2)
 
+const flowerSize = 9
+const flowerpos = [width / 2, height / 2] // you can put any location you want
+
+
+
 console.log(arcOneCount)
 console.log(arcTwoCount)
-const arc1 = (n) => {
+const arc1 = (n, flowerSize, flowerpos) => {
   const t = new bt.Turtle()
   for (let i = 0; i < n + 1; i++) {
     t.up()
-    t.goTo([width / 2, height / 2 + 10])
+    t.goTo([flowerpos[0], flowerpos[1]])
     t.setAngle(i * (360 / n))
     t.forward(2)
     t.down()
-    t.arc(-90, 9)
+    t.arc(-90, flowerSize)
   }
   return t.lines()
 }
 
-const arc2 = (n) => {
+const arc2 = (n, flowerSize, flowerpos) => {
   const t = new bt.Turtle()
   for (let i = 0; i < n + 1; i++) {
     t.up()
-    t.goTo([width / 2, height / 2 + 10])
+    t.goTo([flowerpos[0], flowerpos[1]])
     t.setAngle(i * (360 / n))
     t.forward(2)
     t.down()
-    t.arc(90, 9)
+    t.arc(90, flowerSize)
   }
   return t.lines()
 }
 
-const pedals = (n, s) => {
+const pedals = (n, flowerSize) => {
   const t = new bt.Turtle()
   for (let i = 0; i < n; i++) {
-    s = bt.randIntInRange(30, 35)
+    let s = bt.randIntInRange(flowerSize * 3 + 1, flowerSize * 3 + 5)
     let pedal = []
     t.up()
 
-    t.goTo([width / 2, height / 2 + 10])
+    t.goTo([flowerpos[0], flowerpos[1]])
     t.setAngle(i * (360 / n) + 5)
-    t.forward(2 + (9 * Math.sqrt(2)))
+    t.forward(2 + (flowerSize * Math.sqrt(2)))
     pedal.push(t.pos)
 
-    t.goTo([width / 2, height / 2 + 10])
+    t.goTo([flowerpos[0], flowerpos[1]])
     t.setAngle(i * (360 / n))
-    t.forward(2 + (9 * Math.sqrt(2)))
+    t.forward(2 + (flowerSize * Math.sqrt(2)))
     t.forward(s / 2)
     pedal.push(t.pos)
 
@@ -66,9 +71,9 @@ const pedals = (n, s) => {
       second = second - 360
     }
 
-    t.goTo([width / 2, height / 2 + 10])
+    t.goTo([flowerpos[0], flowerpos[1]])
     t.setAngle(((i + 1) * (360 / n) + i * (360 / n)) / 2)
-    t.forward(2 + (9 * Math.sqrt(2)))
+    t.forward(2 + (flowerSize * Math.sqrt(2)))
     t.down()
     t.forward(s / 4)
     t.up()
@@ -76,16 +81,16 @@ const pedals = (n, s) => {
     pedal.push(t.pos)
     t.up()
 
-    t.goTo([width / 2, height / 2 + 10])
+    t.goTo([flowerpos[0], flowerpos[1]])
     t.setAngle(second)
-    t.forward(2 + (9 * Math.sqrt(2)))
+    t.forward(2 + (flowerSize * Math.sqrt(2)))
     t.forward(s / 2)
     pedal.push(t.pos)
 
 
-    t.goTo([width / 2, height / 2 + 10])
+    t.goTo([flowerpos[0], flowerpos[1]])
     t.setAngle(second - 5)
-    t.forward(2 + (9 * Math.sqrt(2)))
+    t.forward(2 + (flowerSize * Math.sqrt(2)))
     pedal.push(t.pos)
 
     let curve = bt.catmullRom(pedal)
@@ -98,32 +103,32 @@ const pedals = (n, s) => {
 const stem = () => {
   const t = new bt.Turtle()
   t.up()
-  t.goTo([width / 2 - 1, 0])
+  t.goTo([flowerpos[0] - 1, 0])
   t.down()
-  t.goTo([width / 2 - 1, height / 2 + 8])
+  t.goTo([flowerpos[0] - 1, flowerpos[1] - 2])
   t.up()
-  t.goTo([width / 2 + 1, 0])
+  t.goTo([flowerpos[0] + 1, 0])
   t.down()
-  t.goTo([width / 2 + 1, height / 2 + 8])
+  t.goTo([flowerpos[0] + 1, flowerpos[1] - 2])
   return t.lines()
 }
 
 if (arcOneCount == 1) {
-  drawLines(arc1(21))
+  drawLines(arc1(21, flowerSize, flowerpos))
 } else {
-  drawLines(arc1(34))
+  drawLines(arc1(34, flowerSize, flowerpos))
 }
 
 if (arcTwoCount == 1) {
-  drawLines(arc2(21))
+  drawLines(arc2(21, flowerSize, flowerpos))
 } else {
-  drawLines(arc2(34))
+  drawLines(arc2(34, flowerSize, flowerpos))
 }
 
 if (pedalsCount == 1) {
-  drawLines(pedals(21))
+  drawLines(pedals(21, flowerSize, flowerpos))
 } else if (pedalsCount == 2) {
-  drawLines(pedals(34))
+  drawLines(pedals(34, flowerSize, flowerpos))
 }
 
 drawLines(stem())
