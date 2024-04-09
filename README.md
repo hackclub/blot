@@ -27,6 +27,8 @@ The [submission rules to get a Blot for a PR are here](https://github.com/hackcl
 
 ### 3) Receive the parts to build your own Blot that can draw that art in real life.
 
+The [bill of materials can be found here](/docs/BOM.toml) and an [assembly guide here](/docs/ASSEMBLY.md).
+
 <img width="500" alt="all-parts" src="https://github.com/hackclub/blot/assets/27078897/8559466d-fd36-4126-bf9c-45cb913be6da" />
 
 <img height="341" alt="drawing" src="https://github.com/hackclub/blot/assets/27078897/2f7c9c17-3b67-4674-b2ca-2a4dbd26a3d1" />
