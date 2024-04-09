@@ -30,9 +30,19 @@ export const codePositionToOffset = (pos: CodePosition, state: EditorState) =>
 export const nodeIsNumber = (node: SyntaxNode, view: EditorView): boolean => {
   if (node.name === 'Number' && node.parent.name !== 'UnaryExpression')
     return true
+
+
   if (node.name === 'UnaryExpression') {
-    const a = node.getChild('ArithOp')
+    const num = node.getChild("Number");
+    if (num === null) return false;
+    const a = node.getChild('ArithOp');
     return a && view.state.doc.sliceString(a.from, a.to) === '-'
   }
   return false
 }
+
+
+
+
+
+

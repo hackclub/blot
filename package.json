@@ -43,6 +43,7 @@
     "highlight.js": "^11.9.0",
     "js-beautify": "^1.14.9",
     "jsdom": "^24.0.0",
+    "loops": "^1.0.1",
     "marked": "^7.0.4",
     "marked-highlight": "^2.1.0",
     "nanoid": "^5.0.3",

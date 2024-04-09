@@ -3,6 +3,8 @@ export default function() {
   const linkClasses = "cursor-pointer text-lg box-border m-0 min-w-0 text-red-600 underline hover:decoration-wavy"
 
   return `
+    ${popupModal()}
+    ${thanks()}
     <div class="relative flex flex-col w-full" style="height: calc(100vh - 51px); min-height: 600px;">
       <div data-fade-in style="opacity: 0;" class="sm:text-7xl sm:leading-[1.3] text-3xl font-semibold tracking-tighter pt-2 mx-auto bg-[rgba(242,242,242,0.1)] backdrop-blur-[2px] rounded-xl max-w-max p-3">
         
@@ -23,8 +25,13 @@ export default function() {
           Write a program that creates art and we'll send you* a CNC machine that can draw it.
         </div>
 
-        <div onclick="window.location.href='/editor?guide=start';" class="text-white w-max text-lg p-1 pl-2.5 pr-2.5 rounded-lg mt-[10px] cursor-pointer bg-[#3a3939] hover:scale-105 hover:shadow-md transition" style="letter-spacing: 0px;">
-          Get started making art!
+        <div class="sm:flex-row flex-col flex gap-2">
+          <div onclick="window.location.href='/editor?guide=start';" class="text-white w-max text-lg p-1 pl-2.5 pr-2.5 rounded-lg mt-[10px] cursor-pointer bg-[--primary] hover:scale-105 hover:shadow-md transition" style="letter-spacing: 0px;">
+            Get started making art!
+          </div>
+          <div onclick="openModal()" class="text-white w-max text-lg p-1 pl-2.5 pr-2.5 rounded-lg mt-[10px] cursor-pointer bg-[#3a3939] hover:scale-105 hover:shadow-md transition" style="letter-spacing: 0px;">
+            Get stickers for free
+          </div>
         </div>
 
       </div>
@@ -354,6 +361,100 @@ function footer() {
   `
 }
 
+function popupModal() {
+  return `
+<!-- Modal backdrop -->
+<div class="hidden fixed inset-0 z-50 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
+
+    <!-- Modal content -->
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white z-50">
+        
+        <!-- Modal header -->
+        <div class="mb-4">
+            <h2 class="text-xl font-bold text-gray-900">Sign Up for Stickers</h2>
+            <p class="text-sm text-gray-600">Send us your email and we'll send a form to order free Hack Club stickers.</p>
+            <p class="text-sm text-gray-600 mt-2">At Hack Club we're open sourcing the future of public education. If you're a teen, join to stay updated on "you ship, we ship" grants like <a href="https://sprig.hackclub.com" class="text-blue-500 hover:text-blue-600">Sprig</a> and <a href="https://onboard.hackclub.com" class="text-blue-500 hover:text-blue-600">OnBoard</a>.</p>
+            <p class="text-sm text-gray-600 mt-2">For anyone else, you're free to explore and use our tools. It's all free.</p>
+        </div>
+
+        <!-- Close button -->
+        <button class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center absolute top-0 right-0 mt-4 mr-4" onclick="closeModal()">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </button>
+
+        <!-- Sign-up form -->
+        <div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                <input type="email" name="email" id="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="you@example.com" required>
+            </div>
+            <div class="mb-4">
+                <button onclick="submitForm()" class="w-full px-3 py-2 bg-[--primary] text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Sign Up
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function closeModal() {
+    document.getElementById('my-modal').classList.add("hidden");
+
+
+}
+
+function openModal() {
+    document.getElementById('my-modal').classList.remove("hidden")
+}
+
+function submitForm() {
+  const email = document.querySelector("#email").value;
+
+  console.log(email);
+
+  fetch("/signUpEmail", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email })
+  });
+
+  closeModal();
+
+  const thanks = document.querySelector("#thanks");
+
+  thanks.classList.remove("hidden");
+
+  setTimeout(() => {
+    thanks.classList.add("hidden");
+  }, 1300)
+}
+</script>
+
+  `
+}
+
+function thanks() {
+  return `
+<!-- Modal backdrop -->
+<div id="thanks" class="hidden fixed z-50 inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+
+    <!-- Modal content -->
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <!-- Modal header -->
+        <div class="flex justify-between items-center mb-4">
+            <h4 class="text-lg font-medium text-gray-900">Thank You!</h4>
+        </div>
+
+        <!-- Modal body -->
+        <p class="text-sm text-gray-500">for signing up.</p>
+    </div>
+
+</div>
+
+  `
+}
 
 
 
