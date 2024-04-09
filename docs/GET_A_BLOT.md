@@ -82,7 +82,7 @@ Refer to [this example](https://github.com/hackclub/blot/tree/main/art/square-di
 
 ## 2.3) Fork the Blot repo
 
-[Click here to fork the Bzzlot repo.](https://github.com/hackclub/blot/fork)
+[Click here to fork the Blot repo.](https://github.com/hackclub/blot/fork)
 
 ## 2.4) Upload your artwork
 
