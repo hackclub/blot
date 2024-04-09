@@ -5,11 +5,11 @@
 Create programmatic art in our web-based editor and submit it to the gallery and we'll send you a CNC machine which can make that art.
 Blot is a [**You Ship, We Ship**](https://github.com/hackclub/blot/tree/main?tab=readme-ov-file#you-ship-we-ship) project from [Hack Club](https://hackclub.com). 
 
-> Must be a teenager or younger to receive a free machine but everything about Blot is open source and the online editor and drawing library can be freely used by anyone. We encourage all to submit to the gallery through PRs but will only send free machines to teenagers.
+> Everything about Blot is open source. The online editor and drawing library can be freely used by anyone, and we encourage all to submit to the gallery through PRs! However, you must be a teenager or younger to receive a free machine.
 
 <img width="600" alt="blot-white-bg" src="https://github.com/hackclub/blot/assets/27078897/e332631f-1232-4ac5-a573-57b0c570e980" />
 
-A piece of art made for Blot can be the first program you ever write, but it can also be a challenge for a master programmer. Check out some of the art made already in our [gallery](https://blot.hackclub.com/gallery). Every piece of art you see is actually a program. Many of them create unique pieces everytime the art is run. So you may be looking at an artwork which has never been seen before, even by the creator.
+A piece of art made for Blot can be the first program you ever write, but it can also be a challenge for a master programmer. Check out some of the art made already in our [gallery](https://blot.hackclub.com/gallery). Every piece of art you see is actually a program. Many of them create unique pieces everytime the art is run. You may be looking at an artwork which has never been seen before, even by the creator.
 
 # How It Works
 
@@ -31,7 +31,9 @@ The [bill of materials can be found here](/docs/BOM.toml) and an [assembly guide
 
 <img width="500" alt="all-parts" src="https://github.com/hackclub/blot/assets/27078897/8559466d-fd36-4126-bf9c-45cb913be6da" />
 
-<img height="341" alt="drawing" src="https://github.com/hackclub/blot/assets/27078897/2f7c9c17-3b67-4674-b2ca-2a4dbd26a3d1" />
+<img height="500" alt="drawing" src="https://github.com/hackclub/blot/assets/27078897/87f7e5b3-1aee-4082-8ae5-36006ec1ab0d" />
+
+<!-- <img height="341" alt="drawing" src="https://github.com/hackclub/blot/assets/27078897/2f7c9c17-3b67-4674-b2ca-2a4dbd26a3d1" /> -->
 
 # Blot is...
 
@@ -48,7 +50,7 @@ There is so much to learn and explore on the programming and the aesthetic side.
 
 <img width="300" src="https://github.com/hackclub/blot/assets/27078897/0ffc0ca8-516b-4f9a-b34e-4f09218e41cd"/>
 
-# It's all Open Source
+# It's All Open Source
 
 Every part of Blot is freely available for you to investigate and discover. 
 That includes the editor, the hardware design, the electronics, and even the finances around the project.
