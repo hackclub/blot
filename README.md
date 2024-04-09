@@ -11,7 +11,7 @@ Blot is a [**"You Ship, We Ship"**](https://github.com/hackclub/blot/tree/main?t
 
 A piece of art made for Blot can be the first program you ever write, but it can also be a challenge for a master programmer. Check out some of the art made already in our [gallery](https://blot.hackclub.com/gallery). Every piece of art you see is actually a program. Many of them create unique pieces everytime the art is run. So you may be looking at an artwork which has never been seen before, even by the creator.
 
-# How it works
+# How It Works
 
 ### 1) Create a piece of programatic art in the web editor.
 
