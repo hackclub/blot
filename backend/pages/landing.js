@@ -29,7 +29,7 @@ export default function() {
             Get started making art!
           </div>
           <div onclick="openModal()" class="text-white w-max text-lg p-1 pl-2.5 pr-2.5 rounded-lg mt-[10px] cursor-pointer bg-[#3a3939] hover:scale-105 hover:shadow-md transition" style="letter-spacing: 0px;">
-            Stay up to date
+            Get stickers for free
           </div>
         </div>
 
@@ -370,7 +370,8 @@ function popupModal() {
         
         <!-- Modal header -->
         <div class="mb-4">
-            <h2 class="text-xl font-bold text-gray-900">Sign Up for Updates</h2>
+            <h2 class="text-xl font-bold text-gray-900">Sign Up for Stickers</h2>
+            <p class="text-sm text-gray-600">Send us your email and we'll send a form to order free Hack Club stickers.</p>
             <p class="text-sm text-gray-600">At Hack Club we're open sourcing the future of public education. If you're a teen, join to stay updated on "you ship, we ship" grants like <a href="https://sprig.hackclub.com" class="text-blue-500 hover:text-blue-600">Sprig</a> and <a href="https://onboard.hackclub.com" class="text-blue-500 hover:text-blue-600">OnBoard</a>.</p>
             <p class="text-sm text-gray-600 mt-2">For anyone else, you're free to explore and use our tools. It's all free.</p>
         </div>
