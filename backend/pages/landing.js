@@ -448,7 +448,7 @@ function thanks() {
         </div>
 
         <!-- Modal body -->
-        <p class="text-sm text-gray-500">for signing up!</p>
+        <p class="text-sm text-gray-500">for signing up.</p>
     </div>
 
 </div>
