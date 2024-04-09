@@ -1,7 +1,7 @@
 /*
 @title: Spider Web
 @author: Will M
-@snapshot: Random Spider Web 
+@snapshot: snapshot0.jpg snapshot1.jpg snapshot2.jpg
 */
 
 const width = 125;
