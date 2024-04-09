@@ -17,7 +17,6 @@ renderer.paragraph = (text) => {
 };
 
 renderer.list = (...args) => {
-  console.log(args);
   return `${args[0]}`
 };
 
