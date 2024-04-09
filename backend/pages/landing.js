@@ -29,7 +29,7 @@ export default function() {
             Get started making art!
           </div>
           <div onclick="openModal()" class="text-white w-max text-lg p-1 pl-2.5 pr-2.5 rounded-lg mt-[10px] cursor-pointer bg-[#3a3939] hover:scale-105 hover:shadow-md transition" style="letter-spacing: 0px;">
-            Stay up to date.
+            Stay up to date
           </div>
         </div>
 
