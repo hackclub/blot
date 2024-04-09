@@ -4,6 +4,7 @@ export default function() {
 
   return `
     ${popupModal()}
+    ${thanks()}
     <div class="relative flex flex-col w-full" style="height: calc(100vh - 51px); min-height: 600px;">
       <div data-fade-in style="opacity: 0;" class="sm:text-7xl sm:leading-[1.3] text-3xl font-semibold tracking-tighter pt-2 mx-auto bg-[rgba(242,242,242,0.1)] backdrop-blur-[2px] rounded-xl max-w-max p-3">
         
@@ -400,6 +401,8 @@ function popupModal() {
 <script>
 function closeModal() {
     document.getElementById('my-modal').classList.add("hidden");
+
+
 }
 
 function openModal() {
@@ -418,8 +421,37 @@ function submitForm() {
   });
 
   closeModal();
+
+  const thanks = document.querySelector("#thanks");
+
+  thanks.classList.remove("hidden");
+
+  setTimeout(() => {
+    thanks.classList.add("hidden");
+  }, 1300)
 }
 </script>
+
+  `
+}
+
+function thanks() {
+  return `
+<!-- Modal backdrop -->
+<div id="thanks" class="hidden fixed z-50 inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+
+    <!-- Modal content -->
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <!-- Modal header -->
+        <div class="flex justify-between items-center mb-4">
+            <h4 class="text-lg font-medium text-gray-900">Thank You!</h4>
+        </div>
+
+        <!-- Modal body -->
+        <p class="text-sm text-gray-500">Thanks for signing up!</p>
+    </div>
+
+</div>
 
   `
 }
