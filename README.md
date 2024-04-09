@@ -1,6 +1,6 @@
 # Blot, the plotter bot from Hack Club
 
-**[💻 Online Editor: Make art](https://blot.hackclub.com/editor)** | **[👀 Gallery](https://blot.hackclub.com/gallery)** | **[🕸 Landing Page](https://blot.hackclub.com)**
+**[🕸 Landing Page](https://blot.hackclub.com)** | **[💻 Online Editor](https://blot.hackclub.com/editor)** | **[👀 Gallery](https://blot.hackclub.com/gallery)**
 
 Create programmatic art in our web-based editor and submit it to the gallery and we'll send you a CNC machine which can make that art.
 Blot is a [**You Ship, We Ship**](https://github.com/hackclub/blot/tree/main?tab=readme-ov-file#you-ship-we-ship) project from [Hack Club](https://hackclub.com). 
