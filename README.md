@@ -60,7 +60,7 @@ You're also welcome to participate and use our tools if you aren't a teen (like 
 
 # You Ship, We Ship
 
-At Hack Club we're reimagining a new type of public education for technology. We belive people learn best by creating things they care about and sharing them with others. We build open source creative tools with young people all around the world. These tools are gateways to new subjects in technology like [embedded](https://sprig.hackclub.com) [systems](https://onboard.hackclub.com) or digital fabrication robotics. When teenagers build things with our tools we send them more creative materials for free. 
+At Hack Club we're reimagining a new type of public education for technology. We believe people learn best by creating things they care about and sharing them with others. We build open source creative tools with young people all around the world. These tools are gateways to new subjects in technology like [embedded systems](https://sprig.hackclub.com), [circuits](https://onboard.hackclub.com) or digital fabrication robotics. When teenagers build things with our tools we send them more creative materials for free. 
 
 Our goal is to build a new type of library online that offers learners not just media to consume but tools to create. And it is free and open source to all. We're just getting started...
 
