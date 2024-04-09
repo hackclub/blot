@@ -40,7 +40,7 @@ The [bill of materials can be found here](/docs/BOM.toml) and an [assembly guide
 **A custom CNC drawing machine** designed from scratch to introduce you to digital fabrication. 
 It's made of 6 unique 3D printed parts with a custom control board and easy to understand firmware, which can be interfaced with through JavaScript in the browser.
 Blot is designed in OnShape. Check out the [3D model of the project](https://cad.onshape.com/documents/0bcd2f50d2614ea26189f43b/w/23913e7defc94fc29f7833e6/e/72ea852bfc1822955e506e37?renderMode=0&uiState=6538235d42737a70b1996741).
-You can find the [bill of materials here](/docs/BOM.toml) if you'd like to 3D print your Blot [the parts are here](https://github.com/hackclub/blot/tree/main/hardware/mechanical/drawing-thing-v4). The entire build costs about $150 dollars. If you're a teen we will give you all the parts for a PR with your an art piece you coded yourself.
+You can find the [bill of materials here](https://blot.hackclub.com/assembly) and, if you'd like to 3D print your Blot, [the parts are here](https://github.com/hackclub/blot/tree/main/hardware/mechanical/drawing-thing-v4). The entire build costs about $150 dollars. If you're a teen we will give you all the parts for a PR with your an art piece you coded yourself.
 
 **A web based editor for programmatic art** that we designed specifically for pen plotting with a [custom geometry library](/docs/DOCUMENTATION.md).
 We practiced programmatic pen plotting with [some](https://github.com/LingDong-) [amazing artists](https://static1.squarespace.com/static/63fbc39db5b01b5fa30423db/t/649b424d33b2ce3e0d5b63a5/1687896656015/June+Cohort+Zine.pdf). 
@@ -50,15 +50,16 @@ There is so much to learn and explore on the programming and the aesthetic side.
 
 <img width="300" src="https://github.com/hackclub/blot/assets/27078897/0ffc0ca8-516b-4f9a-b34e-4f09218e41cd"/>
 
+
 # It's All Open Source
 
 Every part of Blot is freely available for you to investigate and discover. 
 That includes the editor, the hardware design, the electronics, and even the finances around the project.
 We think people deserve tools they can take ownership of. That's why we give away the source for free. 
 
-Our projects at Hack Club have hundreds of teenage contributors from all over the world, if you want to learn how to program we invite you to jump in and start building tools used by thousands.
+Our projects at Hack Club have hundreds of teenage contributors from all over the world. If you want to learn how to program, we invite you to jump in and start building tools used by thousands.
 
-You're also welcome to participate and use our tools if you aren't a teen (like making art or building your own blot). But our [online community](https://hackclub.com/slack) is for teens only.
+You're also welcome to participate and use our tools if you aren't a teen (like making art or building your own blot), but our [online community](https://hackclub.com/slack) is for teens only.
 
 # You Ship, We Ship
 
@@ -70,22 +71,16 @@ Our goal is to build a new type of library online that offers learners not just 
 
 Join the `#blot` channel on the [Hack Club Slack](https://hackclub.com/slack). 
 
-The Blot editor is run with an express server.
+The Blot editor is run with an Express server.
 
-```
-Git
-Node.js
-Yarn
-```
-
-After installing those, clone the repo.
+After installing `Git`, `Node.js`, and `Yarn`, clone the repo.
 
 ```
 git clone https://github.com/hackclub/blot/
 yarn install
 ```
 
-To run the development server.
+To run the development server:
 
 ```
 yarn dev
