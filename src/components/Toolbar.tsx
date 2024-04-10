@@ -94,9 +94,9 @@ export default function Toolbar() {
         <div class={menuItemClasses} onClick={tidyCode}>
           tidy code
         </div>
-        <div class={menuItemClasses} onClick={animateLines}>
+       {/* <div class={menuItemClasses} onClick={animateLines}>
           animate
-        </div>
+        </div>*/}
         <div class={dropdownContainer}>
           <div>download</div>
           <div class={dropdownClasses + " left-0"}>
@@ -531,7 +531,7 @@ function animateLines() {
 
   const resampled = tk.resample(pls, 0.1);
 
-  let totalTime = 10000; // should be determined by length of line and timePerMM
+  let totalTime = 3000; // should be determined by length of line and timePerMM
   let deltaTime = 10;
 
   // console.time()
@@ -540,6 +540,9 @@ function animateLines() {
     if (elapsedTime >= totalTime) {
       clearInterval(animateState.intervalId);
       animateState.animating = false;
+      patchStore({
+        turtles: animateState.ogTurtles
+      })
 
       // console.timeEnd();
       return;
