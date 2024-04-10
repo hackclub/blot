@@ -37,6 +37,7 @@ const findOrCreateEmailListContact = async (email) => {
 
   if (foundContacts.length == 0) { // if the contact isn't already in the DB
     return await loops.createContact(email, {
+      source: "Blot editor",
       userGroup: "Hack Clubber",
       blotRequestedStickersAt: new Date()
     });
@@ -48,7 +49,6 @@ const findOrCreateEmailListContact = async (email) => {
 const addToEmailList = async (email) => {
   await findOrCreateEmailListContact(email);
   await loops.updateContact(email, {
-    userGroup: "Hack Clubber",
     blotRequestedStickersAt: new Date()
   });
 }
