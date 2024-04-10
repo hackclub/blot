@@ -1,3 +1,8 @@
+/*
+@title: Theplanets
+@author: Samrat Bose
+@snapshot: Planetary Blots
+*/
 setDocDimensions(400, 400);
 
 drawLines([[[200, 200], [200, 200]]]);
