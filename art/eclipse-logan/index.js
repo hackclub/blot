@@ -1,18 +1,23 @@
 /*
-@title: eclipse
 @author: logan fick
-@snapshot: 0.png
+
 credit from author Scott C's "word search" for influence on the text engine
 */
 
 const Width = 196;
 const Height = 163;
 
-const percentCoverage = 0.87 //0-100%
-const SunSize = Width/16.67
+var percentCoverage = 0.97 //0-100%
+if (percentCoverage > 1){
+  percentCoverage = 1
+}else if (percentCoverage < 0){
+  percentCoverage = 0
+}
+
+const SunSize = Width/23.99
 const MoonSize = SunSize * percentCoverage
 
-const drawingConstant = 732
+const drawingConstant = 12
 
 const Date = "April 8th 2024"
 const Location = "NY"
@@ -22,6 +27,7 @@ const Time = "3:20PM"
 const TimeZone = "EST"
 const TimeText = Time + " " + TimeZone
 
+const e = 25 - percentCoverage * 25;
 
 // ============================ Text Engine ============================
 // instructions.ts
@@ -242,27 +248,43 @@ var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
 
 setDocDimensions(Width, Height);
 const Board = new bt.Turtle();
+const Lines = new bt.Turtle();
 const finalLines = [];
 
 DrawText(EclipseText, [16, 144], 1.8);
 DrawText(TimeText, [78, 6], 1.8);
 
-for (let i = 0; i < 52; i++) {
+for (let i = 0; i < 50; i++) {
   Board.forward(SunSize);
   Board.right(drawingConstant);
 }
 
-for (let i = 0; i < 52; i++) {
+for (let i = 0; i < 30; i++) {
   Board.forward(MoonSize);
   Board.right(drawingConstant);
 }
 
 // add turtle to final lines
 bt.join(finalLines, Board.lines());
+bt.join(finalLines, Lines.lines());
 
 // center piece
 const cc = bt.bounds(finalLines).cc;
-bt.translate(finalLines, [Width / 2, Height / 2.1], cc);
+bt.translate(finalLines, [Width / 3, Height / 2.1], cc);
 
 // draw it
 drawLines(finalLines);
+drawLines([
+  [
+    [104, 110],
+    [104+e, 110+e]
+  ],
+  [
+    [104, 45],
+    [104+e, 45-e]
+  ],
+  [
+    [112, 81],
+    [112+e, 81]
+  ]
+]);
