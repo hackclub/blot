@@ -1,7 +1,7 @@
 /*
 @title: Theplanets
 @author: Samrat Bose
-@snapshot: Planetary Blots
+@snapshot: blot.png
 */
 setDocDimensions(400, 400);
 
