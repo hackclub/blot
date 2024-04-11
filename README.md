@@ -108,7 +108,7 @@ You ship we ship projects are developed to provide technological creative materi
 
 **The infinite gallery** at [Outernet](https://www.youtube.com/watch?v=O1s5HqSqKi0) (Hack Club's 2023 summer hackathon). Leo, Kai, and Henry constructed a black out box that contained an infinite art gallery. Participant's entered a room sized black box with one wall illuminated with artwork and a giant joystick in the center. They could navigate the gallery with the joystick and as they explored new (possibly never before seen) art was generated based on their location. 
 
-<img width="500" src="https://github.com/hackclub/blot/assets/27078897/c484d7fe-fb72-4d44-90b5-d7ec0ffe3204">
+<img height="500" src="https://github.com/hackclub/blot/assets/27078897/c484d7fe-fb72-4d44-90b5-d7ec0ffe3204">
 
 **Chinese caligraphy workshop** was developed for and run at the [Hack Club leader summit 2024](https://www.youtube.com/watch?v=UZEm5lONg7g) by Bright Li (age 15). During it participants learned how to draw Chinese caligraphy programmatically and then handed ink brushes to Bright's Blot robot to put the drawings to the page.
 
