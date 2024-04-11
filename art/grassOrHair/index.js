@@ -1,7 +1,7 @@
 /*
 @title: grassOrHair
 @author: mint :3
-@snapshot: 
+@snapshot: SCR-20240411-oang.png
 */
 
 const width = 125;
