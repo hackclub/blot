@@ -58,7 +58,7 @@ There is so much to learn and explore on the programming and the aesthetic side.
 
 # What are People Making with Blot
 
-Blot has been in development since January 2023 and was released April 2024. We've had lots of people use the Blot editor and the Blto machine to create visual art, run workshops and as part of interactive installations. Here's a sense of what van be done with Blot.
+Blot has been in development since January 2023 and was released April 2024. We've had lots of people use the Blot editor and the Blto machine to create visual art, run workshops and as part of interactive installations. Here's a sense of what can be done with Blot.
 
 ### Programmatic Art
 
@@ -82,7 +82,7 @@ There is all sorts of styles of programmatic art. Here are some examples of grea
   <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/90c01a52-0404-423f-8ae9-763bc591ff9f">
 </a>
 
-**The data transformation** can be seen in Kieran's self portrait. It takes data from an SVG but modifies it programmtically to produce an art piece. This approach could be used to visualize data that may not of been visual to begin with.
+**The data transformation** can be seen in Kieran's (age 15) self portrait. It takes data from an SVG but modifies it programmtically to produce an art piece. This approach could be used to visualize data that may not of been visual to begin with.
 
 <a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/self_portrait-kieran/index.js">
   <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/145ebbb5-7187-4062-b41f-c6961c5156b4">
