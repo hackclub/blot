@@ -11,6 +11,12 @@ Blot is a [**You Ship, We Ship**](https://github.com/hackclub/blot/tree/main?tab
 
 A piece of art made for Blot can be the first program you ever write, but it can also be a challenge for a master programmer. Check out some of the art made already in our [gallery](https://blot.hackclub.com/gallery). Every piece of art you see is actually a program. Many of them create unique pieces everytime the art is run. You may be looking at an artwork which has never been seen before, even by the creator.
 
+For a short video introduction to Blot [check out our 38 second trailer](https://www.youtube.com/watch?v=d1noJNmfvC0).
+
+<a href="https://www.youtube.com/watch?v=d1noJNmfvC0">
+  <img width="500" alt="Screenshot 2024-04-11 at 5 31 07 PM" src="https://github.com/hackclub/blot/assets/27078897/a1ff1494-9624-45ff-ac76-b47da7b7d6e3">
+</a>
+
 # How It Works
 
 ### 1) Create a piece of programatic art in the web editor.
@@ -50,6 +56,63 @@ There is so much to learn and explore on the programming and the aesthetic side.
 
 <img width="300" src="https://github.com/hackclub/blot/assets/27078897/0ffc0ca8-516b-4f9a-b34e-4f09218e41cd"/>
 
+# What are People Making with Blot
+
+Blot has been in development since January 2023 and was released April 2024. We've had lots of people use the Blot editor and the Blto machine to create visual art, run workshops and as part of interactive installations. Here's a sense of what van be done with Blot.
+
+### Programmatic Art
+
+There is all sorts of styles of programmatic art. Here are some examples of great Blot submissions that show a range of styles. This list is by no means exhuastive.
+
+**The nautral scene** is a common source of artistic inspiration. This could be called figurative or represenational art when it tries to depict a real thing with some fidelity. One example are these roots by Kai (age 17).
+
+<a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/roots-kai/index.js">
+  <img width="500" alt="collection" src="https://github.com/hackclub/blot/assets/27078897/a67fec4c-11cc-48b3-981f-5f4108028c03">
+</a>
+
+**The geometric pattern** is natural avenue to pursue when making art with computers because code is a great way to describe patterns. Oz's approach of clipping overlapping segments creates a wonderful sense of depth.
+
+<a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/braid-oz/index.js">
+  <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/361e448d-0eeb-4aa2-818e-2831b373efb2">
+</a>
+
+**The tech demo (with composition)** is focusing on a specific technical approach like in Henry's (age 15) ray marcher. The art piece isn't complete though until the artists uses the technique to make a composition.
+
+<a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/raymarching-henry/index.js">
+  <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/90c01a52-0404-423f-8ae9-763bc591ff9f">
+</a>
+
+**The data transformation** can be seen in Kieran's self portrait. It takes data from an SVG but modifies it programmtically to produce an art piece. This approach could be used to visualize data that may not of been visual to begin with.
+
+<a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/self_portrait-kieran/index.js">
+  <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/145ebbb5-7187-4062-b41f-c6961c5156b4">
+</a>
+
+**The concept** is important with any artwork and can be mixed with any of the genres above. Ultimately an interesting idea can be what elevates something that is visually pretty simple, one example by Ayush is the Blot's own self portrait.
+
+<a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/blot-ayush/index.js">
+  <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/1f367d9b-aa74-4fca-8623-259a06800335">
+</a>
+
+For way more examples check out the [gallery](https://blot.hackclub.com/gallery).
+
+### Blot as Creative Material
+
+You ship we ship projects are developed to provide technological creative material. The Blot was developed to not just create visual programs on computers but also to explore robotic and interactive technology. Here are some ways the machine or project has been used to create interactive technology experiences.
+
+[**Lineflow**](https://github.com/leomcelroy/lineflow) was developed as an interactive art piece for an MIT Museum event. Participants would create a single line drawing on the computer and would then watch a simulation of a line folding into there drawing. Three frames of that simulation were strung together to create a timeline of the animation that would be drawn by a Blot to be brought home by the participant.
+
+<img width="500" src="https://private-user-images.githubusercontent.com/27078897/291394243-0333b4ca-52cd-4bca-9141-44d05d2775ce.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTI4NzI3OTgsIm5iZiI6MTcxMjg3MjQ5OCwicGF0aCI6Ii8yNzA3ODg5Ny8yOTEzOTQyNDMtMDMzM2I0Y2EtNTJjZC00YmNhLTkxNDEtNDRkMDVkMjc3NWNlLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA0MTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNDExVDIxNTQ1OFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTFiOTRkM2MzM2Q0ZTU2ZDM2ZWNmZTYyZWNkZWRlMDU0MmZlNjM3OTE4OWNjM2IxOGQxMDUyNmZlYzYyODU5YTQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.oYpMoiGw0wWuYv_ccL9L5C7bawR2lHLMGUVleZat4xo">
+
+<img width="500" src="https://github.com/hackclub/blot/assets/27078897/bfdb83c4-5b65-419f-8b3a-4ceab3bb7f33"/>
+
+**The infinite gallery** at [Outernet](https://www.youtube.com/watch?v=O1s5HqSqKi0) (Hack Club's 2023 summer hackathon). Leo, Kai, and Henry constructed a black out box that contained an infinite art gallery. Participant's entered a room sized black box with one wall illuminated with artwork and a giant joystick in the center. They could navigate the gallery with the joystick and as they explored new (possibly never before seen) art was generated based on their location. 
+
+<img width="500" src="https://github.com/hackclub/blot/assets/27078897/c484d7fe-fb72-4d44-90b5-d7ec0ffe3204">
+
+**Chinese caligraphy workshop** was developed for and run at the [Hack Club leader summit 2024](https://www.youtube.com/watch?v=UZEm5lONg7g) by Bright Li (age 15). During it participants learned how to draw Chinese caligraphy programmatically and then handed ink brushes to Bright's Blot robot to put the drawings to the page.
+
+<img width="500" alt="Screenshot 2024-04-11 at 6 04 53 PM" src="https://github.com/hackclub/blot/assets/27078897/0de4df40-a742-4f9b-a2eb-d17fdd3a1e22">
 
 # It's All Open Source
 
