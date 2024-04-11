@@ -1,6 +1,6 @@
 /*
 @title: grassOrHair
-@author: mint :3
+@author: mint
 @snapshot: SCR-20240411-oang.png
 */
 
