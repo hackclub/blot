@@ -58,7 +58,7 @@ There is so much to learn and explore on the programming and the aesthetic side.
 
 # What are People Making with Blot
 
-Blot has been in development since January 2023 and was released April 2024. We've had lots of people use the Blot editor and the Blto machine to create visual art, run workshops and as part of interactive installations. Here's a sense of what can be done with Blot.
+Blot has been in development since January 2023 and was released April 2024. We've had lots of people use the Blot editor and the Blot machine to create visual art, run workshops and as part of interactive installations. Here's a sense of what can be done with Blot.
 
 ### Programmatic Art
 
