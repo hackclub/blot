@@ -1,34 +1,48 @@
 /*
+@title: eclipse
 @author: logan fick
-
-credit from author Scott C's "word search" for influence on the text engine
+@snapshot: 0.png
 */
 
 const Width = 196;
 const Height = 163;
 
-var percentCoverage = 0.97 //0-100%
+var percentCoverage = 1.03 //0-100%
 if (percentCoverage > 1){
   percentCoverage = 1
 }else if (percentCoverage < 0){
   percentCoverage = 0
 }
 
-const SunSize = Width/23.99
+const SunSize = Width/26.57
 const MoonSize = SunSize * percentCoverage
+const radius = (5 / 28) * Width
+const rayPadding = 5
 
 const drawingConstant = 12
 
 const Date = "April 8th 2024"
 const Location = "NY"
 const EclipseText = Date + " Total Solar Eclipse " + Location
+const TotalityText = "Totality!"
 
-const Time = "3:20PM"
+const Times = [
+    "<2:40PM",
+    "2:40PM",
+    "3:00PM",
+    "3:20PM",
+    "3:25PM",
+    "3:30PM"
+  ]
+
 const TimeZone = "EST"
-const TimeText = Time + " " + TimeZone
+var TimeText = " " + TimeZone
 
-const e = 25 - percentCoverage * 25;
+var visibility = 15 - percentCoverage * 10;
 
+if (percentCoverage >= 1){
+  visibility = 3
+}
 // ============================ Text Engine ============================
 // instructions.ts
 var ParseCoords = (cstr, multScale = 1) => {
@@ -251,8 +265,50 @@ const Board = new bt.Turtle();
 const Lines = new bt.Turtle();
 const finalLines = [];
 
-DrawText(EclipseText, [16, 144], 1.8);
-DrawText(TimeText, [78, 6], 1.8);
+const top = [ //12 o clock
+    [Width / 2, Height / 2 + radius + rayPadding],
+    [Width / 2, Height / 2 + radius + rayPadding + visibility]
+]
+const topRight = [
+    [Width / 2 + (radius - 5), Height / 2 + (radius - 5)],
+    [Width / 2 + (radius - 5) + visibility, Height / 2 + (radius - 5) + visibility] 
+]
+const right = [
+    [Width / 2 + radius + rayPadding, Height / 2],
+    [Width / 2 + radius + rayPadding + visibility, Height / 2]
+]
+const bottomRight = [
+    [Width / 2 + (radius - 5), Height / 2 - (radius - 5)],
+    [Width / 2 + (radius - 5) + visibility, Height / 2 - (radius - 5) - visibility]
+]
+const bottom = [
+    [Width / 2, Height / 2 - radius - rayPadding],
+    [Width / 2, Height / 2 - radius - rayPadding - visibility]
+]
+const bottomLeft = [
+    [Width / 2 - (radius - 5), Height / 2 - (radius - 5)],
+    [Width / 2 - (radius - 5) - visibility, Height / 2 - (radius - 5) - visibility]
+]
+const left = [
+    [Width / 2 - radius - rayPadding, Height / 2],
+    [Width / 2 - radius - rayPadding - visibility, Height / 2]
+]
+const topLeft = [
+    [Width / 2 - (radius - 5), Height / 2 + (radius - 5)],
+    [Width / 2 - (radius - 5) - visibility, Height / 2 + (radius - 5) + visibility]
+]
+
+const rays = [
+  top,
+  topRight,
+  right,
+  bottomRight,
+  bottom,
+  bottomLeft,
+  left,
+  topLeft
+]
+
 
 for (let i = 0; i < 50; i++) {
   Board.forward(SunSize);
@@ -270,21 +326,33 @@ bt.join(finalLines, Lines.lines());
 
 // center piece
 const cc = bt.bounds(finalLines).cc;
-bt.translate(finalLines, [Width / 3, Height / 2.1], cc);
+bt.translate(finalLines, [Width / 2, Height / 2], cc);
 
 // draw it
 drawLines(finalLines);
-drawLines([
-  [
-    [104, 110],
-    [104+e, 110+e]
-  ],
-  [
-    [104, 45],
-    [104+e, 45-e]
-  ],
-  [
-    [112, 81],
-    [112+e, 81]
-  ]
-]);
+if(percentCoverage == 1.0){
+  drawLines(rays);
+  TimeText = Times[5] + TimeText
+}else if(percentCoverage < 1 && percentCoverage >= 0.95){
+  drawLines([top,topRight,right]);  
+  TimeText = Times[4] + TimeText
+}else if(percentCoverage < 0.95 && percentCoverage >= 0.8){
+  drawLines([top,topRight,right,bottomRight,bottom]);  
+  TimeText = Times[3] + TimeText
+}else if(percentCoverage < 0.8 && percentCoverage >= 0.4){
+  drawLines([top,topRight,right,bottomRight,bottom,topLeft,left]);  
+  TimeText = Times[2] + TimeText
+}else{
+  drawLines(rays);
+  TimeText = Times[1] + TimeText
+}
+
+if(percentCoverage<=0){
+  TimeText = Times[0] + " " + TimeZone
+}
+
+DrawText(EclipseText, [16, 151], 1.8);
+DrawText(TimeText, [78, 7], 1.8);
+if(percentCoverage >= 1){
+  DrawText(TotalityText, [79,134],1.8);
+}
