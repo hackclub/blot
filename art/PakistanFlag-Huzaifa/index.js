@@ -45,7 +45,7 @@ const starCenter = [width * (3/4) - 16, height / 2 + 2];
 const starPoints = 5;
 function drawStar(center, radius, points) {
   const star = [];
-  for (let i = 0; i < points * 2; i++) {
+  for (let i = 0; i <= points * 2; i++) {
     const r = i % 2 === 0 ? radius * 0.5 : radius;
     const theta = i * Math.PI / points;
     const x = center[0] + Math.cos(theta) * r;
