@@ -1,3 +1,9 @@
+/*
+@title: USA Flag
+@author: Gautam
+@snapshot: snapshot3.png
+*/
+
 const width = 190;
 const height = 100;
 setDocDimensions(width, height);
