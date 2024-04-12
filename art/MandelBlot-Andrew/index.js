@@ -1,7 +1,7 @@
 /*
 @title: MandelBlot
 @author: Andrew
-@snapshot: Recursion-100.png
+@snapshot: 100-Recursion.png
 */
 
 // Set the dimensions of the drawing document
