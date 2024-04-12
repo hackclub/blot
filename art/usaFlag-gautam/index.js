@@ -1,9 +1,3 @@
-/*
-@title: USA Flag
-@author: Gautam
-@snapshot: snapshot0.png
-*/
-
 const width = 190;
 const height = 100;
 setDocDimensions(width, height);
@@ -21,7 +15,15 @@ for (let i = 0; i < 13; i++) {
         [[0, i * stripeHeight], [width, i * stripeHeight]]
     ]);
   }
+    if (i % 2 === 0) {
+        for (let j = 0; j < 5; j++) {
+            drawLines([
+                [[i>5?sw:0, i * stripeHeight + j * stripeHeight / 5], [width, i * stripeHeight + (j + 1) * stripeHeight / 5]]
+            ]);
+        }
+    }
 }
+
 const sh = 7 * (height / 13);
 
 function star(x, y, size) {
@@ -33,30 +35,15 @@ function star(x, y, size) {
         const endY = y + length * Math.sin(angle);
         points.push([endX, endY]);
     }
-
+    
     const starLines = [];
     for (let i = 0; i < points.length; i++) {
         starLines.push([points[i], points[(i + 1) % points.length]]); // Connect each point to the next
     }
-
+    
     drawLines(starLines);
 }
 const starSize = 3;
-
-// const cx = 37;
-// const cy = 73;
-// const t = 13;
-
-// const r = 21;
-
-// for (let i = 0; i < t; i++) {
-//     const a = (2 * Math.PI / t) * i;
-//     const x = cx +r * Math.cos(a);
-//     const y = cy +r * Math.sin(a);
-//     star(x, y, starSize);
-// }
-
-
 const rows = 5;
 const columns = 6;
 const xOffset = 13
