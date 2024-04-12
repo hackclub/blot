@@ -4,6 +4,8 @@
 
 > For an introduction to Blot check out <a href="/editor?guide=start">this guide</a>. 
 
+> Check out our <a href="https://www.youtube.com/watch?v=d1noJNmfvC0">38 second trailer for a brief overview of the whole Blot project.</a>
+
 There are three names that provide functionality available in the Blot editor:
 `setDocDimensions`, `drawLines`, and `blotToolkit` (which can also be referenced as `bt`).
 
