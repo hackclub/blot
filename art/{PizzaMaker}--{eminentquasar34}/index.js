@@ -7,21 +7,24 @@
 const width = 125;
 const height = 125;
 
-const num_of_pepperonis = 0;
-const num_of_mushrooms = 5;
-const num_of_peppers = 5;
-const num_of_pineapples = 0;
-const num_of_olives = 3;
+// ------------------------------------ EDITABLE, only 1-12, then go to bottom of file for more instructions
+
+const amount_of_toppings = 12
+
+// ------------------------------------
+
+
+const p = new bt.Turtle();
 // Go to bottom of file after changing these values
 
 setDocDimensions(width, height);
 
 const drawBase = () => {
-  const p = new bt.Turtle()
-  for (let i = 0; i < 183; i++) p.forward(0.2).right(2)
-  p.up().left(90).forward(0.5).right(90).down()
-  for (let i = 0; i < 183; i++) p.forward(0.215).right(2)
-  return p.lines()
+  const f = new bt.Turtle()
+  for (let i = 0; i < 183; i++) f.forward(0.2).right(2)
+  f.up().left(90).forward(0.5).right(90).down()
+  for (let i = 0; i < 183; i++) f.forward(0.215).right(2)
+  return f.lines()
 }
 
 const createRandCoordinates = () => {
@@ -31,24 +34,44 @@ const createRandCoordinates = () => {
 }
 
 
+
+
 const drawMushroom = () => {
-  const curve = bt.catmullRom([[15, 1.5], [14.5, 4], [13.5, 8], [11, 7], [10, 7], [9, 9.5], [14.5, 12.5], [20, 9.5], [20, 7.5], [19, 7.5], [17, 7.5], [17.5, 1.5], [16.5, 1.5], [15, 1.5]])
-  bt.translate([curve], createRandCoordinates())
-  bt.rotate([curve], bt.randIntInRange(0, 360))
-  return [curve]
+  // p.up().goTo().down()
+  p.forward(3)
+  p.left(90).forward(3)
+  for (let i = 0; i < 82; i++) p.forward(0.052).right(2.5)
+  p.left(74).forward(0.5).left(90)
+  for (let i = 0; i < 40; i++) p.forward(0.213).left(2.9)
+  for (let i = 0; i < 26; i++) p.forward(0.234).left(1.3)
+  for (let i = 0; i < 40; i++) p.forward(0.206).left(3.1)
+  p.left(74).forward(0.5).left(90)
+  for (let i = 0; i < 82; i++) p.forward(0.066).right(2.5)
+  p.left(-4).forward(3.9)
+  return p.lines()
+
+  
 }
 
-const drawPepperoni = () => {
-  const p = new bt.Turtle()
-  p.up().goTo(createRandCoordinates()).down()
-  for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
+const drawTomato = (x) => {
+  // p.up().goTo(x).down()
+  for (let i = 0; i < 88; i++) p.forward(0.15).right(2)
+  p.right(90).forward(8.6).up().right(180).forward(1).down().left(90)
+  for (let i = 0; i < 91; i++) p.forward(0.115).right(2)
+  p.up().right(90).forward(3).right(146).forward(0.7).down()
+  p.forward(1)
+  p.up().right(180).forward(1.7).right(138).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(2.2).right(132).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(1.7).right(136).forward(0.7).down()
+  p.forward(1)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   return p.lines()
 }
 
-const drawPineapple = () => {
-  const p = new bt.Turtle()
-  p.up().goTo(createRandCoordinates()).down()
+const drawPineapple = (x) => {
+  // p.up().goTo([x]).down()
   p.forward(1.1).left(60)
   p.forward(7.0).left(120)
   p.forward(5.4).left(96)
@@ -57,28 +80,47 @@ const drawPineapple = () => {
   return p.lines()
 }
 
-const drawOlive = () => {
-  const p = new bt.Turtle()
-  p.up().goTo(createRandCoordinates()).down()
+const drawOlive = (x) => {
+  // const p = new bt.Turtle()
+  // p.up().goTo(x).down()
   for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
-  p.up().right(90).forward(2).down()
-  p.forward(3)
-  p.up().right(180).forward(1.5).left(90).forward(1.5).right(180).down()
-  p.forward(3)
+  p.up().right(57).forward(2.0).down()
+  for (let i = 0; i < 183; i++) p.forward(0.04).right(2)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   return p.lines()
 }
 
-const drawPepper = () => {
-  const p = new bt.Turtle()
-  p.up().goTo(createRandCoordinates()).down()
-  for (let i = 0; i < 138; i++) p.forward(0.1).right(2)
-  p.left(123)
-  for (let i = 0; i < 109; i++) p.forward(0.1).right(2)
-  p.left(157)
-  for (let i = 0; i < 123; i++) p.forward(0.1).right(2)
-  p.left(139)
-  for (let i = 0; i < 126; i++) p.forward(0.1).right(2)
+const drawPepper = (x) => {
+  // p.up().goTo([x]).down()
+  const randRotate = bt.randIntInRange(0, 360)
+  for (let i = 0; i < 99; i++) p.forward(0.1).right(2)
+  p.left(93)
+  for (let i = 0; i < 92; i++) p.forward(0.1).right(2)
+  p.left(106)
+  for (let i = 0; i < 100; i++) p.forward(0.1).right(2)
+  p.left(120)
+  for (let i = 0; i < 115; i++) p.forward(0.1).right(2)
+  p.up().left(39).forward(1).right(90).forward(1).left(180).down()
+  for (let i = 0; i < 95; i++) p.forward(0.06).right(2)
+  p.left(93)
+  for (let i = 0; i < 92; i++) p.forward(0.06).right(2)
+  p.left(106)
+  for (let i = 0; i < 100; i++) p.forward(0.06).right(2)
+  p.left(120)
+  for (let i = 0; i < 115; i++) p.forward(0.06).right(2)
+  
+  bt.rotate(p.lines(), bt.randIntInRange(0, 360))
+  return p.lines()
+}
+
+const drawOnion = (x) => {
+  // p.up().goTo(x).down()
+  for (let i = 0; i < 75; i++) p.forward(0.24).right(2)
+  p.right(85).forward(1).right(78)
+  for (let i = 0; i < 60; i++) p.forward(0.23).left(2)
+  p.right(85).forward(1)
+  
+  
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   return p.lines()
 }
@@ -111,42 +153,112 @@ const perfectPizza = () => {
   const p = new bt.Turtle()
 
   // pepperoni
-  p.up().goTo([40, 85]).down()
-  for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
+  p.up().goTo([40, 65]).down()
+  for (let i = 0; i < 88; i++) p.forward(0.15).right(2)
+  p.right(90).forward(8.6).up().right(180).forward(1).down().left(90)
+  for (let i = 0; i < 91; i++) p.forward(0.115).right(2)
+  p.up().right(90).forward(3).right(146).forward(0.7).down()
+  p.forward(1)
+  p.up().right(180).forward(1.7).right(138).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(2.2).right(132).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(1.7).right(136).forward(0.7).down()
+  p.forward(1)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  p.up().goTo([57, 93]).down()
-  for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
+  p.up().goTo([57, 88]).down()
+  for (let i = 0; i < 88; i++) p.forward(0.15).right(2)
+  p.right(90).forward(8.6).up().right(180).forward(1).down().left(90)
+  for (let i = 0; i < 91; i++) p.forward(0.115).right(2)
+  p.up().right(90).forward(3).right(146).forward(0.7).down()
+  p.forward(1)
+  p.up().right(180).forward(1.7).right(138).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(2.2).right(132).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(1.7).right(136).forward(0.7).down()
+  p.forward(1)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  p.up().goTo([73, 44]).down()
-  for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
+  p.up().goTo([73, 55]).down()
+  for (let i = 0; i < 88; i++) p.forward(0.15).right(2)
+  p.right(90).forward(8.6).up().right(180).forward(1).down().left(90)
+  for (let i = 0; i < 91; i++) p.forward(0.115).right(2)
+  p.up().right(90).forward(3).right(146).forward(0.7).down()
+  p.forward(1)
+  p.up().right(180).forward(1.7).right(138).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(2.2).right(132).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(1.7).right(136).forward(0.7).down()
+  p.forward(1)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  p.up().goTo([91, 67]).down()
-  for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
+  p.up().goTo([97, 58]).down()
+  for (let i = 0; i < 88; i++) p.forward(0.15).right(2)
+  p.right(90).forward(8.6).up().right(180).forward(1).down().left(90)
+  for (let i = 0; i < 91; i++) p.forward(0.115).right(2)
+  p.up().right(90).forward(3).right(146).forward(0.7).down()
+  p.forward(1)
+  p.up().right(180).forward(1.7).right(138).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(2.2).right(132).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(1.7).right(136).forward(0.7).down()
+  p.forward(1)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  p.up().goTo([61, 37]).down()
-  for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
+  p.up().goTo([61, 28]).down()
+  for (let i = 0; i < 88; i++) p.forward(0.15).right(2)
+  p.right(90).forward(8.6).up().right(180).forward(1).down().left(90)
+  for (let i = 0; i < 91; i++) p.forward(0.115).right(2)
+  p.up().right(90).forward(3).right(146).forward(0.7).down()
+  p.forward(1)
+  p.up().right(180).forward(1.7).right(138).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(2.2).right(132).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(1.7).right(136).forward(0.7).down()
+  p.forward(1)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   p.up().goTo([53, 47]).down()
-  for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
+  for (let i = 0; i < 88; i++) p.forward(0.15).right(2)
+  p.right(90).forward(8.6).up().right(180).forward(1).down().left(90)
+  for (let i = 0; i < 91; i++) p.forward(0.115).right(2)
+  p.up().right(90).forward(3).right(146).forward(0.7).down()
+  p.forward(1)
+  p.up().right(180).forward(1.7).right(138).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(2.2).right(132).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(1.7).right(136).forward(0.7).down()
+  p.forward(1)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  p.up().goTo([74, 67]).down()
-  for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
+  p.up().goTo([63, 66]).down()
+  for (let i = 0; i < 88; i++) p.forward(0.15).right(2)
+  p.right(90).forward(8.6).up().right(180).forward(1).down().left(90)
+  for (let i = 0; i < 91; i++) p.forward(0.115).right(2)
+  p.up().right(90).forward(3).right(146).forward(0.7).down()
+  p.forward(1)
+  p.up().right(180).forward(1.7).right(138).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(2.2).right(132).forward(0.7).down()
+  p.forward(1.5)
+  p.up().right(180).forward(1.7).right(136).forward(0.7).down()
+  p.forward(1)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   
   // pineapple
-  p.up().goTo([28, 64]).down()
+  p.up().goTo([29, 64]).down()
   p.forward(1.1).left(60)
   p.forward(7.0).left(120)
   p.forward(5.4).left(96)
   p.forward(6.07).left(65)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  p.up().goTo([86, 48]).down()
+  p.up().goTo([94, 52]).down()
   p.forward(1.1).left(60)
   p.forward(7.0).left(120)
   p.forward(5.4).left(96)
   p.forward(6.07).left(65)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  p.up().goTo([44, 24]).down()
+  p.up().goTo([48, 30]).down()
   p.forward(1.1).left(60)
   p.forward(7.0).left(120)
   p.forward(5.4).left(96)
@@ -155,56 +267,90 @@ const perfectPizza = () => {
 
   // pepper
   p.up().goTo([75, 49]).down()
-  for (let i = 0; i < 138; i++) p.forward(0.1).right(2)
-  p.left(123)
-  for (let i = 0; i < 109; i++) p.forward(0.1).right(2)
-  p.left(157)
-  for (let i = 0; i < 123; i++) p.forward(0.1).right(2)
-  p.left(139)
-  for (let i = 0; i < 126; i++) p.forward(0.1).right(2)
+  for (let i = 0; i < 99; i++) p.forward(0.1).right(2)
+  p.left(93)
+  for (let i = 0; i < 92; i++) p.forward(0.1).right(2)
+  p.left(106)
+  for (let i = 0; i < 100; i++) p.forward(0.1).right(2)
+  p.left(120)
+  for (let i = 0; i < 115; i++) p.forward(0.1).right(2)
+  p.up().left(39).forward(1).right(90).forward(1).left(180).down()
+  for (let i = 0; i < 95; i++) p.forward(0.06).right(2)
+  p.left(93)
+  for (let i = 0; i < 92; i++) p.forward(0.06).right(2)
+  p.left(106)
+  for (let i = 0; i < 100; i++) p.forward(0.06).right(2)
+  p.left(120)
+  for (let i = 0; i < 115; i++) p.forward(0.06).right(2)
+  
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   p.up().goTo([54, 76]).down()
-  for (let i = 0; i < 138; i++) p.forward(0.1).right(2)
-  p.left(123)
-  for (let i = 0; i < 109; i++) p.forward(0.1).right(2)
-  p.left(157)
-  for (let i = 0; i < 123; i++) p.forward(0.1).right(2)
-  p.left(139)
-  for (let i = 0; i < 126; i++) p.forward(0.1).right(2)
+  for (let i = 0; i < 99; i++) p.forward(0.1).right(2)
+  p.left(93)
+  for (let i = 0; i < 92; i++) p.forward(0.1).right(2)
+  p.left(106)
+  for (let i = 0; i < 100; i++) p.forward(0.1).right(2)
+  p.left(120)
+  for (let i = 0; i < 115; i++) p.forward(0.1).right(2)
+  p.up().left(39).forward(1).right(90).forward(1).left(180).down()
+  for (let i = 0; i < 95; i++) p.forward(0.06).right(2)
+  p.left(93)
+  for (let i = 0; i < 92; i++) p.forward(0.06).right(2)
+  p.left(106)
+  for (let i = 0; i < 100; i++) p.forward(0.06).right(2)
+  p.left(120)
+  for (let i = 0; i < 115; i++) p.forward(0.06).right(2)
+  
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  p.up().goTo([38, 36]).down()
-  for (let i = 0; i < 138; i++) p.forward(0.1).right(2)
-  p.left(123)
-  for (let i = 0; i < 109; i++) p.forward(0.1).right(2)
-  p.left(157)
-  for (let i = 0; i < 123; i++) p.forward(0.1).right(2)
-  p.left(139)
-  for (let i = 0; i < 126; i++) p.forward(0.1).right(2)
+  p.up().goTo([43, 37]).down()
+  for (let i = 0; i < 99; i++) p.forward(0.1).right(2)
+  p.left(93)
+  for (let i = 0; i < 92; i++) p.forward(0.1).right(2)
+  p.left(106)
+  for (let i = 0; i < 100; i++) p.forward(0.1).right(2)
+  p.left(120)
+  for (let i = 0; i < 115; i++) p.forward(0.1).right(2)
+  p.up().left(39).forward(1).right(90).forward(1).left(180).down()
+  for (let i = 0; i < 95; i++) p.forward(0.06).right(2)
+  p.left(93)
+  for (let i = 0; i < 92; i++) p.forward(0.06).right(2)
+  p.left(106)
+  for (let i = 0; i < 100; i++) p.forward(0.06).right(2)
+  p.left(120)
+  for (let i = 0; i < 115; i++) p.forward(0.06).right(2)
+  
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  p.up().goTo([73, 25]).down()
-  for (let i = 0; i < 138; i++) p.forward(0.1).right(2)
-  p.left(123)
-  for (let i = 0; i < 109; i++) p.forward(0.1).right(2)
-  p.left(157)
-  for (let i = 0; i < 123; i++) p.forward(0.1).right(2)
-  p.left(139)
-  for (let i = 0; i < 126; i++) p.forward(0.1).right(2)
+  
+  p.up().goTo([71, 33]).down()
+  for (let i = 0; i < 99; i++) p.forward(0.1).right(2)
+  p.left(93)
+  for (let i = 0; i < 92; i++) p.forward(0.1).right(2)
+  p.left(106)
+  for (let i = 0; i < 100; i++) p.forward(0.1).right(2)
+  p.left(120)
+  for (let i = 0; i < 115; i++) p.forward(0.1).right(2)
+  p.up().left(39).forward(1).right(90).forward(1).left(180).down()
+  for (let i = 0; i < 95; i++) p.forward(0.06).right(2)
+  p.left(93)
+  for (let i = 0; i < 92; i++) p.forward(0.06).right(2)
+  p.left(106)
+  for (let i = 0; i < 100; i++) p.forward(0.06).right(2)
+  p.left(120)
+  for (let i = 0; i < 115; i++) p.forward(0.06).right(2)
+  
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
 
   // olives (few because i don't like olives)
   p.up().goTo([83, 73]).down()
   for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
-  p.up().right(90).forward(2).down()
-  p.forward(3)
-  p.up().right(180).forward(1.5).left(90).forward(1.5).right(180).down()
-  p.forward(3)
+  p.up().right(57).forward(2.0).down()
+  for (let i = 0; i < 183; i++) p.forward(0.04).right(2)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   p.up().goTo([30, 51]).down()
   for (let i = 0; i < 183; i++) p.forward(0.1).right(2)
-  p.up().right(90).forward(2).down()
-  p.forward(3)
-  p.up().right(180).forward(1.5).left(90).forward(1.5).right(180).down()
-  p.forward(3)
+  p.up().right(57).forward(2.0).down()
+  for (let i = 0; i < 183; i++) p.forward(0.04).right(2)
+  bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
 
   // mushrooms
@@ -229,31 +375,50 @@ const perfectPizza = () => {
 
 drawLines(bt.translate(bt.scale(drawBase(), [7, 7]), [width/2, height/2]))
 
-// drawToppings()
-const randomPizza = () => {
-  for (let i = 0; i < num_of_pepperonis; i++) {
-    drawLines(drawPepperoni())
-  }
+
+
   
-  for (let i = 0; i < num_of_peppers; i++) {
-    drawLines(drawPepper())
-  }
+const randomPizza = (num_of_toppings) => {
+  const coords = [[35, 71], [67, 24], [47, 34], [67, 83] ,[88, 72] ,[62, 40] ,[86, 41], [34, 49], [51, 83], [63, 65], [72, 58], [48, 60]]
   
-  for (let i = 0; i < num_of_olives; i++) {
-    drawLines(drawOlive())
+  let polylines = p.lines()
+  let rand = 0
+  const toppings = ["mushroom", "tomato", "pineapple", "olive", "pepper"]
+  for (let i = 0; i < num_of_toppings; i ++) {
+    rand = bt.randIntInRange(0, 4)
+    console.log(toppings[rand] + " " + coords[i])
+    switch (rand) {
+      case 0:
+        p.up().goTo((coords[i])).down()
+        drawMushroom()
+        break;
+      case 1:
+        p.up().goTo((coords[i])).down()
+        drawTomato()
+        break;
+      case 2:
+        p.up().goTo((coords[i])).down()
+        drawPineapple()
+        break;
+      case 3:
+        p.up().goTo((coords[i])).down()
+        drawOlive()
+        break;
+      case 4:
+        p.up().goTo((coords[i])).down()
+        drawPepper()
+        break;
+    }
+    
   }
+
+  return p.lines()
   
-  for (let i = 0; i < num_of_pineapples; i++) {
-    drawLines(drawPineapple())
-  }
-  
-  for (let i = 0; i < num_of_mushrooms; i++) {
-    drawLines(drawMushroom())
-  }
 }
+
 
 // Comment out the perfectPizza() line and uncomment the randomPizza() line
 
 drawLines(perfectPizza())
 
-// randomPizza()
+// drawLines(randomPizza())
