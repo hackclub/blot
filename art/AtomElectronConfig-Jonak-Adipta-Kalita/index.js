@@ -1,5 +1,5 @@
 /*
-@title: Designed Balloons
+@title: Atom Electronic Configuration Generator
 @author: Jonak-Adipta-Kalita
 @snapshot: snapshot1-Phosphorus.png
 */
