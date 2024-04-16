@@ -1,7 +1,8 @@
-// welcome to blot!
-
-// check out this guide to learn how to program in blot
-// https://blot.hackclub.com/editor?guide=start
+/*
+@title: generativeMountainArt
+@author: hephaestusHex
+@snapshot: snapshot_00.svg
+*/
 
 const width = 125;
 const height = 125;
