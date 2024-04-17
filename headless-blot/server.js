@@ -65,21 +65,22 @@ const webCam = {
   baseUrl: process.env.MOTION_URL,
   filePath: process.env.MOTION_FILEPATH,
   command(str) {
+    console.log(this.baseUrl + str);
     return fetch(this.baseUrl + str);
   },
   start() {
     return this.command('/detection/connection');
   },
-  startEvent() {
-    return this.command('/action/eventstart');
+  async startEvent() {
+    const datetime = new Date().toISOString()
+    this.command('/config/set?movie_filename=' + datetime)
+    this.command('/config/set?snapshot_filename=' + datetime)
+    await this.command('/action/eventstart');
+    return datetime;
   },
   async endEvent() {
-    const datetime = new Date().toISOString()
-    await this.command('/config/set?movie_filename=' + datetime)
-    await this.command('/config/set?snapshot_filename=' + datetime)
+    this.command('/action/snapshot');
     await this.command('/action/eventend');
-    await this.command('/action/snapshot');
-    return datetime;
   }
 };
 
@@ -97,18 +98,19 @@ async function fetchSlackFile(fileUrl) {
   return body;
 }
 
-const sendSlackFile = (channelId, fileName, comment = '') => (
-  app.client.files.upload({
+const sendSlackFile = async (channelId, fileName, comment = '') => (
+  app.client.files.uploadV2({
     channels: channelId,
     initial_comment: comment,
-    file: createReadStream(fileName)
+    file: createReadStream(fileName),
+    filename: fileName
   })
 )
 
 const runMachine = (turtles) => runMachineHelper(haxidraw, turtles);
 
 async function resetMachine() {
-  await runMachine(resetTurtles);
+  // await runMachine(resetTurtles);
   await clearBoard();
 }
 
@@ -120,25 +122,26 @@ const sleep = (ms) => (
 
 async function clearBoard() {
   await rpi.write(true);
-  await sleep(200);
+  await sleep(100);
   await rpi.write(false);
 }
 
 async function onMessage(message) {
-  if (!length(message.files)) return;
+  if (!message.files) return;
 
   const fileUrl = message.files[0].url_private;
   const code = await fetchSlackFile(fileUrl);
 
-  const turtles = await runSync(code);
+  // const turtles = await runSync(code);
 
-  await webCam.startEvent();
-  await runMachine(turtles);
-  let filename = await webCam.endEvent();
-
+  let filename = await webCam.startEvent();
   filename = webCam.filePath + '/' + filename;
-  sendSlackFile(message.channel, filename + '.mp4');
-  sendSlackFile(message.channel, filename + '.jpg');
+  await sleep(10000);
+  // await runMachine(turtles);
+  await webCam.endEvent();
+
+  await sendSlackFile(message.channel, filename + '.mkv');
+  await sendSlackFile(message.channel, filename + '.jpg');
 }
 
 (async () => {
@@ -161,10 +164,12 @@ app.message(async ({ message, say }) => {
     running = false;
   }
   catch (error) {
+    console.log(error);
     say(error.message);
   }
   finally {
-    resetMachine();
+    await resetMachine();
+    console.log("clearing board")
   }
 })
 
