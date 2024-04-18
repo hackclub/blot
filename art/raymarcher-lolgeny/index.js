@@ -75,11 +75,6 @@ const sdf = ([x, y, z]) => {
   });
   const g = sdfLink([x, y, z], 2, 1.0, 0.35);
 
-  // var i = 1e6;
-  // for (var n = 0; n < n_random_spheres; ++n) {
-    // const x = bt.randInRange();
-  // }
-
   // Smooth, blending min
   return smoothMin(s, g, 0.4);
 };
