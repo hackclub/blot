@@ -1,7 +1,7 @@
 /*
 @title: Koch Snowflake Fractal
 @author: Guy Sandler
-@snapshot: the name of the snapshot file you want in the gallery
+@snapshot: Level3Detail
 */
 
 // Koch Snowflake Fractal by Guy Sandler
