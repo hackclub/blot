@@ -79,8 +79,13 @@ There is all sorts of styles of programmatic art. Here are some examples of grea
 **The tech demo (with composition)** is focusing on a specific technical approach like in Henry's (age 15) ray marcher. The art piece isn't complete though until the artists uses the technique to make a composition.
 
 <a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/raymarching-henry/index.js">
-  <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/90c01a52-0404-423f-8ae9-763bc591ff9f">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/hackclub/blot/assets/61765149/d65464eb-8cc2-4bf3-be82-0b4cc12070bd">
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/hackclub/blot/assets/27078897/90c01a52-0404-423f-8ae9-763bc591ff9f">
+    <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/90c01a52-0404-423f-8ae9-763bc591ff9f">
+  </picture>
 </a>
+
 
 **The data transformation** can be seen in Kieran's (age 15) self portrait. It takes data from an SVG but modifies it programmtically to produce an art piece. This approach could be used to visualize data that may not of been visual to begin with.
 
@@ -91,7 +96,11 @@ There is all sorts of styles of programmatic art. Here are some examples of grea
 **The concept** is important with any artwork and can be mixed with any of the genres above. Ultimately an interesting idea can be what elevates something that is visually pretty simple, one example by Ayush is the Blot's own self portrait.
 
 <a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/blot-ayush/index.js">
-  <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/1f367d9b-aa74-4fca-8623-259a06800335">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/hackclub/blot/assets/61765149/12044cdf-a498-438c-814b-48622488e42f">
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/hackclub/blot/assets/27078897/1f367d9b-aa74-4fca-8623-259a06800335">
+    <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/1f367d9b-aa74-4fca-8623-259a06800335">
+  </picture>
 </a>
 
 For way more examples check out the [gallery](https://blot.hackclub.com/gallery).
