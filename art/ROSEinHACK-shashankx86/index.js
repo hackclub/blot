@@ -108,11 +108,47 @@ function drawHACK() {
     for (const line of lines) {
       finalLines.push([
         [line[0][0] + position[0], line[0][1] + position[vhPOS]],
-        [line[1][0] + position[0], line[1][1] + position[vhPOS]],
-        [line[0][1] + position[0], line[1][1] + position[vhPOS]],
-        [line[stTX1][stTX2] + position[0], line[1][0] + position[vhPOS]],
-        [line[1][0] + position[0], line[1][0] + position[vhPOS]],
+        [line[1][0] + position[0], line[1][1] + position[vhPOS]]
       ]);
+    }
+  }
+  if (RenderPARAMS.TXstyleL1) {
+    for (const letter of "HACK") {
+      const lines = letters[letter];
+      const position = positions[letter];
+      for (const line of lines) {
+        finalLines.push([
+          [line[0][0] + position[0], line[0][1] + position[vhPOS]],
+          [line[1][0] + position[0], line[1][1] + position[vhPOS]],
+          [line[0][1] + position[0], line[1][1] + position[vhPOS]]
+        ]);
+      }
+    }
+  } 
+  if (RenderPARAMS.TXstyleL2) {
+    for (const letter of "HACK") {
+      const lines = letters[letter];
+      const position = positions[letter];
+      for (const line of lines) {
+        finalLines.push([
+          [line[0][0] + position[0], line[0][1] + position[vhPOS]],
+          [line[1][0] + position[0], line[1][1] + position[vhPOS]],
+          [line[stTX1][stTX2] + position[0], line[1][0] + position[vhPOS]]
+        ]);
+      }
+    }
+  }
+  if (RenderPARAMS.TXstyleL3) {
+    for (const letter of "HACK") {
+      const lines = letters[letter];
+      const position = positions[letter];
+      for (const line of lines) {
+        finalLines.push([
+          [line[0][0] + position[0], line[0][1] + position[vhPOS]],
+          [line[1][0] + position[0], line[1][1] + position[vhPOS]],
+          [line[1][0] + position[0], line[1][0] + position[vhPOS]]
+        ]);
+      }
     }
   }
 
