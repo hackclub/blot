@@ -4,18 +4,27 @@
 @snapshot: snapshot_0.png
 */
 
-const ROSEParams = {
+const RenderPARAMS = {
   width: 350,
   height: 360,
-  ROSElineWidth: 0.7,
-  HACKStroke: "white",
-  HACKFill: "",
+  ROSElineWidth: 1,
+  HACKStroke: "black",
   HACKWidth: 3,
-  minNumLength: 1, // Minimum length of the generated random number
-  maxNumLength: 9 // Maximum length of the generated random number
+  ROSElineColor: "grey",
+  TXstyleL1: true,
+  TXstyleL2: true,
+  TXstyleL3: true,
+  ROSEposSETs: [
+    {x: 0, y: 0, z: 0, w: 350},
+    {x: 350, y: 0, z: 0, w: 0},
+    {x: 350, y: 350, z: 0, w: 0},
+    {x: 0, y: 350, z: 350, w: 0},
+    {x: 350, y: 350, z: 350, w: 0},
+    {x: 350, y: 350, z: 0, w: 350}
+  ]
 };
 
-setDocDimensions(ROSEParams.width, ROSEParams.height);
+setDocDimensions(RenderPARAMS.width, RenderPARAMS.height);
 
 // Function to generate a random number between specified length
 function randomNum(minLength, maxLength) {
@@ -25,9 +34,12 @@ function randomNum(minLength, maxLength) {
 }
 
 // Randomize numbers
-const ranNum1 = randomNum(ROSEParams.minNumLength, ROSEParams.maxNumLength);
-const ranNum2 = randomNum(ROSEParams.minNumLength, ROSEParams.maxNumLength);
-const ranNum3 = randomNum(ROSEParams.minNumLength, ROSEParams.maxNumLength);
+const ranNum1 = randomNum(RenderPARAMS.minNumLength, RenderPARAMS.maxNumLength);
+const ranNum2 = randomNum(RenderPARAMS.minNumLength, RenderPARAMS.maxNumLength);
+const ranNum3 = randomNum(RenderPARAMS.minNumLength, RenderPARAMS.maxNumLength);
+var vhPOS = Math.round(Math.random());
+var stTX1 = Math.round(Math.random());
+var stTX2 = Math.round(Math.random());
 
 // Function to draw ROSEline
 function drawROSEline() {
@@ -95,8 +107,11 @@ function drawHACK() {
     const position = positions[letter];
     for (const line of lines) {
       finalLines.push([
-        [line[0][0] + position[0], line[0][1] + position[1]],
-        [line[1][0] + position[0], line[1][1] + position[1]]
+        [line[0][0] + position[0], line[0][1] + position[vhPOS]],
+        [line[1][0] + position[0], line[1][1] + position[vhPOS]],
+        [line[0][1] + position[0], line[1][1] + position[vhPOS]],
+        [line[stTX1][stTX2] + position[0], line[1][0] + position[vhPOS]],
+        [line[1][0] + position[0], line[1][0] + position[vhPOS]],
       ]);
     }
   }
@@ -104,28 +119,36 @@ function drawHACK() {
   return finalLines;
 }
 
+// Function to pick random values for x, y, z, and w
+function pickRandomValues() {
+  const ROSEposSET = RenderPARAMS.ROSEposSETs[Math.floor(Math.random() * RenderPARAMS.ROSEposSETs.length)];
+  const { x, y, z, w } = ROSEposSET;
+  return { x, y, z, w };
+}
+
+// Get random values for x, y, z, and w
+const { x, y, z, w } = pickRandomValues();
+
 // Draw ROSEline
 const ROSEline = drawROSEline();
-// Center ROSEline
-const ROSElineBounds = bt.bounds(ROSEline);
-const ROSElineCenter = ROSElineBounds.cc;
-bt.translate(ROSEline, [ROSEParams.width / 2 - ROSElineCenter[0], ROSEParams.height / 2 - ROSElineCenter[1]]);
+// Translate ROSEline using random values
+bt.translate(ROSEline, [x, y]);
 
 // Draw ROSEin
 const ROSEin = drawROSEin();
-// Center ROSEin
-const ROSEinBounds = bt.bounds(ROSEin);
-const ROSEinCenter = ROSEinBounds.cc;
-bt.translate(ROSEin, [ROSEParams.width / 2 - ROSEinCenter[0], ROSEParams.height / 2 - ROSEinCenter[1]]);
+// Translate ROSEin using random values
+bt.translate(ROSEin, [z, w]);
+
+console.log(`x: ${x}, y: ${y}, z: ${z}, w: ${w}`);
 
 // Draw "HACK" text
 const HACK = drawHACK();
 // Center HACK text
 const HACKBounds = bt.bounds(HACK);
 const HACKCenter = HACKBounds.cc;
-bt.translate(HACK, [ROSEParams.width / 2 - HACKCenter[0], ROSEParams.height / 2 - HACKCenter[1]]);
+bt.translate(HACK, [RenderPARAMS.width / 2 - HACKCenter[0], RenderPARAMS.height / 2 - HACKCenter[1]]);
 
 // Render each part with parameters
-drawLines(ROSEline, { stroke: `hsla(${ranNum1}, 100%, 40%, 1)`, fill: `hsla(${ranNum2}, 100%, 40%, 1)` });
-drawLines(ROSEin, { fill: `hsla(${ranNum3}, 100%, 40%, 0.5)`, width: ROSEParams.ROSElineWidth });
-drawLines(HACK, { stroke: ROSEParams.HACKStroke, fill: ROSEParams.HACKFill, width: ROSEParams.HACKWidth });
+drawLines(ROSEline, { stroke: RenderPARAMS.ROSElineColor, width: RenderPARAMS.ROSElineWidth });
+drawLines(ROSEin, { width: RenderPARAMS.ROSElineWidth, stroke: RenderPARAMS.ROSElineColor }); 
+drawLines(HACK, { stroke: RenderPARAMS.HACKStroke, width: RenderPARAMS.HACKWidth }); 
