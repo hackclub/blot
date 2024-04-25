@@ -21,6 +21,10 @@ import { bounds } from "./bounds.js";
 import { catmullRom } from "./catmullRom.js";
 import { nurbs } from "./nurbs.js";
 import { bezierEasing } from "./bezierEasing.js";
+import { createPoissonDisc } from "./createPoissonDisc.js";
+import { offset } from "./offset.js";
+import { Voronoi } from "./voronoi.js";
+
 import * as polyclip from 'polyclip-ts';
 
 export const toolkit = {
@@ -32,6 +36,10 @@ export const toolkit = {
   intersection: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "intersection", ops),
   difference: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "difference", ops),
   xor: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "xor", ops),
+  offset, // undoced
+  expand: (shape, distance) => offset(shape, distance, { endType: "closedPolygon" }),
+  createPoissonDisc, // undoced
+  Voronoi,
   iteratePoints: iteratePolylines,
   transform,
   bounds,
