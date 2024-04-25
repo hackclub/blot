@@ -1,8 +1,8 @@
-// check out the workshop tab to get started
-// welcome to blot!
-
-// check out this guide to learn how to program in blot
-// https://blot.hackclub.com/editor?guide=start
+/*
+@title: leaf-spiral
+@author: Zainab Mustufa
+@snapshot: Leaf-spiral
+*/
 
 const width = 125;
 const height = 125;
