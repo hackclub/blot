@@ -65,25 +65,26 @@ function boolean(polyline0, polyline1, diff = true) {
 
   const ndp = [];
 
-  function addToNdp(pt0, pt1) {
-    const epsilon = 1e-4;
-    for (let i = 0; i < ndp.length; i++) {
-      const poly = ndp[i];
-      if (poly.length === 0) continue;
+  // Removed to fix a bug but removing it may have broken other things
+  // function addToNdp(pt0, pt1) {
+  //   const epsilon = 1e-4;
+  //   for (let i = 0; i < ndp.length; i++) {
+  //     const poly = ndp[i];
+  //     if (poly.length === 0) continue;
 
-      if (poly.at(0) && length(pt1, poly.at(0)) < epsilon) {
-        poly.unshift(pt0);
-        return;
-      }
+  //     if (poly.at(0) && length(pt1, poly.at(0)) < epsilon) {
+  //       poly.unshift(pt0);
+  //       return;
+  //     }
 
-      if (poly.at(-1) && length(pt0, poly.at(-1)) < epsilon) {
-        poly.push(pt1);
-        return;
-      }
-    }
+  //     if (poly.at(-1) && length(pt0, poly.at(-1)) < epsilon) {
+  //       poly.push(pt1);
+  //       return;
+  //     }
+  //   }
 
-    ndp.push([pt0, pt1]);
-  }
+  //   ndp.push([pt0, pt1]);
+  // }
 
   for (let i = 0; i < polyline0.length-1; i ++) {
     const ls0 = polyline0[i];
@@ -105,8 +106,8 @@ function boolean(polyline0, polyline1, diff = true) {
     if (int.length === 0) {
       // 0 intersections, inside or outside?
       if (diff === !pointInPolylines([ polyline1 ], ls0)) {
-        // ndp.at(-1).push(ls0, ls1);
-        addToNdp(ls0, ls1)
+        ndp.push([ls0, ls1]);
+        // addToNdp(ls0, ls1)
       }
     } else {
       int.push(ls0, ls1);
@@ -141,8 +142,8 @@ function boolean(polyline0, polyline1, diff = true) {
             )
           ) {
             // could merge here
-            addToNdp(int[j], int[j+1]);
-            // ndp.push([ int[j], int[j+1] ]);
+            // addToNdp(int[j], int[j+1]);
+            ndp.push([ int[j], int[j+1] ]);
           }
         }
       }
@@ -186,5 +187,3 @@ function length([x0, y0], [x1, y1]) {
 function doRectanglesOverlap(rect1, rect2) {
   return !(rect1.xMax < rect2.xMin || rect2.xMax < rect1.xMin || rect1.yMax < rect2.yMin || rect2.yMax < rect1.yMin);
 }
-
-
