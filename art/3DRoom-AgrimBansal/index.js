@@ -118,13 +118,13 @@ let table = new cuboid([50,35,0], 75, 3, 5);
 scene.push(table);
 
 
-for ( let i=0; i<13; i++){
-  let shelf1_book = new cuboid([60+3*i,70 + 3,0], 9, 2, 15);
+for ( let i=0; i<15; i++){
+  let shelf1_book = new cuboid([60+3*i,70 + 3,0], 3, 2, 15);
   scene.push(shelf1_book);
 }
 
-for ( let i=0; i<13; i++){
-  let shelf2_book = new cuboid([60+3*i,100+3,0], 9, 2, 15);
+for ( let i=0; i<15; i++){
+  let shelf2_book = new cuboid([60+3*i,100+3,0], 3, 2, 15);
   scene.push(shelf2_book);
 }
 
