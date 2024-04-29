@@ -17,32 +17,41 @@ import { createHaxidraw } from "../src/haxidraw/createHaxidraw.js";
 let running = false;
 
 const app = new App({
-  token: process.env.SLACK_BOT_TOKEN,
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-  appToken: process.env.SLACK_APP_TOKEN,
-  socketMode: true,
-  port: process.env.PORT
+  token:          process.env.SLACK_BOT_TOKEN,
+  signingSecret:  process.env.SLACK_SIGNING_SECRET,
+  appToken:       process.env.SLACK_APP_TOKEN,
+  socketMode:     true,
+  port:           process.env.PORT
 });
 
 const config = {
-  MOCK_SERIAL: true,
-  BAUD: 9600,
-  BOARD_PIN: 7,
+  MOCK_SERIAL:  false, // set false to test without a Blot connected
+  BAUD:         9600,
+  BOARD_PIN:    7, // GPIO 7 on RPi
 }
 
 let port;
 const path = process.env.SERIAL_PATH;
-if (config.MOCK_SERIAL) {
+if (config.MOCK_SERIAL) { // simulates open serial port (no response back)
   SerialPortMock.binding.createPort(path);
-  port = new SerialPortMock({ path, baudRate: config.BAUD, autoOpen: false });
+  port = new SerialPortMock({
+    path,
+    baudRate: config.BAUD,
+    autoOpen: false
+  });
 }
 else {
-  port = new SerialPort({ path, baudRate: config.BAUD, autoOpen: false })
+  port = new SerialPort({
+    path,
+    baudRate: config.BAUD,
+    autoOpen: false
+  });
 }
 
 const comsBuffer = await createNodeSerialBuffer(port);
 const haxidraw = await createHaxidraw(comsBuffer);
 
+// draw path to move the Blot head back to origin
 const resetTurtles = await runSync(`
     drawLines([
       [
@@ -56,21 +65,23 @@ const rpi = {
   setup() {
     return gpio.setup(this.pin, gpio.DIR_OUT);
   },
-  write(val) {
+  write(val) { // uses BOARD_PIN to clear the LCD Writing Tablet
     return gpio.write(this.pin, val);
   }
 }
 
+// controls the USB webcam using Motion library on the RPi
 const webCam = {
   baseUrl: process.env.MOTION_URL,
   filePath: process.env.MOTION_FILEPATH,
   command(str) {
-    console.log(this.baseUrl + str);
+    // console.log(this.baseUrl + str);
     return fetch(this.baseUrl + str);
   },
   start() {
     return this.command('/detection/connection');
   },
+  // sets the filename to the current datetime and start recording using Motion
   async startEvent() {
     const datetime = new Date().toISOString()
     this.command('/config/set?movie_filename=' + datetime)
@@ -78,7 +89,8 @@ const webCam = {
     await this.command('/action/eventstart');
     return datetime;
   },
-  async endEvent() {
+  // stop recording and take a snapshot using Motion
+  async endEvent() { 
     this.command('/action/snapshot');
     await this.command('/action/eventend');
   }
@@ -100,17 +112,18 @@ async function fetchSlackFile(fileUrl) {
 
 const sendSlackFile = async (channelId, fileName, comment = '') => (
   app.client.files.uploadV2({
-    channels: channelId,
-    initial_comment: comment,
-    file: createReadStream(fileName),
-    filename: fileName
+    channels:         channelId,
+    initial_comment:  comment,
+    file:             createReadStream(fileName),
+    filename:         fileName
   })
 )
 
 const runMachine = (turtles) => runMachineHelper(haxidraw, turtles);
 
+// set the Blot head back to origin and clear the LCD Writing Tablet and
 async function resetMachine() {
-  // await runMachine(resetTurtles);
+  await runMachine(resetTurtles);
   await clearBoard();
 }
 
@@ -129,17 +142,18 @@ async function clearBoard() {
 async function onMessage(message) {
   if (!message.files) return;
 
-  const fileUrl = message.files[0].url_private;
-  const code = await fetchSlackFile(fileUrl);
+  const fileUrl = message.files[0].url_private; // get the uploaded .js filename
+  const code = await fetchSlackFile(fileUrl); // get the uploaded .js file through Slack
 
-  // const turtles = await runSync(code);
+  const turtles = await runSync(code); // try to run the blot code and generate path
 
   let filename = await webCam.startEvent();
   filename = webCam.filePath + '/' + filename;
-  await sleep(10000);
-  // await runMachine(turtles);
-  await webCam.endEvent();
 
+  await runMachine(turtles); // send drawing path to the Blot over serial
+  await webCam.endEvent(); // creates recording and snapshot files
+
+  // sends recording and snapshot via Slack
   await sendSlackFile(message.channel, filename + '.mkv');
   await sendSlackFile(message.channel, filename + '.jpg');
 }
@@ -154,22 +168,22 @@ async function onMessage(message) {
   console.log('Server running');
 })();
 
+// when user sends a file in slack and the Blot is not currently drawing, then run the code
 app.message(async ({ message, say }) => {
   try {
     if (running) {
-      throw new Error("The blot is currently drawing, please try again later.")
+      throw new Error("The Blot is currently drawing, please try again later.")
     }
     running = true;
     await onMessage(message);
     running = false;
   }
   catch (error) {
-    console.log(error);
-    say(error.message);
+    console.log(error.message);
+    say('Coud not run code: "' + error.message + '"'); // sends error message in Slack
   }
   finally {
     await resetMachine();
-    console.log("clearing board")
   }
 })
 
