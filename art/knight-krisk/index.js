@@ -6,7 +6,8 @@
 const ty = Math.PI*2/8 // theta-y; controls rotation
 const f = 3 // focal length
 const normal_inversion = true // the normals may have to be inverted
-const useHatching = true // stippling is much much slower
+const useHatching = true // stippling is much much slower, check the console for progress
+const hatchingLinesUp = false // makes hatching line up; reduces the number of colors to only powers of two
 const light = [2, 10, -1] // lighting direction
 // you can also change the verts, norms, and faces with the following link (upload an obj in place of the standford-bunny file): https://replit.com/@KrishnaKesavalu/obj2list
 
@@ -66,7 +67,7 @@ faces = mergedfaces
 // drawLines(bt.cut(generateStippling(0.5), [[[0, 0], [0, 125], [125, 0]]]))
 
 for (let fi = 0; fi < faces.length; fi++) {
-  console.log(fi)
+  console.log(fi/faces.length)
   let line = faces[fi][0]
   let shading = faces[fi][1]
   for (let fj = 0; fj < fi; fj++) {
@@ -96,6 +97,7 @@ function sortbycentroid(x, y) {
 
 function generateHatching(n) {
   let turtle = new bt.Turtle().down().right(45)
+  if (hatchingLinesUp) n = Math.pow(2, Math.round(Math.log2(n*14)))/14
   for (let x = -125; x < 125; x += 0.25/n) {
     turtle = turtle
       .jump([x, 125])
