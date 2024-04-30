@@ -10,8 +10,8 @@ each square is the sum of the two adjacent smaller squares.
 The three squares together form a right triangle.
 
 The algorithm is unusual as it constructs the tree as an 
-Eulerian cycle: this means that it draws the entire tree in 
-a single closed line without lifting up the pen, and without 
+Euler cycle: this means that it draws the entire tree in a
+single closed line without lifting up the pen, and without
 drawing any line twice. At the end, the pen returns to the 
 starting position. This makes it interesting and well-suited 
 for running on a pen plotter.
@@ -30,30 +30,39 @@ inspiration from my Grandpa, Gerhard Rompf.
 - Julius Rompf, 8 years old
 */
 
-const width = 250;
-const height = 250;
 
-setDocDimensions(width, height);
-
-const t = new bt.Turtle();
+// canvas
+let width = 250;
+let height = 250;
 
 // parameters
 let side = 28
-let angle = 32
+let angle = 30
 
 // termination criteria
-let minLengthL = 1
-let minLengthR = 1
+let minLengthL = 2
+let minLengthR = 2
 
 let maxDepthL = 20
 let maxDepthR = 20
 
+// scale angles, side lengths
+let scaleAngleL = 100
+let scaleAngleR = 100
+
+let scaleSideL = 100
+let scaleSideR = 100
 
 // derived values
-let alpha = angle
-let beta = 90-alpha
-let cos = Math.cos(alpha*Math.PI/180)
-let sin = Math.sin(alpha*Math.PI/180)
+let angleL = scaleAngleL/100 * (90-angle)
+let angleR = scaleAngleR/100 * angle
+let sideL = scaleSideL/100 * Math.cos(angleL*Math.PI/180)
+let sideR = scaleSideR/100 * Math.cos(angleR*Math.PI/180)
+
+
+// ---------- algorithm ----------
+
+const t = new bt.Turtle();
 
 // draw a 'left' square: 
 // - start at bottom left, pointing up
@@ -64,11 +73,11 @@ function squareL(len, n) {
   // bot left -> top left
   t.forward(len)
   // top left: draw left square
-  t.left(beta); squareL(sin*len, n+1); t.right(beta)
+  t.left(angleL); squareL(sideL*len, n+1); t.right(angleL)
   // top left -> top right
   t.right(90); t.forward(len)
   // top right: draw right square
-  t.left(beta); squareR(cos*len, n+1); t.right(beta)
+  t.left(90-angleR); squareR(sideR*len, n+1); t.right(90-angleR)
   // top right -> bot right
   t.right(90); t.forward(len)
   // bot right -> bot left
@@ -84,11 +93,11 @@ function squareR(len, n) {
   // bot right -> top right
   t.forward(len)
   // top right: draw right square
-  t.right(alpha); squareR(cos*len, n+1); t.left(alpha)
+  t.right(angleR); squareR(sideR*len, n+1); t.left(angleR)
   // top right -> top left
   t.left(90); t.forward(len)
   // top left: draw left square
-  t.right(alpha); squareL(sin*len, n+1); t.left(alpha)
+  t.right(90-angleL); squareL(sideL*len, n+1); t.left(90-angleL)
   // top left -> bot left
   t.left(90); t.forward(len)
   // bot left -> bot right
@@ -100,7 +109,7 @@ t.left(90)
 squareR(side, 0)
 
 
-// ----------
+// ---------- blot commands ----------
 
 // add turtle to final lines
 const finalLines = [];
@@ -109,6 +118,9 @@ bt.join(finalLines, t.lines());
 // center piece
 const cc = bt.bounds(finalLines).cc;
 bt.translate(finalLines, [width / 2, height / 2], cc);
+
+// setup canvas
+setDocDimensions(width, height);
 
 // draw it
 drawLines(finalLines);
