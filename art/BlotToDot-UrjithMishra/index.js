@@ -1,7 +1,10 @@
 /*
 @title: BlotToDot™️
 @author: Urjith Mishra
+@snapshot: horse.png
 */
+
+// Thanks to Bright Li for helping me on Slack when I needed help!
 
 const side = 400;
 
