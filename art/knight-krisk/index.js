@@ -1,7 +1,7 @@
 /*
 @title: knight
 @author: krisk
-@snapshot: knight
+@snapshot: img2.png
 */
 const ty = Math.PI*2/8 // theta-y; controls rotation
 const f = 3 // focal length
