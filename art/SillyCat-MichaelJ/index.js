@@ -1,7 +1,7 @@
 /*
 @title: Silly Cat
 @author: Michael Jao
-@snapshot: silly_cat1
+@snapshot: silly_cat1.png
 */
 
 const width = 125
