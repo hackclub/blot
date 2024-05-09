@@ -14,7 +14,6 @@ Philips head for adjusting pot?
 [schema]
 part = "string"
 quantity = "number"
-extra = "number"
 exampleSource = "link"
 findLocalSupplier = "boolean"
 notes = "string"
@@ -65,17 +64,15 @@ part = "M5x35 Button Cap Screw"
 notes = "for attaching wheels to carriage"
 exampleSource = "https://www.mcmaster.com/92095A220/"
 quantity = 8
-extra = 1
 findLocalSupplier = true
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0056.png"
 container = "box #1"
 
 [[items]]
 part = "M5x25 Button Cap Screw"
-notes = "for attaching wheels to pen holder"
+notes = "for attaching wheels to pen holder (3), and idlers on carriage (4)"
 exampleSource = "https://www.mcmaster.com/92095A216/"
-quantity = 3
-extra = 1
+quantity = 7
 findLocalSupplier = true
 container = "box #1"
 
@@ -83,27 +80,15 @@ container = "box #1"
 part = "M5 Nut"
 exampleSource = "https://www.mcmaster.com/90591A260/"
 quantity = 17
-extra = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0084.png"
 findLocalSupplier = true
 container = "box #4"
 
 [[items]]
-part = "M5x20 Button Cap Screw"
-notes = "for attaching idlers to carriage and pen holder rail"
-exampleSource = "https://www.mcmaster.com/92095A214/"
-quantity = 5
-extra = 1
-image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0058.png"
-findLocalSupplier = true
-container = "box #1"
-
-[[items]]
 part = "M5 T-nut"
 notes = "for attaching feet, belt holder, pen rail to extrusions"
-exampleSource = "https://www.amazon.com/Fastener-Nickel-Plated-Sliding-Aluminum-Profile/dp/B086MKNYDS/"
-quantity = 13
-extra = 1
+exampleSource = "https://www.amazon.com/100-Pack-Aluminum-Extrusions-Profile-Accessories/dp/B07VHNGBWJ/ref=sr_1_6?dib=eyJ2IjoiMSJ9.VrGC_YfN9GS3jY03RrLqLn1Pk7fRGm7HVTgxxF7XiN1gRG9dzdIRzGEwYRielWsMH_gtV6haMa4zgkLmi4VfdtbTSuRHBxzP1UKG_SpqbVjXQcSH6MfoDGzdt9A1VI7G0Kqn2dU9X2khSz6kyg0fEKqjTQiMrREDdeoMxHUbbDlqTIItCSlp1VKpeHp7OBRxpeZYoAFpS7s1lHYm4i2LCVO2DzaX5E4FOoKq619P5Uk.va7qt_Z-CXS4bq0b2yP2gqtBEQDoNq4VznGOw2rY03M&dib_tag=se&keywords=m5+t+nut&qid=1715219352&sr=8-6"
+quantity = 14
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0085.png"
 findLocalSupplier = true
 container = "box #4"
@@ -129,8 +114,7 @@ container = "box #4"
 part = "M5x10 Button Cap Screw"
 notes = "for attaching parts to alumnium extrusion"
 exampleSource = "https://www.mcmaster.com/92095A208/"
-quantity = 13
-extra = 1
+quantity = 14
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0059.png"
 findLocalSupplier = true
 container = "box #1"
@@ -148,14 +132,13 @@ part = "M3x10 Button Cap Screw"
 notes = "for attaching stepper motors to feet"
 exampleSource = "https://www.mcmaster.com/91292A113/"
 quantity = 8
-extra = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0057.png"
 findLocalSupplier = true
 container = "small parts bag"
 
 [[items]]
 part = "Carriage"
-exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_ReinforcedCarriage.stl"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/blot-v6/1x_Carriage.stl"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0094.png"
 tags = ["3D-printed"]
@@ -168,14 +151,13 @@ part = "1mm tall x 10mm OD x M5 inner Alumninum Spacer"
 notes = "for idler assemblies"
 exampleSource = "https://www.mcmaster.com/98089A375/"
 quantity = 5
-extra = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0060.png"
 findLocalSupplier = true
 container = "small parts bag"
 
 [[items]]
 part = "Tool Head"
-exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_ToolHead.stl"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/blot-v6/1x_ToolHead.stl"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0063.png"
 tags = ["3D-printed"]
@@ -187,14 +169,13 @@ container = "free floating"
 part = "6mm tall x M5 inner Eccentric Spacer"
 exampleSource = "https://www.amazon.com/Micro-Traders-Eccentric-Aluminium-Extrusion/dp/B09CYK9P43/"
 quantity = 5
-extra = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0055.png"
 findLocalSupplier = true
 container = "bag #4"
 
 [[items]]
 part = "Printed Rail"
-exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_PrintedRail.stl"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/blot-v6/1x_PrintedRail.stl"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0064.png"
 tags = ["3D-printed"]
@@ -206,14 +187,13 @@ container = "free floating"
 part = "6mm tall x 8mm OD x M5 inner Alumnium Spacer"
 exampleSource = "https://www.mcmaster.com/94669A042/"
 quantity = 4
-extra = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0061.png"
 findLocalSupplier = true
 container = "bag #4"
 
 [[items]]
 part = "Motor Leg"
-exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/2x_Legs.stl"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/blot-v6/2x_Legs.stl"
 quantity = 2
 tags = ["3D-printed"]
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0065.png"
@@ -225,7 +205,6 @@ notes = "made of PLA"
 part = "625zz V-Wheel" # TODO: what is the dimension
 exampleSource = "https://www.amazon.com/gp/product/B09CGJZYPK/"
 quantity = 11
-extra = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0053.png"
 findLocalSupplier = true
 container = "box #3"
@@ -239,7 +218,7 @@ exampleSource = "https://openbuildspartstore.com/gt2-2m-timing-belt-by-the-foot/
 
 [[items]]
 part = "Belt Clip"
-exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_BeltClip.stl"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/blot-v6/1x_BeltClip.stl"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0066.png"
 findLocalSupplier = true
@@ -257,7 +236,7 @@ container = "box #2"
 
 [[items]]
 part = "PCB Mount"
-exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_PcbMount.stl"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/blot-v6/1x_PcbMount.stl"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0087.png"
 findLocalSupplier = true
@@ -319,7 +298,7 @@ container = "electronics box"
 
 [[items]]
 part = "Carriage Plate"
-exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/drawing-thing-v5/1x_CarriagePlate.dxf"
+exampleSource = "https://github.com/hackclub/blot/blob/main/hardware/mechanical/blot-v6/1x_CarriagePlate.dxf"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0093.png"
 findLocalSupplier = true
