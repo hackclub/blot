@@ -7,15 +7,13 @@
 const width = 125;
 const height = 125;
 
-// ------------------------------------ EDITABLE, only 1-12, then go to bottom of file for more instructions
-
-const amount_of_toppings = 12
+// change this value!!
+const amount_of_toppings = 11
 
 // ------------------------------------
 
 
 const p = new bt.Turtle();
-// Go to bottom of file after changing these values
 
 setDocDimensions(width, height);
 
@@ -50,7 +48,7 @@ const drawMushroom = () => {
   p.left(-4).forward(3.9)
   return p.lines()
 
-  
+
 }
 
 const drawTomato = (x) => {
@@ -108,7 +106,7 @@ const drawPepper = (x) => {
   for (let i = 0; i < 100; i++) p.forward(0.06).right(2)
   p.left(120)
   for (let i = 0; i < 115; i++) p.forward(0.06).right(2)
-  
+
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   return p.lines()
 }
@@ -119,8 +117,8 @@ const drawOnion = (x) => {
   p.right(85).forward(1).right(78)
   for (let i = 0; i < 60; i++) p.forward(0.23).left(2)
   p.right(85).forward(1)
-  
-  
+
+
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   return p.lines()
 }
@@ -129,7 +127,7 @@ const drawToppings = () => { // NOT USED
   const toppingType = [drawMushroom(), drawPepperoni(), drawPineapple(), drawOlive(), drawPepper()]
   const numberOfToppings = bt.randIntInRange(8, 20)
   const p = new bt.Turtle()
-  p.jump([width/2, height/2])
+  p.jump([width / 2, height / 2])
   let polyline = []
   for (let i = 0; i <= numberOfToppings; i++) {
     let topping = bt.randIntInRange(0, 5)
@@ -139,13 +137,13 @@ const drawToppings = () => { // NOT USED
 
 }
 const isInPizzaBase = (x, y) => { // NOT USED
-  const Xdistance = Math.abs(width/2 - x)
-  const Ydistance = Math.abs(width/2 - y)
-  if (Math.sqrt(Math.pow(Xdistance, 2) + Math.pow(Ydistance, y)) <= 60) {
+  const Xdistance = Math.abs(width / 2 - x)
+  const Ydistance = Math.abs(width / 2 - y)
+  if (Math.sqrt(Math.pow(Xdistance, 2) + Math.pow(Ydistance, 2)) <= 60) {
     return true;
   } else {
     return false;
-}
+  }
 }
 
 const perfectPizza = () => {
@@ -244,7 +242,7 @@ const perfectPizza = () => {
   p.up().right(180).forward(1.7).right(136).forward(0.7).down()
   p.forward(1)
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  
+
   // pineapple
   p.up().goTo([29, 64]).down()
   p.forward(1.1).left(60)
@@ -282,7 +280,7 @@ const perfectPizza = () => {
   for (let i = 0; i < 100; i++) p.forward(0.06).right(2)
   p.left(120)
   for (let i = 0; i < 115; i++) p.forward(0.06).right(2)
-  
+
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   p.up().goTo([54, 76]).down()
   for (let i = 0; i < 99; i++) p.forward(0.1).right(2)
@@ -300,7 +298,7 @@ const perfectPizza = () => {
   for (let i = 0; i < 100; i++) p.forward(0.06).right(2)
   p.left(120)
   for (let i = 0; i < 115; i++) p.forward(0.06).right(2)
-  
+
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
   p.up().goTo([43, 37]).down()
   for (let i = 0; i < 99; i++) p.forward(0.1).right(2)
@@ -318,9 +316,9 @@ const perfectPizza = () => {
   for (let i = 0; i < 100; i++) p.forward(0.06).right(2)
   p.left(120)
   for (let i = 0; i < 115; i++) p.forward(0.06).right(2)
-  
+
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
-  
+
   p.up().goTo([71, 33]).down()
   for (let i = 0; i < 99; i++) p.forward(0.1).right(2)
   p.left(93)
@@ -337,7 +335,7 @@ const perfectPizza = () => {
   for (let i = 0; i < 100; i++) p.forward(0.06).right(2)
   p.left(120)
   for (let i = 0; i < 115; i++) p.forward(0.06).right(2)
-  
+
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
 
   // olives (few because i don't like olives)
@@ -354,37 +352,95 @@ const perfectPizza = () => {
   bt.rotate(p.lines(), bt.randIntInRange(0, 360))
 
   // mushrooms
-  const curve = bt.catmullRom([[15, 1.5], [14.5, 4], [13.5, 8], [11, 7], [10, 7], [9, 9.5], [14.5, 12.5], [20, 9.5], [20, 7.5], [19, 7.5], [17, 7.5], [17.5, 1.5], [16.5, 1.5], [15, 1.5]])
+  const curve = bt.catmullRom([
+    [15, 1.5],
+    [14.5, 4],
+    [13.5, 8],
+    [11, 7],
+    [10, 7],
+    [9, 9.5],
+    [14.5, 12.5],
+    [20, 9.5],
+    [20, 7.5],
+    [19, 7.5],
+    [17, 7.5],
+    [17.5, 1.5],
+    [16.5, 1.5],
+    [15, 1.5]
+  ])
   bt.translate([curve], [40, 51])
   bt.rotate([curve], bt.randIntInRange(0, 360))
-  const curve2 = bt.catmullRom([[15, 1.5], [14.5, 4], [13.5, 8], [11, 7], [10, 7], [9, 9.5], [14.5, 12.5], [20, 9.5], [20, 7.5], [19, 7.5], [17, 7.5], [17.5, 1.5], [16.5, 1.5], [15, 1.5]])
+  const curve2 = bt.catmullRom([
+    [15, 1.5],
+    [14.5, 4],
+    [13.5, 8],
+    [11, 7],
+    [10, 7],
+    [9, 9.5],
+    [14.5, 12.5],
+    [20, 9.5],
+    [20, 7.5],
+    [19, 7.5],
+    [17, 7.5],
+    [17.5, 1.5],
+    [16.5, 1.5],
+    [15, 1.5]
+  ])
   bt.translate([curve2], [59, 73])
   bt.rotate([curve2], bt.randIntInRange(0, 360))
-  const curve3 = bt.catmullRom([[15, 1.5], [14.5, 4], [13.5, 8], [11, 7], [10, 7], [9, 9.5], [14.5, 12.5], [20, 9.5], [20, 7.5], [19, 7.5], [17, 7.5], [17.5, 1.5], [16.5, 1.5], [15, 1.5]])
+  const curve3 = bt.catmullRom([
+    [15, 1.5],
+    [14.5, 4],
+    [13.5, 8],
+    [11, 7],
+    [10, 7],
+    [9, 9.5],
+    [14.5, 12.5],
+    [20, 9.5],
+    [20, 7.5],
+    [19, 7.5],
+    [17, 7.5],
+    [17.5, 1.5],
+    [16.5, 1.5],
+    [15, 1.5]
+  ])
   bt.translate([curve3], [72, 29])
   bt.rotate([curve3], bt.randIntInRange(0, 360))
   drawLines([curve])
   drawLines([curve2])
   drawLines([curve3])
-  
+
   return p.lines()
-  
+
 }
 
 
 
-drawLines(bt.translate(bt.scale(drawBase(), [7, 7]), [width/2, height/2]))
+drawLines(bt.translate(bt.scale(drawBase(), [7, 7]), [width / 2, height / 2]))
 
 
 
-  
+
 const randomPizza = (num_of_toppings) => {
-  const coords = [[35, 71], [67, 24], [47, 34], [67, 83] ,[88, 72] ,[62, 40] ,[86, 41], [34, 49], [51, 83], [63, 65], [72, 58], [48, 60]]
-  
+  const coords = [
+    [35, 71],
+    [67, 24],
+    [47, 34],
+    [67, 83],
+    [88, 72],
+    [62, 40],
+    [86, 41],
+    [34, 49],
+    [51, 83],
+    [63, 65],
+    [72, 58],
+    [48, 60]
+  ]
+
   let polylines = p.lines()
   let rand = 0
   const toppings = ["mushroom", "tomato", "pineapple", "olive", "pepper"]
-  for (let i = 0; i < num_of_toppings; i ++) {
+  for (let i = 0; i < num_of_toppings; i++) {
     rand = bt.randIntInRange(0, 4)
     console.log(toppings[rand] + " " + coords[i])
     switch (rand) {
@@ -409,16 +465,14 @@ const randomPizza = (num_of_toppings) => {
         drawPepper()
         break;
     }
-    
+
   }
 
   return p.lines()
-  
+
 }
 
 
-// Comment out the perfectPizza() line and uncomment the randomPizza() line
+// drawLines(perfectPizza())
 
-drawLines(perfectPizza())
-
-// drawLines(randomPizza())
+drawLines(randomPizza(amount_of_toppings))
