@@ -17,6 +17,11 @@ const backgroundColour = [255, 25, 196];
 // set this to true to see the real raytraced result instead of the lines
 const colouredSquares = false
 
+// A higher value does allow for complexer/deeper reflections, but this comes
+// with a huge impact on performance, I would not really recommend setting this
+// any higher.
+const recursionDepth = 2
+
 // Changing values in here should be fairly trivial
 const scene = {
   spheres: [
@@ -190,7 +195,7 @@ for (let y = 0; y < height; y+=2) {
 
   for (let x = 0; x < width; x++) {
     let pos = canvasToWorld(x, y);
-    let colour = traceRay(cameraOrigin, pos, 1, Infinity, 2);
+    let colour = traceRay(cameraOrigin, pos, 1, Infinity, recursionDepth);
 
     let gColour = colour[0] * 0.3 + colour[1] * 0.59 + colour[2] * 0.11
     gColour = Math.round(gColour)
