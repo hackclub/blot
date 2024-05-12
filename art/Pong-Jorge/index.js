@@ -1,7 +1,7 @@
 /*
 @title: Pong 
 @author: Jorge Uribe
-@snapshot: pong image
+@snapshot: nameOfPicture.png
 */
 // check out the workshop tab to get started
 // welcome to blot!
