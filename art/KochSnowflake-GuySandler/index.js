@@ -1,7 +1,7 @@
 /*
 @title: Fractal Collection
 @author: Guy Sandler
-@snapshot: snapshot_1
+@snapshot: snapshot_1.png
 */
 
 const FractalChoise = 0 // 0 Koch Snowflake | 1 Sierpinski Pentagon | 2 Sierpinski Triangle | 3 Tree
