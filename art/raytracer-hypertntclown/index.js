@@ -1,5 +1,5 @@
 /*
-@title: Blot Raytracer (SinArt Filtered)
+@title: Blot Raytracer (Ascii Art)
 @author: HyperTNTClown
 @snapshot: img.png
 */
@@ -11,7 +11,7 @@ setDocDimensions(width, height);
 
 // will affect both the result with just lines and 
 // the one with real pixels due to the spheres reflecting it
-const backgroundColour = [255, 25, 196];
+const backgroundColour = [241, 243, 264];
 
 
 // set this to true to see the real raytraced result instead of the lines
@@ -20,14 +20,22 @@ const colouredSquares = false
 // A higher value does allow for complexer/deeper reflections, but this comes
 // with a huge impact on performance, I would not really recommend setting this
 // any higher.
-const recursionDepth = 2
+const recursionDepth = 20
 
-// Changing values in here should be fairly trivial
+const lineWidth = 1.0
+const letterScale = 1
+
+// The following values control the scene
 const scene = {
   spheres: [
-    { radius: 0.5, center: [0, -0.8, 2], colour: [255, 0, 0], specular: 10, reflective: 1.8 },
-    { radius: 0.75, center: [1, 0, 3], colour: [255, 221, 255], specular: 250, reflective: 0.8 },
+    { radius: 0.3, center: [0, -0.8, 2], colour: [255, 0, 0], specular: 1, reflective: 0.7 },
+    { radius: 0.7, center: [-2, -0.8, 19], colour: [50, 100, 120], specular: 10, reflective: 0 },
+    { radius: 0.3, center: [-0.4, -0.8, 2], colour: [255, 0, 0], specular: 276, reflective: .8 },
+    { radius: 0.75, center: [1, 0, 6], colour: [255, 221, 255], specular: 250, reflective: 0.8 },
     { radius: 1000.0, center: [-4, -1001, 18], colour: [0, 0, 0], specular: 1000, reflective: 0.3 },
+  ],
+  triangles: [
+    { vert0: [0, 0.5, 6], vert1: [1, 2.4, 4], vert2: [-1, 0, 4], colour: [0, 0, 0], specular: 13, reflective: 0.7 }
   ],
   lights: [{
       type: "ambient",
@@ -45,6 +53,142 @@ const scene = {
     }
   ]
 }
+// letters can be easily expanded by just adding a new entry into the object and idk array
+const letters = {
+  'idx': ['$', '@', 'B', 'X', 'I', 'i', ':', '_', '.', ' '],
+  '$': () => [
+    [
+      [1, 1],
+      [.5, 1.2],
+      [0, 1],
+      [0, .6],
+      [1, .4],
+      [1, 0],
+      [.5, -.2],
+      [0, 0]
+    ],
+    [
+      [.5, 1.5],
+      [.5, -.5]
+    ]
+  ],
+  '@': () => [
+    [
+      [.75, 0],
+      [0, 0],
+      [0, 1],
+      [1, 1],
+      [1, .25],
+      [.25, .25],
+      [.25, .75],
+      [.75, .75],
+      [.75, .25]
+    ]
+  ],
+  'B': () => [
+    [
+      [0, 1],
+      [.75, 1],
+      [.75, .5],
+      [0, .5],
+      [.75, .5],
+      [.75, 0],
+      [0, 0]
+    ],
+    [
+      [0, 0],
+      [0, 1]
+    ]
+  ],
+  'X': () => [
+    [
+      [0, 0],
+      [1, 1]
+    ],
+    [
+      [0, 1],
+      [1, 0],
+    ]
+  ],
+  'I': () => [
+    [
+      [.35, .1],
+      [.35, .2],
+      [.45, .2],
+      [.45, .8],
+      [.35, .8],
+      [.35, .9],
+      [.65, .9],
+      [.65, .8],
+      [.55, .8],
+      [.55, .2],
+      [.65, .2],
+      [.65, .1],
+      [.35, .1]
+    ]
+  ],
+  'i': () => [
+    [
+      [.35, .1],
+      [.35, .2],
+      [.45, .2],
+      [.45, .7],
+      [.55, .7],
+      [.55, .2],
+      [.65, .2],
+      [.65, .1],
+      [.35, .1]
+    ],
+    [
+      [.45, .9],
+      [.45, .8],
+      [.55, .8],
+      [.55, .9],
+      [.45, .9]
+    ]
+  ],
+  ':': () => [
+    [
+      [.45, .1],
+      [.45, .2],
+      [.55, .2],
+      [.55, .1],
+      [.45, .1]
+    ],
+    [
+      [.45, .9],
+      [.45, .8],
+      [.55, .8],
+      [.55, .9],
+      [.45, .9]
+    ]
+  ],
+  '_': () => [
+    [
+      [.1, .1],
+      [.1, .2],
+      [.9, .2],
+      [.9, .1],
+      [.1, .1]
+    ]
+  ],
+  '.': () => [
+    [
+      [.45, .1],
+      [.45, .2],
+      [.55, .2],
+      [.55, .1],
+      [.45, .1]
+    ]
+  ],
+  ' ': () => [
+    [
+      []
+    ]
+  ]
+
+}
+
 
 const cameraOrigin = [0, 0, 0];
 
@@ -58,47 +202,63 @@ const canvasToWorld = (x, y) => {
   }
 }
 
-const closestIntersection = (origin, position, t_min, t_max) => {
+const closestIntersection = (origin, direction, t_min, t_max) => {
   let closest_t = Infinity
-  let closest_sphere = null
+  let closest = null
   for (let sphere of scene.spheres) {
-    let t = intersectRaySphere(origin, position, sphere);
+    let t = intersectRaySphere(origin, direction, sphere);
     let t1 = t[0]
     let t2 = t[1]
     if (t1 >= t_min && t1 <= t_max && t1 < closest_t) {
       closest_t = t1;
-      closest_sphere = sphere;
+      closest = sphere;
+      closest.type = "sphere"
     }
     if (t2 >= t_min && t2 <= t_max && t2 < closest_t) {
       closest_t = t2;
-      closest_sphere = sphere;
+      closest = sphere;
+      closest.type = "sphere";
     }
   }
-  return { closest_t: closest_t, closest_sphere: closest_sphere }
+  for (let trig of scene.triangles) {
+    let t = intersectRayTriangle(origin, direction, trig);
+    if (t[0] >= t_min && t[0] <= t_max && t[0] < closest_t) {
+      closest_t = t[0];
+      closest = trig;
+      closest.normal = t[1]
+      closest.type = "triangle";
+    }
+  }
+  return { closest_t: closest_t, closest: closest }
 }
 
-const traceRay = (origin, position, t_min, t_max, recursion_depth) => {
-  let res = closestIntersection(origin, position, t_min, t_max)
+const traceRay = (origin, direction, t_min, t_max, recursion_depth) => {
+  let res = closestIntersection(origin, direction, t_min, t_max)
   let closest_t = res.closest_t
-  let closest_sphere = res.closest_sphere
+  let closest = res.closest
 
-  if (closest_sphere == null) {
+  if (closest == null) {
     return backgroundColour
   }
 
-  let pos = origin.map((_, i) => origin[i] + closest_t * position[i])
-  let normal = pos.map((_, i) => pos[i] - closest_sphere.center[i])
+  let pos = origin.map((_, i) => origin[i] + closest_t * direction[i])
+  let normal;
+  if (closest.type == "sphere") {
+    normal = pos.map((_, i) => pos[i] - closest.center[i])
+  } else {
+    normal = closest.normal
+  }
   // normalize the normal - duh
   normal = normal.map((_, i) => normal[i] / length(normal))
-  let factor = computeLightning(pos, normal, position.map((el) => -el), closest_sphere.specular)
-  let local_colour = closest_sphere.colour.map((el) => el * factor)
+  let factor = computeLightning(pos, normal, direction.map((el) => -el), closest.specular)
+  let local_colour = closest.colour.map((el) => el * factor)
 
-  let r = closest_sphere.reflective
+  let r = closest.reflective
   if (recursion_depth <= 0 || r <= 0) {
     return local_colour
   }
 
-  let R = reflectRay(position.map((el) => -el), normal)
+  let R = reflectRay(direction.map((el) => -el), normal)
   let reflected_colour = traceRay(pos, R, 0.001, Infinity, recursion_depth - 1)
 
   return local_colour.map((_, i) => local_colour[i] * (1 - r) + reflected_colour[i] * r)
@@ -106,17 +266,22 @@ const traceRay = (origin, position, t_min, t_max, recursion_depth) => {
 
 const dot = (a, b) => a.map((_, i) => a[i] * b[i]).reduce((m, n) => m + n);
 const length = (a) => Math.sqrt(a.map((el) => el * el).reduce((m, n) => m + n));
+const cross = (a, b) => [
+  a[1] * b[2] - a[2] * b[1],
+  a[2] * b[0] - a[0] * b[2],
+  a[0] * b[1] - a[1] * b[0]
+]
 
 const reflectRay = (R, N) => {
   return N.map((_, i) => 2 * N[i] * dot(N, R) - R[i]);
 }
 
-const intersectRaySphere = (origin, position, sphere) => {
+const intersectRaySphere = (origin, direction, sphere) => {
   let r = sphere.radius
   let C0 = origin.map((_, i) => origin[i] - sphere.center[i]);
 
-  let a = dot(position, position);
-  let b = 2 * dot(C0, position);
+  let a = dot(direction, direction);
+  let b = 2 * dot(C0, direction);
   let c = dot(C0, C0) - r * r;
 
   let discr = b * b - 4 * a * c;
@@ -127,6 +292,42 @@ const intersectRaySphere = (origin, position, sphere) => {
   let t1 = (-b + Math.sqrt(discr)) / (2 * a)
   let t2 = (-b - Math.sqrt(discr)) / (2 * a)
   return [t1, t2]
+}
+
+const intersectRayTriangle = (origin, direction, triangle) => {
+  let edge0 = triangle.vert0.map((_, i) => triangle.vert1[i] - triangle.vert0[i]);
+  let edge1 = triangle.vert0.map((_, i) => triangle.vert2[i] - triangle.vert0[i]);
+  let normal = cross(edge0, edge1)
+  normal = normal.map((_, i) => normal[i] / length(normal))
+
+  let distance = -dot(normal, triangle.vert0)
+  let nrml_dot_dir = dot(normal, direction);
+  if (nrml_dot_dir == 0) {
+    return Infinity
+  }
+  let t = -(dot(normal, origin) + distance) / nrml_dot_dir;
+  if (t < 0) {
+    return Infinity
+  }
+  let hit = origin.map((_, i) => origin[i] + (t * direction[i]));
+  let edge2 = triangle.vert0.map((_, i) => triangle.vert0[i] - triangle.vert2[i])
+  let C0 = hit.map((el, i) => el - triangle.vert0[i])
+  let C1 = hit.map((el, i) => el - triangle.vert1[i])
+  let C2 = hit.map((el, i) => el - triangle.vert2[i])
+
+  if (dot(normal, cross(edge0, C0)) < 0) {
+    return Infinity
+  }
+
+  if (dot(normal, cross(edge1, C1)) < 0) {
+    return Infinity
+  }
+
+  if (dot(normal, cross(edge2, C2)) < 0) {
+    return Infinity
+  }
+
+  return [t, normal]
 }
 
 const computeLightning = (position, normal, V, s) => {
@@ -185,17 +386,13 @@ const lerp = (a, b, alpha) => {
   return a + alpha * (b - a)
 }
 
-const t = new bt.Turtle();
+let step = colouredSquares ? 1 : 2;
 
-for (let y = 0; y < height; y+=2) {
-  let factor = 1;
-  t.up()
-  t.goTo([0, y])
-  t.down()
+for (let y = 0; y < height; y += step) {
 
-  for (let x = 0; x < width; x++) {
-    let pos = canvasToWorld(x, y);
-    let colour = traceRay(cameraOrigin, pos, 1, Infinity, recursionDepth);
+  for (let x = 0; x < width; x += step) {
+    let dir = canvasToWorld(x, y);
+    let colour = traceRay(cameraOrigin, dir, 1, Infinity, recursionDepth);
 
     let gColour = colour[0] * 0.3 + colour[1] * 0.59 + colour[2] * 0.11
     gColour = Math.round(gColour)
@@ -218,12 +415,12 @@ for (let y = 0; y < height; y+=2) {
 
       lines[colour.toString()].lines.push(pixel);
     } else {
-
-      for (let smolX = x; smolX < x + 1; smolX += 0.01) {
-        factor = lerp(factor, smolX * gColour / 255, 0.06)
-        let sin_change = Math.max(-2, Math.min(2, Math.sin(factor * 1) * gColour / 270));
-        t.goTo([smolX, y + sin_change * 1.5]);
-      }
+      let chosen = letters['idx'][Math.round(Math.min(gColour, 255) / 255 * (letters['idx'].length - 1))]
+      let e = letters[chosen]
+      let f = e()
+      let letter = bt.translate(f, [x, y])
+      letter = bt.scale(letter, letterScale)
+      lines = bt.join(lines, letter)
     }
 
 
@@ -236,15 +433,9 @@ if (colouredSquares) {
   }
 } else {
 
-  bt.join(lines, t.lines());
-  console.log(lines)
-
-  const cc = bt.bounds(lines).cc;
+    const cc = bt.bounds(lines).cc;
   bt.translate(lines, [width / 2, height / 2], cc);
 
-  for (let el in lines) {
-    lines[el] = bt.nurbs(lines[el], { steps: 1000, degree: 8 })
-  }
-  drawLines(lines);
+  drawLines(lines, { width: lineWidth });
 
 }
