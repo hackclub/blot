@@ -25,6 +25,10 @@ const recursionDepth = 20
 const lineWidth = 1.0
 const letterScale = 1
 
+// This stepsize will only be used when generating the Ascii art. It will determine how many rows will be rendered.
+// With the default value of 2 it will for example always skip over one row and one column each iteration (works best with the current lineWith and letterScale)
+const stepSize = 2
+
 // The following values control the scene
 const scene = {
   spheres: [
@@ -386,7 +390,7 @@ const lerp = (a, b, alpha) => {
   return a + alpha * (b - a)
 }
 
-let step = colouredSquares ? 1 : 2;
+let step = colouredSquares ? 1 : stepSize;
 
 for (let y = 0; y < height; y += step) {
 
