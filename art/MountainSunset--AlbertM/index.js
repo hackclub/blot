@@ -162,28 +162,3 @@ drawLines([[[100, 0], [100, 87]]], {width: 7, stroke: 'brown'})
 
 // Draw Tree Branch
 drawLines(t.lines(), {stroke: 'red', width: 2})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
