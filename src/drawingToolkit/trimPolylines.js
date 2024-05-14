@@ -1,78 +1,90 @@
-export function trimPolylines(polylines, t1, t2) {
-  t1 = Math.max(0, Math.min(1, t1));
-  t2 = Math.max(0, Math.min(1, t2));
+function interpolatePolyline(polyline, startDistance, endDistance) {
+    let accumulatedLength = 0;
+    let started = false;
+    const trimmedPolyline = [];
 
-  let totalLength = getTotalLength(polylines);
-  let targetLength1 = totalLength * t1;
-  let targetLength2 = totalLength * t2;
+    for (let i = 0; i < polyline.length - 1; i++) {
+        const pointA = polyline[i];
+        const pointB = polyline[i + 1];
+        const segmentLength = distance(pointA, pointB);
 
-  let newPolylines = [];
-  let accumulatedLength = 0;
-
-  for (let i = 0; i < polylines.length; i++) {
-    let polyline = polylines[i];
-    let newPolyline = [];
-
-    for (let j = 1; j < polyline.length; j++) {
-      let segment = [polyline[j - 1], polyline[j]];
-      let dx = segment[1][0] - segment[0][0];
-      let dy = segment[1][1] - segment[0][1];
-      let segmentLength = Math.sqrt(dx * dx + dy * dy);
-
-      let nextAccumulatedLength = accumulatedLength + segmentLength;
-
-      if (nextAccumulatedLength >= targetLength1 && accumulatedLength <= targetLength2) {
-        if (accumulatedLength < targetLength1) {
-          // Interpolate start point
-          let t = (targetLength1 - accumulatedLength) / segmentLength;
-          newPolyline.push([
-            segment[0][0] + t * dx,
-            segment[0][1] + t * dy,
-          ]);
-        } else if (newPolyline.length === 0) {
-          // If this is the first segment after targetLength1, add the start point
-          newPolyline.push(segment[0]);
+        if (!started && accumulatedLength + segmentLength >= startDistance) {
+            const ratio = (startDistance - accumulatedLength) / segmentLength;
+            const startPoint = interpolate(pointA, pointB, ratio);
+            trimmedPolyline.push(startPoint);
+            started = true;
         }
 
-        if (nextAccumulatedLength > targetLength2) {
-          // Interpolate end point and break
-          let t = (targetLength2 - accumulatedLength) / segmentLength;
-          newPolyline.push([
-            segment[0][0] + t * dx,
-            segment[0][1] + t * dy,
-          ]);
-          break;
-        } else {
-          newPolyline.push(segment[1]);
+        if (started) {
+            if (accumulatedLength + segmentLength > endDistance) {
+                const ratio = (endDistance - accumulatedLength) / segmentLength;
+                const endPoint = interpolate(pointA, pointB, ratio);
+                trimmedPolyline.push(endPoint);
+                break;
+            } else {
+                if (accumulatedLength >= startDistance) {
+                    trimmedPolyline.push(pointA);
+                }
+            }
         }
-      }
 
-      accumulatedLength += segmentLength;
-
-      if (accumulatedLength >= targetLength2) break;
+        accumulatedLength += segmentLength;
     }
 
-    if (newPolyline.length > 0) {
-      newPolylines.push(newPolyline);
-    }
-
-    if (accumulatedLength >= targetLength2) break;
-  }
-
-  while (polylines.length) polylines.pop();
-  newPolylines.forEach(pl => polylines.push(pl));
-
-  return polylines;
+    return trimmedPolyline;
 }
 
-function getTotalLength(polylines) {
-  let totalLength = 0;
-  for (let polyline of polylines) {
-    for (let i = 1; i < polyline.length; i++) {
-      let dx = polyline[i][0] - polyline[i - 1][0];
-      let dy = polyline[i][1] - polyline[i - 1][1];
-      totalLength += Math.sqrt(dx * dx + dy * dy);
+export function trimPolylines(polylines, startT, endT) {
+    const totalLength = calculateTotalLength(polylines);
+    const startLength = totalLength * Math.max(0, Math.min(1, startT));
+    const endLength = totalLength * Math.max(0, Math.min(1, endT));
+
+    let currentLength = 0;
+    const trimmedPolylines = [];
+
+    for (const polyline of polylines) {
+        const remainingLength = totalLength - currentLength;
+        if (startLength > currentLength + remainingLength || endLength <= currentLength) {
+            currentLength += calculateTotalLength([polyline]);
+            continue;
+        }
+
+        const localStart = Math.max(0, startLength - currentLength);
+        const localEnd = Math.min(calculateTotalLength([polyline]), endLength - currentLength);
+        const trimmedPolyline = interpolatePolyline(polyline, localStart, localEnd);
+
+        if (trimmedPolyline.length > 0) {
+            trimmedPolylines.push(trimmedPolyline);
+        }
+
+        currentLength += calculateTotalLength([polyline]);
+        if (currentLength >= endLength) break;
     }
-  }
-  return totalLength;
+
+    while (polylines.length) polylines.pop();
+
+    trimmedPolylines.forEach(pl => polylines.push(pl));
+
+    return trimmedPolylines;
+}
+
+function calculateTotalLength(polylines) {
+    let length = 0;
+    for (const polyline of polylines) {
+        for (let i = 0; i < polyline.length - 1; i++) {
+            length += distance(polyline[i], polyline[i + 1]);
+        }
+    }
+    return length;
+}
+
+function distance(pointA, pointB) {
+    return Math.sqrt((pointB[0] - pointA[0]) ** 2 + (pointB[1] - pointA[1]) ** 2);
+}
+
+function interpolate(pointA, pointB, ratio) {
+    return [
+        pointA[0] + (pointB[0] - pointA[0]) * ratio,
+        pointA[1] + (pointB[1] - pointA[1]) * ratio
+    ];
 }
