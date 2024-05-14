@@ -3,12 +3,12 @@
 @author: Maggie, Claire and Belle
 @snapshot: 0.png
 */
-const t = createTurtle();
+const t = new bt.Turtle();
 
-const MAX_ITERATION = randInRange(7, 10)
+const MAX_ITERATION = bt.randInRange(7, 10)
 const START_ANGLE = 90
-const ANGLE_CHANGE = randInRange(10, 20)
-const BRANCH_LEN = randInRange(20, 30)
+const ANGLE_CHANGE = bt.randInRange(10, 20)
+const BRANCH_LEN = bt.randInRange(20, 30)
 const START_POS = [62.5, 30]
 
 function recurse(prevBranchEnd, angle, branchLen, iteration) {
@@ -21,16 +21,17 @@ function recurse(prevBranchEnd, angle, branchLen, iteration) {
   t.setAngle(angle + ANGLE_CHANGE)
   t.forward(branchLen)
 
-  recurse(t.end, angle + ANGLE_CHANGE, branchLen * 2/3, iteration + 1)
+  const end = () => t.path.at(-1).at(-1);
+  recurse(end(), angle + ANGLE_CHANGE, branchLen * 2/3, iteration + 1)
 
   // Right branch from a node
   t.jump(prevBranchEnd)
   t.setAngle(angle - ANGLE_CHANGE)
   t.forward(branchLen)
 
-  recurse(t.end, angle - ANGLE_CHANGE, branchLen * 2/3, iteration + 1)
+  recurse(end(), angle - ANGLE_CHANGE, branchLen * 2/3, iteration + 1)
 }
 
 recurse(START_POS, START_ANGLE, BRANCH_LEN, 1)
 
-drawTurtles([t])
+drawLines(t.lines())

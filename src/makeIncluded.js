@@ -15,7 +15,7 @@ export function makeIncluded() {
 
     const baseLogger = (type, ...args) => {
         console[type](...args)
-        
+
         // get code location
         const pos = getPosFromErr(new Error())
         
@@ -66,7 +66,8 @@ export function makeIncluded() {
             turtles.push(temp);
         },
         
-        toolkit,
+        blotToolkit: toolkit,
+        bt: toolkit,
         
         // createTurtle: (pt: Point) => new Turtle(pt),
         // Turtle,

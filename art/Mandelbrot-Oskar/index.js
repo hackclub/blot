@@ -13,7 +13,7 @@ let xrange = [-2,0.5]
 let yrange = [-1.125,1.125]
 setDocDimensions(size, size);
 
-const shapes = createTurtle() // high level turtle
+const shapes = [] // high level turtle
 
 function mandelbrot_px(x,y) { // calculates mandelbrot set inclusion for a complex number (x+iy)
   let z1 = 0 
@@ -32,7 +32,7 @@ function mandelbrot_px(x,y) { // calculates mandelbrot set inclusion for a compl
 }
 
 function shade(pixsize, density) { // shades a pixel to a given density (in lines/mm)
-  const t = createTurtle()
+  const t = new bt.Turtle()
   for (let i = 0; i < pixsize; i += (1/density)) {
     t.goTo([0,i])
     t.down()
@@ -92,7 +92,7 @@ for (let y = 0; y < pixarr.length; y++) {
 }
 
 if (shaded == true) {
-  let t = createTurtle()
+  let t = new bt.Turtle()
   for (let y = 0; y < pixels_to_render.length; y++) {
     let block_begin = 0
     let block_val = false
@@ -116,14 +116,14 @@ if (shaded == true) {
       t.goTo([gridsize/px_per_mm, y/px_per_mm])
     }
   }
-  shapes.join(t)
+  bt.join(shapes, t.lines())
 }
 
 if (shaded == false) {
   for (let y = 0; y < pixels_to_render.length; y++) {
     for (let x = 0; x < pixels_to_render[0].length; x++) {
       if (pixels_to_render[y][x] != 0) { // ignore the 0s
-        const t = createTurtle()
+        const t = new bt.Turtle()
         // check if the pixel diagonally down and to the left to v is the same, and if it is draws a line to it
         if (x > 0 && y < gridsize-1 && pixels_to_render[y][x] == pixels_to_render[y+1][x-1]) {
           t.up()
@@ -153,10 +153,10 @@ if (shaded == false) {
           t.goTo([0,(1)/px_per_mm])
         }
         t.translate([x/px_per_mm,y/px_per_mm])
-        shapes.join(t)
+        bt.join(shapes, t.lines())
       }
     }
   }
 }
-shapes.translate([size / 2, size / 2], shapes.cc) // center it
-drawTurtles([shapes]) // draw it
+bt.translate(shapes, [size / 2, size / 2], bt.bounds(shapes).cc) // center it
+drawLines(shapes) // draw it

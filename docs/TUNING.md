@@ -48,3 +48,19 @@ This is a sign that your stepper motors are either wired incorrectly or don’t 
 - Unplug and replug your stepper motors.
 - Make sure your stepper motors are plugged in the correct direction. The red wire should connect to the side labeled "red".
 - Make sure the stepper motor horizontal breakouts are connected. Steppers **do not** directly connect to the main board.
+
+**My blot draws weirdly**
+
+![](https://cloud-4w10pxj3u-hack-club-bot.vercel.app/020240216_213925.jpg)
+
+This usually means your belt is not tight enough.
+- Check if your belt pulley is attached tight. While your blot is powered on, try twisting the pulley. If it moves, it's not tight enough.
+- To tighten it, use your smallest allen key to tighten both screws
+- If your pulley is tight, try tightening the belt
+- Move the belt clip forward. Attach the belt to the clip as tight as possible. Pull the belt clip as much as possible. Screw it in place.
+
+**My belt keeps getting loose**
+
+Ensure that the t-nut is 90 degrees from the alluminum extrusion
+
+![](https://cloud-4w10pxj3u-hack-club-bot.vercel.app/120240216_212734.jpg)

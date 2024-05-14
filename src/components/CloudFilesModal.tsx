@@ -34,13 +34,22 @@ export default function() {
           <span class="cursor-pointer hover:text-red-500" onClick={closeModal}>x</span>
         </div>
       </div>
-      <div class="width-[80%] border-2 border-stone-400 h-[20rem] bg-gray-100 rounded mx-4 mt-4 overflow-auto">
-        {files.map((file, i) => <>
-          <div class={`${i%2 === 1 && selectedFile !== i ? "bg-gray-200" : ""} ${selectedFile === i ? "bg-[var(--primary)] text-white" : ""} px-2 py-1`} onClick={e => selectFile(i)}>
-            {file.name ? file.name : "anon"}
+
+      <div class="width-[90%] border-2 border-stone-400 h-[20rem] bg-gray-100 rounded mx-4 mt-4 overflow-auto">
+        {sortFilesByTime(files).map((file, i) => <>
+          <div class={`${i%2 === 1 && selectedFile !== i ? "bg-gray-200" : ""} ${selectedFile === i ? "bg-[var(--primary)] text-white" : ""} px-2 py-1` + " " + `flex flex-row justify-between`} onClick={e => selectFile(i)}>
+            <div>{file.name ? file.name : "anon"}</div>
+            <div class="text-gray-400">
+              {formatTimestamp(file.created_at)}
+            </div>
           </div>
         </>)}
       </div>
+
+      <pre class="width-[90%] border-2 border-stone-400 h-[8rem] bg-gray-100 rounded mx-4 mt-4 p-1 overflow-auto font-mono">
+        {files[selectedFile] ? files[selectedFile].content : ""}
+      </pre>
+
       <div class={`w-full flex p-2 items-center justify-center flex-row`}>
         <button class="m-3 p-2 w-40 text-center cursor-pointer bg-gray-700 hover:bg-gray-500 text-white rounded" onClick={openFile}>
           open
@@ -48,4 +57,15 @@ export default function() {
       </div>
     </div>
   </>
+}
+
+function sortFilesByTime(files) {
+  const sortedFiles = files
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+  return sortedFiles;
+}
+
+function formatTimestamp(timestamp) {
+  return new Date(timestamp).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
 }

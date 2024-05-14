@@ -1,5 +1,5 @@
 // A test pattern you can use while tuning your blot.
-// Diagnose issues with your blot using the tuning guide: https://blot.hackclub.dev/tuning
+// Diagnose issues with your blot using the tuning guide: https://blot.hackclub.com/tuning
 
 const width = 125;
 const height = 125;

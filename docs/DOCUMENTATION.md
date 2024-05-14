@@ -8,9 +8,7 @@ This is the drawing library available in the Blot editor.
 
 These functions set properties of the Blot drawing environment.
 
-### setDocDimensions
-
-**Function:** `setDocDimensions(width, height)`
+### setDocDimensions(width, height)
 
 **Parameters:**
 - `width` (number): The width of the document.
@@ -32,9 +30,7 @@ The units are millimeters (mm).
 setDocDimensions(800, 600);
 ```
 
-### drawLines
-
-**Function:** `drawLines(polylines, options = { fill, stroke, width })`
+### drawLines(polylines, options = { fill, stroke, width })
 
 **Parameters:**
 - `polylines` ([number, number][][]): A list of polylines
@@ -61,34 +57,39 @@ drawLines([
 ]);
 ```
 
-## Importing the Toolkit
+## Importing the blotToolkit
 
-The functions below are available in the `toolkit` object.
+The functions below are available in the `blotToolkit` object.
 
 ```js
 // like so
-toolkit.scale(...)
+blotToolkit.scale(...)
 ```
 
-It's reccomended to destructure the functions from `toolkit`.
+`blotToolkit` is also available as the abbreviated `bt`. This is **the recommended way to reference the blotToolkit**.
+
+```js
+// like so
+bt.scale(...)
+```
+
+You can also destructure the functions from `blotToolkit`.
 
 ```js
 // all imports
-const { Turtle, trim, merge, cut, cover, rotate, scale, translate, originate, iteratePoints, pointInside, resample, join, copy, union, difference, intersection, xor, getAngle, getPoint, getNormal, bounds, nurbs, catmullRom, svgToPolylines, rand, setRandSeed, randInRange, randIntInRange, noise, bezierEasing } = toolkit;
+const { Turtle, trim, merge, cut, cover, rotate, scale, translate, originate, iteratePoints, pointInside, resample, join, copy, union, difference, intersection, xor, getAngle, getPoint, getNormal, bounds, nurbs, catmullRom, rand, setRandSeed, randInRange, randIntInRange, noise } = blotToolkit;
 ```
 
 ```js
 // common imports
-const { Turtle, cut, cover, copy, rotate, scale, translate, originate, iteratePoints, resample, join, getAngle, getNormal, bounds, rand, setRandSeed, randInRange, noise, nurbs } = toolkit;
+const { Turtle, cut, cover, copy, rotate, scale, translate, originate, iteratePoints, resample, join, getAngle, getNormal, bounds, rand, setRandSeed, randInRange, noise, nurbs } = blotToolkit;
 ```
 
 ## Modify Polylines
 
 These functions modify a polyline that is passed as a first argument.
 
-### iteratePoints
-
-**Function:** `iteratePoints(polylines, callback)`
+### iteratePoints(polylines, callback)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to iterate over.
@@ -113,16 +114,29 @@ Modifications are applied after all points are iterated through.
 
 ```js
 const polylines = [[[0, 0], [10, 10], [20, 20]]];
-const modifiedPolylines = iteratePoints(polylines, (pt, t) => {
+const modifiedPolylines = bt.iteratePoints(polylines, (pt, t) => {
   const [x, y] = pt;
+  // Move each point up by 5mm
+  return [x, y + 5];
+});
+
+// or 
+
+const modifiedPolylines2 = bt.iteratePoints(polylines, (pt, t) => {
+  const [x, y] = pt;
+
+  if (t < .2) {
+    return "REMOVE";
+  } else if (.5 > rand()) {
+    return "BREAK";
+  }
+
   // Move each point up by 5mm
   return [x, y + 5];
 });
 ```
 
-### scale
-
-**Function:** `scale(polylines, scale, origin = [0, 0])`
+### scale(polylines, scale, origin = [0, 0])
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be scaled.
@@ -148,18 +162,16 @@ const polylines = [
 ];
 
 // Scale uniformly by a factor of 2
-const uniformlyScaled = scale(polylines, 2);
+const uniformlyScaled = bt.scale(polylines, 2);
 
 // Scale non-uniformly (x by 2, y by 3)
-const nonUniformlyScaled = scale(polylines, [2, 3]);
+const nonUniformlyScaled = bt.scale(polylines, [2, 3]);
 
 // Scale uniformly around a custom origin (5, 5)
-const customOriginScaled = scale(polylines, 2, [5, 5]);
+const customOriginScaled = bt.scale(polylines, 2, [5, 5]);
 ```
 
-### rotate
-
-**Function:** `rotate(polylines, degrees, origin = [0, 0])`
+### rotate(polylines, degrees, origin = [0, 0])
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be rotated.
@@ -178,13 +190,11 @@ Rotates the provided polylines around a specified origin point by a given number
 const polylines = [[[10, 10], [20, 20], [30, 10]]];
 const degrees = 45; // Rotate 45 degrees clockwise
 
-rotate(polylines, degrees);
-rotate(polylines, degrees, [45, 0]);
+bt.rotate(polylines, degrees);
+bt.rotate(polylines, degrees, [45, 0]);
 ```
 
-### translate
-
-**Function:** `translate(polylines, [dx, dy], origin = [0, 0])`
+### translate(polylines, [dx, dy], origin = [0, 0])
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be translated.
@@ -202,12 +212,10 @@ The `translate` function shifts the position of the given polylines without alte
 
 ```js
 const polylines = [[[0, 0], [10, 10], [20, 5]]];
-translate(polylines, [5, 10]);
+bt.translate(polylines, [5, 10]);
 ```
 
-### originate
-
-**Function:** `originate(polylines)`
+### originate(polylines)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be centered.
@@ -224,12 +232,10 @@ The `originate` function recalculates the bounding box of the given polylines an
 
 ```js
 const polylines = [[[10, 10], [20, 20], [30, 10]]];
-originate(polylines);
+bt.originate(polylines);
 ```
 
-### resample
-
-**Function:** `resample(polylines, sampleRate)`
+### resample(polylines, sampleRate)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be resampled.
@@ -245,12 +251,10 @@ The `resample` function is used to either increase or decrease the number of poi
 
 ```js
 const polylines = [[[0, 0], [10, 10], [20, 5], [30, 10]]];
-resample(polylines, 5);
+bt.resample(polylines, 5);
 ```
 
-### simplify
-
-**Function:** `simplify(polylines, tolerance, highQuality = false)`
+### simplify(polylines, tolerance, highQuality = false)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be simplified.
@@ -268,12 +272,10 @@ The `simplify` function is particularly useful for reducing the complexity of po
 
 ```js
 const polylines = [[[0, 0], [5, 5], [10, 10], [15, 15], [20, 20]]];
-simplify(polylines, 1);
+bt.simplify(polylines, 1);
 ```
 
-### trim
-
-**Function:** `trim(polylines, tStart, tEnd)`
+### trim(polylines, tStart, tEnd)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be trimmed.
@@ -291,12 +293,10 @@ The `trim` function reduces the length of each polyline according to the specifi
 
 ```js
 const polylines = [[[0, 0], [10, 10], [20, 20]]];
-trim(polylines, 0.25, 0.75);
+bt.trim(polylines, 0.25, 0.75);
 ```
 
-### merge
-
-**Function:** `merge(polylines)`
+### merge(polylines)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be merged.
@@ -314,12 +314,10 @@ The `merge` function combines several polyline paths into one continuous path, e
 const polyline1 = [[0, 0], [10, 10]];
 const polyline2 = [[10, 10], [20, 20]];
 const polylines = [polyline1, polyline2];
-merge(polylines);
+bt.merge(polylines);
 ```
 
-### join
-
-**Function:** `join(polylines0, ...morePolylines)`
+### join(polylines0, ...morePolylines)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The primary array of polylines to which others will be joined.
@@ -337,12 +335,10 @@ The `join` function is used to concatenate multiple arrays of polylines into a s
 ```js
 const polylines1 = [[[0, 0], [10, 10]]];
 const polylines2 = [[[20, 20], [30, 30]]];
-join(polylines1, polylines2);
+bt.join(polylines1, polylines2);
 ```
 
-### copy
-
-**Function:** `copy(polylines)`
+### copy(polylines)
 
 **Parameters:**
   - `polylines` ([number, number][][]): An array of polylines to be copied.
@@ -359,12 +355,10 @@ The `copy` function is useful when you need to duplicate polylines without alter
 
 ```js
 const originalPolylines = [[[0, 0], [10, 10]]];
-const copiedPolylines = copy(originalPolylines);
+const copiedPolylines = bt.copy(originalPolylines);
 ```
 
-### cut
-
-**Function:** `cut(polylines0, polylines1)`
+### cut(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The primary array of polylines to be cut.
@@ -381,12 +375,10 @@ Removes all points of the `basePolylines` outside of the `cuttingPolylines`.
 ```js
 const polylinesToCut = [[[0, 0], [10, 10], [20, 0]]];
 const cuttingPolylines = [[[5, 5], [15, 5]]];
-cut(polylinesToCut, cuttingPolylines);
+bt.cut(polylinesToCut, cuttingPolylines);
 ```
 
-### cover
-
-**Function:** `cover(polylines0, polylines1)`
+### cover(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The primary array of polylines to be covered.
@@ -403,12 +395,10 @@ Removes all points of the `basePolylines` inside of the `coveringPolylines`.
 ```js
 const basePolylines = [[[0, 0], [10, 10], [20, 0]]];
 const coveringPolylines = [[[5, -5], [15, 15]]];
-cover(basePolylines, coveringPolylines);
+bt.cover(basePolylines, coveringPolylines);
 ```
 
-### union
-
-**Function:** `union(polylines0, polylines1)`
+### union(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The first array of polylines.
@@ -425,12 +415,10 @@ Takes the boolean union of both sets of polylines.
 ```js
 const subjectPolylines = [[[0, 0], [10, 10], [20, 0]]];
 const clippingPolylines = [[[10, 10], [30, 10], [20, -10]]];
-union(subjectPolylines, clippingPolylines);
+bt.union(subjectPolylines, clippingPolylines);
 ```
 
-### difference
-
-**Function:** `difference(polylines0, polylines1)`
+### difference(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The primary array of polylines to be modified.
@@ -447,12 +435,10 @@ Subtracts the `clippingPolylines` from the `subjectPolylines`.
 ```js
 const subjectPolylines = [[[0, 0], [20, 0], [10, 20]]];
 const clippingPolylines = [[[0, 10], [20, 10], [10, -10]]];
-difference(subjectPolylines, clippingPolylines);
+bt.difference(subjectPolylines, clippingPolylines);
 ```
 
-### intersection
-
-**Function:** `intersection(polylines0, polylines1)`
+### intersection(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The first array of polylines.
@@ -469,12 +455,10 @@ Modifies the `subjectPolylines` to only the part that intersects with the `clipp
 ```js
 const subjectPolylines = [[[0, 0], [10, 10], [20, 0]]];
 const clippingPolylines = [[[0, 10], [10, 0], [20, 10]]];
-intersection(subjectPolylines, clippingPolylines);
+bt.intersection(subjectPolylines, clippingPolylines);
 ```
 
-### xor
-
-**Function:** `xor(polylines0, polylines1)`
+### xor(polylines0, polylines1)
 
 **Parameters:**
   - `polylines0` ([number, number][][]): The first array of polylines.
@@ -491,7 +475,7 @@ Performs an exclusive or operation on two sets of polylines, leaving only the pa
 ```js
 const polylines0 = [[[0, 0], [10, 10], [20, 0]]];
 const polylines1 = [[[0, 10], [10, 0], [20, 10]]];
-xor(polylines0, polylines1);
+bt.xor(polylines0, polylines1);
 ```
 
 ## Get Data From Polylines
@@ -499,9 +483,7 @@ xor(polylines0, polylines1);
 These functions take polylines and return other values. 
 They do not modify the polylines.
 
-### getAngle
-
-**Function:** `getAngle(polylines, t: [0 to 1])`
+### getAngle(polylines, t: [0 to 1])
 
 **Parameters:**
 - `polylines` ([number, number][][]): An array of polylines representing a shape.
@@ -514,9 +496,7 @@ They do not modify the polylines.
 Calculates the angle in degrees at the specified point along the polylines. 
 This function determines the angle of the tangent line to the shape at the given position `t`.
 
-### getPoint
-
-**Function:** `getPoint(polylines, t: [0 to 1])`
+### getPoint(polylines, t: [0 to 1])
 
 **Parameters:**
 - `polylines` ([number, number][][]): An array of polylines representing a shape.
@@ -528,9 +508,7 @@ This function determines the angle of the tangent line to the shape at the given
 
 Returns the coordinates of the point at the specified position `t` along the polylines. 
 
-### getNormal
-
-**Function:** `getNormal(polylines, t: [0 to 1])`
+### getNormal(polylines, t: [0 to 1])
 
 **Parameters:**
 - `polylines` ([number, number][][]): An array of polylines representing a shape.
@@ -543,9 +521,7 @@ Returns the coordinates of the point at the specified position `t` along the pol
 Calculates the normal vector at the specified point along the polylines. 
 The normal vector is a vector that is perpendicular to the tangent line at the given position `t`. 
 
-### pointInside
-
-**Function:** `pointInside(polylines, pt)`
+### pointInside(polylines, pt)
 
 **Parameters:**
 - `polylines` ([number, number][][]): An array of polylines representing a shape.
@@ -560,9 +536,7 @@ The normal vector is a vector that is perpendicular to the tangent line at the g
 Determines whether a point lies inside the provided shape defined by the polylines. 
 This function is useful for collision detection, hit testing, or determining containment of points within shapes.
 
-### bounds
-
-**Function:** `bounds(polylines)`
+### bounds(polylines)
 
 **Parameters:**
 - `polylines` ([number, number][][]): An array of polylines representing a shape.
@@ -592,7 +566,7 @@ lb--cb--rb
 
 ```js
 const polylines = [[[0, 0], [10, 10], [20, 0]]];
-const bounds = bounds(polylines);
+const boundingBox = bt.bounds(polylines);
 /*
 returns { 
   xMin, xMax, 
@@ -604,14 +578,14 @@ returns {
 }
 */
 
-const center = bounds.cc;
+const center = boundingBox.cc;
 ```
 
 ## Generate Polylines
 
 A collection of functions and classes for creating polylines.
 
-### Turtle Class
+### Turtle
 
 A `Turtle` class represents a cursor that moves around a canvas to draw shapes. It is inspired by the Logo programming language and can be used to create intricate designs and patterns programmatically.
 
@@ -628,6 +602,7 @@ A `Turtle` class represents a cursor that moves around a canvas to draw shapes. 
 - `down()` Lowers the pen so that moving the turtle draws lines.
 - `copy()` Creates a copy of the turtle's current state.
 - `apply(fn)` Takes a function that receives the turtle as an argument and applies custom operations.
+- `lines()` Returns a copy of the Turtle's path.
 
 **Properties:**
 
@@ -639,7 +614,7 @@ A `Turtle` class represents a cursor that moves around a canvas to draw shapes. 
 **Example:**
 
 ```js
-const myTurtle = new Turtle()
+const myTurtle = new bt.Turtle()
   .down()
   .forward(100)
   .right(90)
@@ -648,9 +623,9 @@ const position = myTurtle.pos; // Gets the current position of the turtle
 const path = myTurtle.path; // Gets the path drawn by the turtle, use this to get polylines
 ```
 
-### catmullRom(points, steps = 1000)
+## Curves
 
-**Function:** `catmullRom(points, steps)`
+### catmullRom(points, steps = 1000)
 
 **Parameters:**
 - `points` ([number, number][]): An array of points through which the curve should pass.
@@ -665,12 +640,10 @@ Generates a Catmull-Rom spline, which is a type of interpolating curve, passing 
 **Example:**
 
 ```js
-catmullRom([[0, 0], [10, 15], [20, 5]], 100); // Returns a polyline with 100 points forming a smooth curve through the specified points
+bt.catmullRom([[0, 0], [10, 15], [20, 5]], 100); // Returns a polyline with 100 points forming a smooth curve through the specified points
 ```
 
 ### nurbs(points, ops = { steps: 100, degree: 2})
-
-**Function:** `nurbs(points, ops)`
 
 **Parameters:**
 - `points` ([number, number][]): An array of control points for the NURBS curve.
@@ -687,12 +660,11 @@ Generates a Non-Uniform Rational B-Spline (NURBS) curve, which provides great fl
 **Example:**
 
 ```js
-nurbs([[0, 0], [10, 15], [20, 5]], { steps: 50, degree: 3 }); // Returns a polyline forming a NURBS curve with specified degree and steps
+bt.nurbs([[0, 0], [10, 15], [20, 5]], { steps: 50, degree: 3 }); // Returns a polyline forming a NURBS curve with specified degree and steps
 ```
 
+<!--
 ### svgToPolylines(svg: string)
-
-**Function:** `svgToPolylines(svg)`
 
 **Parameters:**
 - `svg` (string): An SVG path string to be converted into polylines.
@@ -706,14 +678,108 @@ Converts SVG path data into an array of polylines.
 **Example:**
 
 ```js
-svgToPolylines(`<svg><path d="M0,0 L10,10 Q15,15 20,5" /></svg>`); // Returns an array of polylines representing the SVG path
+bt.svgToPolylines(`<svg><path d="M0,0 L10,10 Q15,15 20,5" /></svg>`); // Returns an array of polylines representing the SVG path
+```
+-->
+
+## Randomness
+
+### rand()
+
+**Returns:** A random number between 0 and 1.
+
+**Description:** 
+
+Generates a random floating-point number between 0 (inclusive) and 1 (inclusive). This function does not require any parameters and provides a quick way to introduce randomness into your drawing or modifications.
+
+**Example:**
+
+```js
+bt.rand(); // Might return 0.123456789
 ```
 
+### randInRange(min, max)
+
+**Parameters:**
+- `min` (number): The minimum value (inclusive).
+- `max` (number): The maximum value (inclusive).
+
+**Returns:** A random number between `min` and `max`.
+
+**Description:** 
+
+Generates a random floating-point number within a specified range. The function takes two parameters: the minimum value (inclusive) and the maximum value (inclusive), and returns a random number within this range.
+
+**Example:**
+
+```js
+bt.randInRange(10, 20); // Might return 15.6789
+```
+
+### randIntInRange(min, max)
+
+**Parameters:**
+- `min` (number): The minimum value (inclusive).
+- `max` (number): The maximum value (inclusive).
+
+**Returns:** A random integer between `min` and `max`.
+
+**Description:** 
+
+Generates a random integer within a specified range. This function is similar to `randInRange` but ensures the returned value is an integer. The `max` value is inclusive, making the range of possible outcomes slightly wider.
+
+**Example:**
+
+```js
+bt.randIntInRange(1, 10); // Might return 7
+```
+
+### setRandSeed(seed)
+
+**Parameters:**
+- `seed` (number): A seed value to initialize the random number generator.
+
+**Returns:** Nothing.
+
+**Description:** 
+
+Initializes the random number generator with a specific seed. This function is useful for creating repeatable sequences of random numbers. Setting the same seed value will reset the random number generator to produce the same sequence of numbers.
+
+**Example:**
+
+```js
+bt.setRandSeed(12345);
+```
+
+### noise(input, options = { octaves, falloff })
+
+**Parameters:**
+- `input` (number | [number, ?number, ?number]): A single number or an array representing the coordinates (x, [y], [z]) in n-dimensional noise space.
+- `options` (object, optional): Configuration options for noise generation
+  - `octaves` (number [0 to 8]): The number of octaves of noise to generate. More octaves produce more detailed noise at the cost of performance.
+  - `falloff` (number [0 to 100]): The rate at which the noise detail decreases across octaves.
+
+**Returns:** A noise value between -1 and 1 based on the input coordinates and options.
+
+**Description:** 
+
+Generates Perlin noise or simplex noise based on the input coordinates and configuration options. This function can produce noise in one, two, or three dimensions and is configured by the number of octaves and the falloff rate. It's useful for generating natural-looking textures, landscapes, or other organic variations.
+
+**Example:**
+
+```js
+bt.noise(0.5);
+bt.noise([0.5, 2.4]);
+bt.noise([0.5, 2.4, 3]);
+bt.noise(0.5, { octaves: 4, falloff: 50 }); // Might return 0.3425
+bt.noise([0.5, 1.2], { octaves: 3, falloff: 75 }); // Might return -0.5687
+```
+
+<!--
+  
 ## Easing Curves
 
 ### bezierEasing(startY, controlPt0, controlPt1, endY)
-
-**Function:** `bezierEasing(startY, controlPt0, controlPt1, endY)`
 
 **Parameters:**
 - `startY` (number): The starting Y value of the Bezier curve.
@@ -732,109 +798,8 @@ The returned function maps an input X (ranging from 0 to 1) to a Y value on the 
 **Example:**
 
 ```js
-const ease = bezierEasing(0, [0.25, 0.1], [0.25, 1], 1);
+const ease = bt.bezierEasing(0, [0.25, 0.1], [0.25, 1], 1);
 const y = ease(0.5); // Returns the Y value at X=0.5 on the Bezier curve
 ```
 
-## Randomness
-
-### rand()
-
-**Function:** `rand()`
-
-**Returns:** A random number between 0 and 1.
-
-**Description:** 
-
-Generates a random floating-point number between 0 (inclusive) and 1 (inclusive). This function does not require any parameters and provides a quick way to introduce randomness into your drawing or modifications.
-
-**Example:**
-
-```js
-rand(); // Might return 0.123456789
-```
-
-### randInRange(min: number, max: number)
-
-**Function:** `randInRange(min, max)`
-
-**Parameters:**
-- `min` (number): The minimum value (inclusive).
-- `max` (number): The maximum value (inclusive).
-
-**Returns:** A random number between `min` and `max`.
-
-**Description:** 
-
-Generates a random floating-point number within a specified range. The function takes two parameters: the minimum value (inclusive) and the maximum value (exclusive), and returns a random number within this range.
-
-**Example:**
-
-```js
-randInRange(10, 20); // Might return 15.6789
-```
-
-### randIntInRange(min: number, max: number)
-
-**Function:** `randIntInRange(min, max)`
-
-**Parameters:**
-- `min` (number): The minimum value (inclusive).
-- `max` (number): The maximum value (inclusive).
-
-**Returns:** A random integer between `min` and `max`.
-
-**Description:** 
-
-Generates a random integer within a specified range. This function is similar to `randInRange` but ensures the returned value is an integer. The `max` value is inclusive, making the range of possible outcomes slightly wider.
-
-**Example:**
-
-```js
-randIntInRange(1, 10); // Might return 7
-```
-
-### setRandSeed(seed: number)
-
-**Function:** `setRandSeed(seed)`
-
-**Parameters:**
-- `seed` (number): A seed value to initialize the random number generator.
-
-**Returns:** Nothing.
-
-**Description:** 
-
-Initializes the random number generator with a specific seed. This function is useful for creating repeatable sequences of random numbers. Setting the same seed value will reset the random number generator to produce the same sequence of numbers.
-
-**Example:**
-
-```js
-setRandSeed(12345);
-```
-
-### noise(input, options)
-
-**Function:** `noise(input, { octaves, falloff })`
-
-**Parameters:**
-- `input` (number | [number, ?number, ?number]): A single number or an array representing the coordinates (x, [y], [z]) in n-dimensional noise space.
-- `options` (object, optional): Configuration options for noise generation
-  - `octaves` (number [0 to 8]): The number of octaves of noise to generate. More octaves produce more detailed noise at the cost of performance.
-  - `falloff` (number [0 to 100]): The rate at which the noise detail decreases across octaves.
-
-**Returns:** A noise value between -1 and 1 based on the input coordinates and options.
-
-**Description:** 
-
-Generates Perlin noise or simplex noise based on the input coordinates and configuration options. This function can produce noise in one, two, or three dimensions and is configured by the number of octaves and the falloff rate. It's useful for generating natural-looking textures, landscapes, or other organic variations.
-
-**Example:**
-
-```js
-noise(0.5);
-noise([0.5, 2.4]);
-noise([0.5, 2.4, 3]);
-noise(0.5, { octaves: 4, falloff: 50 }); // Might return 0.3425
-noise([0.5, 1.2], { octaves: 3, falloff: 75 }); // Might return -0.5687
-```
+-->

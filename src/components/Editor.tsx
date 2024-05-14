@@ -62,13 +62,14 @@ export default function Editor() {
               height: "100%",
               "flex-direction": "column",
               overflow: "none",
+              cursor: "text"
             }}
           >
             <div style={{ flex: 1, overflow: "auto" }}>
               <CodeMirror />
             </div>
             <div>
-              { false && <Console /> }
+              <Console />
               <Error />
             </div>
           </div>

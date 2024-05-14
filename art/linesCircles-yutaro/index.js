@@ -38,7 +38,7 @@ function line(turtle,startx, starty, endx, endy){
   turtle.goTo([endx,endy]);
 }
 
-const testTurtle = createTurtle();
+const testTurtle = new bt.Turtle();
 
 for (let i = 0; i < divisions; i++) {
     let x = i;
@@ -50,14 +50,15 @@ for (let i = 0; i < divisions; i++) {
 
 
 
-testTurtle.translate(
+bt.translate(
+  testTurtle.path,
   [width/2, height/2], 
   testTurtle.cc
 );
 
-testTurtle.jump(testTurtle.cb);
+testTurtle.jump(bt.bounds(testTurtle.path).cb);
 testTurtle.arc(360,radius);
 
-drawTurtles([
-    testTurtle
-]);
+drawLines(
+    testTurtle.lines()
+);

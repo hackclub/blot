@@ -15,6 +15,8 @@ import GitHubIcon from '../ui/GitHubIcon.tsx'
 import { saveFile } from '../saveFile.ts'
 // import * as prettier from 'prettier'
 import js_beautify from 'js-beautify'
+import { createShareLink } from "../createShareLink.js";
+import { toolkit as tk } from "../drawingToolkit/toolkit.js";
 
 const menuItemClasses = `
   relative
@@ -66,31 +68,37 @@ export default function Toolbar() {
         </h1>
         <RunButton />
         <div class={dropdownContainer}>
-          {needsSaving ? 'file*' : "file"}
+          {needsSaving ? 'File*' : "File"}
           <div class={dropdownClasses + " left-0"}>
             <div class={menuItemClasses} onClick={() => patchStore({ saveToCloudModalOpen: true })}>
-              save to cloud (ctrl/cmd+s)
+              Save to cloud (ctrl/cmd+s)
             </div>
             <div class={menuItemClasses} onClick={() => patchStore({ cloudFilesModalOpen: true })}>
-              open from cloud
+              Open from cloud
             </div>
             <div class={menuItemClasses} onClick={() => loadCodeFromString(defaultProgram)}>
-              new
+              New
             </div>
             <div class={menuItemClasses} onClick={() => saveFile(getCode())}>
-              save to disk
+              Save to disk
             </div>
             <div class={menuItemClasses} onClick={openFromDisk}>
-              open from disk
+              Open from disk
+            </div>
+            <div class={menuItemClasses} onClick={() => createShareLink(getCode())}>
+              Create share link
             </div>
           </div>
 
         </div>
         <div class={menuItemClasses} onClick={tidyCode}>
-          tidy code
+          Tidy code
         </div>
+       {/* <div class={menuItemClasses} onClick={animateLines}>
+          animate
+        </div>*/}
         <div class={dropdownContainer}>
-          <div>download</div>
+          <div>Download</div>
           <div class={dropdownClasses + " left-0"}>
             <DownloadButton />
             <DownloadSVG />
@@ -104,38 +112,38 @@ export default function Toolbar() {
           {loginName === "" ? "log in to save" : "logged in as: " + loginName}
         </div>
         <div class={dropdownContainer}>
-          machine control
+          Machine control
           <div class={dropdownClasses + " right-0"}>
             <div class="p-2 hover:bg-white hover:bg-opacity-10" data-evt-connectTrigger>
-              {connected ? 'disconnect from' : 'connect to'} machine
+              {connected ? 'Disconnect from' : 'Connect to'} machine
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-machineTrigger>
-              {machineRunning ? 'stop' : 'run'} machine
+              {machineRunning ? 'Stop' : 'Run'} machine
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-penUp>
-              pen up
+              Pen up
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-penDown>
-              pen down
+              Pen down
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-motorsOn>
-              motors on
+              Motors on
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-motorsOff>
-              motors off
+              Motors off
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-moveTowardsOrigin>
-              move towards origin
+              Move towards origin
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-setOrigin>
-              set origin
+              Set origin
             </div>
 
             {/* <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-goToOrigin>
@@ -186,7 +194,7 @@ function RunButton() {
 
   return (
     <Button class="relative" variant="ghost" onClick={() => runCode()}>
-      run (shift+enter)
+      Run (shift+enter)
       { getStore().codeRunning  && 
         <div class="absolute mx-auto bottom-0 left-0 right-0 text-xs text-gray-300">
             running...
@@ -210,18 +218,6 @@ function DownloadButton() {
       class={menuItemClasses}
       onClick={() => download('project.js', getCode())}>
       js
-    </div>
-  )
-}
-
-function NewButton() {
-  return (
-    <div
-      class="p-2 hover:bg-white hover:bg-opacity-10"
-      onClick={() => {
-        loadCodeFromString(defaultProgram)
-      }}>
-      new
     </div>
   )
 }
@@ -423,11 +419,11 @@ function SettingsButton() {
             localStorage.setItem('vimMode', (!vimMode).toString())
           }}>
           <KeyboardIcon className={styles.icon} />
-          <span class="px-2">{vimMode ? 'disable' : 'enable'} vim mode</span>
+          <span class="px-2">{vimMode ? 'Disable' : 'Enable'} vim mode</span>
         </div>
         { loginName && 
           <div class="p-2 hover:bg-white hover:bg-opacity-10" onClick={logOut}>
-            log out
+            Log out
           </div>
         }
       </div>
@@ -436,7 +432,7 @@ function SettingsButton() {
 }
 
 function logOut() {
-  sessionStorage.setItem('session_secret_key', "");
+  localStorage.setItem('session_secret_key', "");
   patchStore({ files: [], loginName: "", cloudFileId: "" });
 }
 
@@ -480,6 +476,88 @@ function loginClick() {
     patchStore({ loginModalOpen: true });
   } else {
     // log out or change account
+  }
+}
+
+let animateState = {
+  animating: false,
+  ogTurtles: [],
+  intervalId: null,
+}
+
+function animateLines() {
+
+  if (animateState.animating) {
+    clearInterval(animateState.intervalId);
+  }
+
+  const turtles = animateState.animating
+    ? animateState.ogTurtles
+    : getStore().turtles;
+
+  animateState.animating = true;
+  animateState.ogTurtles = turtles;
+
+  // console.log({
+  //   turtles,
+  //   tk
+  // })
+
+  const styleMap = {};
+
+  let plIndex = 0;
+  turtles.forEach(t => {
+    t.path.forEach(pl => {
+      styleMap[plIndex] = t.style;
+      plIndex++;
+    })
+  })
+
+  const pls = turtles.map(t => t.path).flat();
+
+  const ogPls = tk.copy(pls);
+
+  const resampled = tk.resample(pls, 0.1);
+
+  let totalTime = 3000; // should be determined by length of line and timePerMM
+  let deltaTime = 10;
+
+  // console.time()
+  let elapsedTime = 0;
+  animateState.intervalId = setInterval(() => {
+    if (elapsedTime >= totalTime) {
+      clearInterval(animateState.intervalId);
+      animateState.animating = false;
+      patchStore({
+        turtles: animateState.ogTurtles
+      })
+
+      // console.timeEnd();
+      return;
+    }
+    const turtles = mapPlsToTurtles(elapsedTime/totalTime)
+    // console.log({ turtles, totalT });
+
+    patchStore({
+      turtles
+    });
+
+    elapsedTime += deltaTime;
+
+  }, deltaTime);
+
+  function mapPlsToTurtles(t) {
+    const tempPls = tk.trim(tk.copy(resampled), 0, t);
+    const tempTurtles = [];
+
+    tempPls.forEach((pl, i) => {
+      tempTurtles.push({
+        path: [ pl ],
+        style: styleMap[i]
+      })
+    }) 
+
+    return tempTurtles;
   }
 }
 

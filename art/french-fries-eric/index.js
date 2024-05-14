@@ -9,10 +9,10 @@ const height = 120
 
 setDocDimensions(width, height)
 
-const shapes = createTurtle()
+const shapes = [];
 
 function createContainer(translate = [0, 0], rotate = 0) {
-  const t = createTurtle()
+  const t = new bt.Turtle()
 
   t.right(158)
   t.arc(-40, 13.6)
@@ -27,14 +27,14 @@ function createContainer(translate = [0, 0], rotate = 0) {
   t.right(253)
   t.forward(15)
 
-  t.translate(translate)
-  t.rotate(rotate)
+  bt.translate(t.path, translate)
+  bt.rotate(t.path, rotate)
 
   return t
 }
 
 function createh() {
-  const t = createTurtle()
+  const t = new bt.Turtle()
   t.forward(1.05)
   t.right(90)
   t.forward(2.0)
@@ -63,15 +63,15 @@ function createh() {
   t.right(70)
   t.forward(6.200)
 
-  t.translate([0, 0], [6.300, 5])
-  t.scale(1.20)
+  bt.translate(t.path, [0, 0], [6.300, 5])
+  bt.scale(t.path, 1.20)
   return t
 }
 
 function createFries(i) {
-  const t = createTurtle()
+  const t = new bt.Turtle()
 
-  const randl = (randInRange(0.4, 1.25))
+  const randl = (bt.randInRange(0.4, 1.25))
  
 
   t.right(90)
@@ -80,47 +80,50 @@ function createFries(i) {
   t.right(45)
   t.forward(0.3)
   t.right(45)
-  t.forward(1*randInRange(0.70,1))
+  t.forward(1*bt.randInRange(0.70,1))
   t.right(45)
   t.forward(0.3)
   t.right(45)
   t.forward(randl * 6)
 
   for(let j=0;j<12;j++){
-    const line = createTurtle();
+    const line = new bt.Turtle();
     line.right(90)
     line.forward(randl*6+0.1);
-    line.translate([0,0],[0.1*j+0.15,0]);
-    line.resample(0.01)
-    line.iteratePath(pt => {
+    const path = line.path;
+    bt.translate(path, [0,0],[0.1*j+0.15,0]);
+    bt.resample(path, 0.01)
+    bt.iteratePoints(path, pt => {
       return Math.random() < (0.87) ? 'BREAK' : pt
     })
-    t.join(line)
+    bt.join(t.path, path)
+    
+    
   }
  
   var minur = 0
   if (4 - i > 0) minur = 4 - i
   else minur = i - 4
-  t.translate([0, 0], [10.5, 14.2 + minur * 0.1])
+  bt.translate(t.path, [0, 0], [10.5, 14.2 + minur * 0.1])
   return t
 }
 
 for (let j = 0; j < 6; j++) {
   const t = createFries(j + 1)
-  t.translate([2 * j + 1.0, 0])
-  t.rotate(randInRange(-1, 1) * 6 * 2.2)
+  bt.translate(t.path, [2 * j + 1.0, 0])
+  bt.rotate(t.path, bt.randInRange(-1, 1) * 6 * 2.2)
 
-  shapes.join(t)
+  bt.join(shapes, t.path)
 }
 
 
 const t = createContainer()
 
-shapes.join(t)
-shapes.join(createh())
+bt.join(shapes, t.path)
+bt.join(shapes, createh().path)
 
-shapes.scale([1, -1])
-shapes.translate([width / 2, height / 2], shapes.cc)
-shapes.scale(3.25)
+bt.scale(shapes, [1, -1])
+bt.translate(shapes, [width / 2, height / 2], bt.bounds(shapes).cc)
+bt.scale(shapes, 3.25)
 
-drawTurtles([shapes])
+drawLines(shapes)

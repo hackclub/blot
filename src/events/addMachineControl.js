@@ -4,7 +4,7 @@ import { createListener } from '../createListener.js'
 import { getStore, patchStore } from '../state.ts'
 import { runMachineHelper } from '../runMachineHelper.js'
 
-let cancelled = false
+let cancelled = { ref: false };
 
 export function addMachineControl() {
   let haxidraw
@@ -43,7 +43,7 @@ export function addMachineControl() {
 
   listener('click', '[data-evt-machineTrigger]', e => {
     const { turtles } = getStore()
-    const runMachine = () => runMachineHelper(haxidraw, turtles)
+    const runMachine = () => runMachineHelper(haxidraw, turtles, cancelled)
 
     if (!haxidraw) {
       console.log('not connected')
@@ -51,7 +51,7 @@ export function addMachineControl() {
     }
 
     if (e.target.innerText.toLowerCase().includes('stop')) {
-      cancelled = true
+      cancelled.ref = true
       patchStore({ machineRunning: false })
       console.log('cancelled')
       return
@@ -59,7 +59,7 @@ export function addMachineControl() {
 
     runMachine().then(() => {
       patchStore({ machineRunning: false })
-      cancelled = false
+      cancelled.ref = false
     })
 
     patchStore({ machineRunning: true })

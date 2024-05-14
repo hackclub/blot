@@ -11,7 +11,7 @@ const height = 232;
 
 setDocDimensions(width, height);
 
-const t = createTurtle();
+const t = new bt.Turtle();
 t.jump([71, 53])
 t.right(90)
 t.arc(-180, 17)
@@ -53,6 +53,4 @@ t.arc(92, 30)
 
 
 
-drawTurtles([
-  t
-]);
+drawLines(t.lines());

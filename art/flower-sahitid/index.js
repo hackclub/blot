@@ -4,7 +4,7 @@
 @snapshot: 1.png
 */
 
-const t = createTurtle();
+const t = new bt.Turtle();
 
 function drawPetal() {
   t.forward(18);
@@ -35,4 +35,4 @@ t.jump([0, 0]);
 
 drawFlower();
 drawStem();
-drawTurtles([t]);
+drawLines(t.lines());

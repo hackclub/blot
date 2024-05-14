@@ -4,6 +4,8 @@
 @snapshot: sample1.png
 */
 
+setDocDimensions(125, 125);
+
 // important consts
 
 const WIDTH = 125; 
@@ -98,7 +100,7 @@ function pointCoord(angle, radius, x = 0, y = 0) { // returns the coords of a po
 };
 
 function arc(angle, radius, x, y, points = 250) { // arc generation but good and precise
-  const arc = createTurtle();
+  const arc = new bt.Turtle();
   const angleRad = angle * (Math.PI / 180);
 
   arc.jump([x,y]);
@@ -110,7 +112,8 @@ function arc(angle, radius, x, y, points = 250) { // arc generation but good and
     arc.goTo(pointCoord(arcAngle, radius, x, y));
   };
   
-  arc.translate(
+  bt.translate(
+    arc.path,
     [WIDTH / 2, HEIGHT / 2],
     [-radius, 0]
   );
@@ -119,7 +122,7 @@ function arc(angle, radius, x, y, points = 250) { // arc generation but good and
 };
 
 function building(x, y, width, height) {
-  let tempBuilding = createTurtle();
+  let tempBuilding = new bt.Turtle();
   tempBuilding.jump([x, y]);
   tempBuilding.setAngle(90);
 
@@ -129,7 +132,7 @@ function building(x, y, width, height) {
   tempBuilding.right(90);
   tempBuilding.forward(height);
 
-  let windows = createTurtle();
+  let windows = new bt.Turtle();
 
   for (let tempX = x; tempX < x + width - (2 * WINDOWSIZE); tempX += (WINDOWGAP + WINDOWSIZE)) { 
     // generates windows in a grid, the loop settings iterate the position of each window
@@ -147,27 +150,28 @@ function building(x, y, width, height) {
     }
   }
 
-  windows.translate( // centers the windows on the building
-    tempBuilding.cc,
-    windows.cc
+  bt.translate(
+    windows.path, // centers the windows on the building
+    bt.bounds(tempBuilding.path).cc,
+    bt.bounds(windows.path).cc
   )
 
-  tempBuilding.join(windows)
+  bt.join(tempBuilding.path, windows.path)
   
   return tempBuilding
 }
 
 // sun gen
 
-let sun = createTurtle();
+let sun = [];
 
-sun.join(arc(220, SUNRAD, 0, 10));
+bt.join(sun, arc(220, SUNRAD, 0, 10).lines());
 
-sun.rotate(-20, [WIDTH / 2, HEIGHT / 2])
+bt.rotate(sun, -20, [WIDTH / 2, HEIGHT / 2])
 
 // building gen
 
-let buildings = createTurtle();
+let buildings = new bt.Turtle();
 const maxWidth = 45;
 let sdfParams = [];
 
@@ -177,15 +181,15 @@ for (let i = 0; i < 2; i++) {
   let buildingsWidth = 0;
 
   while (buildingsWidth < maxWidth) {
-    let tempWidth = randIntInRange(6, 14);
-    let tempHeight = randIntInRange(20, 49);
+    let tempWidth = bt.randIntInRange(6, 14);
+    let tempHeight = bt.randIntInRange(20, 49);
 
     if ((buildingsWidth + tempWidth) > maxWidth) {
       break;
     }
 
     if (leftArcEnd > x && leftArcEnd < (x + tempWidth)) {
-      sun.iteratePath(pt => {
+      bt.iteratePoints(sun, pt => {
         let [x, y] = pt;
         if (x < (WIDTH / 2) && y < (HORIZON + tempHeight)) {
           return "REMOVE";
@@ -195,7 +199,7 @@ for (let i = 0; i < 2; i++) {
     }
 
     if (rightArcEnd > x && rightArcEnd < (x + tempWidth)) {
-      sun.iteratePath(pt => {
+      bt.iteratePoints(sun, pt => {
         let [x, y] = pt;
         if (x > (WIDTH / 2) && y < (HORIZON + tempHeight)) {
           return "REMOVE";
@@ -205,7 +209,7 @@ for (let i = 0; i < 2; i++) {
     }
     
     let tempBuilding = building(x, HORIZON, tempWidth, tempHeight);
-    buildings.join(tempBuilding);
+    bt.join(buildings.path, tempBuilding.path);
 
     x += tempWidth;
     buildingsWidth += tempWidth
@@ -215,9 +219,9 @@ for (let i = 0; i < 2; i++) {
 
   if (buildingsWidth != maxWidth) {
     const leftoverWidth = maxWidth - buildingsWidth;
-    const tempHeight = randIntInRange(20, 49);
-    const tempBuilding = building(x, HORIZON, leftoverWidth, randIntInRange(20,49));
-    buildings.join(tempBuilding);
+    const tempHeight = bt.randIntInRange(20, 49);
+    const tempBuilding = building(x, HORIZON, leftoverWidth, bt.randIntInRange(20,49));
+    bt.join(buildings.path, tempBuilding.path);
   }
 }
 
@@ -270,26 +274,26 @@ for (let i = 0; i < 2; i++) {
 
 // wave gen
 
-let waves = createTurtle();
+let waves = [];
 const waveNum = 39;
 const waveSpacing = HORIZON / waveNum;
 
 for (let i = 0; i < waveNum; i++) {
-  let tempWave = createTurtle();
+  let tempWave = new bt.Turtle();
 
   tempWave.jump([0, HORIZON - (i * waveSpacing)]);
   tempWave.forward(125);
   
-  waves.join(tempWave);
+  bt.join(waves, tempWave.lines());
 }
   
-waves.resample(2);
+bt.resample(waves, 2);
 
-waves.iteratePath(pt => {
+bt.iteratePoints(waves, pt => {
   let [x, y] = pt;
   let scale = (HORIZON - y) * 0.5
-  y += randInRange(0,1)
-  y += noise([x * 0.05]) * scale
+  y += bt.randInRange(0,1)
+  y += bt.noise([x * 0.05]) * scale
   y *= 2
   y -= 40
   
@@ -301,4 +305,8 @@ waves.iteratePath(pt => {
   return [x, y];
 })
 
-drawTurtles([buildings, sun, waves]);
+drawLines([
+  ...buildings.lines(), 
+  ...sun, 
+  ...waves
+]);

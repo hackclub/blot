@@ -12,17 +12,26 @@ import navBar from "./backend/pages/navBar.js";
 import guides from "./backend/pages/guides.js";
 import gallery from "./backend/pages/gallery.js";
 import landing from "./backend/pages/landing.js";
+import docs from "./backend/pages/docs.js";
 
+import signUpEmail from "./backend/api/signUpEmail.js";
 import checkSignIn from "./backend/api/checkSignIn.js";
 import saveFile from "./backend/api/saveFile.js";
 import getUser from "./backend/api/getUser.js";
 import submitCode from "./backend/api/submitCode.js";
 import getFiles from "./backend/api/getFiles.js";
+import createShareLink from "./backend/api/createShareLink.js";
+
+import { supabase } from "./backend/api/supabase.js";
 
 build({
   index: wrapHTML(`
     ${navBar(true)}
     ${landing()}
+  `),
+  docs: wrapHTML(`
+    ${navBar()}
+    ${docs()}
   `),
   editor: wrapHTML(`
     <!-- TODO: add automatically when building -->
@@ -61,11 +70,36 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.post('/signUpEmail', signUpEmail);
 app.post('/check-signed-in', checkSignIn);
 app.post('/get-files', getFiles);
 app.post('/save-file', saveFile);
 app.post('/get-user', getUser);
 app.post('/submit-code', submitCode);
+app.post('/create-share-link', createShareLink);
+app.get('/read-share-link', async (req, res) => {
+  const { id } = req.query;
+
+  try {
+
+    console.log("check in database");
+    // check if email is in database
+    let { data: file, error: fileError } = await supabase
+      .from('share_link')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (fileError && fileError.message !== 'No rows found') {
+      res.send("no share link here");
+      return;
+    }
+
+    res.send(file.content);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

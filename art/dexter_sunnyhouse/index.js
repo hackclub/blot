@@ -22,18 +22,18 @@ const upperwindowheight = househeight / 4;
 const upperwindowwidth = housewidth / 4;
 
 function drawLine(startpointx, startpointy, endpointx, endpointy) {
-  const turtle = new Turtle;
+  const turtle = new bt.Turtle();
   turtle.jump([startpointx, startpointy]);
   turtle.goTo([endpointx, endpointy]);
-  drawTurtles([turtle]);
+  drawLines(turtle.lines());
 }
 
 function drawArc(centreX, centreY, radius, angle) {
-  const turtle = new Turtle;
+  const turtle = new bt.Turtle();
   turtle.jump([centreX, centreY]);
   turtle.arc(90, radius);
-  turtle.rotate(270, [centreX, centreY]);
-  drawTurtles([turtle]);
+  bt.rotate(turtle.path, 270, [centreX, centreY])
+  drawLines(turtle.lines());
 }
 
 //draws the box outline for the house

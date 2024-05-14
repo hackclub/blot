@@ -5,7 +5,7 @@ import { defaultProgram } from '../defaultProgram.js'
 export function addLoadBackup() {
   const { view } = getStore()
 
-  const backupString = localStorage.getItem('cache')
+  const backupString = sessionStorage.getItem('cache')
 
   const changes = {
     from: 0,
@@ -22,5 +22,5 @@ function backup() {
   const { view } = getStore()
 
   const code = view.state.doc.toString()
-  localStorage.setItem('cache', code)
+  sessionStorage.setItem('cache', code)
 }

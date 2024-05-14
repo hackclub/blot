@@ -88,7 +88,8 @@ export default function LoginModal() {
           inputValue: "",
           loggedIn: true,
         });
-        sessionStorage.setItem('session_secret_key', res.sessionKey);
+
+        localStorage.setItem('session_secret_key', res.sessionKey);
 
         checkCurrentUser();
       } else {
@@ -97,6 +98,17 @@ export default function LoginModal() {
     } catch (error) {
       updateState({ headerText: "Enter the log in code you received.", msg: error.message, isError: true });
     }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendOrSubmitCode();
+    }
+
+    // if (e.key === 'Esc') {
+    //   reset(); 
+    //   patchStore({ loginModalOpen: false });
+    // }
   };
 
   return (
@@ -125,7 +137,7 @@ export default function LoginModal() {
       </div>
       { !state.loggedIn &&
         <div class="w-full flex p-2 items-center justify-center flex-col">
-          <input value={state.inputValue} onInput={(e) => updateState({ isError: false, msg: "", inputValue: e.target.value })} class="p-1 w-[70%] border"/>
+          <input value={state.inputValue} onKeyDown={handleKeyPress} onInput={(e) => updateState({ isError: false, msg: "", inputValue: e.target.value })} class="p-1 w-[70%] border"/>
           <button onClick={handleSendOrSubmitCode} class="m-3 p-2 w-[50%] text-center cursor-pointer bg-gray-700 hover:bg-gray-500 text-white rounded">
             {state.codeSent ? "submit code" : "send code"}
           </button>

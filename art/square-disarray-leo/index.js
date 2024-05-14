@@ -4,48 +4,59 @@
 @snapshot: 0.png
 */
 
-const width = 120
-const height = 120
+const width = 120;
+const height = 120;
 
-const nWidth = 10
-const nHeight = 10
+setDocDimensions(width, height);
 
-setDocDimensions(width, height)
+const finalLines = []; // we'll put our final lines here
 
-const shapes = createTurtle()
+const squareWidth = 10
+const squareHeight = 10
+for (let i = 0; i < 10; i++) {
+  for (let j = 0; j < 10; j++) {
+    const square = rect(squareWidth, squareHeight);
+    const offsetX = bt.randInRange(-1.4, 4.5);
+    const offsetY = bt.randInRange(-3.2, 4.5);
+    bt.translate(
+      square, 
+      [
+        (squareWidth) * i, 
+        (squareHeight) * j
+      ]
+    );
 
-function createSquare(translate = [0, 0], rotate = 0) {
-  const t = createTurtle()
+    // randomness added here
+    bt.translate(square, [(bt.randInRange(-1, 1) * i) / 6, (bt.randInRange(-1, 1) * i) / 6])
+    bt.rotate(square, bt.randInRange(-1, 1) * 2 * i)
 
-  for (let i = 0; i < 2; i++) {
-    t.forward(width / nWidth)
-    t.right(90)
-    t.forward(height / nHeight)
-    t.right(90)
-  }
 
-  t.translate(translate)
-  t.rotate(rotate)
+    bt.join(finalLines, square);
 
-  return t
-}
-
-const stepW = width / nWidth
-const stepH = height / nHeight
-for (let i = 0; i < nWidth; i++) {
-  for (let j = 0; j < nHeight; j++) {
-    const t = createSquare()
-    t.translate([0, 0], t.lb)
-    t.translate([stepW * i, stepH * j])
-    t.rotate(randInRange(-1, 1) * (i + j) * 2.2)
-    t.translate([
-      randInRange(-1, 1) * (i + j) * 0.14,
-      randInRange(-1, 1) * (i + j) * 0.14
-    ])
-    shapes.join(t)
   }
 }
+// let's get the bounds of our final lines
+const finalLinesBounds = bt.bounds(finalLines);
 
-shapes.scale([0.9, -0.9])
+// this moves the center of our drawing to the center of our doc
+bt.translate(
+  finalLines,
+  [ width / 2, height / 2 ], 
+  finalLinesBounds.cc
+); 
 
-drawTurtles([shapes])
+drawLines(finalLines);
+
+function rect(w, h) {
+
+  // notice how this is an array of arrays
+  return [
+    [
+      [-w/2, h/2],
+      [w/2, h/2],
+      [w/2, -h/2],
+      [-w/2, -h/2],
+      [-w/2, h/2],
+    ]
+  ]
+}

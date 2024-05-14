@@ -36,6 +36,9 @@ export const toolkit = {
   transform,
   bounds,
   Turtle,
+  // createTurtle() {
+  //   return new Turtle(...arguments);
+  // },
   cut,
   cover,
   pointInside: pointInPolylines,
@@ -49,7 +52,7 @@ export const toolkit = {
     const steps = ops.steps ?? 100;
     const boundary = isClosed(points) ? "closed" : "clamped";
     
-    if (boundary === "closed") {
+    if (boundary === "closed" && points.length > 3) {
       points.pop();
     };
 
@@ -118,12 +121,17 @@ export const toolkit = {
   trim: trimPolylines,
   merge: mergePolylines,
   svgToPolylines(svgString) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(svgString, 'image/svg+xml');
-    const svg = doc.querySelector('svg');
-    const polylines = flattenSVG(svg, { maxError: 0.001 }).map(pl => pl.points);
+    try {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgString, 'image/svg+xml');
+      const svg = doc.querySelector('svg');
+      const polylines = flattenSVG(svg, { maxError: 0.001 }).map(pl => pl.points);
 
-    return polylines;
+      return polylines;
+    } catch (err) {
+      throw new Error("SVGs can not be parsed in web workers.");
+    }
+    
   },
   join() {
     const [first, ...rest] = arguments;
