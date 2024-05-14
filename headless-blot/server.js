@@ -17,38 +17,41 @@ import { createHaxidraw } from "../src/haxidraw/createHaxidraw.js";
 let running = false;
 
 const app = new App({
-  token: process.env.SLACK_BOT_TOKEN,
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-  appToken: process.env.SLACK_APP_TOKEN,
-  socketMode: true,
-  port: process.env.PORT || 3000
+  token:          process.env.SLACK_BOT_TOKEN,
+  signingSecret:  process.env.SLACK_SIGNING_SECRET,
+  appToken:       process.env.SLACK_APP_TOKEN,
+  socketMode:     true,
+  port:           process.env.PORT
 });
 
 const config = {
-  IS_RPI: false,
-  MOCK_SERIAL: true,
-  SERIAL_PATH: '/dev/tty-usbserial1',
-  BAUD: 9600,
-  BOARD_PIN: 7,
-  MOTION_URL: 'http://127.0.0.1:8081/0',
-  // MOTION_URL: 'http://192.168.100.227:8081/0/',
-  MOTION_FILEPATH: '/motion'
-  // MOTION_FILEPATH: '/Users/derrek/Downloads'
+  MOCK_SERIAL:  false, // set false to test without a Blot connected
+  BAUD:         9600,
+  BOARD_PIN:    7, // GPIO 7 on RPi
 }
 
 let port;
-const path = config.SERIAL_PATH;
-if (config.MOCK_SERIAL) {
+const path = process.env.SERIAL_PATH;
+if (config.MOCK_SERIAL) { // simulates open serial port (no response back)
   SerialPortMock.binding.createPort(path);
-  port = new SerialPortMock({ path, baudRate: config.BAUD, autoOpen: false });
+  port = new SerialPortMock({
+    path,
+    baudRate: config.BAUD,
+    autoOpen: false
+  });
 }
 else {
-  port = new SerialPort({ path, baudRate: config.BAUD, autoOpen: false })
+  port = new SerialPort({
+    path,
+    baudRate: config.BAUD,
+    autoOpen: false
+  });
 }
 
 const comsBuffer = await createNodeSerialBuffer(port);
 const haxidraw = await createHaxidraw(comsBuffer);
 
+// draw path to move the Blot head back to origin
 const resetTurtles = await runSync(`
     drawLines([
       [
@@ -60,34 +63,36 @@ const resetTurtles = await runSync(`
 const rpi = {
   pin: config.BOARD_PIN,
   setup() {
-    if (!config.IS_RPI) return;
     return gpio.setup(this.pin, gpio.DIR_OUT);
   },
-  write(val) {
-    if (!config.IS_RPI) return;
+  write(val) { // uses BOARD_PIN to clear the LCD Writing Tablet
     return gpio.write(this.pin, val);
   }
 }
 
+// controls the USB webcam using Motion library on the RPi
 const webCam = {
-  baseUrl: config.MOTION_URL,
-  filePath: config.MOTION_FILEPATH,
+  baseUrl: process.env.MOTION_URL,
+  filePath: process.env.MOTION_FILEPATH,
   command(str) {
+    // console.log(this.baseUrl + str);
     return fetch(this.baseUrl + str);
   },
   start() {
     return this.command('/detection/connection');
   },
-  startEvent() {
-    return this.command('/action/eventstart');
-  },
-  async endEvent() {
+  // sets the filename to the current datetime and start recording using Motion
+  async startEvent() {
     const datetime = new Date().toISOString()
-    await this.command('/config/set?movie_filename=' + datetime)
-    await this.command('/config/set?snapshot_filename=' + datetime)
-    await this.command('/action/eventend');
-    await this.command('/action/snapshot');
+    this.command('/config/set?movie_filename=' + datetime)
+    this.command('/config/set?snapshot_filename=' + datetime)
+    await this.command('/action/eventstart');
     return datetime;
+  },
+  // stop recording and take a snapshot using Motion
+  async endEvent() { 
+    this.command('/action/snapshot');
+    await this.command('/action/eventend');
   }
 };
 
@@ -105,16 +110,18 @@ async function fetchSlackFile(fileUrl) {
   return body;
 }
 
-const sendSlackFile = (channelId, fileName, comment = '') => (
-  app.client.files.upload({
-    channels: channelId,
-    initial_comment: comment,
-    file: createReadStream(fileName)
+const sendSlackFile = async (channelId, fileName, comment = '') => (
+  app.client.files.uploadV2({
+    channels:         channelId,
+    initial_comment:  comment,
+    file:             createReadStream(fileName),
+    filename:         fileName
   })
 )
 
 const runMachine = (turtles) => runMachineHelper(haxidraw, turtles);
 
+// set the Blot head back to origin and clear the LCD Writing Tablet and
 async function resetMachine() {
   await runMachine(resetTurtles);
   await clearBoard();
@@ -128,25 +135,27 @@ const sleep = (ms) => (
 
 async function clearBoard() {
   await rpi.write(true);
-  await sleep(200);
+  await sleep(100);
   await rpi.write(false);
 }
 
 async function onMessage(message) {
   if (!message.files) return;
 
-  const fileUrl = message.files[0].url_private;
-  const code = await fetchSlackFile(fileUrl);
+  const fileUrl = message.files[0].url_private; // get the uploaded .js filename
+  const code = await fetchSlackFile(fileUrl); // get the uploaded .js file through Slack
 
-  const turtles = await runSync(code);
+  const turtles = await runSync(code); // try to run the blot code and generate path
 
-  await webCam.startEvent();
-  // await runMachine(turtles);
-  let filename = await webCam.endEvent();
-
+  let filename = await webCam.startEvent();
   filename = webCam.filePath + '/' + filename;
-  sendSlackFile(message.channel, filename + '.mp4');
-  sendSlackFile(message.channel, filename + '.jpg');
+
+  await runMachine(turtles); // send drawing path to the Blot over serial
+  await webCam.endEvent(); // creates recording and snapshot files
+
+  // sends recording and snapshot via Slack
+  await sendSlackFile(message.channel, filename + '.mkv');
+  await sendSlackFile(message.channel, filename + '.jpg');
 }
 
 (async () => {
@@ -156,30 +165,25 @@ async function onMessage(message) {
 
   await resetMachine();
 
-  /*
-    onMessage({
-      files: [{
-        url_private: 'https://files.slack.com/files-pri/T0266FRGM-F06PHTH3D40/test_pattern.js'
-      }]
-    });
-  */
-  console.log('⚡️ Bolt app is running!');
+  console.log('Server running');
 })();
 
+// when user sends a file in slack and the Blot is not currently drawing, then run the code
 app.message(async ({ message, say }) => {
   try {
     if (running) {
-      throw new Error("The blot is currently drawing, please try again later.")
+      throw new Error("The Blot is currently drawing, please try again later.")
     }
     running = true;
     await onMessage(message);
     running = false;
   }
   catch (error) {
-    say(error.message);
+    console.log(error.message);
+    say('Coud not run code: "' + error.message + '"'); // sends error message in Slack
   }
   finally {
-    resetMachine();
+    await resetMachine();
   }
 })
 
