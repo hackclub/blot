@@ -1,7 +1,7 @@
 /*
 @title: CRT Image Drawer
 @author: DedFishy
-@snapshot: ricky
+@snapshot: ricky.png
 */
 
 //// PARAMETERS
