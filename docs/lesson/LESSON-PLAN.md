@@ -14,12 +14,14 @@ For a one day schedule:
 
 For the quickest introduction check out this video trailer for Blot.
 
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=d1noJNmfvC0" frameborder="0" allowfullscreen></iframe>
+[![](./assets/trailer.png)](https://www.youtube.com/watch?v=d1noJNmfvC0)
+[Watch the Blot Trailer Here](https://www.youtube.com/watch?v=d1noJNmfvC0)
 
 Blot is a gateway to making physical things with machines through programmatic art. The process starts by using JavaScript in a web-based editor to create a line drawing that is generated with code. When you submit the line drawing to the virtual gallery Hack Club will send you the parts to build a drawing robot. That drawing robot can then draw your line drawing in real life. Check out this video to get a sense of the creative process and to see Blot in action.
 
 <!-- eye short -->
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=d1noJNmfvC0" frameborder="0" allowfullscreen></iframe>
+[![]()]()
+[See what you can make in Blot here.]()
 
 Blot is made by Hack Club and is free to participate in to teenagers all over the world. We’re on a mission to create high quality publicly available engineering tools which inspire young people to pursue projects they didn’t know were possible. We’re funded by donors like the founder of GitHub who allow us to provide these tools to the world for free. Everything we make is open-source. That means it’s built in public (with teenage contributors) and every aspect of the project from the [hardware and electronics to the web editor and finances is online in the open](www.github.com/hackclub/blot).
 
@@ -28,8 +30,8 @@ Blot is made by Hack Club and is free to participate in to teenagers all over th
 
 This video will orient you to the Blot editor and demonstrate the most basic Blot drawing.
 
-<!-- editor intro -->
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=d1noJNmfvC0" frameborder="0" allowfullscreen></iframe>
+[![](./assets/intro-to-editor.png)](https://youtu.be/OZ9KaFr1V_o)
+[Editor Intro Video Here](https://youtu.be/OZ9KaFr1V_o)
 
 Top start head over to:
 
@@ -126,8 +128,8 @@ Follow along with the guide.
 
 You can find a video of me walking through the Square Disarray below. This will show you how to work through guides in the Blot editor.
 
-<!-- square intro -->
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=d1noJNmfvC0" frameborder="0" allowfullscreen></iframe>
+[![](./assets/square-video.png)](https://youtu.be/mP4rUdaF8ng)
+[Watch how to use a guide here.](https://youtu.be/mP4rUdaF8ng)
 
 ### Feathers (Intro to the Blot Toolkit)
 
@@ -142,16 +144,32 @@ Work through the guide in a manner similar to Square Disarray.
 
 Below are a series of visual puzzles. Try to recreate them.
 
+When you've mastered these try to recreate your favorite piece from [the gallery]().
+
+### 1) A simple rectangle
+
 ![](./assets/puzzles/1.png)
+
+### 2) Can you make it a function?
 
 ![](./assets/puzzles/2.png)
 
+### 3) In a row
+
 ![](./assets/puzzles/3.png)
+
+### 4) All around
 
 ![](./assets/puzzles/4.png)
 
+### 5) Not so messy
+
 ![](./assets/puzzles/5.png)
 
+### 6) Round the top
+
 ![](./assets/puzzles/6.png)
+
+### 7) Round the table
 
 ![](./assets/puzzles/7.png)
