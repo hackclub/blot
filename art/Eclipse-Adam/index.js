@@ -4,99 +4,159 @@
 @snapshot: snapshot1.png
 */
 
-// My first ever javascript code, pretty horribly organised and optimized, but it looks kinda nice :)
-/* PLANS:
-  improving already existing code, mainly better circle intersection finding code
-  adding special effects when close to 100% totality
-  option for annular eclipses (controllable size ratio)
+/* My first ever javascript code, pretty unoptimized, but it looks nice :)
+  PLANS:
+  -adding special effects when close to 100% totality (solar corona, other stars)
+  -make  annular eclipses work. Right now it gives an error
 */
 
-const width = 120;
+// -------- Customizable Parameters --------
+const width = 120; // milimeters, board size
 const height = 120;
+const sunSize = 30;
+const moonSize = 36;
+const moonOffset = [17, -17];
+const pointsCount = 1000; // Larger value = Higher quality
+const invertColors = true;
+const drawType = "invert" // options: "outline" "fill" "invert"
+// -----------------------------------------
+const sunCenter = [width/2, height/2];
+const moonCenter = [width/2 + moonOffset[0], height/2 + moonOffset[1]];
 
 setDocDimensions(width, height);
 
-// --- Customizable Parameters ---
-let sunOffset = [60, 60];
-let moonOffset = [73, 69];
-let pointsCount = 40; // Quality
-let invertColors = true
-// -------------------------------
+// Define functions that will be used
+function circleIntersectionPoints(center1, radius1, center2, radius2) {
+    // Calculate the distance between the centers of the circles
+    const dx = center2[0] - center1[0];
+    const dy = center2[1] - center1[1];
+    const distance = Math.sqrt(dx * dx + dy * dy);
 
+    // Check if circles are separate or one is completely inside the other
+    if (distance >= radius1 + radius2) {
+        return "n"; // No Eclipse
+    }
+    if (distance <= Math.abs(radius1 - radius2)) {
+        return "a"; // Anular Eclipse
+    }
+
+    // Those checks completed, so there are intersections. Calculate intersection points
+    const a = (radius1 * radius1 - radius2 * radius2 + distance * distance) / (2 * distance);
+    const h = Math.sqrt(radius1 * radius1 - a * a);
+    const x2 = center1[0] + a * (center2[0] - center1[0]) / distance;
+    const y2 = center1[1] + a * (center2[1] - center1[1]) / distance;
+    const intersection1 = [
+        x2 + h * (center2[1] - center1[1]) / distance,
+        y2 - h * (center2[0] - center1[0]) / distance
+    ];
+    const intersection2 = [
+        x2 - h * (center2[1] - center1[1]) / distance,
+        y2 + h * (center2[0] - center1[0]) / distance
+    ];
+
+    return [intersection1, intersection2];
+}
+function distance(point1, point2) {
+  return Math.hypot(point1[0]-point2[0], point1[1]-point2[1])
+}
+function modulo(a, b) { // I'm doing this because JS's built in modulo is not the usual modulo
+  return (a % b + b) % b;
+}
+// -----------------------
+
+// Generate a list of points that forms the circle for the Sun and Moon
 let sunPoints = [];
 let moonPoints = [];
 
-for (let i = 0; i <= pointsCount; i++) {
-  sunPoints.push([sunOffset[0] + 30 * Math.cos(2 * Math.PI * i / pointsCount), sunOffset[1] + 30 * Math.sin(2 * Math.PI * i / pointsCount)]);
-  moonPoints.push([moonOffset[0] + 30 * Math.cos(2 * Math.PI * i / pointsCount), moonOffset[1] + 30 * Math.sin(2 * Math.PI * i / pointsCount)]);
+for (let i = 0; i < pointsCount; i++) { 
+  sunPoints.push([width/2 + sunSize * Math.cos(2 * Math.PI * i / pointsCount), height/2 + sunSize * Math.sin(2 * Math.PI * i / pointsCount)]);
+  moonPoints.push([width/2 + moonOffset[0] + moonSize * Math.cos(2 * Math.PI * i / pointsCount), width/2 + moonOffset[1] + moonSize * Math.sin(2 * Math.PI * i / pointsCount)]);
 }
 
-let vertex1 = [0, 0];
-let vertex2 = [0, 0];
-let vertex1error = 9999;
-let vertex2error = 9999;
-let p1 = [0, 0];
-let p2 = [0, 0];
-let t1 = 0
-let t2 = 0
-let goodt1sun = [0, 0];
-let goodt1moon = [0, 0];
-let goodt2sun = [0, 0];
-let goodt2moon = [0, 0];
-let distance = 0;
-for (let i = 0; i < 50000; i++) { // Horible algorithm to find the two points where the two circles intersect. But it works ¯\_(ツ)_/¯ (very badly) Something like gradient descent (or some completely different algorithm to find the intersections of two circles) would work better
-  t1 = bt.rand() // Two random numbers 0 to 1
-  t2 = bt.rand()
+const sunPointsExtra = sunPoints.concat([sunPoints[0]]) //Used to draw a complete unfilled circle
+const moonPointsExtra = moonPoints.concat([moonPoints[0]])
+// -----------------------
+// Find point and indices in sunPoints and moonPoints that are closest to the two intersection points.
+const [intersection1, intersection2] = circleIntersectionPoints(sunCenter, sunSize, moonCenter, moonSize);
+let sunIntersectionPoint1 = sunPoints[0];
+let sunIntersectionPointIndex1 = 0;
+let sunIntersectionPoint2 = sunPoints[0];
+let sunIntersectionPointIndex2 = 0;
+let moonIntersectionPoint1 = moonPoints[0]
+let moonIntersectionPointIndex1 = 0;
+let moonIntersectionPoint2 = moonPoints[0];
+let moonIntersectionPointIndex2 = 0;
 
-  p1 = bt.getPoint([sunPoints], t1); //Get two random positions, one on each circle
-  p2 = bt.getPoint([moonPoints], t2);
-  distance = ((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2) // If those two random positions are close, they are probably close to the intersections of the vertex.
-  if (p1[1] > 60) { //Assuming one intersection will be above y=2 (center of the sun) and the other vertex will be below. This is not always the case and will yield a broken result.
-    if (distance < vertex1error) {
-      vertex1error = distance;
-      vertex1 = p1;
-      goodt1sun = t1;
-      goodt1moon = t2;
-    }
-  } else {
-    if (distance < vertex2error) {
-      vertex2error = distance;
-      vertex2 = p2;
-      goodt2sun = t1;
-      goodt2moon = t2;
-    }
+for (let i = 0; i < pointsCount; i++) {
+  let sunPointDistance1 = distance(sunPoints[i], intersection1);
+  let sunPointDistance2 = distance(sunPoints[i], intersection2);
+  let moonPointDistance1 = distance(moonPoints[i], intersection1);
+  let moonPointDistance2 = distance(moonPoints[i], intersection2);
+
+  if (sunPointDistance1 < distance(sunIntersectionPoint1, intersection1)) {
+    sunIntersectionPoint1 = sunPoints[i];
+    sunIntersectionPointIndex1 = i;
+  }
+  if (sunPointDistance2 < distance(sunIntersectionPoint2, intersection2)) {
+    sunIntersectionPoint2 = sunPoints[i];
+    sunIntersectionPointIndex2 = i;
+  }
+  if (moonPointDistance1 < distance(moonIntersectionPoint1, intersection1)) {
+    moonIntersectionPoint1 = moonPoints[i];
+    moonIntersectionPointIndex1 = i;
+  }
+  if (moonPointDistance2 < distance(moonIntersectionPoint2, intersection2)) {
+    moonIntersectionPoint2 = moonPoints[i];
+    moonIntersectionPointIndex2 = i;
   }
 }
+// -----------------------
+// Find index for sun and moon points to form the correct arcs.
+let pointAwayFromMoon = [sunCenter[0] + -moonOffset[0]/(moonOffset[0]**2 + moonOffset[1]**2)**.5,sunCenter[1] + -moonOffset[1]/(moonOffset[0]**2 + moonOffset[1]**2)**.5]
 
-let sunFirstPointIndex = Math.ceil(goodt1sun * sunPoints.length)
-let sunLastPointIndex = Math.floor(goodt2sun * sunPoints.length)
-let moonFirstPointIndex = Math.floor(goodt2moon * moonPoints.length)
-let moonLastPointIndex = Math.ceil(goodt1moon * moonPoints.length)
+const sunDistanceIndexPlusOne = distance(sunPoints[modulo(sunIntersectionPointIndex1+1,pointsCount)], pointAwayFromMoon);
+const sunDistanceIndexMinusOne = distance(sunPoints[modulo(sunIntersectionPointIndex1-1,pointsCount)], pointAwayFromMoon);
+let sunDeltaIndex;
+if (sunDistanceIndexPlusOne < sunDistanceIndexMinusOne) {
+  sunDeltaIndex = 1;
+}
+else {
+  sunDeltaIndex = -1;
+}
 
-let eclipsedSunPoints = [];
-eclipsedSunPoints.push(vertex1);
-for (let i = sunFirstPointIndex; i <= sunLastPointIndex; i++) {
+const moonDistanceIndexPlusOne = distance(moonPoints[modulo(moonIntersectionPointIndex2+1,pointsCount)], pointAwayFromMoon);
+const moonDistanceIndexMinusOne = distance(moonPoints[modulo(moonIntersectionPointIndex2-1,pointsCount)], pointAwayFromMoon);
+let moonDeltaIndex;
+if (moonDistanceIndexPlusOne < moonDistanceIndexMinusOne) {
+  moonDeltaIndex = 1;
+}
+else {
+  moonDeltaIndex = -1;
+}
+// -----------------------
+
+// All information known. Begin constructing the final eclipsed Sun list of points.
+let eclipsedSunPoints = []
+
+eclipsedSunPoints.push(sunIntersectionPoint1)
+for (let i = sunIntersectionPointIndex1; i != sunIntersectionPointIndex2; i=modulo(i+sunDeltaIndex,pointsCount)) {
   eclipsedSunPoints.push(sunPoints[i]);
 }
-eclipsedSunPoints.push(vertex2);
-for (let i = moonFirstPointIndex; i > moonLastPointIndex; i--) {
+eclipsedSunPoints.push(moonIntersectionPoint2)
+for (let i = moonIntersectionPointIndex2; i != moonIntersectionPointIndex1; i=modulo(i+moonDeltaIndex,pointsCount)) {
   eclipsedSunPoints.push(moonPoints[i]);
 }
-eclipsedSunPoints.push(vertex1);
+eclipsedSunPoints.push(sunIntersectionPoint1)
+// -----------------------
 
-//Invert it so Sun is undrawn (white on paper) and sky is drawn (black on paper)
-if (invertColors) {
-  let inverseEclipsedSunPoints = []
-  inverseEclipsedSunPoints.push([0, 0])
-  inverseEclipsedSunPoints.push([0, height])
-  inverseEclipsedSunPoints.push([width, height])
-  inverseEclipsedSunPoints.push([width, 0])
-  for (const point of eclipsedSunPoints) {
-    inverseEclipsedSunPoints.push(point)
-  }
-  inverseEclipsedSunPoints.push([width, 0])
-  inverseEclipsedSunPoints.push([0, 0])
-  drawLines([inverseEclipsedSunPoints], "fill");
+// Points done. Draw based on drawType.
+if (drawType == "outline") {
+  drawLines([sunPointsExtra, moonPointsExtra])
+} else if (drawType == "fill") {
+  drawLines([eclipsedSunPoints], {stroke: "none", fill: "black"})
+} else if (drawType == "invert") {
+  drawLines([[[0,0],[width,0],[width,height],[0,height]]], {stroke: "none", fill: "black"})
+  drawLines([eclipsedSunPoints], {stroke: "none", fill: "white"})
 } else {
-  drawLines([eclipsedSunPoints], "fill");
+  console.log("Unaccepted draw type")
 }
