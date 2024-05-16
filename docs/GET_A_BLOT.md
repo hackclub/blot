@@ -108,6 +108,10 @@ we're looking to see if you put effort and creativity into your work.
 Don't worry if this is the first program you have ever written, if you worked hard (at least ~8 hrs) and are proud of the result then it's probably good.
 If you are an experienced programmer, then we challenge you to show us how nice generative art can be.
 
+## 2.6) Give us a star on GitHub if you like the project (optional)
+
+<img width="603" alt="Screenshot 2024-04-18 at 1 13 24 PM" src="https://github.com/hackclub/blot/assets/27078897/6beb04a5-6f1e-4eba-be43-cc8135d5d0e0">
+
 # 3) Fill out the order form
 
 Once your PR is merged, we'll give you a link to fill out an order form so we can send you the parts for your machine.

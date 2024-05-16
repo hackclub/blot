@@ -68,37 +68,37 @@ export default function Toolbar() {
         </h1>
         <RunButton />
         <div class={dropdownContainer}>
-          {needsSaving ? 'file*' : "file"}
+          {needsSaving ? 'File*' : "File"}
           <div class={dropdownClasses + " left-0"}>
             <div class={menuItemClasses} onClick={() => patchStore({ saveToCloudModalOpen: true })}>
-              save to cloud (ctrl/cmd+s)
+              Save to cloud (ctrl/cmd+s)
             </div>
             <div class={menuItemClasses} onClick={() => patchStore({ cloudFilesModalOpen: true })}>
-              open from cloud
+              Open from cloud
             </div>
             <div class={menuItemClasses} onClick={() => loadCodeFromString(defaultProgram)}>
-              new
+              New
             </div>
             <div class={menuItemClasses} onClick={() => saveFile(getCode())}>
-              save to disk
+              Save to disk
             </div>
             <div class={menuItemClasses} onClick={openFromDisk}>
-              open from disk
+              Open from disk
             </div>
             <div class={menuItemClasses} onClick={() => createShareLink(getCode())}>
-              create share link
+              Create share link
             </div>
           </div>
 
         </div>
         <div class={menuItemClasses} onClick={tidyCode}>
-          tidy code
+          Tidy code
         </div>
        {/* <div class={menuItemClasses} onClick={animateLines}>
           animate
         </div>*/}
         <div class={dropdownContainer}>
-          <div>download</div>
+          <div>Download</div>
           <div class={dropdownClasses + " left-0"}>
             <DownloadButton />
             <DownloadSVG />
@@ -112,38 +112,38 @@ export default function Toolbar() {
           {loginName === "" ? "log in to save" : "logged in as: " + loginName}
         </div>
         <div class={dropdownContainer}>
-          machine control
+          Machine control
           <div class={dropdownClasses + " right-0"}>
             <div class="p-2 hover:bg-white hover:bg-opacity-10" data-evt-connectTrigger>
-              {connected ? 'disconnect from' : 'connect to'} machine
+              {connected ? 'Disconnect from' : 'Connect to'} machine
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-machineTrigger>
-              {machineRunning ? 'stop' : 'run'} machine
+              {machineRunning ? 'Stop' : 'Run'} machine
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-penUp>
-              pen up
+              Pen up
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-penDown>
-              pen down
+              Pen down
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-motorsOn>
-              motors on
+              Motors on
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-motorsOff>
-              motors off
+              Motors off
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-moveTowardsOrigin>
-              move towards origin
+              Move towards origin
             </div>
 
             <div class={`${connected ? '' : 'hidden'} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-setOrigin>
-              set origin
+              Set origin
             </div>
 
             {/* <div class={`${connected ? "" : "hidden"} p-2 hover:bg-white hover:bg-opacity-10`} data-evt-goToOrigin>
@@ -194,7 +194,7 @@ function RunButton() {
 
   return (
     <Button class="relative" variant="ghost" onClick={() => runCode()}>
-      run (shift+enter)
+      Run (shift+enter)
       { getStore().codeRunning  && 
         <div class="absolute mx-auto bottom-0 left-0 right-0 text-xs text-gray-300">
             running...
@@ -218,18 +218,6 @@ function DownloadButton() {
       class={menuItemClasses}
       onClick={() => download('project.js', getCode())}>
       js
-    </div>
-  )
-}
-
-function NewButton() {
-  return (
-    <div
-      class="p-2 hover:bg-white hover:bg-opacity-10"
-      onClick={() => {
-        loadCodeFromString(defaultProgram)
-      }}>
-      new
     </div>
   )
 }
@@ -431,11 +419,11 @@ function SettingsButton() {
             localStorage.setItem('vimMode', (!vimMode).toString())
           }}>
           <KeyboardIcon className={styles.icon} />
-          <span class="px-2">{vimMode ? 'disable' : 'enable'} vim mode</span>
+          <span class="px-2">{vimMode ? 'Disable' : 'Enable'} vim mode</span>
         </div>
         { loginName && 
           <div class="p-2 hover:bg-white hover:bg-opacity-10" onClick={logOut}>
-            log out
+            Log out
           </div>
         }
       </div>
