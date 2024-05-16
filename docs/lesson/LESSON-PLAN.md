@@ -20,8 +20,8 @@ For the quickest introduction check out this video trailer for Blot.
 Blot is a gateway to making physical things with machines through programmatic art. The process starts by using JavaScript in a web-based editor to create a line drawing that is generated with code. When you submit the line drawing to the virtual gallery Hack Club will send you the parts to build a drawing robot. That drawing robot can then draw your line drawing in real life. Check out this video to get a sense of the creative process and to see Blot in action.
 
 <!-- eye short -->
-[![]()]()
-[See what you can make in Blot here.]()
+[![](./assets/insta.png)](https://www.instagram.com/reel/C7CPejLAwc0/?hl=en)
+[See what you can make in Blot here.](https://www.instagram.com/reel/C7CPejLAwc0/?hl=en)
 
 Blot is made by Hack Club and is free to participate in to teenagers all over the world. We’re on a mission to create high quality publicly available engineering tools which inspire young people to pursue projects they didn’t know were possible. We’re funded by donors like the founder of GitHub who allow us to provide these tools to the world for free. Everything we make is open-source. That means it’s built in public (with teenage contributors) and every aspect of the project from the [hardware and electronics to the web editor and finances is online in the open](www.github.com/hackclub/blot).
 
