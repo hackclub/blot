@@ -14,10 +14,9 @@
 const width = 120; // milimeters, board size
 const height = 120;
 const sunSize = 30;
-const moonSize = 36;
-const moonOffset = [17, -17];
+const moonSize = 32;
+const moonOffset = [5, -5];
 const pointsCount = 1000; // Larger value = Higher quality
-const invertColors = true;
 const drawType = "invert" // options: "outline" "fill" "invert"
 // -----------------------------------------
 const sunCenter = [width/2, height/2];
@@ -27,36 +26,34 @@ setDocDimensions(width, height);
 
 // Define functions that will be used
 function circleIntersectionPoints(center1, radius1, center2, radius2) {
-    // Calculate the distance between the centers of the circles
-    const dx = center2[0] - center1[0];
-    const dy = center2[1] - center1[1];
-    const distance = Math.sqrt(dx * dx + dy * dy);
+  // Find intersection between of circles
+  const distance = getDistance(center1,center2)
 
-    // Check if circles are separate or one is completely inside the other
-    if (distance >= radius1 + radius2) {
-        return "n"; // No Eclipse
-    }
-    if (distance <= Math.abs(radius1 - radius2)) {
-        return "a"; // Anular Eclipse
-    }
+  // Check if circles are separate or one is completely inside the other
+  if (distance >= radius1 + radius2) {
+      return "n"; // No Eclipse
+  }
+  if (distance <= Math.abs(radius1 - radius2)) {
+      return "a"; // Anular Eclipse
+  }
 
-    // Those checks completed, so there are intersections. Calculate intersection points
-    const a = (radius1 * radius1 - radius2 * radius2 + distance * distance) / (2 * distance);
-    const h = Math.sqrt(radius1 * radius1 - a * a);
-    const x2 = center1[0] + a * (center2[0] - center1[0]) / distance;
-    const y2 = center1[1] + a * (center2[1] - center1[1]) / distance;
-    const intersection1 = [
-        x2 + h * (center2[1] - center1[1]) / distance,
-        y2 - h * (center2[0] - center1[0]) / distance
-    ];
-    const intersection2 = [
-        x2 - h * (center2[1] - center1[1]) / distance,
-        y2 + h * (center2[0] - center1[0]) / distance
-    ];
+  // Those checks completed, so there are intersections. Actually calculate intersection points.
+  const a = (radius1 * radius1 - radius2 * radius2 + distance * distance) / (2 * distance);
+  const h = Math.sqrt(radius1 * radius1 - a * a);
+  const x2 = center1[0] + a * (center2[0] - center1[0]) / distance;
+  const y2 = center1[1] + a * (center2[1] - center1[1]) / distance;
+  const intersection1 = [
+      x2 + h * (center2[1] - center1[1]) / distance,
+      y2 - h * (center2[0] - center1[0]) / distance
+  ];
+  const intersection2 = [
+      x2 - h * (center2[1] - center1[1]) / distance,
+      y2 + h * (center2[0] - center1[0]) / distance
+  ];
 
-    return [intersection1, intersection2];
+  return [intersection1, intersection2];
 }
-function distance(point1, point2) {
+function getDistance(point1, point2) {
   return Math.hypot(point1[0]-point2[0], point1[1]-point2[1])
 }
 function modulo(a, b) { // I'm doing this because JS's built in modulo is not the usual modulo
@@ -88,24 +85,24 @@ let moonIntersectionPoint2 = moonPoints[0];
 let moonIntersectionPointIndex2 = 0;
 
 for (let i = 0; i < pointsCount; i++) {
-  let sunPointDistance1 = distance(sunPoints[i], intersection1);
-  let sunPointDistance2 = distance(sunPoints[i], intersection2);
-  let moonPointDistance1 = distance(moonPoints[i], intersection1);
-  let moonPointDistance2 = distance(moonPoints[i], intersection2);
+  let sunPointDistance1 = getDistance(sunPoints[i], intersection1);
+  let sunPointDistance2 = getDistance(sunPoints[i], intersection2);
+  let moonPointDistance1 = getDistance(moonPoints[i], intersection1);
+  let moonPointDistance2 = getDistance(moonPoints[i], intersection2);
 
-  if (sunPointDistance1 < distance(sunIntersectionPoint1, intersection1)) {
+  if (sunPointDistance1 < getDistance(sunIntersectionPoint1, intersection1)) {
     sunIntersectionPoint1 = sunPoints[i];
     sunIntersectionPointIndex1 = i;
   }
-  if (sunPointDistance2 < distance(sunIntersectionPoint2, intersection2)) {
+  if (sunPointDistance2 < getDistance(sunIntersectionPoint2, intersection2)) {
     sunIntersectionPoint2 = sunPoints[i];
     sunIntersectionPointIndex2 = i;
   }
-  if (moonPointDistance1 < distance(moonIntersectionPoint1, intersection1)) {
+  if (moonPointDistance1 < getDistance(moonIntersectionPoint1, intersection1)) {
     moonIntersectionPoint1 = moonPoints[i];
     moonIntersectionPointIndex1 = i;
   }
-  if (moonPointDistance2 < distance(moonIntersectionPoint2, intersection2)) {
+  if (moonPointDistance2 < getDistance(moonIntersectionPoint2, intersection2)) {
     moonIntersectionPoint2 = moonPoints[i];
     moonIntersectionPointIndex2 = i;
   }
@@ -114,8 +111,8 @@ for (let i = 0; i < pointsCount; i++) {
 // Find index for sun and moon points to form the correct arcs.
 let pointAwayFromMoon = [sunCenter[0] + -moonOffset[0]/(moonOffset[0]**2 + moonOffset[1]**2)**.5,sunCenter[1] + -moonOffset[1]/(moonOffset[0]**2 + moonOffset[1]**2)**.5]
 
-const sunDistanceIndexPlusOne = distance(sunPoints[modulo(sunIntersectionPointIndex1+1,pointsCount)], pointAwayFromMoon);
-const sunDistanceIndexMinusOne = distance(sunPoints[modulo(sunIntersectionPointIndex1-1,pointsCount)], pointAwayFromMoon);
+const sunDistanceIndexPlusOne = getDistance(sunPoints[modulo(sunIntersectionPointIndex1+1,pointsCount)], pointAwayFromMoon);
+const sunDistanceIndexMinusOne = getDistance(sunPoints[modulo(sunIntersectionPointIndex1-1,pointsCount)], pointAwayFromMoon);
 let sunDeltaIndex;
 if (sunDistanceIndexPlusOne < sunDistanceIndexMinusOne) {
   sunDeltaIndex = 1;
@@ -124,8 +121,8 @@ else {
   sunDeltaIndex = -1;
 }
 
-const moonDistanceIndexPlusOne = distance(moonPoints[modulo(moonIntersectionPointIndex2+1,pointsCount)], pointAwayFromMoon);
-const moonDistanceIndexMinusOne = distance(moonPoints[modulo(moonIntersectionPointIndex2-1,pointsCount)], pointAwayFromMoon);
+const moonDistanceIndexPlusOne = getDistance(moonPoints[modulo(moonIntersectionPointIndex2+1,pointsCount)], pointAwayFromMoon);
+const moonDistanceIndexMinusOne = getDistance(moonPoints[modulo(moonIntersectionPointIndex2-1,pointsCount)], pointAwayFromMoon);
 let moonDeltaIndex;
 if (moonDistanceIndexPlusOne < moonDistanceIndexMinusOne) {
   moonDeltaIndex = 1;
