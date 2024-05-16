@@ -6,12 +6,12 @@
 
 /* My first ever javascript code, pretty unoptimized, but it looks nice :)
   PLANS:
-  -adding special effects when close to 100% totality (solar corona, other stars)
-  -make  annular eclipses work. Right now it gives an error
+  -adding special effects when close to 100% totality (solar corona, other stars)
+  -make  annular eclipses work. Right now it gives an error
 */
 
 // -------- Customizable Parameters --------
-const width = 120; // milimeters, board size
+const width = 120; // millimeters, board size
 const height = 120;
 const sunSize = 30;
 const moonSize = 32;
@@ -34,7 +34,7 @@ function circleIntersectionPoints(center1, radius1, center2, radius2) {
       return "n"; // No Eclipse
   }
   if (distance <= Math.abs(radius1 - radius2)) {
-      return "a"; // Anular Eclipse
+      return "a"; // Annular Eclipse
   }
 
   // Those checks completed, so there are intersections. Actually calculate intersection points.
@@ -65,7 +65,7 @@ function modulo(a, b) { // I'm doing this because JS's built in modulo is not th
 let sunPoints = [];
 let moonPoints = [];
 
-for (let i = 0; i < pointsCount; i++) { 
+for (let i = 0; i < pointsCount; i++) {
   sunPoints.push([width/2 + sunSize * Math.cos(2 * Math.PI * i / pointsCount), height/2 + sunSize * Math.sin(2 * Math.PI * i / pointsCount)]);
   moonPoints.push([width/2 + moonOffset[0] + moonSize * Math.cos(2 * Math.PI * i / pointsCount), width/2 + moonOffset[1] + moonSize * Math.sin(2 * Math.PI * i / pointsCount)]);
 }
@@ -73,7 +73,7 @@ for (let i = 0; i < pointsCount; i++) {
 const sunPointsExtra = sunPoints.concat([sunPoints[0]]) //Used to draw a complete unfilled circle
 const moonPointsExtra = moonPoints.concat([moonPoints[0]])
 // -----------------------
-// Find point and indices in sunPoints and moonPoints that are closest to the two intersection points.
+// Find points and indices in sunPoints and moonPoints that are closest to the two intersection points.
 const [intersection1, intersection2] = circleIntersectionPoints(sunCenter, sunSize, moonCenter, moonSize);
 let sunIntersectionPoint1 = sunPoints[0];
 let sunIntersectionPointIndex1 = 0;
@@ -108,7 +108,7 @@ for (let i = 0; i < pointsCount; i++) {
   }
 }
 // -----------------------
-// Find index for sun and moon points to form the correct arcs.
+// Find indices for sun and moon points to form the correct arcs.
 let pointAwayFromMoon = [sunCenter[0] + -moonOffset[0]/(moonOffset[0]**2 + moonOffset[1]**2)**.5,sunCenter[1] + -moonOffset[1]/(moonOffset[0]**2 + moonOffset[1]**2)**.5]
 
 const sunDistanceIndexPlusOne = getDistance(sunPoints[modulo(sunIntersectionPointIndex1+1,pointsCount)], pointAwayFromMoon);
