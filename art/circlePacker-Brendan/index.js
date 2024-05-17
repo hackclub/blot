@@ -6,7 +6,7 @@
 /*
 @title: CirclePacker
 @author: Brendan
-@snapshot: circlePacker
+@snapshot: circlePacker.png
 */
 const width = 125;
 const height = 125;
