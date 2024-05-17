@@ -1,7 +1,7 @@
 /*
 @title: Mountain Sunrise
 @author: AlbertM
-@snapshot: Mountain1
+@snapshot: Mountain1.png
 */
 
 // Adjustable Parameters
