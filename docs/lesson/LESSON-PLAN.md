@@ -8,6 +8,8 @@ For a one day schedule:
   - Get familiar with the Blot editor
   - Make a simple shape together
 - Learn different levels of drawing techniques [20 minutes]
+  - Work through Square Disarray guide
+  - Work through feather guide   
 - Work through the Blot visual puzzles [25+ minutes]
 
 # Introduction
@@ -35,7 +37,7 @@ This video will orient you to the Blot editor and demonstrate the most basic Blo
 
 [Editor Intro Video Here](https://youtu.be/OZ9KaFr1V_o)
 
-Top start head over to:
+To start head over to:
 
 ```
 https://blot.hackclub.com/editor
