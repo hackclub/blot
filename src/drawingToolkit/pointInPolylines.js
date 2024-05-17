@@ -22,8 +22,9 @@ function pointInPolyline(point, polyline, ops = {}) {
     let xj = polyline[j][0], yj = polyline[j][1];
 
     // if on edge
-    const distanceToSegment = pDistance(point, [xj, yj], [xi, yi]);
-    if (distanceToSegment < 1e-4) return edge;
+    // Tentatively removed since it causes bugs and doesn't seem necessary
+    // const distanceToSegment = pDistance(point, [xj, yj], [xi, yi]);
+    // if (distanceToSegment < 1e-4) return edge;
 
     if (yj <= y) {
       if (yi > y) {
