@@ -8,7 +8,8 @@ const width = 125;
 const height = 125;
 setDocDimensions(width, height);
 
-const waveResolution = 0.05;
+const waveFrequency = 15;
+const waveResolution = 100;
 const waveAmplitude = 7;
 const waveHeight = 30;
 const shipSize = 50;
@@ -20,13 +21,14 @@ const sunOrientation = "left";
 let x = 0;
 const wave = [];
 while (x <= width) {
-    for (let radiant = 0.0; radiant <= 2.0; radiant += waveResolution) {
+    for (let radiant = 0.5; radiant < 2.0; radiant += 1.0) {
         const y = Math.round(Math.sin(radiant * Math.PI) * waveAmplitude) + waveHeight;
         wave.push([x, y]);
-        x += 1;
         if (x > width) break;
+        x += waveFrequency;
     }
 }
+const wavePath = bt.catmullRom(wave, waveResolution);
 
 // ship
 const ship = new bt.Turtle();
@@ -75,6 +77,6 @@ if (sunOrientation == "right") {
 const sunPath = sun.path;
 
 // draw it
-drawLines([wave]);
+drawLines([wavePath]);
 drawLines(shipPath);
 drawLines(sunPath);
