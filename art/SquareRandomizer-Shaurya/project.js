@@ -1,57 +1,190 @@
 /*
-@title: Square randomizer v0.2 fix
+@title: Square randomizer v0.4
 @author: Shaurya Mohapatra (@shaurio / Github)
-@snapshot: square_randomizer_main.png
+@snapshot: square_randomizer_main_v2.png
 */
 
 /*
-
-Enhancement Ideas:
-------------------
-1. Fill in the rectangle (all sides different shades of grey)
-2. Randomize the perspective i.e., angle in which the inner share is shown
-3. Experiment with cresating other shapes, i.e. shapes with less or more than 4 sides.
-4. Pseudo-3d: Cutt off the lines, and add lines at the end of the cut off, making
-it look 3d with definitive sides. So instead of extenting the lines till
-the outer square, we could stop it short of it, then add lines going from
-each of the endings to make it look like a real 3d shape.
-
+Changes in v0.4:
+- Added more squares
+- Moved code into a repeatable function drawSquares()
+- Wrapped function inside a for loop to generate add more projections of polygons that work the same way
+and crate a cool effect
 */
 
+let cpx = bt.randInRange(5, 5);
+// this changes the complexity, change the values-
+// -and see what happens :D
 
-/* variables */
 
-const s = 100; // size of the outer square container
-const m = bt.randInRange(0, 100);  // controls x and y position of two inner square points
-const c = bt.randInRange(0, 100); // controls y position of two inner square points
-const a = bt.randInRange(0, 100); // controls x for half of the points
-const angle = bt.randInRange(1, 4); // an idea for future, the point/"angle" in which the lines go to the shape
-let vr = m // another idea for "filling" in the square
+function drawSquares() {
 
-// draws outer square
-drawLines([ 
-    [[0, 0], [0, s]],
-    [[0, s], [s, s]],
-    [[s, s], [s, 0]],
-    [[s, 0], [0, 0]]
-])
+  const s = 100 
+  //boundry square size
+  const m = bt.randInRange(25, 50); 
+  // inner square size 
+  const c = bt.randInRange(25, 50);
+  // inner square size add depth
+  const a = bt.randInRange(25, 50); 
+  // inner square size add volume
+  let x = (m) - (c) // to separate squares
+  const xr = bt.randInRange(25, 50); 
+  // filler variable for randomness of pos
+  let xx = (x) + (xr) 
+  // filler variable to understand what I'm doing
+  let rx = xr - (xr + xr) 
+  // filler variable to split into steps for understanding
+  let yx = rx + 20 
+  // filler variable to move some squares to the right (effect)
+  const cc = bt.randInRange(15, 30) 
+  // filler variable for the x change in squares
 
-// draws inner square
-drawLines([ 
-    [[a, c], [a, m]],
-    [[a, m], [m, m]],
-    [[m, m], [m, c]],
-    [[m, c], [a, c]]
-])
+  // This is to draw the boundry square 100 by 100
+  drawLines([
+    [
+      [0, 0],
+      [0, s]
+    ],
+    [
+      [0, s],
+      [s, s]
+    ],
+    [
+      [s, s],
+      [s, 0]
+    ],
+    [
+      [s, 0],
+      [0, 0]
+    ]
+  ])
 
-// draws lines that go from inner square to one central point in the outer square
-drawLines([ 
-  [[a, c], [100, 100]],
-  [[a, m], [100, 100]],
-  [[m, m], [100, 100]],
-  [[m, c], [100, 100]],
+  // draw sqaure
+  drawLines([
+    [
+      [a, c],
+      [a, m]
+    ],
+    [
+      [a, m],
+      [m, m]
+    ],
+    [
+      [m, m],
+      [m, c]
+    ],
+    [
+      [m, c],
+      [a, c]
+    ]
+  ])
+  
+  // draw sqaure + height difference
+  drawLines([
+    [
+      [a, c + xr],
+      [a, m + xr]
+    ],
+    [
+      [a, m + xr],
+      [m, m + xr]
+    ],
+    [
+      [m, m + xr],
+      [m, c + xr]
+    ],
+    [
+      [m, c + xr],
+      [a, c + xr]
+    ]
+  ])
+
+  // draw sqaure + height difference + x difference
+  drawLines([
+    [
+      [a + cc, c + yx],
+      [a + cc, m + yx]
+    ],
+    [
+      [a + cc, m + yx],
+      [m + cc, m + yx]
+    ],
+    [
+      [m + cc, m + yx],
+      [m + cc, c + yx]
+    ],
+    [
+      [m + cc, c + yx],
+      [a + cc, c + yx]
+    ]
+  ])
+
+  // draw lines from square
+  drawLines([
+    [
+      [a, c],
+      [100, 100]
+    ],
+    [
+      [a, m],
+      [100, 100]
+    ],
+    [
+      [m, m],
+      [100, 100]
+    ],
+    [
+      [m, c],
+      [100, 100]
+    ],
 
   ])
 
-// We can use a variable, put is as M (how long the lines are) and call the lines to repeat untill the variable = 0, meaning we fill the square.
+  // draw lines from square + height difference
+  drawLines([
+    [
+      [a, c + xr],
+      [100, 100]
+    ],
+    [
+      [a, m + xr],
+      [100, 100]
+    ],
+    [
+      [m, m + xr],
+      [100, 100]
+    ],
+    [
+      [m, c + xr],
+      [100, 100]
+    ],
 
+  ])
+
+  // draw lines from square + height difference + x difference
+  drawLines([
+    [
+      [a + cc, c + yx],
+      [100, 100]
+    ],
+    [
+      [a + cc, m + yx],
+      [100, 100]
+    ],
+    [
+      [m + cc, m + yx],
+      [100, 100]
+    ],
+    [
+      [m + cc, c + yx],
+      [100, 100]
+    ],
+
+  ])
+
+}
+
+// change "cpx" to any number you would like, to alter the complexity
+for (let i = 0; i <= (cpx); i += 1)[
+  drawSquares()
+]
