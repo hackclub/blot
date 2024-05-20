@@ -1,10 +1,10 @@
-### Subject:
+Subject:
 
 ```
-Looking for something for students after AP exams?
+Need something after AP exams?
 ```
 
-### Body:
+Body:
 
 ```
 
@@ -20,13 +20,16 @@ Blot is part of our “You Ship, We Ship” program. When students create projec
 
 You can find an example lesson plan for using Blot in your classroom here: [hack.af/learnblot](https://hack.af/learnblot).
 
+Through drawing projects students can practice logic branching, function calls, one and two-dimensional arrays, and recursive algorithms.
+
 Additionally, we offer another project called [Sprig](https://sprig.hackclub.com), where students can program tile based games in JavaScript. When they share their games with us, we send them the materials to build a handheld console to play those games.
 
 If you’d like posters for Blot and Sprig for your classroom, you can [sign up to receive them here](https://airtable.com/appv0BzBY2APyIXj6/shrk2RTYPbpM1KlKF). We’d also love your feedback on how these tools can fit into your curriculum.
 
 Best regards,
 
-Leo
-Engineer at Hack Club
-Creator of Blot and Sprig
+Zach
+Founder of Hack Club
+
+P.S. I’ve cc'd Leo, the creator of Blot and Sprig.
 ```
