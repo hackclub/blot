@@ -1,0 +1,90 @@
+
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 190 100" 
+                  width="190mm" 
+                  height="100mm"
+                  style="transform: scale(1, -1)">
+                    <path 
+                    d="M 0 0L 190 0L 190 100L 0 100L 0 0" 
+                    stroke-width="1" 
+                    stroke="gray" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 0 0L 190 16.666666666666668" 
+                    stroke-width="5" 
+                    stroke="gray" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 16.666666666666668 0L 16.666666666666668 100" 
+                    stroke-width="5" 
+                    stroke="gray" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 0 33.333333333333336L 190 33.333333333333336" 
+                    stroke-width="5" 
+                    stroke="blue" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 0 50L 190 66.66666666666667" 
+                    stroke-width="5" 
+                    stroke="Sienna" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 0 66.66666666666667L 190 66.66666666666667" 
+                    stroke-width="5" 
+                    stroke="Tomato" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 83.33333333333334 0L 83.33333333333334 100" 
+                    stroke-width="5" 
+                    stroke="blue" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 86.87198312705407 74.53327619695779L 83.25595848518049 83.26313192924431L 74.52610275289396 86.87915657111789L 65.79624702060744 83.26313192924431L 62.18022237873386 74.53327619695779L 65.79624702060744 65.80342046467126L 74.52610275289396 62.18739582279768L 83.25595848518049 65.80342046467126L 86.87198312705407 74.53327619695779" 
+                    stroke-width="5" 
+                    stroke="Tomato" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 0 0L 0 100L 190 100L 190 0L 0 0" 
+                    stroke-width="1" 
+                    stroke="black" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+                </svg>
+            

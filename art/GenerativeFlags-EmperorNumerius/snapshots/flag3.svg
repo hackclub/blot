@@ -1,0 +1,72 @@
+
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 190 100" 
+                  width="190mm" 
+                  height="100mm"
+                  style="transform: scale(1, -1)">
+                    <path 
+                    d="M 0 0L 190 0L 190 100L 0 100L 0 0" 
+                    stroke-width="1" 
+                    stroke="gray" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 0 0L 190 25" 
+                    stroke-width="5" 
+                    stroke="yellow" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 25 0L 25 100" 
+                    stroke-width="5" 
+                    stroke="Sienna" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 0 50L 190 50" 
+                    stroke-width="5" 
+                    stroke="Tomato" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 0 75L 190 100" 
+                    stroke-width="5" 
+                    stroke="blue" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 53.07291901362939 80.24673517844994L 51.124156460301315 84.29338231727462L 46.745326750484764 85.29282162400597L 43.233777967519515 82.49245491582879L 43.233777967519515 78.00101544107109L 46.74532675048476 75.20064873289391L 51.124156460301315 76.20008803962526L 53.07291901362939 80.24673517844994" 
+                    stroke-width="5" 
+                    stroke="Tomato" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 0 0L 0 100L 190 100L 190 0L 0 0" 
+                    stroke-width="1" 
+                    stroke="black" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+                </svg>
+            
