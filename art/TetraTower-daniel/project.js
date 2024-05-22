@@ -1,7 +1,7 @@
 /*
 @title: Tetra Tower
 @author: Daniel Pu
-@snapshot: tetra1
+@snapshot: tetra1.png
 */
 
 const canvasWidth = 125;
