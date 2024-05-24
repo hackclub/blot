@@ -1,11 +1,11 @@
 /*
 @title: Turtle
 @author: Andrew Douglass
-@snapshot: the name of the snapshot file you want in the gallery
+@snapshot: image (6).png
 */
 
 //Art adjustments
-const seed = 6534289;
+const seed = 1;
 bt.setRandSeed(seed);
 
 const width = 200;
