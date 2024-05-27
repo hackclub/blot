@@ -1,7 +1,7 @@
 /*
 @title: The ROOM
 @author: blazecoding2009
-@snapshot: snapshop1.png
+@snapshot: snapshot1.png
 */
 
 const width = 125;
