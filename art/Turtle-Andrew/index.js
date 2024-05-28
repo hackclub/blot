@@ -1,7 +1,7 @@
 /*
 @title: Turtle
 @author: Andrew Douglass
-@snapshot: image (6).png
+@snapshot: image(6).png
 */
 
 //Art adjustments
