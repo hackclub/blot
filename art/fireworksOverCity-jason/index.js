@@ -1,7 +1,7 @@
 /*
 @title: fireworksOverCity
 @author: jason
-@snapshot: snapshot0
+@snapshot: snapshot0.png
 */
 
 const width = 125;
