@@ -1,7 +1,7 @@
 /*
 @title: Pete_the_Cat
 @author: Alex Rabochii
-@snapshot: snapshot0
+@snapshot: snapshot0.png
 */
 const width = 155
 const height = 155
