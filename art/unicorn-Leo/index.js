@@ -1,7 +1,7 @@
 /*
 @title: unicorn
 @author: Leo
-@snapshot: snapshot0
+@snapshot: snapshot0.png
 */
 
 const stripeSize = bt.randInRange(5.4, 5.8);
