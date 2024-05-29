@@ -1,4 +1,6 @@
 export function getNormalAtT(polylines, t) {
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   // Calculate the total length of all polylines
   let totalLength = 0
   let lengths = polylines.map(polyline => {

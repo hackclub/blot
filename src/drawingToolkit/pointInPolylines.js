@@ -1,4 +1,5 @@
 export function pointInPolylines(polylines, point, ops = {}) {
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
 
   const insides = polylines
     .map(poly => pointInPolyline(point, poly, ops))

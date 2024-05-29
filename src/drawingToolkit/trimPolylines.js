@@ -1,4 +1,7 @@
 export function trimPolylines(polylines, t1, t2) {
+  const ogPolylines = polylines;
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   t1 = Math.max(0, Math.min(1, t1));
   t2 = Math.max(0, Math.min(1, t2));
 
@@ -62,7 +65,7 @@ export function trimPolylines(polylines, t1, t2) {
   while (polylines.length) polylines.pop();
   newPolylines.forEach(pl => polylines.push(pl));
 
-  return polylines;
+  return ogPolylines;
 }
 
 function getTotalLength(polylines) {

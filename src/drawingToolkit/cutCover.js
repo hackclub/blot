@@ -3,6 +3,10 @@ import { pointInPolylines } from "./pointInPolylines.js"
 import { mergePolylines } from "./mergePolylines.js";
 
 export const cut = (polylines0, polylines1, assumeClosed = true) => {
+  const ogPolylines = polylines0;
+  if (typeof polylines0.at(0)?.at(0) === "number") polylines0 = [polylines0];
+  if (typeof polylines1.at(0)?.at(0) === "number") polylines1 = [polylines1];
+
   if (assumeClosed) polylines1.forEach(poly => {
     const [x, y] = poly.at(0);
     poly.push([x, y]);
@@ -22,10 +26,14 @@ export const cut = (polylines0, polylines1, assumeClosed = true) => {
     poly.pop();
   })
 
-  return polylines0;
+  return ogPolylines;
 };
 
 export const cover = (polylines0, polylines1, assumeClosed = true) => {
+  const ogPolylines = polylines0;
+  if (typeof polylines0.at(0)?.at(0) === "number") polylines0 = [polylines0];
+  if (typeof polylines1.at(0)?.at(0) === "number") polylines1 = [polylines1];
+
   if (assumeClosed) polylines1.forEach(poly => {
     const [x, y] = poly.at(0);
     poly.push([x, y]);
@@ -39,7 +47,7 @@ export const cover = (polylines0, polylines1, assumeClosed = true) => {
     poly.pop();
   })
 
-  return polylines0;
+  return ogPolylines;
 
   function helper(polylines0, poly1) {
     const result = [];

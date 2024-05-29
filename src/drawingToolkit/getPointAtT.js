@@ -1,4 +1,6 @@
 export function getPointAtT(polylines, t) {
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   t = Math.max(t, 0)
   t = Math.min(t, 1)
 

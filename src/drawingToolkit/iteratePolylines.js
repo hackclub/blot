@@ -1,4 +1,7 @@
 export function iteratePolylines(polylines, fn) {
+  const ogPolylines = polylines;
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   const toRemove = new Set()
   const toBreak = new Set()
 
@@ -39,7 +42,7 @@ export function iteratePolylines(polylines, fn) {
     (i, j, arr) => toBreak.has(`${i},${j}`)
   )
 
-  return polylines
+  return ogPolylines
 }
 
 function tValuesForPoints(polylines) {

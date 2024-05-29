@@ -1,16 +1,22 @@
 import { bounds } from "./bounds.js";
 
 export const translate = (polylines, to, origin = [0, 0]) => {
+  const ogPolylines = polylines;
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   polylines.flat().forEach(pt => {
     const [x, y] = translatePt(pt, to, origin);
     pt[0] = x;
     pt[1] = y;
   });
 
-  return polylines;
+  return ogPolylines;
 }
 
 export const rotate = (polylines, angle, origin) => {
+  const ogPolylines = polylines;
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   if (!origin) origin = bounds(polylines).cc
 
   polylines.flat().forEach(pt => {
@@ -19,10 +25,13 @@ export const rotate = (polylines, angle, origin) => {
     pt[1] = y;
   });
 
-  return polylines
+  return ogPolylines
 }
 
 export const scale = (polylines, factor, origin) => {
+  const ogPolylines = polylines;
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   if (!origin) origin = bounds(polylines).cc
 
   polylines.flat().forEach(pt => {
@@ -31,7 +40,7 @@ export const scale = (polylines, factor, origin) => {
     pt[1] = y;
   });
 
-  return polylines
+  return ogPolylines
 }
 
 export function translatePt(pt, [x, y], origin = [0, 0]) {

@@ -1,4 +1,7 @@
 export function mergePolylines(polylines) {
+  const ogPolylines = polylines;
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   let merged = true;
 
   while (merged) {
@@ -42,5 +45,5 @@ export function mergePolylines(polylines) {
     }
   }
 
-  return polylines;
+  return ogPolylines;
 }

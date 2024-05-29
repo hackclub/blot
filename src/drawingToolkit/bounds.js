@@ -1,5 +1,8 @@
 
 export function bounds(polylines) {
+  const ogPolylines = polylines0;
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   const { xMin, xMax, yMin, yMax } = extrema(polylines.flat());
 
   const width = xMax - xMin;

@@ -9,7 +9,10 @@ const isClosed = shape => {
   return closed;
 }
 
-export function offset(paths, delta, ops = {}) {
+export function offset(polylines, delta, ops = {}) {
+  const ogPolylines = polylines;
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   /*
     {
       joinType
@@ -35,8 +38,8 @@ export function offset(paths, delta, ops = {}) {
 
   let et = ops.endType;
   if (!et) {
-    const start = paths[0][0];
-    const end = paths.at(-1).at(-1);
+    const start = polylines[0][0];
+    const end = polylines.at(-1).at(-1);
     const closed = overlap(start, end);
     et = closed ? 'closedPolygon' : "openRound";
   }
@@ -58,8 +61,8 @@ export function offset(paths, delta, ops = {}) {
     ({ X, Y }) => [ X, Y ] 
   )
 
-  const subjectClosed = isClosed(paths);
-  const clipPaths = paths.map(toClipperFormat);
+  const subjectClosed = isClosed(polylines);
+  const clipPaths = polylines.map(toClipperFormat);
   const co = new ClipperLib.ClipperOffset(miterLimit, arcTolerance);
   
   co.AddPaths(clipPaths, joinType, endType);
@@ -68,17 +71,17 @@ export function offset(paths, delta, ops = {}) {
 
   const final = result.map(fromClipperFormat);
 
-  while (paths.length > final.length) paths.pop();
+  while (polylines.length > final.length) polylines.pop();
 
   final.forEach((pl, i) =>  {
-    paths[i] = pl;
+    polylines[i] = pl;
 
-    paths[i].push([
+    polylines[i].push([
       pl[0][0],
       pl[0][1],
     ])
     
   });
 
-  return paths;
+  return ogPolylines;
 }

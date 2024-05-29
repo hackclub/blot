@@ -17,6 +17,9 @@ function displacePolyline(pts, fn) {
 }
 
 export function displacePolylines(polylines, fn) {
+  const ogPolylines = polylines;
+  if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
+
   polylines.forEach(pl => displacePolyline(pl, fn));
-  return polylines;
+  return ogPolylines;
 }

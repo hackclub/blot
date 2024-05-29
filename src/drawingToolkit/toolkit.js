@@ -24,6 +24,8 @@ import { bezierEasing } from "./bezierEasing.js";
 import { createPoissonDisc } from "./createPoissonDisc.js";
 import { offset } from "./offset.js";
 import { Voronoi } from "./voronoi.js";
+import { turnForward } from "./turnForward.js";
+import { arc } from "./arc.js";
 
 import * as polyclip from 'polyclip-ts';
 
@@ -37,9 +39,11 @@ export const toolkit = {
   difference: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "difference", ops),
   xor: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "xor", ops),
   offset, // undoced
-  expand: (shape, distance) => offset(shape, distance, { endType: "closedPolygon" }),
+  expand: (shape, distance) => offset(shape, distance, { endType: "closedPolygon" }), // undoced
   createPoissonDisc, // undoced
-  Voronoi,
+  Voronoi, // undoced
+  turnForward, // undoced
+  arc, // undoced
   iteratePoints: iteratePolylines,
   transform,
   bounds,

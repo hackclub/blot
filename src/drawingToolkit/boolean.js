@@ -2,6 +2,9 @@ import { ClipperLib } from "./clipper_unminified.js";
 
 
 export function boolean(subjectPaths, clipPaths, type, ops = {}) {
+  const ogPolylines = subjectPaths;
+  if (typeof subjectPaths.at(0)?.at(0) === "number") subjectPaths = [subjectPaths];
+  if (typeof clipPaths.at(0)?.at(0) === "number") clipPaths = [clipPaths];
 
   const toClipperFormat = pl => {
     return pl.map( 
@@ -46,5 +49,5 @@ export function boolean(subjectPaths, clipPaths, type, ops = {}) {
     
   });
 
-  return subjectPaths;
+  return ogPolylines;
 }
