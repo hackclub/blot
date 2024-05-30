@@ -1,5 +1,5 @@
 /*
-@title: Generative Flags v1.0
+@title: Generative Flags v3.0
 @author: Emperor Numerius
 @snapshot: flag2.svg
 */
@@ -7,6 +7,7 @@
 const width = 240;
 const height = 160;
 setDocDimensions(width, height);
+const hilbertconst = 3;
 
 // Hilbert curve algorithm
 function hilbertCurve(n) {
@@ -154,47 +155,47 @@ for (let i = 1; i < 3; i++) {
   // Draw Hilbert curves in the required areas based on the chosen preset
   if (chosenPreset === drawCross) {
     if (!regionsUsed.topLeft) {
-      drawHilbertCurve(3, 0, 0, width / 2, height / 2);
+      drawHilbertCurve(hilbertconst, 0, 0, width / 2, height / 2);
       regionsUsed.topLeft = true;
     }
     if (!regionsUsed.bottomRight) {
-      drawHilbertCurve(3, width / 2, height / 2, width / 2, height / 2);
+      drawHilbertCurve(hilbertconst, width / 2, height / 2, width / 2, height / 2);
       regionsUsed.bottomRight = true;
     }
   } else if (chosenPreset === drawSaltire) {
     if (!regionsUsed.top) {
-      drawHilbertCurve(4, 0, 0, width, height / 2);
+      drawHilbertCurve(hilbertconst - 1, 0, 0, width, height / 2);
       regionsUsed.top = true;
     }
     if (!regionsUsed.bottom) {
-      drawHilbertCurve(4, 0, height / 2, width, height / 2);
+      drawHilbertCurve(hilbertconst + 2, 0, height / 2, width, height / 2);
       regionsUsed.bottom = true;
     }
   } else if (chosenPreset === drawScandinavianCross) {
     if (!regionsUsed.topLeft) {
-      drawHilbertCurve(5, 0, 0, width / 2, height / 2);
+      drawHilbertCurve(hilbertconst - 2, 0, 0, width / 2, height / 2);
       regionsUsed.topLeft = true;
     }
     if (!regionsUsed.bottomRight) {
-      drawHilbertCurve(5, width / 2, height / 2, width / 2, height / 2);
+      drawHilbertCurve(hilbertconst + 1, width / 2, height / 2, width / 2, height / 2);
       regionsUsed.bottomRight = true;
     }
   } else if (chosenPreset === drawHorizontalTricolor) {
     if (!regionsUsed.top) {
-      drawHilbertCurve(6, 0, 0, width, height / 3);
+      drawHilbertCurve(hilbertconst + 2, 0, 0, width, height / 3);
       regionsUsed.top = true;
     }
     if (!regionsUsed.bottom) {
-      drawHilbertCurve(6, 0, 2 * height / 3, width, height / 3);
+      drawHilbertCurve(hilbertconst - 2, 0, 2 * height / 3, width, height / 3);
       regionsUsed.bottom = true;
     }
   } else if (chosenPreset === drawVerticalTricolor) {
     if (!regionsUsed.left) {
-      drawHilbertCurve(7, 0, 0, width / 3, height);
+      drawHilbertCurve(hilbertconst + 1, 0, 0, width / 3, height);
       regionsUsed.left = true;
     }
     if (!regionsUsed.right) {
-      drawHilbertCurve(7, 2 * width / 3, 0, width / 3, height);
+      drawHilbertCurve(hilbertconst - 1, 2 * width / 3, 0, width / 3, height);
       regionsUsed.right = true;
     }
   }
