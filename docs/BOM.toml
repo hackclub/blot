@@ -70,9 +70,9 @@ container = "box #1"
 
 [[items]]
 part = "M5x25 Button Cap Screw"
-notes = "for attaching wheels to pen holder (3), and idlers on carriage (4)"
+notes = "for attaching wheels to pen holder (3), and idlers on carriage (4), idler on pen rail (1)"
 exampleSource = "https://www.mcmaster.com/92095A216/"
-quantity = 7
+quantity = 8
 findLocalSupplier = true
 container = "box #1"
 
