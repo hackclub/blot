@@ -1,6 +1,6 @@
 ---
 title: Roots
-thumbnail: https://cloud-dl5vmy52p-hack-club-bot.vercel.app/0roots.png
+thumbnail: https://cloud-54f820d0z-hack-club-bot.vercel.app/00roots.webp
 contributors: profsucrose
 ---
 
@@ -9,7 +9,8 @@ contributors: profsucrose
 Let's walk through the process of how the following image was generated:
 
 <img
-  src="https://cloud-dl5vmy52p-hack-club-bot.vercel.app/0roots.png"
+  alt="roots"
+  src="https://cloud-54f820d0z-hack-club-bot.vercel.app/00roots.webp"
   width="200"
 />
 
@@ -21,7 +22,7 @@ We can first start by drawing a simple random walk, where during each step we (r
 const WIDTH = 10
 const HEIGHT = 20
 
-const t = new Turtle([WIDTH / 2, 0])
+const t = createTurtle([WIDTH / 2, 0])
 t.right(90)
 
 const turtles = [t]
@@ -40,7 +41,7 @@ function makeBranch(turtle) {
 
 makeBranch(t)
 
-drawTurtles(...turtles)
+drawTurtles([ turtles ])
 ```
 
 You should get something like the screenshot below:
@@ -104,7 +105,7 @@ function thicken(turtle) {
 
 makeBranch(t, 0.1, 0)
 
-drawTurtles(t)
+drawTurtles([ t ])
 
 // Smoothstep
 function clamp(x, minVal, maxVal) {
@@ -332,5 +333,5 @@ That's it! But you can still add a lot of features from here, if you're up to it
 - For instance, one thing to add would be occlusion, so each branch can be assigned a z-index and cover other ones, so many more branches can be rendered without being too busy
 - Or, you could make the texturing more interesting by varying `ringSeed` for different branches or different regions
 - You could render multiple initial branches/roots at the start, and generate random parameters for each one in an interesting pattern
-- Add some logic so the branches stay within the Haxidraw bed/document always, and curl away from the edges if they get too close
+- Add some logic so the branches stay within the blot bed/document always, and curl away from the edges if they get too close
 - Generate a texture for the background

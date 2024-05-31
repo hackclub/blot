@@ -3,8 +3,8 @@ title: Let's draw a tree
 thumbnail: https://github.com/hackclub/haxidraw/assets/27078897/b2b3b319-1b0f-4c0e-bf78-d8323ab577d4
 ---
 
-> You can follow along in this editor: [https://blot.hackclub.dev/editor/
-](https://blot.hackclub.dev/editor)
+> You can follow along in this editor: [https://blot.hackclub.com/editor/
+](https://blot.hackclub.com/editor?guide=tree)
 We're going to use abstract scribbles to make a tree that looks like this.
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/b2b3b319-1b0f-4c0e-bf78-d8323ab577d4" height="512"/>
@@ -134,7 +134,7 @@ for (let i = 0; i < 1000; i++) {
   const [endX, endY] = randomWalk.end;
 }
 
-drawTurtles(randomWalk);
+drawTurtles([ randomWalk ]);
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/f98e2f48-3785-4449-b936-dc5e637bdff5" height="512"/>
@@ -276,7 +276,7 @@ let startPt = trunk.ct;
 
 randomWalk.rotate(randInRange(-5, 5)).translate([-0.1, -0.6]);
 
-drawTurtles(randomWalk, trunk);
+drawTurtles([ randomWalk, trunk ]);
 ```
 
 <img src="https://github.com/hackclub/haxidraw/assets/27078897/114d17dc-b5a3-43ab-baf6-0e1dfee2d959" height="512"/>

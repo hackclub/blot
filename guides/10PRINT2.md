@@ -1,6 +1,6 @@
 ﻿---
 title: 10PRINT2
-thumbnail: https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png
+thumbnail: https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp
 contributors: henrybass
 ---
 
@@ -15,13 +15,14 @@ _This tutorial is aimed at beginners, but it works best if you have a little pri
 From just that one line, the following intricate pattern is be created:
 
 <img
-  src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png"
+  alt="10print2"
+  src="https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp"
   width="512px"
 />
 
-There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Haxidraw_**. (This tutorial works fine if you don't have one!)
+There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Blot_**. (This tutorial works fine if you don't have one!)
 
-A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
+A Blot is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
 
 <img
   src="https://cloud-imp7l9zfa-hack-club-bot.vercel.app/0232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg"
@@ -33,7 +34,7 @@ A Haxidraw is a small drawing robot that can be programed from a browser. You se
   width="512px"
 />
 
-Here are some examples of art people have made with Haxidraw:
+Here are some examples of art people have made with Blot:
 
 <img
   src="https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true"
@@ -58,7 +59,7 @@ Let's start by defining a constant `t`: this will represent our turtle. The turt
 const t = createTurtle()
 ```
 
-Directly below that, write `drawTurtles(t);`. This function makes it so that we can see the turtle's path in the preview window as we add to it.
+Directly below that, write `drawTurtles([ t ]);`. This function makes it so that we can see the turtle's path in the preview window as we add to it.
 
 Since the original artwork is made up of many diagonal lines, we'll need a function that can draw these.
 

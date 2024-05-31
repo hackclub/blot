@@ -1,0 +1,89 @@
+.root {
+  border-top: 3px solid var(--primary);
+  display: flex;
+  flex-direction: column;
+/*  gap: 0.25rem;*/
+
+/*  max-height: min(15rem, 40vh);*/
+  padding-bottom: .25rem;
+}
+
+body:not([data-theme='dark']) .root {
+  background-color: rgba(var(--primary-rgb), 0.1);
+}
+
+.lines {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.header {
+  padding: 1rem;
+  padding-bottom: 0;
+  display: flex;
+  color: var(--text);
+  align-items: center;
+}
+.header span {
+  font-weight: bold;
+  flex: 1;
+}
+
+.line {
+  display: flex;
+  gap: 0.5rem;
+  color: var(--text);
+  align-items: center;
+  margin: -0.2rem 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.line:first-child {
+  margin-top: 0;
+}
+
+.line:last-child {
+  margin-bottom: 0;
+}
+
+.pos {
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
+  color: inherit;
+}
+
+body:not([data-theme='dark']) .pos {
+  color: var(--primary);
+}
+
+.values {
+  flex: 1;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.time {
+  color: rgba(var(--text-rgb), 0.5);
+  font-size: 0.8rem;
+}
+
+.clearButton svg {
+  width: 1rem;
+}
+
+.clearButton {
+  padding: 0.25rem;
+}
+
+.tWarn {
+  background-color: rgba(255, 255, 0, 0.1);
+}
+
+.tError {
+  background-color: rgba(255, 0, 0, 0.1);
+}

@@ -1,6 +1,6 @@
 ---
 title: Draw a triangle mesh
-thumbnail: https://cloud-fxnwjivpd-hack-club-bot.vercel.app/0image__1_.png
+thumbnail: https://cloud-mgfukhxlr-hack-club-bot.vercel.app/00image__1_.webp
 contributors: henrybass
 ---
 
@@ -8,7 +8,7 @@ contributors: henrybass
 
 ---
 
-<img src="https://cloud-fxnwjivpd-hack-club-bot.vercel.app/0image__1_.png" width="512"/>
+<img alt="triangle mesh" src="https://cloud-mgfukhxlr-hack-club-bot.vercel.app/00image__1_.webp" width="512"/>
 
 We'll build the above mesh like this:
 
@@ -26,7 +26,7 @@ Next, let's define a scale for the whole image:
 
 Then, we can create a grid. This is identical to a typical rectangular grid, except we offset every other line by a bit, making it triangular.
 
-```
+```js
 var line, dot,
     odd = false,
     lines = [],
@@ -39,9 +39,9 @@ for(var y = gap / 2; y <= size; y+= gap) {
     dot = {x: x + (odd ? gap/2 : 0), y: y};
 ```
 
-Then, use the built-in haxidraw noise function to offset the points again, this time randomly. Also, add an offset on the x axis if we're drawing an odd-numbered line.
+Then, use the built-in blot noise function to offset the points again, this time randomly. Also, add an offset on the x axis if we're drawing an odd-numbered line.
 
-```
+```js
     let n = noise([x * 0.1, y * 0.1])
     line.push({
       x: x + (n*4.1 - .4) * gap  + (odd ? gap/2 : 0),
@@ -54,7 +54,7 @@ Then, use the built-in haxidraw noise function to offset the points again, this 
 
 Now, we need a way to draw this. We can define a simple function to render a triange, where we simply go through every point of the triangle with the turtle `goTo` function.
 
-```
+```js
 function drawTriangle(pointA, pointB, pointC) {
   t.goTo([pointA.x, pointA.y]);
   t.down()
@@ -67,7 +67,7 @@ function drawTriangle(pointA, pointB, pointC) {
 
 Now, to draw the whole mesh, we can iterate through the points, drawing triangles at every 3 points next to each other in 2D.
 
-```
+```js
 var dotLine;
 odd = true;
 
@@ -83,7 +83,7 @@ for(var y = 0; y < lines.length - 1; y++) {
   }
 }
 
-drawTurtles(t)
+drawTurtles([ t ])
 ```
 
 And, that's it! If all went well, you should have an image resembling the one at the start of the guide.

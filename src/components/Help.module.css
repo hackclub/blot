@@ -1,0 +1,95 @@
+.helpSection {
+  color: black;
+  position: relative;
+  font-family: var(--font-sans);
+}
+
+.helpSectionToolbar {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  transform: translate(0, -100%);
+  background: rgba(var(--primary-rgb), 0.89);
+  border-radius: 0 10px 0 0;
+  overflow: clip;
+}
+
+.helpSectionTab {
+  padding: 6px 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.helpSectionTab:hover {
+  background: rgba(var(--primary-rgb), 0.89);
+}
+
+.helpContent {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  position: relative;
+  padding: 1.5rem;
+  overflow-x: clip;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.helpContent > :nth-child(1) {
+  margin-top: 0;
+}
+
+.helpContent a {
+  color: var(--primary);
+  transition: opacity 0.2s;
+}
+
+.helpContent a:hover {
+  opacity: 0.8;
+}
+
+.helpContent img {
+  display: block;
+  margin-top: 1.1rem;
+  max-width: 100%;
+}
+
+.helpContent code,
+.helpContent pre {
+  font-size: 0.995rem;
+  font-family: var(--font-mono);
+}
+
+.helpContent li p {
+  margin: 0;
+}
+
+.helpContent pre {
+  background: #f4f4f4;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+body[data-theme='dark'] .helpContent {
+  color: white;
+}
+
+body[data-theme='dark'] .helpContent a {
+  color: white;
+}
+
+body[data-theme='dark'] .helpContent hr {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+body[data-theme='dark'] .helpContent img {
+  background-color: white;
+}
+
+.helpContent p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

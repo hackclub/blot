@@ -19,7 +19,7 @@ The "RPI-RP2" disk should show up on your computer if the above step was success
 > You'll need to have the latest version of the Arduino IDE installed. [Install it here.](https://www.arduino.cc/en/software/)
 
 1. Open the Arduino IDE.
-2. Add the Seeed Studio XIAO RP2040 board package to your IDE. Navigate to **Arduino IDE** > **Settings...** and add the following URLs to the **Additional Board Manager URLs** field.
+2. Add the Seeed Studio XIAO RP2040 board package to your IDE. Navigate to **Arduino IDE** > **Settings...** and add the following URLs to the **Additional Board Manager URLs** field. It's a single line, so you should combine the URLs with a comma.
 
 ```
 https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
@@ -44,7 +44,7 @@ To select the port, go to **Tools** > **Port** and select the serial port name o
 > - AccelStepper (by Mike McCauley)
 > - osap (by Jake Robert Read)
 
-1. Copy the Arduino code from the respective firmware file (found in [`./firmwares`](./firmwares/)) into your IDE and upload to your board.
+1. Copy the Arduino code from the respective firmware file (found in [`./firmware`](./firmware/)) into your IDE and upload to your board.
 
 > The firmware is very fresh and poorly documented (and rapidly changing). Ask in #haxidraw-developemnt for a link to the latest version.
 

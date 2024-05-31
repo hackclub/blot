@@ -1,14 +1,15 @@
 ---
-title: Raymarching in Haxidraw
-thumbnail: https://cloud-4kaqtq8oi-hack-club-bot.vercel.app/0image.png
+title: Raymarching in Blot
+thumbnail: https://cloud-79ah2o72z-hack-club-bot.vercel.app/00image.webp
 contributors: henrybass
 pinned: true
 ---
 
 The goal of this guide will be to simulate 3D environments, with realistic lighting and shadows. By the end, you should have something like this:
 
-<img
-  src="https://cloud-4kaqtq8oi-hack-club-bot.vercel.app/0image.png"
+<img 
+  alt="Raymarching in Blot"
+  src="https://cloud-79ah2o72z-hack-club-bot.vercel.app/00image.webp"
   width="512"
 />
 
@@ -19,6 +20,7 @@ Let's start by thinking about how vision works in real life. Light rays come fro
 - From there, cast them in the direction of a light source, to see if they're in a shadow
 
 <img
+  alt="wikipedia image"
   src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Ray_trace_diagram.svg/2560px-Ray_trace_diagram.svg.png"
   width="512"
 />
@@ -32,6 +34,7 @@ Luckily, an alternative exists. In ray marching, there's no need to have an inte
 - If the new minimum distance is below some low threshold, the ray has probably hit some object. Otherwise, repeat this sequence of steps until it does hit something.
 
 <img
+  alt="wikipedia image"
   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Visualization_of_SDF_ray_marching_algorithm.png/2560px-Visualization_of_SDF_ray_marching_algorithm.png"
   width="512"
 />

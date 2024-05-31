@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Blot Image Thing</title>
+
+        <style>
+            body {
+                background-color: rgb(51, 51, 51);
+                color: white;
+                font-family: sans-serif;
+                text-align: center;
+                padding: 0;
+                margin: 0;
+            }
+
+            #output {
+                width: 100vw;
+                height: fit-content;
+                overflow-wrap: break-word;
+                text-wrap: wrap;
+                font-size: 0.1em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Blot Image Thing™️</h1>
+
+        <h2>Input: <code>image.png</code> in this HTML file's working directory</h2>
+        <h3>Paste the output into an online-hosted text file (such as a raw GitHub text file) and paste the direct link into the url constant in the blot program</h3>
+        <h2>Output (double-click to copy):</h2>
+        <div id="output">Loading... check console for errors if this is taking too long!</div>
+
+        <script>
+
+            const threshold = 60;
+
+            function get_blot_code(pixel_data) {
+                if ((pixel_data[0] + pixel_data[1] + pixel_data[2])/3 > threshold) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+
+            var img = new Image(); 
+            img.onload = function() {
+                console.log(this)
+                var canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                console.log(img.width);
+                console.log(img.height);
+                var ctx = canvas.getContext("2d");
+
+                ctx.drawImage(img, 0, 0);
+
+                console.log();
+
+                imageData = ctx.getImageData(0,0,img.width,img.height);
+                data = imageData.data;
+                width = imageData.width;
+                height = imageData.height;
+
+                let blot_code = "";
+                
+                let current_row_index = 0;
+                let iter_div = 0; // 0=R, 1=G, 2=B, 3=A, 4=loop to 0
+                let current_pixel_data = [];
+                for (let i = 0; i < data.length; i++) {
+
+                    
+
+                    if (iter_div != 3) {
+                        current_pixel_data += data[i];
+                    }
+
+                    iter_div++;
+                    current_row_index++;
+                    if (iter_div > 3) {
+                        iter_div = 0;
+                        blot_code += get_blot_code(current_pixel_data);
+                        current_pixel_data = [];
+
+                        
+                        if (current_row_index >= width*4) {
+                            blot_code += "-"
+                            current_row_index = 0;
+                        }
+                    }
+                }
+                document.getElementById("output").innerText = blot_code;
+            }
+            img.src = "image.png";
+        </script>
+    </body>
+</html>

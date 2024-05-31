@@ -1,8 +1,0 @@
-package.json
-package-lock.json
-public/*
-.next/*
-.vercel/*
-*/.vercel
-*/*/*.mdx
-*/*/*/*.mdx

@@ -1,5 +1,13 @@
-const t = new Turtle()
-drawTurtles(t)
+/*
+@title: landscape
+@author: henry bass
+@snapshot: landscape.png
+*/
+
+setDocDimensions(125, 125);
+
+const t = new bt.Turtle();
+
 const time = 106
 
 const resX = 5.16
@@ -13,7 +21,7 @@ const distanceFalloff = 4
 
 const globalScale = 1
 
-const cameraX = 25.34
+const cameraX = 23.54
 const dx = 1 / (resX * 10)
 const dy = 1 / (resY * 10)
 
@@ -31,7 +39,7 @@ function softmin(x, y) {
 
 function genHeight(x, y) {
   let height =
-    (noise([x * noiseScale + cameraX, Math.pow(y, 1.4) * noiseScale]) *
+    (bt.noise([x * noiseScale + cameraX, Math.pow(y, 1.4) * noiseScale]) *
       heightScale) /
     (y + distanceFalloff)
   height = Math.max(
@@ -44,11 +52,11 @@ function genHeight(x, y) {
 }
 
 function go(x, y) {
-  t.goTo([x * globalScale, (y - 9) * globalScale])
+  t.goTo([x * globalScale, (y - 8) * globalScale])
 }
 
 function drawTree(x, y, size) {
-  size = size * rand() + size / 2
+  size = size * bt.rand() + size / 2
   t.down()
   go(x, y)
   go(x, y + size)
@@ -84,3 +92,8 @@ function drawLandscape() {
 }
 
 drawLandscape()
+
+bt.scale(t.path, 125/bt.bounds(t.path).width);
+bt.translate(t.path, [125/2, 0], bt.bounds(t.path).cb);
+
+drawLines(t.lines())

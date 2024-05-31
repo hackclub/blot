@@ -1,6 +1,6 @@
 ---
 title: 10PRINT
-thumbnail: https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png
+thumbnail: https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp
 contributors: henrybass
 ---
 
@@ -12,17 +12,17 @@ _This tutorial is aimed at beginners, but it works best if you have a little pri
 `10 PRINT CHR$(205.5+RND(1)); : GOTO 10`
 From just that one line, the following intricate pattern is created:
 
-<img src="https://elmcip.net/sites/default/files/media/work/images/the_ppg256_article_image.png" width="512"/>
+<img alt="10print" src="https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp" width="512"/>
 
-There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Haxidraw_**. (This tutorial works fine if you don't have one!)
+There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Blot_**. (This tutorial works fine if you don't have one!)
 
-A Haxidraw is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
+A Blot is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
 
 <img src="https://haxidraw.hackclub.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdrawing-machine.726ff526.png&w=3840&q=75" width="512"/>
 
 <img src="https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png" width="512"/>
 
-Here are some examples of art people have made with Haxidraw:
+Here are some examples of art people have made with Blot:
 
 <img src="https://github.com/hackclub/haxidraw/blob/main/art/landscape-henry/snapshots/landscape.png?raw=true" width="512"/>
 
@@ -132,7 +132,7 @@ Each time we're at a new row, start moving horizontally by increasing `x`. At ev
 
 And, lastly, let's draw this to the screen! This is done simply by calling the function `drawTurtles` with the turtle we defined at the start.
 
-`drawTurtles(t);`
+`drawTurtles([ t ]);`
 
 And, you're done! If all went well, you should be seeing something like the below art:
 

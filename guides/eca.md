@@ -1,6 +1,6 @@
 ---
 title: Elementary Cellular Automata
-thumbnail: https://cloud-oz9juilm9-hack-club-bot.vercel.app/0image.png
+thumbnail: https://cloud-i7potzeq3-hack-club-bot.vercel.app/00image-2-2.webp
 contributors: henrybass
 ---
 
@@ -10,8 +10,8 @@ contributors: henrybass
 
 Through extremely simple rules, complex patterns can be created.
 
-<img src="https://cloud-oz9juilm9-hack-club-bot.vercel.app/0image.png" width="512"/>
-<img src="https://cloud-eci1vxr8d-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img alt="elementary cellular automata" src="https://cloud-i7potzeq3-hack-club-bot.vercel.app/00image-2-2.webp" width="512"/>
+<img alt="elementary cellular automata" src="https://cloud-4du3fnctv-hack-club-bot.vercel.app/00image-3.webp" width="512"/>
 
 The rules behind Elementary Cellular Automata, or ECA, are very simple.
 
@@ -108,7 +108,7 @@ We then check if the state matches, and if it does, follow the rule defined:
 ```
 
 Now, how should we draw this?
-Since the Haxidraw can't directly render pixels, we'll have to be a _bit_ more creative with how we do this.
+Since the Blot can't directly render pixels, we'll have to be a _bit_ more creative with how we do this.
 
 By using the following rendering method, we can some visually interesting results:
 
@@ -167,7 +167,7 @@ for (let gen = 0; gen < w; gen++) {
   drawGen(allGens[gen + 1], gen)
 }
 
-drawTurtles(t)
+drawTurtles([ t ])
 ```
 
 Great job! There are plenty of variations on ECAs that you can explore. Here's a few more drawings done with the code, by setting only the center pixel as a one:
