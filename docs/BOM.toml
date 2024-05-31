@@ -323,3 +323,12 @@ notes = "30w+ is ideal, but anything over 20w can still work"
 container = ["free floating"]
 exampleSource = "https://www.amazon.com/3-Pack-Wall-Charger-Type-Power/dp/B0CDWLK1NG/ref=sr_1_1_sspa?crid=29EGJIM7AE9SM&dib=eyJ2IjoiMSJ9.7ou9qnO76ifgV04Xj_sOkRLlL5pgUeb2SXTmbVh4HI_RBEBJpHBs8_B256KEpt_-2w69DNolOk3PLMJ9yNNE9Rntw53xCLShXaGKb0Ob1mdRCLkfslrMzkvpkUOfqRkY05HG8cljbJ9wk8JWxCzr-GJtEZT6FZm60W1YA3_JL5r8EVmNaC_be1NG4aBJP-nA5L1-EhdPVk7YQ905Jzl_D7TVt9a4VQFHSMHI-tMTiTQIfhZxg1jxE4l21OM_RfDGWsdOTkPAY-xhoBYSuduejvXXOGN9EXybJzlPefaX3nM.MvMmBQ3YMB5EYjF-qFkQpaKqir0M-9hAG5VWGLFHFdU&dib_tag=se&keywords=20w+usb-c&qid=1709663916&s=industrial&sprefix=20w+usb-c%2Cindustrial%2C125&sr=1-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1&smid=A3T7NGXH3L1OEM"
 tags = []
+
+[[items]]
+part = "Pilot G-2 roller pen"
+quantity = "1"
+findLocalSupplier = true
+notes = "for drawing with the machine"
+container = ["free floating"]
+exampleSource = "https://www.amazon.com/Pilot-Retractable-Premium-Roller-31020/dp/B001GAOTSW/ref=sr_1_5?dib=eyJ2IjoiMSJ9.pFXBdh11TeE4_rL1w11pAsGHoWifMZnmBXt_inn_e0kpGqiw4WyC7hHqsUzB8Nq_Wbd1YPdNaO1hqLCF3dmkba5hMm3j3QatzOO1thgFn4r-nSuMISU_0PDpJ8PbRYMkjuA2BZecDSXPj7HT4reinAsQCy2oJJodfz9Hvr86kCmtKc5qqESdRGJEv_vd8Qz-xPw6xFN1U3zQXFv1IfFda6rqSh-PPYrpUdL8ygYuS2tYlCN-jkvyRq9xlHHqOZN-aMQ7S21zfgqYcEAgrrLxSgThm9yrKvTK7sdh1d2woPA.RHEGmIwhQEPT2tCrcu0TNumAYUbR-EbH-dvahtTIdRI&dib_tag=se&keywords=pilot%2Bg2%2Bpens&qid=1717169049&sr=8-5&th=1"
+tags = []
