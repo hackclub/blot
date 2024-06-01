@@ -1,17 +1,15 @@
-//The import and functions here are so you can have access to the turtle functions when porgraming, for the real thing delete them
-import { Turtle } from "blot/virtual-gallery/drawing-functions/Turtle.js"
-function createTurtle(): Turtle {
-    return new Turtle
+function drawLines(lines) { }
+function setDocDimensions(width, height) { }
+class bt {
+    public static randIntInRange(min: number, max: number): number {
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
 }
-
-function drawTurtles(turtle: Turtle[]) { }
-
-function randIntInRange(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1) + min)
-}
-//turtle stuff above^
+// ^ Helper stuff above ^
+//Delete before running on blot
 
 
+//Code rough outline:
 interface Maze {
     walls: Walls
     grid: CellGrid
@@ -70,90 +68,64 @@ interface WallState {
                      \▓▓                                                                                                    
 */
 
+/*
+@title: mazeGenerator
+@author: evanGan
+@snapshot: the name of the snapshot file you want in the gallery
+*/
 
+//+------------------------------------+
+//| SEE BOTTOM FOR RUN CODE & SETTINGS |
+//+------------------------------------+
+/*
+                   .
+                     .
+                 . ;.
+                  .;
+                   ;;.
+                 ;.;;
+                 ;;;;.
+                 ;;;;;
+                 ;;;;;
+                 ;;;;;
+                 ;;;;;
+                 ;;;;;
+               ..;;;;;..
+                ':::::'
+                  ':`
+*/
+
+//THIS IS A BUILT SOURCE! It's advised you look at the original code before it was transpiled
+//You can find the code at: https://github.com/evan-gan/blot/tree/main/art/mazeGenerator-Evan
 class MazeDrawer {
-    public static draw(X: number, Y: number, width: number, hight: number, maze: Maze) {
+    public static getPolylines(Xoffset: number, Yoffset: number, width: number, hight: number, maze: Maze) {
+        let mazePolylines = []
         //Cleares entrence and exit
         maze.walls.rows[0][0].isWall = false
         maze.walls.rows[maze.walls.rows.length - 1][maze.walls.rows[0].length - 1].isWall = false
-        //Turtle time!
-        let turtle = createTurtle()
-        turtle.jump([X, Y])
-        turtle.down()
-        //basicly the width of a colum
-        const rowSegmentLength = width / maze.grid.columCount
-        //basicly the hight of a row
-        const columSegmentLength = hight / maze.grid.rowCount
+        
+        const cellWidth = width/maze.grid.columCount
+        const cellHight = hight/maze.grid.rowCount
 
-        //ensure most efficient path of plotter
-        let directionToggle = true
-        let currentRowY = Y
-        for (let row of maze.walls.rows.reverse()) {
-            if (directionToggle) {
-                //left to right
-                let nextX = X
-                turtle.jump([nextX,currentRowY])
-                for (let wall of row) {
-                    nextX += rowSegmentLength
-                    if (wall.isWall) {
-                        turtle.goTo([nextX, currentRowY])
-                    } else {
-                        turtle.jump([nextX, currentRowY])
-                    }
+        //Add rows
+        for (let row = 0; row < maze.walls.rows.length; row++) { 
+            for (let col = 0; col < maze.walls.rows[0].length; col++) { 
+                if (maze.walls.rows[row][col].isWall) { 
+                    mazePolylines.push([[col*cellWidth+Xoffset,hight-(row*cellHight)+Yoffset],[col*cellWidth+cellWidth+Xoffset,hight-(row*cellHight)+Yoffset]])
                 }
-                directionToggle = false
-            } else {
-                //right to left
-                let nextX = X + width
-                turtle.jump([nextX,currentRowY])
-                for (let wall of row.reverse()) {
-                    nextX -= rowSegmentLength
-                    if (wall.isWall) {
-                        turtle.goTo([nextX, currentRowY])
-                    } else {
-                        turtle.jump([nextX, currentRowY])
-                    }
-                }
-                directionToggle = true
             }
-            currentRowY += columSegmentLength
+        }
+        // console.log(JSON.parse(JSON.stringify(maze.walls.colums)))
+        //Add colums
+        for (let row = 0; row < maze.walls.colums.length; row++) { 
+            for (let col = 0; col < maze.walls.colums[0].length; col++) { 
+                if (maze.walls.colums[row][col].isWall) { 
+                    mazePolylines.push([[col*cellWidth+Xoffset,hight-(row*cellHight)+Yoffset],[col*cellWidth+Xoffset,hight-(row*cellHight+cellHight)+Yoffset]])
+                }
+            }
         }
 
-        //Colums
-        let currentColumX = X
-        directionToggle = false
-        for (let colum = 0; colum < maze.walls.colums[0].length; colum++) {
-            if (directionToggle) {
-                //left to right
-                let nextY = Y
-                turtle.jump([currentColumX, nextY])
-                for (let row = 0; row < maze.walls.colums.length; row++) {
-                    nextY += columSegmentLength
-                    if (maze.walls.colums[maze.walls.colums.length - 1 - row][colum].isWall) {
-                        turtle.goTo([currentColumX,nextY])
-                    } else {
-                        turtle.jump([currentColumX,nextY])
-                    }
-                }
-                directionToggle = false
-            } else {
-                //right to left
-                let nextY = Y + hight
-                turtle.jump([currentColumX,nextY])
-                for (let row = maze.walls.colums.length - 1; row >= 0; row--) {
-                    nextY -= columSegmentLength
-                    if (maze.walls.colums[maze.walls.colums.length - 1 - row][colum].isWall) {
-                        turtle.goTo([currentColumX,nextY])
-                    } else {
-                        turtle.jump([currentColumX,nextY])
-                    }
-                }
-                directionToggle = true
-            }
-            currentColumX += rowSegmentLength
-        }
-
-        drawTurtles([ turtle ])
+        return mazePolylines
     }
 }
 
@@ -173,7 +145,7 @@ class MazeImplementation implements Maze {
         this.grid.grid[row][colum].generated = true
         while (this.grid.grid[row - 1]?.[colum]?.generated === false || this.grid.grid[row + 1]?.[colum]?.generated === false || this.grid.grid[row]?.[colum - 1]?.generated === false || this.grid.grid[row]?.[colum + 1]?.generated === false) {
             //Math.floor(Math.random() * (max - min + 1) + min)
-            const randomNumber = randIntInRange(1,4)
+            const randomNumber = bt.randIntInRange(1,4)
             //up,down,left,right
             if (randomNumber === 1 && this.grid.grid[row - 1]?.[colum] != undefined && this.grid.grid[row - 1][colum].generated === false) {
                 this.grid.grid[row][colum].boderingWall.up.isWall = false
@@ -220,7 +192,6 @@ class MazeImplementation implements Maze {
         }
         console.log(displayMazed);
     }
-
 }
 
 class CellGridImplementation implements CellGrid {
@@ -280,8 +251,9 @@ class WallsImplementation implements Walls {
         this.rowCount = cellRows + 1
         this.columCount = cellColums + 1
     }
-
 }
+//Pathing optimisation
+
 /*
  __       __                                 _______                                                  
 |  \     /  \                               |       \                                                 
@@ -298,6 +270,9 @@ class WallsImplementation implements Walls {
 //Then use MazeDrawer.draw(startX, startY, widthInMM, hightInMM, mazeInstance)
 
 //Below is an example I made that you can play around with
+const width = 125
+const height = 125
+setDocDimensions(width, height);
 let maze = new MazeImplementation(5, 5)
 maze.generateMaze()
-MazeDrawer.draw(5, 5, 100, 100, maze)
+drawLines(MazeDrawer.getPolylines(5, 5, 100, 100, maze))

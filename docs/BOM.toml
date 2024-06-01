@@ -70,9 +70,9 @@ container = "box #1"
 
 [[items]]
 part = "M5x25 Button Cap Screw"
-notes = "for attaching wheels to pen holder (3), and idlers on carriage (4)"
+notes = "for attaching wheels to pen holder (3), and idlers on carriage (4), idler on pen rail (1)"
 exampleSource = "https://www.mcmaster.com/92095A216/"
-quantity = 7
+quantity = 8
 findLocalSupplier = true
 container = "box #1"
 
@@ -288,6 +288,13 @@ notes = "brains of the control board; purchase from Seeed Studios with header so
 container = "electronics box"
 
 [[items]]
+part = "a4988 stepper motor driver"
+quantity = 2
+findLocalSupplier = true
+notes = "for driving stepper motors"
+exampleSource = "https://www.amazon.com/Bolsen-Reprap-Stepper-Aluminum-Printer/dp/B07G15Z31B/ref=sr_1_3?dib=eyJ2IjoiMSJ9.wzEIhvXmp5CY2mkFwFb5tguNDgSMny5eRAz7Vq6cih3hguozuZeLKRipq30ZX9z4oTwzP4Rls4omlmp-uX0bXVULDgAjIbJVzOKeI605lFcYK18qtTZBWjB9_g4egg95Ivu6h8vNqYVQBlSxxNIPoekUbOtjsrly09hE8jy2KLEji4_P9W27EZymRIY90_8PMRadzF4ivboG6QdYO68X9nUlRiq43iZcZbuhTKVYfpg.xnk07OkEEhhH4PxhF69hR7y623Pbxa9Bpq29sWLXuwY&dib_tag=se&keywords=Pololu+Stepper+Driver&qid=1717171521&sr=8-3"
+
+[[items]]
 part = "Servo (25mm cable) + arm"
 exampleSource = "https://www.amazon.com/gp/product/B07L2SF3R4/"
 quantity = 1
@@ -322,4 +329,13 @@ findLocalSupplier = true
 notes = "30w+ is ideal, but anything over 20w can still work"
 container = ["free floating"]
 exampleSource = "https://www.amazon.com/3-Pack-Wall-Charger-Type-Power/dp/B0CDWLK1NG/ref=sr_1_1_sspa?crid=29EGJIM7AE9SM&dib=eyJ2IjoiMSJ9.7ou9qnO76ifgV04Xj_sOkRLlL5pgUeb2SXTmbVh4HI_RBEBJpHBs8_B256KEpt_-2w69DNolOk3PLMJ9yNNE9Rntw53xCLShXaGKb0Ob1mdRCLkfslrMzkvpkUOfqRkY05HG8cljbJ9wk8JWxCzr-GJtEZT6FZm60W1YA3_JL5r8EVmNaC_be1NG4aBJP-nA5L1-EhdPVk7YQ905Jzl_D7TVt9a4VQFHSMHI-tMTiTQIfhZxg1jxE4l21OM_RfDGWsdOTkPAY-xhoBYSuduejvXXOGN9EXybJzlPefaX3nM.MvMmBQ3YMB5EYjF-qFkQpaKqir0M-9hAG5VWGLFHFdU&dib_tag=se&keywords=20w+usb-c&qid=1709663916&s=industrial&sprefix=20w+usb-c%2Cindustrial%2C125&sr=1-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1&smid=A3T7NGXH3L1OEM"
+tags = []
+
+[[items]]
+part = "Pilot G-2 roller pen"
+quantity = "1"
+findLocalSupplier = true
+notes = "for drawing with the machine"
+container = ["free floating"]
+exampleSource = "https://www.amazon.com/Pilot-Retractable-Premium-Roller-31020/dp/B001GAOTSW/ref=sr_1_5?dib=eyJ2IjoiMSJ9.pFXBdh11TeE4_rL1w11pAsGHoWifMZnmBXt_inn_e0kpGqiw4WyC7hHqsUzB8Nq_Wbd1YPdNaO1hqLCF3dmkba5hMm3j3QatzOO1thgFn4r-nSuMISU_0PDpJ8PbRYMkjuA2BZecDSXPj7HT4reinAsQCy2oJJodfz9Hvr86kCmtKc5qqESdRGJEv_vd8Qz-xPw6xFN1U3zQXFv1IfFda6rqSh-PPYrpUdL8ygYuS2tYlCN-jkvyRq9xlHHqOZN-aMQ7S21zfgqYcEAgrrLxSgThm9yrKvTK7sdh1d2woPA.RHEGmIwhQEPT2tCrcu0TNumAYUbR-EbH-dvahtTIdRI&dib_tag=se&keywords=pilot%2Bg2%2Bpens&qid=1717169049&sr=8-5&th=1"
 tags = []

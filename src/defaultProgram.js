@@ -8,21 +8,23 @@ const height = 125;
 
 setDocDimensions(width, height);
 
+// store final lines here
 const finalLines = [];
 
-const t = new bt.Turtle();
+// create a polyline
+const polyline = [
+  [30, 90],
+  [100, 90],
+  [100, 30],
+  [30, 30],
+  [30, 90]
+];
 
-for (let i = 0; i < 52; i++) {
-  t.forward(i);
-  t.right(91);
-}
+// add the polyline to the final lines
+finalLines.push(polyline);
 
-// add turtle to final lines
-bt.join(finalLines, t.lines());
-
-// center piece
-const cc = bt.bounds(finalLines).cc;
-bt.translate(finalLines, [width / 2, height / 2], cc);
+// transform lines using the toolkit
+bt.rotate(finalLines, 45);
 
 // draw it
 drawLines(finalLines);
