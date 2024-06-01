@@ -9,9 +9,10 @@ import hljs from "highlight.js";
 const renderer = new marked.Renderer();
 
 renderer.heading = (text, level, raw, slugger) => {
-  if (level === 1) return `<h1 class="text-3xl font-sans font-semibold text-gray-800 py-2">${text}</h1>`;
-  if (level === 2) return `<h1 class="text-2xl font-sans font-semibold text-gray-800 py-2">${text}</h1>`;
-  if (level === 3) return `<h1 class="text-xl font-sans font-semibold text-gray-800 py-2">${text}</h1>`;
+  
+  if (level === 1) return `<h1 class=${styles.h1}>${text}</h1>`;
+  if (level === 2) return `<h1 class=${styles.h2}>${text}</h1>`;
+  if (level === 3) return `<h1 class=${styles.h3}>${text}</h1>`;
   else return `<h1>${text}</h1>`
 };
 
@@ -136,7 +137,7 @@ export default function Help({
         )}
         {tab === "workshop" && (
           <div class={styles.helpContent}>
-            <h1 class="text-2xl font-sans font-semibold text-gray-800">{workshopContent.frontMatter.title}</h1>
+            <h1 class={styles.h2}>{workshopContent.frontMatter.title}</h1>
             <div
               dangerouslySetInnerHTML={{
                 __html: workshopContent.htmlContent,

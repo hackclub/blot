@@ -8,7 +8,7 @@ import styles from './Toolbar.module.css'
 import Button from '../ui/Button.tsx'
 // import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
 // import PlugIcon from '../ui/PlugIcon.tsx'
-// import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
+import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
@@ -421,6 +421,26 @@ function SettingsButton() {
           <KeyboardIcon className={styles.icon} />
           <span class="px-2">{vimMode ? 'Disable' : 'Enable'} vim mode</span>
         </div>
+        <div
+          class={menuItemClasses}
+          onClick={() => {
+            const newTheme = theme === 'dark' ? 'light' : 'dark'
+            patchStore({
+              theme: newTheme
+            })
+
+            document.body.dataset.theme = newTheme
+
+            localStorage.setItem('colorTheme', newTheme)
+
+            
+
+          }}>
+         
+          <BrightnessContrastIcon className={styles.icon} />
+          <span class="px-2">Toggle Dark Mode</span>
+        </div>
+        
         { loginName && 
           <div class="p-2 hover:bg-white hover:bg-opacity-10" onClick={logOut}>
             Log out

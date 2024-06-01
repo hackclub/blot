@@ -3,7 +3,9 @@
   padding: 0.4rem 0.5rem;
   margin-right: 0.5rem;
 }
-
+body[data-theme='dark'] .root{
+  background-color:#1E7898
+}
 .heading a {
   color: inherit;
   display: flex;
