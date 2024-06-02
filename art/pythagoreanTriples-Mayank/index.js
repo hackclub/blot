@@ -1,3 +1,8 @@
+/*
+@title: Pythagorean Triples
+@author: Mayank Kumar
+@snapshot: image.png
+*/
 const n = 47; //max side length (any unit)
 
 const width = n * 20;
