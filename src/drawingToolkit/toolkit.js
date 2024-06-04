@@ -22,16 +22,39 @@ import { catmullRom } from "./catmullRom.js";
 import { nurbs } from "./nurbs.js";
 import { bezierEasing } from "./bezierEasing.js";
 import * as polyclip from 'polyclip-ts';
+import { turnForward } from "./turnForward.js"
+import { arc } from "./arc.js"
+import { offset } from "./offset.js"
 
 export const toolkit = {
   // polyclip, // NOT INCLUDED
   // boolean, // NOT INCLUDED
   // polygonClipping, // NOT INCLUDED
   // displace, // NOT INCLUDED
+
   union: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "union", ops),
   intersection: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "intersection", ops),
   difference: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "difference", ops),
   xor: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "xor", ops),
+  
+  offset, // undoced
+  turnForward, // undoced
+  arc, // undoced
+  step: (polylines, dx, dy) => { // undoced
+    if (polylines.length === 0) {
+      polylines.push([ [0, 0] ])
+    }
+
+    const [x, y] = polylines.at(-1).at(-1);
+
+    polylines.at(-1).push([
+      x + dx,
+      y + dy
+    ])
+
+    return polylines;
+  },
+
   iteratePoints: iteratePolylines,
   transform,
   bounds,
