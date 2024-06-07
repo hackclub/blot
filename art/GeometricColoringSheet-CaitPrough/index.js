@@ -5,8 +5,8 @@
 */
 
 // these are the size of the grid
-const sqNumWidth = 10; // Number of squares wide
-const sqNumHeight = 10; // Number of squares tall
+const sqNumWidth = 12; // Number of squares wide
+const sqNumHeight = 12; // Number of squares tall
 
 // if width and height = 10 there will be no gap between shapes, larger will
 // have the gaps as the remainder after 10, less will cause overlap
@@ -39,11 +39,11 @@ function polylineCircle(center, radius, segments) {
   return [circle];
 }
 
-// create arc/quarter circle
+// create quarter circle
 function quarterCircle(center, radius, segments) {
   const qCircle = [];
   const startAngle = -Math.PI / 2; // angle
-  const endAngle = 0; 
+  const endAngle = 0;
   const angleIncrement = (endAngle - startAngle) / segments;
   qCircle.push([5, 5], [-5, 5]);
   qCircle.push([-5, 5], [-5, -5]);
@@ -56,12 +56,59 @@ function quarterCircle(center, radius, segments) {
   return [qCircle];
 }
 
+// create arc
+function arc(center, radius, segments) {
+  const qCircle = [];
+  const startAngle = -Math.PI / 2; // angle
+  const endAngle = 0;
+  const angleIncrement = (endAngle - startAngle) / segments;
+  for (let i = 0; i <= segments; i++) {
+    const angle = startAngle + i * angleIncrement;
+    const x = center[0] + radius * Math.cos(angle);
+    const y = center[1] + radius * Math.sin(angle);
+    qCircle.push([y, x]);
+  }
+  for (let i = segments; i >= 0; i--) {
+    const angle = startAngle + i * angleIncrement;
+    const x = center[0] + radius * Math.cos(angle);
+    const y = center[1] + radius * Math.sin(angle);
+    qCircle.push([x, y]);
+  }
+  return [qCircle];
+}
+
 // iterates creation
 for (let i = 0; i < sqNumWidth; i++) {
   for (let j = 0; j < sqNumHeight; j++) {
     let shape;
-    const num = bt.randInRange(1, 4); 
-    if (num <= 2) { 
+    const num = bt.randInRange(0, 5);
+    
+    if (num <= 1) {
+      const num = bt.randInRange(0,2);
+      if (num <= 1) {
+        shape = [
+          [
+            [-5,5],
+            [5,5],
+            [5,0],
+            [-5,0],
+            [-5,5],
+          ]
+        ];
+      }
+      else {
+        shape = [
+          [
+            [-5,5],
+            [0,5],
+            [0,-5],
+            [-5,-5],
+            [-5,5],
+          ]
+        ];
+      }
+    }
+    else if (num <= 2) {
       shape = [
         [
           [-5, 5],
@@ -69,15 +116,24 @@ for (let i = 0; i < sqNumWidth; i++) {
           [5, 5],
           [-5, 5],
         ]
-      ];}
+      ]
+      rotateShape(shape);
+    } 
     else if (num <= 3) { //quarter circle
-      shape = quarterCircle([-5, 5], 10, 24);}
-      
-    else { //full circle
-      shape = polylineCircle([0, 0], 5, 24);}
+      shape = quarterCircle([-5, 5], 10, 24);
+      rotateShape(shape);
+    } 
+    else if (num <= 4) { //full circle
+      shape = polylineCircle([0, 0], 5, 24);
+      rotateShape(shape);
+    } 
+    else {
+      shape = arc([-5, 5], 10, 24);
+      rotateShape(shape);
+    }
 
     bt.translate(shape, [squareWidth * i, squareHeight * j]); // puts shape where it goes
-    rotateShape(shape); // random chance of rotation
+    //rotateShape(shape);
     bt.join(finalLines, shape); // add shape to group
   }
 }
