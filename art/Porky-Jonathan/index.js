@@ -1,7 +1,7 @@
 /*
 @title: Little Porcupine
 @author: Jonathan Dong
-@snapshot: Porky!
+@snapshot: snapshot0.png
 */
 const width = 125;
 const height = 125;
