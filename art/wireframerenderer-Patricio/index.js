@@ -1,7 +1,7 @@
 /*
 @title: 3d_wire_frame_renderer
 @author: Patcybermind
-@snapshot: castle
+@snapshot: 0.png
 */
 
 // BLOT SETTINGS
