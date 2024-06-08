@@ -1,7 +1,7 @@
 /*
 @title: Cursor Wall
 @author: smashmaster
-@snapshot: every cursor is unique and usually not symmetric.
+@snapshot: snapshot1.png
 */
 
 // welcome to blot!
