@@ -1,7 +1,7 @@
 /*
 @title: GeometricColoringSheet
 @author: CaitPrough
-@snapshot: 12x12noGaps
+@snapshot: 12x12noGaps.png
 */
 
 // these are the size of the grid
