@@ -210,7 +210,7 @@ findLocalSupplier = true
 container = "box #3"
 
 [[items]]
-part = "125mm long GT2 Timing Belt"
+part = "125cm long GT2 Timing Belt"
 quantity = 1
 findLocalSupplier = true
 container = "box #2"

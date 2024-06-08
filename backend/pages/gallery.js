@@ -63,20 +63,26 @@ export default function() {
 
   directories.forEach((dir, i) => {
     if (GALLERY_NOT_TO_DISPLAY.includes(dir)) return;
-    const file = fs.readFileSync(`./art/${dir}/index.js`, 'utf8');
 
-    const metadata = extractKeyValuePairs(file);
+    try {
+      const file = fs.readFileSync(`./art/${dir}/index.js`, 'utf8');
 
-    if (Object.keys(metadata).length === 0) return; 
+      const metadata = extractKeyValuePairs(file);
 
-    const result = {
-      dir: dir,
-      img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${dir}/snapshots/${metadata.snapshot}`,
-      href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${dir}/index.js`,
-      alt: dir
+      if (Object.keys(metadata).length === 0) return; 
+
+      const result = {
+        dir: dir,
+        img: `https://raw.githubusercontent.com/hackclub/blot/main/art/${dir}/snapshots/${metadata.snapshot}`,
+        href: `/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/${dir}/index.js`,
+        alt: dir
+      }
+
+      files.push(result);
+    } catch (err) {
+      console.log(err);
     }
-
-    files.push(result);
+    
 
   })
 
