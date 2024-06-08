@@ -1,7 +1,7 @@
 /*
 @title: RatandCheese
 @author: Anna K
-@snapshot: ratandcheese.png
+@snapshot: RatSS1.png
 */
 
 /* My drawing is a rat that, with every run, changes the length of its tail,
