@@ -1,7 +1,7 @@
 /*
 @title: GSLV.Mk.III
 @author: Samrat
-@snapshot: 2.png
+@snapshot: snapshot2.png
 */
 const width = 125;
 const height = 125;
