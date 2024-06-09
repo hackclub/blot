@@ -7,7 +7,7 @@ body[data-theme='dark'] .helpSectionTab{
   background-color:rgb(30, 120, 152);
 }
 body[data-theme='dark'] .helpSectionTab:hover {
-  background: rgba(30,120,152, 0.89);
+  background:rgba(15, 57, 77, 0.89);
 }
 .helpSectionToolbar {
   display: flex;
@@ -114,7 +114,7 @@ body[data-theme='dark'] .h1, .h2, .h3 {
 
 
 body[data-theme='dark'] .helpContent {
-  background-color: rgba(50, 50, 50, 1);
+  background-color: rgb(32, 32, 32);
   color: white;
 }
 
@@ -122,7 +122,7 @@ body[data-theme='dark'] .helpContent a {
   color: white;
 }
 body[data-theme='dark'] .helpContent pre {
-  background-color: rgb(175, 175, 175);
+  background-color: rgba(46,50,53,255);
 }
 
 body[data-theme='dark'] .helpContent hr {
@@ -133,8 +133,9 @@ body[data-theme='dark'] .helpContent img {
   background-color: white;
 }
 body[data-theme='dark'] .helpContent code {
-  background: rgb(175, 175, 175);
+  background: rgba(46,50,53,255);
 }
+
 
 .helpContent p {
   margin-top: 1em;

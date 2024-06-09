@@ -47,14 +47,18 @@ const dropdownClasses =`
   flex-col
   absolute
   top-full
-  bg-[var(--primary)]
   w-max
   z-[99999]
   rounded-b-lg
 `;
 
 export default function Toolbar() {
-  const { connected, needsSaving, machineRunning, loginName } = getStore()
+  const { connected, needsSaving, machineRunning, loginName,theme } = getStore()
+  let css = "bg-[var(--primary)]"
+  if(theme == "dark"){
+    css = "bg-dark-mode-blue"
+  }
+
 
   return (
     <div class={styles.root}>
@@ -69,7 +73,7 @@ export default function Toolbar() {
         <RunButton />
         <div class={dropdownContainer}>
           {needsSaving ? 'File*' : "File"}
-          <div class={dropdownClasses + " left-0"}>
+          <div class={dropdownClasses + " left-0 \n " + css}>
             <div class={menuItemClasses} onClick={() => patchStore({ saveToCloudModalOpen: true })}>
               Save to cloud (ctrl/cmd+s)
             </div>
@@ -99,7 +103,7 @@ export default function Toolbar() {
         </div>*/}
         <div class={dropdownContainer}>
           <div>Download</div>
-          <div class={dropdownClasses + " left-0"}>
+          <div class={dropdownClasses + " left-0 \n " + css}>
             <DownloadButton />
             <DownloadSVG />
             <DownloadPNG />
@@ -113,7 +117,7 @@ export default function Toolbar() {
         </div>
         <div class={dropdownContainer}>
           Machine control
-          <div class={dropdownClasses + " right-0"}>
+          <div class={dropdownClasses + " right-0 \n " + css}>
             <div class="p-2 hover:bg-white hover:bg-opacity-10" data-evt-connectTrigger>
               {connected ? 'Disconnect from' : 'Connect to'} machine
             </div>
@@ -403,6 +407,10 @@ function formatCode(code) {
 
 function SettingsButton() {
   const { theme, vimMode, loginName } = getStore()
+  let css = "bg-[var(--primary)]"
+  if(theme == "dark"){
+    css = "bg-dark-mode-blue"
+  }
 
   return (
     <div class={dropdownContainer}>
@@ -411,7 +419,7 @@ function SettingsButton() {
           <SettingsIcon className={styles.icon} />
         </a>
       </div>
-      <div class={dropdownClasses + " right-0"}>
+      <div class={dropdownClasses + " right-0 \n " + css}>
         <div
           class={menuItemClasses}
           onClick={() => {

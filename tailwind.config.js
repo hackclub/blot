@@ -2,7 +2,11 @@
 export default {
   content: ["./backend/**/*", "./src/**/*"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'dark-mode-blue': '#1E7898',
+      },
+    },
   },
   plugins: [],
 }

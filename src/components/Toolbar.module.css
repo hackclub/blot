@@ -6,6 +6,10 @@
 body[data-theme='dark'] .root{
   background-color:#1E7898
 }
+
+body[data-theme = 'dark'] .dropdownClasses{
+  background-color:#1E7898
+}
 .heading a {
   color: inherit;
   display: flex;
