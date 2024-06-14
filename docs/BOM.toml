@@ -128,7 +128,7 @@ findLocalSupplier = true
 container = "box #4"
 
 [[items]]
-part = "M3x10 Button Cap Screw"
+part = "M3x10 Socket Head Screw"
 notes = "for attaching stepper motors to feet"
 exampleSource = "https://www.mcmaster.com/91292A113/"
 quantity = 8
