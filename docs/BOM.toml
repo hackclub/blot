@@ -281,6 +281,15 @@ tags = ["homemade", "circuit"]
 container = "electronics box"
 
 [[items]]
+part = "PCB - power board"
+exampleSource = "https://github.com/hackclub/blot/tree/main/hardware"
+quantity = 1
+findLocalSupplier = true
+notes = "manufacture in china"
+tags = ["homemade", "circuit"]
+container = "electronics box"
+
+[[items]]
 part = "xiao RP2040"
 quantity = 1
 findLocalSupplier = true
