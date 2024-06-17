@@ -1,7 +1,7 @@
 /*
 @title: Summer Currents
 @author: Armaan Gupta
-@snapshot: snapshot.png
+@snapshot: snapshot1.png
 */
 
 // Constants
