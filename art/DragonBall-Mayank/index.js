@@ -5,7 +5,14 @@
 */
 
 // Set up the canvas dimensions
-const numStars = 3; 
+
+function randomBetween1And7() {
+  return Math.floor(Math.random() * 7) + 1;
+}
+
+// Assigning a random number between 1 and 7 to a variable
+const numStars = randomBetween1And7();
+
 
 
 const width = 200;
