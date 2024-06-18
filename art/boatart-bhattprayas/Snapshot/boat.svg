@@ -1,0 +1,18 @@
+
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 125 190" 
+                  width="125mm" 
+                  height="190mm"
+                  style="transform: scale(1, -1)">
+                    <path 
+                    d="M 100 105L 35 105L 49.99999999999999 85L 85 85L 100 105M 68 105L 68 185M 68 185L 30 115L 68 115L 68 185M 100 85L 90 80L 80 85L 70 80L 59.99999999999999 85L 49.99999999999999 80L 40 85M 95 75L 85 70L 75 75L 65 70L 54.99999999999999 75L 44.99999999999999 70L 34.99999999999999 75" 
+                    stroke-width="1" 
+                    stroke="black" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+                </svg>
+            
