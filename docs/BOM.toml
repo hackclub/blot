@@ -128,7 +128,7 @@ findLocalSupplier = true
 container = "box #4"
 
 [[items]]
-part = "M3x10 Button Cap Screw"
+part = "M3x10 Socket Head Screw"
 notes = "for attaching stepper motors to feet"
 exampleSource = "https://www.mcmaster.com/91292A113/"
 quantity = 8
@@ -275,6 +275,15 @@ part = "PCB - control board"
 exampleSource = "https://github.com/hackclub/blot/tree/main/hardware/motor-control-board"
 quantity = 1
 image = "https://raw.githubusercontent.com/hackclub/blot/main/docs/AssemblyImages/Image0086.png"
+findLocalSupplier = true
+notes = "manufacture in china"
+tags = ["homemade", "circuit"]
+container = "electronics box"
+
+[[items]]
+part = "PCB - power board"
+exampleSource = "https://github.com/hackclub/blot/tree/main/hardware"
+quantity = 1
 findLocalSupplier = true
 notes = "manufacture in china"
 tags = ["homemade", "circuit"]
