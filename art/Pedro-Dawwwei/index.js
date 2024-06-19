@@ -1,3 +1,9 @@
+/*
+@title: Pedro
+@author: Dawei Lin (Dawwwei)
+@snapshot: snapshot0.png
+*/
+
 let x1, x2, y;
 
 // Avaliable options: upLeft, up, upRight, right, downRight, down, downLeft, left, center
