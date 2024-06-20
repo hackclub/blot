@@ -8,7 +8,7 @@
 // PARAMETERS
 
 // set width of sun rays around sun and on the floor
-const rayWidth = 10 //( 1 to 10 typically work best)
+const rayWidth = 4 //( 1 to 10 typically work best)
 
 // set width of the dark border around the sun
 const sunBorder = 5
