@@ -1,3 +1,9 @@
+/*
+@title: alien
+@author: Saumil Anand
+@snapshot: snapshot1.png
+*/
+
 const width = 206;
 const height = 248;
 setDocDimensions(width, height);
