@@ -12,62 +12,86 @@ setDocDimensions(width, height);
 // store final lines here
 const finalLines = [];
 
-// create a polyline
-//const polyline = [
-//  [30, 90],
-//  [100, 90],
-//  [100, 30],
-//  [30, 30],
-//  [30, 90]
-//];
-
-const s = 125;
+const s = 0;
 
 const rot = s/125;
 
-const pi = 3.141592
+const pi = 3.141592;
 
-function calc_con1 (rot):
-    
+function calc_con (rot) {
+    if ((rot - Math.floor(rot)) > 0.5) {
+      return ((Math.sin((rot - Math.floor(rot))*pi)/2)) * 125;
+    } else {
+      return ((((Math.sin((rot - Math.floor(rot)) * pi) * -1)+2)/2)) * 125;
+    }
+}
+
+function calc_spiral (rot) {
+    if ((rot - Math.floor(rot)) > 0.5) {
+      return ((Math.sin((rot - Math.floor(rot))*pi)/2)+(rot - Math.floor(rot))) * 125;
+    } else {
+      return ((((Math.sin((rot - Math.floor(rot)) * pi) * -1)+2)/2)+(rot - Math.floor(rot))) * 125;
+    }
+}
 
 const con1 = [
-  [Math.sin(rot/2 * pi) * 125, 20],
-  [Math.sin(rot/2 * pi) * 125, 105],
+  [calc_con(rot), Math.abs(Math.sin(rot*pi)*50)],
+  [calc_con(rot), (125-Math.abs(Math.sin(rot*pi)*20))],
 ];
 
-//var k;
-//var c
+const con2 = [
+  [calc_con(rot+0.5), Math.abs(Math.sin((rot+0.5)*pi)*50)],
+  [calc_con(rot+0.5), (125-Math.abs(Math.sin((rot+0.5)*pi)*20))]
+];
 
-//if (s > 90) {
-//  k = (s - 125)*-1;
-//  c = k/3;
-//} else {
-//  k = 0;
-//  c = 0;
-//}
+const wall_con1 = [
+  [calc_con(rot+0.5), Math.abs(Math.sin((rot+0.5)*pi)*50)],
+  [calc_con(rot), Math.abs(Math.sin(rot*pi)*50)]
+];
 
-//const roof = [
-//  [k, 125 - c],
-//  [s, 105],
-//  [125, 125]
-//];
+function calc_wall_con (rot, con) {
+  if ((rot - Math.floor(rot)) > 0.5) {
+    if (con == 1) {
+      return 125;
+    } else {
+      return 0;
+    }
+  } else {
+    if (con == 1) {
+      return 0;
+    } else {
+      return 125;
+    }
+  }
+}
 
-//const floor = [
-//  [k, c],
-//  [s, 20],
-//  [125, 0]
-//];
+const wall_con2 = [
+  [calc_con(rot+0.5), Math.abs(Math.sin((rot+0.5)*pi)*50)],
+  [calc_wall_con(rot, 1), 0],
+];
 
-//const roof_floor_con = [
-//  [s, 20],
-//  [s, 105]
+const wall_con3 = [
+  [calc_con(rot), Math.abs(Math.sin(rot*pi)*50)],
+  [calc_wall_con(rot, 2), 0],
+];
+
+const roof = [
+  [calc_con(rot), (125-Math.abs(Math.sin(rot*pi)*20))],
+  [calc_con(rot+0.5), (125-Math.abs(Math.sin((rot+0.5)*pi)*20))]
+];
+
+//const root_con1 = [
+//  [calc_con(rot+0.5), Math.abs(Math.sin((rot+0.5)*pi)*50)],
+//  [calc_wall_con(rot, 1), 0],
 //];
 
 // add the polyline to the final lines
 finalLines.push(con1);
-
-// transform lines using the toolkit
-//bt.rotate(finalLines, 45);
+finalLines.push(con2);
+finalLines.push(wall_con1);
+finalLines.push(wall_con2);
+finalLines.push(wall_con3);
+finalLines.push(roof);
 
 // draw it
 drawLines(finalLines);
