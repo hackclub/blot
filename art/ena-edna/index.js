@@ -12,7 +12,7 @@ setDocDimensions(width, height);
 // store final lines here
 const boxLines = [];
 
-const s = 363;
+const s = 124/4;
 
 const rot = s/125;
 
@@ -102,7 +102,7 @@ boxLines.push(roof_con2);
 
 // store ena lines here
 const enaLines = [];
-const enaHeadLines = [];
+var enaHeadLines = [];
 
 const face_right = [
   [62.5, 88],
@@ -140,13 +140,6 @@ const ear = [
 ];
 
 const hair = [
-  [49, 86],
-  [49.5, 64],
-  [56, 68],
-  [57, 68],
-  [58.5, 69.5],
-  [65.5, 69.5],
-  [67, 68],
   [75, 75],
   [74.5, 85],
   [69, 94],
@@ -155,7 +148,9 @@ const hair = [
   [66.5, 98],
   [67, 95],
   [55, 94],
-  [49, 86]
+  [49, 86],
+  [49.5, 50],
+  [75, 75]
 ];
 
 const eye_left = [
@@ -197,7 +192,14 @@ const shirt_flap_bottom = [
 const shirt_flap_top = [
   [58.5, 69.5],
   [62, 67.5],
-  [65.5, 69.5]
+  [65.5, 69.5],
+  [58.5, 69.5],
+  [57, 68]
+];
+
+const shirt_flap_line = [
+  [65.5, 69.5],
+  [67, 68]
 ];
 
 const chest_top_1 = [
@@ -233,6 +235,7 @@ const chest_bottom_left = [
 ];
 
 const arm_left_sleeve = [
+  [57, 68],
   [49.5, 64],
   [49, 62],
   [51.5, 56.5],
@@ -293,24 +296,73 @@ const arm_left_hand = [
 ];
 
 const arm_left_fingers_1 = [
-  []
+  [23, 58.5],
+  [21.5, 59],
+  [19.75, 59],
+  [19, 60.25],
+  [21.5, 60.25],
+  [21.5, 61.5],
+  [21, 62],
+  [19, 62.5],
+  [19, 64],
+  [23, 63.75],
+  [23.8, 63.5]
 ];
 
+const arm_left_fingers_2 = [
+  [19, 60.25],
+  [18.75, 62.25],
+  [19, 62.5]
+];
+
+const arm_left_fingers_3 = [
+  [21.5, 61.5],
+  [22, 62.4166666]
+];
+
+const skirt_upper_1 = [
+  [66.4, 48],
+  [68.5, 47],
+  [68.25, 43],
+  [62, 42],
+  [55.75, 43],
+  [55.5, 47],
+  [57.6, 48]
+];
+
+const skirt_upper_2 = [
+  [65.5, 45],
+  [67.5, 46]
+];
+
+const skirt_upper_3 = [
+  [58.5, 45],
+  [56.5, 46]
+];
+
+const skirt_lower_1 = [
+  [68.375, 45],
+  [75, 39],
+  [75, 37]
+]
 
 // add the polylines to the ena head lines
-enaHeadLines.push(face_right);
-enaHeadLines.push(face_left);
-enaHeadLines.push(ear);
 enaHeadLines.push(hair);
-enaHeadLines.push(eye_left);
-enaHeadLines.push(eye_left_line);
-enaHeadLines.push(eye_right_top);
-enaHeadLines.push(eye_right_bottom);
-enaHeadLines.push(eye_right_line);
+if (Math.floor(rot+0.25) % 2 == 0) {
+  enaHeadLines.push(face_right);
+  enaHeadLines.push(face_left);
+  enaHeadLines.push(ear);
+  enaHeadLines.push(eye_left);
+  enaHeadLines.push(eye_left_line);
+  enaHeadLines.push(eye_right_top);
+  enaHeadLines.push(eye_right_bottom);
+  enaHeadLines.push(eye_right_line);
+};
 
 // add the polylines to the ena lines
 enaLines.push(shirt_flap_bottom);
 enaLines.push(shirt_flap_top);
+enaLines.push(shirt_flap_line);
 enaLines.push(chest_top_1);
 enaLines.push(chest_top_2);
 enaLines.push(chest_bottom);
@@ -325,8 +377,32 @@ enaLines.push(arm_left_lower_1);
 enaLines.push(arm_left_lower_2);
 enaLines.push(arm_left_thumb);
 enaLines.push(arm_left_hand);
+enaLines.push(arm_left_fingers_1);
+enaLines.push(arm_left_fingers_2);
+enaLines.push(arm_left_fingers_3);
+enaLines.push(skirt_upper_1);
+enaLines.push(skirt_upper_2);
+enaLines.push(skirt_upper_3);
+enaLines.push(skirt_lower_1);
+
+//fancy stuff with ena head
+if (Math.floor(rot+0.25) % 2 == 0) {
+  enaHeadLines = bt.scale(enaHeadLines, [(Math.sin((rot - Math.floor(rot)) * 2 * pi)+1)/2, 1], [125/2, 125/2])
+} else {
+  enaHeadLines = bt.scale(enaHeadLines, [(Math.sin((rot - Math.floor(rot)) * 2 * pi)+1)/-2, 1], [125/2, 125/2])
+}
 
 // draw it
-drawLines(bt.cover(bt.cover(boxLines, enaLines)), enaHeadLines);
-drawLines(bt.cover(enaHeadLines, enaLines));
-drawLines(enaLines);
+
+var draw_lines_1 = bt.cover(boxLines, enaLines);
+draw_lines_1 = bt.cover(draw_lines_1, enaHeadLines)
+
+drawLines(draw_lines_1);
+// 0.65 because 0.75 looks weirder
+if (Math.floor(rot+0.65) % 2 == 0) {
+  drawLines(bt.cover(enaHeadLines, enaLines));
+  drawLines(enaLines);
+} else {
+  drawLines(bt.cover(enaLines, enaHeadLines));
+  drawLines(enaHeadLines);
+}
