@@ -12,7 +12,7 @@ setDocDimensions(width, height);
 // store final lines here
 const boxLines = [];
 
-const s = 304;
+const s = 363;
 
 const rot = s/125;
 
@@ -100,8 +100,9 @@ boxLines.push(roof);
 boxLines.push(roof_con1);
 boxLines.push(roof_con2);
 
-// store final lines here
+// store ena lines here
 const enaLines = [];
+const enaHeadLines = [];
 
 const face_right = [
   [62.5, 88],
@@ -213,7 +214,7 @@ const chest_top_2 = [
   [58.75, 67]
 ];
 
-const chest_bottom_1 = [
+const chest_bottom = [
   [70, 60],
   [65.5, 45],
   [62, 43.5],
@@ -221,27 +222,111 @@ const chest_bottom_1 = [
   [54, 60]
 ];
 
-//const chest_bottom_2 = [
-//  
-//];
+const chest_bottom_right = [
+  [67, 60],
+  [63.75, 44.25]
+];
 
-// add the polylines to the box lines
-enaLines.push(face_right);
-enaLines.push(face_left);
-enaLines.push(ear);
-enaLines.push(hair);
-enaLines.push(eye_left);
-enaLines.push(eye_left_line);
-enaLines.push(eye_right_top);
-enaLines.push(eye_right_bottom);
-enaLines.push(eye_right_line);
+const chest_bottom_left = [
+  [57, 60],
+  [60.25, 44.25]
+];
+
+const arm_left_sleeve = [
+  [49.5, 64],
+  [49, 62],
+  [51.5, 56.5],
+  [54.45, 58.5]
+];
+
+const arm_left_sleeve_line = [
+  [49, 62],
+  [57, 68]
+];
+
+const arm_left_upper_1 = [
+  [49.25, 63],
+  [44, 60.5],
+  [45, 60],
+  [49.5, 60.9]
+];
+
+const arm_left_upper_2 = [
+  [45, 60],
+  [44, 55],
+  [51, 57.6],
+];
+
+const arm_left_mid = [
+  [44, 60.5],
+  [42, 60.5],
+  [44, 55]
+];
+
+const arm_left_lower_1 = [
+  [42, 60.5],
+  [27, 62],
+  [26.5, 60],
+  [43.272727, 57]
+];
+
+const arm_left_lower_2 = [
+  [26.5, 60],
+  [25.5, 59],
+  [44, 55]
+];
+
+const arm_left_thumb = [
+  [27, 62],
+  [25.5, 63.5],
+  [21.5, 63.5],
+  [21.5, 62.5],
+  [24.5, 62],
+  [24.5, 61],
+  [25.5, 59]
+];
+
+const arm_left_hand = [
+  [25.5, 59],
+  [23, 58.5],
+  [23.5, 62.166666]
+];
+
+const arm_left_fingers_1 = [
+  []
+];
+
+
+// add the polylines to the ena head lines
+enaHeadLines.push(face_right);
+enaHeadLines.push(face_left);
+enaHeadLines.push(ear);
+enaHeadLines.push(hair);
+enaHeadLines.push(eye_left);
+enaHeadLines.push(eye_left_line);
+enaHeadLines.push(eye_right_top);
+enaHeadLines.push(eye_right_bottom);
+enaHeadLines.push(eye_right_line);
+
+// add the polylines to the ena lines
 enaLines.push(shirt_flap_bottom);
 enaLines.push(shirt_flap_top);
 enaLines.push(chest_top_1);
 enaLines.push(chest_top_2);
-enaLines.push(chest_bottom_1);
-//enaLines.push(chest_bottom_2);
+enaLines.push(chest_bottom);
+enaLines.push(chest_bottom_right);
+enaLines.push(chest_bottom_left);
+enaLines.push(arm_left_sleeve);
+enaLines.push(arm_left_sleeve_line);
+enaLines.push(arm_left_upper_1);
+enaLines.push(arm_left_upper_2);
+enaLines.push(arm_left_mid);
+enaLines.push(arm_left_lower_1);
+enaLines.push(arm_left_lower_2);
+enaLines.push(arm_left_thumb);
+enaLines.push(arm_left_hand);
 
 // draw it
-drawLines(bt.cover(boxLines, enaLines));
+drawLines(bt.cover(bt.cover(boxLines, enaLines)), enaHeadLines);
+drawLines(bt.cover(enaHeadLines, enaLines));
 drawLines(enaLines);
