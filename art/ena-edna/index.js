@@ -1,7 +1,7 @@
 /*
 @title: Ena
 @author: Edna
-@snapshot: the name of the snapshot file you want in the gallery
+@snapshot: snapshot1.png
 */
 
 const width = 125;
