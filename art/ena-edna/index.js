@@ -12,7 +12,7 @@ setDocDimensions(width, height);
 // store final lines here
 const boxLines = [];
 
-const s = 1148/4;
+const s = 125/4;
 
 const rot = s/125;
 
@@ -409,7 +409,22 @@ const left_leg_foot_1 = [
   [58.5, 8],
   [57, 6],
   [47, 8],
-]
+  [48, 11]
+];
+
+const left_leg_foot_2 = [
+  [57, 6],
+  [56, 8],
+  [47.5, 9.5]
+];
+
+const arm_right_sleeve = bt.catmullRom([[67.562, 66.5], [69.5, 67], [76, 65], [73, 57], [69.5, 58.33333]])
+
+const arm_right_1 = bt.catmullRom([[75.9055, 63.1], [83, 60], [92, 58], [100, 60], [103, 64], [104, 60], [107, 60], [104, 57], [107, 56], [104, 55], [106, 51], [100, 54], [90, 53], [73.7, 58]])
+
+const right_leg_1 = bt.catmullRom([[64, 32.85], [63, 25], [70, 13], [75, 14], [68, 25], [72, 35.15]])
+
+const right_leg_2 = bt.catmullRom([[69, 14], [71, 10], [66, 9], [65, 8], [65, 5], [68, 5], [78, 6], [78, 10], [73.5, 17]])
 
 // add the polylines to the ena head lines
 enaHeadLines.push(hair);
@@ -457,6 +472,11 @@ enaLines.push(left_leg_mid_1);
 enaLines.push(left_leg_mid_2);
 enaLines.push(left_leg_mid_3);
 enaLines.push(left_leg_foot_1);
+enaLines.push(left_leg_foot_2);
+enaLines.push(arm_right_sleeve);
+enaLines.push(arm_right_1);
+enaLines.push(right_leg_1);
+enaLines.push(right_leg_2);
 
 //fancy stuff with ena head
 if (Math.floor(rot+0.25) % 2 == 0) {
