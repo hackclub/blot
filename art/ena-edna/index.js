@@ -12,7 +12,7 @@ setDocDimensions(width, height);
 // store final lines here
 const boxLines = [];
 
-const s = 124/4;
+const s = 1148/4;
 
 const rot = s/125;
 
@@ -181,25 +181,27 @@ const eye_right_line = [
   [65.6, 83.45]
 ];
 
-const shirt_flap_bottom = [
-  [67, 68],
+const shirt_flap_right = [
+  [65.5, 69.5],
+  [62, 67.5],
   [63.5, 66],
+  [67, 68],
+  [65.5, 69.5]
+]
+
+const shirt_flap_left = [
+  [58.5, 69.5],
   [62, 67.5],
   [60.5, 66],
-  [57, 68]
-];
-
-const shirt_flap_top = [
-  [58.5, 69.5],
-  [62, 67.5],
-  [65.5, 69.5],
-  [58.5, 69.5],
-  [57, 68]
+  [57, 68],
+  [58.5, 69.5]
 ];
 
 const shirt_flap_line = [
+  [58.5, 69.5],
   [65.5, 69.5],
-  [67, 68]
+  [62, 67.5],
+  [58.5, 69.5]
 ];
 
 const chest_top_1 = [
@@ -251,13 +253,14 @@ const arm_left_upper_1 = [
   [49.25, 63],
   [44, 60.5],
   [45, 60],
-  [49.5, 60.9]
+  [49.5, 60.9],
 ];
 
 const arm_left_upper_2 = [
   [45, 60],
   [44, 55],
   [51, 57.6],
+  [49.5, 60.9]
 ];
 
 const arm_left_mid = [
@@ -276,7 +279,8 @@ const arm_left_lower_1 = [
 const arm_left_lower_2 = [
   [26.5, 60],
   [25.5, 59],
-  [44, 55]
+  [44, 55],
+  [43.272727, 57]
 ];
 
 const arm_left_thumb = [
@@ -343,7 +347,68 @@ const skirt_upper_3 = [
 const skirt_lower_1 = [
   [68.375, 45],
   [75, 39],
-  [75, 37]
+  [75, 36],
+  [61, 32],
+  [49, 36],
+  [49, 39],
+  [55.625, 45]
+];
+
+const skirt_lower_2 = [
+  [62, 42],
+  [61, 36],
+  [75, 39]
+];
+
+const skirt_lower_3 = [
+  [61, 32],
+  [61, 36],
+  [49, 39]
+];
+
+const left_leg_upper_1 = [
+  [52, 35],
+  [53, 29],
+  [58, 27.5],
+  [60.5, 28.5],
+  [60, 32.33333],
+];
+
+const left_leg_upper_2 = [
+  [58, 27.5],
+  [57, 33.33333]
+];
+
+const left_leg_mid_1 = [
+  [58, 27.5],
+  [59, 23],
+  [60.5, 28.5]
+];
+
+const left_leg_mid_2 = [
+  [59, 23],
+  [53, 29],
+  [58, 27.5]
+];
+
+const left_leg_mid_3 = [
+  [53, 29],
+  [52, 22],
+  [59, 23],
+  [52, 10],
+  [52, 22],
+  [48, 11],
+  [52, 10],
+  [56, 8],
+  [58, 10],
+  [52.80769, 11.5]
+];
+
+const left_leg_foot_1 = [
+  [58, 10],
+  [58.5, 8],
+  [57, 6],
+  [47, 8],
 ]
 
 // add the polylines to the ena head lines
@@ -360,8 +425,8 @@ if (Math.floor(rot+0.25) % 2 == 0) {
 };
 
 // add the polylines to the ena lines
-enaLines.push(shirt_flap_bottom);
-enaLines.push(shirt_flap_top);
+enaLines.push(shirt_flap_right);
+enaLines.push(shirt_flap_left);
 enaLines.push(shirt_flap_line);
 enaLines.push(chest_top_1);
 enaLines.push(chest_top_2);
@@ -384,6 +449,14 @@ enaLines.push(skirt_upper_1);
 enaLines.push(skirt_upper_2);
 enaLines.push(skirt_upper_3);
 enaLines.push(skirt_lower_1);
+enaLines.push(skirt_lower_2);
+enaLines.push(skirt_lower_3);
+enaLines.push(left_leg_upper_1);
+enaLines.push(left_leg_upper_2);
+enaLines.push(left_leg_mid_1);
+enaLines.push(left_leg_mid_2);
+enaLines.push(left_leg_mid_3);
+enaLines.push(left_leg_foot_1);
 
 //fancy stuff with ena head
 if (Math.floor(rot+0.25) % 2 == 0) {
