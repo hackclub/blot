@@ -4,13 +4,26 @@
 @snapshot: snapshot1.png
 */
 
-
-
 // Set canvas dimensions
 const width = 250; // Width of the canvas (changeable)
 const height = 200; // Height of the canvas (changeable)
 
 setDocDimensions(width, height); // Function to set document dimensions for drawing
+
+
+// Function to generate a random color from a predefined set of colors
+function getRandomColorFromArray(colorArray) {
+  const randomIndex = Math.floor(Math.random() * colorArray.length);
+  return colorArray[randomIndex];
+}
+
+// Predefined array of color choices
+const colorChoices = ["lightblue", "lightgreen", "lightyellow", "lightpink", "lightcoral", "lightskyblue", "lightseagreen"];
+const colorChoices1 = ["lightblue", "darkblue"];
+const colorChoices2 = ["lightgreen", "darkgreen"];
+const colorChoices3 = ["gray", "white", "black"];
+const colorChoices4 = [ "black", "dark blue", "red", "purple"];
+const colorChoices5 = [ "lightpink", "brown", "gray", "light yellow"];
 
 // Store final lines here (to be drawn on the canvas)
 const finalLines = [];
@@ -29,9 +42,12 @@ const outerRectangle = [
   [outerX, outerY + outerHeight], // Bottom-left corner of the outer rectangle
   [outerX, outerY] // Closing the path by returning to the top-left corner
 ];
-finalLines.push(outerRectangle); // Add outer rectangle points to final lines
 
-// Inner rectangle (smaller rectangle inside)
+// Add fill color to the outer rectangle (randomly chosen from colorChoices)
+drawLines([outerRectangle], { fill: getRandomColorFromArray(colorChoices) });
+
+
+// Define dimensions and position for the inner rectangle
 const innerWidth = 130; // Width of the inner rectangle (changeable)
 const innerHeight = 80; // Height of the inner rectangle (changeable)
 const innerX = (width - innerWidth) / 2; // X-coordinate of the inner rectangle's top-left corner
@@ -45,7 +61,9 @@ const innerRectangle = [
   [innerX, innerY + innerHeight], // Bottom-left corner of the inner rectangle
   [innerX, innerY] // Closing the path by returning to the top-left corner
 ];
-finalLines.push(innerRectangle); // Add inner rectangle points to final lines
+
+// Add fill color to the inner rectangle (randomly chosen from colorChoices)
+drawLines([innerRectangle], { fill: getRandomColorFromArray(colorChoices1) });
 
 
 // Function to set document dimensions for drawing
@@ -68,77 +86,64 @@ const hangerY = (0, 150); // Y-coordinate of the top-left corner of the roof
 
 const curve = bt.catmullRom([[150, 80], [165, 95], [180, 80]])
 
-drawLines([curve])
-
+drawLines([curve], { fill: "brown", width: 2 });
 
 const curvee = bt.catmullRom([[150, 80], [150, 90], [155, 90],[155,87]])
 
-drawLines([curvee])
+drawLines([curvee], { fill: "beige", width: 2 });
 
 
 
-//nonrandomsmoke
-
-
-const smokey = bt.catmullRom([[152, 91], [150, 100], [159, 114]])
-
-drawLines([smokey])
-
-const smokeey = bt.catmullRom([[154, 91], [160, 98], [167, 102],[166,113]])
-
-drawLines([smokeey])
-
-const smokeeey = bt.catmullRom([[150, 90], [143, 101], [150, 112],[142,120]])
-
-drawLines([smokeeey])
-
-
-
-//random smoke
-
-// Function to generate random integer within a range
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+// Function to generate random offset within a range
+function randomOffset(range) {
+  return Math.random() * range - range / 2;
 }
 
-// Original fixed starting point
-const startPoint = [154, 90];
+// Function to randomize coordinates
+function randomizeCoordinates(coords, range) {
+  return coords.map(coord => [
+    coord[0] + randomOffset(range),
+    coord[1] + randomOffset(range)
+  ]);
+}
 
-// Function to generate random offsets for control points
-function generateRandomPath(startPoint) {
-  const path = [startPoint];
-  const numPoints = getRandomInt(1, 3); // Randomly choose 3 or 4 control points
-  
-  for (let i = 0; i < numPoints; i++) {
-    // Generate random offsets within a range
-    const randomOffsetX = getRandomInt(-23, 25);
-    const randomOffsetY = getRandomInt(22, 21);
-    
-    // Calculate control points relative to the start point
-    const controlPointX = startPoint[0] + randomOffsetX;
-    const controlPointY = startPoint[1] + randomOffsetY;
-    
-    // Add control points to the path
-    path.push([controlPointX, controlPointY]);
+// Random smoke paths with controlled randomness
+const range = 5;
+
+const originalSmokey = [[152, 91], [150, 100], [159, 114]];
+const originalSmokeey = [[154, 91], [160, 98], [167, 102], [166, 113]];
+const originalSmokeeey = [[150, 90], [143, 101], [150, 112], [142, 120]];
+
+const randomizedSmokey = bt.catmullRom(randomizeCoordinates(originalSmokey, range));
+const randomizedSmokeey = bt.catmullRom(randomizeCoordinates(originalSmokeey, range));
+const randomizedSmokeeey = bt.catmullRom(randomizeCoordinates(originalSmokeeey, range));
+
+drawLines([randomizedSmokey], { stroke: getRandomColorFromArray(colorChoices3), width: 3 });
+drawLines([randomizedSmokeey], { stroke: getRandomColorFromArray(colorChoices3), width: 3 });
+drawLines([randomizedSmokeeey], { stroke: getRandomColorFromArray(colorChoices3), width: 3 });
+
+
+// Define a new function with a different name or consolidate if already defined
+if (typeof randomOffset !== 'function') {
+  function randomOffset(range) {
+    return Math.random() * range - range / 2;
   }
-  
-  return path;
 }
 
-// Generate random paths
-const smoke = bt.catmullRom(generateRandomPath(startPoint));
-const smokee = bt.catmullRom(generateRandomPath(startPoint));
-const smokeee = bt.catmullRom(generateRandomPath(startPoint));
+// Original points of the fly curve
+const originalFlyPoints = [[60, 60], [73, 119], [104, 87], [129, 110], [150, 60]];
 
-// Assuming drawLines function is defined somewhere
-drawLines([smoke]);
-drawLines([smokee]);
-drawLines([smokeee]);
+// Randomize the coordinates of the fly curve with controlled randomness
+const randomizedFlyPoints = originalFlyPoints.map(point => [
+  point[0] + randomOffset(5), // Use randomOffset function
+  point[1] + randomOffset(5)  // Use randomOffset function
+]);
 
-//butterfly
-const fly = bt.catmullRom([[60, 78], [72, 116], [105, 90],[131,106],[150,76]])
+// Generate the fly curve using the randomized points
+const fly = bt.catmullRom(randomizedFlyPoints);
 
-drawLines([fly])
+// Draw the fly curve with a randomly chosen fill color from colorChoices2
+drawLines([fly], { fill: getRandomColorFromArray(colorChoices2) });
 
 
 
@@ -146,14 +151,14 @@ drawLines([fly])
 
 const firstheart = bt.catmullRom([[125, 180], [100, 195], [125, 180],[100,157]])
 
-drawLines([firstheart])
+drawLines([firstheart], { stroke: "red", width: 3 });
 
 const firstheartt = bt.catmullRom([[125, 180], [150, 195], [125, 180],[150,157]])
 
-drawLines([firstheartt])
+drawLines([firstheartt], { stroke: "red", width: 3 });
 
 
-// Define points of the house (adjusted for rotation)
+// Define points of the house shape (adjusted for rotation)
 const houseShape = [
   [houseX, houseY + houseHeight], // Bottom-left corner of the house
   [houseX + houseWidth, houseY + houseHeight], // Bottom-right corner of the house
@@ -161,7 +166,10 @@ const houseShape = [
   [houseX, houseY], // Top-left corner of the house
   [houseX, houseY + houseHeight] // Closing the path by returning to the bottom-left corner
 ];
-finalLines.push(houseShape); // Add house points to final lines
+
+// Add fill color to the house shape
+drawLines([houseShape], { fill: "white" }); // Change "lightgreen" to the color you prefer
+
 
 // Define points of the roof (adjusted for rotation)
 const roofShape = [
@@ -170,28 +178,46 @@ const roofShape = [
   [hangerX + hangerWidth, hangerY], // Top-right corner of the roof
   [hangerX, hangerY] // Closing the path by returning to the top-left corner
 ];
-finalLines.push(roofShape); // Add roof points to final lines
 
-// Door dimensions and positions
+// Add fill color to the roof (randomly chosen from colorChoices)
+drawLines([roofShape], { stroke: "red", width: 3 }); 
+
+
+// Define door parameters
 const doorWidth = 5; // Width of the door
 const doorHeight = 7; // Height of the door
-const doorX = (0, 170); // X-coordinate of the top-left corner of the door
-const doorY = (0, 60); // Y-coordinate of the top-left corner of the door
+const doorX = 170; // X-coordinate of the top-left corner of the door
+const doorY = 60; // Y-coordinate of the top-left corner of the door
 
-// Define points of the door (adjusted for rotation)
+// Define the points of the door shape
 const doorShape = [
-  [doorX, doorY + doorHeight], // Bottom-left corner of the door
-  [doorX + doorWidth, doorY + doorHeight], // Bottom-right corner of the door
-  [doorX + doorWidth, doorY], // Top-right corner of the door
-  [doorX, doorY], // Top-left corner of the door
-  [doorX, doorY + doorHeight] // Closing the path by returning to the bottom-left corner
+  [doorX, doorY + doorHeight],               // Bottom-left corner of the door
+  [doorX + doorWidth, doorY + doorHeight],   // Bottom-right corner of the door
+  [doorX + doorWidth, doorY],                // Top-right corner of the door
+  [doorX, doorY],                            // Top-left corner of the door
+  [doorX, doorY + doorHeight]                // Closing the path by returning to the bottom-left corner
 ];
-finalLines.push(doorShape); // Add door points to final lines
 
-// Window dimensions and positions
+// Draw the door
+drawLines([doorShape], { fill: getRandomColorFromArray(colorChoices5) });
+
+
+// Define window parameters
 const windowSize = 8; // Size of the square window
-const windowX = (0, 155); // X-coordinate of the top-left corner of the window
-const windowY = (0, 68); // Y-coordinate of the top-left corner of the window
+const windowX = 155; // X-coordinate of the top-left corner of the window
+const windowY = 68; // Y-coordinate of the top-left corner of the window
+
+// Define the window as an array of coordinates
+const window = [
+  [windowX, windowY],                         // Top-left corner
+  [windowX + windowSize, windowY],            // Top-right corner
+  [windowX + windowSize, windowY + windowSize], // Bottom-right corner
+  [windowX, windowY + windowSize]             // Bottom-left corner
+];
+
+// Draw the window
+drawLines([window], { fill: getRandomColorFromArray(colorChoices4) });
+
 
 // Define points of the window (adjusted for rotation)
 const windowShape = [
@@ -216,6 +242,7 @@ const circleSpacingY = 1; // Vertical spacing between circles (changeable)
 // Define positions for circles forming a rectangle between the inner and outer rectangles
 const circles = [];
 
+
 // Top and Bottom Rows of Circles
 for (let i = 1; i <= 5; i++) {
   const topY = innerY - circleRadius - circleSpacingY; // Y-coordinate for circles in the top row
@@ -237,6 +264,7 @@ circles.forEach(circle => {
   const [cx, cy] = circle;
   finalLines.push(createCirclePoints(cx, cy, circleRadius)); // Create points for each circle and add to final lines
 });
+
 
 // Function to create points for a circle
 function createCirclePoints(centerX, centerY, radius) {
