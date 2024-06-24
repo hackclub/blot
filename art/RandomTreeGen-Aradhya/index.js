@@ -1,7 +1,7 @@
 /**
  * @title: Arsh's Random Tree Generator 
  * @author: Aradhya Shaswat
- * @snapshot: ran-tree-snap1.png
+ * @snapshot: snap-1.png
  */
 
 // Set canvas size
