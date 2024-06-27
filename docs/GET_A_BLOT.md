@@ -15,7 +15,6 @@ Some criteria your art needs to meet:
 - Your artwork must be algorithmic.
   - It must be able to create multiple versions. To demonstrate this, **submit 3 snapshots**.
   - You should expose some parameters at the top of your code which can adjust the art. This could be `setRandSeed` or some other variable used in your piece.
-- Your artwork must be original.
 - Your artwork must be drawable by the Blot machine.
   - This means it can't be too busy and have many overlapping lines.
   - It should fit within the workarea.
