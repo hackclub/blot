@@ -14,8 +14,14 @@ export async function createShareLink(content) {
     email: loginName,
     content: content,
   });
-
-  const link = `${window.location.href}?shareId=${res.id}`;
+  url = new URL(window.location.href)
+  let link = ''
+  if(url.searchParams.get('guide') != null){
+    link = `${window.location.href}&shareId=${res.id}`;
+  }else{
+    link = `${window.location.href}?shareId=${res.id}`;
+  }
+  
 
   customAlert(`
     <div>Share the file at:</div>
