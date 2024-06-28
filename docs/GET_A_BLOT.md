@@ -22,7 +22,7 @@ Some criteria your art needs to meet:
   - You can't just copy an existing piece of art and mess with the numbers.
   - That being said, you can take inspiration from other art and remix a few pieces together.
 
-I reccomend trying to create a [figurative](https://en.wikipedia.org/wiki/Figurative_art) piece, which depicts a real life thing.
+I recommend trying to create a [figurative](https://en.wikipedia.org/wiki/Figurative_art) piece, which depicts a real life thing.
 A key to being successful is being intentional with what you make. Sketch something out and have it in mind before you program it.
 
 Here are some examples of some **acceptable pieces**:
