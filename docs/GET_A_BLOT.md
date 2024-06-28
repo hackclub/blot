@@ -11,7 +11,7 @@ You can learn how to use the editor and make art by following some of [these gui
 
 Some criteria your art needs to meet:
 
-- Your artwork must be beautiful. It has to be something aestetically interesting.
+- Your artwork must be beautiful. It has to be something aesthetically interesting.
 - Your artwork must be algorithmic.
   - It must be able to create multiple versions. To demonstrate this, **submit 3 snapshots**.
   - You should expose some parameters at the top of your code which can adjust the art. This could be `setRandSeed` or some other variable used in your piece.
