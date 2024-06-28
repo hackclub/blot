@@ -1,7 +1,7 @@
 /*
 @title: Pyro Snow
 @author: Map
-@snapshot: PyroSnow
+@snapshot: snapshot1.png
 */
 const width = 300
 const height = 300
