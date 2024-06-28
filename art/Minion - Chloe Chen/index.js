@@ -1,7 +1,7 @@
 /*
 @title: Minion
 @author: Celloii Nehc
-@snapshot: snapshot0
+@snapshot: snapshot0.png
 */
 
 // welcome to bot!
