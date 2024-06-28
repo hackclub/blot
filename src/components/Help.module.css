@@ -4,7 +4,7 @@
   font-family: var(--font-sans);
 }
 body[data-theme='dark'] .helpSectionTab{
-  background-color:rgb(30, 120, 152);
+  background-color:var(--primary-dark);
 }
 body[data-theme='dark'] .helpSectionTab:hover {
   background:rgba(15, 57, 77, 0.89);
@@ -114,7 +114,7 @@ body[data-theme='dark'] .h1, .h2, .h3 {
 
 
 body[data-theme='dark'] .helpContent {
-  background-color: rgb(32, 32, 32);
+  background-color: var(--primary-dark-grey);
   color: white;
 }
 
@@ -122,18 +122,18 @@ body[data-theme='dark'] .helpContent a {
   color: white;
 }
 body[data-theme='dark'] .helpContent pre {
-  background-color: rgba(46,50,53,255);
+  background-color: rgba(32,32,32,255);
 }
 
 body[data-theme='dark'] .helpContent hr {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(32, 32, 32, 0.25);
 }
 
 body[data-theme='dark'] .helpContent img {
   background-color: white;
 }
 body[data-theme='dark'] .helpContent code {
-  background: rgba(46,50,53,255);
+  background: rgba(32,32,32,255);
 }
 
 

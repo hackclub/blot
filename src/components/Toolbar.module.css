@@ -4,11 +4,11 @@
   margin-right: 0.5rem;
 }
 body[data-theme='dark'] .root{
-  background-color:#1E7898
+  background-color:var(--primary-dark)
 }
 
 body[data-theme = 'dark'] .dropdownClasses{
-  background-color:#1E7898
+  background-color:var(--primary-dark)
 }
 .heading a {
   color: inherit;

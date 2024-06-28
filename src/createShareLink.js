@@ -2,8 +2,11 @@ import { patchStore, getStore } from "./state.ts";
 import { post } from "./post.js";
 
 export async function createShareLink(content) {
-  const { loginName, sessionKey } = getStore();
-
+  const { loginName, sessionKey ,theme} = getStore();
+  let text = 'color:blue;'
+  if(theme=="dark"){
+    text = ' color:#1E7898;'
+  }
   if (loginName === "") {
     alert("Log in to create share links.");
     return;
@@ -18,10 +21,11 @@ export async function createShareLink(content) {
   const link = `${window.location.href}?shareId=${res.id}`;
 
   customAlert(`
+  
     <div>Share the file at:</div>
     <br/>
     <div style="font-size: .75rem;">
-      <a href="${link}" target="_blank" style="color: blue;">${link}</a>
+      <a href=${link} target="_blank" style=${text}>${link}</a>
     </div>
     <br/>
     <div>Share links last for 1 week.</div>
@@ -31,7 +35,11 @@ export async function createShareLink(content) {
 }
 
 function customAlert(html) {
-
+  const {theme} = getStore()
+  let bg = 'background: #f4f4f4;'
+  if(theme=="dark"){
+    bg = 'background: var(--primary-dark-grey); color: white'
+  }
   const el = document.createElement("div");
   const style = `
     z-index: 999999999999;
@@ -41,11 +49,12 @@ function customAlert(html) {
     left: 50%;
     top: 100px;
     transform: translate(-50%, 0%);
-    background: #f4f4f4;
+   
     border-radius: 10px;
     border: 1px solid black;
     padding: 8px;
-  `
+    \n
+  `+bg
 
   el.innerHTML = `
     <div style="${style}">
