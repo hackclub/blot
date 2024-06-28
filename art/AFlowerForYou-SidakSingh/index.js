@@ -88,7 +88,7 @@ const genPetal = (x, y, r, num, h) => {
     petal.goTo([xMidCor2,yMidCor2])
     petal.goTo([xCor, yCor])
     drawLines([bt.catmullRom(petal.lines()[0],)])
-    drawLines(petal.lines())
+    //drawLines(petal.lines())
   }
 }
 
@@ -113,10 +113,3 @@ const genFlower = (r, x, y, petalNum, PetalHeight, innerPetalNum, innerPetalHeig
 }
 
 genFlower(r, x, y, petalNum, petalHeight, innerPetalNum, innerPetalHeight, circleMorph, innerCircleMorph)
-
-
-
-
-
-
-
