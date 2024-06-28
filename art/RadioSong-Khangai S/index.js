@@ -1,7 +1,7 @@
 /*
 @title: RadioSong
 @author: Khangai S.
-@snapshot: the name of the snapshot file you want in the gallery
+@snapshot: s2.png
 */
 var width = 600;
 var height = 600;
