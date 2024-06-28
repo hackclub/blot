@@ -1,6 +1,6 @@
 /*
 @title: Triangle Fractal
-@author: Pegoku
+@author: Pere G
 @snapshot: Triangle Fractal
 */
 
