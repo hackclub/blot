@@ -47,7 +47,8 @@ export default function Help({
   const [tab, setTab] = useState<"workshop" | "toolkit">("toolkit");
 
   const currentUrl = new URL(window.location.href);
-  const workshop = currentUrl.searchParams.get("guide");
+  let workshop = currentUrl.searchParams.get("guide");
+  
   const [workshopContent, setWorkshopContent] = useState({
     frontMatter: {},
     htmlContent: "",
@@ -67,6 +68,12 @@ export default function Help({
       setHelpContent(htmlString);
 
       if (workshop === null) return;
+      if(workshop?.includes('?')){
+        workshop = workshop.split('?')
+        console.log(workshop)
+        workshop = workshop[0]
+        console.log(workshop)
+      }
 
       if (confirm("Reset text editor?"))
         loadCodeFromString(`// check out the workshop tab to get started\n${defaultProgram}`);
