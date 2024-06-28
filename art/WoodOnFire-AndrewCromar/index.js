@@ -1,7 +1,7 @@
 /*
 @title: Wood On FireS
 @author: Andrew Cromar
-@snapshot: snapshots/snapshot-one.png
+@snapshot: snapshot-one.png
 */
 
 // DOC DIMENSIONS
