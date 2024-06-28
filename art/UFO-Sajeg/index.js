@@ -1,3 +1,9 @@
+/*
+ @ title: UFO
+ @author: Sajeg
+ @snapshot: image2.png
+*/
+
 //A flying Unknown Flying Object, or UFO in short.
 
 //Changeable parameters
