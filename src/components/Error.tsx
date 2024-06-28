@@ -87,7 +87,7 @@ const Snippet = ({
       <div>
         <div>{pos.line}</div>
       </div>
-      <code style={{ width: "100%", overflow: "auto" }}>
+      <code class={styles.code}>
         <div ref={cmRef} class={styles.cm} />
         {" ".repeat(pos.column)}
         <span class={styles.arrow}>↑</span>

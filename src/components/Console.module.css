@@ -11,6 +11,10 @@
 body:not([data-theme='dark']) .root {
   background-color: rgba(var(--primary-rgb), 0.1);
 }
+body[data-theme='dark'] .root {
+  background: #cdcdcd;
+  filter: invert(1)
+}
 
 .lines {
   overflow-y: auto;

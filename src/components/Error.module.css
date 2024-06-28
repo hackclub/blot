@@ -45,7 +45,7 @@
 }
 
 body[data-theme='dark'] .snippet {
-  background-color: rgba(50, 50, 50, 1);
+  background-color: rgb(34, 33, 33);
   color: white;
 }
 
@@ -73,6 +73,15 @@ body[data-theme='dark'] .snippet > :first-child > :first-child {
   color: white;
 }
 
+.code { 
+  width: "100%";
+  overflow: "auto";
+  background: #f4f4f4
+}
+body[data-theme = 'dark'] .code{
+  background: #cdcdcd;
+  filter:invert(1)
+}
 .arrow {
   color: rgb(255, 67, 67);
 }
@@ -83,15 +92,20 @@ body[data-theme='dark'] .snippet > :first-child > :first-child {
 }
 
 body[data-theme='dark'] .context {
-  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(50, 50, 50, 1);
 }
 
 .cm {
   width: min-content;
 }
 
+
 .cm > div {
   background-color: unset;
+}
+body[data-theme='dark'] .cm {
+  
+  background-color:#cdcdcd;
 }
 
 .jumpTo {

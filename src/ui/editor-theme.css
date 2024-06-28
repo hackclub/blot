@@ -3,6 +3,7 @@
 :root {
   --primary: #33e;
   --primary-rgb: 51, 51, 238;
+  --primary-dark: #1E7898;
   --text: #000;
   --text-rgb: 0, 0, 0;
   --background: #fff;
