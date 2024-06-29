@@ -1,7 +1,7 @@
 /*
 @title: Infinite Skyline
 @author: Rishabh Mittal
-@snapshot: image (3).png
+@snapshot: image(3).png
 */
 
 const width = 138
