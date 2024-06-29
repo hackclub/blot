@@ -11,7 +11,7 @@ setDocDimensions(width, height)
 const r = Math.floor((Math.random() * 10) + 5)
 const x = (width - r) / 2 
 const y = 65
-const petalNum = Math.floor((Math.random() * 12) + 7)
+const petalNum = Math.floor((Math.random() * 8) + 7)
 const petalHeight = Math.floor((Math.random() * 20) + 20)
 const innerPetalNum = Math.floor((Math.random() * 7) + 5)
 const innerPetalHeight = Math.floor((Math.random() * 10) + 5)
@@ -60,6 +60,8 @@ const genPetal = (x, y, r, num, h) => {
 
   const midHighCircPoints1 = getCirclePoints(x, y, r + ((h / 10)* 7), num, 5.9);
   const midHighCircPoints2 = getCirclePoints(x, y, r + ((h / 10)* 7), num, -5.9);
+
+  const petalArray = []
   
   for (let i = 0; i < circlePoints.length; i++) {
     let xCor = circlePoints[i].x
@@ -87,9 +89,11 @@ const genPetal = (x, y, r, num, h) => {
     petal.goTo([xMidHighCor2,yMidHighCor2])
     petal.goTo([xMidCor2,yMidCor2])
     petal.goTo([xCor, yCor])
-    drawLines([bt.catmullRom(petal.lines()[0],)])
+    petalArray.push(bt.catmullRom(petal.lines()[0]))
     //drawLines(petal.lines())
   }
+
+  return petalArray
 }
 
 const genStem = (x, y, r, petalHeight) => {
@@ -105,11 +109,15 @@ const genStem = (x, y, r, petalHeight) => {
 
 const genFlower = (r, x, y, petalNum, PetalHeight, innerPetalNum, innerPetalHeight, circleMorph, innerCircleMorph) => {
   const outerCircle = genRanCir(x, y, r, circleMorph)
-  const innerCircle = genRanCir(x + 1.5, y + 1.5, r - 3, innerCircleMorph)
-  genPetal(x, y, r, petalNum, petalHeight)
-  genPetal(x, y, r, innerPetalNum, innerPetalHeight)
+  const test = genRanCir(x + r / 2 , y + r / 2, r, circleMorph)
+  const innerCircle = genRanCir(x + 1.2, y + 1.2, r - 3, innerCircleMorph)
+  const outterPetal = genPetal(x, y, r, petalNum, petalHeight)
+  const innerPetal = genPetal(x, y, r, innerPetalNum, innerPetalHeight)
   genStem(x, y, r, petalHeight)
-  drawLines([outerCircle, innerCircle])
+  drawLines([outerCircle])
+
+  const newPetalDesign = bt.cover(outterPetal, innerPetal)
+  drawLines(newPetalDesign)
+  drawLines(innerPetal)
 }
 
-genFlower(r, x, y, petalNum, petalHeight, innerPetalNum, innerPetalHeight, circleMorph, innerCircleMorph)
