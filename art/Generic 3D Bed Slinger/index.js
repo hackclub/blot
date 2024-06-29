@@ -18,7 +18,7 @@ const img = parseInt(bt.randInRange(0, 4));
 
 //Editable vars. Just uncomment these vars and comment out the random vars above
 //const rx = 0
-//const rrz = 66
+//const rz = 66
 //const img = 0
 setDocDimensions(width, height);
 
