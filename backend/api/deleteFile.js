@@ -2,13 +2,13 @@ import { supabase } from "./supabase.js";
 import checkValidSession from "./checkValidSession.js";
 
 export default async function(req, res) {
-  const { code, email } = req.body;
+  const { sessionKey, email, fileId } = req.body;
 
   try {
     let { data: session, error: userError } = await supabase
       .from('sessions')
       .select('*')
-      .eq('login_code', code)
+      .eq('id', sessionKey)
       .single();
 
     if (userError && userError.message !== 'No rows found') {
@@ -17,14 +17,20 @@ export default async function(req, res) {
 
     const isValid = checkValidSession(session, { email });
     if (!isValid) {
-      res.status(500).send({ error: "invalid login code" });
       return;
     }
-    
-    res.send({
-      sessionKey: session.id,
-      email: session.user
-    });
+
+    const { data: deletedFile, error } = await supabase
+      .from("files")
+      .delete()
+      .eq('id', fileId)
+      .eq('user', email);
+
+    if (error) {
+      throw error;
+    }
+
+    res.send({ message: 'File deleted successfully', fileId });
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ error: error.message });
