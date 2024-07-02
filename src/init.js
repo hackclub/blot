@@ -116,10 +116,13 @@ export async function checkCurrentUser() {
 
   if (signInError) return;
 
-  patchStore({ loginName: res.email })
+  const email = res.email;
+
+  patchStore({ loginName: email })
 
   const [ json, filesErr ] = await post('/get-files', { 
-    sessionKey 
+    sessionKey,
+    email
   });
 
   if (filesErr) return;

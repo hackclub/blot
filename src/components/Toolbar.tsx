@@ -17,6 +17,7 @@ import { saveFile } from '../saveFile.ts'
 import js_beautify from 'js-beautify'
 import { createShareLink } from "../createShareLink.js";
 import { toolkit as tk } from "../drawingToolkit/toolkit.js";
+import { post } from "../post.js";
 
 const menuItemClasses = `
   relative
@@ -422,7 +423,7 @@ function SettingsButton() {
           <span class="px-2">{vimMode ? 'Disable' : 'Enable'} vim mode</span>
         </div>
         { loginName && 
-          <div class="p-2 hover:bg-white hover:bg-opacity-10" onClick={logOut}>
+          <div class="p-2 hover:bg-white hover:bg-opacity-10" onClick={logout}>
             Log out
           </div>
         }
@@ -431,7 +432,19 @@ function SettingsButton() {
   )
 }
 
-function logOut() {
+async function logout() {
+  const { loginName, sessionKey } = getStore();
+
+  const [ res, err] = await post("/logout", { 
+    sessionKey,
+    email: loginName,
+  });
+
+  if (err) {
+    console.log(err);
+    return;
+  }
+
   localStorage.setItem('session_secret_key', "");
   patchStore({ files: [], loginName: "", cloudFileId: "" });
 }

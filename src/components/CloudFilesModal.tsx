@@ -1,5 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { patchStore, getStore } from "../state.ts";
+import { post } from "../post.js";
 import { loadCodeFromString } from "../loadCodeFromString.ts";
 
 export default function() {
@@ -39,8 +40,11 @@ export default function() {
         {sortFilesByTime(files).map((file, i) => <>
           <div class={`${i%2 === 1 && selectedFile !== i ? "bg-gray-200" : ""} ${selectedFile === i ? "bg-[var(--primary)] text-white" : ""} px-2 py-1` + " " + `flex flex-row justify-between`} onClick={e => selectFile(i)}>
             <div>{file.name ? file.name : "anon"}</div>
-            <div class="text-gray-400">
-              {formatTimestamp(file.created_at)}
+            <div class="flex content-center">
+              <div class="text-gray-400">
+                {formatTimestamp(file.created_at)}
+              </div>
+              <div class="px-2 cursor-pointer hover:text-red-500" style="translate: 5px -2px;" onClick={e => deleteFile(e, file)}>x</div>
             </div>
           </div>
         </>)}
@@ -57,6 +61,33 @@ export default function() {
       </div>
     </div>
   </>
+}
+
+async function deleteFile(event, file) {
+  
+  const confirmedDelete = confirm("Are you sure you want to delete this file?")
+  if (confirmedDelete === false) return;
+  
+
+  const { loginName, files } = getStore();
+  const sessionKey = localStorage.getItem('session_secret_key');
+
+  console.log(file);
+
+  const [ res, err ] = await post("delete-file", { 
+    sessionKey,
+    email: loginName,
+    fileId: file.id
+  });
+
+  if (err) {
+    console.log(err);
+    return;
+  }
+
+  // assume successful
+  const updatedFiles = files.filter(x => x.id !== file.id);
+  patchStore({ files: updatedFiles }); 
 }
 
 function sortFilesByTime(files) {
