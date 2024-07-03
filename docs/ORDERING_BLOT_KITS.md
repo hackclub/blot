@@ -25,7 +25,8 @@ The important columns are
   - any additional notes
 
 It's helpful to include images as well. 
-For the Blot Sam 3D prints some parts and also fabricates a metal plate for the plate we provide DXF and STEP files.
+For the Blot Sam 3D prints some parts and also fabricates a metal plate. 
+For the plate we provide DXF and STEP files.
 
 You can also specify how you would like your parts to be packed, such as creating a custom box or foam.
 Sam might also have clarifying questions about the job such as
@@ -43,6 +44,8 @@ Some examples of changes from our first order was I determined the T-nuts we use
 We also discovered that I had specified the wrong units for the belt length (which Sam caught!), the proper units could be inferred fortunately so the belt length was still acceptable. 
 
 After okaying the kit we order them by requesting an invoice from Sam which is fulfilled by our payment office (thanks Mel!).
+
+Sam can ship kits directly from China to Hack Clubbers.
 
 
 
