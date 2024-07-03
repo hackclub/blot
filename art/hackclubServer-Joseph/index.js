@@ -1,9 +1,8 @@
-// check out the workshop tab to get started
-// welcome to blot!
-
-// check out this guide to learn how to program in blot
-// https://blot.hackclub.com/editor?guide=start
-
+/*
+@title: hackclubServer
+@author: Joseph Dang
+@snapshot: snapshots/1.png
+*/
 const width = 125;
 const height = 120;
 const linesss = 55;
