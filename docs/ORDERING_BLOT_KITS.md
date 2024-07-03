@@ -12,7 +12,8 @@ I provided each of them with the [BOM](https://raw.githubusercontent.com/hackclu
 Each of these kits cost around $100 - $200.
 Sam was the most expedient and thorough in this task, in addition to ultimately offering a good price. 
 
-Sam prefers to view the BOM as a table and to download it as a CSV (as is the case with most contract manufacturers I spoke to) so I wrote [this utility website](https://leomcelroy.com/toml-table-viewer/?src=https://raw.githubusercontent.com/hackclub/blot/main/docs/BOM.toml) to provide that functionality.
+Sam prefers to view the BOM as a table and to download it as a CSV (as is the case with most contract manufacturers I spoke to) so I wrote [this utility website](https://leomcelroy.com/toml-table-viewer/?src=https://raw.githubusercontent.com/hackclub/blot/main/docs/BOM.toml) to provide that functionality. 
+Take note that to view files like this on GitHub someone in China will need to make use of a VPN.
 
 The important columns are
 
