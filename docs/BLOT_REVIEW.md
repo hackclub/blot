@@ -34,9 +34,17 @@ A piece may not be random on each generation if parameterization is provided thr
 
 Submissions are made as GitHub PRs.
 
+First find an open submission.
 
+<img width="1269" alt="Screenshot 2024-07-03 at 2 51 54 PM" src="https://github.com/hackclub/blot/assets/27078897/dd079924-00d2-4ec0-8454-d9d420f9855f">
 
+A submission with good effort will typically include some comment from the author. You don't have to automatically reject a submission if it doesn't have a description.
 
+<img width="731" alt="Screenshot 2024-07-03 at 2 52 53 PM" src="https://github.com/hackclub/blot/assets/27078897/1caddc1d-9749-4927-bd29-dffa4f2dd0e1">
+
+Mark the submission as such with the `submission` label.
+
+<img width="260" alt="Screenshot 2024-07-03 at 2 53 54 PM" src="https://github.com/hackclub/blot/assets/27078897/5158af1c-090f-4c91-97bf-cfb8a6cb71b2">
 
 
 
