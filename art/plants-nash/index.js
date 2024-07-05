@@ -1,3 +1,9 @@
+/*
+@title: Plants and Stars
+@author: Nash Pillai
+@snapshot: 1.png
+*/
+
 const width = 200;
 const height = 200;
 
