@@ -1,9 +1,17 @@
 //The Hering illusion
+// Tells whether the straight lines should be a little crooked
+const crooked = true
+  // If true, sets the amount
+  const rightLine = bt.randIntInRange(0, 10);
+  const leftLine = bt.randIntInRange(0, 10);
 
-const width = 125
-const height = 125
+// The Kanizsa Triangle
+// Sets the scale
+const s = 1
+// Sets the position
+const posX = 70
+const posY = 80
 
-setDocDimensions(width, height);
 
 // First generate the Lines in the background
 function generateLines() {
@@ -23,9 +31,12 @@ function generateLines() {
 }
 
 function straightLines() {
-  // Slightly rotated
-  const r = bt.randIntInRange(0, 10);
-  const l = bt.randIntInRange(0, 10);
+  let r = 0
+  let l = 0
+  if (crooked) {
+    r = rightLine
+    l = leftLine
+  }
   // Left straight Line
   drawLines([
     [
@@ -48,40 +59,45 @@ function straightLines() {
 }
 
 function triangle() {
-
-  drawLines([
-    [
-      [70, 80],
-      [80, 80]
-    ],
-    [
-      [70, 80],
-      [75, 88]
-    ],
-  ])
-
-  drawLines([
-    [
-      [90, 80],
-      [100, 80]
-    ],
-    [
-      [100, 80],
-      [95, 88]
-    ],
-  ])
-
-  drawLines([
-    [
-      [85, 100],
-      [80, 80]
-    ],
-    [
-      [85, 100],
-      [90, 95]
-    ],
-  ])
+  drawTriangle(70, 80, 120, 10, false)
+  drawTriangle(70, 97.35, 240, 5, true)
 }
+
+function drawTriangle(x, y, rotation, length, circle) {
+  const t = new bt.Turtle()
+    .jump([x, y])
+  for (let i = 0; i < 3; i++) {
+    if (circle) {
+      t.left(180)
+      t.up()
+      t.forward(length)
+      t.down()
+      t.right(90)
+      t.arc(-180, length)
+      t.up()
+      t.arc(-60, length)
+      t.down()
+      t.arc(-120, length)
+      t.right(90)
+      t.up()
+      t.forward(length)
+      t.down()
+    }
+    t.forward(length * s)
+    t.up()
+    t.forward((30 - (2 * length)) * s)
+    t.down()
+    t.forward(length * s)
+    t.left(rotation)
+  }
+  drawLines(t.lines())
+
+}
+
+const width = 125
+const height = 125
+
+setDocDimensions(width, height);
 
 // Illusion 1
 generateLines();
