@@ -1,19 +1,40 @@
-//The Hering illusion
-// Tells whether the straight lines should be a little crooked
-const crooked = true
-  // If true, sets the amount
-  const rightLine = bt.randIntInRange(0, 10);
-  const leftLine = bt.randIntInRange(0, 10);
+/*
+@title: Optical Illusion
+@author: Sajeg
+@snapshot: image0.png
+*/
 
-// The Kanizsa Triangle
-// Sets the scale
-const s = 1
-// Sets the position
-const posX = 70
-const posY = 80
+// The Hering illusion
+  // Tells if it should be drawn
+  const heringEnabled = true
+  // Sets if the Space between the Lines should be random
+  const rSpace = true
+    // If false sets the Space between the Lines
+    const space = 8
+  // Tells whether the straight lines should be a little crooked
+  const crooked = true
+    // If true, sets the amount
+    const rightLine = bt.randIntInRange(0, 10);
+    const leftLine = bt.randIntInRange(0, 10);
 
+// The Kanizsa triangle
+  // Tells if it should be drawn
+  const kanizsaEnabled = true
+  // Sets the scale
+  const s = bt.randInRange(1, 1.4)
+  // Sets the position
+  const kanPosX = 70
+  const kanPosY = 80
 
-// First generate the Lines in the background
+// The Penrose triangle
+  // Tells if it should be drawn
+  const penroseEnabled = true
+  // Sets the scale
+  const penS = bt.randInRange(0.5, 1.3)
+  // Sets the position
+  const penPosX = 70
+  const penPosY = 15
+
 function generateLines() {
   let currentY = 5
 
@@ -24,7 +45,11 @@ function generateLines() {
         [50, 125 - currentY]
       ]
     ]);
-    currentY += bt.randIntInRange(3, 6);
+    if (rSpace) {
+      currentY += bt.randIntInRange(3, 6);
+    } else {
+      currentY += space
+    }
   }
 
   straightLines();
@@ -59,8 +84,8 @@ function straightLines() {
 }
 
 function triangle() {
-  drawTriangle(70, 80, 120, 10, false)
-  drawTriangle(70, 97.35, 240, 5, true)
+  drawTriangle(kanPosX, kanPosY, 120, 10, false)
+  drawTriangle(kanPosX, (kanPosY + (17.35 * s)), 240, 5, true)
 }
 
 function drawTriangle(x, y, rotation, length, circle) {
@@ -70,17 +95,17 @@ function drawTriangle(x, y, rotation, length, circle) {
     if (circle) {
       t.left(180)
       t.up()
-      t.forward(length)
+      t.forward(length * s)
       t.down()
       t.right(90)
-      t.arc(-180, length)
+      t.arc(-180, length * s)
       t.up()
-      t.arc(-60, length)
+      t.arc(-60, length * s)
       t.down()
-      t.arc(-120, length)
+      t.arc(-120, length * s)
       t.right(90)
       t.up()
-      t.forward(length)
+      t.forward(length * s)
       t.down()
     }
     t.forward(length * s)
@@ -94,13 +119,47 @@ function drawTriangle(x, y, rotation, length, circle) {
 
 }
 
+function penrose() {
+  let angles = [
+    [0, 0],
+    [0, 0],
+    [0, 0]
+  ]
+  const t = new bt.Turtle()
+    .jump([penPosX, penPosY])
+  t.left(30)
+  for (let i = 0; i < 3; i++) {
+    angles[i] = t.pos
+    t.forward(30 * penS)
+    t.left(120)
+  }
+  t.right(120)
+  for (let i = 0; i < 3; i++) {
+    t.jump(angles[i])
+    t.forward(5 * penS)
+    t.left(120)
+    t.forward(45 * penS)
+    t.left(120)
+    t.forward(50 * penS)
+    t.left(60)
+    t.forward(5 * penS)
+    t.left(180)
+  }
+  drawLines(t.lines())
+}
+
 const width = 125
 const height = 125
 
 setDocDimensions(width, height);
 
-// Illusion 1
-generateLines();
+if (heringEnabled) {
+  generateLines()
+}
 
-// Illusion 2
-triangle();
+if (kanizsaEnabled) {
+  triangle()
+}
+if (penroseEnabled) {
+  penrose()
+}
