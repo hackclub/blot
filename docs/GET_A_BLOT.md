@@ -57,6 +57,9 @@ Make sure to include this info in a comment at the top of your file.
 */
 ```
 
+__NOTE__
+- Make sure your snapshot matches the name of an image in the `snapshots` folder you submit with `.png` like `example1.png`
+
 ## 2.1) Download your program
 
 - Hover over `download`
@@ -70,6 +73,10 @@ Make sure to include this info in a comment at the top of your file.
 - Create a folder called `{yourArtworkName}-{yourName}`.
 - Inside that folder create a `snapshots` folder with **at least 3 screenshots** of your work.
 - Place the code for your artwork in an `index.js` file.
+
+__NOTE__
+- DO NOT USE SPACES in any folder name or file.
+- Make sure you `snapshots` folder is lowercase `snapshots` not `Snapshots`
 
 **Make sure there are no spaces in your directory or file names!**
 
