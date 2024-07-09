@@ -1,7 +1,7 @@
 /*
 @title: Day At The Beach
 @author: Daniel Kou
-@snapshot: Palm Tree
+@snapshot: image1.png
 */
 
 // check out the workshop tab to get started
