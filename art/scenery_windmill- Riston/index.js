@@ -1,4 +1,8 @@
-
+/*
+@title: scenery_windmill
+@author: Riston
+@snapshot: b1.png
+*/
 const width = 125;
 const height = 125;
 
@@ -84,11 +88,11 @@ function drawAndFillSquare(t, centerX, centerY, halfSize) {
   t.goTo([centerX - halfSize, centerY + halfSize]);
   t.goTo([centerX - halfSize, centerY - halfSize]);
   
-  // Fill the square by drawing lines inside it
-  for (let i = 1; i < squareSize; i++) {
-    t.goTo([centerX - halfSize, centerY - halfSize + i]);
-    t.goTo([centerX + halfSize, centerY - halfSize + i]);
-  }
+  // Fill the square by drawing lines inside it(this creates the texture inside the square base)
+  // for (let i = 1; i < squareSize; i++) {
+  //   t.goTo([centerX - halfSize, centerY - halfSize + i]);
+  //   t.goTo([centerX + halfSize, centerY - halfSize + i]);
+  // }
 }
 
 // Call the function to draw and fill the square
