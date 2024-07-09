@@ -1,7 +1,7 @@
 /*
 @title: Robot Clipart
 @author: Krishnan Shankar
-@snapshot: RobotClipart-Krishnan
+@snapshot: image1.png
 */
 
 // Size parameters
