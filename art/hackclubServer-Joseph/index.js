@@ -3,6 +3,7 @@
 @author: Joseph Dang
 @snapshot: snapshots/1.png
 */
+
 const width = 125;
 const height = 120;
 const linesss = 55;
@@ -32,21 +33,21 @@ t.left(-358);
 t.forward(-1);
 
 t.left(0);
-t.forward(57);
+t.forward(55);
 t.left(69)
 
 //pannels
 t.jump([10, 65])
-t.forward(31);
+t.forward(31.1);
 
 t.jump([26.5, 55])
-t.forward(39);
+t.forward(39.4);
 
 t.jump([38.6, 59.6])
-t.forward(36.5);
+t.forward(36.6);
 
-t.jump([80.2, 74.6])
-t.forward(29);
+t.jump([78.8, 74.2])
+t.forward(28.3);
 
 t.jump([54.9, 75.5])
 t.forward(26);
@@ -58,12 +59,12 @@ t.left(167);
 t.forward(17);
 
 t.left(375);
-t.forward(54);
+t.forward(52.3);
 
-t.left(534);
-t.forward(28);
+t.left(535);
+t.forward(24);
 
-t.jump([10.4, 65])
+t.jump([10.0, 65])
 
 t.left(190)
 t.forward(46)
@@ -71,14 +72,14 @@ t.forward(46)
 t.jump([54.9, 76])
 
 t.left(343)
-t.forward(26)
+t.forward(24)
 
 
 function fan(x, y) {
   t.jump([x, y])
   t.arc(708, 5)
   for (let i = -106; i < -2; i++) {
-    t.jump([x + -0.1, y + 5])
+    t.jump([x + 0.3, y + 5])
     t.arc(47, 6)
     t.right(122.71)
   }
@@ -88,7 +89,7 @@ function fan2(x, y) {
   t.jump([x, y])
   t.arc(709, 5)
   for (let i = -106; i < -2; i++) {
-    t.jump([x + -2.6, y + 4])
+    t.jump([x + -2.6, y + 4.3])
     t.arc(47, 6)
     t.right(122.74)
   }
@@ -125,13 +126,13 @@ t.forward(32);
 
 //hack club logo!
 
-t.jump([70, 20]);
+t.jump([70, 19.5]);
 t.left(1);
 t.forward(13);
 t.right(270);
 t.forward(13);
 t.left(92);
-t.forward(13);
+t.forward(13.1);
 
 t.jump([45, 76]);
 t.left(-2);
@@ -160,9 +161,9 @@ if (randomNumber === 1) {
   //bios screen
 
 
-  t.jump([54, 42]);
+  t.jump([53.6, 42.5]);
 
-
+  t.right(2)
   t.forward(size)
   t.left(122)
   t.forward(size)
@@ -176,7 +177,7 @@ if (randomNumber === 1) {
   t.left(123)
   t.forward(size)
 
-  t.jump([61, 46]);
+  t.jump([61, 47]);
   t.forward(size)
   t.left(116)
   t.forward(size)
@@ -212,10 +213,10 @@ if (randomNumber == 2) {
   t.jump([70, 32])
   t.right(360)
   t.arc(360, 2)
-  t.jump([79, 28])
+  t.jump([80.7, 28.3])
   t.right(360)
   t.arc(360, 2)
-  t.jump([79, 38])
+  t.jump([80.5, 38])
   t.right(360)
   t.arc(360, 2)
   t.jump([58, 50])
