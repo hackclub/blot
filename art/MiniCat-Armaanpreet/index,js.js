@@ -13,7 +13,7 @@ function drawPanda() {
 
   // Body
   const bodyRadius = 50;
-  const bodyCenter = [100, 50];
+  const bodyCenter = [100, 53];
   lines.push(...circle(bodyCenter, bodyRadius));
 
   // Left Ear
@@ -64,8 +64,8 @@ function drawPanda() {
 
   // Hands (Paws)
   const pawRadius = 15;
-  const pawLeftCenter = [70, 60];
-  const pawRightCenter = [130, 60];
+  const pawLeftCenter = [66, 60];
+  const pawRightCenter = [135, 60];
   lines.push(...circle(pawLeftCenter, pawRadius));
   lines.push(...circle(pawRightCenter, pawRadius));
 
@@ -98,19 +98,19 @@ function circle(center, radius) {
   const segments = 60; // Increased for smoother circle
   const angleStep = (2 * Math.PI) / segments;
   const points = [];
-  
+
   for (let i = 0; i <= segments; i++) {
     const angle = i * angleStep;
     const x = cx + radius * Math.cos(angle);
     const y = cy + radius * Math.sin(angle);
     points.push([x, y]);
   }
-  
+
   const lines = [];
   for (let i = 0; i < points.length - 1; i++) {
     lines.push([points[i], points[i + 1]]);
   }
-  
+
   return lines;
 }
 
