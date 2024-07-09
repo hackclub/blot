@@ -1,7 +1,7 @@
 /*
 @title: Koch's Eye
 @author: Adwaya Gupta
-@snapshot: p1.png
+@snapshot: depth5.png
 */
 
 setDocDimensions(500, 500);
