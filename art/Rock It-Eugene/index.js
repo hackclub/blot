@@ -1,7 +1,7 @@
 /*
 @title: Rock It
 @author: Eugene
-@snapshot: skinny rocket
+@snapshot: skinny-rocket.png
 */
 const width = 150;
 const height = 130;
