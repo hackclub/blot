@@ -1,7 +1,7 @@
 /*
 @title: Collatz-Inspired Kite
 @author: Kate Xu
-@snapshot: collatz_kite.png
+@snapshot: snapshot1.png
 */
 
 
