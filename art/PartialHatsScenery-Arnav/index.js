@@ -1,7 +1,7 @@
 /*
 @title: Partial Hats Scenery Mosaic
 @author: Arnav Kumar
-@snapshot: snapshot.0
+@snapshot: 0.png
 */
 
 // Partial Hats Scenery Mosaic insipred from The Einstein problem
