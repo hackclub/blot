@@ -1,7 +1,7 @@
 /**
 @title:  My Flower
 @author:  Gwen Tigges
-@snapshot:  
+@snapshot:  flower1.png
 */
 
 const width = 120;
