@@ -1,7 +1,7 @@
 /*
 @title: Generic 3D Bed Slinger
 @author: Joshua Vinod
-@snapshot: snapshot0
+@snapshot: snapshot0.png
 */
 const width = 125;
 const height = 125;
