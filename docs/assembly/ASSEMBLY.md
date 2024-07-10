@@ -608,7 +608,7 @@ Watch Blot turn the code into a real thing.
 
 ### Debugging Common Issues
 
-Your Blot can draw quite precisely poor performance is often due to:
+Your Blot can draw quite precisely, poor performance is often due to:
 
 - Bad wheel spacing on the carriage or pen holder.
   
