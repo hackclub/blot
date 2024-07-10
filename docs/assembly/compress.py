@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-def compress_images(input_folder, output_folder, max_size=550):
+def compress_images(input_folder, output_folder, max_size=500):
     # Create output folder if it doesn't exist
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
