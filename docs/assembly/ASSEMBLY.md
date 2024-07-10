@@ -2,7 +2,7 @@
 
 Congratulations! You've just received your Blot (or what is soon to be your Blot)! Get ready to jump into machine building. Don't worry we'll walk through everything in detail.
 
-If you'd like to watch a short video (6 minutes) of building a Blot you can click here.
+If you'd like to [watch a short video (6 minutes) of building a Blot you can click here](https://www.youtube.com/watch?v=7N-Nu6_oo4I).
 
 It takes me about 30 minutes in real time to assemble a Blot but I have lots of experience (and designed the machine). Don't be discouraged if it takes a few hours (or more) there is a lot to learn along the way.
 

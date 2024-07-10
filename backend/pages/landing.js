@@ -186,7 +186,11 @@ export default function() {
         </div>
 
         <div>
-          Also thanks to Paul Hamilton for his contributions to embedded designs.
+          Paul Hamilton for his contributions to embedded designs.
+        </div>
+
+        <div>
+          Oz Nova for writing an excellent getting started guide.
         </div>
 
         <div class="flex flex-row mx-auto w-full justify-center gap-20 py-8">
