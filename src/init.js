@@ -137,16 +137,16 @@ async function addShareIdURLParam() {
   const currentUrl = new URL(window.location.href)
 
   const shareId = currentUrl.searchParams.get('shareId')
-  console.log('It ran the code to find the share id')
+
 
   if (!shareId) return
-  console.log('It detected a share code')
+
   try {
     const response = await fetch(`/read-share-link?id=${shareId}`)
     const content = await response.text()
 
     loadCodeFromString(content)
-    console.log('Loaded the shared content')
+
     removeQueryParam('shareId')
   } catch (error) {
     console.error('Error fetching content:', error)
