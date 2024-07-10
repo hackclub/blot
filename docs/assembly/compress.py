@@ -1,12 +1,10 @@
 import os
-import shutil
 from PIL import Image
 
 def compress_images(input_folder, output_folder, max_size=550):
-    # Clear the output folder if it exists
-    if os.path.exists(output_folder):
-        shutil.rmtree(output_folder)
-    os.makedirs(output_folder)
+    # Create output folder if it doesn't exist
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
     
     # Iterate through all files in the input folder
     for filename in os.listdir(input_folder):

@@ -10,8 +10,8 @@ Here are all the parts that come with your Blot. The source of truth for the Blo
 
 ![PXL_20240614_202958435.jpg](./assets/PXL_20240614_202958435.jpg)
 
-| Quantity | Name                                  | Image                                                                                                                                          |
-| -------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Quantity | Name                                  | Image                                                                                              |
+| -------- | ------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | 1        | 3mm allen key                         | ![Screenshot 2024-07-10 at 2.00.28 PM.png](./assets/Screenshot%202024-07-10%20at%202.00.28 PM.png) |
 | 1        | 2.5mm allen key                       | ![Screenshot 2024-07-10 at 2.01.33 PM.png](./assets/Screenshot%202024-07-10%20at%202.01.33 PM.png) |
 | 1        | 2mm allen key                         | ![Screenshot 2024-07-10 at 2.02.03 PM.png](./assets/Screenshot%202024-07-10%20at%202.02.03 PM.png) |
@@ -520,7 +520,11 @@ Connect your Blot to the web editor by plugging the Xiao in over USB.
 
 ![PXL_20240710_153841116.jpg](./assets/PXL_20240710_153841116.jpg)
 
-TODO: image of editor connecting to xiao
+Connect to your Blot by hovering over `Machine control` and selecting `Connect to machine`
+
+![Screenshot 2024-07-10 at 5.05.53 PM.png](./assets/Screenshot%202024-07-10%20at%205.05.53 PM.png)
+
+If this is the first time you've connected with this Blot you'll get a pop-up to authorize the web serial connection. Select the item that says "xiao".
 
 __Fixturing__
 
@@ -530,9 +534,23 @@ Secure a piece of paper to draw on. I generally tape (or magnet down) the other 
 
 __Setting Lever__
 
+The servo lever lifts the pen. To set the servo lever range properly.
+
+Remove the lever arm from the servo.
+
 ![PXL_20240710_154016398.jpg](./assets/PXL_20240710_154016398.jpg)
 
-TODO: image of setting pen to up in editor
+Set the pen to the up position in the editor.
+
+![Screenshot 2024-07-10 at 5.01.58 PM.png](./assets/Screenshot%202024-07-10%20at%205.01.58 PM.png)
+
+Place the lever arm back on in the up position.
+
+Loosen the set screw on the pen.
+
+Move the pen to be just above the paper in the up position.
+
+It should look like this when you are done.
 
 ![PXL_20240710_154152531.jpg](./assets/PXL_20240710_154152531.jpg)
 
@@ -542,23 +560,51 @@ To home your Blot.
 
 Turn off the motors.
 
+![Screenshot 2024-07-10 at 4.58.46 PM.png](./assets/Screenshot%202024-07-10%20at%204.58.46 PM.png)
+
 Manually move the Blot to the center position.
 
 ![PXL_20240710_183002315.jpg](./assets/PXL_20240710_183002315.jpg)
 
-Turn on your motors and click `Move to Origin`
+Turn on the motors.
 
-Turn off your motors.
+![Screenshot 2024-07-10 at 4.59.27 PM.png](./assets/Screenshot%202024-07-10%20at%204.59.27 PM.png)
+
+Click `Move towards origin`. Note which corner the Blot moves towards.
+
+![Screenshot 2024-07-10 at 5.00.16 PM.png](./assets/Screenshot%202024-07-10%20at%205.00.16 PM.png)
+
+Turn off the motors.
+
+![Screenshot 2024-07-10 at 4.58.46 PM.png](./assets/Screenshot%202024-07-10%20at%204.58.46 PM.png)
 
 Manually move your Blot all the way to the corner it moved towards.
 
 ![PXL_20240710_174439847.jpg](./assets/PXL_20240710_174439847.jpg)
 
-Click `Set Origin`
+Click `Set Origin`.
 
-Turn on your motors.
+![Screenshot 2024-07-10 at 5.01.21 PM.png](./assets/Screenshot%202024-07-10%20at%205.01.21 PM.png)
+
+Turn on the motors.
+
+![Screenshot 2024-07-10 at 4.59.27 PM.png](./assets/Screenshot%202024-07-10%20at%204.59.27 PM.png)
 
 Depending on how your stepper motors are plugged in the drawing may be mirrored. You can correct this by changing whether the motors are plugged in with the metal pins showing face up or hidden face down. The correct orientation may be some combination of the two.
+
+__Draw!__
+
+Pull up the art piece you want to draw in the code editor.
+
+Hit`Run` to render the piece in the editor.
+
+![Screenshot 2024-07-10 at 5.07.56 PM.png](./assets/Screenshot%202024-07-10%20at%205.07.56 PM.png)
+
+Then hover over `Machine control` and select `Run machine`.
+
+![Screenshot 2024-07-10 at 5.08.35 PM.png](./assets/Screenshot%202024-07-10%20at%205.08.35 PM.png)
+
+Watch Blot turn the code into a real thing.
 
 ### Debugging Common Issues
 
@@ -570,21 +616,7 @@ Your Blot can draw quite precisely poor performance is often due to:
 
 - Bad pen height.
   
-  - To adjust the pen height properly.
-    
-    - Remove the lever arm from the servo.
-    
-    - Set the pen to move up in the editor.
-    
-    - Place the lever arm back on in the up position.
-    
-    - Loosen the set screw on the pen.
-    
-    - Move the pen to be just above the paper in the up position.
-    
-    - It should look like this:
-      
-      ![PXL_20240710_154152531.jpg](./assets/PXL_20240710_154152531.jpg)
+  - If you're drawing has irregular pen strokes your pen may not be low enough or your surface may be uneven.
 
 - Machine improperly homed.
 
