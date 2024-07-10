@@ -171,3 +171,5 @@ Sam Hu and his team at ISourceAsia for supplying Blot parts and becoming a criti
 
 Paul Hamilton for his contributions to embedded circuit designs.
 
+Oz Nova for writing an excellent getting started guide.
+
