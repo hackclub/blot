@@ -37,25 +37,25 @@ export const toolkit = {
   difference: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "difference", ops),
   xor: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "xor", ops),
   
-  offset, // undoced
+  offset,
 
   // maybe
-  turnForward, // undoced
-  arc, // undoced
-  step: (polylines, dx, dy) => { // undoced
-    if (polylines.length === 0) {
-      polylines.push([ [0, 0] ])
-    }
+  // turnForward, // undoced
+  // arc, // undoced
+  // step: (polylines, dx, dy) => { // undoced
+  //   if (polylines.length === 0) {
+  //     polylines.push([ [0, 0] ])
+  //   }
 
-    const [x, y] = polylines.at(-1).at(-1);
+  //   const [x, y] = polylines.at(-1).at(-1);
 
-    polylines.at(-1).push([
-      x + dx,
-      y + dy
-    ])
+  //   polylines.at(-1).push([
+  //     x + dx,
+  //     y + dy
+  //   ])
 
-    return polylines;
-  },
+  //   return polylines;
+  // },
 
   iteratePoints: iteratePolylines,
   transform,

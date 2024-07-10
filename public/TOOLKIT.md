@@ -42,6 +42,7 @@ bt.union(polylines0, polylines1)
 bt.difference(polylines0, polylines1)
 bt.intersection(polylines0, polylines1)
 bt.xor(polylines0, polylines1)
+bt.offset(polylines, delta, ops = { endType, joinType, miterLimit, arcTolerance })
 ```
 
 ## Get Data From Polylines
