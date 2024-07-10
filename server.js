@@ -101,7 +101,7 @@ app.get('/read-share-link', async (req, res) => {
   }
 });
 app.get('/assembly', (req, res) => {
-  res.redirect('https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md');
+  res.redirect('https://github.com/hackclub/blot/blob/main/docs/assembly/ASSEMBLY.md');
 });
 app.get('/welcome-qr-code', (req, res) => {
   res.redirect('/assembly');
