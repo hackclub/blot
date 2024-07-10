@@ -182,6 +182,10 @@ export default function() {
         <br/>
 
         <div>
+          Sam Hu and his team are our wonderful manufacturing partners.
+        </div>
+
+        <div>
           Also thanks to Paul Hamilton for his contributions to embedded designs.
         </div>
 

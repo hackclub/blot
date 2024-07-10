@@ -141,3 +141,14 @@ bt.noise(
   }
 );
 ```
+
+## Idioms
+
+These are small useful code snippets.
+
+```js
+function centerPolylines(polylines, documentWidth, documentHeight) {
+  const cc = bt.bounds(polylines).cc;
+  bt.translate(polylines, [documentWidth / 2, documentHeight / 2], cc);
+}
+```

@@ -2,7 +2,7 @@
 
 **[🕸 Landing Page](https://blot.hackclub.com)** | **[💻 Online Editor](https://blot.hackclub.com/editor)** | **[👀 Gallery](https://blot.hackclub.com/gallery)**
 
-Create programmatic art in our web-based editor and submit it to the gallery and we'll send you a CNC machine which can make that art.
+Create programmatic art in our web-based editor and submit it to the gallery and we'll send you a CNC machine which can make that art for free.
 Blot is a [**You Ship, We Ship**](https://github.com/hackclub/blot/tree/main?tab=readme-ov-file#you-ship-we-ship) project from [Hack Club](https://hackclub.com). 
 
 > Everything about Blot is open source. The online editor and drawing library can be freely used by anyone, and we encourage all to submit to the gallery through PRs! However, you must be a teenager or younger to receive a free machine.
