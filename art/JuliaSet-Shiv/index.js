@@ -1,7 +1,7 @@
 /*
 @title: Julia Set
 @author: Shiv Gupta
-@snapshot: un_tweaked.png
+@snapshot: patternVar_2.png
 */
 ```
 const width = 125;
