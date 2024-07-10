@@ -160,3 +160,14 @@ yarn dev
 
 # License
 The Hack Club Blot is open source and licensed under the [MIT License](https://github.com/hackclub/blot/LICENSE.md). Fork, remix, and make it your own! Pull requests and other contributions greatly appreciated.
+
+# Acknowledgements
+
+Many people have contributed to Blot, to mention a few and give much thanks too...
+
+MIT's Center for Bits and Atoms for providing expert advice and occasionally a space to work. 
+
+Sam Hu and his team at ISourceAsia for supplying Blot parts and becoming a critical part of the Blot team. 
+
+Paul Hamilton for his contributions to embedded circuit designs.
+
