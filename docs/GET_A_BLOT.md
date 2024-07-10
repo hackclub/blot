@@ -11,7 +11,7 @@ You can learn how to use the editor and make art by following some of [these gui
 
 Some criteria your art needs to meet:
 
-- Your artwork must be beautiful. It has to be something aestetically interesting.
+- Your artwork must be beautiful. It has to be something aesthetically interesting.
 - Your artwork must be algorithmic.
   - It must be able to create multiple versions. To demonstrate this, **submit 3 snapshots**.
   - You should expose some parameters at the top of your code which can adjust the art. This could be `setRandSeed` or some other variable used in your piece.
@@ -22,7 +22,7 @@ Some criteria your art needs to meet:
   - You can't just copy an existing piece of art and mess with the numbers.
   - That being said, you can take inspiration from other art and remix a few pieces together.
 
-I reccomend trying to create a [figurative](https://en.wikipedia.org/wiki/Figurative_art) piece, which depicts a real life thing.
+I recommend trying to create a [figurative](https://en.wikipedia.org/wiki/Figurative_art) piece, which depicts a real life thing.
 A key to being successful is being intentional with what you make. Sketch something out and have it in mind before you program it.
 
 Here are some examples of some **acceptable pieces**:
@@ -57,6 +57,9 @@ Make sure to include this info in a comment at the top of your file.
 */
 ```
 
+__NOTE__
+- Make sure your snapshot matches the name of an image in the `snapshots` folder you submit with `.png` like `example1.png`
+
 ## 2.1) Download your program
 
 - Hover over `download`
@@ -70,6 +73,10 @@ Make sure to include this info in a comment at the top of your file.
 - Create a folder called `{yourArtworkName}-{yourName}`.
 - Inside that folder create a `snapshots` folder with **at least 3 screenshots** of your work.
 - Place the code for your artwork in an `index.js` file.
+
+__NOTE__
+- DO NOT USE SPACES in any folder name or file.
+- Make sure you `snapshots` folder is lowercase `snapshots` not `Snapshots`
 
 **Make sure there are no spaces in your directory or file names!**
 

@@ -38,6 +38,8 @@ export const toolkit = {
   xor: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "xor", ops),
   
   offset, // undoced
+
+  // maybe
   turnForward, // undoced
   arc, // undoced
   step: (polylines, dx, dy) => { // undoced

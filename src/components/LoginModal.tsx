@@ -14,6 +14,7 @@ export default function LoginModal() {
     codeSent: false,
     headerText: "Enter your email to log in.",
     loggedIn: false,
+    email: ""
   });
 
   const updateState = (newState) => setState((prev) => ({ ...prev, ...newState }));
@@ -26,6 +27,7 @@ export default function LoginModal() {
       codeSent: false,
       headerText: "Enter your email to log in.",
       loggedIn: false,
+      email: ""
     });
   };
 
@@ -48,9 +50,10 @@ export default function LoginModal() {
       return;
     }
 
-    updateState({ msg: "sending code..." });
+    updateState({ msg: "sending code...", email: state.inputValue });
 
     try {
+      console.log(state);
       const res = await fetch('/get-user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -77,7 +80,7 @@ export default function LoginModal() {
       const res = await fetch('/submit-code', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: state.inputValue, code: state.inputValue }) // Assuming email is stored or retrieved differently, adjust accordingly
+        body: JSON.stringify({ email: state.email, code: state.inputValue }) // Assuming email is stored or retrieved differently, adjust accordingly
       }).then(res => res.json());
 
       if (res.email && res.sessionKey) {
