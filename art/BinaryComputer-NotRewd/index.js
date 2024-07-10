@@ -1,3 +1,9 @@
+/*
+@title: BinaryComputer
+@author: NotRewd
+@snapshot: image-1.png
+*/
+
 const width = 125;
 const height = 125;
 
@@ -257,8 +263,8 @@ finalLines = finalLines.concat(binaryWindow);
 finalLines = finalLines.concat(antenna);
 finalLines = finalLines.concat(sinWindow);
 
-drawLines(stripedLines, { width: 0.5 });
-drawLines(grid, { width: 0.2 });
-drawLines(sinContent);
+drawLines(stripedLines, { width: 0.1 });
+drawLines(grid, { width: 0.1 });
+drawLines(sinContent, { width: 0.2 });
 
-drawLines(finalLines, { width : 3 });
+drawLines(finalLines, { width : 1 });
