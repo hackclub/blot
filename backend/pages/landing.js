@@ -100,7 +100,7 @@ export default function() {
             <div class="text-2xl font-bold pr-5">3</div>
             <div>
               <div class="text-lg font-semibold">Get your parts in the mail.</div> 
-              <a class="${linkClasses}" href="https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md">Build your own machine.</a>
+              <a class="${linkClasses}" href="/assembly">Build your own machine.</a>
             </div>
           </div>
 
