@@ -606,6 +606,12 @@ Then hover over `Machine control` and select `Run machine`.
 
 Watch Blot turn the code into a real thing.
 
+### Send us a Postcard
+
+We're building a Blot art wall back at HQ. After you build your machine pick up a local postcard and draw your picture on the back.
+
+TODO: IMAGE OF MY POSTCARD (FRONT AND BACK)
+
 ### Debugging Common Issues
 
 Your Blot can draw quite precisely, poor performance is often due to:
