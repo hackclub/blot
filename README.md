@@ -163,11 +163,11 @@ The Hack Club Blot is open source and licensed under the [MIT License](https://g
 
 # Acknowledgements
 
-Many people have contributed to Blot to mention a few.
+Many people have contributed to Blot, to mention a few and give much thanks too...
 
-Much thanks to MIT's Center for Bits and Atoms for providing expert advice and occasionally a space to work. 
+MIT's Center for Bits and Atoms for providing expert advice and occasionally a space to work. 
 
-To Sam Hu and his team at ISourceAsia for supplying Blot parts and becoming a critical part of the Blot team. 
+Sam Hu and his team at ISourceAsia for supplying Blot parts and becoming a critical part of the Blot team. 
 
-To Paul Hamilton for his contributions to embedded circuit designs.
+Paul Hamilton for his contributions to embedded circuit designs.
 
