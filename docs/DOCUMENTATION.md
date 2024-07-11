@@ -627,13 +627,14 @@ A `Turtle` class represents a cursor that moves around a canvas to draw shapes. 
 - `arc(angle, radius)` Draws an arc with the specified angle and radius from the current position.
 - `goTo([x, y])` Moves the turtle to the specified coordinates, drawing a line if the pen is down.
 - `jump([x, y])` Moves the turtle to the specified coordinates without drawing a line.
+- `step([dx, dy])` Moves the turtle to the current positon plus the passed delta values.
 - `right(angle)` Rotates the turtle to the right by the specified angle.
 - `left(angle)` Rotates the turtle to the left by the specified angle.
 - `setAngle(angle)` Sets the absolute angle of the turtle's orientation.
 - `up()` Lifts the pen so that moving the turtle does not draw lines.
 - `down()` Lowers the pen so that moving the turtle draws lines.
 - `copy()` Creates a copy of the turtle's current state.
-- `apply(fn)` Takes a function that receives the turtle as an argument and applies custom operations.
+- `applyToPath(fn)` Takes a function that receives the turtle's path as an argument.
 - `lines()` Returns a copy of the Turtle's path.
 
 **Properties:**

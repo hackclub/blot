@@ -94,13 +94,14 @@ const myTurtle = new bt.Turtle()
   .arc(angle: number, radius: number)
   .goTo( [ x: number, y: number ] ) // move with up/down state
   .jump( [ x: number, y: number ] ) // move but don't draw
+  .step( [ dx: number, dy: number ] ) // add delta to turtles current position
   .right(angle: number)
   .left(angle: number)
   .setAngle(angle: number)
   .up() // sets drawing to false
   .down() // sets drawing to true
   .copy()
-  .apply(fn) // takes (turtle) => { }
+  .applyToPath(fn) // takes (turtlePath) => { }
   .lines() // get copy of the Turtle's path
 
 // data
