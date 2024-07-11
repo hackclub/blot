@@ -1,7 +1,7 @@
 # Reviewing Blots
 
 This document describes how to review a Blot submission.
-It corresponds to the this file on [how to submit a Blot submission](https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md).
+It corresponds to the this file on [how to make a Blot submission](https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md).
 
 # Submission Criteria
 
@@ -46,7 +46,63 @@ Mark the submission as such with the `submission` label.
 
 <img width="260" alt="Screenshot 2024-07-03 at 2 53 54 PM" src="https://github.com/hackclub/blot/assets/27078897/5158af1c-090f-4c91-97bf-cfb8a6cb71b2">
 
+Check the submitted files in the `Files changed` tab.
 
+![Screenshot 2024-07-10 at 10 03 14 PM](https://github.com/hackclub/blot/assets/27078897/c0e3e1df-14dd-416a-abda-c773162a4a82)
+
+Make sure the metadata snapshot exists and that the snapshots folder is named `snapshots`.
+
+The metadata in the above example is
+
+```
+/*
+@title: BinaryComputer
+@author: NotRewd
+@snapshot: image-1.png
+*/
+```
+
+The JavaScript file should be named `index.js`.
+
+There can be no spaces in any of the folder or filenames.
+
+If there are any errors you can note them to the submitter and ask for corrections. If an error is small (like a misreferenced filename) I sometimes just fix it for the submitter. Many submitters are new and the mechanics of GitHub (while a great skill) are not the most important thing about starting to code.
+
+Review the submission for the above submission criteria. If you find the submission doesn't meet the criteria explain how so to the submitter in the `Conversation` tab.
+
+If the submission is close to being acceptable then request the user make some specific changes. I will sometimes add the `changes requested` label to note that the project has been reviewed.
+
+If specific changes can not be suggested that make the submission acceptable then close the PR. It is nice to give some positive encouragement to the submitter and let them know they can submit again in the future.
+
+# Accepting PRs
+
+To accept a PR.
+
+Apply the `approved` label.
+
+![Screenshot 2024-07-10 at 10 09 13 PM](https://github.com/hackclub/blot/assets/27078897/0ffb37e0-3490-430b-9c4c-a0f8dec50600)
+
+Comment in the conversation what you appreciate about the piece. Congratulate the Hack Clubber and provide them with the order link. You may still make suggestions about ways to improve the piece too or offer challenges. Here is an example comment:
+
+```
+I like how you rendered a simple geometric element in perspective and then transformed it into a recognizable and some what whimsical object. Your code is also very well organized.
+
+Congrats this definitely earns a Blot. You can order it [here](https://airtable.com/appv0BzBY2APyIXj6/shrhpWVXN5imMzUmw). 
+
+Do you think you could tie together the code that appears on the screen with the object in the viewing window? Maybe you could write a programming language for this computer?
+```
+
+The order link is
+
+```
+https://airtable.com/appv0BzBY2APyIXj6/shrhpWVXN5imMzUmw
+```
+
+It's best to hyperlink it.
+
+Merge the PR.
+
+The best practice when merging PRs is to checkout the branch locally to make sure everything still runs properly. After merging check the gallery to make sure the gallery image is referenced properly.
 
 
 
