@@ -37,20 +37,20 @@ t.forward(55);
 t.left(69)
 
 //pannels
-t.jump([10, 65])
-t.forward(31.1);
+t.jump([10.1, 65])
+t.forward(31.7);
 
 t.jump([26.5, 55])
-t.forward(39.4);
+t.forward(40);
 
 t.jump([38.6, 59.6])
-t.forward(36.6);
+t.forward(37.3);
 
 t.jump([78.8, 74.2])
-t.forward(28.3);
+t.forward(29.0);
 
-t.jump([54.9, 75.5])
-t.forward(26);
+t.jump([54.9, 75.9])
+t.forward(26.4);
 
 t.left(98);
 t.forward(45);
@@ -62,16 +62,20 @@ t.left(375);
 t.forward(52.3);
 
 t.left(535);
+t.forward(0);
+t.jump([79.3, 103.2])
+t.right(1.8)
 t.forward(24);
+
 
 t.jump([10.0, 65])
 
-t.left(190)
-t.forward(46)
+t.left(191.5)
+t.forward(46.4)
 
 t.jump([54.9, 76])
 
-t.left(343)
+t.left(342)
 t.forward(24)
 
 
@@ -126,13 +130,13 @@ t.forward(32);
 
 //hack club logo!
 
-t.jump([70, 19.5]);
+t.jump([70, 20.056]);
 t.left(1);
 t.forward(13);
 t.right(270);
 t.forward(13);
 t.left(92);
-t.forward(13.1);
+t.forward(13.227);
 
 t.jump([45, 76]);
 t.left(-2);
