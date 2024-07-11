@@ -596,7 +596,7 @@ __Draw!__
 
 Pull up the art piece you want to draw in the code editor.
 
-Hit`Run` to render the piece in the editor.
+Hit `Run` to render the piece in the editor.
 
 ![Screenshot 2024-07-10 at 5.07.56 PM.png](./assets/Screenshot%202024-07-10%20at%205.07.56 PM.png)
 
@@ -604,7 +604,11 @@ Then hover over `Machine control` and select `Run machine`.
 
 ![Screenshot 2024-07-10 at 5.08.35 PM.png](./assets/Screenshot%202024-07-10%20at%205.08.35 PM.png)
 
+Note that you must keep this tab active or the communication speed (and your machine) will slow down. If you want to do something else on the computer just move the tab to a new window.
+
 Watch Blot turn the code into a real thing.
+
+TODO: picture of drawn thing
 
 ### Send us a Postcard
 
