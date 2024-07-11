@@ -1,4 +1,4 @@
-# How to order Blot kits
+# How to Order Blot kits
 
 Blot kits are provided by [ISource-Asia](http://www.isource-asia.com/). Our main contact there is Sam Hu.
 I'm (Leo McElroy) going to describe how to order a kit from a contract manufacturer using Sam as an example.
