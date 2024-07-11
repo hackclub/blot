@@ -42,6 +42,17 @@ export class Turtle {
     return this
   }
 
+  step([dx, dy]) { // document this
+    const [x, y] = this.position;
+
+    this.goTo([
+      x+dx,
+      y+dy
+    ])
+
+    return this;
+  }
+
   jump(pt) {
     const [x, y] = pt;
     const lastPath = this.path.at(-1);
@@ -162,7 +173,7 @@ export class Turtle {
     return t
   }
 
-  // TODO: do i want this;
+  // TODO: do i want this; prioritize this
   applyToPath(fn) {
     fn(this.path);
     return this;
