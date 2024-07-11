@@ -1,3 +1,4 @@
+import { assertArgs } from './assert.js'
 import { rand } from './rand.js'
 
 let PERLIN_YWRAPB = 4
@@ -13,6 +14,7 @@ let scaled_cosine = function (i) {
 let perlin// will be initialized lazily by noise() or noiseSeed()
 
 export function noise( vector, options = {}) {
+  assertArgs(arguments, ['point', 'any?'], 'bt.noise')
   if (typeof vector === 'number') vector = [vector, 0, 0]
   let [x, y, z] = vector
   y = y || 0

@@ -1,4 +1,8 @@
+import { assertArgs } from './assert'
+
 export function trimPolylines(polylines, t1, t2) {
+  assertArgs(arguments, ['polylines', 'number', 'number'], 'bt.trims');
+
   t1 = Math.max(0, Math.min(1, t1));
   t2 = Math.max(0, Math.min(1, t2));
 
