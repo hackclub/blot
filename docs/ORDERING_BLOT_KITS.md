@@ -45,7 +45,7 @@ We also discovered that I had specified the wrong units for the belt length (whi
 
 After okaying the kit we order them by requesting an invoice from Sam which is fulfilled by our payment office (thanks Mel!).
 
-Sam can ship kits directly from China to Hack Clubbers.
+Sam can ship kits directly from China to Hack Clubbers or can ship kits to the warehouse in Vermont.
 
 
 
