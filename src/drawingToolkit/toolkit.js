@@ -1,4 +1,3 @@
-import polygonClipping from "polygon-clipping";
 import { boolean } from "./boolean.js";
 import { Turtle } from "./Turtle.js";
 import { cut, cover } from "./cutCover.js";
@@ -14,49 +13,24 @@ import { getNormalAtT } from "./getNormalAtT.js";
 import { resamplePolylines } from "./resamplePolylines.js";
 import { simplify as simplifyPolyline } from "./simplify.js";
 import { trimPolylines } from "./trimPolylines.js";
-import { displacePolylines as displace } from "./displacePolylines.js";
 import { flattenSVG } from "./flatten-svg/index.js";
 import { transform } from "./transform.js";
 import { bounds } from "./bounds.js";
 import { catmullRom } from "./catmullRom.js";
 import { nurbs } from "./nurbs.js";
-import { bezierEasing } from "./bezierEasing.js";
-import * as polyclip from 'polyclip-ts';
-import { turnForward } from "./turnForward.js"
-import { arc } from "./arc.js"
 import { offset } from "./offset.js"
 
-export const toolkit = {
-  // polyclip, // NOT INCLUDED
-  // boolean, // NOT INCLUDED
-  // polygonClipping, // NOT INCLUDED
-  // displace, // NOT INCLUDED
+// import * as polyclip from 'polyclip-ts';
+// import polygonClipping from "polygon-clipping";
+// import { displacePolylines as displace } from "./displacePolylines.js";
+// import { bezierEasing } from "./bezierEasing.js";
 
+export const toolkit = {
   union: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "union", ops),
   intersection: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "intersection", ops),
   difference: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "difference", ops),
   xor: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "xor", ops),
-  
   offset,
-
-  // maybe
-  // turnForward, // undoced
-  // arc, // undoced
-  // step: (polylines, dx, dy) => { // undoced
-  //   if (polylines.length === 0) {
-  //     polylines.push([ [0, 0] ])
-  //   }
-
-  //   const [x, y] = polylines.at(-1).at(-1);
-
-  //   polylines.at(-1).push([
-  //     x + dx,
-  //     y + dy
-  //   ])
-
-  //   return polylines;
-  // },
-
   iteratePoints: iteratePolylines,
   transform,
   bounds,
@@ -70,7 +44,7 @@ export const toolkit = {
   scale,
   rotate,
   translate,
-  bezierEasing,
+  // bezierEasing, // used to be in
   catmullRom,
   nurbs(points, ops = {}) {
     const degree = ops.degree ?? 2;
@@ -145,7 +119,7 @@ export const toolkit = {
   },
   trim: trimPolylines,
   merge: mergePolylines,
-  svgToPolylines(svgString) {
+  svgToPolylines(svgString) { // undoced
     try {
       const parser = new DOMParser();
       const doc = parser.parseFromString(svgString, 'image/svg+xml');
