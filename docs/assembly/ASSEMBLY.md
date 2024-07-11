@@ -498,7 +498,7 @@ Ready to run.
 
 Now it's time to run your Blot. 
 
-Check out a quick video demonstrating how to run a Blot here.
+[Check out a quick video demonstrating how to run a Blot here.](https://youtu.be/qDP5CNjFHJE)
 
 To run your Blot you'll have to:
 
@@ -608,13 +608,34 @@ Note that you must keep this tab active or the communication speed (and your mac
 
 Watch Blot turn the code into a real thing.
 
-TODO: picture of drawn thing
+![Screenshot 2024-07-11 at 2.01.34 PM.png](./assets/Screenshot%202024-07-11%20at%202.01.34 PM.png)
+
+For best results I like to use a whiteboard ([which I bought for $10 at Target](https://www.amazon.com/Brand-Frameless-Magnetic-Dry-Erase-Board/dp/B0845T7JLC?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&smid=ATVPDKIKX0DER&th=1)) with magnets to provide a flat surface and hold down paper.
+
+![PXL_20240711_150846841.jpg](./assets/PXL_20240711_150846841.jpg)
 
 ### Send us a Postcard
 
-We're building a Blot art wall back at HQ. After you build your machine pick up a local postcard and draw your picture on the back.
+We're building a Blot art wall back at HQ. After you build your machine pick up a local postcard and use Blot to draw your art on the back.
 
-TODO: IMAGE OF MY POSTCARD (FRONT AND BACK)
+I picked up this cool vintage postcard from the antique store next door to Hack Club HQ. It shows a Vermont lake.
+
+![PXL_20240711_181315601.jpg](./assets/PXL_20240711_181315601.jpg)
+
+Here it is with my art piece drawn on the back. Ready to send to HQ.
+
+Make sure you sign it too!
+
+![PXL_20240711_181326466.jpg](./assets/PXL_20240711_181326466.jpg)
+
+Hack Club HQ address is
+
+```
+Hack Club
+15 Falls Rd 
+Shelburne, VT 05482
+USA
+```
 
 ### Debugging Common Issues
 
