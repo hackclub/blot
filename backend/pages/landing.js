@@ -184,14 +184,17 @@ export default function() {
         <div>
           Sam Hu and his team are our wonderful manufacturing partners.
         </div>
+        <br>
 
         <div>
           Paul Hamilton for his contributions to embedded designs.
         </div>
+        <br>
 
         <div>
           Oz Nova for writing an excellent getting started guide.
         </div>
+        <br>
 
         <div class="flex flex-row mx-auto w-full justify-center gap-20 py-8">
           <div class="flex flex-row justify-center" style="transform: translateX(-27px);">
