@@ -113,16 +113,16 @@ t.left(26)
 t.jump([102, 20]);
 
 t.left(521)
-t.forward(51);
+t.forward(0);
 
 t.left(-92)
-t.forward(33);
+t.forward(0);
 
 t.left(271)
-t.forward(51);
+t.forward(0);
 
 t.right(91)
-t.forward(32);
+t.forward(0);
 
 
 
@@ -160,14 +160,22 @@ t.left(-1);
 t.forward(5)
 
 
-const randomNumber = Math.ceil(Math.random() * 3)
+const randomNumber = Math.ceil(Math.random() + 0)
 if (randomNumber === 1) {
   //bios screen
-
-
+  t.jump([40.4, 54.2]);
+  t.right(2);
+  t.forward(70);
+  t.right(90)
+  t.forward(34)
+  t.right(90)
+  t.forward(70)
+  t.left(-90)
+  t.forward(34)
+  
   t.jump([53.6, 42.5]);
 
-  t.right(2)
+  t.right(89)
   t.forward(size)
   t.left(122)
   t.forward(size)
@@ -209,10 +217,39 @@ if (randomNumber === 1) {
   t.right(90)
   t.down()
   t.forward(29)
+  t.jump([87.4, 40.7])
+  t.right(116)
+  t.forward(-11)
+  t.jump([92.4, 50.5])
+  t.right(130)
+  t.forward(-11)
+
+  t.jump([89.4, 44.7])
+  t.right(113)
+  t.forward(5.5)
+    t.jump([99.8, 40.3])
+  t.right(-90)
+  t.forward(10.3)
+  t.right(520)
+  t.forward(10.8)
+  t.right(212)
+  t.forward(10.3)
+  t.right(161)
+  t.forward(10.4)
 }
 if (randomNumber == 2) {
+  t.jump([64, 58])
+  t.right(2)
+  t.forward(26)
+  t.right(90)
+  t.forward(38)
+  t.right(90)
+  t.forward(26)
+  t.right(90)
+  t.forward(38)
+  
   t.jump([75, 31])
-  t.right(375)
+  t.right(463)
   t.arc(385, 4)
   t.jump([70, 32])
   t.right(360)
@@ -223,14 +260,14 @@ if (randomNumber == 2) {
   t.jump([80.5, 38])
   t.right(360)
   t.arc(360, 2)
-  t.jump([58, 50])
+  t.jump([72, 55])
   t.right(103)
   t.forward(8)
   t.right(-91)
   t.forward(3)
   t.left(89)
   t.forward(8)
-  t.jump([63, 50])
+  t.jump([77, 55])
   t.right(180)
   t.forward(8)
   t.right(-113)
@@ -306,6 +343,20 @@ if (randomNumber == 3) {
   t.jump([50.0, 108.5])
   t.right(565)
   t.arc(32, 10)
+
+  t.jump([102, 20]);
+
+t.left(585)
+t.forward(51);
+
+t.left(-92)
+t.forward(33);
+
+t.left(271)
+t.forward(51);
+
+t.right(91)
+t.forward(32);
 }
 
 
