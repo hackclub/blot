@@ -505,8 +505,8 @@ To run your Blot you'll have to:
 - Connecting
   - Power your Blot.
   - Connect it to the web editor.
-- Fixture paper to draw on.
 - Home your machine (set the origin).
+- Fixture paper to draw on.
 - Set the lever on the servo.
 - Set the pen height for drawing.
 
@@ -525,34 +525,6 @@ Connect to your Blot by hovering over `Machine control` and selecting `Connect t
 ![Screenshot 2024-07-10 at 5.05.53 PM.png](./assets/Screenshot%202024-07-10%20at%205.05.53 PM.png)
 
 If this is the first time you've connected with this Blot you'll get a pop-up to authorize the web serial connection. Select the item that says "xiao".
-
-__Fixturing__
-
-Secure a piece of paper to draw on. I generally tape (or magnet down) the other side of the paper too.
-
-![PXL_20240710_153943015.jpg](./assets/PXL_20240710_153943015.jpg)
-
-__Setting Lever__
-
-The servo lever lifts the pen. To set the servo lever range properly.
-
-Remove the lever arm from the servo.
-
-![PXL_20240710_154016398.jpg](./assets/PXL_20240710_154016398.jpg)
-
-Set the pen to the up position in the editor.
-
-![Screenshot 2024-07-10 at 5.01.58 PM.png](./assets/Screenshot%202024-07-10%20at%205.01.58 PM.png)
-
-Place the lever arm back on in the up position.
-
-Loosen the set screw on the pen.
-
-Move the pen to be just above the paper in the up position.
-
-It should look like this when you are done.
-
-![PXL_20240710_154152531.jpg](./assets/PXL_20240710_154152531.jpg)
 
 __Homing__
 
@@ -591,6 +563,36 @@ Turn on the motors.
 ![Screenshot 2024-07-10 at 4.59.27 PM.png](./assets/Screenshot%202024-07-10%20at%204.59.27 PM.png)
 
 Depending on how your stepper motors are plugged in the drawing may be mirrored. You can correct this by changing whether the motors are plugged in with the metal pins showing face up or hidden face down. The correct orientation may be some combination of the two.
+
+__Fixturing Paper__
+
+Secure a piece of paper to draw on. I generally tape (or magnet down) the other side of the paper too.
+
+![PXL_20240710_153943015.jpg](./assets/PXL_20240710_153943015.jpg)
+
+__Setting Lever__
+
+The servo lever lifts the pen. To set the servo lever range properly.
+
+Remove the lever arm from the servo.
+
+![PXL_20240710_154016398.jpg](./assets/PXL_20240710_154016398.jpg)
+
+Set the pen to the up position in the editor.
+
+![Screenshot 2024-07-10 at 5.01.58 PM.png](./assets/Screenshot%202024-07-10%20at%205.01.58 PM.png)
+
+Place the lever arm back on in the up position.
+
+__Setting the Pen Height__
+
+Loosen the set screw on the pen.
+
+Move the pen to be just above the paper in the up position.
+
+It should look like this when you are done.
+
+![PXL_20240710_154152531.jpg](./assets/PXL_20240710_154152531.jpg)
 
 __Draw!__
 
