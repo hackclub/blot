@@ -158,6 +158,23 @@ To run the development server:
 yarn dev
 ```
 
+# Blot Docs
+
+Here are a collection of resources for Blot:
+
+- [Complete documentation of the drawing library in the editor](https://github.com/hackclub/blot/blob/main/docs/DOCUMENTATION.md)
+- [Short documentation shown in the Blot editor](https://github.com/hackclub/blot/blob/main/public/TOOLKIT.md)
+- [The Blot assembly and operation guide](https://github.com/hackclub/blot/blob/main/docs/assembly/ASSEMBLY.md)
+- [The source of truth bill of materials (BOM)](https://github.com/hackclub/blot/blob/main/docs/BOM.toml)
+- [Criteria for how to get a Blot and a guide on how to submit a PR](https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md)
+- [A guide on how to review Blot submissions](https://github.com/hackclub/blot/blob/main/docs/BLOT_REVIEW.md)
+- [A brief guide on how to approve Blot requests for Blot shipments](https://github.com/hackclub/blot/blob/main/docs/APPROVING_BLOT_REQUESTS.md)
+- [Information on how we order Blot supplies from our manufacturing partners](https://github.com/hackclub/blot/blob/main/docs/ORDERING_BLOT_KITS.md)
+- [The files for the 3D printed parts](https://github.com/hackclub/blot/tree/main/hardware/mechanical/blot-v6)
+- [The source files for the control PCB](https://github.com/hackclub/blot/tree/main/hardware/motor-control-board/circuit/controller)
+- [The source files for the power delivery PCB](https://github.com/hackclub/blot/tree/main/hardware/motor-control-board/circuit/power-delivery)
+- [The firmware for the Blot control board](https://github.com/hackclub/blot/blob/main/hardware/motor-control-board/firmware/firmware.ino)
+  
 # License
 The Hack Club Blot is open source and licensed under the [MIT License](https://github.com/hackclub/blot/LICENSE.md). Fork, remix, and make it your own! Pull requests and other contributions greatly appreciated.
 
