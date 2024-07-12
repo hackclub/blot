@@ -352,7 +352,7 @@ Attach the belt clip to the end of the carriage facing down and secure in place 
 
 ![PXL_20240710_173838750.jpg](./assets/PXL_20240710_173838750.jpg)
 
-Flip the machine upside down and use the remaing two T-nuts to attach the motor mount.
+Flip the machine upside down and use the remaining two T-nuts to attach the motor mount.
 
 ![PXL_20240616_224208232.jpg](./assets/PXL_20240616_224208232.jpg)
 
