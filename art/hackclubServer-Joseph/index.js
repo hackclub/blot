@@ -160,7 +160,7 @@ t.left(-1);
 t.forward(5)
 
 
-const randomNumber = Math.ceil(Math.random() + 0)
+const randomNumber = Math.ceil(Math.random() * 3)
 if (randomNumber === 1) {
   //bios screen
   t.jump([40.4, 54.2]);
