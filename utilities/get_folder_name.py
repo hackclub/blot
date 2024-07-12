@@ -28,9 +28,9 @@ def main(pr_url):
     files = get_pr_files(repo, pr_number)
     folder = check_art_folder_created(files).replace(" ", "")
 
-    code_url = f"https://raw.githubusercontent.com/hackclub/blot/main/art/{folder}/index.js"
-    playable_url = f"https://blot.hackclub.com/editor?src={code_url}"
-    screenshot = f"https://github.com/hackclub/blot/tree/main/art/{folder}/snapshots"
+    # code_url = f"https://raw.githubusercontent.com/hackclub/blot/main/art/{folder}/index.js"
+    # playable_url = f"https://blot.hackclub.com/editor?src={code_url}"
+    # screenshot = f"https://github.com/hackclub/blot/tree/main/art/{folder}/snapshots"
     
     if folder:
         print(folder)
@@ -38,13 +38,7 @@ def main(pr_url):
         print("No folder created in 'art' directory.")
 
 if __name__ == "__main__":
-    pr_urls = [
-"https://github.com/hackclub/blot/pull/612",
-"https://github.com/hackclub/blot/pull/649",
-"https://github.com/hackclub/blot/pull/647",
-"https://github.com/hackclub/blot/pull/637",
-"https://github.com/hackclub/blot/pull/650",
-    ]
+    pr_urls = []
 
     for pr_url in pr_urls:
       main(pr_url)
