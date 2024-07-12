@@ -179,7 +179,7 @@ Here are a collection of resources for Blot:
 - [Video of operating a Blot](https://www.youtube.com/watch?v=qDP5CNjFHJE&t=48s)
 - [Video of making a Blot submission](https://www.youtube.com/watch?v=AmbjNEPuv14&t=1s)
 - [Video Blot promo trailer](https://www.youtube.com/watch?v=d1noJNmfvC0)
-- [Video Introduction to JavaScript in the context of Blot](https://www.youtube.com/watch?v=3KAan1PzmxA&t=23s)
+- [Video introduction to JavaScript in the context of Blot](https://www.youtube.com/watch?v=3KAan1PzmxA&t=23s)
 - [Video introduction to Blot editor](https://www.youtube.com/watch?v=OZ9KaFr1V_o&t=3s)
 - [Video demonstrating working through a Blot guide](https://www.youtube.com/watch?v=mP4rUdaF8ng&t=4s)
 
