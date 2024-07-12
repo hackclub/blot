@@ -6,7 +6,7 @@ If you'd like to [watch a short video (6 minutes) of building a Blot you can cli
 
 It takes me about 30 minutes in real time to assemble a Blot but I have lots of experience (and designed the machine). Don't be discouraged if it takes a few hours (or more) there is a lot to learn along the way.
 
-Here are all the parts that come with your Blot. The source of truth for the Blot components is the [BOM (Bill of Matrials) available here](./BOM.toml).
+Here are all the parts that come with your Blot. The source of truth for the Blot components is the [BOM (Bill of Materials) available here](./BOM.toml).
 
 ![PXL_20240614_202958435.jpg](./assets/PXL_20240614_202958435.jpg)
 
@@ -192,7 +192,7 @@ And these tools:
 - __1 x__ 2.5mm allen key
 - __1 x__ 2mm allen key
 
-We'll start by placing the timing belt pulley onto the shaft of the stepper motor.
+We'll start by placing the timing belt pulley on to the shaft of the stepper motor.
 
 ![PXL_20240613_153208987.jpg](./assets/PXL_20240613_153208987.jpg)
 
@@ -295,12 +295,12 @@ You'll need these parts in addition to the sub-assemblies you just put together.
 - **1 x** PCB Mount
 - **2 x** 20mm x 20mm (face) x 250mm (tall) Aluminum Extrusion
 
-Additionally you'll need these tools:
+Additionally, you'll need these tools:
 
 - **1 x** 3mm allen key
 - **1 x** 10mm wrench
 
-Begin by taking a piece of aluminum extrusion and inserting the t-nuts. I prefer to place the hole closer to the center of the bar. This will make the t-nut not visibile when the part is mounted to it.
+Begin by taking a piece of aluminum extrusion and inserting the t-nuts. I prefer to place the hole closer to the center of the bar. This will make the t-nut not visible when the part is mounted to it.
 
 ![Screenshot 2024-06-14 at 3.06.42 PM.png](./assets/Screenshot%202024-06-14%20at%203.06.42%20PM.png)
 
@@ -312,7 +312,7 @@ Secure it in place with M5x10 screws.
 
 ![Screenshot 2024-06-14 at 3.13.31 PM.png](./assets/Screenshot%202024-06-14%20at%203.13.31%20PM.png)
 
-If the T-nut is misaligned you can center it with the allen key.
+If the T-nut is misaligned, you can center it with the allen key.
 
 ![Screenshot 2024-06-14 at 4.57.55 PM.png](./assets/Screenshot%202024-06-14%20at%204.57.55%20PM.png)
 
@@ -326,7 +326,7 @@ Now slide the carriage onto the rail. Notice how the aluminum plate faces the al
 
 ![PXL_20240614_194805182.jpg](./assets/PXL_20240614_194805182.jpg)
 
-You can now adjust the nuts to make the wheels ride snugly. Don't make it too tight, just tight enough that the carriage doesn't rock and back and fourth.
+You can now adjust the nuts to make the wheels ride snugly. Don't make it too tight, just tight enough that the carriage doesn't rock back and fourth.
 
 ![Screenshot 2024-06-14 at 3.18.43 PM.png](./assets/Screenshot%202024-06-14%20at%203.18.43%20PM.png)
 
@@ -342,11 +342,11 @@ Attach the printed pen rail to one end of the other extrusion.
 
 ![Screenshot 2024-06-14 at 3.21.55 PM.png](./assets/Screenshot%202024-06-14%20at%203.21.55%20PM.png)
 
-Place that exstrusion on the carriage adjusting the v-wheels as shown above.
+Place that exstrusion on the carriage, adjusting the v-wheels as shown above.
 
 ![Screenshot 2024-06-14 at 3.22.09 PM.png](./assets/Screenshot%202024-06-14%20at%203.22.09%20PM.png)
 
-Attach the belt clip to the end of the carriage facing down and secure in place with M5x10 screws and t-nuts.
+Attach the belt clip to the end of the carriage facing down and secure it in place with M5x10 screws and t-nuts.
 
 ![Screenshot 2024-06-14 at 3.22.24 PM.png](./assets/Screenshot%202024-06-14%20at%203.22.24%20PM.png)
 
@@ -360,13 +360,13 @@ Flip the machine upside down and use the remaining two T-nuts to attach the moto
 
 ### Threading the Timing Belt
 
-For this step you'll need the assembly you just made and the timing belt.
+For this step, you'll need the assembly you just made and the timing belt.
 
 - **1 x** 125cm long GT2 Timing Belt
 
 ![PXL_20240616_224848871-EDIT.jpg](./assets/PXL_20240616_224848871-EDIT.jpg)
 
-To start turn the machine upside down.
+To start, turn the machine upside down.
 
 We'll place one loop of the belt in the endcap.
 
@@ -406,7 +406,7 @@ Flip the Blot over and fold the belt to push into the other side of the belt cla
 
 ![PXL_20240616_224824785.jpg](./assets/PXL_20240616_224824785.jpg)
 
-Congrats you've finished putting together the mechanical parts of the Blot.
+Congratulations! You've finished putting together the mechanical parts of the Blot.
 
 ![PXL_20240616_224848871-EDIT.jpg](./assets/PXL_20240616_224848871-EDIT.jpg)
 
@@ -422,7 +422,7 @@ Insert the servo into the press fit holder. I place it so the arm is closer to t
 
 ![](./assets/PXL_20240710_152651622.jpg)
 
-You first slip one side underneath the the ledge.
+You first slip one side underneath the ledge.
 
 ![](./assets/PXL_20240710_152707402.jpg)
 
@@ -440,7 +440,7 @@ Now assemble the control board
 
 ![](./assets/Screenshot%202024-06-14%20at%205.05.37%20PM.png)
 
-Make sure the potentiometer (round metal thing) on the red boards are on the side with the black control board (Xiao).
+Make sure the potentiometers (round metal things) on the red boards are on the side with the black control board (Xiao).
 
 ![Screenshot 2024-06-14 at 5.05.22 PM.png](./assets/Screenshot%202024-06-14%20at%205.05.22%20PM.png)
 
@@ -454,9 +454,9 @@ Insert the control board into the machine.
 
 Plug in all the wires.
 
-First plug in the servo motor wires. Thats the brown, red, yellow wires. 
+First, plug in the servo motor wires. That's the brown, red, yellow wires. 
 
-It's **very improtant** that the brown wire be in the side with the little circle. That means the metal pins will be on the inner side of the board (not facing the outer edge).
+It's **very important** that the brown wire be on the side with the little circle. That means the metal pins will be on the inner side of the board (not facing the outer edge).
 
 ![PXL_20240710_152930835.jpg](./assets/PXL_20240710_152930835.jpg)
 
@@ -604,13 +604,13 @@ Then hover over `Machine control` and select `Run machine`.
 
 ![Screenshot 2024-07-10 at 5.08.35 PM.png](./assets/Screenshot%202024-07-10%20at%205.08.35 PM.png)
 
-Note that you must keep this tab active or the communication speed (and your machine) will slow down. If you want to do something else on the computer just move the tab to a new window.
+Note that you must keep this tab active, or the communication speed (and your machine) will slow down. If you want to do something else on the computer just move the tab to a new window.
 
 Watch Blot turn the code into a real thing.
 
 ![Screenshot 2024-07-11 at 2.01.34 PM.png](./assets/Screenshot%202024-07-11%20at%202.01.34 PM.png)
 
-For best results I like to use a whiteboard ([which I bought for $10 at Target](https://www.amazon.com/Brand-Frameless-Magnetic-Dry-Erase-Board/dp/B0845T7JLC?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&smid=ATVPDKIKX0DER&th=1)) with magnets to provide a flat surface and hold down paper.
+For best results, I like to use a whiteboard ([which I bought for $10 at Target](https://www.amazon.com/Brand-Frameless-Magnetic-Dry-Erase-Board/dp/B0845T7JLC?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&smid=ATVPDKIKX0DER&th=1)) with magnets to provide a flat surface and hold down paper.
 
 ![PXL_20240711_150846841.jpg](./assets/PXL_20240711_150846841.jpg)
 
@@ -647,7 +647,7 @@ Your Blot can draw quite precisely, poor performance is often due to:
 
 - Bad pen height.
   
-  - If you're drawing has irregular pen strokes your pen may not be low enough or your surface may be uneven.
+  - If your drawing has irregular pen strokes your pen may not be low enough or your surface may be uneven.
 
 - Machine improperly homed.
 
