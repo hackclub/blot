@@ -42,7 +42,7 @@ Here are all the parts that come with your Blot. The source of truth for the Blo
 | 2        | 20mm Stepper Motor Cables             | ![Screenshot 2024-06-14 at 4.59.42 PM](./assets/Screenshot%202024-06-14%20at%204.59.42%20PM.png)   |
 | 1        | PCB - Control Board                   | ![Screenshot 2024-06-14 at 5.05.33 PM](./assets/Screenshot%202024-06-14%20at%205.05.33%20PM.png)   |
 | 1        | PCB - Power Board                     | ![Screenshot 2024-06-14 at 5.05.28 PM](./assets/Screenshot%202024-06-14%20at%205.05.28%20PM.png)   |
-| 1        | xiao RP2040                           | ![Screenshot 2024-06-14 at 5.05.25 PM](./assets/Screenshot%202024-06-14%20at%205.05.25%20PM.png)   |
+| 1        | Xiao RP2040                           | ![Screenshot 2024-06-14 at 5.05.25 PM](./assets/Screenshot%202024-06-14%20at%205.05.25%20PM.png)   |
 | 2        | a4988 Stepper Motor Driver            | ![Screenshot 2024-06-14 at 5.05.30 PM](./assets/Screenshot%202024-06-14%20at%205.05.30%20PM.png)   |
 | 1        | Servo + Arm (25mm cable)              | ![Screenshot 2024-06-14 at 5.04.28 PM](./assets/Screenshot%202024-06-14%20at%205.04.28%20PM.png)   |
 | 1        | Carriage Plate                        | ![Screenshot 2024-06-14 at 5.05.51 PM](./assets/Screenshot%202024-06-14%20at%205.05.51%20PM.png)   |
@@ -81,7 +81,7 @@ Here are all the parts that come with your Blot. The source of truth for the Blo
 - __2 x__ 20mm Stepper motor cables
 - __1 x__ PCB - control board
 - __1 x__ PCB - power board
-- __1 x__ xiao RP2040
+- __1 x__ Xiao RP2040
 - __2 x__ a4988 stepper motor driver
 - __1 x__ Servo (25mm cable) + arm
 - __1 x__ Carriage Plate
@@ -413,7 +413,7 @@ Congratulations! You've finished putting together the mechanical parts of the Bl
 ### Wiring
 
 - **1 x** PCB - control board
-- **1 x** xiao RP2040
+- **1 x** Xiao RP2040
 - **2 x** a4988 stepper motor driver
 - **1 x** Servo (25mm cable) + arm
 - **2 x** 20mm Stepper motor cables
@@ -524,7 +524,7 @@ Connect to your Blot by hovering over `Machine control` and selecting `Connect t
 
 ![Screenshot 2024-07-10 at 5.05.53 PM.png](./assets/Screenshot%202024-07-10%20at%205.05.53 PM.png)
 
-If this is the first time you've connected with this Blot you'll get a pop-up to authorize the web serial connection. Select the item that says "xiao".
+If this is the first time you've connected with this Blot you'll get a pop-up to authorize the web serial connection. Select the item that says "Xiao".
 
 __Homing__
 
