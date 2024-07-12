@@ -15,7 +15,8 @@ export async function createShareLink(content) {
     content: content,
   });
 
-  const link = `${window.location.href}?shareId=${res.id}`;
+  const url = new URL(window.location.href);
+  const link = `${url.origin}${url.pathname}?shareId=${res.id}`;
 
   customAlert(`
     <div>Share the file at:</div>
