@@ -115,7 +115,7 @@ export default function LoginModal() {
   let css2 = ""
   let css3 = ""
   if(theme == "dark"){
-    css = "bg-dark-mode-blue"
+    css = "bg-[var(--primary-dark)]"
     css2 = "bg-dark-mode-grey"
     css3 = "text-white"
   }

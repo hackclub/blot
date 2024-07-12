@@ -56,7 +56,7 @@ export default function Toolbar() {
   const { connected, needsSaving, machineRunning, loginName,theme } = getStore()
   let css = "bg-[var(--primary)]"
   if(theme == "dark"){
-    css = "bg-dark-mode-blue"
+    css = "bg-[var(--primary-dark)]"
   }
 
 
@@ -409,7 +409,7 @@ function SettingsButton() {
   const { theme, vimMode, loginName } = getStore()
   let css = "bg-[var(--primary)]"
   if(theme == "dark"){
-    css = "bg-dark-mode-blue"
+    css = "bg-[var(--primary-dark)]"
   }
 
   return (

@@ -6,12 +6,10 @@ export default function() {
   const { files, loginName } = getStore();
 
   const closeModal = () => patchStore({ cloudFilesModalOpen: false });
-
   if (loginName === "") {
     closeModal();
     alert("Log in to open files in the cloud.");
   }
-
   const [selectedFile, setSelectedFile] = useState(-1);
   const selectFile = i => {
     setSelectedFile(i);
@@ -28,12 +26,12 @@ export default function() {
   const { theme } = getStore()
   let css = "bg-[var(--primary)]"
   let css2 = "bg-gray-100"
-  let css3 = ""
+  let css3 = "bg-grey-200"
   let css4 = "bg-white"
   if(theme == "dark"){
-    css = "bg-dark-mode-blue"
-    css2 = "bg-dark-mode-grey text-white"
-    css3 = "bg-dark-mode-grey text-white"
+    css = "bg-[var(--primary-dark)]"
+    css2 = "bg-[var(--primary-dark-grey)] text-white"
+    css3 = "bg-[var(--primary-dark-dark-grey)] text-white"
     css4 = "bg-black"
   }
 
@@ -48,7 +46,7 @@ export default function() {
 
       <div class={"width-[90%] border-2 border-stone-400 h-[20rem] rounded mx-4 mt-4 overflow-auto \n" + css2}>
         {sortFilesByTime(files).map((file, i) => <>
-          <div class={`${i%2 === 1 && selectedFile !== i ? "bg-gray-200" : ""} ${selectedFile === i ? "bg-[var(--primary)] text-white" : ""} px-2 py-1` + " " + `flex flex-row justify-between`} onClick={e => selectFile(i)}>
+          <div class={`${i%2 === 1 && selectedFile !== i ? css3 : ""} ${selectedFile === i ?  "text-white\n" + css : ""} px-2 py-1` + " " + `flex flex-row justify-between`} onClick={e => selectFile(i)}>
             <div>{file.name ? file.name : "anon"}</div>
             <div class="text-gray-400">
               {formatTimestamp(file.created_at)}
