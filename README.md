@@ -174,7 +174,15 @@ Here are a collection of resources for Blot:
 - [The source files for the control PCB](https://github.com/hackclub/blot/tree/main/hardware/motor-control-board/circuit/controller)
 - [The source files for the power delivery PCB](https://github.com/hackclub/blot/tree/main/hardware/motor-control-board/circuit/power-delivery)
 - [The firmware for the Blot control board](https://github.com/hackclub/blot/blob/main/hardware/motor-control-board/firmware/firmware.ino)
-  
+- [Sample Blot based lesson plan](https://github.com/hackclub/blot/blob/main/docs/lesson/LESSON-PLAN.md)
+- [Video of a Blot being assembled](https://www.youtube.com/watch?v=7N-Nu6_oo4I)
+- [Video of operating a Blot](https://www.youtube.com/watch?v=qDP5CNjFHJE&t=48s)
+- [Video of making a Blot submission](https://www.youtube.com/watch?v=AmbjNEPuv14&t=1s)
+- [Video Blot promo trailer](https://www.youtube.com/watch?v=d1noJNmfvC0)
+- [Video Introduction to JavaScript in the context of Blot](https://www.youtube.com/watch?v=3KAan1PzmxA&t=23s)
+- [Video introduction to Blot editor](https://www.youtube.com/watch?v=OZ9KaFr1V_o&t=3s)
+- [Video demonstrating working through a Blot guide](https://www.youtube.com/watch?v=mP4rUdaF8ng&t=4s)
+
 # License
 The Hack Club Blot is open source and licensed under the [MIT License](https://github.com/hackclub/blot/LICENSE.md). Fork, remix, and make it your own! Pull requests and other contributions greatly appreciated.
 
