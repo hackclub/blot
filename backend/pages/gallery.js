@@ -1,9 +1,7 @@
 import fs from 'fs';
 import { extractFrontmatter } from "../extractFrontmatter.js";
 
-const GALLERY_NOT_TO_DISPLAY = [
-  "mazeGenerator-Evan", // built from source
-]
+const GALLERY_NOT_TO_DISPLAY = []
 
 function getDirectories(srcPath) {
   return fs.readdirSync(srcPath, { withFileTypes: true })
