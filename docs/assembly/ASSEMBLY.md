@@ -521,7 +521,7 @@ Now to plug in your Xiao.
 
 First hold down the boot button (right button with a small `B` next to it) on your Xiao and then plug it into your computer.
 
-![](./assets/xiao-labelled.png)
+<img width="500" src="./assets/xiao-labelled.png" />
 
 It should appear as a drive.
 
