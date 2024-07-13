@@ -52,10 +52,6 @@ build({
     ${navBar()}
     ${gallery()}
   `),
-  assembly: wrapHTML(`
-    ${navBar()}
-    Go <a class="underline decoration-sky-500" href="https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md">here</a>.
-  `),
   404: wrapHTML(`
     ${navBar()}
     <div class="p-2">nothing here</div>
@@ -103,6 +99,12 @@ app.get('/read-share-link', async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
+});
+app.get('/assembly', (req, res) => {
+  res.redirect('https://github.com/hackclub/blot/blob/main/docs/assembly/ASSEMBLY.md');
+});
+app.get('/welcome-qr-code', (req, res) => {
+  res.redirect('/assembly');
 });
 
 const __filename = fileURLToPath(import.meta.url);

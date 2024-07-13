@@ -33,7 +33,7 @@ The [submission rules to get a Blot for a PR are here](https://github.com/hackcl
 
 ### 3) Receive the parts to build your own Blot that can draw that art in real life.
 
-The [bill of materials can be found here](/docs/BOM.toml) and an [assembly guide here](/docs/ASSEMBLY.md).
+The [bill of materials can be found here](/docs/BOM.toml) and an [assembly guide here](https://blot.hackclub.com/assembly).
 
 <img width="500" alt="all-parts" src="https://github.com/hackclub/blot/assets/27078897/8559466d-fd36-4126-bf9c-45cb913be6da" />
 
@@ -55,6 +55,31 @@ There is so much to learn and explore on the programming and the aesthetic side.
 <img width="300" alt="parts" src="https://github.com/hackclub/blot/assets/27078897/04ab7345-03fa-4b60-9870-64a99327e8cd">
 
 <img width="300" src="https://github.com/hackclub/blot/assets/27078897/0ffc0ca8-516b-4f9a-b34e-4f09218e41cd"/>
+
+# Blot Docs
+
+Here are a collection of resources for Blot:
+
+- [Complete documentation of the drawing library in the editor](https://github.com/hackclub/blot/blob/main/docs/DOCUMENTATION.md)
+- [Short documentation shown in the Blot editor](https://github.com/hackclub/blot/blob/main/public/TOOLKIT.md)
+- [The Blot assembly and operation guide](https://github.com/hackclub/blot/blob/main/docs/assembly/ASSEMBLY.md)
+- [The source of truth bill of materials (BOM)](https://github.com/hackclub/blot/blob/main/docs/BOM.toml)
+- [Criteria for how to get a Blot and a guide on how to submit a PR](https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md)
+- [A guide on how to review Blot submissions](https://github.com/hackclub/blot/blob/main/docs/BLOT_REVIEW.md)
+- [A brief guide on how to approve Blot requests for Blot shipments](https://github.com/hackclub/blot/blob/main/docs/APPROVING_BLOT_REQUESTS.md)
+- [Information on how we order Blot supplies from our manufacturing partners](https://github.com/hackclub/blot/blob/main/docs/ORDERING_BLOT_KITS.md)
+- [The files for the 3D printed parts](https://github.com/hackclub/blot/tree/main/hardware/mechanical/blot-v6)
+- [The source files for the control PCB](https://github.com/hackclub/blot/tree/main/hardware/motor-control-board/circuit/controller)
+- [The source files for the power delivery PCB](https://github.com/hackclub/blot/tree/main/hardware/motor-control-board/circuit/power-delivery)
+- [The firmware for the Blot control board](https://github.com/hackclub/blot/blob/main/hardware/motor-control-board/firmware/firmware.ino)
+- [Sample Blot based lesson plan](https://github.com/hackclub/blot/blob/main/docs/lesson/LESSON-PLAN.md)
+- [Video of a Blot being assembled](https://www.youtube.com/watch?v=7N-Nu6_oo4I)
+- [Video of operating a Blot](https://www.youtube.com/watch?v=qDP5CNjFHJE)
+- [Video of making a Blot submission](https://www.youtube.com/watch?v=AmbjNEPuv14)
+- [Video Blot promo trailer](https://www.youtube.com/watch?v=d1noJNmfvC0)
+- [Video introduction to JavaScript in the context of Blot](https://www.youtube.com/watch?v=3KAan1PzmxA)
+- [Video introduction to Blot editor](https://www.youtube.com/watch?v=OZ9KaFr1V_o)
+- [Video demonstrating working through a Blot guide](https://www.youtube.com/watch?v=mP4rUdaF8ng)
 
 # What are People Making with Blot
 
@@ -160,3 +185,16 @@ yarn dev
 
 # License
 The Hack Club Blot is open source and licensed under the [MIT License](https://github.com/hackclub/blot/LICENSE.md). Fork, remix, and make it your own! Pull requests and other contributions greatly appreciated.
+
+# Acknowledgements
+
+Many people have contributed to Blot, to mention a few and give much thanks too...
+
+MIT's Center for Bits and Atoms for providing expert advice and occasionally a space to work. 
+
+Sam Hu and his team at ISourceAsia for supplying Blot parts and becoming a critical part of the Blot team. 
+
+Paul Hamilton for his contributions to embedded circuit designs.
+
+Oz Nova for writing an excellent getting started guide.
+

@@ -11,12 +11,14 @@ import { addNumberScrubbing } from './events/addNumberScrubbing.ts'
 import { saveFile } from './saveFile.ts'
 import { useOnEditorChange } from './events.ts'
 import { post } from './post.js'
+import { keepAwake } from './keepAwake.js'
 
 import { loadCodeFromString } from './loadCodeFromString.js'
 import { removeQueryParam } from './removeQueryParam.js'
 
 export function init() {
   console.log('init')
+  keepAwake();
 
   render(true)
 
