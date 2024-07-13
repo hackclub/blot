@@ -515,9 +515,7 @@ __Flashing Firmware__
 
 The first step to running your Blot is to flash the Blot firmware to the Xiao.
 
-[You can find the firmware here.](https://github.com/hackclub/blot/blob/main/hardware/motor-control-board/firmware/uf2/firmware.ino.uf2)
-
-Download it by clicking `Download raw file`.
+[You can download the firmware here.](https://github.com/hackclub/blot/raw/main/hardware/motor-control-board/firmware/uf2/firmware.ino.uf2)
 
 Now to plug in your Xiao.
 
