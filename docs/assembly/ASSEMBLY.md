@@ -519,7 +519,7 @@ The first step to running your Blot is to flash the Blot firmware to the Xiao.
 
 Now to plug in your Xiao.
 
-First hold down the boot button on your Xiao then plug it into your computer.
+First hold down the boot button (right button with a small `B` next to it) on your Xiao and then plug it into your computer.
 
 It should appear as a drive.
 
