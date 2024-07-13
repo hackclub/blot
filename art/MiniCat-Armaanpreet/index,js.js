@@ -1,94 +1,93 @@
+/*
+@title: MiniCat
+@author: Armaanpreet Singh
+@snapshot: snapshot.png
+*/
+
 const width = 200;
 const height = 200;
 
 setDocDimensions(width, height);
 
-function drawPanda() {
+function drawCat() {
   const lines = [];
+  
+  // Random number generator within a range
+  function randInRange(min, max) {
+    return min + Math.random() * (max - min);
+  }
 
   // Head
-  const headRadius = 40;
-  const headCenter = [100, 140];
+  const headRadius = randInRange(30, 50);
+  const headCenter = [width / 2, height - headRadius - randInRange(10, 20)];
   lines.push(...circle(headCenter, headRadius));
 
   // Body
-  const bodyRadius = 50;
-  const bodyCenter = [100, 53];
+  const bodyRadius = randInRange(45, 60);
+  const bodyCenter = [width / 2, headCenter[1] - headRadius - bodyRadius / 2];
   lines.push(...circle(bodyCenter, bodyRadius));
 
-  // Left Ear
-  const earRadius = 15;
-  const earLeftCenter = [75, 175];
+  // Ears
+  const earRadius = randInRange(10, 20);
+  const earLeftCenter = [headCenter[0] - headRadius + earRadius, headCenter[1] + headRadius - earRadius];
+  const earRightCenter = [headCenter[0] + headRadius - earRadius, headCenter[1] + headRadius - earRadius];
   lines.push(...circle(earLeftCenter, earRadius));
-
-  // Right Ear
-  const earRightCenter = [125, 175];
   lines.push(...circle(earRightCenter, earRadius));
 
-  // Inner Left Ear
+  // Inner Ears
   const innerEarLeft = [
-    [[70, 175], [75, 170]],
-    [[75, 170], [80, 175]]
+    [earLeftCenter[0] - earRadius / 2, earLeftCenter[1]],
+    [earLeftCenter[0], earLeftCenter[1] - earRadius / 2],
+    [earLeftCenter[0] + earRadius / 2, earLeftCenter[1]]
   ];
-  lines.push(...innerEarLeft);
-
-  // Inner Right Ear
   const innerEarRight = [
-    [[120, 175], [125, 170]],
-    [[125, 170], [130, 175]]
+    [earRightCenter[0] - earRadius / 2, earRightCenter[1]],
+    [earRightCenter[0], earRightCenter[1] - earRadius / 2],
+    [earRightCenter[0] + earRadius / 2, earRightCenter[1]]
   ];
-  lines.push(...innerEarRight);
+  lines.push(innerEarLeft);
+  lines.push(innerEarRight);
 
   // Eyes
-  const eyeRadius = 7;
-  const eyeLeftCenter = [85, 145];
-  const eyeRightCenter = [115, 145];
+  const eyeRadius = randInRange(5, 10);
+  const eyeLeftCenter = [headCenter[0] - headRadius / 3, headCenter[1] - eyeRadius];
+  const eyeRightCenter = [headCenter[0] + headRadius / 3, headCenter[1] - eyeRadius];
   lines.push(...circle(eyeLeftCenter, eyeRadius));
   lines.push(...circle(eyeRightCenter, eyeRadius));
 
   // Pupils
-  const pupilRadius = 3;
-  const pupilLeftCenter = [87, 145];
-  const pupilRightCenter = [113, 145];
+  const pupilRadius = eyeRadius / 2;
+  const pupilLeftCenter = [eyeLeftCenter[0] + randInRange(-2, 2), eyeLeftCenter[1] + randInRange(-2, 2)];
+  const pupilRightCenter = [eyeRightCenter[0] + randInRange(-2, 2), eyeRightCenter[1] + randInRange(-2, 2)];
   lines.push(...circle(pupilLeftCenter, pupilRadius));
   lines.push(...circle(pupilRightCenter, pupilRadius));
 
   // Nose
   const noseRadius = 5;
-  const noseCenter = [100, 130];
+  const noseCenter = [headCenter[0], headCenter[1] - headRadius / 2];
   lines.push(...circle(noseCenter, noseRadius));
 
   // Mouth
-  const mouthLeft = [[95, 120], [105, 120]];
-  lines.push(mouthLeft);
+  const mouth = [
+    [noseCenter[0] - 5, noseCenter[1] - 5],
+    [noseCenter[0], noseCenter[1] - 10],
+    [noseCenter[0] + 5, noseCenter[1] - 5]
+  ];
+  lines.push(mouth);
 
-  // Hands (Paws)
-  const pawRadius = 15;
-  const pawLeftCenter = [66, 60];
-  const pawRightCenter = [135, 60];
+  // Whiskers
+  const whiskerLength = randInRange(10, 20);
+  for (let i = 0; i < 3; i++) {
+    lines.push([[noseCenter[0] - noseRadius, noseCenter[1] - i * 5], [noseCenter[0] - noseRadius - whiskerLength, noseCenter[1] - i * 5]]);
+    lines.push([[noseCenter[0] + noseRadius, noseCenter[1] - i * 5], [noseCenter[0] + noseRadius + whiskerLength, noseCenter[1] - i * 5]]);
+  }
+
+  // Paws
+  const pawRadius = randInRange(10, 20);
+  const pawLeftCenter = [bodyCenter[0] - bodyRadius / 2, bodyCenter[1] - bodyRadius / 2];
+  const pawRightCenter = [bodyCenter[0] + bodyRadius / 2, bodyCenter[1] - bodyRadius / 2];
   lines.push(...circle(pawLeftCenter, pawRadius));
   lines.push(...circle(pawRightCenter, pawRadius));
-
-  // Fingers (optional detail)
-  const fingerLength = 8;
-  const fingerSpread = 5;
-
-  // Left hand fingers
-  lines.push([[63, 60], [63 - fingerLength, 60]]);
-  lines.push([[63, 60], [63, 60 - fingerSpread]]);
-  lines.push([[63, 60], [63, 60 + fingerSpread]]);
-
-  // Right hand fingers
-  lines.push([[137, 60], [137 + fingerLength, 60]]);
-  lines.push([[137, 60], [137, 60 - fingerSpread]]);
-  lines.push([[137, 60], [137, 60 + fingerSpread]]);
-
-  // Add slight shading for depth
-  const shadingLines = [
-    [[93, 135], [95, 133]],
-    [[105, 133], [107, 135]]
-  ];
-  lines.push(...shadingLines);
 
   drawLines(lines);
 }
@@ -114,4 +113,4 @@ function circle(center, radius) {
   return lines;
 }
 
-drawPanda();
+drawCat();
