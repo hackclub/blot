@@ -15,7 +15,7 @@ const ringInnerRadiusX = 45;
 const ringInnerRadiusY = 10;
 const ringOuterRadiusX = 60;
 const ringOuterRadiusY = 15;
-const ringAngle = 30; // in degrees
+const ringAngle = 30; 
 
 // number of stars and size of stars
 const numStars = 20;
@@ -83,7 +83,7 @@ finalLines.push(...stars);
 // draw it
 drawLines(finalLines);
 
-// function to create a detailed ellipse
+// function to create ellipse
 function createEllipse(center, radiusX, radiusY, angle, numPoints = 200) {
   const points = [];
   const radAngle = (Math.PI / 180) * angle; // convert angle to radians
