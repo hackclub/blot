@@ -1,7 +1,7 @@
 /*
 @title: Message Maze
 @author: Iambodha
-@snapshot: HelloWorld-1.png
+@snapshot: helloworld-1.png
 */
 
 // Message Maze is a system where the path of the maze forms a secret message. 
