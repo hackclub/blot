@@ -521,6 +521,8 @@ Now to plug in your Xiao.
 
 First hold down the boot button on your Xiao then plug it into your computer.
 
+![](./assets/xiao-labelled.png)
+
 It should appear as a drive.
 
 Next drop the firmware `.uf2` file onto drive.
