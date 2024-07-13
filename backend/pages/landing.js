@@ -100,7 +100,7 @@ export default function() {
             <div class="text-2xl font-bold pr-5">3</div>
             <div>
               <div class="text-lg font-semibold">Get your parts in the mail.</div> 
-              <a class="${linkClasses}" href="https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md">Build your own machine.</a>
+              <a class="${linkClasses}" href="/assembly">Build your own machine.</a>
             </div>
           </div>
 
@@ -184,10 +184,17 @@ export default function() {
         <div>
           Sam Hu and his team are our wonderful manufacturing partners.
         </div>
+        <br>
 
         <div>
-          Also thanks to Paul Hamilton for his contributions to embedded designs.
+          Paul Hamilton for his contributions to embedded designs.
         </div>
+        <br>
+
+        <div>
+          Oz Nova for writing an excellent getting started guide.
+        </div>
+        <br>
 
         <div class="flex flex-row mx-auto w-full justify-center gap-20 py-8">
           <div class="flex flex-row justify-center" style="transform: translateX(-27px);">
