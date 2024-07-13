@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "node server.js",
+    "build": "node build.js",
     "dev": "nodemon -r dotenv/config server.js"
   },
   "nodemonConfig": {
