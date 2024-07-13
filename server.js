@@ -39,7 +39,7 @@ build({
     <!-- TODO: add automatically when building -->
     <link rel="stylesheet" href='./assets/initApp.css'>
     
-    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css'>
+  
 
     <main></main>
     <script type="module" src="./src/initApp.js"></script>
