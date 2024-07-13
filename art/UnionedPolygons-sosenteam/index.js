@@ -4,23 +4,29 @@
 @snapshot: cover.png
 */
 //Changeable Parameters:
-let pointCount = 2; //Number of Points
-let circleResolution = 150; // Amount of points per ring (looks best between 3-20 or 150+)
-let maxRingSize = 300; // Maxium size of ring
-let ringDist = 0.5; // Starting Ring Distance
-let rateOfRingChange = 1.05; // Ring Distance Change
-let thickness = 1;
+let pointCount = 50; //Number of Points
+let circleResolution =200; // Amount of points per ring (looks best between 3-20 or 150+)
+let maxRingSize = 510; // Maxium size of ring
+let ringDist = 0.8; // Starting Ring Distance
+let rateOfRingChange = 1.02; // Ring Distance Change
+let thickness = 2;
 let mergeLines = true // Connect Lines
-let colorEnabled = false; // Chooses Random Colors
-let wavyEnabled = false; // Adds distortion 
-
+let colorEnabled = true; // Chooses Random Colors
+//Noise
+let wavyAmount = 2; // Adds Distortion (0 for off)
+//Squash
+let squashMode = 1; // 1 Controlled by xSquash/ySquash, 2 is random, controlled by squashRandomMax
+let xSquash = 1; //Only Mode 1
+let ySquash = -1; //Only Mode 1
+let squashRandomMax = 0.1; //Only Mode 2 (Takes a While)
 //SHIFT
 let randomizeShift = false; // Overrides horizontalShift and verticleShift
-let horizontalShift = 0.3; // Recommended -1-1
-let verticleShift = 0.5; // Recommended -1-1
+let horizontalShift = -0.3; // Recommended -1-1
+let verticleShift = .7; // Recommended -1-1
 //OFFSET
 let offsetEnabled = true;
-let offsetDistance = 0.2;
+let offsetDistance = 1;
+
 //Define Box
 const width = 125;
 const height = 125;
@@ -31,6 +37,8 @@ const CSS_COLORS = [
   'dodgerblue', 'crimson', 'springgreen', 'goldenrod', 'indigo',
   'coral', 'deeppink', 'sienna', 'turquoise', 'slategray'
 ];
+xSquash+=0.001; //Keeps from freezing
+ySquash+=0.001; //Keeps from freezing
 setDocDimensions(width, height);
 
 //Define Edges for cut opperation
@@ -69,14 +77,24 @@ for (let pc = 0; pc < pointList.length; pc++) {
     let circle = [];
     //circle points
     for (let angle = 0; angle < 6.28; angle += 6.28 / circleResolution) {
-      let sillyOffset = dist;
-      if (wavyEnabled) {
-        sillyOffset = (dist + Math.cos(angle * dist))
+      //Add Waves
+      let newDist = dist;
+      newDist+=(bt.noise(bt.rand()*2,bt.rand()*2,bt.rand()*2)*wavyAmount);
+      //Add Points
+      let oldX = point[0];
+      let oldY = point[1];
+      if(squashMode == 1){
+        oldX = oldX+Math.cos(angle)*xSquash;
+        oldY = oldY+Math.cos(angle)*ySquash;
       }
-      let x = point[0] + (Math.cos(angle) * sillyOffset);
-      let y = point[1] + (Math.sin(angle) * sillyOffset);
-      x += (dist * horizontalShift);
-      y += (dist * verticleShift);
+      else if(squashMode == 2 && dist > 10){
+      oldX = oldX+Math.cos(angle)*bt.randInRange(-squashRandomMax,squashRandomMax);
+      oldY = oldY+Math.cos(angle)*bt.randInRange(-squashRandomMax,squashRandomMax);
+      }
+      let x = oldX + (Math.cos(angle)*dist);
+      let y = oldY + (Math.sin(angle)*dist);
+      x += (newDist * horizontalShift);
+      y += (newDist * verticleShift);
       circle.push([x, y]);
 
     }
