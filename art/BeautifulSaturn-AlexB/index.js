@@ -3,20 +3,30 @@ const height = 125;
 
 setDocDimensions(width, height);
 
+const scale = (0.6*Math.random()) + 0.7;
+
 // parameters to adjust size and angle
-const planetRadius = 35;
-const ringInnerRadiusX = 45;
-const ringInnerRadiusY = 10;
-const ringInMiddleRadiusX = 57;
-const ringInMiddleRadiusY = 15;
-const ringOutMiddleRadiusX = 63;
-const ringOutMiddleRadiusY = 18;
-const ringOuterRadiusX = 75;
-const ringOuterRadiusY = 23;
-const ringAngle = 10; 
+const planetRadius = 35*scale;
+const ringInnerRadiusX = 45*scale;
+const ringInnerRadiusY = 10*scale;
+const ringInMiddleRadiusX = 57*scale;
+const ringInMiddleRadiusY = 15*scale;
+const ringOutMiddleRadiusX = 63*scale;
+const ringOutMiddleRadiusY = 18*scale;
+const ringOuterRadiusX = 75*scale;
+const ringOuterRadiusY = 23*scale;
+const ringAngle = getRandomAngle(); 
+
+function getRandomAngle() {
+  let angle = Math.random() * 20;
+  if (angle > 10) {
+    angle = 350 + (angle - 10);
+  }
+  return angle;
+}
 
 // number of stars and size of stars
-const numStars = 15;
+const numStars = (10*Math.random())+10;
 const starRadius = 0.8;
 
 // store final lines here
@@ -55,7 +65,7 @@ function createStars(numStars, minX, maxX, minY, maxY, radius, avoidCenter, avoi
     do {
       x = Math.random() * (maxX - minX) + minX;
       y = Math.random() * (maxY - minY) + minY;
-    } while (avoidCenter && Math.sqrt((x - avoidCenter[0]) ** 2 + (y - avoidCenter[1]) ** 2) < avoidRadius);
+    } while ((y<91 && y>32) || (avoidCenter && Math.sqrt((x - avoidCenter[0]) ** 2 + (y - avoidCenter[1]) ** 2) < avoidRadius));
     const star = createCircle([x, y], radius, 10);
     stars.push(star);
   }
@@ -76,7 +86,7 @@ const maxX = width;
 const minY = 0;
 const maxY = height;
 const avoidCenter = saturn.center;
-const avoidRadius = ringInMiddleRadiusX;
+const avoidRadius = planetRadius;
 const stars = createStars(numStars, minX, maxX, minY, maxY, starRadius, avoidCenter, avoidRadius);
 finalLines.push(...stars);
 
