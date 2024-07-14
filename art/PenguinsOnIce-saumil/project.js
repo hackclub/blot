@@ -1,3 +1,4 @@
+
 /*
 @title: Penguins On Ice (not the musical)
 @author: Saumil
@@ -9,14 +10,15 @@ const width = 125;
 const height = 125;
 
 // BACKGROUND
-const numberOfIceCracks = 5;
-const iceCrackWidth = 2;
+const numberOfIceCracks = 10;
+const iceCrackWidth = 15;
 
 const maxCrackOffset = 5;
 const minCrackOffset = -5;
+const crackSegments = 20; // Increase the number of segments for more jagged cracks
 
 // NUMBER OF PENGUINS
-const maxNumPenguins = 10;
+const maxNumPenguins = 8;
 const minNumPenguins = 3;
 
 // POSITION
@@ -59,11 +61,11 @@ function DrawPenguin(center, scale) {
   ]);
 
   // Function to simulate fill by drawing lines
-  function fillPolygon(points, color) {
+  function fillPolygon(points, color, lineWidth = 1) {
     const numLines = 50;
     const minX = Math.min(...points.map(p => p[0]));
     const maxX = Math.max(...points.map(p => p[0]));
-    
+
     for (let i = 0; i <= numLines; i++) {
       const t = i / numLines;
       const x = minX + t * (maxX - minX);
@@ -82,18 +84,23 @@ function DrawPenguin(center, scale) {
       intersections.sort((a, b) => a - b);
 
       for (let k = 0; k < intersections.length; k += 2) {
-        drawLines([[[x, intersections[k]], [x, intersections[k + 1]]]], { stroke: color, width: 1 });
+        drawLines([
+          [
+            [x, intersections[k]],
+            [x, intersections[k + 1]]
+          ]
+        ], { stroke: color, width: lineWidth });
       }
     }
   }
 
-  // Draw body
-  fillPolygon(bodyPoints, 'black');
+  // Draw body with thicker lines
+  fillPolygon(bodyPoints, 'black', 2);
 
   // Draw belly
   fillPolygon(bellyPoints, 'white');
 
-  // Beak
+  // Beak with slightly thicker lines
   const beakPoints = bt.catmullRom([
     [centerX, centerY - scale],
     [centerX - scale / 8, centerY - scale / 1.2],
@@ -102,15 +109,40 @@ function DrawPenguin(center, scale) {
     [centerX, centerY - scale]
   ]);
 
-  fillPolygon(beakPoints, 'orange');
+  fillPolygon(beakPoints, 'orange', 1.5);
 }
 
-drawLines([[[0, width], [height, width], [height, 0], [0, 0]]], { stroke: "#B0E0E6", width: 1 });
+// Draw background and ice cracks
+drawLines([
+  [
+    [0, width],
+    [height, width],
+    [height, 0],
+    [0, 0]
+  ]
+], { stroke: "#B0E0E6", width: 1 });
 
-for (let i = 0; i <= numberOfIceCracks; i++) {
-  const randomYOffsetStart = ((height / numberOfIceCracks) * i) + bt.randInRange(minCrackOffset, maxCrackOffset);
-  const randomYOffsetEnd = ((height / numberOfIceCracks) * i) + bt.randInRange(minCrackOffset, maxCrackOffset);
-  drawLines([[[0, randomYOffsetStart], [width, randomYOffsetEnd]]], { stroke: "#ADD8E6", width: iceCrackWidth });
+for (let i = 0; i < numberOfIceCracks; i++) {
+  const startY = ((height / numberOfIceCracks) * i) + bt.randInRange(minCrackOffset, maxCrackOffset);
+  const endY = ((height / numberOfIceCracks) * (i + 1)) + bt.randInRange(minCrackOffset, maxCrackOffset);
+  const crackPoints = [[0, startY]];
+
+  for (let j = 0; j < crackSegments; j++) {
+    const x = ((j + 1) / crackSegments) * width;
+    const y = startY + ((endY - startY) * (j + 1)) / crackSegments + bt.randInRange(minCrackOffset, maxCrackOffset);
+    crackPoints.push([x, y]);
+  }
+
+  crackPoints.push([width, endY]);
+
+  for (let j = 0; j < crackPoints.length - 1; j++) {
+    drawLines([
+      [
+        crackPoints[j],
+        crackPoints[j + 1]
+      ]
+    ], { stroke: "#ADD8E6", width: iceCrackWidth });
+  }
 }
 
 function DrawRandomPenguins() {
@@ -125,4 +157,5 @@ function DrawRandomPenguins() {
   }
 }
 
+// Draw penguins
 DrawRandomPenguins();
