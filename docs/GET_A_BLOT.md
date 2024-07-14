@@ -110,6 +110,7 @@ Refer to [this example](https://github.com/hackclub/blot/tree/main/art/square-di
 - In the body, describe your artwork and your experience coding.
 - Please add an image of your artwork to the pull request.
 - Click "Create Pull Request"
+- Fill out the checkboxes in the PR
 
 Your PR will be reviewed by people in the BLOT community. We aren't evaluating it based on style,
 we're looking to see if you put effort and creativity into your work.
