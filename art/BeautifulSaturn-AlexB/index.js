@@ -1,9 +1,3 @@
-/*
-@title: Beautful Saturn
-@author: Alex B
-@snapshot: snapshot1.png
-*/
-
 const width = 125;
 const height = 125;
 
@@ -13,13 +7,17 @@ setDocDimensions(width, height);
 const planetRadius = 35;
 const ringInnerRadiusX = 45;
 const ringInnerRadiusY = 10;
-const ringOuterRadiusX = 60;
-const ringOuterRadiusY = 15;
+const ringInMiddleRadiusX = 57;
+const ringInMiddleRadiusY = 15;
+const ringOutMiddleRadiusX = 63;
+const ringOutMiddleRadiusY = 18;
+const ringOuterRadiusX = 75;
+const ringOuterRadiusY = 23;
 const ringAngle = 10; 
 
 // number of stars and size of stars
-const numStars = 20;
-const starRadius = 1;
+const numStars = 15;
+const starRadius = 0.8;
 
 // store final lines here
 const finalLines = [];
@@ -32,6 +30,8 @@ const saturn = {
 
 const rings = [
   { center: [width / 2, height / 2], radiusX: ringInnerRadiusX, radiusY: ringInnerRadiusY, angle: ringAngle },
+  { center: [width / 2, height / 2], radiusX: ringInMiddleRadiusX, radiusY: ringInMiddleRadiusY, angle: ringAngle },
+  { center: [width / 2, height / 2], radiusX: ringOutMiddleRadiusX, radiusY: ringOutMiddleRadiusY, angle: ringAngle },
   { center: [width / 2, height / 2], radiusX: ringOuterRadiusX, radiusY: ringOuterRadiusY, angle: ringAngle }
 ];
 
@@ -76,7 +76,7 @@ const maxX = width;
 const minY = 0;
 const maxY = height;
 const avoidCenter = saturn.center;
-const avoidRadius = planetRadius + 5; // avoid area slightly larger than planet
+const avoidRadius = ringInMiddleRadiusX;
 const stars = createStars(numStars, minX, maxX, minY, maxY, starRadius, avoidCenter, avoidRadius);
 finalLines.push(...stars);
 
