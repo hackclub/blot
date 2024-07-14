@@ -27,7 +27,7 @@ function getRandomAngle() {
 
 // number of stars and size of stars
 const numStars = (10*Math.random())+10;
-const starRadius = 0.8;
+const starRadius = 0.4;
 
 // store final lines here
 const finalLines = [];
@@ -65,8 +65,8 @@ function createStars(numStars, minX, maxX, minY, maxY, radius, avoidCenter, avoi
     do {
       x = Math.random() * (maxX - minX) + minX;
       y = Math.random() * (maxY - minY) + minY;
-    } while ((y<91 && y>32) || (avoidCenter && Math.sqrt((x - avoidCenter[0]) ** 2 + (y - avoidCenter[1]) ** 2) < avoidRadius));
-    const star = createCircle([x, y], radius, 10);
+    } while ((y<92 && y>31) || (avoidCenter && Math.sqrt((x - avoidCenter[0]) ** 2 + (y - avoidCenter[1]) ** 2) < avoidRadius));
+    const star = createCircle([x, y], (radius*Math.random())+0.6, 10);
     stars.push(star);
   }
   return stars;
@@ -86,7 +86,7 @@ const maxX = width;
 const minY = 0;
 const maxY = height;
 const avoidCenter = saturn.center;
-const avoidRadius = planetRadius;
+const avoidRadius = planetRadius+2;
 const stars = createStars(numStars, minX, maxX, minY, maxY, starRadius, avoidCenter, avoidRadius);
 finalLines.push(...stars);
 
