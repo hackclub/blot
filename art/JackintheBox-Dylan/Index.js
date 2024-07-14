@@ -4,7 +4,7 @@
 @snapshot: Jack in the Box
 */
 
-const { Turtle, rand, randInRange } = blotToolkit;
+const { Turtle, rand, randInRange, randIntInRange } = blotToolkit;
 const t = new Turtle();
 const finalLines = [];
 
@@ -216,15 +216,6 @@ function drawCup(options = {}) {
     });
 }
 
-drawCup(
-    {
-        cupWidth: 39,
-        cupHeight: 49,
-        cupTranslate: [83, 2],
-        cupColor: redColor
-    }
-);
-
 function drawCherry(options = {}) {
     const {
         cherryRadius = 5,
@@ -233,8 +224,7 @@ function drawCherry(options = {}) {
         cherryColor = redColor,
         stemColor = "rgb(0, 100, 0)"
     } = options;
-
-    // Draw the cherry (circle)
+    
     const cherry = new Turtle();
     cherry.up()
           .goTo([cherryPosition[0], cherryPosition[1]])
@@ -242,7 +232,7 @@ function drawCherry(options = {}) {
           .arc(360, cherryRadius);
     
     drawLines([cherry.lines()[0]], { fill: cherryColor() });
-    
+
     const stemStart = [cherryPosition[0], cherryPosition[1] + cherryRadius];
     const stemEnd = [cherryPosition[0] - stemLength / 2, cherryPosition[1] + cherryRadius + stemLength];
     const controlPoint = [cherryPosition[0] + stemLength / 2, cherryPosition[1] + cherryRadius + stemLength / 2];
@@ -252,27 +242,20 @@ function drawCherry(options = {}) {
     drawLines([stem], { stroke: stemColor, width: 1 });
 }
 
-drawCherry({
-    cherryRadius: bt.randIntInRange(4, 7),
-    stemLength: bt.randIntInRange(8, 15),
-    cherryPosition: [84 + 36 / 2, 2 + 68 + 2],
-    cherryColor: redColor,
-    stemColor: "rgb(0, 100, 0)"
-});
-
 function drawWhippedCream(options = {}) {
     const {
         baseWidth = 60,
         baseHeight = 40,
-        basePosition = [83 - 10, 2 - 20], 
+        basePosition = [83 - 10, 2 - 20],
         creamColor = grayColor,
-        centerRadius = 20, 
-        numCircles = bt.randIntInRange(30, 40), 
-        rotation = 0 
+        centerRadius = 20,
+        numCircles = bt.randIntInRange(30, 40),
+        rotation = 0
     } = options;
 
     const centerX = basePosition[0] + baseWidth / 2;
     const centerY = basePosition[1] + baseHeight / 2;
+
 
     const baseTurtle = new Turtle();
     baseTurtle.up().goTo([centerX, centerY - centerRadius * 0.2]).down();
@@ -299,7 +282,8 @@ function drawWhippedCream(options = {}) {
         drawLines(t.lines(), { fill: creamColor(), stroke: creamColor() });
     }
 
-    for (let i = 0; i < 15; i++) {
+
+    for (let i = 0; i < 15; i++) { 
         const angle = bt.randInRange(0, Math.PI * 2);
         const distance = bt.randInRange(centerRadius * 0.5, centerRadius * 1.2);
         const x = centerX + Math.cos(angle) * distance;
@@ -310,25 +294,9 @@ function drawWhippedCream(options = {}) {
         t.up().goTo([x, y]).down();
         t.arc(360, radius);
         
-        drawLines(t.lines(), { fill: creamColor(), stroke: creamColor() }); // Changed to function call
+        drawLines(t.lines(), { fill: creamColor(), stroke: creamColor() });
     }
 }
-
-drawWhippedCream({
-    baseWidth: 102,
-    baseHeight: 59,
-    basePosition: [64 - 10, 46 - 20],
-    creamColor: grayColor, // Changed to function reference
-    centerRadius: 10, 
-    rotation: 162
-});
-
-drawCup({
-    cupWidth: 39,
-    cupHeight: 49,
-    cupTranslate: [83, 2],
-    cupColor: redColor
-});
 
 function drawFaceLogo(options = {}) {
     const {
@@ -372,7 +340,7 @@ function drawFaceLogo(options = {}) {
         vertex[0] + squareTranslation[0],
         vertex[1] + squareTranslation[1]
     ]);
-
+    
     const squareCenter = [
         (squareVertices[0][0] + squareVertices[2][0]) / 2,
         (squareVertices[0][1] + squareVertices[2][1]) / 2
@@ -400,7 +368,6 @@ function drawFaceLogo(options = {}) {
     logoTriangleVertices = logoTriangleVertices.map(vertex => 
         [vertex[0] + triangleMoveX, vertex[1] + triangleMoveY]
     );
-    
     const logoTriangleCenter = [
         (logoTriangleVertices[0][0] + logoTriangleVertices[1][0] + logoTriangleVertices[2][0]) / 3,
         (logoTriangleVertices[0][1] + logoTriangleVertices[1][1] + logoTriangleVertices[2][1]) / 3
@@ -447,10 +414,107 @@ function drawFaceLogo(options = {}) {
     drawLines([logoSmile], { stroke: "red", width: bt.randInRange(2, 14) * scale });
 }
 
-drawFaceLogo({
-    scale: 0.2,
-    translate: [95, 28]
-});
+function drawFriesBox(options = {}) {
+    const {
+        boxWidth = 30,
+        boxHeight = 40,
+        boxTranslate = [0, 0],
+        boxColor = "redColor",
+        fryColor = "rgb(255, 165, 0)",
+        numFries = randIntInRange(5, 15)
+    } = options;
+
+    const baseWidth = 30;
+    const baseHeight = 40;
+    const scaleX = boxWidth / baseWidth;
+    const scaleY = boxHeight / baseHeight;
+
+    const boxPoints = [
+        [0, 0], [0, baseHeight], [baseWidth, baseHeight], [baseWidth, 0], [0, 0]
+    ];
+
+    drawElement(boxPoints, {
+        scale: [scaleX, scaleY],
+        translate: boxTranslate,
+        fill: boxColor,
+        stroke: "black",
+        width: 2
+    });
+
+    const friesPositions = [];
+
+    for (let i = 0; i < numFries; i++) {
+        let fryX, fryHeight, fryWidth, fryAngle, fryPoints, rotatedFryPoints;
+        let overlap;
+
+        do {
+            overlap = false;
+            fryX = boxTranslate[0] + randInRange(0, boxWidth);
+            fryHeight = randInRange(boxHeight * 0.4, boxHeight * 0.9);
+            fryWidth = randInRange(2, 8);
+            fryAngle = randInRange(-15, 15);
+
+            fryPoints = [
+                [fryX, boxTranslate[1] + boxHeight],
+                [fryX, boxTranslate[1] + boxHeight + fryHeight]
+            ];
+
+            rotatedFryPoints = fryPoints.map(point => 
+                rotatePoint(fryX, boxTranslate[1] + boxHeight, point[0], point[1], fryAngle)
+            );
+
+            for (const pos of friesPositions) {
+                const distance = Math.sqrt(Math.pow(rotatedFryPoints[0][0] - pos[0], 2) + Math.pow(rotatedFryPoints[0][1] - pos[1], 2));
+                if (distance < fryWidth) {
+                    overlap = true;
+                    break;
+                }
+            }
+        } while (overlap);
+
+        friesPositions.push(rotatedFryPoints[0]);
+        drawLines([rotatedFryPoints], { stroke: fryColor, width: fryWidth });
+    }
+}
+
+function handleClick() {
+    const randomChoice = rand();
+    if (randomChoice < 0.5) {
+        drawWhippedCream({
+            baseWidth: 102,
+            baseHeight: 59,
+            basePosition: [64 - 10, 46 - 20],
+            creamColor: grayColor,
+            centerRadius: 10,
+            rotation: 162
+        });
+        drawCherry({
+            cherryRadius: bt.randIntInRange(4, 7),
+            stemLength: bt.randIntInRange(8, 15),
+            cherryPosition: [84 + 36 / 2, 2 + 68 + 2],
+            cherryColor: redColor,
+            stemColor: "rgb(0, 100, 0)"
+        });
+        drawCup({
+            cupWidth: 39,
+            cupHeight: 49,
+            cupTranslate: [83, 2],
+            cupColor: redColor
+        });
+        drawFaceLogo({
+            scale: 0.2,
+            translate: [95, 28]
+        });
+    } else {
+        drawFriesBox({
+            boxWidth: 30,
+            boxHeight: 40,
+            boxTranslate: [89, 18]
+        });
+    }
+}
+
+handleClick();
 
 drawLines([polylines[0]], { fill: bluecolor() });
 drawLines([polylines[1]], { fill: bluecolor() });
