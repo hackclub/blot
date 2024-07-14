@@ -2,7 +2,12 @@
 export default {
   content: ["./backend/**/*", "./src/**/*"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+     
+  
+      },
+    },
   },
   plugins: [],
 }

@@ -502,6 +502,7 @@ Now it's time to run your Blot.
 
 To run your Blot you'll have to:
 
+- Flash firmware to your Blot
 - Connecting
   - Power your Blot.
   - Connect it to the web editor.
@@ -509,6 +510,22 @@ To run your Blot you'll have to:
 - Fixture paper to draw on.
 - Set the lever on the servo.
 - Set the pen height for drawing.
+
+__Flashing Firmware__
+
+The first step to running your Blot is to flash the Blot firmware to the Xiao.
+
+[You can download the firmware here.](https://github.com/hackclub/blot/raw/main/hardware/motor-control-board/firmware/uf2/firmware.ino.uf2)
+
+First hold down the boot button (right button with a small `B` next to it) on your Xiao and then plug it into your computer.
+
+<img width="500" src="./assets/xiao-labelled.png" />
+
+It should appear as a drive.
+
+Next drop the firmware `.uf2` file onto drive.
+
+Now the firmware is flashed.
 
 __Connecting__
 
