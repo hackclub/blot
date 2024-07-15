@@ -1,3 +1,8 @@
+/*
+@title: Geometric thing that looks curved but is actally all straight lines
+@author: Gavin Schultz
+@snapshot: example1
+*/
 // Geometric thing that looks curved but is actally all straight lines
 // By Gavin Schultz
 
@@ -15,7 +20,7 @@ var x2 = 0
 var num = 0
 
 //change this for the width between lines
-const ws = 5
+const ws = bt.randInRange(1, 5);
 
 //initialize screen
 setDocDimensions(width, height);
@@ -23,7 +28,8 @@ setDocDimensions(width, height);
 // store final lines to draw
 const finalLines = [];
 
-// create the cross
+
+// create the crosses
 const polyline = [
   [0, 62.5],
   [125, 62.5]
@@ -32,6 +38,8 @@ const polyline2 = [
   [62.5, 0],
   [62.5, 125]
 ];
+
+
 //set starting points for the first line
 y1 = 125
 x1 = 62.5
@@ -106,6 +114,6 @@ while (num < 13) {
 // add the cross to the final lines
 finalLines.push(polyline);
 finalLines.push(polyline2);
-
+bt.rotate(finalLines, bt.randInRange(0, 90))
 // draw the cross
 drawLines(finalLines);
