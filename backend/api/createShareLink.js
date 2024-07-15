@@ -1,4 +1,5 @@
 import { supabase } from "./supabase.js";
+import checkValidSession from "./checkValidSession.js";
 
 export default async function(req, res) {
   const { sessionKey, content, email } = req.body;
@@ -13,6 +14,11 @@ export default async function(req, res) {
 
     if (userError && userError.message !== 'No rows found') {
       throw userError;
+    }
+
+    const isValid = checkValidSession(session, { email });
+    if (!isValid) {
+      return;
     }
 
     if (session.user !== email) return;

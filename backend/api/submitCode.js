@@ -1,4 +1,5 @@
 import { supabase } from "./supabase.js";
+import checkValidSession from "./checkValidSession.js";
 
 export default async function(req, res) {
   const { code, email } = req.body;
@@ -14,10 +15,12 @@ export default async function(req, res) {
       throw userError;
     }
 
-    // TODO: check that session isn't expired
-    // check the email matches
-    console.log("session", session, session.id, session.user);
-
+    const isValid = checkValidSession(session, { email });
+    if (!isValid) {
+      res.status(500).send({ error: "invalid login code" });
+      return;
+    }
+    
     res.send({
       sessionKey: session.id,
       email: session.user
