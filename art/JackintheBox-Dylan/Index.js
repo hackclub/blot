@@ -224,7 +224,7 @@ function drawCherry(options = {}) {
         cherryColor = redColor,
         stemColor = "rgb(0, 100, 0)"
     } = options;
-    
+
     const cherry = new Turtle();
     cherry.up()
           .goTo([cherryPosition[0], cherryPosition[1]])
@@ -256,7 +256,6 @@ function drawWhippedCream(options = {}) {
     const centerX = basePosition[0] + baseWidth / 2;
     const centerY = basePosition[1] + baseHeight / 2;
 
-
     const baseTurtle = new Turtle();
     baseTurtle.up().goTo([centerX, centerY - centerRadius * 0.2]).down();
     baseTurtle.arc(360, centerRadius * 1.2);
@@ -282,8 +281,7 @@ function drawWhippedCream(options = {}) {
         drawLines(t.lines(), { fill: creamColor(), stroke: creamColor() });
     }
 
-
-    for (let i = 0; i < 15; i++) { 
+    for (let i = 0; i < 15; i++) {
         const angle = bt.randInRange(0, Math.PI * 2);
         const distance = bt.randInRange(centerRadius * 0.5, centerRadius * 1.2);
         const x = centerX + Math.cos(angle) * distance;
@@ -308,6 +306,7 @@ function drawFaceLogo(options = {}) {
     const logoCenterX = 98 / 2;
     const logoCenterY = 125 / 2;
     
+
     function transformCoord(x, y) {
         return [
             x * scale + translate[0],
@@ -340,7 +339,7 @@ function drawFaceLogo(options = {}) {
         vertex[0] + squareTranslation[0],
         vertex[1] + squareTranslation[1]
     ]);
-    
+
     const squareCenter = [
         (squareVertices[0][0] + squareVertices[2][0]) / 2,
         (squareVertices[0][1] + squareVertices[2][1]) / 2
@@ -368,6 +367,7 @@ function drawFaceLogo(options = {}) {
     logoTriangleVertices = logoTriangleVertices.map(vertex => 
         [vertex[0] + triangleMoveX, vertex[1] + triangleMoveY]
     );
+
     const logoTriangleCenter = [
         (logoTriangleVertices[0][0] + logoTriangleVertices[1][0] + logoTriangleVertices[2][0]) / 3,
         (logoTriangleVertices[0][1] + logoTriangleVertices[1][1] + logoTriangleVertices[2][1]) / 3
@@ -416,65 +416,76 @@ function drawFaceLogo(options = {}) {
 
 function drawFriesBox(options = {}) {
     const {
-        boxWidth = 30,
-        boxHeight = 40,
+        corner1 = [0, 0],
+        corner2 = [0, 40],
+        corner3 = [30, 40],
+        corner4 = [30, 0],
         boxTranslate = [0, 0],
         boxColor = "redColor",
         fryColor = "rgb(255, 165, 0)",
-        numFries = randIntInRange(5, 15)
+        rows = 5,
+        friesPerRow = 4,
+        fryOffset = 0,
+        firstFryRotation = 0,
+        lastFryRotation = 0
     } = options;
 
-    const baseWidth = 30;
-    const baseHeight = 40;
-    const scaleX = boxWidth / baseWidth;
-    const scaleY = boxHeight / baseHeight;
+    function drawRoundedRectangle(x, y, width, height, radius) {
+        const t = new Turtle();
+        t.up().goTo([x + radius, y]);
+        t.down()
+         .forward(width - 2 * radius)
+         .arc(90, radius)
+         .forward(height - 2 * radius)
+         .arc(90, radius)
+         .forward(width - 2 * radius)
+         .arc(90, radius)
+         .forward(height - 2 * radius)
+         .arc(90, radius);
+        return t.lines()[0];
+    }
 
-    const boxPoints = [
-        [0, 0], [0, baseHeight], [baseWidth, baseHeight], [baseWidth, 0], [0, 0]
-    ];
+    const boxWidth = Math.max(corner1[0], corner2[0], corner3[0], corner4[0]) - 
+                     Math.min(corner1[0], corner2[0], corner3[0], corner4[0]);
+    const boxHeight = Math.max(corner1[1], corner2[1], corner3[1], corner4[1]) - 
+                      Math.min(corner1[1], corner2[1], corner3[1], corner4[1]);
+
+    const fryWidth = boxWidth / (friesPerRow * 1.2);
+    const fryHeight = boxHeight * 0.7;
+    const horizontalGap = (boxWidth - fryWidth * friesPerRow) / (friesPerRow + 1);
+    const verticalGap = boxHeight * 0.05;
+
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < friesPerRow; col++) {
+            const fryX = boxTranslate[0] + horizontalGap + (fryWidth + horizontalGap) * col;
+            const fryY = boxTranslate[1] + fryOffset + verticalGap + (boxHeight - fryHeight) / (rows - 1) * row;
+            
+            let fryAngle = randInRange(-5, 5);
+            
+            if (col === 0) {
+                fryAngle += firstFryRotation;
+            } else if (col === friesPerRow - 1) {
+                fryAngle += lastFryRotation;
+            }
+            
+            const fryPoints = drawRoundedRectangle(fryX, fryY, fryWidth, fryHeight, fryWidth / 2);
+
+            const rotatedFryPoints = fryPoints.map(point => 
+                rotatePoint(fryX + fryWidth / 2, fryY + fryHeight / 2, point[0], point[1], fryAngle)
+            );
+
+            drawLines([rotatedFryPoints], { fill: fryColor, stroke: "black", width: 1 });
+        }
+    }
+
+    const boxPoints = [corner1, corner2, corner3, corner4, corner1];
 
     drawElement(boxPoints, {
-        scale: [scaleX, scaleY],
         translate: boxTranslate,
-        fill: boxColor,
+        fill: "redColor",
         stroke: "black",
         width: 2
     });
-
-    const friesPositions = [];
-
-    for (let i = 0; i < numFries; i++) {
-        let fryX, fryHeight, fryWidth, fryAngle, fryPoints, rotatedFryPoints;
-        let overlap;
-
-        do {
-            overlap = false;
-            fryX = boxTranslate[0] + randInRange(0, boxWidth);
-            fryHeight = randInRange(boxHeight * 0.4, boxHeight * 0.9);
-            fryWidth = randInRange(2, 8);
-            fryAngle = randInRange(-15, 15);
-
-            fryPoints = [
-                [fryX, boxTranslate[1] + boxHeight],
-                [fryX, boxTranslate[1] + boxHeight + fryHeight]
-            ];
-
-            rotatedFryPoints = fryPoints.map(point => 
-                rotatePoint(fryX, boxTranslate[1] + boxHeight, point[0], point[1], fryAngle)
-            );
-
-            for (const pos of friesPositions) {
-                const distance = Math.sqrt(Math.pow(rotatedFryPoints[0][0] - pos[0], 2) + Math.pow(rotatedFryPoints[0][1] - pos[1], 2));
-                if (distance < fryWidth) {
-                    overlap = true;
-                    break;
-                }
-            }
-        } while (overlap);
-
-        friesPositions.push(rotatedFryPoints[0]);
-        drawLines([rotatedFryPoints], { stroke: fryColor, width: fryWidth });
-    }
 }
 
 function handleClick() {
@@ -507,9 +518,20 @@ function handleClick() {
         });
     } else {
         drawFriesBox({
-            boxWidth: 30,
-            boxHeight: 40,
-            boxTranslate: [89, 18]
+            corner1: [5, 0],
+            corner2: [0, 40],
+            corner3: [30, 41],
+            corner4: [25, 0],
+            boxTranslate: [89, 18],
+            rows: 5,
+            friesPerRow: 5,
+            fryOffset: 20,
+            firstFryRotation: 12,
+            lastFryRotation: -13
+        });
+        drawFaceLogo({
+            scale: 0.2,
+            translate: [95, 28]
         });
     }
 }
