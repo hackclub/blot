@@ -42,27 +42,23 @@ function DrawPenguin(center, scale) {
     return;
   }
 
-  // Body (approximated with a polygon)
+  // Body (approximated with a polygon, leaving a blank space for the belly)
   const bodyPoints = bt.catmullRom([
     [centerX, centerY - scale],
     [centerX - scale / 2, centerY - scale / 2],
     [centerX - scale / 2, centerY + scale / 2],
-    [centerX, centerY + scale],
     [centerX + scale / 2, centerY + scale / 2],
     [centerX + scale / 2, centerY - scale / 2],
     [centerX, centerY - scale]
   ]);
 
-  // Belly (approximated with a smaller polygon)
-  const bellyPoints = bt.catmullRom([
-    [centerX, centerY - scale / 1.5],
-    [centerX - scale / 3, centerY - scale / 3],
-    [centerX - scale / 3, centerY + scale / 3],
-    [centerX, centerY + scale / 1.5],
-    [centerX + scale / 3, centerY + scale / 3],
-    [centerX + scale / 3, centerY - scale / 3],
-    [centerX, centerY - scale / 1.5]
-  ]);
+  const bodyOutlinePoints = [
+    [centerX - scale / 2, centerY - scale / 2],
+    [centerX - scale / 2, centerY + scale / 2],
+    [centerX + scale / 2, centerY + scale / 2],
+    [centerX + scale / 2, centerY - scale / 2],
+    [centerX - scale / 2, centerY - scale / 2]
+  ];
 
   // Function to simulate fill by drawing lines
   function fillPolygon(points, color, lineWidth = 1) {
@@ -103,8 +99,8 @@ function DrawPenguin(center, scale) {
   // Draw body with thicker lines
   fillPolygon(bodyPoints, 'black', 2);
 
-  // Draw belly with a light grey instead of white
-  fillPolygon(bellyPoints, 'lightgrey');
+  // Draw body outline to create a blank belly effect
+  drawLines([bodyOutlinePoints], { stroke: 'black', width: 2 });
 
   // Beak with slightly thicker lines
   const beakPoints = bt.catmullRom([
