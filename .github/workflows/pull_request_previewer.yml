@@ -1,0 +1,27 @@
+on:
+  pull_request_target:
+        types: [opened, synchronize, reopened,labeled]
+        paths: 'art/**'  # the onboard repository has projects folder and similarly the blot repository has art folder
+# The code below is mostly from the onboard repo
+jobs:
+  echo-input:
+    runs-on: ubuntu-latest
+    permissions: 
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4 # base (safe) branch because of pull_request_target
+        with:
+          path: ./ourBlot
+      - uses: actions/checkout@v4 # unsafe, user contributed branch
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: ./theirBlot
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ORPHEUS_PAT || secrets.GITHUB_TOKEN }} # Github token is different for every repo, so it will be different for the fork repository and the host repository
+          script: |
+            const script = require('./ourBlot/.github/workflows/previewer.js')
+            const { chdir } = require('node:process');
+            chdir('./theirOnBoard');
+            console.log(await script({gh: github, ctx: context}))
