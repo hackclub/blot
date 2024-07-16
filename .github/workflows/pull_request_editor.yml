@@ -7,7 +7,7 @@ on:
 
 jobs:
   echo-input:
-    #if: contains(github.event.pull_request.labels.*.name, 'Submission') || contains(github.event.pull_request.labels.*.name, 'PCB')
+    #if: contains(github.event.pull_request.labels.*.name, 'Submission') || contains(github.event.pull_request.labels.*.name, 'submission')
     # don't need this condition, because gets called on.pull_request.paths == 'art/**' above. Leaving for posterity.
     runs-on: ubuntu-latest
     permissions:
