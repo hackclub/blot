@@ -8,8 +8,9 @@ const height = 125;
 
 setDocDimensions(width, height);
 
-const birbScale = randomNumber(-5, 5)
-const birbStretch = randomNumber(-3, 3)
+const birbScale = randomNumber(-3, 3)
+const add = 0
+const birbStretch = randomNumber(-2, 2) + add
 
 const finalLines = [];
 
