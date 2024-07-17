@@ -6,8 +6,8 @@
 const width = 200;
 const height = 200;
 
-const tvWidth = bt.randInRange(150, 320) // default: 230
-const tvHeight = bt.randInRange(180, 250) // default: 180
+const tvWidth = bt.randInRange(240, 320) // default: 230
+const tvHeight = bt.randInRange(210, 250) // default: 180
 const tvBezel = bt.randInRange(5, 15) // default: 7
 const tvCornerRad = bt.randInRange(1, 4) // default: 2
 const tvScreenDeg = -20 //default: -20
@@ -46,7 +46,7 @@ const createGrill = (length, distanceBetween, width) => {
 const t = new bt.Turtle();
 
 t.left(10)
-t.arc(-20, tvWidth)
+t.arc(tvScreenDeg, tvWidth)
 t.arc(-70, tvCornerRad)
 t.arc(tvScreenDeg, tvHeight)
 t.arc(-70, tvCornerRad)
@@ -55,12 +55,76 @@ t.arc(-70, tvCornerRad)
 t.arc(tvScreenDeg, tvHeight)
 t.arc(-70, tvCornerRad)
 
-t.left(170).up()
-t.forward(tvCornerRad)
-t.right(90)
-t.forward(tvBezel)
-t.right(90).down()
+// Scene
+t.up()
+t.right(100).forward(getChord(tvHeight, tvScreenDeg) + tvCornerRad * 2)
+t.left(90).forward(getChord(tvWidth, tvScreenDeg) / 2 - 40 > 0 ? getChord(tvWidth, tvScreenDeg) / 2 - 40 : 0)
+t.down()
+t.left(70)
+  .forward(getChord(tvHeight, tvScreenDeg) * (3 / 4))
+t.right(70).forward(2).right(70)
+  .forward(getChord(tvHeight, tvScreenDeg) * (3 / 4))
 
+// a = c * sin(angle a)
+t.right(110).up().forward(getChord(tvHeight, tvScreenDeg) * (3 / 4) * Math.sin(toRadians(20)) + 1).right(90).down()
+
+t.forward(10).up().forward(3).down()
+t.forward(8).up().forward(3).down()
+t.forward(6).up().forward(3).down()
+t.forward(4).up().forward(3).down()
+t.forward(3).up().forward(3).down()
+t.forward(2).up().forward(3).down()
+t.forward(1).up()
+t.left(180).forward(52).left(90)
+// a = c * sin(angle a)
+t.forward(getChord(tvHeight, tvScreenDeg) * (3 / 4) * Math.sin(toRadians(20)) + 1).down().forward(15)
+
+t.left(130).forward(10)
+t.right(100).forward(20)
+t.left(80).forward(15)
+t.left(60).forward(10)
+t.right(100).forward(10)
+t.right(40).forward(5)
+t.left(120).forward(15)
+t.right(50).forward(10)
+t.right(100).forward(getChord(tvWidth, tvScreenDeg) / 2 - 2)
+
+t.right(180).forward(getChord(tvWidth, tvScreenDeg) / 4 + 3)
+t.left(100).forward(10)
+t.left(50).forward(15)
+t.right(120).forward(5)
+t.left(40).forward(10)
+t.left(100).forward(10)
+t.right(60).forward(15)
+t.right(80).forward(20)
+t.left(100).forward(10)
+t.right(130).forward(getChord(tvWidth, tvScreenDeg) / 4 + 5)
+
+t.up()
+// b = c * sin(angle b)
+t.right(90).forward(getChord(tvHeight, tvScreenDeg) * (3 / 4) * Math.sin(toRadians(70))).down()
+t.left(90).forward(((getChord(tvWidth, tvScreenDeg) / 2 - 40 > 0 ? getChord(tvWidth, tvScreenDeg) / 2 - 40 : 0) + 15 + 2 * getChord(tvHeight, tvScreenDeg) * (3 / 4) * Math.sin(toRadians(20)) - 3))
+t.up()
+t.left(180).forward(getChord(tvWidth, tvScreenDeg) / 8).down()
+t.left(90).arc(-180, getChord(tvHeight, tvScreenDeg) / 4)
+t.left(180).up()
+
+t.arc(20, getChord(tvHeight, tvScreenDeg) / 4).right(90).down().forward(2).up().left(180).forward(2).right(90)
+t.arc(20, getChord(tvHeight, tvScreenDeg) / 4).right(90).down().forward(2).up().left(180).forward(2).right(90)
+t.arc(20, getChord(tvHeight, tvScreenDeg) / 4).right(90).down().forward(2).up().left(180).forward(2).right(90)
+t.arc(20, getChord(tvHeight, tvScreenDeg) / 4).right(90).down().forward(2).up().left(180).forward(2).right(90)
+t.arc(20, getChord(tvHeight, tvScreenDeg) / 4).right(90).down().forward(2).up().left(180).forward(2).right(90)
+t.arc(20, getChord(tvHeight, tvScreenDeg) / 4).right(90).down().forward(2).up().left(180).forward(2).right(90)
+t.arc(20, getChord(tvHeight, tvScreenDeg) / 4).right(90).down().forward(2).up().left(180).forward(2).right(90)
+t.arc(20, getChord(tvHeight, tvScreenDeg) / 4).right(90).down().forward(2).up().left(180).forward(2).right(90)
+t.arc(20, getChord(tvHeight, tvScreenDeg) / 4).right(90).forward(getChord(tvWidth, tvScreenDeg) / 8 - 5)
+t.right(90)
+  .forward(getChord(tvHeight, tvScreenDeg) - (getChord(tvHeight, tvScreenDeg) * (3 / 4) * Math.sin(toRadians(70))) + 2 * tvCornerRad)
+t.forward(tvBezel).right(90)
+
+// -------------------
+
+t.down()
 t.forward(getChord(tvWidth, tvScreenDeg)).forward(tvCornerRad + tvBezel)
 t.arc(-90, tvCornerRad)
 t.forward(getChord(tvHeight, tvScreenDeg)).forward(tvBezel * 2)
@@ -96,7 +160,6 @@ t.forward(getChord(tvHeight, tvScreenDeg) / 2)
 // Maybe create a sort of 'grill' at the top of the control panel
 t.up()
 t.right(90)
-// t.right(90).forward(getChord(tvHeight, tvScreenDeg) / 2 / 2).left(90)
 t.down()
 
 const length = tvPanelW * (6 / 8)
@@ -190,9 +253,9 @@ t.right(bt.randInRange(80, 100)).down()
 t.forward(20)
 t.up()
 
+
 const cc = bt.bounds(t.lines()).cc;
 const centered = bt.translate(t.lines(), [height / 2, width / 2], cc);
-
 
 // draw it
 drawLines(centered);
