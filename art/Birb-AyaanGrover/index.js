@@ -8,8 +8,8 @@ const height = 125;
 
 setDocDimensions(width, height);
 
-const birbScale = 1
-const birbStretch = 2
+const birbScale = randomNumber(-5, 5)
+const birbStretch = randomNumber(-3, 3)
 
 const finalLines = [];
 
@@ -99,6 +99,10 @@ const finalBounds = bt.bounds(finalLines);
 const finalScale = width/finalBounds.width*.85;
 bt.scale(finalLines, finalScale);
 bt.translate(finalLines, [width / 2, height / 2], bt.bounds(finalLines).cc);
+
+function randomNumber(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
 // draw it
 drawLines(finalLines);
