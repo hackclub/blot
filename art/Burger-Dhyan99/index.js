@@ -1,10 +1,11 @@
+// Set the canvas dimensions
 setDocDimensions(800, 800);
 
 // Settings
-const seedTop = 3432;
-//
+const seedTop = 3517;
 const seedBottom = ((seedTop * 63) % 42) + 79;
 
+// Create top bun
 const myTurtleTop = new bt.Turtle();
 myTurtleTop.jump([600, 600]);
 myTurtleTop.right(-90);
@@ -29,6 +30,7 @@ for (let i = 0; i < numSeedsTop; i++) {
   ]);
 }
 
+// Create bottom bun
 const myTurtleBottom = new bt.Turtle();
 myTurtleBottom.jump([200, 225]);
 myTurtleBottom.right(90);
@@ -53,28 +55,54 @@ for (let i = 0; i < numSeedsBottom; i++) {
   ]);
 }
 
+// Create patty
+const pattyY = 580
+
 const pattyTurtle = new bt.Turtle();
-pattyTurtle.jump([115, 610]);
+pattyTurtle.jump([115, pattyY]);
 pattyTurtle.right(180);
 pattyTurtle.arc(180, 40);
-pattyTurtle.goTo([685, 530]);
+const pattyDetail = 1150;
+const pattyAmplitude = 1;
+
+for (let i = 0; i < pattyDetail; i++) {
+  const x = 115 + (i * 0.5); // Adjust x position for each segment
+  const y = pattyY-80 + pattyAmplitude * Math.sin(i * Math.PI / 10); // Calculate y position with sine function
+  pattyTurtle.goTo([x, y]);
+}
 pattyTurtle.arc(180, 40);
-pattyTurtle.goTo([115, 610]);
+
+for (let i = 0; i < pattyDetail; i++) {
+  const x = 115 + (i * 0.5); // Adjust x position for each segment
+  const y = pattyY + pattyAmplitude * Math.sin(i * Math.PI / 10); // Calculate y position with sine function
+  pattyTurtle.goTo([x, y]);
+}
+
+pattyTurtle.step([0,20])
+pattyTurtle.goTo([115,pattyY+20])
+pattyTurtle.step([0,-20])
+pattyTurtle.step([450,0])
+pattyTurtle.goTo([600,pattyY-60])
+pattyTurtle.goTo([659,pattyY])
+
 let pattyPolylines = pattyTurtle.lines();
 
+// Draw squiggly line below the patty
+const lettuceY = 450
 const squiggleTurtle = new bt.Turtle();
-squiggleTurtle.jump([115, 480]); 
-squiggleTurtle.right(0); 
-const squiggleDetail = 150;
-const squiggleAmplitude = 33;
+squiggleTurtle.jump([115, lettuceY]); // Starting point below the patty
+squiggleTurtle.right(0); // Start horizontally
+const squiggleDetail = 150; // Number of points for squiggle
+const squiggleAmplitude = 33; // Amplitude of the squiggle
 
 for (let i = 0; i < squiggleDetail; i++) {
-  const x = 115 + (i * 4);
-  const y = 480 + squiggleAmplitude * Math.sin(i * Math.PI / 10);
+  const x = 115 + (i * 4); // Adjust x position for each segment
+  const y = lettuceY + squiggleAmplitude * Math.sin(i * Math.PI / 10); // Calculate y position with sine function
   squiggleTurtle.goTo([x, y]);
 }
 let squigglePolylines = squiggleTurtle.lines();
 
+// Draw everything
 drawLines(polylinesTop);
 drawLines(sesameSeedsTop);
 drawLines(pattyPolylines);
