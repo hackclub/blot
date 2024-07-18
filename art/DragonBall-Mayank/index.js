@@ -1,3 +1,9 @@
+/*
+@title: DragonBall
+@author: Mayank
+@snapshot: snapshot1.png
+*/
+
 const width = 300;
 const height = 300;
 setDocDimensions(width, height);
