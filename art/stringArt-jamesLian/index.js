@@ -4,7 +4,7 @@
 @snapshot: stringart-IU-highresolution.png
 */
 
-// insert your own image URL here!
+// insert your own image URL here! Images that work best typically include high-contrast portraits
 var imageURL = "https://raw.githubusercontent.com/James-Lian/blot-string-art-generator/main/examples/mona.jpg";
 var image;
 
@@ -189,6 +189,20 @@ function init() {
     }
     for (let w = 0; w < Math.ceil(difference/2); w++) {
       image.pop()
+    }
+  }
+  // crop the image to size if it is too wide
+  else if (image.length < size) {
+    let difference = size - image.length;
+    for (let q = 0; q < Math.floor(difference/2); q++) {
+      for (let z = 0; z < image.length; z++) {
+        image[z].shift()
+      }
+    }
+    for (let w = 0; w < Math.ceil(difference/2); w++) {
+      for (let x = 0; x < image.length; x++) {
+        image[x].pop()
+      }
     }
   }
 
