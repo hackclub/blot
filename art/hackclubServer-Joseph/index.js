@@ -4,6 +4,13 @@
 @snapshot: snapshots/1.png
 */
 
+// generation vars
+const uhd_length = 15;
+const uhd_length2 = 13;
+const vert_length = 7;
+
+
+
 const width = 125;
 const height = 120;
 const linesss = 55;
@@ -13,6 +20,48 @@ const warn = 10;
 setDocDimensions(width, height);
 
 const t = new bt.Turtle();
+//Multiplers for UHD or Screen 1
+function generateRandomUHDLength(uhd_length) {
+  const var_uhd_length = Math.floor(Math.random() * uhd_length * 10);
+  if (var_uhd_length >= 1 && var_uhd_length <= 90) {
+    return var_uhd_length;
+  } else {
+    return 50;
+  }
+}
+const var_uhd_length = generateRandomUHDLength(uhd_length);
+
+function generateRandomUHDLength2(uhd_length2) {
+  const var_uhd_length2 = Math.floor(Math.random() * uhd_length2 * 10);
+  if (var_uhd_length2 >= 7 && var_uhd_length2 <= 71) {
+    return var_uhd_length2;
+  } else {
+    return 19;
+  }
+}
+
+const var_uhd_length2 = generateRandomUHDLength2(uhd_length2);
+
+
+
+function generateRandomVertLength(vert_length) {
+  //Multiplyer 2
+  const var_vert_length = Math.floor(Math.random() * vert_length * 10);
+  if (var_vert_length >= 1 && var_vert_length <= 19) {
+    return var_vert_length;
+  } else {
+    return 15;
+  }
+}
+
+const var_vert_length = generateRandomVertLength(vert_length);
+var vert_half = var_vert_length / 2;
+
+
+
+
+
+
 
 
 // server
@@ -160,16 +209,16 @@ t.left(-1);
 t.forward(5)
 
 
-const randomNumber = Math.ceil(Math.random() * 3)
+const randomNumber = Math.ceil(Math.random() + 0)
 if (randomNumber === 1) {
   //bios screen
-  t.jump([40.4, 54.2]);
+  t.jump([var_uhd_length2, 54.4]);
   t.right(2);
-  t.forward(70);
+  t.forward(var_uhd_length);
   t.right(90)
   t.forward(34)
   t.right(90)
-  t.forward(70)
+  t.forward(var_uhd_length)
   t.left(-90)
   t.forward(34)
   
@@ -238,18 +287,20 @@ if (randomNumber === 1) {
   t.forward(10.4)
 }
 if (randomNumber == 2) {
-  t.jump([64, 58])
+  t.jump([84, 64])
   t.right(2)
-  t.forward(26)
+  t.forward(var_vert_length)
   t.right(90)
-  t.forward(38)
+  t.forward(44)
   t.right(90)
-  t.forward(26)
+  t.forward(44)
   t.right(90)
-  t.forward(38)
+  t.forward(44)
+  t.right(90)
+  t.forward(var_vert_length * 1.25 + 22)
   
   t.jump([75, 31])
-  t.right(463)
+  t.right(732)
   t.arc(385, 4)
   t.jump([70, 32])
   t.right(360)
@@ -282,7 +333,7 @@ if (randomNumber == 3) {
   t.right(16)
   t.arc(37, 36)
   t.jump([75.0, 33.0])
-  t.right(218)
+  t.right(217)
   t.arc(32, 39)
   t.jump([78.0, 28.5])
   t.right(218)
@@ -358,6 +409,7 @@ t.forward(51);
 t.right(91)
 t.forward(32);
 }
+
 
 
 
