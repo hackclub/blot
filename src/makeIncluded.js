@@ -18,7 +18,7 @@ export function makeIncluded() {
 
         // get code location
         const pos = getPosFromErr(new Error())
-        
+
         logs.push({
             type,
             pos,
@@ -26,37 +26,48 @@ export function makeIncluded() {
             values: args
         });
     }
-        
+
     const patchedConsole = {
         log: (...args) => baseLogger('log', ...args),
         error: (...args) => baseLogger('error', ...args),
         warn: (...args) => baseLogger('warn', ...args)
     }
-    
+
     const patchedInterval = (callback, time, ...args) => {
         const interval = window.setInterval(callback, time, ...args)
         intervals.push(interval)
         return interval
     }
-    
+
     const patchedTimeout = (callback, time, ...args) => {
         const timeout = window.setTimeout(callback, time, ...args);
         timeouts.push(timeout);
         return timeout;
     }
-    
+
+    let DETECTED_RANDOM_USAGE = false;
+    const originalRandom = Math.random;
+    Math.random = function () {
+        if (!DETECTED_RANDOM_USAGE) {
+            patchedConsole.warn(`Math.random() called! This could cause issues if done unintentionally.
+https://github.com/hackclub/blot/issues/161`);
+            DETECTED_RANDOM_USAGE = true;
+        }
+        return originalRandom();
+    };
+
     const customGlobal = {
         setTimeout: patchedTimeout,
         setInterval: patchedInterval,
         console: patchedConsole,
-        
+
         setDocDimensions(w, h) {
             docDimensions.width = w;
             docDimensions.height = h;
         },
         drawLines: (polylines = [], style = {}) => {
             if (polylines.length === 0) return;
-        
+
             const temp = {};
             temp.path = JSON.parse(JSON.stringify(polylines));
             if (style.fill === undefined) style.fill = 'none';
@@ -65,10 +76,10 @@ export function makeIncluded() {
             temp.style = style;
             turtles.push(temp);
         },
-        
+
         blotToolkit: toolkit,
         bt: toolkit,
-        
+
         // createTurtle: (pt: Point) => new Turtle(pt),
         // Turtle,
         // ...drawingUtils,
@@ -86,13 +97,13 @@ export function makeIncluded() {
         //   })
         // },
     }
-    
+
     // const globalProxy = new Proxy(window, {
     //     get: (w, prop) =>
     //         prop in customGlobal ? customGlobal[prop] : w[prop].bind(w)
     //     }
     // )
-        
+
     const args = {
         ...customGlobal,
         // global: globalProxy,

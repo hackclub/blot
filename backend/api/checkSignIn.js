@@ -1,4 +1,5 @@
 import { supabase } from "./supabase.js";
+import checkValidSession from "./checkValidSession.js";
 
 export default async function(req, res) {
   const { sessionKey } = req.body;
@@ -14,8 +15,21 @@ export default async function(req, res) {
       throw userError;
     }
 
-    // TODO: check that session isn't expired
-    console.log("checkSignIn session:", session);
+    const isValid = checkValidSession(session);
+    if (!isValid) {
+      return;
+    }
+
+    // Update the last_used field to the current time
+    const currentTime = new Date().toISOString();
+    const { error: updateError } = await supabase
+      .from('sessions')
+      .update({ last_used: currentTime })
+      .eq('id', sessionKey);
+
+    if (updateError) {
+      throw updateError;
+    }
 
     res.send({ email: session.user });
   } catch (error) {

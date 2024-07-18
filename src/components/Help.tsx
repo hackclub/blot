@@ -3,15 +3,17 @@ import { useState, useEffect } from "preact/hooks";
 import { marked } from "marked";
 import { defaultProgram } from "../defaultProgram.js";
 import { loadCodeFromString } from "../loadCodeFromString.ts";
+import { patchStore, getStore } from "../state.ts";
 // import Prism from "prismjs";
 import hljs from "highlight.js";
 
 const renderer = new marked.Renderer();
 
 renderer.heading = (text, level, raw, slugger) => {
-  if (level === 1) return `<h1 class="text-3xl font-sans font-semibold text-gray-800 py-2">${text}</h1>`;
-  if (level === 2) return `<h1 class="text-2xl font-sans font-semibold text-gray-800 py-2">${text}</h1>`;
-  if (level === 3) return `<h1 class="text-xl font-sans font-semibold text-gray-800 py-2">${text}</h1>`;
+  
+  if (level === 1) return `<h1 class=${styles.h1}>${text}</h1>`;
+  if (level === 2) return `<h1 class=${styles.h2}>${text}</h1>`;
+  if (level === 3) return `<h1 class=${styles.h3}>${text}</h1>`;
   else return `<h1>${text}</h1>`
 };
 
@@ -42,6 +44,15 @@ export default function Help({
   toggleClose: () => void;
   helpHeight: number;
 }) {
+  const { theme } = getStore()
+  console.log(theme)
+  let css = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+  let isDark = false
+  if(theme == "dark"){
+    css = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    isDark = true
+  }
+  console.log(isDark)
   const closed = helpHeight <= 0;
 
   const [tab, setTab] = useState<"workshop" | "toolkit">("toolkit");
@@ -90,7 +101,9 @@ export default function Help({
   }, []);
 
   return (
+   
     <>
+       <link rel="stylesheet" href={css}></link>
       <div
         class={[styles.helpSection, "help-section"].join(" ")}
         style={{ height: `${helpHeight}%` }}
@@ -101,7 +114,7 @@ export default function Help({
               className={styles.helpSectionTab}
               style={{
                 backgroundColor:
-                  tab == "workshop" ? "rgba(var(--primary-rgb), 0.9)" : "",
+                  tab == "workshop" ?  (isDark ? "rgba(15, 57, 77, 0.89)" : "rgba(var(--primary-rgb), 0.9)") : "",
               }}
               onClick={() => {
                 setTab("workshop");
@@ -115,7 +128,7 @@ export default function Help({
             className={styles.helpSectionTab}
             style={{
               backgroundColor:
-                tab == "toolkit" ? "rgba(var(--primary-rgb), 0.9)" : "",
+                tab == "toolkit" ? (isDark ? "rgba(15, 57, 77, 0.89)" : "rgba(var(--primary-rgb), 0.9)") : "",
             }}
             onClick={() => {
               setTab("toolkit");
@@ -136,7 +149,7 @@ export default function Help({
         )}
         {tab === "workshop" && (
           <div class={styles.helpContent}>
-            <h1 class="text-2xl font-sans font-semibold text-gray-800">{workshopContent.frontMatter.title}</h1>
+            <h1 class={styles.h2}>{workshopContent.frontMatter.title}</h1>
             <div
               dangerouslySetInnerHTML={{
                 __html: workshopContent.htmlContent,

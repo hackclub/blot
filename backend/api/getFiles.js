@@ -1,8 +1,9 @@
 import { supabase } from "./supabase.js";
+import checkValidSession from "./checkValidSession.js";
 
 // TODO: this should not return content, add a get-file path for that
 export default async function(req, res) {
-  const { sessionKey } = req.body;
+  const { sessionKey, email } = req.body;
 
   try {
     // get session email TODO: should be user id
@@ -17,7 +18,10 @@ export default async function(req, res) {
       throw userError;
     }
 
-    // TODO: check that session isn't expired
+    const isValid = checkValidSession(session, { email });
+    if (!isValid) {
+      return;
+    }
 
     let { data: files, error: filesError } = await supabase
       .from('files')
