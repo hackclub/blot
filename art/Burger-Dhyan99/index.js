@@ -1,11 +1,13 @@
-// Set the canvas dimensions
 setDocDimensions(800, 800);
 
 // Settings
-const seedTop = 3517;
+const seedTop = 5056;
+
+
+
+
 const seedBottom = ((seedTop * 63) % 42) + 79;
 
-// Create top bun
 const myTurtleTop = new bt.Turtle();
 myTurtleTop.jump([600, 600]);
 myTurtleTop.right(-90);
@@ -30,7 +32,6 @@ for (let i = 0; i < numSeedsTop; i++) {
   ]);
 }
 
-// Create bottom bun
 const myTurtleBottom = new bt.Turtle();
 myTurtleBottom.jump([200, 225]);
 myTurtleBottom.right(90);
@@ -55,7 +56,7 @@ for (let i = 0; i < numSeedsBottom; i++) {
   ]);
 }
 
-// Create patty
+
 const pattyY = 580
 
 const pattyTurtle = new bt.Turtle();
@@ -66,46 +67,79 @@ const pattyDetail = 1150;
 const pattyAmplitude = 1;
 
 for (let i = 0; i < pattyDetail; i++) {
-  const x = 115 + (i * 0.5); // Adjust x position for each segment
-  const y = pattyY-80 + pattyAmplitude * Math.sin(i * Math.PI / 10); // Calculate y position with sine function
+  const x = 115 + (i * 0.5);
+  const y = pattyY - 80 + pattyAmplitude * Math.sin(i * Math.PI / 10);
   pattyTurtle.goTo([x, y]);
 }
 pattyTurtle.arc(180, 40);
 
 for (let i = 0; i < pattyDetail; i++) {
-  const x = 115 + (i * 0.5); // Adjust x position for each segment
-  const y = pattyY + pattyAmplitude * Math.sin(i * Math.PI / 10); // Calculate y position with sine function
+  const x = 115 + (i * 0.5); 
+  const y = pattyY + pattyAmplitude * Math.sin(i * Math.PI / 10); 
   pattyTurtle.goTo([x, y]);
 }
 
-pattyTurtle.step([0,20])
-pattyTurtle.goTo([115,pattyY+20])
-pattyTurtle.step([0,-20])
-pattyTurtle.step([450,0])
-pattyTurtle.goTo([600,pattyY-60])
-pattyTurtle.goTo([659,pattyY])
+pattyTurtle.step([0, 20])
+pattyTurtle.goTo([115, pattyY + 20])
+pattyTurtle.step([0, -20])
+pattyTurtle.step([450, 0])
+pattyTurtle.up()
+pattyTurtle.step([0, 20])
+pattyTurtle.down()
+pattyTurtle.goTo([600, pattyY - 60])
+pattyTurtle.goTo([660, pattyY + 20])
 
 let pattyPolylines = pattyTurtle.lines();
 
-// Draw squiggly line below the patty
 const lettuceY = 450
 const squiggleTurtle = new bt.Turtle();
-squiggleTurtle.jump([115, lettuceY]); // Starting point below the patty
-squiggleTurtle.right(0); // Start horizontally
-const squiggleDetail = 150; // Number of points for squiggle
-const squiggleAmplitude = 33; // Amplitude of the squiggle
+squiggleTurtle.jump([115, lettuceY]); 
+squiggleTurtle.right(0);
+const squiggleDetail = 150;
+const squiggleAmplitude = 33;
 
 for (let i = 0; i < squiggleDetail; i++) {
-  const x = 115 + (i * 4); // Adjust x position for each segment
-  const y = lettuceY + squiggleAmplitude * Math.sin(i * Math.PI / 10); // Calculate y position with sine function
+  const x = 115 + (i * 4);
+  const y = lettuceY + squiggleAmplitude * Math.sin(i * Math.PI / 10); 
   squiggleTurtle.goTo([x, y]);
 }
 let squigglePolylines = squiggleTurtle.lines();
 
-// Draw everything
+const tomatoTurtle = new bt.Turtle();
+const numTomatoes = 4;
+const tomatoRadius = 32;
+const tomatoThickness = 11;
+const tomatoXStart = 344;
+const tomatoYStart = 340;
+
+bt.setRandSeed(seedTop)
+
+for (let i = 0; i < numTomatoes; i++) {
+  const x = tomatoXStart + i * 53;
+  const y = tomatoYStart;
+  const rand = bt.randInRange(-40, 30)
+  const xrand = bt.randInRange(-10, 10)
+
+  tomatoTurtle.jump([x - tomatoRadius + xrand, y + rand]);
+  tomatoTurtle.right(0);
+  tomatoTurtle.arc(360, tomatoRadius);
+
+  tomatoTurtle.jump([x - tomatoRadius + xrand, y - tomatoThickness + rand]);
+  tomatoTurtle.right(0);
+  tomatoTurtle.arc(360, tomatoRadius);
+
+  tomatoTurtle.jump([x - tomatoRadius, y]);
+  tomatoTurtle.goTo([x - tomatoRadius, y - tomatoThickness]);
+
+}
+
+let tomatoPolylines = tomatoTurtle.lines();
+bt.scale(tomatoPolylines, [3, 0.5])
+
 drawLines(polylinesTop);
 drawLines(sesameSeedsTop);
 drawLines(pattyPolylines);
+drawLines(squigglePolylines);
+drawLines(tomatoPolylines);
 drawLines(polylinesBottom);
 drawLines(sesameSeedsBottom);
-drawLines(squigglePolylines);
