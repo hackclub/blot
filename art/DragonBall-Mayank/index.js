@@ -1,12 +1,20 @@
-/*
-@title: DragonBall
-@author: Mayank
-@snapshot: snapshot2.png
-*/
-
-const width = 200;
-const height = 200;
+const width = 300;
+const height = 300;
 setDocDimensions(width, height);
+
+function createCircle(radius, segments, centerX, centerY) {
+    const path = [];
+    const angleStep = (2 * Math.PI) / segments;
+
+    for (let i = 0; i <= segments; i++) {
+        const angle = i * angleStep;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        path.push([x, y]);
+    }
+
+    return path;
+}
 
 function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
     let rot = Math.PI / 2 * 3;
@@ -27,66 +35,62 @@ function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
         rot += step;
     }
     path.push([cx, cy - outerRadius]);
-    drawLines([path], { fill: "red" });
+    return path;
 }
 
-function getStarPositions(numStars, cx, cy, radius) {
-    const positions = {
-        1: [[cx, cy]],
-        2: [[cx - radius / 2, cy], [cx + radius / 2, cy]],
-        3: [[cx, cy - radius / 2], [cx - radius / 3, cy + radius / 3], [cx + radius / 3, cy + radius / 3]],
-        4: [[cx - radius / 3, cy - radius / 3], [cx + radius / 3, cy - radius / 3], [cx - radius / 3, cy + radius / 3], [cx + radius / 3, cy + radius / 3]],
-        5: [
-            [cx, cy - radius * 0.75],
-            [cx - radius * 0.65, cy - radius * 0.2],
-            [cx + radius * 0.65, cy - radius * 0.2],
-            [cx - radius * 0.4, cy + radius * 0.5],
-            [cx + radius * 0.4, cy + radius * 0.5]
-        ],
-        6: [
-            [cx, cy],
-            [cx, cy - radius * 0.6],
-            [cx - radius * 0.55, cy - radius * 0.2],
-            [cx + radius * 0.55, cy - radius * 0.2],
-            [cx - radius * 0.35, cy + radius * 0.4],
-            [cx + radius * 0.35, cy + radius * 0.4]
-        ],
-        7: [
-            [cx, cy],
-            [cx, cy - radius * 0.6],
-            [cx - radius * 0.55, cy - radius * 0.35],
-            [cx + radius * 0.55, cy - radius * 0.35],
-            [cx - radius * 0.55, cy + radius * 0.35],
-            [cx + radius * 0.55, cy + radius * 0.35],
-            [cx, cy + radius * 0.6]
-        ]
-    };
-    return positions[numStars] || [];
-}
+const radius = 100;
+const segments = 100;
+const centerX = width / 2;
+const centerY = height / 2;
 
-function drawDragonBall(numStars) {
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const radius = 80;
+drawLines([circlePath], { stroke: 'orange', fill: 'orange' });
 
-    const circlePath = new bt.Turtle();
-    circlePath.up();
-    circlePath.goTo([centerX, centerY - radius]);
-    circlePath.down();
-    circlePath.arc(360, radius);
+const reflection1 = createCircle(20, 50, centerX - 30, centerY - 50);
+drawLines([reflection1], { fill: 'rgba(255, 255, 255, 0.8)', stroke: 'rgba(255, 255, 255, 0.8)' });
 
-    drawLines([circlePath.lines()[0]], { fill: "orange" });
+const reflection2 = createCircle(10, 50, centerX + 50, centerY + 40);
+drawLines([reflection2], { fill: 'rgba(255, 255, 255, 0.5)', stroke: 'rgba(255, 255, 255, 0.5)' });
 
-    const starPositions = getStarPositions(numStars, centerX, centerY, radius / 2);
-    starPositions.forEach(pos => {
-        drawStar(pos[0], pos[1], 5, 10, 5);
-    });
-}
-function randomBetween1And7() {
-  return Math.floor(Math.random() * 7) + 1;
-}
+//////////////////////////////////////////////////////// One Star ///////////////////////////////////////////////
+// const circlePath = createCircle(radius, segments, centerX, centerY);
+// const starPath = drawStar(centerX, centerY, 5, 12, 6);
 
-// Assigning a random number between 1 and 7 to a variable
-const numStars = randomBetween1And7();
+// drawLines([starPath], { fill: 'red' });
 
-drawDragonBall(numStars);
+
+
+
+
+//////////////////////////////////////////////////////// Two Stars ///////////////////////////////////////////////
+// const circlePath = createCircle(radius, segments, centerX, centerY);
+// const starPath1 = drawStar(centerX - 27, centerY, 5, 12, 6);
+// const starPath2 = drawStar(centerX + 27, centerY, 5, 12, 6);
+
+// drawLines([starPath1, starPath2], { fill: 'red' });
+
+
+
+//////////////////////////////////////////////////////// Three Stars ///////////////////////////////////////////////
+// const starPath1 = drawStar(centerX - 15, centerY - 23 , 5, 12, 6);
+// const starPath2 = drawStar(centerX -15, centerY+ 25, 5, 12, 6);
+// const starPath3 = drawStar(centerX + 32, centerY - 0, 5, 12, 6);
+// drawLines([starPath1, starPath2, starPath3], { fill: 'red' });
+
+//////////////////////////////////////////////////////// Four Stars ///////////////////////////////////////////////
+// const fourStarPath1 = drawStar(centerX - 15, centerY - 20, 5, 12, 6);
+// const fourStarPath2 = drawStar(centerX + 25, centerY - 20, 5, 12, 6);
+// const fourStarPath3 = drawStar(centerX - 25, centerY + 20, 5, 12, 6);
+// const fourStarPath4 = drawStar(centerX + 15, centerY + 20, 5, 12, 6);
+// drawLines([fourStarPath1, fourStarPath2, fourStarPath3, fourStarPath4], { fill: 'red' });
+
+//////////////////////////////////////////////////////// Five Stars ///////////////////////////////////////////////
+const fiveStarPath1 = drawStar(centerX - 20, centerY - 25, 5, 12, 6);
+const fiveStarPath2 = drawStar(centerX + 30, centerY - 25, 5, 12, 6);
+const fiveStarPath3 = drawStar(centerX - 30, centerY + 25, 5, 12, 6);
+const fiveStarPath4 = drawStar(centerX + 20, centerY + 25, 5, 12, 6);
+const fiveStarPath5 = drawStar(centerX , centerY, 5, 12, 6);
+drawLines([fiveStarPath1, fiveStarPath2, fiveStarPath3, fiveStarPath4, fiveStarPath5], { fill: 'red' });
+
+//////////////////////////////////////////////////////// Six Stars ///////////////////////////////////////////////
+
+//////////////////////////////////////////////////////// Seven Stars ///////////////////////////////////////////////
