@@ -15,8 +15,12 @@ Positions:
 2 - Middle
 3 - Bottom
 */
+const randomAngle = Math.round(blotToolkit.randInRange(1, 2));
 const randomPosition = Math.round(blotToolkit.randInRange(1, 3));
 const randomSize = Math.round(blotToolkit.randInRange(1, 3));
+// const randomAngle = 2;
+// const randomPosition = 3;
+// const randomSize = 1;
 /*
 Sizes:
 1 - Middle, 2U
@@ -30,19 +34,28 @@ Text options:
 */
 const randomText = Math.round(blotToolkit.randInRange(1, 2));
 
+// true = 2D
+const is2Dor3D = randomAngle == 1;
+
 const serverTurtle = new bt.Turtle();
 const textTurtle = new bt.Turtle();
 const portTurtle = new bt.Turtle();
+const rackTurtle = new bt.Turtle();
+const cableTurtle = new bt.Turtle();
 
 // Set starting point and dimensions
 const startX = 5;
-const startY = randomPosition == 1 ? 80 : randomPosition == 2 ? 45 : 30;
+const startY = is2Dor3D ? 
+  randomPosition == 1 ? 125 : randomPosition == 2 ? 70 : 30
+  : 
+  randomPosition == 1 ? 80 : randomPosition == 2 ? 45 : 30;
 const serverWidth = 80;
 const serverHeight = randomSize == 1 ? 25 : randomSize == 2 ? 15 : 30;
 const caddyWidth = 20;
 const bezelHeight = 5; // Height of the bezel at the top
 const caddyHeight = randomSize == 3 ? (serverHeight - bezelHeight) / 3 : (serverHeight - bezelHeight) / 2; // Adjusted caddy height with bezel
-const topDepth = 55;
+const topDepth = is2Dor3D ? 40 : 55;
+const threeDAngle = is2Dor3D ? 0 : 45;
 
 function drawPowerEdgeServer(turtle) {
   turtle.jump([startX, startY]);
@@ -100,27 +113,38 @@ function drawPowerEdgeServer(turtle) {
     }
   }
 
-  // Top face
-  turtle.up();
-  turtle.jump([startX, startY]);
-  turtle.down();
-  turtle.left(45);
-  turtle.forward(topDepth);
-  turtle.right(45);
-  turtle.forward(serverWidth);
-  turtle.right(135);
-  turtle.forward(topDepth);
-  turtle.right(45);
-  turtle.forward(serverWidth);
-
-  // Connect the edges of the top and front faces
-  turtle.up();
-  turtle.jump([startX + serverWidth, startY - serverHeight]);
-  turtle.down();
-  turtle.left(45);
-  turtle.forward(-topDepth);
-  turtle.left(45);
-  turtle.forward(-serverHeight);
+  if (!is2Dor3D) {
+    // Top face
+    turtle.up();
+    turtle.jump([startX, startY]);
+    turtle.down();
+    turtle.left(threeDAngle);
+    turtle.forward(topDepth);
+    turtle.right(threeDAngle);
+    turtle.forward(serverWidth);
+    turtle.right(180 - threeDAngle);
+    turtle.forward(topDepth);
+    turtle.right(threeDAngle);
+    turtle.forward(serverWidth);
+  
+    // Connect the edges of the top and front faces
+    turtle.up();
+    turtle.jump([startX + serverWidth, startY - serverHeight]);
+    turtle.down();
+    turtle.left(threeDAngle);
+    turtle.forward(-topDepth);
+    turtle.left(180-threeDAngle);
+    turtle.right(90);
+    turtle.forward(-serverHeight);
+  } else {
+    turtle.jump([startX + serverWidth, startY - serverHeight]);
+    turtle.down();
+    turtle.forward(topDepth);
+    turtle.left(90);
+    turtle.forward(serverHeight);
+    turtle.left(90);
+    turtle.forward(topDepth);
+  }
 
   turtle.up();
 }
@@ -264,7 +288,128 @@ function drawVGAPort(turtle, size) {
   turtle.right(180);
   turtle.arc(360, 0.15);
 }
+function drawServerRack(turtle) {
+  turtle.jump([startX, startY]);
 
+  // A small homelab rack (Yes I know r/homedatacenter exists)
+  // around 8U/15U
+
+  if (is2Dor3D) {
+    turtle.setAngle(90);
+    turtle.forward(125 - turtle.pos[1]);
+    turtle.forward(-(turtle.pos[1]));
+  
+    turtle.jump([startX + serverWidth, startY]);
+    turtle.forward(125 - turtle.pos[1]);
+    turtle.forward(-(turtle.pos[1]));
+  
+    turtle.up();
+
+    // Top and bottom faces
+  
+    // Top
+  
+    turtle.jump([startX, 125 - turtle.pos[1]]);
+    turtle.down();
+    turtle.right(90);
+    turtle.forward(serverWidth);
+    turtle.forward(topDepth);
+  
+    turtle.up();
+  
+    // Bottom
+    turtle.jump([startX, 125 -turtle.pos[1]]);
+    turtle.down();
+    turtle.forward(serverWidth);
+    turtle.forward(topDepth);
+  
+    turtle.up();
+
+    // Connect together
+
+    turtle.left(90);
+    turtle.down();
+    turtle.forward(125);
+    turtle.up();
+
+    
+  } else {
+    turtle.setAngle(90);
+    turtle.forward(125 - turtle.pos[1]);
+    turtle.forward(-(turtle.pos[1]));
+
+    turtle.jump([startX + serverWidth, 125]);
+    // turtle.forward(1215 - turtle.pos[1]);
+    turtle.forward(-(turtle.pos[1]));
+    // turtle.forward(-startY);
+    turtle.jump([startX + serverWidth, startY]);
+    turtle.forward(-(turtle.pos[1]));
+  
+    turtle.up();
+  
+    turtle.setAngle(90);
+    turtle.jump([startX, startY]);
+    turtle.right(threeDAngle);
+    turtle.forward(topDepth);
+    turtle.left(threeDAngle);
+    turtle.down();
+    turtle.forward(125 - turtle.pos[1]);
+    turtle.up();
+    turtle.setAngle(90);
+    turtle.jump([startX, startY]);
+    turtle.right(threeDAngle);
+    turtle.forward(topDepth);
+    turtle.setAngle(-90);
+    turtle.forward(serverHeight + getHorizontalDistance(topDepth, threeDAngle));
+    turtle.down();
+    turtle.forward(turtle.pos[1]);
+    
+    turtle.up();
+    turtle.setAngle(90);
+    turtle.jump([startX + serverWidth, startY]);
+    turtle.right(threeDAngle);
+    turtle.forward(topDepth);
+    turtle.left(threeDAngle);
+    turtle.down();
+    turtle.forward(125 - turtle.pos[1]);
+    turtle.forward(-(turtle.pos[1]));
+  
+    turtle.up();
+  
+    // Top and bottom faces
+  
+    // Top
+  
+    turtle.jump([startX, 125 - turtle.pos[1]]);
+    turtle.down();
+    turtle.right(90);
+    turtle.forward(serverWidth);
+    turtle.forward(getHorizontalDistance(topDepth, threeDAngle));
+  
+    turtle.up();
+  
+    // Bottom
+    turtle.jump([startX, 125 -turtle.pos[1]]);
+    turtle.down();
+    turtle.forward(serverWidth);
+    turtle.forward(getHorizontalDistance(topDepth, threeDAngle));
+  
+    turtle.up();
+  }
+  
+}
+
+function getHorizontalDistance(diagonalDistance, angleInDegrees) {
+    // Convert the angle from degrees to radians
+    const angleInRadians = angleInDegrees * (Math.PI / 180);
+    
+    // Calculate the horizontal distance using the cosine of the angle
+    const horizontalDistance = diagonalDistance * Math.cos(angleInRadians);
+    
+    return horizontalDistance;
+}
+
+drawServerRack(rackTurtle);
 drawPowerEdgeServer(serverTurtle);
 textTurtle.up();
 textTurtle.setAngle(0);
@@ -292,7 +437,6 @@ drawLines(portTurtle.lines(), {
   width: 3,
   fill: "gray"
 });
-
 drawLines(textTurtle.lines(), {
   width: 1,
   stroke: "LightSlateGray",
@@ -301,5 +445,17 @@ drawLines(textTurtle.lines(), {
 drawLines(serverTurtle.lines(), {
   width: 1,
   stroke: "DimGray",
+  width: 4
+});
+
+drawLines(rackTurtle.lines(), {
+  width: 1,
+  stroke: "black",
+  width: 4
+});
+
+drawLines(cableTurtle.lines(), {
+  width: 1,
+  stroke: "blue",
   width: 4
 });
