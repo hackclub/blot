@@ -84,13 +84,29 @@ drawLines([reflection2], { fill: 'rgba(255, 255, 255, 0.5)', stroke: 'rgba(255, 
 // drawLines([fourStarPath1, fourStarPath2, fourStarPath3, fourStarPath4], { fill: 'red' });
 
 //////////////////////////////////////////////////////// Five Stars ///////////////////////////////////////////////
-const fiveStarPath1 = drawStar(centerX - 20, centerY - 25, 5, 12, 6);
-const fiveStarPath2 = drawStar(centerX + 30, centerY - 25, 5, 12, 6);
-const fiveStarPath3 = drawStar(centerX - 30, centerY + 25, 5, 12, 6);
-const fiveStarPath4 = drawStar(centerX + 20, centerY + 25, 5, 12, 6);
-const fiveStarPath5 = drawStar(centerX , centerY, 5, 12, 6);
-drawLines([fiveStarPath1, fiveStarPath2, fiveStarPath3, fiveStarPath4, fiveStarPath5], { fill: 'red' });
+// const fiveStarPath1 = drawStar(centerX - 20, centerY - 25, 5, 12, 6);
+// const fiveStarPath2 = drawStar(centerX + 30, centerY - 25, 5, 12, 6);
+// const fiveStarPath3 = drawStar(centerX - 30, centerY + 25, 5, 12, 6);
+// const fiveStarPath4 = drawStar(centerX + 20, centerY + 25, 5, 12, 6);
+// const fiveStarPath5 = drawStar(centerX , centerY, 5, 12, 6);
+// drawLines([fiveStarPath1, fiveStarPath2, fiveStarPath3, fiveStarPath4, fiveStarPath5], { fill: 'red' });
 
 //////////////////////////////////////////////////////// Six Stars ///////////////////////////////////////////////
+// const sixStarPath1 = drawStar(centerX - 12, centerY - 25, 5, 12, 6);
+// const sixStarPath2 = drawStar(centerX + 18, centerY - 25, 5, 12, 6);
+// const sixStarPath3 = drawStar(centerX - 12, centerY + 25, 5, 12, 6);
+// const sixStarPath4 = drawStar(centerX + 18, centerY + 25, 5, 12, 6);
+// const sixStarPath5 = drawStar(centerX - 30, centerY, 5, 12, 6);
+// const sixStarPath6 = drawStar(centerX + 30, centerY, 5, 12, 6);
+// drawLines([sixStarPath1, sixStarPath2, sixStarPath3, sixStarPath4, sixStarPath5, sixStarPath6], { fill: 'red' });
 
 //////////////////////////////////////////////////////// Seven Stars ///////////////////////////////////////////////
+const sevenStarPath1 = drawStar(centerX - 15, centerY - 28, 5, 12, 6);
+const sevenStarPath2 = drawStar(centerX + 21, centerY - 28, 5, 12, 6);
+const sevenStarPath3 = drawStar(centerX - 15, centerY + 28, 5, 12, 6);
+const sevenStarPath4 = drawStar(centerX + 21, centerY + 28, 5, 12, 6);
+const sevenStarPath5 = drawStar(centerX - 33, centerY, 5, 12, 6);
+const sevenStarPath6 = drawStar(centerX + 33, centerY, 5, 12, 6);
+const sevenStarPath7 = drawStar(centerX , centerY, 5, 12, 6);
+drawLines([sevenStarPath1, sevenStarPath2, sevenStarPath3, sevenStarPath4, sevenStarPath5, sevenStarPath6, sevenStarPath7], { fill: 'red' });
+
