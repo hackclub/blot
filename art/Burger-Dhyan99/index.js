@@ -1,3 +1,9 @@
+/*
+@title: Burger
+@author: Dhyan99
+@snapshot: image-1.png
+*/
+
 setDocDimensions(800, 650);
 
 // Settings
