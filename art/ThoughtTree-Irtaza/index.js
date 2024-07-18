@@ -1,10 +1,8 @@
 /*
 @title: SunsetAtSea
 @author: Irtaza
-@snapshot: the name of the snapshot file you want in the gallery
+@snapshot: not added yet
 */
-
-
 const width = 125;
 const height = 125;
 
@@ -20,7 +18,7 @@ const seaLevel = rr(height / 3, height / 2);
 // Draw sun rays
 for (let i = 0; i < 21; i++) {
   t.up();
-  t.goTo([0, height]);
+  t.goTo([60, seaLevel]);
   t.forward(sunSize + 2);
   t.down();
   t.forward(sunSize / 2);
@@ -41,19 +39,20 @@ function drawBoat(x, y, scale) {
 
   // Draw the sail
   t.goTo([x, y]);
-  t.goTo([x, y - scale / 2]);
-  t.goTo([x + scale / 4, y - scale / 4]);
-  t.goTo([x, y - scale / 2]);
-  t.goTo([x - scale / 4, y - scale / 4]);
+  t.goTo([x, y + scale / 2]);
+  t.goTo([x + scale / 4, y + scale / 4]);
+  t.goTo([x, y + scale / 2]);
+  t.goTo([x - scale / 4, y + scale / 4]);
+  t.goTo([x + scale / 4, y + scale / 4]);
 
   return t;
 }
 
 // Draw sun
 t.up();
-t.goTo([sunSize, height]);
+t.goTo([sunSize + 60, seaLevel]);
 t.down();
-for (let i = 0; i < 90; i++) {
+for (let i = 0; i < 175; i++) {
   t.forward(3 * sunSize / 180);
   t.right(1);
 }
@@ -68,7 +67,7 @@ t.goTo([width, seaLevel]);
 const boatCount = Math.floor(rr(2, 5));
 for (let i = 0; i < boatCount; i++) {
   let boatX = rr(10, width - 10);
-  let boatY = seaLevel + rr(5, 15);
+  let boatY = seaLevel - rr(10, 20);  // Ensure boat stays below sea level
   let boatScale = rr(10, 20);
   drawBoat(boatX, boatY, boatScale);
 }
@@ -91,9 +90,7 @@ for (let i = 0; i < birdCount; i++) {
 // Add turtle to final lines
 bt.join(finalLines, t.lines());
 
-// Center piece
-const cc = bt.bounds(finalLines).cc;
-bt.translate(finalLines, [width / 2, height / 2], cc);
+
 
 // Draw it
 drawLines(finalLines);
