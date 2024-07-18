@@ -1,6 +1,6 @@
 /*
 @title: Bus
-@author: Valentina
+@author: Valentina Banner <@potatoes>
 @snapshot: snapshot1.png
 */
 
@@ -8,6 +8,9 @@
 
 // check out this guide to learn how to program in blot
 // https://blot.hackclub.com/editor?guide=start
+
+const amtWheels = bt.randIntInRange(2, 4);
+const amtWindows = bt.randIntInRange(1, 4);
 
 const width = 125;
 const height = 125;
@@ -30,9 +33,6 @@ const spaceBetweenWindows = totalSpacing / (amtWindows + 1)
 var windowX = 10 + spaceBetweenWindows
 
 setDocDimensions(width, height);
-
-const amtWheels = bt.randIntInRange(2, 4);
-const amtWindows = bt.randIntInRange(1, 4);
 
 // store final lines here
 const finalLines = [];
