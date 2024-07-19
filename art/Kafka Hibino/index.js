@@ -7,8 +7,9 @@
 const width = 125;
 const height = 125;
 
-setDocDimensions(width, height);
+bt.setRandSeed(100)
 
+setDocDimensions(width, height);
 // store final lines here
 const finalLines = [];
 
@@ -35,7 +36,7 @@ let yCenter = 70; // y-coordinate of the semicircle's center
 let horizontalRadius = 35; // Horizontal radius of the elliptical semicircle
 let verticalRadius = 10; // Vertical radius of the elliptical semicircle, smaller than horizontal
 let isUpper = true; // Set to true for upper semicircle, false for lower
-let triangles = getRandomNumber(5) + 7
+let triangles = bt.randIntInRange(7,12)
 
 let ellipticalSemiCirclePoints = approximateEllipticalSemiCircle(xCenter, yCenter, horizontalRadius, verticalRadius, triangles, isUpper);
 
@@ -121,12 +122,9 @@ drawTriangle([30, 60], 6, 10, 90)
 drawTriangle([100, 60], 6, 10, 270)
 drawTriangle([100, 70], 6, 10, 270)
 
-function getRandomNumber(max) {
-  return Math.floor(Math.random() * max);
-}
 
 let leng = 70 / triangles
-let height1 = getRandomNumber(6) + 5
+let height1 = bt.randIntInRange(5, 11)
 for (let i = 0; i < triangles; i++) {
   drawTriangle([(i * leng) + 30 + leng, 70], height1, leng, 180)
 }
