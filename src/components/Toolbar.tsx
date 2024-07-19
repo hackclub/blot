@@ -240,12 +240,12 @@ function DownloadSVG() {
           t.path.forEach(pl =>
             pl.forEach((pt, i) => {
               const [x, y] = pt
-              if (i === 0) d += `M ${x} ${y}`
-              else d += `L ${x} ${y}`
+              if (i === 0) d += ` M ${x.toFixed(6)} ${y.toFixed(6)} `
+              else d += ` L ${x.toFixed(6)} ${y.toFixed(6)} `
             })
           )
 
-          return d
+          return d.trim();
         }
 
         const turtleToPath = t => {
@@ -295,7 +295,7 @@ function DownloadPNG() {
             pl.forEach((pt, i) => {
               const [x, y] = pt
               if (i === 0) d += `M ${x} ${y}`
-              else d += `L ${x} ${y}`
+              else d += ` L ${x} ${y}`
             })
           )
 
