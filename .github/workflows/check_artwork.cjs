@@ -39,7 +39,8 @@ function countAndVerifySnapshots(artworkDir) {
     }
     comments.push('✅ Step 2: Metadata found in index.js');
 
-    const expectedSnapshotBaseName = snapshotNameInMetadata.toLowerCase(); // Ensure case insensitive
+    const metadataBaseName = path.basename(snapshotNameInMetadata, path.extname(snapshotNameInMetadata));
+    const expectedSnapshotBaseName = metadataBaseName.toLowerCase();
     comments.push(`✅ Step 3: Expected snapshot base name: ${expectedSnapshotBaseName}`);
 
     try {
