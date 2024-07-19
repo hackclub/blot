@@ -28,7 +28,7 @@ function drawTinyFlower(t, centerX, centerY, size, color) {
   ];
 
   // Draw and fill the flower in one step
-drawLines([flowerPath], { fill: color, stroke: 'black', strokeWidth: 0.5 });
+  drawLines([flowerPath], { fill: color, stroke: 'black', strokeWidth: 0.5 });
 }
 
 function drawRandomColorFlowers(count) {
@@ -36,9 +36,9 @@ function drawRandomColorFlowers(count) {
   const colors = ['red', 'blue', 'pink', 'purple', 'white'];
   for (let i = 0; i < count; i++) {
     const randomX = bt.randInRange(10, 115); // Adjusted x-coordinate range
-    const randomY = bt.randInRange(10, 63);  // Adjusted y-coordinate range
+    const randomY = bt.randInRange(10, 63); // Adjusted y-coordinate range
     const randomColor = colors[Math.floor(bt.randInRange(0, colors.length))];
-    
+
     drawTinyFlower(t, randomX, randomY, tinyFlowerSize, randomColor);
   }
 }
@@ -48,8 +48,8 @@ const ground = [
   [
     [0, 3 * 0],
     [125, 3 * 0],
-    [125, height],
-    [0, height]
+    [125,height/2 ],
+    [0, height/2]
   ]
 ];
 const top = [
@@ -85,20 +85,131 @@ const down = [
   ]
 ];
 
-drawLines(ground, { fill: "#32a467", stroke: "#29636A" });
+
 drawLines(down, { fill: "#dfecf6", stroke: "#F4CA90" });
 drawLines(middle1, { fill: "#72aee0", stroke: "#C7B087" });
 drawLines(middle2, { fill: "#5693dc", stroke: "#99977E" });
-drawLines(top, { fill: "#0149aa", stroke: "#83c0ea" });
-
-// Draw the flowers
-drawRandomColorFlowers(125);
+drawLines(top, { fill: "#2d6fa1", stroke: "#83c0ea" });
 
 
 
 const finalLines = [];
 
 
+const rr = bt.randInRange;
+const moon = rr(15, 25);
+
+// Draw a circle at a random position with a random size
+const kites = new bt.Turtle();
+
+bt.join(finalLines, t.lines());
+function drawMoonWithRings(t) {
+  const moonRadius = rr(5, 10); // Random radius between 5 and 10
+  const x = rr(40, 95); 
+  const y = 89; // Fixed y position
+  const steps = 100; 
+  const angleStep = (2 * Math.PI) / steps;
+
+  // Function to draw a circle
+  function drawCircle(radius, fill) {
+    const circlePath = [];
+    for (let step = 0; step <= steps; step++) {
+      const pointX = x + radius * Math.cos(step * angleStep);
+      const pointY = y + radius * Math.sin(step * angleStep);
+      circlePath.push([pointX, pointY]);
+    }
+    drawLines([circlePath], { fill: fill, stroke: fill });
+  }
+
+  // Draw outer black ring
+  drawCircle(moonRadius + 15, '#aac8ed');
+
+  // Draw middle white ring
+  drawCircle(moonRadius + 10, '#fda944');
+
+  // Draw inner grey ring
+  drawCircle(moonRadius + 5, '#fdc33b');
+
+  // Draw the moon
+  drawCircle(moonRadius, '#fafbfd');
+}
+
+// Draw moon with rings
+drawMoonWithRings(t);
+
+drawLines(finalLines);
+
+
+
+
+
+
+
+
+
+const waveY = 80;
+const sunRadius = 18;
+// turtle at center
+const turtle = new bt.Turtle()
+  .setAngle(0);
+
+// clouds-1 triangle
+turtle.jump([ sunRadius * 2.2 -54, height - 30]);
+for (let i = 0; i < 1; i++) {
+  let angle = 115;
+  turtle.up().setAngle(0).forward(15).setAngle(-angle / 2).down();
+  for (let i = 0; i < 2; i++) {
+    for (let j = 0; j < 4; j++) {
+      turtle.left(angle).arc(-angle, 7);
+    }
+    turtle.right(90);
+    for (let j = 0; j < 4; j++) {
+      turtle.left(angle).arc(-angle, 4);
+    }
+    turtle.setAngle(18 - angle / 2);
+  }
+  turtle.setAngle(0).up().forward(27);
+}
+// draw it
+drawLines(turtle.lines(), {
+  fill: "black",
+  stroke: "grey",
+  width: 8
+});
+
+
+
+const randomX = Math.floor(Math.random() * (90 - 30 + 1)) + 30; // Random x between 30 and 100
+const constantY = height - 25;
+
+turtle.jump([randomX, constantY]);
+for (let i = 0; i < 1; i++) {
+  let angle = 115;
+  turtle.up().setAngle(100).forward(14).setAngle(-angle / 2).down();
+  for (let i = 0; i < 1; i++) {
+    for (let j = 0; j < 2.3; j++) {
+      //length
+      turtle.left(angle).arc(-angle, 4);
+    }
+    turtle.right(9);
+    for (let j = 0; j < 3; j++) {
+      // breadth
+      turtle.left(angle).arc(-angle, 4);
+    }
+  }
+}
+
+// draw it
+drawLines(turtle.lines(), {
+  fill: "black",
+  stroke: "lightgrey",
+  width: 7
+});
+drawLines(ground, { fill: "#32a467", stroke: "#29636A" });
+
+
+// Draw the flowers
+drawRandomColorFlowers(125);
 
 // Function to draw and fill a square
 function drawAndFillSquare(t, centerX, centerY, halfSize) {
@@ -216,5 +327,3 @@ drawLines(finalLines);
 
 
 drawLines(finalLines);
-
-
