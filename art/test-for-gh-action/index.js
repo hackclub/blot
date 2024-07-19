@@ -1,7 +1,7 @@
 /*
 @title: leaf
 @author: leomcelroy
-@snapshot: testing
+@snapshot: testing.png
 */
 
 const width = 125;
