@@ -2,7 +2,7 @@ name: Art PR Comment
 run-name: Art PR Comment
 on: 
     pull_request_target: 
-        types: [opened]
+        types: [opened,synchronize,reopened]
         paths: 'art/**'
 jobs:
   comment-pr:
@@ -25,7 +25,7 @@ jobs:
               pull_number: number,
             });
             
-            let commentbody = "";
+            let commentbody = "<!-- SUPER-COOL-BLOT-BOT-THING -->\n";
             let also = false;
 
             for (const file of changedFiles.data) {
@@ -44,11 +44,26 @@ jobs:
             if (!also) return;
 
             console.log(commentbody)
-            github.rest.issues.createComment({
+            const comments = await github.rest.issues.listComments({
               issue_number: number,
               owner: owner,
               repo: repo,
-              body: commentbody
             });
+            const ecomment = comments.data.find((c) => c.body.includes("SUPER-COOL-BLOT-BOT-THING"));
+            if (ecomment) {
+                github.rest.issues.updateComment({
+                    comment_id: ecomment.id,
+                    owner: owner,
+                    repo: repo,
+                    body: commentbody,
+                });
+            } else {
+                github.rest.issues.createComment({
+                  issue_number: number,
+                  owner: owner,
+                  repo: repo,
+                  body: commentbody,
+                });
+            }
 
       
