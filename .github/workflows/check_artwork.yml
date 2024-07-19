@@ -25,7 +25,7 @@ jobs:
       - name: Run artwork checks
         run: |
           for dir in $NEW_DIRS; do
-            node .github/workflows/check_artwork.js "$dir"
+            node .github/workflows/check_artwork.cjs "$dir"
           done
         env:
           NEW_DIRS: ${{ env.new_dirs }}
