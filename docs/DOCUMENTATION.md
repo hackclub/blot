@@ -478,6 +478,38 @@ const polylines1 = [[[0, 10], [10, 0], [20, 10]]];
 bt.xor(polylines0, polylines1);
 ```
 
+### offset(polylines, delta, ops = { endType, joinType, miterLimit, arcTolerance })
+
+**Parameters:**
+- `polylines` ([number, number][][]): The array of polylines.
+- `delta` (number): Distance between offset polylines and target polylines.
+- `ops` (object, optional): Configuration options for the offset curve.
+  - `endType` ("openSquare" | "openRound" | "openButt" | "closedLine" | "closedPolygon"): End type of the offset. Defaults to "closedPolygon" if closed and "openRound" if open.
+  - `joinType` ("square" | "round" | "miter"): Join type of the offset. Defaults to "round".
+  - `miterLimit` (number): Miter limit. Defaults to 2.
+  - `arcTolerance` (number): Rounding precision. Defaults to 0.1.
+
+**Returns:** A polyline ([number, number][]) of the given shape offset along its normal.
+
+**Description:** 
+
+Can be used to expand, contract, or thicken curves. If passed an open curve it will thicken it with a closed curve around it. If passed a closed curve it will contract or expand based on the sign of delta.
+
+**Example:**
+
+```js
+// thicken an open curve
+const polylines0 = [[[0, 0], [10, 10], [20, 0]]];
+bt.offset(polylines0, 3);
+
+// expand a closed curve
+const polylines1 = [[[0, 0], [10, 10], [20, 0], [0, 0]]];
+bt.offset(polylines1, 3);
+
+// thicken a closed curve
+const polylines2 = [[[0, 0], [10, 10], [20, 0], [0, 0]]];
+bt.offset(polylines2, 3, { endType: "openRound" });
+```
 ## Get Data From Polylines
 
 These functions take polylines and return other values. 
@@ -595,13 +627,14 @@ A `Turtle` class represents a cursor that moves around a canvas to draw shapes. 
 - `arc(angle, radius)` Draws an arc with the specified angle and radius from the current position.
 - `goTo([x, y])` Moves the turtle to the specified coordinates, drawing a line if the pen is down.
 - `jump([x, y])` Moves the turtle to the specified coordinates without drawing a line.
+- `step([dx, dy])` Moves the turtle to the current positon plus the passed delta values.
 - `right(angle)` Rotates the turtle to the right by the specified angle.
 - `left(angle)` Rotates the turtle to the left by the specified angle.
 - `setAngle(angle)` Sets the absolute angle of the turtle's orientation.
 - `up()` Lifts the pen so that moving the turtle does not draw lines.
 - `down()` Lowers the pen so that moving the turtle draws lines.
 - `copy()` Creates a copy of the turtle's current state.
-- `apply(fn)` Takes a function that receives the turtle as an argument and applies custom operations.
+- `applyToPath(fn)` Takes a function that receives the turtle's path as an argument.
 - `lines()` Returns a copy of the Turtle's path.
 
 **Properties:**

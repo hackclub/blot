@@ -1,5 +1,10 @@
+# TeleBlot
 
 Blot is a plotter bot from Hack Club. The TeleBlot Site encourages Hack Clubbers to create with Blot by lowering the barrier for Hack Clubbers to see their Blot works drawn on a Blot machine. Hack Clubbers can upload code to the website and watch through a livestream as a remote blot machine (the TeleBlot) draws their code.
+
+![image (2)](https://github.com/hackclub/blot/assets/27078897/015bba76-d767-428f-82c3-03ca79fc6006)
+
+![image (1)](https://github.com/hackclub/blot/assets/27078897/d5372073-9b76-482b-9c8d-d87d3b279b05)
 
 ## Components
 - Raspberry Pi Model B (RPi)

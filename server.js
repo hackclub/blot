@@ -39,7 +39,7 @@ build({
     <!-- TODO: add automatically when building -->
     <link rel="stylesheet" href='./assets/initApp.css'>
     
-    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css'>
+  
 
     <main></main>
     <script type="module" src="./src/initApp.js"></script>
@@ -51,10 +51,6 @@ build({
   gallery: wrapHTML(`
     ${navBar()}
     ${gallery()}
-  `),
-  assembly: wrapHTML(`
-    ${navBar()}
-    Go <a class="underline decoration-sky-500" href="https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md">here</a>.
   `),
   404: wrapHTML(`
     ${navBar()}
@@ -103,6 +99,12 @@ app.get('/read-share-link', async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
+});
+app.get('/assembly', (req, res) => {
+  res.redirect('https://github.com/hackclub/blot/blob/main/docs/assembly/ASSEMBLY.md');
+});
+app.get('/welcome-qr-code', (req, res) => {
+  res.redirect('/assembly');
 });
 
 const __filename = fileURLToPath(import.meta.url);

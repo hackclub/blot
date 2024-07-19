@@ -3,6 +3,8 @@
 So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one? The Blot is paid for by Hack Club, including shipping, but you should check for customs fees in your country before ordering. [^1]
 [^1]: Customs fees aren't covered by Hack Club, so please look into how much customs is for an electronics kit order being shipped from the US if you are based outside the US.
 
+[For a video guide on submitting your Blot project click here.](https://youtu.be/AmbjNEPuv14)
+
 # 1) Make a unique piece of generative art
 
 The first step is to make some generative art like that seen in [the gallery](https://blot.hackclub.com/gallery).
@@ -22,7 +24,7 @@ Some criteria your art needs to meet:
   - You can't just copy an existing piece of art and mess with the numbers.
   - That being said, you can take inspiration from other art and remix a few pieces together.
 
-I reccomend trying to create a [figurative](https://en.wikipedia.org/wiki/Figurative_art) piece, which depicts a real life thing.
+I recommend trying to create a [figurative](https://en.wikipedia.org/wiki/Figurative_art) piece, which depicts a real life thing.
 A key to being successful is being intentional with what you make. Sketch something out and have it in mind before you program it.
 
 Here are some examples of some **acceptable pieces**:
@@ -57,6 +59,9 @@ Make sure to include this info in a comment at the top of your file.
 */
 ```
 
+__NOTE__
+- Make sure your snapshot matches the name of an image in the `snapshots` folder you submit with `.png` like `example1.png`
+
 ## 2.1) Download your program
 
 - Hover over `download`
@@ -70,6 +75,10 @@ Make sure to include this info in a comment at the top of your file.
 - Create a folder called `{yourArtworkName}-{yourName}`.
 - Inside that folder create a `snapshots` folder with **at least 3 screenshots** of your work.
 - Place the code for your artwork in an `index.js` file.
+
+__NOTE__
+- DO NOT USE SPACES in any folder name or file.
+- Make sure you `snapshots` folder is lowercase `snapshots` not `Snapshots`
 
 **Make sure there are no spaces in your directory or file names!**
 
@@ -101,6 +110,7 @@ Refer to [this example](https://github.com/hackclub/blot/tree/main/art/square-di
 - In the body, describe your artwork and your experience coding.
 - Please add an image of your artwork to the pull request.
 - Click "Create Pull Request"
+- Fill out the checkboxes in the PR
 
 Your PR will be reviewed by people in the BLOT community. We aren't evaluating it based on style,
 we're looking to see if you put effort and creativity into your work.

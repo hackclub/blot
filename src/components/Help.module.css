@@ -3,7 +3,12 @@
   position: relative;
   font-family: var(--font-sans);
 }
-
+body[data-theme='dark'] .helpSectionTab{
+  background-color:var(--primary-dark);
+}
+body[data-theme='dark'] .helpSectionTab:hover {
+  background:rgba(15, 57, 77, 0.89);
+}
 .helpSectionToolbar {
   display: flex;
   justify-content: flex-start;
@@ -36,12 +41,13 @@
   height: 100%;
 }
 
+
 .helpContent > :nth-child(1) {
   margin-top: 0;
 }
 
 .helpContent a {
-  color: var(--primary);
+  /* color: var(--primary); */
   transition: opacity 0.2s;
 }
 
@@ -72,22 +78,64 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.h1 {
+  font-size: 1.875rem; /* 30px */
+  line-height: 2.25rem; /* 36px */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 600;
+  color: rgb(31 41 55);
+  padding-top: 0.5rem; /* 8px */
+  padding-bottom: 0.5rem; /* 8px */
+
+}
+.h2 {
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 600;
+  color: rgb(31 41 55);
+  padding-top: 0.5rem; /* 8px */
+  padding-bottom: 0.5rem; /* 8px */
+
+}
+.h3 {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 600;
+  color: rgb(31 41 55);
+  padding-top: 0.5rem; /* 8px */
+  padding-bottom: 0.5rem; /* 8px */
+
+}
+body[data-theme='dark'] .h1, .h2, .h3 {
+  filter: invert(1)
+}
+
 
 body[data-theme='dark'] .helpContent {
+  background-color: var(--primary-dark-grey);
   color: white;
 }
 
 body[data-theme='dark'] .helpContent a {
   color: white;
 }
+body[data-theme='dark'] .helpContent pre {
+  background-color: rgba(32,32,32,255);
+}
 
 body[data-theme='dark'] .helpContent hr {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(32, 32, 32, 0.25);
 }
 
 body[data-theme='dark'] .helpContent img {
   background-color: white;
 }
+body[data-theme='dark'] .helpContent code {
+  background: rgba(32,32,32,255);
+}
+
 
 .helpContent p {
   margin-top: 1em;
