@@ -1,0 +1,54 @@
+name: Art PR Comment
+run-name: Art PR Comment
+on: 
+    pull_request_target: 
+        types: [opened]
+        paths: 'art/**'
+jobs:
+  comment-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            const owner = context.payload.repository.owner.login;
+            const repo = context.payload.repository.name;
+            const number = context.payload.number;
+            const changedFiles = await github.request(`GET /repos/${owner}/${repo}/pulls/${number}/files`, {
+              owner: owner,
+              repo: repo,
+              pull_number: number,
+            });
+            
+            let commentbody = "";
+            let also = false;
+
+            for (const file of changedFiles.data) {
+              if (!file.filename.endsWith('index.js')) continue;
+              const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${pr.head.sha}/${file.filename}`
+              const blotUrl = `https://blot.hackclub.com/editor?src=${rawUrl}`;
+
+              if (!also) {
+                commentbody += `\`${file.filename}\` looks like art! [preview it in the editor](${blotUrl})\n`
+                also = true
+              } else {
+                commentbody += `\`${file.filename}\` *also* looks like art! [preview it in the editor](${blotUrl})\n`
+              }
+            }
+
+            if (!also) return;
+
+            console.log(commentbody)
+            github.rest.issues.createComment({
+              issue_number: number,
+              owner: owner,
+              repo: repo,
+              body: commentbody
+            });
+
+      
