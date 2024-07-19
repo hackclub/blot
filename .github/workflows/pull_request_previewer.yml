@@ -1,27 +1,64 @@
-on:
-  pull_request_target:
-        types: [opened, synchronize, reopened,labeled]
-        paths: 'art/**'  # the onboard repository has projects folder and similarly the blot repository has art folder
-# The code below is mostly from the onboard repo
+name: Pull Request Previewer
+run-name: Pull Request Previewer
+on: 
+    pull_request_target: 
+        types: [opened,synchronize,reopened]
+        paths: 'art/**' # The blot repo has art folder as compared to projects folder in onboard
 jobs:
-  echo-input:
-    runs-on: ubuntu-latest
-    permissions: 
-      pull-requests: write
+  comment-pr:
+    runs-on: windows-latest
+    permissions:
       issues: write
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v4 # base (safe) branch because of pull_request_target
+      - uses: actions/github-script@v6
         with:
-          path: ./ourBlot
-      - uses: actions/checkout@v4 # unsafe, user contributed branch
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          path: ./theirBlot
-      - uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.ORPHEUS_PAT || secrets.GITHUB_TOKEN }} # Github token is different for every repo, so it will be different for the fork repository and the host repository
-          script: |
-            const script = require('./ourBlot/.github/workflows/previewer.js')
-            const { chdir } = require('node:process');
-            chdir('./theirOnBoard');
-            console.log(await script({gh: github, ctx: context}))
+          github-token: ${{ secrets.GITHUB_TOKEN }} 
+          script: | # As compared to the onboard repo, blot only requires index.js file whereas onboard requires gerber.zip, cart photo, schematics and pcb json files and a pdf file.
+            const pr = context.payload.pull_request; 
+            const owner = context.payload.repository.owner.login;
+            const repo = context.payload.repository.name;
+            const number = context.payload.number;
+            const changedFiles = await github.request(`GET /repos/${owner}/${repo}/pulls/${number}/files`, {
+              owner: owner,
+              repo: repo,
+              pull_number: number,
+            });
+            
+            let commentbody = "<!-- BLOTPHEUS -->\n";
+            let also = false;
+            for (const file of changedFiles.data) {
+              if (!file.filename.endsWith('index.js')) continue;
+              const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${pr.head.sha}/${file.filename}`
+              const blotUrl = `https://blot.hackclub.com/editor?src=${rawUrl}`;
+              if (!also) {
+                commentbody += `\`${file.filename}\` looks like art! [preview it in the editor](${blotUrl})\n`
+                also = true
+              } else {
+                commentbody += `\`${file.filename}\` *also* looks like art! [preview it in the editor](${blotUrl})\n`
+              }
+            }
+            if (!also) return;
+            console.log(commentbody)
+            const comments = await github.rest.issues.listComments({
+              issue_number: number,
+              owner: owner,
+              repo: repo,
+            });
+            const ecomment = comments.data.find((c) => c.body.includes("BLOTPHEUS")); 
+            if (ecomment) {
+                github.rest.issues.updateComment({
+                    comment_id: ecomment.id,
+                    owner: owner,
+                    repo: repo,
+                    body: commentbody,
+                });
+            } else {
+                github.rest.issues.createComment({
+                  issue_number: number,
+                  owner: owner,
+                  repo: repo,
+                  body: commentbody,
+                });
+            }
+      
