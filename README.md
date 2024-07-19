@@ -45,7 +45,7 @@ The [bill of materials can be found here](/docs/BOM.toml) and an [assembly guide
 
 **A custom CNC drawing machine** designed from scratch to introduce you to digital fabrication. 
 It's made of 6 unique 3D printed parts with a custom control board and easy to understand firmware, which can be interfaced with through JavaScript in the browser.
-Blot is designed in OnShape. Check out the [3D model of the project](https://cad.onshape.com/documents/0bcd2f50d2614ea26189f43b/w/23913e7defc94fc29f7833e6/e/72ea852bfc1822955e506e37?renderMode=0&uiState=6538235d42737a70b1996741).
+Blot is designed in OnShape. Check out the [3D model of the project](https://cad.onshape.com/documents/536478c2ac00624edd8e2182/w/945ceabd15096661108b7650/e/61fd4346c9fdab983c6ba24d?renderMode=0&uiState=66980ee799bd766f406eb9c8).
 You can find the [bill of materials here](https://blot.hackclub.com/assembly) and, if you'd like to 3D print your Blot, [the parts are here](https://github.com/hackclub/blot/tree/main/hardware/mechanical/drawing-thing-v4). The entire build costs about $150 dollars. If you're a teen we will give you all the parts for a PR with your an art piece you coded yourself.
 
 **A web based editor for programmatic art** that we designed specifically for pen plotting with a [custom geometry library](/docs/DOCUMENTATION.md).
