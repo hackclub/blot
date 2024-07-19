@@ -295,7 +295,7 @@ function DownloadPNG() {
             pl.forEach((pt, i) => {
               const [x, y] = pt
               if (i === 0) d += `M ${x} ${y}`
-              else d += `L ${x} ${y}`
+              else d += ` L ${x} ${y}`
             })
           )
 
