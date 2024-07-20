@@ -1,3 +1,9 @@
+/* 
+  @title: Harmonograph
+  @author: Ansh Kumar
+  @snapshot: snapshot3
+*/
+
 const width = 125;
 const height = 125;
 
