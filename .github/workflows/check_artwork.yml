@@ -36,7 +36,7 @@ jobs:
           echo "" > .github/workflows/logs/artwork_check_results.txt
           for dir in $NEW_DIRS; do
             echo "Checking directory: $dir" >> .github/workflows/logs/artwork_check_results.txt
-            node .github/workflows/check_artwork.js "$dir" >> .github/workflows/logs/artwork_check_results.txt
+            node .github/workflows/check_artwork.cjs "$dir" >> .github/workflows/logs/artwork_check_results.txt
           done
           echo "RESULTS_FILE=.github/workflows/logs/artwork_check_results.txt" >> $GITHUB_ENV
       
