@@ -39,6 +39,7 @@ jobs:
             node .github/workflows/check_artwork.cjs "$dir" >> .github/workflows/logs/artwork_check_results.txt
           done
           echo "RESULTS_FILE=.github/workflows/logs/artwork_check_results.txt" >> $GITHUB_ENV
+                    cat .github/workflows/logs/artwork_check_results.txt
       
       - name: Comment on pull request
         uses: actions/github-script@v6
