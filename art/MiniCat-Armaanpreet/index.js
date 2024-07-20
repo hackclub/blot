@@ -1,7 +1,7 @@
 /*
 @title: MiniCat
 @author: Armaanpreet Singh
-@snapshot: snapshot.png
+@snapshot: snapshot1.png
 */
 
 const width = 200;
