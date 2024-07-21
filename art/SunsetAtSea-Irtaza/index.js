@@ -21,33 +21,9 @@ const sunSize = rr(15, 25);
 const seaLevel = rr(height / 4, height / 2.1);
 const sunCenterX = width / 2;
 
-// Sun rays
-const tsRays = new bt.Turtle();
-const rayCount = 50; // Number of rays
-const angleIncrement = 180 / rayCount;
 
-for (let i = 0; i < rayCount; i++) {
-  tsRays.up();
-  tsRays.goTo([sunCenterX, seaLevel + sunSize + sunSize / 4]);
-  tsRays.forward(sunSize - 1);
-  tsRays.left(90);
-  tsRays.down();
-  tsRays.forward(sunSize / 2);
-  tsRays.left(angleIncrement);
-}
-bt.join(raysLines, tsRays.lines());
 
-// Sun
-const tSun = new bt.Turtle();
-tSun.up();
-tSun.goTo([sunCenterX - sunSize + 1, seaLevel + sunSize + sunSize / 4]);
-tSun.down();
-tSun.left(90);
-for (let i = 0; i < 360; i++) {
-  tSun.forward((3 * sunSize) / 180);
-  tSun.right(1);
-}
-bt.join(sunLines, tSun.lines());
+
 
 // Sea
 const tSea = new bt.Turtle();
@@ -111,22 +87,7 @@ for (let i = 0; i < boatCount; i++) {
   bt.join(finalLines, tBoat.lines());
 }
 
-// Drawing the birds
-const birdCount = Math.floor(rr(2, 5));
-for (let i = 0; i < birdCount; i++) {
-  const tBird = new bt.Turtle();
-  tBird.up();
-  tBird.goTo([rr(0, width - 30), height - rr(5, sunSize)]);
-  tBird.down();
-  tBird.forward(10);
-  tBird.right(45);
-  tBird.forward(5);
-  tBird.left(90);
-  tBird.forward(5);
-  tBird.right(45);
-  tBird.forward(10);
-  bt.join(birdLines, tBird.lines());
-}
+
 
 drawLines(seaLines, { fill: "#b5e8d2", stroke: "darkblue" });
 
