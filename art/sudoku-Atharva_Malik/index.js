@@ -348,7 +348,7 @@ function tValuesForPoints(polylines) {
 // ----------------------------END TEXT GENERATION---------------------------- //
 
 // ----------------------------FUNCTIONS---------------------------- //
-function generateSudoku(difficulty=17) {
+function generateSudoku(difficulty = 17) {
   const board = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -415,7 +415,7 @@ function generateSudoku(difficulty=17) {
       const col = j * 3;
       let placed = false;
       while (!placed) {
-        const num = Math.floor(Math.random() * 9) + 1;
+        const num = Math.floor(bt.rand() * 9) + 1;
         if (isValid(row, col, num)) {
           board[row][col] = num;
           placed = true;
@@ -430,8 +430,8 @@ function generateSudoku(difficulty=17) {
   // Remove some numbers to create a puzzle (adjust number to remove for difficulty)
   let removed = 0;
   while (removed < 40) { // Adjust this number for difficulty
-    const row = Math.floor(Math.random() * 9);
-    const col = Math.floor(Math.random() * 9);
+    const row = Math.floor(bt.rand() * 9);
+    const col = Math.floor(bt.rand() * 9);
     if (board[row][col] !== 0) {
       const backup = board[row][col];
       board[row][col] = 0;
@@ -449,15 +449,15 @@ function generateSudoku(difficulty=17) {
   }
   // Function to convert a solved board to a playable puzzle
   function convertToPuzzle(board, difficulty) {
-    if (difficulty > 64){
+    if (difficulty > 64) {
       difficulty = 64 // Clamp this as this is the max number of empty spaces allowed
-    }else if (difficulty < 1){
+    } else if (difficulty < 1) {
       difficulty = 1
     }
     let removed = 0;
     while (removed < difficulty) { // Adjust this number for difficulty
-      const row = Math.floor(Math.random() * 9);
-      const col = Math.floor(Math.random() * 9);
+      const row = Math.floor(bt.rand() * 9);
+      const col = Math.floor(bt.rand() * 9);
       if (board[row][col] != 0) {
         board[row][col] = 0;
         removed++;
@@ -469,41 +469,53 @@ function generateSudoku(difficulty=17) {
   return puzzleBoard;
 }
 
-function drawSquare(size, origin, colour=""){
+function drawSquare(size, origin, colour = "") {
   let x = origin[0];
   let y = origin[1];
-  if (colour == ""){
+  if (colour == "") {
     drawLines([
-      [[x, y], [x, y+size], [x+size, y+size], [x+size, y], [x, y]]
+      [
+        [x, y],
+        [x, y + size],
+        [x + size, y + size],
+        [x + size, y],
+        [x, y]
+      ]
     ]);
-  }else{
+  } else {
     drawLines([
-      [[x, y], [x, y+size], [x+size, y+size], [x+size, y], [x, y]]
-    ], {stroke: colour});
+      [
+        [x, y],
+        [x, y + size],
+        [x + size, y + size],
+        [x + size, y],
+        [x, y]
+      ]
+    ], { stroke: colour });
   }
 }
 
-function drawGrid(size, offset, origin, colour=""){
+function drawGrid(size, offset, origin, colour = "") {
   let x = origin[0];
   let y = origin[1];
-  for (var i = 0; i < size*offset; i += offset){
-    for (var j = 0; j < size*offset; j += offset){
-      if (colour == ""){
-        drawSquare(offset, [x+i, y+j]);
-      }else{
-        drawSquare(offset, [x+i, y+j], colour);
+  for (var i = 0; i < size * offset; i += offset) {
+    for (var j = 0; j < size * offset; j += offset) {
+      if (colour == "") {
+        drawSquare(offset, [x + i, y + j]);
+      } else {
+        drawSquare(offset, [x + i, y + j], colour);
       }
     }
   }
 }
 
-function writeNumbers(b){
+function writeNumbers(b) {
   let row = 0;
   let col = 0;
-  for (var j=247; j > 5; j-=30){
-    row = 0; 
-    for (var i=14; i < 270; i+=30){
-      if ((b[col][row]).toString() != "0"){
+  for (var j = 247; j > 5; j -= 30) {
+    row = 0;
+    for (var i = 14; i < 270; i += 30) {
+      if ((b[col][row]).toString() != "0") {
         DrawText((b[col][row]).toString(), [i, j], 6);
       }
       row += 1;
@@ -514,11 +526,7 @@ function writeNumbers(b){
 // ----------------------------END FUNCTIONS---------------------------- //
 
 const sudokuBoard = generateSudoku(difficulty);
-drawGrid(9, 30, [5,5]); // Draw the normal grid
-drawGrid(3, 90, [5,5], "red"); // Draw the 3x3 squares
+drawGrid(9, 30, [5, 5]); // Draw the normal grid
+drawGrid(3, 90, [5, 5], "red"); // Draw the 3x3 squares
 drawSquare(270, [5, 5]) // Draw the bounding square
-// DrawText("9", [245, 245], 6); // The bottom left of the top right square
-// DrawText("9", [245, 247], 6); // Height offset (2)
-// DrawText("9", [254, 247], 6); // Height offset + width offset (15-6=9)
 writeNumbers(sudokuBoard);
-// var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
