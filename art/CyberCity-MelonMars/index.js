@@ -24,7 +24,7 @@ const skyScraperJumps = 5 // How many tiers you want in your tiered skyscraper
 const skyScraperReductionFactor = 0.4;
 const colorCars = false
 const colorBuildings = false
-const colorBackground = false
+const colorBackground = true
 setDocDimensions(screenWidth, screenHeight);
 
 function getRandElem(arr) {
@@ -238,7 +238,7 @@ for (let vertCar = 0; vertCar < nBlocks; vertCar++) {
   }
 }
 
-const blockCols = ["green", "red", "black", "blue", "orange", "navy", "pink", "purple"]
+const Cols = ["green", "red", "black", "blue", "orange", "navy", "pink", "purple"]
 
 const border = new bt.Turtle()
 border.goTo([0,0])
