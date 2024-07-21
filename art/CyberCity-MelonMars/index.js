@@ -25,10 +25,15 @@ const skyScraperReductionFactor = 0.4;
 const colorCars = false
 const colorBuildings = false
 const colorBackground = true
+const sidewalkWidth = 5; //Also increases the width of the skyscrapers
+const stuff = 2; //Amount of random stuff to put on each block
+const lChance = 0.5; //Chance that the random thing on the block will be an L shaped polygon or not
+const maxStuffLength = 10; //Max stuff length (MUST BE LESS THAN THE SIZE OF THE BLOCK)
+const minStuffLength = 5; //Minimum stuff length (>0)
 setDocDimensions(screenWidth, screenHeight);
 
 function getRandElem(arr) {
-  const randI = Math.floor(Math.random() * arr.length);
+  const randI = Math.floor(bt.randInRange(0,1) * arr.length);
   return arr[randI].slice();
 }
 
@@ -132,6 +137,7 @@ function drawCrosswalks(startPos, bw, bh, streetSize) {
 const crosswalks = []
 const blocks = []
 const lanes = []
+const polys = []
 for (let blkVert = 0; blkVert < nBlocks; blkVert++) {
   for (let blkHor = 0; blkHor < nBlocks; blkHor++) {
     let startPos = [blkHor * (blockWidth + streetSize), blkVert * (blockHeight + streetSize)]
@@ -154,6 +160,43 @@ for (let blkVert = 0; blkVert < nBlocks; blkVert++) {
       }
     } else {
       blocks.push(makeBlock([blkHor * (blockWidth + streetSize), blkVert * (blockHeight + streetSize)], blockWidth, blockHeight));
+      for (let i=0;i<stuff;i++) {
+        if (bt.randInRange(0,1) < lChance) {
+          const rt = new bt.Turtle();
+          rt.up();
+          const width = bt.randInRange(minStuffLength, maxStuffLength);
+          const height = bt.randInRange(minStuffLength, maxStuffLength);
+          rt.goTo([bt.randInRange(blkHor * (blockWidth + streetSize), blkHor * (blockWidth + streetSize) + blockWidth-width), bt.randInRange(blkVert * (blockHeight + streetSize), blkVert * (blockHeight + streetSize)+blockHeight-height)]);
+          rt.down();
+          rt.forward(width);
+          rt.left(90);
+          rt.forward(height/2);
+          rt.left(90);
+          rt.forward(width/2);
+          rt.right(90);
+          rt.forward(height/2);
+          rt.left(90);
+          rt.forward(width/2);
+          rt.left(90);
+          rt.forward(height);
+          polys.push(rt.lines());
+        } else {
+          const rt = new bt.Turtle();
+          rt.up();
+          const width = bt.randInRange(minStuffLength, maxStuffLength);
+          const height = bt.randInRange(minStuffLength, maxStuffLength);
+          rt.goTo([bt.randInRange(blkHor * (blockWidth + streetSize), blkHor * (blockWidth + streetSize) + blockWidth-width), bt.randInRange(blkVert * (blockHeight + streetSize), blkVert * (blockHeight + streetSize)+blockHeight-height)]);
+          rt.down();
+          rt.forward(width);
+          rt.left(90);
+          rt.forward(height);
+          rt.left(90);
+          rt.forward(width);
+          rt.left(90);
+          rt.forward(height);
+          polys.push(rt.lines());
+        }
+      }
     }
     crosswalks.push(drawCrosswalks(startPos, blockWidth, blockHeight, streetSize));
   }
@@ -262,11 +305,11 @@ for (const crosswalk of crosswalks) {
 
 if (colorBuildings) {
   for (const block of blocks) {
-    drawLines(block, { "fill": getRandElem(Cols) })
+    drawLines(block, { "fill": getRandElem(Cols) , "width": sidewalkWidth})
   }
 } else {
   for (const block of blocks) {
-    drawLines(block)
+    drawLines(block, {"width": sidewalkWidth})
   }
 }
 
@@ -282,4 +325,8 @@ if (colorCars) {
 
 for (const lane of lanes) {
   drawLines(lane, {"fill": "white"});
+}
+
+for (const poly of polys) {
+  drawLines(poly);
 }
