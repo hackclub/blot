@@ -63,14 +63,14 @@ t.up()
 
 function drawSquare(corner1, corner2, corner3, corner4) {
     const t = new Turtle();
-    
+
     t.up().goTo(corner1).down();
-    
+
     t.goTo(corner2)
      .goTo(corner3)
      .goTo(corner4)
      .goTo(corner1);
-    
+
     let squareLines = t.lines();
 
     squareLines = bt.translate(squareLines, translation);
@@ -78,7 +78,7 @@ function drawSquare(corner1, corner2, corner3, corner4) {
     const centerX = (corner1[0] + corner3[0]) / 2;
     const centerY = (corner1[1] + corner3[1]) / 2;
     squareLines = bt.rotate(squareLines, rotation, [centerX + translation[0], centerY + translation[1]]);
-    
+
     drawLines([squareLines[0]], { stroke: "orangeColor", width: -2, fill: orangeColor() });
 }
 
@@ -170,7 +170,7 @@ function drawElement(points, options = {}) {
         stroke, 
         width 
     } = options;
-    
+
     const scaledTranslatedPoints = points.map(([x, y]) => [
         x * scale[0] + translate[0],
         y * scale[1] + translate[1]
@@ -230,7 +230,7 @@ function drawCherry(options = {}) {
           .goTo([cherryPosition[0], cherryPosition[1]])
           .down()
           .arc(360, cherryRadius);
-    
+
     drawLines([cherry.lines()[0]], { fill: cherryColor() });
 
     const stemStart = [cherryPosition[0], cherryPosition[1] + cherryRadius];
@@ -238,7 +238,7 @@ function drawCherry(options = {}) {
     const controlPoint = [cherryPosition[0] + stemLength / 2, cherryPosition[1] + cherryRadius + stemLength / 2];
 
     const stem = bt.nurbs([stemStart, controlPoint, stemEnd], { steps: 20, degree: 2 });
-    
+
     drawLines([stem], { stroke: stemColor, width: 1 });
 }
 
@@ -277,7 +277,7 @@ function drawWhippedCream(options = {}) {
         const t = new Turtle();
         t.up().goTo([x, y]).down();
         t.arc(360, radius);
-        
+
         drawLines(t.lines(), { fill: creamColor(), stroke: creamColor() });
     }
 
@@ -291,7 +291,7 @@ function drawWhippedCream(options = {}) {
         const t = new Turtle();
         t.up().goTo([x, y]).down();
         t.arc(360, radius);
-        
+
         drawLines(t.lines(), { fill: creamColor(), stroke: creamColor() });
     }
 }
@@ -305,7 +305,7 @@ function drawFaceLogo(options = {}) {
     const logoT = new Turtle();
     const logoCenterX = 98 / 2;
     const logoCenterY = 125 / 2;
-    
+
 
     function transformCoord(x, y) {
         return [
@@ -348,7 +348,7 @@ function drawFaceLogo(options = {}) {
     squareVertices = squareVertices.map(vertex => 
         rotatePoint(squareCenter[0], squareCenter[1], vertex[0], vertex[1], squareRotation)
     );
-  
+
     logoT.up().goTo(squareVertices[0]).down()
         .goTo(squareVertices[1])
         .goTo(squareVertices[2])
@@ -421,7 +421,7 @@ function drawFriesBox(options = {}) {
         corner3 = [30, 40],
         corner4 = [30, 0],
         boxTranslate = [0, 0],
-        boxColor = "redColor",
+        boxColor = redColor,
         fryColor = "rgb(255, 165, 0)",
         rows = 5,
         friesPerRow = 4,
@@ -459,22 +459,37 @@ function drawFriesBox(options = {}) {
         for (let col = 0; col < friesPerRow; col++) {
             const fryX = boxTranslate[0] + horizontalGap + (fryWidth + horizontalGap) * col;
             const fryY = boxTranslate[1] + fryOffset + verticalGap + (boxHeight - fryHeight) / (rows - 1) * row;
-            
+
             let fryAngle = randInRange(-5, 5);
-            
+
             if (col === 0) {
                 fryAngle += firstFryRotation;
             } else if (col === friesPerRow - 1) {
                 fryAngle += lastFryRotation;
             }
-            
-            const fryPoints = drawRoundedRectangle(fryX, fryY, fryWidth, fryHeight, fryWidth / 2);
+
+            const fryScale = randInRange(0.9, 1.1);
+            const fryWidthScaled = fryWidth * fryScale;
+            const fryHeightScaled = fryHeight * fryScale;
+            fryAngle += randInRange(-5, 5);
+
+            const fryPoints = drawRoundedRectangle(fryX, fryY, fryWidthScaled, fryHeightScaled, fryWidthScaled / 2);
 
             const rotatedFryPoints = fryPoints.map(point => 
-                rotatePoint(fryX + fryWidth / 2, fryY + fryHeight / 2, point[0], point[1], fryAngle)
+                rotatePoint(fryX + fryWidthScaled / 2, fryY + fryHeightScaled / 2, point[0], point[1], fryAngle)
             );
 
             drawLines([rotatedFryPoints], { fill: fryColor, stroke: "black", width: 1 });
+            
+            const dotRadius = 0.05;
+            const dotColor = "rgba(255, 255, 255, 0.7)";
+            for (let i = 0; i < 50; i++) {
+                const dotX = fryX + randInRange(0, fryWidthScaled);
+                const dotY = fryY + randInRange(0, fryHeightScaled);
+                const dotTurtle = new Turtle();
+                dotTurtle.up().goTo([dotX, dotY]).down().arc(360, dotRadius);
+                drawLines([dotTurtle.lines()[0]], { fill: dotColor });
+            }
         }
     }
 
@@ -482,7 +497,7 @@ function drawFriesBox(options = {}) {
 
     drawElement(boxPoints, {
         translate: boxTranslate,
-        fill: "redColor",
+        fill: boxColor(),
         stroke: "black",
         width: 2
     });
