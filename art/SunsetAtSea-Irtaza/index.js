@@ -77,40 +77,6 @@ tSky.right(90);
 tSky.forward(height - seaLevel);
 bt.join(skyLines, tSky.lines());
 
-// Boat
-function drawBoat(t, x, y, scale) {
-  t.up();
-  t.goTo([x, y]);
-  t.down();
-  // Boat's body (kept it a simple trapezium for now)
-  t.goTo([x - scale / 2, y]);
-  t.goTo([x + scale / 2, y]);
-  t.goTo([x + scale / 4, y - scale / 4]);
-  t.goTo([x - scale / 4, y - scale / 4]);
-  t.goTo([x - scale / 2, y]);
-
-  // The sail of the boat
-  t.goTo([x, y]);
-  t.goTo([x, y + scale / 2]);
-  t.goTo([x + scale / 4, y + scale / 4]);
-  t.goTo([x, y + scale / 2]);
-  t.goTo([x - scale / 4, y + scale / 4]);
-  t.goTo([x + scale / 4, y + scale / 4]);
-
-  return t;
-}
-
-// Drawing the boats
-const boatCount = Math.floor(rr(2, 4));
-for (let i = 0; i < boatCount; i++) {
-  const tBoat = new bt.Turtle();
-  let boatX = rr(10, width - 10);
-  let boatY = seaLevel - rr(10, seaLevel - 10);
-  let boatScale = rr(10, 20);
-  drawBoat(tBoat, boatX, boatY, boatScale);
-  bt.join(finalLines, tBoat.lines());
-}
-
 // Drawing the birds
 const birdCount = Math.floor(rr(2, 5));
 const occupiedAreas = [];
