@@ -133,7 +133,7 @@ function isPointInIsland(island, x, y) {
 }
 
 function drawIslandWithWavesTreesHousesAndShip(x, y, islandSize, waveSize, waveCount, treeCount, houseCount) {
-  let island = drawIrregularIsland(x, y, islandSize);
+  let island = drawIsland(x, y, islandSize);
   let waves = [];
   let trees = [];
   let houses = [];
@@ -149,7 +149,7 @@ function drawIslandWithWavesTreesHousesAndShip(x, y, islandSize, waveSize, waveC
     let distance = bt.randInRange(islandSize + 10, islandSize + 20);
     let waveX = x + distance * Math.cos(angle * Math.PI / 180);
     let waveY = y + distance * Math.sin(angle * Math.PI / 180);
-    waves.push(drawRealisticWave(waveX, waveY, waveSize * 2, waveSize, angle));
+    waves.push(drawWaves(waveX, waveY, waveSize * 2, waveSize, angle));
   }
 
   for (let i = 0; i < treeCount; i++) {
