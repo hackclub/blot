@@ -1,4 +1,7 @@
 /*
+@title: Sudoku
+@author: Atharva Malik
+@snapshot: 1.png
  */
 
 /*
@@ -9,7 +12,7 @@
 const width = 280;
 const height = 280;
 
-const difficulty = 10; //Change this to change the number of empty squares. Max is 64
+const difficulty = 26; //Change this to change the number of empty squares. Max is 64
 
 setDocDimensions(width, height);
 
@@ -448,12 +451,13 @@ function generateSudoku(difficulty=17) {
   function convertToPuzzle(board, difficulty) {
     if (difficulty > 64){
       difficulty = 64 // Clamp this as this is the max number of empty spaces allowed
+    }else if (difficulty < 1){
+      difficulty = 1
     }
     let removed = 0;
     while (removed < difficulty) { // Adjust this number for difficulty
       const row = Math.floor(Math.random() * 9);
       const col = Math.floor(Math.random() * 9);
-      console.log(row, col);
       if (board[row][col] != 0) {
         board[row][col] = 0;
         removed++;
@@ -499,15 +503,17 @@ function writeNumbers(b){
   for (var j=247; j > 5; j-=30){
     row = 0; 
     for (var i=14; i < 270; i+=30){
-      DrawText(b[col][row], [i, j], 6);
+      if ((b[col][row]).toString() != "0"){
+        DrawText((b[col][row]).toString(), [i, j], 6);
+      }
+      row += 1;
     }
     col += 1;
   }
 }
 // ----------------------------END FUNCTIONS---------------------------- //
 
-const sudokuBoard = generateSudoku();
-console.log(sudokuBoard);
+const sudokuBoard = generateSudoku(difficulty);
 drawGrid(9, 30, [5,5]); // Draw the normal grid
 drawGrid(3, 90, [5,5], "red"); // Draw the 3x3 squares
 drawSquare(270, [5, 5]) // Draw the bounding square
