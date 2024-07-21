@@ -1,17 +1,17 @@
 /*
-*/
+ */
 
 /*
  * Credits: BlotFont, by geschmit
  * You can find it here: https://github.com/geschmit/blotfont
-*/
+ */
 
-const width = 125;
-const height = 125;
+const width = 280;
+const height = 280;
+
+const difficulty = 10; //Change this to change the number of empty squares
 
 setDocDimensions(width, height);
-
-const pen = new bt.Turtle()
 
 // ----------------------------TEXT GENERATION---------------------------- //
 // instructions.ts
@@ -229,8 +229,122 @@ var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
   }
   return;
 };
+// helper functions - added by Leo when porting piece from old library
+
+function calculateBezierPoint(t, p0, p1, p2, p3) {
+  let u = 1 - t
+  let tt = t * t
+  let uu = u * u
+  let uuu = uu * u
+  let ttt = tt * t
+
+  let p = [uuu * p0[0], uuu * p0[1]] // u^3 * p0
+  p[0] += 3 * uu * t * p1[0] // 3u^2t * p1
+  p[1] += 3 * uu * t * p1[1]
+  p[0] += 3 * u * tt * p2[0] // 3ut^2 * p2
+  p[1] += 3 * u * tt * p2[1]
+  p[0] += ttt * p3[0] // t^3 * p3
+  p[1] += ttt * p3[1]
+
+  return p
+}
+
+function findTForGivenX(xTarget, p0, p1, p2, p3) {
+  let tolerance = 0.00001
+  let t = 0.5 // Start with approximate solution
+  let iterations = 0
+
+  while (iterations < 1000) {
+    // Max iterations to prevent infinite loop
+    let p = calculateBezierPoint(t, p0, p1, p2, p3)
+    let difference = p[0] - xTarget
+    if (Math.abs(difference) < tolerance) {
+      return t
+    } else {
+      t = t - difference / 2 // Approximate a new t value
+    }
+    iterations++
+  }
+  return t // Return the approximate t value
+}
+
+function getYForX(x, p0, p1, p2, p3) {
+  let t = findTForGivenX(x, p0, p1, p2, p3)
+  let p = calculateBezierPoint(t, p0, p1, p2, p3)
+  return p[1]
+}
+
+function bezierEasing(initial, p0, p1, final) {
+  return (x) =>
+    getYForX(
+      x,
+      [0, initial],
+      [Math.min(Math.max(0, p0[0]), 1), p0[1]],
+      [Math.min(Math.max(0, p1[0]), 1), p1[1]],
+      [1, final]
+    )
+}
+
+function warp(turtle, fn, baseAngle = null) {
+  const tValues = tValuesForPoints(turtle.path);
+  const newPts = [];
+  tValues.forEach((t, i) => {
+    const pt = turtle.path.flat()[i];
+    let angle = baseAngle ?? bt.getAngle(turtle.path, t);
+    if (typeof angle === "function") {
+      angle = angle(bt.getAngle(turtle.path, t));
+    } else if (typeof angle === "number") {
+      angle = angle;
+    }
+    const y = fn(t);
+    const newPoint = rotate([0, y], angle);
+    newPts.push([pt[0] + newPoint[0], pt[1] + newPoint[1]]);
+  });
+  turtle.path.flat().forEach((pt, i, arr) => {
+    pt[0] = newPts[i][0];
+    pt[1] = newPts[i][1];
+  });
+  return turtle
+
+  function rotate(pt, angle, origin = [0, 0]) {
+    let delta = angle / 180 * Math.PI;
+    let hereX = pt[0] - origin[0];
+    let hereY = pt[1] - origin[1];
+    let newPoint = [
+      hereX * Math.cos(delta) - hereY * Math.sin(delta) + origin[0],
+      hereY * Math.cos(delta) + hereX * Math.sin(delta) + origin[1]
+    ];
+    return newPoint;
+  }
+}
+
+function tValuesForPoints(polylines) {
+  let totalLength = 0;
+  let lengths = [];
+  let tValues = [];
+  let segmentLength = 0;
+  for (let i = 0; i < polylines.length; i++) {
+    let polyline2 = polylines[i];
+    for (let j = 0; j < polyline2.length; j++) {
+      if (j > 0) {
+        let dx = polyline2[j][0] - polyline2[j - 1][0];
+        let dy = polyline2[j][1] - polyline2[j - 1][1];
+        segmentLength = Math.sqrt(dx * dx + dy * dy);
+        totalLength += segmentLength;
+      }
+      lengths.push(segmentLength);
+    }
+  }
+  let accumulatedLength = 0;
+  for (let i = 0; i < lengths.length; i++) {
+    accumulatedLength += lengths[i];
+    tValues.push(accumulatedLength / totalLength);
+  }
+  return tValues;
+};
 // ----------------------------END TEXT GENERATION---------------------------- //
 
+// ----------------------------FUNCTIONS---------------------------- //
 function generateSudoku() {
   const board = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -244,7 +358,7 @@ function generateSudoku() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
 
-  
+
   // Function to check if a number is valid in a specific cell
   function isValid(row, col, num) {
     // Check row and column
@@ -253,7 +367,7 @@ function generateSudoku() {
         return false;
       }
     }
-    
+
     // Check 3x3 subgrid
     const subRow = Math.floor(row / 3);
     const subCol = Math.floor(col / 3);
@@ -268,7 +382,7 @@ function generateSudoku() {
     }
     return true;
   }
-  
+
   // Backtracking function to solve and generate the board
   function solve() {
     for (let row = 0; row < 9; row++) {
@@ -290,7 +404,7 @@ function generateSudoku() {
     }
     return true; // Solved the board
   }
-  
+
   // Fill the diagonal 3x3 subgrids first
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
@@ -306,10 +420,10 @@ function generateSudoku() {
       }
     }
   }
-  
+
   // Solve the rest of the board using backtracking
   solve();
-  
+
   // Remove some numbers to create a puzzle (adjust number to remove for difficulty)
   let removed = 0;
   while (removed < 40) { // Adjust this number for difficulty
@@ -333,18 +447,13 @@ function generateSudoku() {
   // Function to convert a solved board to a playable puzzle
   function convertToPuzzle(board) {
     let removed = 0;
-    while (removed < 40) { // Adjust this number for difficulty
+    while (removed < 2) { // Adjust this number for difficulty
       const row = Math.floor(Math.random() * 9);
       const col = Math.floor(Math.random() * 9);
-      if (board[row][col] !== 0) {
-        const backup = board[row][col];
+      console.log(row, col);
+      if (board[row][col] != 0) {
         board[row][col] = 0;
-        // Check if it's still solvable after removing (more efficient way)
-        if (!isSolvable(board.slice())) { // Slice to create a copy
-          board[row][col] = backup;
-        } else {
-          removed++;
-        }
+        removed++;
       }
     }
     return board;
@@ -353,11 +462,24 @@ function generateSudoku() {
   return puzzleBoard;
 }
 
+// var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
+function drawSquare(size, origin){
+  let x = origin[0];
+  let y = origin[1];
+  drawLines([
+    [[x, y], [x, y+size], [x+size, y+size], [x+size, y], [x, y]]
+  ]);
+}
+// ----------------------------END FUNCTIONS---------------------------- //
 
 const sudokuBoard = generateSudoku();
-
 console.log(sudokuBoard);
-
-
-//var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5])
-DrawText(`drawn w/ blot by geschmit`, [0, 0], 2);
+let x = 5;
+let y = 5;
+drawSquare(270, [x, y])
+for (var i = 0; i < 270; i += 30){
+  for (var j = 0; j < 270; j += 30){
+    drawSquare(30, [x+i, y+j]);
+  }
+}
+DrawText("9", [14, 7], 6);
