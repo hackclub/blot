@@ -18,7 +18,7 @@ const houseCount = bt.randIntInRange(1, 1);
 
 setDocDimensions(width, height);
 
-function drawIrregularIsland(x, y, size) {
+function drawIsland(x, y, size) {
   let points = [];
   let angle = 0;
   while (angle < 360) {
@@ -33,7 +33,7 @@ function drawIrregularIsland(x, y, size) {
   return points;
 }
 
-function drawRealisticWave(x, y, length, height, angle) {
+function drawWaves(x, y, length, height, angle) {
   let points = [];
   let waveCount = 3;
   let waveLength = length / waveCount;
@@ -54,7 +54,6 @@ function drawTree(x, y) {
   const trunkWidth = bt.randIntInRange(2, 4);
   const foliageSize = bt.randInRange(4, 8);
 
-  // Draw trunk
   let trunk = [
     [x, y],
     [x, y - trunkHeight],
@@ -63,7 +62,6 @@ function drawTree(x, y) {
     [x, y]
   ];
 
-  // Draw foliage
   let foliage = [];
   let angle = 0;
   while (angle < 360) {
