@@ -1,20 +1,26 @@
 Error.stackTraceLimit = Infinity;
 Error.prepareStackTrace = (_err, stack) => stack;
 
-// This regex works for both SpiderMonkey and JavaScriptCore
-const frameRegex = /^ *(?:(?<async>.*?)\*)?(?<func>.*?)@(?<source>.*?)(?::(?<line>\d+):(?<column>\d+))$/
+// Error.stack is an unstandardized string, so we use
+// a regex based on the format of the stack trace, as
+// seen in the source code of the JavaScript engines
+// SpiderMonkey (Firefox): https://searchfox.org/mozilla-central/rev/87630817796aae3cbceb369a1b642da3e4741745/js/src/vm/SavedStacks.cpp#1007-1022
+// JavaScriptCore (Safari): https://github.com/WebKit/WebKit/blob/f087a1892ee65f63fc511d500f59c8ecd31b7e0b/Source/JavaScriptCore/runtime/StackFrame.cpp#L152-L164
+
+const frameRegex = /^ *(?:(?<async>.*?)\*)?(?<func>.*?)@(?<source>.*?)(?::(?<line>\d+):(?<column>\d+))?$/
 
 export const traceFormat = (function () {
   const stack = (0, eval)('new Error()').stack
-  console.log('Test stack:')
-  console.log(stack)
 
   if (Array.isArray(stack)) {
     return 'V8'
   }
 
   const matches = stack.trim().split('\n').map(l => l.match(frameRegex))
-  if (!matches.every(m => m)) return 'unknown'
+  if (!matches.every(m => m)) {
+    console.error("Unable to parse this browser's stack trace:", stack)
+    return 'unknown'
+  }
   
   const topHasLineNumber = matches[0].groups.line !== undefined
   if (topHasLineNumber) {
@@ -32,7 +38,6 @@ export function getPosFromErr(err) {
     }
 
     const stack = err.stack
-    console.log(stack)
 
     if (Array.isArray(stack)) {
       // V8 (Chrome)-specific internal stack representation
@@ -40,16 +45,11 @@ export function getPosFromErr(err) {
       // Frames with isEval() are within user code, the
       // topmost one is the error location
       const frame = stack.find(f => f.isEval())
+      console.log(frame, frame.getLineNumber(), frame.getColumnNumber())
       return { line: frame.getLineNumber() - 3, column: frame.getColumnNumber() - 1 }
     }
 
     const lines = stack.trim().split('\n')
-
-    // Error.stack is an unstandardized string, so we use
-    // a regex based on the format of the stack trace, as
-    // seen in the source code of the JavaScript engines
-    // SpiderMonkey (Firefox): https://searchfox.org/mozilla-central/rev/87630817796aae3cbceb369a1b642da3e4741745/js/src/vm/SavedStacks.cpp#1007-1022
-    // JavaScriptCore (Safari): https://github.com/WebKit/WebKit/blob/f087a1892ee65f63fc511d500f59c8ecd31b7e0b/Source/JavaScriptCore/runtime/StackFrame.cpp#L152-L164
 
     const frameMatches = lines.map(l => l.match(frameRegex))
     if (frameMatches.every(m => m)) {

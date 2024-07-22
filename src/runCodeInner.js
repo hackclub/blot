@@ -2,7 +2,7 @@ import { traceFormat } from "./getPosFromErr.js"
 const AsyncFunction = async function () {}.constructor
 
 function createFunction(str, globalKeys) {
-  const useAsyncFunction = traceFormat === 'JavaScriptCore'
+  const useAsyncFunction = traceFormat !== 'JavaScriptCore'
   if (useAsyncFunction) {
     return new AsyncFunction(...globalKeys, str)
   } else {
