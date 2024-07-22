@@ -430,18 +430,17 @@ function drawFriesBox(options = {}) {
         lastFryRotation = 0
     } = options;
 
-    function drawRoundedRectangle(x, y, width, height, radius) {
+    function drawFlatRectangle(x, y, width, height) {
         const t = new Turtle();
-        t.up().goTo([x + radius, y]);
+        t.up().goTo([x, y]);
         t.down()
-         .forward(width - 2 * radius)
-         .arc(90, radius)
-         .forward(height - 2 * radius)
-         .arc(90, radius)
-         .forward(width - 2 * radius)
-         .arc(90, radius)
-         .forward(height - 2 * radius)
-         .arc(90, radius);
+         .forward(width)
+         .left(90)
+         .forward(height)
+         .left(90)
+         .forward(width)
+         .left(90)
+         .forward(height);
         return t.lines()[0];
     }
 
@@ -473,14 +472,14 @@ function drawFriesBox(options = {}) {
             const fryHeightScaled = fryHeight * fryScale;
             fryAngle += randInRange(-5, 5);
 
-            const fryPoints = drawRoundedRectangle(fryX, fryY, fryWidthScaled, fryHeightScaled, fryWidthScaled / 2);
+            const fryPoints = drawFlatRectangle(fryX, fryY, fryWidthScaled, fryHeightScaled);
 
             const rotatedFryPoints = fryPoints.map(point => 
                 rotatePoint(fryX + fryWidthScaled / 2, fryY + fryHeightScaled / 2, point[0], point[1], fryAngle)
             );
 
             drawLines([rotatedFryPoints], { fill: fryColor, stroke: "black", width: 1 });
-            
+
             const dotRadius = 0.05;
             const dotColor = "rgba(255, 255, 255, 0.7)";
             for (let i = 0; i < 50; i++) {
