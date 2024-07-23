@@ -3,10 +3,11 @@
 @author: Dhyan99
 @snapshot: image-1.png
 */
+
 setDocDimensions(800, 700);
 
 // Settings
-const seedTop = 1020193;
+const seedTop = 1022083;
 //
 
 let pattyY;
@@ -46,7 +47,7 @@ const sesameSeedsTop = [];
 const numSeedsTop = 35;
 
 for (let i = 0; i < numSeedsTop; i++) {
-  const x = bt.randInRange(150, 650);
+  const x = bt.randInRange(180, 600);
   const y = bt.randInRange(440, 515);
 
   sesameSeedsTop.push([
@@ -70,7 +71,7 @@ const sesameSeedsBottom = [];
 const numSeedsBottom = 35;
 
 for (let i = 0; i < numSeedsBottom; i++) {
-  const x = bt.randInRange(150, 650);
+  const x = bt.randInRange(180, 600);
   const y = bt.randInRange(100, 175);
 
   sesameSeedsBottom.push([
