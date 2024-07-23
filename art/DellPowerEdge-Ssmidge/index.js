@@ -22,7 +22,8 @@ while (randomPosition2 === randomPosition) {
   randomPosition2 = Math.round(blotToolkit.randInRange(1, 3));
 }
 const randomSize = Math.round(blotToolkit.randInRange(1, 3));
-const serverCount = 2;
+const randomSize2 = Math.round(blotToolkit.randInRange(1, 3));
+const serverCount = Math.round(blotToolkit.randInRange(1, 2));
 // const randomAngle = 2;
 // const randomPosition = 3;
 // const randomSize = 1;
@@ -60,9 +61,11 @@ const startY2 = is2Dor3D ?
   randomPosition2 == 1 ? 80 : randomPosition2 == 2 ? 45 : 30;
 const serverWidth = 80;
 const serverHeight = randomSize == 1 ? 25 : randomSize == 2 ? 15 : 30;
+const serverHeight2 = randomSize2 == 1 ? 25 : randomSize2 == 2 ? 15 : 30;
 const caddyWidth = 20;
 const bezelHeight = 5; // Height of the bezel at the top
 const caddyHeight = randomSize == 3 ? (serverHeight - bezelHeight) / 3 : (serverHeight - bezelHeight) / 2; // Adjusted caddy height with bezel
+const caddyHeight2 = randomSize2 == 3 ? (serverHeight2 - bezelHeight) / 3 : (serverHeight2 - bezelHeight) / 2; // Adjusted caddy height with bezel
 const topDepth = is2Dor3D ? 40 : 55;
 const threeDAngle = is2Dor3D ? 0 : 45;
 
@@ -81,11 +84,11 @@ function drawPowerEdgeServer(turtle, serverNum = 1) {
   turtle.down();
   turtle.forward(serverWidth);
   turtle.right(90);
-  turtle.forward(serverHeight);
+  turtle.forward(serverNum == 1 ? serverHeight : serverHeight2);
   turtle.right(90);
   turtle.forward(serverWidth);
   turtle.right(90);
-  turtle.forward(serverHeight);
+  turtle.forward(serverNum == 1 ? serverHeight : serverHeight2);
   turtle.right(90);
 
 
@@ -96,19 +99,19 @@ function drawPowerEdgeServer(turtle, serverNum = 1) {
   turtle.forward(serverWidth);
 
   // Draw the caddies (4 horizontal by 2 vertical)
-  if (randomSize !== 3) {
+  if ((serverNum == 1 ? randomSize : randomSize2) !== 3) {
     for (let row = 0; row < 2; row++) {
       for (let col = 0; col < 4; col++) {
         turtle.up();
-        turtle.jump([startX + col * caddyWidth, serverY - bezelHeight - row * caddyHeight]);
+        turtle.jump([startX + col * caddyWidth, serverY - bezelHeight - row * (serverNum == 1 ? caddyHeight : caddyHeight2)]);
         turtle.down();
         turtle.forward(caddyWidth);
         turtle.right(90);
-        turtle.forward(caddyHeight);
+        turtle.forward((serverNum == 1 ? caddyHeight : caddyHeight2));
         turtle.right(90);
         turtle.forward(caddyWidth);
         turtle.right(90);
-        turtle.forward(caddyHeight);
+        turtle.forward((serverNum == 1 ? caddyHeight : caddyHeight2));
         turtle.right(90);
       }
     }
@@ -116,15 +119,15 @@ function drawPowerEdgeServer(turtle, serverNum = 1) {
     for (let row = 0; row < 3; row++) {
       for (let col = 0; col < 4; col++) {
         turtle.up();
-        turtle.jump([startX + col * caddyWidth, serverY - bezelHeight - row * caddyHeight]);
+        turtle.jump([startX + col * caddyWidth, serverY - bezelHeight - row * (serverNum == 1 ? caddyHeight : caddyHeight2)]);
         turtle.down();
         turtle.forward(caddyWidth);
         turtle.right(90);
-        turtle.forward(caddyHeight);
+        turtle.forward((serverNum == 1 ? caddyHeight : caddyHeight2));
         turtle.right(90);
         turtle.forward(caddyWidth);
         turtle.right(90);
-        turtle.forward(caddyHeight);
+        turtle.forward((serverNum == 1 ? caddyHeight : caddyHeight2));
         turtle.right(90);
       }
     }
@@ -146,19 +149,19 @@ function drawPowerEdgeServer(turtle, serverNum = 1) {
   
     // Connect the edges of the top and front faces
     turtle.up();
-    turtle.jump([startX + serverWidth, serverY - serverHeight]);
+    turtle.jump([startX + serverWidth, serverY - (serverNum == 1 ? serverHeight : serverHeight2)]);
     turtle.down();
     turtle.left(threeDAngle);
     turtle.forward(-topDepth);
     turtle.left(180-threeDAngle);
     turtle.right(90);
-    turtle.forward(-serverHeight);
+    turtle.forward(-(serverNum == 1 ? serverHeight : serverHeight2));
   } else {
-    turtle.jump([startX + serverWidth, serverY - serverHeight]);
+    turtle.jump([startX + serverWidth, serverY - (serverNum == 1 ? serverHeight : serverHeight2)]);
     turtle.down();
     turtle.forward(topDepth);
     turtle.left(90);
-    turtle.forward(serverHeight);
+    turtle.forward((serverNum == 1 ? serverHeight : serverHeight2));
     turtle.left(90);
     turtle.forward(topDepth);
   }
@@ -444,7 +447,7 @@ switch (randomText) {
   default:
     drawDellEMC(textTurtle, 2);
 }
-if (is2Dor3D) {
+if (is2Dor3D && serverCount >= 2) {
   drawPowerEdgeServer(serverTurtle,2);
   textTurtle.up();
   textTurtle.setAngle(0);
