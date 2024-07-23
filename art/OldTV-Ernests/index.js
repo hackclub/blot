@@ -70,6 +70,14 @@ t.right(110).up().forward(getChord(tvHeight, tvScreenDeg) * (3 / 4) * Math.sin(t
 
 t.forward(10).up().forward(3).down()
 t.forward(8).up().forward(3).down()
+
+if (bt.randInRange(0, 10) > 5) {
+  const offsetY = bt.randInRange(0, 11)
+  t.forward(offsetY).right(90).up().forward(3).down().forward(7).right(80).forward(15)
+  t.right(100).forward(10).right(90).forward(15).left(90).up()
+  t.forward(3).left(90).forward(offsetY).right(180).down()
+}
+
 t.forward(6).up().forward(3).down()
 t.forward(4).up().forward(3).down()
 t.forward(3).up().forward(3).down()
@@ -77,7 +85,8 @@ t.forward(2).up().forward(3).down()
 t.forward(1).up()
 t.left(180).forward(52).left(90)
 // a = c * sin(angle a)
-t.forward(getChord(tvHeight, tvScreenDeg) * (3 / 4) * Math.sin(toRadians(20)) + 1).down().forward(15)
+t.forward(getChord(tvHeight, tvScreenDeg) * (3 / 4) * Math.sin(toRadians(20)) + 1).down().forward(bt.randInRange(10, 15))
+
 
 t.left(130).forward(10)
 t.right(100).forward(20)
@@ -101,11 +110,10 @@ t.left(100).forward(10)
 t.right(130).forward(getChord(tvWidth, tvScreenDeg) / 4 + 5)
 
 t.up()
-// b = c * sin(angle b)
 t.right(90).forward(getChord(tvHeight, tvScreenDeg) * (3 / 4) * Math.sin(toRadians(70))).down()
 t.left(90).forward(((getChord(tvWidth, tvScreenDeg) / 2 - 40 > 0 ? getChord(tvWidth, tvScreenDeg) / 2 - 40 : 0) + 15 + 2 * getChord(tvHeight, tvScreenDeg) * (3 / 4) * Math.sin(toRadians(20)) - 3))
 t.up()
-t.left(180).forward(getChord(tvWidth, tvScreenDeg) / 8).down()
+t.left(180).forward(getChord(tvWidth, tvScreenDeg) / bt.randInRange(6, 12) ).down()
 t.left(90).arc(-180, getChord(tvHeight, tvScreenDeg) / 4)
 t.left(180).up()
 
