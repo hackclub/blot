@@ -10,7 +10,7 @@ setDocDimensions(width, height);
 
 // Randomize sunrise position
 const randx = bt.randIntInRange(0, 10);
-const randy = bt.randIntInRange(0, 32); // Adjusted for sunrise effect
+const randy = bt.randIntInRange(0, 17); // Adjusted for sunrise effect
 
 // Birds flying across the sunrise
 const birdLines = [];
@@ -87,47 +87,51 @@ const birdright4 = [
 bt.join(birdLines, birdleft, birdright, birdleft1, birdright1, birdleft2, birdright2, birdleft3, birdright3, birdleft4, birdright4);
 
 // Position birds randomly across the sunrise
-const randinsky = bt.randIntInRange(75, 115);
-const randinskx = bt.randIntInRange(0, 96);
+const randinsky = bt.randIntInRange(70, 70);
+const randinskx = bt.randIntInRange(0, 80);
 bt.translate(birdLines, [randinskx, randinsky], [0, 0]);
 bt.copy(birdLines);
 
-// Sun at sunrise position
-const sun = [
-  bt.nurbs([
-    [32.5, randy + 20],
-    [32.5, randy + 35], // Adjusted for sunrise effect
-    [62.5, randy + 53], // Adjusted for sunrise effect
-    [92.5, randy + 35], // Adjusted for sunrise effect
-    [92.5, randy + 20]
-  ])
-];
-
-// Mountains adjusted for sunrise effect
+// Less wide, smaller, and lower left mountain
 const leftmount = [
   bt.nurbs([
-    [0, randy + 20],
-    [40, 90], // Adjusted for sunrise effect
-    [40, 60], // Adjusted for sunrise effect
-    [57.5, randy + 20]
+    [0, randy + 10],                // Lowered
+    [30 + randx, 60 - randy],       // Less wide
+    [30 - randx, 30 + randy],       // Less wide
+    [45, randy + 10]                // Lowered
   ])
 ];
 
+// Wider, smaller, and lower right mountain
 const rightmount = [
   bt.nurbs([
-    [67.5, randy + 20],
-    [110, 85], // Adjusted for sunrise effect
-    [110, 55], // Adjusted for sunrise effect
-    [width, randy + 20]
+    [45, randy + 10],               // Lowered
+    [95 - randx, 55 + randy],       // Wider
+    [95 + randx, 40 - randy],       // Wider
+    [width, randy + 10]             // Lowered
   ])
 ];
+
+// Smaller and lower sun
+const sun = [
+  bt.nurbs([
+    [25, randy + 10],               // Smaller and lower
+    [25, randy + 20],               // Smaller and lower
+    [50, randy + 30],               // Smaller and lower
+    [75, randy + 20],               // Smaller and lower
+    [75, randy + 10]                // Smaller and lower
+  ])
+];
+
+
+
 
 // Cloud Creation
 const cloudOne = new bt.Turtle();
 const cloudTwo = new bt.Turtle();
 
 // Cloud One
-const cloudOneBase = [16, 88]; // Static
+const cloudOneBase = [16, 90]; // Static
 cloudOne.up();
 cloudOne.goTo(cloudOneBase);
 cloudOne.down();
@@ -147,7 +151,7 @@ cloudOne.arc(106, 7);
 const cloudOneLines = cloudOne.lines();
 
 // Cloud Two
-const cloudTwoBase = [70.3, 97]; // Static
+const cloudTwoBase = [70.3, 99]; // Static
 cloudTwo.up();
 cloudTwo.goTo(cloudTwoBase);
 cloudTwo.down();
