@@ -61,42 +61,45 @@ function DrawPenguin(center, scale) {
   ];
 
   // Function to simulate fill by drawing lines
-function fillPolygon(points, color, lineWidth = 1) {
-  const numLines = Math.max(10, scale * 3); // Adjust line density based on penguin size
-  const minX = Math.max(0, Math.min(...points.map(p => p[0])));
-  const maxX = Math.min(width, Math.max(...points.map(p => p[0])));
+  function fillPolygon(points, color, lineWidth = 1) {
+    const numLines = Math.max(10, scale * 3); // Adjust line density based on penguin size
+    const minX = Math.max(0, Math.min(...points.map(p => p[0])));
+    const maxX = Math.min(width, Math.max(...points.map(p => p[0])));
 
-  for (let i = 0; i <= numLines; i++) {
-    const t = i / numLines;
-    const x = minX + t * (maxX - minX);
+    for (let i = 0; i <= numLines; i++) {
+      const t = i / numLines;
+      const x = minX + t * (maxX - minX);
 
-    const intersections = [];
-    for (let j = 0; j < points.length - 1; j++) {
-      const [x1, y1] = points[j];
-      const [x2, y2] = points[j + 1];
+      const intersections = [];
+      for (let j = 0; j < points.length - 1; j++) {
+        const [x1, y1] = points[j];
+        const [x2, y2] = points[j + 1];
 
-      if ((x1 <= x && x2 >= x) || (x2 <= x && x1 >= x)) {
-        const y = y1 + ((x - x1) * (y2 - y1)) / (x2 - x1);
-        intersections.push([x, y]);
+        if ((x1 <= x && x2 >= x) || (x2 <= x && x1 >= x)) {
+          const y = y1 + ((x - x1) * (y2 - y1)) / (x2 - x1);
+          intersections.push([x, y]);
+        }
       }
-    }
 
-    intersections.sort((a, b) => a[1] - b[1]);
+      intersections.sort((a, b) => a[1] - b[1]);
 
-    for (let k = 0; k < intersections.length; k += 2) {
-      if (k + 1 < intersections.length) {
-        const [x1, y1] = intersections[k];
-        const [x2, y2] = intersections[k + 1];
-        drawLines([
-          [
-            [x1, Math.max(0, y1)],
-            [x2, Math.min(height, y2)]
-          ]
-        ], { stroke: color, width: lineWidth });
+      for (let k = 0; k < intersections.length; k += 2) {
+        if (k + 1 < intersections.length) {
+          const [x1, y1] = intersections[k];
+          let [x2, y2] = intersections[k + 1];
+          if (isNaN(y2)) {
+            y2 = y1;
+          }
+          drawLines([
+            [
+              [x1, Math.max(0, y1)],
+              [x2, Math.min(height, y2)]
+            ]
+          ], { stroke: color, width: lineWidth });
+        }
       }
     }
   }
-}
 
   // Draw body fill with adjusted lines
   fillPolygon(bodyPoints, 'black', 1);
