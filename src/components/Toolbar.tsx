@@ -17,6 +17,7 @@ import { saveFile } from '../saveFile.ts'
 import js_beautify from 'js-beautify'
 import { createShareLink } from "../createShareLink.js";
 import { toolkit as tk } from "../drawingToolkit/toolkit.js";
+import { post } from "../post.js";
 
 const menuItemClasses = `
   relative
@@ -239,12 +240,12 @@ function DownloadSVG() {
           t.path.forEach(pl =>
             pl.forEach((pt, i) => {
               const [x, y] = pt
-              if (i === 0) d += `M ${x} ${y}`
-              else d += `L ${x} ${y}`
+              if (i === 0) d += ` M ${x.toFixed(6)} ${y.toFixed(6)} `
+              else d += ` L ${x.toFixed(6)} ${y.toFixed(6)} `
             })
           )
 
-          return d
+          return d.trim();
         }
 
         const turtleToPath = t => {
@@ -294,7 +295,7 @@ function DownloadPNG() {
             pl.forEach((pt, i) => {
               const [x, y] = pt
               if (i === 0) d += `M ${x} ${y}`
-              else d += `L ${x} ${y}`
+              else d += ` L ${x} ${y}`
             })
           )
 
@@ -450,7 +451,7 @@ function SettingsButton() {
         </div>
         
         { loginName && 
-          <div class="p-2 hover:bg-white hover:bg-opacity-10" onClick={logOut}>
+          <div class="p-2 hover:bg-white hover:bg-opacity-10" onClick={logout}>
             Log out
           </div>
         }
@@ -459,7 +460,19 @@ function SettingsButton() {
   )
 }
 
-function logOut() {
+async function logout() {
+  const { loginName, sessionKey } = getStore();
+
+  const [ res, err] = await post("/logout", { 
+    sessionKey,
+    email: loginName,
+  });
+
+  if (err) {
+    console.log(err);
+    return;
+  }
+
   localStorage.setItem('session_secret_key', "");
   patchStore({ files: [], loginName: "", cloudFileId: "" });
 }

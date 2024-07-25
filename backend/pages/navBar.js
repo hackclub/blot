@@ -24,7 +24,7 @@ export default function(fadeIn = false) {
           <span class="hidden sm:block">gallery</span>
         </a>
 
-        <a href="https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md" class="flex h-full gap-1 items-center hover:opacity-60">
+        <a href="/assembly" class="flex h-full gap-1 items-center hover:opacity-60">
           <img src="/icons/wrench.svg"/>
           <span class="hidden sm:block">build guide</span>
         </a>

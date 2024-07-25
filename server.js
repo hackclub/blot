@@ -21,6 +21,8 @@ import getUser from "./backend/api/getUser.js";
 import submitCode from "./backend/api/submitCode.js";
 import getFiles from "./backend/api/getFiles.js";
 import createShareLink from "./backend/api/createShareLink.js";
+import logout from "./backend/api/logout.js";
+import deleteFile from "./backend/api/deleteFile.js";
 
 import { supabase } from "./backend/api/supabase.js";
 
@@ -50,10 +52,6 @@ build({
     ${navBar()}
     ${gallery()}
   `),
-  assembly: wrapHTML(`
-    ${navBar()}
-    Go <a class="underline decoration-sky-500" href="https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md">here</a>.
-  `),
   404: wrapHTML(`
     ${navBar()}
     <div class="p-2">nothing here</div>
@@ -74,6 +72,8 @@ app.post('/signUpEmail', signUpEmail);
 app.post('/check-signed-in', checkSignIn);
 app.post('/get-files', getFiles);
 app.post('/save-file', saveFile);
+app.post('/delete-file', deleteFile);
+app.post('/logout', logout);
 app.post('/get-user', getUser);
 app.post('/submit-code', submitCode);
 app.post('/create-share-link', createShareLink);
@@ -99,6 +99,12 @@ app.get('/read-share-link', async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
+});
+app.get('/assembly', (req, res) => {
+  res.redirect('https://github.com/hackclub/blot/blob/main/docs/assembly/ASSEMBLY.md');
+});
+app.get('/welcome-qr-code', (req, res) => {
+  res.redirect('/assembly');
 });
 
 const __filename = fileURLToPath(import.meta.url);

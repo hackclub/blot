@@ -2,7 +2,6 @@ import { supabase } from "./supabase.js";
 import { LoopsClient } from 'loops'
 
 export default async function(req, res) {
-  // this should check session code
   const { email } = req.body;
 
   console.log("sign up:", email);
