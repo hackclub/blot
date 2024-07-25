@@ -11,10 +11,10 @@ setDocDimensions(width, height);
 
 function drawCat() {
   const lines = [];
-  
+
   // Random number generator within a range
   function randInRange(min, max) {
-    return min + Math.random() * (max - min);
+    return bt.randInRange(min, max);
   }
 
   // Head
