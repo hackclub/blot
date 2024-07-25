@@ -126,6 +126,23 @@ export const toolkit = {
       const svg = doc.querySelector('svg');
       const polylines = flattenSVG(svg, { maxError: 0.001 }).map(pl => pl.points);
 
+      let maxYVal = 0;
+      polylines.forEach((obj) => {
+        obj.forEach((coord) => {
+          if (coord[1] > maxYVal) {
+            maxYVal = coord[1];
+          }
+
+          coord[1] = -coord[1];
+        })
+      })
+
+      polylines.forEach((obj) => {
+        obj.forEach((coord) => {
+          coord[1] = coord[1] + maxYVal;
+        })
+      })
+
       return polylines;
     } catch (err) {
       throw new Error("SVGs can not be parsed in web workers.");
