@@ -10,23 +10,36 @@ const t = new bt.Turtle();
 
 setDocDimensions(width, height);
 
-
 const finalLines = [];
+const displayMode = 1;
 
+const innerX = 32;
+const innerY = 32;
+const innerWidth = width - 55;
+const innerHeight = height - 60;
+const numberOfLines = 788;
+const gridSpacing = 2;
+const fillColors = [];
 
-// the channels set to 1,2, or 3
-const displayMode = 2; 
-
+const keepInBounds = (x, y, xMin, yMin, xMax, yMax) => {
+  const clampedX = Math.max(xMin, Math.min(x, xMax));
+  const clampedY = Math.max(yMin, Math.min(y, yMax));
+  return [clampedX, clampedY];
+};
 
 const createStaticLines = (x, y, w, h, numLines) => {
   const lines = [];
   for (let i = 0; i < numLines; i++) {
-    const x1 = x + Math.floor(Math.random() * w);
-    const y1 = y + Math.floor(Math.random() * h);
-    const angle = Math.random() * 2 * Math.PI;
-    const length = Math.random() * 5 + 1; 
-    const x2 = x1 + Math.cos(angle) * length;
-    const y2 = y1 + Math.sin(angle) * length;
+    let x1 = x + Math.floor(Math.random() * w);
+    let y1 = y + Math.floor(Math.random() * h);
+    const angle = Math.random() * 0 * Math.PI;
+    const length = Math.random() * -2 + 1;
+    let x2 = x1 + Math.cos(angle) * length;
+    let y2 = y1 + Math.sin(angle) * length;
+
+    [x1, y1] = keepInBounds(x1, y1, x, y, x + w, y + h);
+    [x2, y2] = keepInBounds(x2, y2, x, y, x + w, y + h);
+
     lines.push([[x1, y1], [x2, y2]]);
   }
   return lines;
@@ -36,12 +49,10 @@ const createStickmanScene = (x, y, w, h) => {
   const lines = [];
   const fillColors = [];
 
-
   const hillHeight = h / 2;
   lines.push([[x, y + h], [x + w, y + h], [x + w, y + hillHeight]]);
   fillColors.push("green");
 
- 
   const boulderRadius = 10;
   const boulderCenterX = x + w / 2;
   const boulderCenterY = y + h - hillHeight / 1.2;
@@ -91,26 +102,14 @@ const createGrid = (x, y, w, h, spacing) => {
   return lines;
 };
 
-const innerX = 32;
-const innerY = 32;
-const innerWidth = width - 55;
-const innerHeight = height - 60;
-const numberOfLines = 412; 
-const gridSpacing = 2;
-
-const fillColors = [];
-
 if (displayMode === 1) {
-
   const staticLines = createStaticLines(innerX, innerY, innerWidth, innerHeight, numberOfLines);
   staticLines.forEach(line => finalLines.push(line));
 } else if (displayMode === 2) {
-
   const { lines: stickmanSceneLines, fillColors: sceneColors } = createStickmanScene(innerX, innerY, innerWidth, innerHeight);
   stickmanSceneLines.forEach(line => finalLines.push(line));
   sceneColors.forEach(color => fillColors.push(color));
 } else if (displayMode === 3) {
- 
   const gridLines = createGrid(innerX, innerY, innerWidth, innerHeight, gridSpacing);
   gridLines.forEach(line => finalLines.push(line));
 }
@@ -119,26 +118,18 @@ finalLines.forEach((line, index) => {
   drawLines([line], { fill: fillColors[index] || "black" });
 });
 
-//tv
+// tv
 const RoundedRectangle = (x, y, w, h, cornerRadius) => {
   const points = [];
 
   points.push([x + cornerRadius, y]);
-
   points.push([x + w - cornerRadius, y]);
-
   points.push(...Corners(x + w - cornerRadius, y + cornerRadius, 1.5 * Math.PI, 2 * Math.PI, cornerRadius));
-
   points.push([x + w, y + h - cornerRadius]);
-
   points.push(...Corners(x + w - cornerRadius, y + h - cornerRadius, 0, 0.5 * Math.PI, cornerRadius));
-
   points.push([x + cornerRadius, y + h]);
-
   points.push(...Corners(x + cornerRadius, y + h - cornerRadius, 0.5 * Math.PI, Math.PI, cornerRadius));
-
   points.push([x, y + cornerRadius]);
-
   points.push(...Corners(x + cornerRadius, y + cornerRadius, Math.PI, 1.5 * Math.PI, cornerRadius));
 
   return points;
@@ -158,13 +149,10 @@ const Corners = (cx, cy, startAngle, endAngle, radius) => {
 
 const outerCornerRadius = 12;
 const outerRectPoints = RoundedRectangle(20, 20, width - 24, height - 40, outerCornerRadius);
-
 const innerCornerRadius = 6;
-const innerRectPoints = RoundedRectangle(32, 32, width - 55, height - 60, innerCornerRadius);
-
+const innerRectPoints = RoundedRectangle(innerX, innerY, innerWidth, innerHeight, innerCornerRadius);
 
 finalLines.push(outerRectPoints);
-
 finalLines.push(innerRectPoints);
 
 const createCircle = (cx, cy, radius) => {
@@ -201,14 +189,12 @@ const Antenna2 = (x1, y1, x2, y2) => {
   return points;
 };
 
-const AntennaPoints1 = Antenna1(47, 120, 68, 105); 
-const AntennaPoints2 = Antenna2(79, 120, 68, 105); 
+const AntennaPoints1 = Antenna1(47, 120, 68, 105);
+const AntennaPoints2 = Antenna2(79, 120, 68, 105);
 
 finalLines.push(AntennaPoints1);
 finalLines.push(AntennaPoints2);
 
-
-drawLines([dial1], {fill:"blue"})
-drawLines([dial2], {fill:"blue"})
-
+drawLines([dial1], { fill: "blue" });
+drawLines([dial2], { fill: "blue" });
 drawLines(finalLines);
