@@ -1,4 +1,4 @@
- /*
+/*
 @title: Dynamic Grid of Circles
 @author: Jakob
 @snapshot: this file (index.js)
@@ -33,7 +33,7 @@ for (let row = 0; row < numRows; row++) {
     for (let col = 0; col < numCols; col++) {
         const cx = col * colWidth + colWidth / 2;
         const cy = row * rowHeight + rowHeight / 2;
-        const radius = Math.random() * (maxCircleSize - minCircleSize) + minCircleSize;
+        const radius = bt.randInRange(minCircleSize, maxCircleSize);
         const circle = drawCircle(cx, cy, radius);
         grid.push(circle);
     }
