@@ -15,7 +15,7 @@ let randomSeed = bt.randInRange(0, 10000); //Change this if you want a specific 
 let scale = gridWidth >= 9 ? (gridWidth >= 15 ? 0.5 : 1) : 2; //Adjust to change text size at a certain breaking point
 
 //Changeable parameters OVER
-
+console.log(randomSeed); //For developing reasons
 //Keep these two parameters the same preferably for better gameplay and avoiding a bug I never bothered to fix
 const width = 125; //Only adjust if necessary, might screw things up idk man
 const height = 125; //Same here ^
@@ -302,15 +302,13 @@ let body = (coords1, coords2, orientation, rd = false) => { //The body of the sh
     ];
     if (length == 0) {
       let firstterm = orientation == "v" ? [x1, y2] : [x2, y1];
-      let middleterm = orientation == "v" ? [(x1 + x2) / 2, y2 - gapy * 0.2] : [x1 + gapx * 1.2, (y1 + y2) / 2];
+      let middleterm = orientation == "v" ? [(x1 + x2) / 2, y2 - gapy * 0.1] : [x1 + gapx * 1.1, (y1 + y2) / 2];
       let boatend = bt.catmullRom([firstterm, middleterm, [x2, y2]], 10);
-      if(rd){
-        finalLines.push(bt.rotate(boatend, 180, [(x1+x2)/2,(y1+y2)/2]));
+      if(rd == true){
+        bt.rotate([boatend], 180, [(x1+x2)/2,(y1+y2)/2]);
       }
-      else{
-        finalLines.push(boatend);
-      }
-    };
+      finalLines.push(boatend);
+    }
     finalLines.push(seat, plank);
     //Big ship
   } else {
@@ -391,12 +389,12 @@ let body = (coords1, coords2, orientation, rd = false) => { //The body of the sh
       let frame = [
         [x1, y1],
         [x1, y2],
-        [x1 + gapx * 0.1, y2 - gapy * 0.15],
-        [x2 - gapx * 1.1, y2 - gapy * 0.15],
+        [x1 + gapx * 0.1, y2 - gapy * 0.2],
+        [x2 - gapx * 1.1, y2 - gapy * 0.2],
         [x2 - gapx * 0.1, y2],
         [x2 - gapx * 0.1, y1],
-        [x2 - gapx * 1.1, y1 + gapy * 0.15],
-        [x1 + gapx * 0.1, y1 + gapy * 0.15],
+        [x2 - gapx * 1.1, y1 + gapy * 0.2],
+        [x1 + gapx * 0.1, y1 + gapy * 0.2],
         [x1, y1],
       ];
       let rear = [ //front thingy (I have no idea what a rear is but my gut tells me to name this thing a rear)
@@ -574,7 +572,8 @@ function addBoat(coords, orientation, length) { // Renders and updates virtual m
         break;
     }
     if (length <= 2) {
-      renderBoat([tip], [body[0],body[0]], actualOrien[0], lv, true);
+      let stat = orientation == "right" || orientation == "down" ? false : true; // I have no idea why this logic works tbh
+      renderBoat([tip], [body[0],body[0]], actualOrien[0], lv, stat);
     } else {
       renderBoat([tip, tip2], body, actualOrien[0], lv)
     }
