@@ -1,7 +1,7 @@
 /*
 @title: BlottleShip
 @author: LinusC
-@snapshot: BlottleShip
+@snapshot: BlottleShip.png
 */
 
 //THE FOLLOWING PARAMETERS ARE ONES THAT YOU CAN CHANGE
@@ -10,8 +10,10 @@ const empty = false; //Set to true for the boats, otherwise false for mapping th
 //Note that the grid still exists when it's true and can be used to map at the same time
 
 const gridWidth = 10; //Adjust to change board size, recommended 10 as there are bugs present outside these boundaries
-const boatSizes = [2, 3, 4, 4, 5]; //Length of arr = the number of boats, specify each boat's length thanks
+const boatSizes = [2,3,4,4,5]; //Length of arr = the number of boats, specify each boat's length thanks
+let randomSeed = bt.randInRange(0, 10000); //Change this if you want a specific seed
 let scale = gridWidth >= 9 ? (gridWidth >= 15 ? 0.5 : 1) : 2; //Adjust to change text size at a certain breaking point
+
 //Changeable parameters OVER
 
 //Keep these two parameters the same preferably for better gameplay and avoiding a bug I never bothered to fix
@@ -241,7 +243,7 @@ let tip = (coords, orientation) => { //The tip of the ship, coords: letter: a1, 
   drawLines(turtle.lines());
 };
 
-let body = (coords1, coords2, orientation) => { //The body of the ship, takes in 2 positional params, orientation is either h(horizontal) or v (vertical)
+let body = (coords1, coords2, orientation, rd = false) => { //The body of the ship, takes in 2 positional params, orientation is either h(horizontal) or v (vertical)
   let x1, y1, x2, y2;
   [x1, y1] = parseCoords(coords1, "tl"); //coords1 > coords2 must be or else it wont rly work
   [x2, y2] = parseCoords(coords2, "br");
@@ -259,26 +261,24 @@ let body = (coords1, coords2, orientation) => { //The body of the ship, takes in
         [x1 - gapx * 0.1, (y2 + y1) / 2],
         [x1, y2]
       ], 10);
-      finalLines.push(left); //left side
       let right = bt.catmullRom([
         [x2, y1],
         [x2 + gapx * 0.1, (y2 + y1) / 2],
         [x2, y2]
       ], 10);
-      finalLines.push(right); //right side
+      finalLines.push(left, right);
     } else {
       let left = bt.catmullRom([
         [x1, y1],
         [(x1 + x2) / 2, y1 + gapy * 0.1],
         [x2, y1]
       ], 10);
-      finalLines.push(left); //left side
       let right = bt.catmullRom([
         [x1, y2],
         [(x1 + x2) / 2, y2 - gapy * 0.1],
         [x2, y2]
       ], 10);
-      finalLines.push(right); //right side
+      finalLines.push(left, right); 
     }
     let seat = [
       [x1 + gapx * 0.2, y1 - gapy * 0.2],
@@ -304,7 +304,12 @@ let body = (coords1, coords2, orientation) => { //The body of the ship, takes in
       let firstterm = orientation == "v" ? [x1, y2] : [x2, y1];
       let middleterm = orientation == "v" ? [(x1 + x2) / 2, y2 - gapy * 0.2] : [x1 + gapx * 1.2, (y1 + y2) / 2];
       let boatend = bt.catmullRom([firstterm, middleterm, [x2, y2]], 10);
-      finalLines.push(boatend);
+      if(rd){
+        finalLines.push(bt.rotate(boatend, 180, [(x1+x2)/2,(y1+y2)/2]));
+      }
+      else{
+        finalLines.push(boatend);
+      }
     };
     finalLines.push(seat, plank);
     //Big ship
@@ -315,8 +320,8 @@ let body = (coords1, coords2, orientation) => { //The body of the ship, takes in
         [x2, y1],
         [x2 + gapx * 0.2, y1 - gapy * 0.1],
         [x2 + gapx * 0.2, y2 + gapy * 1.1],
-        [x2, y2 + gapy * 0.3],
-        [x1, y2 + gapy * 0.3],
+        [x2, y2 + gapy * 0.1],
+        [x1, y2 + gapy * 0.1],
         [x1 - gapx * 0.2, y2 + gapy * 1.1],
         [x1 - gapx * 0.2, y1 - gapy * 0.1],
         [x1, y1],
@@ -375,8 +380,8 @@ let body = (coords1, coords2, orientation) => { //The body of the ship, takes in
       ] //Bounds: x1+gapx*0.35 and y1-gapy*(length+0.5)
       let start = [x1 + gapx * 0.35, y1 - gapy * 1.7];
       let end = [x2 - gapx * 0.35, y1 - gapy * 1.7];
-      const increment = ((y1 - gapy * (length + 0.5)) - (y1 - gapy * 1.7)) / 20;
-      for (let i = 0; i < 20; i++) {
+      const increment = ((y1 - gapy * (length + 0.5)) - (y1 - gapy * 1.7)) / ((length-1)*10);
+      for (let i = 0; i < (length-1)*10; i++) {
         start[1] += increment;
         end[1] += increment;
         drawLine(start, end);
@@ -386,12 +391,12 @@ let body = (coords1, coords2, orientation) => { //The body of the ship, takes in
       let frame = [
         [x1, y1],
         [x1, y2],
-        [x1 + gapx * 0.1, y2 - gapy * 0.2],
-        [x2 - gapx * 1.1, y2 - gapy * 0.2],
-        [x2 - gapx * 0.3, y2],
-        [x2 - gapx * 0.3, y1],
-        [x2 - gapx * 1.1, y1 + gapy * 0.2],
-        [x1 + gapx * 0.1, y1 + gapy * 0.2],
+        [x1 + gapx * 0.1, y2 - gapy * 0.15],
+        [x2 - gapx * 1.1, y2 - gapy * 0.15],
+        [x2 - gapx * 0.1, y2],
+        [x2 - gapx * 0.1, y1],
+        [x2 - gapx * 1.1, y1 + gapy * 0.15],
+        [x1 + gapx * 0.1, y1 + gapy * 0.15],
         [x1, y1],
       ];
       let rear = [ //front thingy (I have no idea what a rear is but my gut tells me to name this thing a rear)
@@ -448,8 +453,8 @@ let body = (coords1, coords2, orientation) => { //The body of the ship, takes in
       ]
       let start = [x1 + gapx * 1.7, y1 - gapy * 0.35];
       let end = [x1 + gapx * 1.7, y2 + gapy * 0.35];
-      var increment = ((x1 + gapx * (length + 0.5)) - (x1 + gapx * 1.7)) / 20;
-      for (let i = 0; i < 20; i++) {
+      var increment = ((x1 + gapx * (length + 0.5)) - (x1 + gapx * 1.7)) / ((length-1)*10);
+      for (let i = 0; i < (length-1)*10; i++) {
         start[0] += increment;
         end[0] += increment;
         drawLine(start, end);
@@ -461,7 +466,7 @@ let body = (coords1, coords2, orientation) => { //The body of the ship, takes in
 //End of boat design
 
 //Generating boats
-bt.setRandSeed(bt.randInRange(0, 10000)); //or set this to something you want
+bt.setRandSeed(randomSeed); //or set this to something you want
 const oMap = []; //occupied maps
 for (let i = 0; i < gridWidth; i++) { //Creating map
   let row = []
@@ -470,7 +475,7 @@ for (let i = 0; i < gridWidth; i++) { //Creating map
   }
   oMap.push(row);
 }
-console.log(oMap);
+
 if (!empty) { //Checks if the player wants an empty sheet or not
   for (const boatLength of boatSizes) { //Generate boat
     let coords, orientation;
@@ -480,7 +485,6 @@ if (!empty) { //Checks if the player wants an empty sheet or not
     } while (!isValidPlacement(coords, orientation, boatLength));
     addBoat(coords, orientation, boatLength)
   }
-  console.log(oMap)
 };
 
 function isValidPlacement(coords, orientation, boatLength) {
@@ -547,7 +551,7 @@ function toCoords(coords1, coords2 = 0) {
 function addBoat(coords, orientation, length) { // Renders and updates virtual map
   let tip, tip2, body;
   let actualOrien = orientation == "left" ? "right" : (orientation == "right" ? "left" : (orientation == "up" ? "down" : "up")); //Pass through the render function
-  let lv = orientation == "left" ? "h" : (orientation == "right" ? "h" : "v");
+  let lv = orientation == "left" ? "h" : (orientation == "right" ? "h" : "v"); //I forgot why i named this as lv so no explaination
   tip = toCoords(coords.join(':'));
   if (length < 4) {
     switch (orientation) {
@@ -570,11 +574,10 @@ function addBoat(coords, orientation, length) { // Renders and updates virtual m
         break;
     }
     if (length <= 2) {
-      renderBoat([tip], [body[0],body[0]], actualOrien[0], lv);
+      renderBoat([tip], [body[0],body[0]], actualOrien[0], lv, true);
     } else {
       renderBoat([tip, tip2], body, actualOrien[0], lv)
     }
-    console.log("smol", orientation, body)
   } else if (length == 4) {
     if (bt.rand() <= 0.5) {
       switch (orientation) { //less cool ship
@@ -661,13 +664,13 @@ function addBoat(coords, orientation, length) { // Renders and updates virtual m
   }
 }
 
-function renderBoat(tipp, bodyy = 0, orientation1, orientation2) { //pass in 0 for body
+function renderBoat(tipp, bodyy = 0, orientation1, orientation2, rd=false) { //pass in 0 for body
   tip(tipp[0], orientation1);
   if (tipp[1]) {
     tip(tipp[1], orientation1 == "l" ? "r" : (orientation1 == "r" ? "l" : (orientation1 == "u" ? "d" : "u")));
   }
   if (bodyy != 0) {
-    body(bodyy[0], bodyy[1], orientation2);
+    body(bodyy[0], bodyy[1], orientation2, rd);
   }
 }
 
