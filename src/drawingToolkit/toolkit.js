@@ -132,6 +132,10 @@ export const toolkit = {
     }
     
   },
+  scalePolylinesToDimension(polylines, width, height){
+    console.log("it works", polylines, width, height);
+    return polylines;
+  },
   join() {
     const [first, ...rest] = arguments;
     if (!first) return [];
