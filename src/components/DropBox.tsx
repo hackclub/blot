@@ -170,7 +170,7 @@ function scaleAlert(polylines) {
         <div>Scale your polylines to specific dimensions.</div>
         <pre style="${polylinesStyle}">${polylines}</pre>
       </div>
-
+  
       <div style="width: 100%; display: flex;">
         <input type="number" id="newWidth" placeholder="Width" style="${polylinesStyle} width: 50%; margin: 5px; ">
         <input type="number" id="newHeight" placeholder="Height" style="${polylinesStyle} width: 50%; margin: 5px; ">
@@ -186,11 +186,18 @@ function scaleAlert(polylines) {
       </span>
     </div>
   `
-
+  
   el.querySelector("#scaleButton").addEventListener("click", () => {
-    const newPolyLines = tk.scalePolylinesToDimension(polylines, el.querySelector("#newWidth").value, el.querySelector("#newHeight").value);
-    el.remove();
-    customAlert(newPolyLines);
+    const newWidth = el.querySelector("#newWidth").value;
+    const newHeight = el.querySelector("#newHeight").value;
+
+    if (Number.isNaN(newWidth) || Number.isNaN(newHeight)|| newWidth == "" || newHeight == "") {
+      alert("Invalid width/height provided ");
+    } else {
+      const newPolyLines = tk.scalePolylinesToDimension(polylines, newWidth, newHeight);
+      el.remove();
+      customAlert(newPolyLines);
+    }
   })
   
   el.querySelector("#cancelButton").addEventListener("click", () => {

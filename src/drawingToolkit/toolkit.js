@@ -133,8 +133,76 @@ export const toolkit = {
     
   },
   scalePolylinesToDimension(polylines, width, height){
-    console.log("it works", polylines, width, height);
-    return polylines;
+    polylines = JSON.parse(polylines);
+
+    let minXVal = Number.POSITIVE_INFINITY;
+    polylines.forEach((obj) => {
+      obj.forEach((coord) => {
+        if (coord[0] < minXVal) {
+          minXVal = coord[0];
+        }
+      })
+    })
+
+    let minYVal = Number.POSITIVE_INFINITY;
+    polylines.forEach((obj) => {
+      obj.forEach((coord) => {
+        if (coord[1] < minYVal) {
+          minYVal = coord[1];
+        }
+      })
+    })
+
+    if (minXVal != 0) {
+      polylines.forEach((obj) => {
+        obj.forEach((coord) => {
+          coord[0] -= minXVal;
+        })
+      })
+    }
+
+    if (minYVal != 0) {
+      polylines.forEach((obj) => {
+        obj.forEach((coord) => {
+          coord[1] -= minYVal;
+        })
+      })
+    }
+    
+    let maxXVal = Number.NEGATIVE_INFINITY;
+    polylines.forEach((obj) => {
+      obj.forEach((coord) => {
+        if (coord[0] > maxXVal) {
+          maxXVal = coord[0];
+        }
+      })
+    })
+
+    let maxYVal = Number.NEGATIVE_INFINITY;
+    polylines.forEach((obj) => {
+      obj.forEach((coord) => {
+        if (coord[1] > maxYVal) {
+          maxYVal = coord[1];
+        }
+      })
+    })
+
+    const xFactor = width/maxXVal;
+    const yFactor = height/maxYVal;
+
+    polylines.forEach((obj) => {
+      obj.forEach((coord) => {
+        coord[0] *= xFactor;
+      })
+    })
+
+    polylines.forEach((obj) => {
+      obj.forEach((coord) => {
+        coord[1] *= yFactor;
+      })
+    })
+    
+    return JSON.stringify(polylines);
   },
   join() {
     const [first, ...rest] = arguments;
