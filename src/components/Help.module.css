@@ -20,6 +20,19 @@ body[data-theme='dark'] .helpSectionTab:hover {
   overflow: clip;
 }
 
+a{
+  box-sizing: border-box; 
+  margin: 0; 
+  min-width: 0; 
+  font-size: 1.125rem;
+  line-height: 1.75rem; 
+  color: #DC2626; 
+  text-decoration: underline; 
+  cursor: pointer; 
+}
+a:hover {
+  text-decoration-style: wavy; 
+}
 .helpSectionTab {
   padding: 6px 10px;
   color: white;
@@ -108,7 +121,7 @@ body[data-theme='dark'] .helpSectionTab:hover {
   padding-bottom: 0.5rem; /* 8px */
 
 }
-body[data-theme='dark'] .h1, .h2, .h3 {
+body[data-theme='dark'] h1,body[data-theme='dark'] .h2,body[data-theme='dark'] .h3{
   filter: invert(1)
 }
 
