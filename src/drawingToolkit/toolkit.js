@@ -54,34 +54,34 @@ export const toolkit = {
     if (boundary === "closed" && points.length > 3) {
       points.pop();
     };
-
+    
     var curve = nurbs({
       points,
       degree,
       boundary
     });
-
+    
     const pl = [];
     const domain = curve.domain[0];
     const range = domain[1] - domain[0];
     const stepSize = range/steps;
-
+    
     let i = domain[0]; 
     while (i <= domain[1]) {
-
+      
       const pt = curve.evaluate([], i);
       pl.push(pt);
-
+      
       i += stepSize;
     }
-
+    
     if (i !== domain[1]) {
       const pt = curve.evaluate([], domain[1]);
       pl.push(pt);
     }
-
+    
     return pl;
-
+    
     function isClosed(polyline, epsilon = 1e-3) {
       let start = polyline[0]
       let end = polyline[polyline.length - 1]
@@ -109,12 +109,12 @@ export const toolkit = {
     polylines.forEach(pl => {
       const newPl = simplifyPolyline(pl, tolerance, hq)
       while (pl.length > 0) pl.pop()
-
+        
       while (newPl.length > 0) {
         pl.push(newPl.shift())
       }
     })
-
+    
     return polylines;
   },
   trim: trimPolylines,
@@ -125,82 +125,61 @@ export const toolkit = {
       const doc = parser.parseFromString(svgString, 'image/svg+xml');
       const svg = doc.querySelector('svg');
       const polylines = flattenSVG(svg, { maxError: 0.001 }).map(pl => pl.points);
-
+      
       return polylines;
     } catch (err) {
       throw new Error("SVGs can not be parsed in web workers.");
     }
     
   },
-  scalePolylinesToDimension(polylines, width, height){
+  scalePolylinesToDimension(polylines, width, height, addPadding){
     polylines = JSON.parse(polylines);
-
+    
     let minXVal = Number.POSITIVE_INFINITY;
+    let minYVal = Number.POSITIVE_INFINITY;
     polylines.forEach((obj) => {
       obj.forEach((coord) => {
         if (coord[0] < minXVal) {
           minXVal = coord[0];
         }
-      })
-    })
-
-    let minYVal = Number.POSITIVE_INFINITY;
-    polylines.forEach((obj) => {
-      obj.forEach((coord) => {
         if (coord[1] < minYVal) {
           minYVal = coord[1];
         }
       })
     })
-
-    if (minXVal != 0) {
-      polylines.forEach((obj) => {
-        obj.forEach((coord) => {
-          coord[0] -= minXVal;
-        })
-      })
-    }
-
-    if (minYVal != 0) {
-      polylines.forEach((obj) => {
-        obj.forEach((coord) => {
-          coord[1] -= minYVal;
-        })
-      })
-    }
+    
+    translate(polylines, [-minXVal, -minYVal]);
     
     let maxXVal = Number.NEGATIVE_INFINITY;
+    let maxYVal = Number.NEGATIVE_INFINITY;
     polylines.forEach((obj) => {
       obj.forEach((coord) => {
         if (coord[0] > maxXVal) {
           maxXVal = coord[0];
         }
-      })
-    })
-
-    let maxYVal = Number.NEGATIVE_INFINITY;
-    polylines.forEach((obj) => {
-      obj.forEach((coord) => {
         if (coord[1] > maxYVal) {
           maxYVal = coord[1];
         }
       })
     })
-
-    const xFactor = width/maxXVal;
-    const yFactor = height/maxYVal;
-
+    
+    var ratio = Math.min(width / maxXVal, height / maxYVal);
+    
     polylines.forEach((obj) => {
       obj.forEach((coord) => {
-        coord[0] *= xFactor;
+        coord[0] *= ratio;
+        coord[1] *= ratio;
       })
     })
-
-    polylines.forEach((obj) => {
-      obj.forEach((coord) => {
-        coord[1] *= yFactor;
-      })
-    })
+    
+    if (ratio == height / maxYVal) {
+      translate(polylines, [width/2 - maxXVal * ratio / 2, 0]);
+    } else if (ratio == width / maxXVal) {
+      translate(polylines, [0, height/2 - maxYVal * ratio / 2]);
+    }
+    if (addPadding) {
+      scale(polylines, 0.97);
+    }
     
     return JSON.stringify(polylines);
   },
@@ -208,13 +187,13 @@ export const toolkit = {
     const [first, ...rest] = arguments;
     if (!first) return [];
     if (!rest) return first;
-
+    
     rest.forEach(pls => {
       pls.forEach(pl => {
         first.push(pl);
       })
     });
-
+    
     return first;
   },
   copy: obj => JSON.parse(JSON.stringify(obj))

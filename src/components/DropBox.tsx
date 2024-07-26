@@ -175,10 +175,15 @@ function scaleAlert(polylines) {
         <input type="number" id="newWidth" placeholder="Width" style="${polylinesStyle} width: 50%; margin: 5px; ">
         <input type="number" id="newHeight" placeholder="Height" style="${polylinesStyle} width: 50%; margin: 5px; ">
       </div>
+
+      <div style="width: 100%; text-align: center;">
+          <input type="checkbox" id="paddingCheckbox" name="paddingCheckbox">
+          <label for="paddingCheckbox"> Add Padding</label><br>
+      </div>
   
       <span style="width: 100%; display: flex;">
         <button id="scaleButton"" ${buttonClasses}>
-          scale
+          scale (keep aspect ratio)
         </button>
         <button id="cancelButton"" ${buttonClasses}>
           cancel
@@ -190,11 +195,12 @@ function scaleAlert(polylines) {
   el.querySelector("#scaleButton").addEventListener("click", () => {
     const newWidth = el.querySelector("#newWidth").value;
     const newHeight = el.querySelector("#newHeight").value;
+    const addPadding = el.querySelector("#paddingCheckbox").checked;
 
     if (Number.isNaN(newWidth) || Number.isNaN(newHeight)|| newWidth == "" || newHeight == "") {
       alert("Invalid width/height provided ");
     } else {
-      const newPolyLines = tk.scalePolylinesToDimension(polylines, newWidth, newHeight);
+      const newPolyLines = tk.scalePolylinesToDimension(polylines, newWidth, newHeight, addPadding);
       el.remove();
       customAlert(newPolyLines);
     }
