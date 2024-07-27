@@ -39,7 +39,7 @@ build({
     <!-- TODO: add automatically when building -->
     <link rel="stylesheet" href='./assets/initApp.css'>
     
-    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css'>
+  
 
     <main></main>
     <script type="module" src="./src/initApp.js"></script>
@@ -101,7 +101,7 @@ app.get('/read-share-link', async (req, res) => {
   }
 });
 app.get('/assembly', (req, res) => {
-  res.redirect('https://github.com/hackclub/blot/blob/main/docs/ASSEMBLY.md');
+  res.redirect('https://github.com/hackclub/blot/blob/main/docs/assembly/ASSEMBLY.md');
 });
 app.get('/welcome-qr-code', (req, res) => {
   res.redirect('/assembly');

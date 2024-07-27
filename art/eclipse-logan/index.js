@@ -356,3 +356,117 @@ DrawText(TimeText, [78, 7], 1.8);
 if(percentCoverage >= 1){
   DrawText(TotalityText, [79,134],1.8);
 }
+
+// helper functions - added by Leo when porting piece from old library
+
+function calculateBezierPoint(t, p0, p1, p2, p3) {
+  let u = 1 - t
+  let tt = t * t
+  let uu = u * u
+  let uuu = uu * u
+  let ttt = tt * t
+
+  let p = [uuu * p0[0], uuu * p0[1]] // u^3 * p0
+  p[0] += 3 * uu * t * p1[0] // 3u^2t * p1
+  p[1] += 3 * uu * t * p1[1]
+  p[0] += 3 * u * tt * p2[0] // 3ut^2 * p2
+  p[1] += 3 * u * tt * p2[1]
+  p[0] += ttt * p3[0] // t^3 * p3
+  p[1] += ttt * p3[1]
+
+  return p
+}
+
+function findTForGivenX(xTarget, p0, p1, p2, p3) {
+  let tolerance = 0.00001
+  let t = 0.5 // Start with approximate solution
+  let iterations = 0
+
+  while (iterations < 1000) {
+    // Max iterations to prevent infinite loop
+    let p = calculateBezierPoint(t, p0, p1, p2, p3)
+    let difference = p[0] - xTarget
+    if (Math.abs(difference) < tolerance) {
+      return t
+    } else {
+      t = t - difference / 2 // Approximate a new t value
+    }
+    iterations++
+  }
+  return t // Return the approximate t value
+}
+
+function getYForX(x, p0, p1, p2, p3) {
+  let t = findTForGivenX(x, p0, p1, p2, p3)
+  let p = calculateBezierPoint(t, p0, p1, p2, p3)
+  return p[1]
+}
+
+function bezierEasing(initial, p0, p1, final) {
+  return (x) =>
+    getYForX(
+      x,
+      [0, initial],
+      [Math.min(Math.max(0, p0[0]), 1), p0[1]],
+      [Math.min(Math.max(0, p1[0]), 1), p1[1]],
+      [1, final]
+    )
+}
+
+function warp(turtle, fn, baseAngle = null) {
+  const tValues = tValuesForPoints(turtle.path);
+  const newPts = [];
+  tValues.forEach((t, i) => {
+    const pt = turtle.path.flat()[i];
+    let angle = baseAngle ?? bt.getAngle(turtle.path, t);
+    if (typeof angle === "function") {
+      angle = angle(bt.getAngle(turtle.path, t));
+    } else if (typeof angle === "number") {
+      angle = angle;
+    }
+    const y = fn(t);
+    const newPoint = rotate([0, y], angle);
+    newPts.push([pt[0] + newPoint[0], pt[1] + newPoint[1]]);
+  });
+  turtle.path.flat().forEach((pt, i, arr) => {
+    pt[0] = newPts[i][0];
+    pt[1] = newPts[i][1];
+  });
+  return turtle
+
+  function rotate(pt, angle, origin = [0, 0]) {
+    let delta = angle / 180 * Math.PI;
+    let hereX = pt[0] - origin[0];
+    let hereY = pt[1] - origin[1];
+    let newPoint = [
+      hereX * Math.cos(delta) - hereY * Math.sin(delta) + origin[0],
+      hereY * Math.cos(delta) + hereX * Math.sin(delta) + origin[1]
+    ];
+    return newPoint;
+  }
+}
+
+function tValuesForPoints(polylines) {
+  let totalLength = 0;
+  let lengths = [];
+  let tValues = [];
+  let segmentLength = 0;
+  for (let i = 0; i < polylines.length; i++) {
+    let polyline2 = polylines[i];
+    for (let j = 0; j < polyline2.length; j++) {
+      if (j > 0) {
+        let dx = polyline2[j][0] - polyline2[j - 1][0];
+        let dy = polyline2[j][1] - polyline2[j - 1][1];
+        segmentLength = Math.sqrt(dx * dx + dy * dy);
+        totalLength += segmentLength;
+      }
+      lengths.push(segmentLength);
+    }
+  }
+  let accumulatedLength = 0;
+  for (let i = 0; i < lengths.length; i++) {
+    accumulatedLength += lengths[i];
+    tValues.push(accumulatedLength / totalLength);
+  }
+  return tValues;
+};

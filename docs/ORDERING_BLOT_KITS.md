@@ -1,4 +1,4 @@
-# How to order Blot kits
+# How to Order Blot kits
 
 Blot kits are provided by [ISource-Asia](http://www.isource-asia.com/). Our main contact there is Sam Hu.
 I'm (Leo McElroy) going to describe how to order a kit from a contract manufacturer using Sam as an example.
@@ -45,7 +45,7 @@ We also discovered that I had specified the wrong units for the belt length (whi
 
 After okaying the kit we order them by requesting an invoice from Sam which is fulfilled by our payment office (thanks Mel!).
 
-Sam can ship kits directly from China to Hack Clubbers.
+Sam can ship kits directly from China to Hack Clubbers or can ship kits to the warehouse in Vermont.
 
 
 

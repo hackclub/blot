@@ -1,44 +1,7 @@
 import fs from 'fs';
 import { extractFrontmatter } from "../extractFrontmatter.js";
 
-const GALLERY_NOT_TO_DISPLAY = [
-  // "amongUs-SahilDasari",
-  // "leaf-leo",
-  // "Donut-BrightLi",
-  // "blot-ayush",
-  // "BitMap-AdityaPV",
-  // "BlotGrapher-V205",
-  // "dexter_sunnyhouse",
-  // "eca-henry",
-  // "emoji_generator_samarpan",
-  // "flower-sahitid",
-  // "lampda-snipchu",
-  // "landscape-henry",
-  // "linesCircles-yutaro",
-  // "raymarching-henry",
-  // "roots-kai",
-  // "square-disarray-leo",
-  // "sunset-ameya",
-  // "fractalTree-maggieClaireBelle",
-  // "fractures-msw",
-  // "french-fries-eric",
-  // "hilbert_golf-henry",
-  // "L-system-reva",
-  // "Mandelbrot-Oskar",
-  // "Minesweeper-LiterallyEverything",
-  // "QR-sam",
-  // "SpiderWeb-Michelle",
-  // "SudokuGenerator-Ivan",
-  // "weatherreport-rivques",
-  // "word_search-scott_c",
-  // "tree-leo",
-  // "self_portrait-kieran", // need to fix svgs
-  // "blotfont-geschmit", // need to fix svg import
-
-  "mazeGenerator-Evan", // built from source
-
-  "tidal-flats-leo",
-]
+const GALLERY_NOT_TO_DISPLAY = []
 
 function getDirectories(srcPath) {
   return fs.readdirSync(srcPath, { withFileTypes: true })

@@ -8,7 +8,7 @@ import styles from './Toolbar.module.css'
 import Button from '../ui/Button.tsx'
 // import CheckmarkIcon from "../ui/CheckmarkIcon.tsx";
 // import PlugIcon from '../ui/PlugIcon.tsx'
-// import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
+import BrightnessContrastIcon from '../ui/BrightnessContrastIcon.tsx'
 import SettingsIcon from '../ui/SettingsIcon.tsx'
 import KeyboardIcon from '../ui/KeyboardIcon.tsx'
 import GitHubIcon from '../ui/GitHubIcon.tsx'
@@ -48,14 +48,18 @@ const dropdownClasses =`
   flex-col
   absolute
   top-full
-  bg-[var(--primary)]
   w-max
   z-[99999]
   rounded-b-lg
 `;
 
 export default function Toolbar() {
-  const { connected, needsSaving, machineRunning, loginName } = getStore()
+  const { connected, needsSaving, machineRunning, loginName,theme } = getStore()
+  let css = "bg-[var(--primary)]"
+  if(theme == "dark"){
+    css = "bg-[var(--primary-dark)]"
+  }
+
 
   return (
     <div class={styles.root}>
@@ -70,7 +74,7 @@ export default function Toolbar() {
         <RunButton />
         <div class={dropdownContainer}>
           {needsSaving ? 'File*' : "File"}
-          <div class={dropdownClasses + " left-0"}>
+          <div class={dropdownClasses + " left-0 \n " + css}>
             <div class={menuItemClasses} onClick={() => patchStore({ saveToCloudModalOpen: true })}>
               Save to cloud (ctrl/cmd+s)
             </div>
@@ -100,7 +104,7 @@ export default function Toolbar() {
         </div>*/}
         <div class={dropdownContainer}>
           <div>Download</div>
-          <div class={dropdownClasses + " left-0"}>
+          <div class={dropdownClasses + " left-0 \n " + css}>
             <DownloadButton />
             <DownloadSVG />
             <DownloadPNG />
@@ -114,7 +118,7 @@ export default function Toolbar() {
         </div>
         <div class={dropdownContainer}>
           Machine control
-          <div class={dropdownClasses + " right-0"}>
+          <div class={dropdownClasses + " right-0 \n " + css}>
             <div class="p-2 hover:bg-white hover:bg-opacity-10" data-evt-connectTrigger>
               {connected ? 'Disconnect from' : 'Connect to'} machine
             </div>
@@ -236,12 +240,12 @@ function DownloadSVG() {
           t.path.forEach(pl =>
             pl.forEach((pt, i) => {
               const [x, y] = pt
-              if (i === 0) d += `M ${x} ${y}`
-              else d += `L ${x} ${y}`
+              if (i === 0) d += ` M ${x.toFixed(6)} ${y.toFixed(6)} `
+              else d += ` L ${x.toFixed(6)} ${y.toFixed(6)} `
             })
           )
 
-          return d
+          return d.trim();
         }
 
         const turtleToPath = t => {
@@ -291,7 +295,7 @@ function DownloadPNG() {
             pl.forEach((pt, i) => {
               const [x, y] = pt
               if (i === 0) d += `M ${x} ${y}`
-              else d += `L ${x} ${y}`
+              else d += ` L ${x} ${y}`
             })
           )
 
@@ -404,6 +408,10 @@ function formatCode(code) {
 
 function SettingsButton() {
   const { theme, vimMode, loginName } = getStore()
+  let css = "bg-[var(--primary)]"
+  if(theme == "dark"){
+    css = "bg-[var(--primary-dark)]"
+  }
 
   return (
     <div class={dropdownContainer}>
@@ -412,7 +420,7 @@ function SettingsButton() {
           <SettingsIcon className={styles.icon} />
         </a>
       </div>
-      <div class={dropdownClasses + " right-0"}>
+      <div class={dropdownClasses + " right-0 \n " + css}>
         <div
           class={menuItemClasses}
           onClick={() => {
@@ -422,6 +430,26 @@ function SettingsButton() {
           <KeyboardIcon className={styles.icon} />
           <span class="px-2">{vimMode ? 'Disable' : 'Enable'} vim mode</span>
         </div>
+        <div
+          class={menuItemClasses}
+          onClick={() => {
+            const newTheme = theme === 'dark' ? 'light' : 'dark'
+            patchStore({
+              theme: newTheme
+            })
+
+            document.body.dataset.theme = newTheme
+
+            localStorage.setItem('colorTheme', newTheme)
+
+            
+
+          }}>
+         
+          <BrightnessContrastIcon className={styles.icon} />
+          <span class="px-2">Toggle Dark Mode</span>
+        </div>
+        
         { loginName && 
           <div class="p-2 hover:bg-white hover:bg-opacity-10" onClick={logout}>
             Log out
