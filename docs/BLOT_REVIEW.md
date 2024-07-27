@@ -70,9 +70,13 @@ If there are any errors you can note them to the submitter and ask for correctio
 
 Review the submission for the above submission criteria. If you find the submission doesn't meet the criteria explain how so to the submitter in the `Conversation` tab.
 
-If the submission is close to being acceptable then request the user make some specific changes. I will sometimes add the `changes requested` label to note that the project has been reviewed.
+If the submission is close to being acceptable then request the user make some specific changes.
 
 If specific changes can not be suggested that make the submission acceptable then close the PR. It is nice to give some positive encouragement to the submitter and let them know they can submit again in the future.
+
+Requesting changes should be done using the "Code Review" GitHub feature, marking "Request changes" for any PR that isn't ready to be merged:
+
+![](https://cloud-3exn8zq44-hack-club-bot.vercel.app/0screenshot_2024-07-19_at_12.14.41.png)
 
 # Accepting PRs
 
