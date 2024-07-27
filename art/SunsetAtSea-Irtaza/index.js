@@ -1,7 +1,7 @@
 /*
 @title: Sunset At Sea
 @author: Irtaza
-@snapshot: image-11.png
+@snapshot: image-1.png
 */
 const width = 125;
 const height = 125;
