@@ -1,7 +1,7 @@
 /*
 @title: BlottleShip
 @author: LinusC
-@snapshot: BlottleShip.png
+@snapshot: Blottleship.png
 */
 
 //THE FOLLOWING PARAMETERS ARE ONES THAT YOU CAN CHANGE
