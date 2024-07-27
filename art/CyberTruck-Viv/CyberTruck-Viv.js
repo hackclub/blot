@@ -34,13 +34,43 @@ function generateCityscape(cybertruckRoofY) {
     if (xPosition + buildingWidth > width) {
       break; // Stop adding buildings if the next one would exceed the document width
     }
+  let building; // Declare the building variable outside the if-else blocks
+    const buildingTypeNum = Math.round(randInRange(1, 3));
+    const topTypeNum = Math.round(randInRange(1, 3));
+    //const topTypeNum = 2;
+ 
+    if (buildingTypeNum === 1) {
+      building = [
+        [xPosition, yPosition],
+        [xPosition, yPosition + buildingHeight],
+        [xPosition + buildingWidth, yPosition + buildingHeight],
+        [xPosition + buildingWidth, yPosition]
+      ];
+    } else if (buildingTypeNum === 2) {
+      building = [
+        [xPosition, yPosition],
+        [xPosition, yPosition - 5 + buildingHeight],
+        [xPosition + (buildingWidth/2), yPosition + buildingHeight],
+        [xPosition + buildingWidth, yPosition - 5 + buildingHeight],
+        [xPosition + buildingWidth, yPosition]
+      ];
+    } else {
+      building = [
+        [xPosition, yPosition],
+        [xPosition + (buildingWidth/6), yPosition + (buildingHeight/2)],
+        [xPosition, yPosition + buildingHeight],
+        [xPosition + buildingWidth, yPosition + buildingHeight],
+        [xPosition + (
+          buildingWidth - (buildingWidth/6)), yPosition + (buildingHeight/2)],
+        [xPosition + buildingWidth, yPosition]
+      ];
+    }
 
-    const building = [
-      [xPosition, yPosition],
-      [xPosition, yPosition + buildingHeight],
-      [xPosition + buildingWidth, yPosition + buildingHeight],
-      [xPosition + buildingWidth, yPosition]
-    ];
+    // Ensure building height does not exceed document height
+    if (yPosition + buildingHeight > height) {
+      break; // Stop adding buildings if the next one would exceed the document height
+    }
+
 
     // Ensure building height does not exceed document height
     if (yPosition + buildingHeight > height) {
@@ -48,7 +78,29 @@ function generateCityscape(cybertruckRoofY) {
     }
 
     cityLines.push(building);
-
+        let top;
+    if (yPosition + buildingHeight <= height - 10) {
+      if (topTypeNum === 1) {
+        top = [
+          [xPosition + (buildingWidth / 2), yPosition + buildingHeight],
+          [xPosition + (buildingWidth / 2), yPosition + buildingHeight + 9.9]
+        ];
+        cityLines.push(top);
+      } else if (topTypeNum === 2) {
+        if (buildingTypeNum === 2){
+          // do nothing
+        } else {
+            top = [
+              [xPosition + (buildingWidth / 4), yPosition + buildingHeight],
+              [xPosition + (buildingWidth / 2)- (buildingWidth/8) , yPosition + buildingHeight+ 2],
+              [xPosition + (buildingWidth / 2), yPosition + buildingHeight + 9.9],
+              [xPosition + (buildingWidth / 2) + (buildingWidth/8) , yPosition + buildingHeight+ 2],
+              [xPosition + (buildingWidth / 4)+ (buildingWidth / 2), yPosition + buildingHeight],
+            ];
+            cityLines.push(top);
+        }
+      }
+    }
 
     // Add windows
     const numWindows = randInRange(2, 5);
@@ -65,13 +117,14 @@ function generateCityscape(cybertruckRoofY) {
       for (let col = 0; col < maxCols; col++) {
         const posX = xPosition + col * (windowWidth + 5);
         const posY = yPosition + row * (windowHeight + 5);
-        positions.push([posX, posY]);
+        positions.push([posX+5
+                        , posY]);
       }
     }
 
     // Shuffle the positions array to randomize window placement
     for (let k = positions.length - 1; k > 0; k--) {
-      const j = Math.floor(Math.random() * (k + 1));
+      const j = Math.floor(rand() * (k + 1));
       [positions[k], positions[j]] = [positions[j], positions[k]];
     }
 
