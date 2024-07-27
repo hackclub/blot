@@ -20,7 +20,7 @@ const rr = bt.randInRange;
 const sunSize = rr(15, 25);
 const seaLevel = rr(height / 4, height / 2.1);
 const sunCenterX = width / 2;
-const sunHeightOffset = rr(-sunSize, seaLevel - sunSize / 2);
+const sunHeightOffset = rr(seaLevel - sunSize/2, 100);
 
 // Sun rays
 const tsRays = new bt.Turtle();
@@ -29,7 +29,7 @@ const angleIncrement = 180 / rayCount;
 
 for (let i = 0; i < rayCount; i++) {
   tsRays.up();
-  tsRays.goTo([sunCenterX, seaLevel + sunHeightOffset + sunSize + sunSize / 4]);
+  tsRays.goTo([sunCenterX, sunHeightOffset ]);
   tsRays.forward(sunSize - 1);
   tsRays.left(90);
   tsRays.down();
@@ -41,7 +41,7 @@ bt.join(raysLines, tsRays.lines());
 // Sun
 const tSun = new bt.Turtle();
 tSun.up();
-tSun.goTo([sunCenterX - sunSize + 1, seaLevel + sunHeightOffset + sunSize + sunSize / 4]);
+tSun.goTo([sunCenterX - sunSize + 1,  sunHeightOffset ]);
 tSun.down();
 tSun.left(90);
 for (let i = 0; i < 360; i++) {
