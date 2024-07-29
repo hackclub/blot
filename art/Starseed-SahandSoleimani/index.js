@@ -8,7 +8,7 @@
 
 const w = 125; // Canvas width (in mm)
 const h = 125; // Canvas height (in mm)
-const randomnessFactor = 1; // Factor to adjust the randomness of the smaller stars
+const randomnessFactor = 1; // Factor to adjust the randomness
 
 /* ------------------------------------------------------------------- */
 
@@ -30,18 +30,17 @@ function distance(x1, y1, x2, y2) {
 function isOutsideStarSeed(x, y, radius) {
   const starSeedCenterX = 62.5;
   const starSeedCenterY = 62.5;
-  const starSeedMaxRadius = 37.5; // Approximating the maximum radius of the main star
+  const starSeedMaxRadius = 37.5; // Approximately get the maximum radius of starSeed
   return distance(x, y, starSeedCenterX, starSeedCenterY) > (starSeedMaxRadius + radius);
 }
 
 function clipToCanvas(shape) {
-  // Define the canvas bounds as a polygon
   const canvasBounds = [[0, 0], [0, h], [w, h], [w, 0], [0, 0]];
 
   // Check if the shape is an array and contains valid points
   if (Array.isArray(shape) && shape.length > 0 && Array.isArray(canvasBounds) && canvasBounds.length > 0) {
     try {
-      // Ensure both shapes are closed polygons
+      // Ensure both shapes are closed
       if (shape[0][0] !== shape[shape.length - 1][0] || shape[0][1] !== shape[shape.length - 1][1]) {
         shape.push(shape[0]);
       }
@@ -49,14 +48,14 @@ function clipToCanvas(shape) {
         canvasBounds.push(canvasBounds[0]);
       }
 
-      // Perform intersection
+      // Intersect
       return intersection(shape, canvasBounds);
     } catch (error) {
       console.error('Error performing intersection:', error);
       return shape; // Return the original shape if an error occurs
     }
   }
-  return shape; // Return the original shape if input is invalid
+  return shape; // Return the original shape if the input is invalid
 }
 
 /* ------------------------------------------------------------------- */
@@ -64,8 +63,14 @@ function clipToCanvas(shape) {
 setDocDimensions(w, h);
 
 drawLines(background, {fill:"#000000"});
-scale(starSeed, randInRange(1, 1));
-drawLines(starSeed, {fill:"#ffffff", stroke:"#0000FF"});
+
+// Randomly scale and rotate starSeed
+let mainStarSeed = copy(starSeed);
+let mainScale = randInRange(0.8, 1.2); // Scale within a range
+let mainRotation = randInRange(-5 * randomnessFactor, 5 * randomnessFactor); // Rotation within a range
+scale(mainStarSeed, mainScale);
+rotate(mainStarSeed, mainRotation);
+drawLines(mainStarSeed, {fill:"#ffffff", stroke:"#0000FF"});
 
 class Star {
   constructor() {
@@ -74,7 +79,7 @@ class Star {
     this.y = randIntInRange(this.radius, h - this.radius); // Ensure stars fit within canvas
     this.rotation = randInRange(-5 * randomnessFactor, 5 * randomnessFactor); // Adjusted random rotation angle
 
-    // Ensure the new star is not touching the main centered star
+    // Make sure the smaller stars aren't not touching starSeed
     while (!isOutsideStarSeed(this.x, this.y, this.radius)) {
       this.x = randIntInRange(this.radius, w - this.radius);
       this.y = randIntInRange(this.radius, h - this.radius);
