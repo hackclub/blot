@@ -126,11 +126,79 @@ export const toolkit = {
       const svg = doc.querySelector('svg');
       const polylines = flattenSVG(svg, { maxError: 0.001 }).map(pl => pl.points);
 
+      let maxYVal = 0;
+      polylines.forEach((obj) => {
+        obj.forEach((coord) => {
+          if (coord[1] > maxYVal) {
+            maxYVal = coord[1];
+          }
+
+          coord[1] = -coord[1];
+        })
+      })
+
+      polylines.forEach((obj) => {
+        obj.forEach((coord) => {
+          coord[1] = coord[1] + maxYVal;
+        })
+      })
+
       return polylines;
     } catch (err) {
       throw new Error("SVGs can not be parsed in web workers.");
     }
     
+  },
+  scalePolylinesToDimension(polylines, width, height, addPadding){
+    polylines = JSON.parse(polylines);
+    
+    let minXVal = Number.POSITIVE_INFINITY;
+    let minYVal = Number.POSITIVE_INFINITY;
+    polylines.forEach((obj) => {
+      obj.forEach((coord) => {
+        if (coord[0] < minXVal) {
+          minXVal = coord[0];
+        }
+        if (coord[1] < minYVal) {
+          minYVal = coord[1];
+        }
+      })
+    })
+    
+    translate(polylines, [-minXVal, -minYVal]);
+    
+    let maxXVal = Number.NEGATIVE_INFINITY;
+    let maxYVal = Number.NEGATIVE_INFINITY;
+    polylines.forEach((obj) => {
+      obj.forEach((coord) => {
+        if (coord[0] > maxXVal) {
+          maxXVal = coord[0];
+        }
+        if (coord[1] > maxYVal) {
+          maxYVal = coord[1];
+        }
+      })
+    })
+    
+    var ratio = Math.min(width / maxXVal, height / maxYVal);
+    
+    polylines.forEach((obj) => {
+      obj.forEach((coord) => {
+        coord[0] *= ratio;
+        coord[1] *= ratio;
+      })
+    })
+    
+    if (ratio == height / maxYVal) {
+      translate(polylines, [width/2 - maxXVal * ratio / 2, 0]);
+    } else if (ratio == width / maxXVal) {
+      translate(polylines, [0, height/2 - maxYVal * ratio / 2]);
+    }
+    if (addPadding) {
+      scale(polylines, 0.97);
+    }
+    
+    return JSON.stringify(polylines);
   },
   join() {
     const [first, ...rest] = arguments;
