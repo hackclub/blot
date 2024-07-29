@@ -4,10 +4,10 @@
 @snapshot: image-1.png
 */
 
-setDocDimensions(800, 700);
+setDocDimensions(1200, 700);
 
 // Settings
-const seedTop = 1022083;
+const seedTop = 5320;
 //
 
 let pattyY;
@@ -31,6 +31,12 @@ function setOrder(o) {
 }
 bt.setRandSeed(seedTop)
 setOrder(bt.randIntInRange(1, 3))
+
+function last3digits(number) {
+    let lastThreeDigits = number % 1000;
+    let digitsArray = lastThreeDigits.toString().split('').map(Number);
+    return digitsArray;
+}
 
 const seedBottom = ((seedTop * 63) % 42) + 79;
 
@@ -168,6 +174,179 @@ for (let i = 0; i < numTomatoes; i++) {
 
 let tomatoPolylines = tomatoTurtle.lines();
 bt.scale(tomatoPolylines, [3, 0.5])
+
+const receiptTurtle = new bt.Turtle();
+const receiptX = 800
+const xVals = [850,925,1000]
+
+
+
+receiptTurtle.jump([receiptX, 550]);
+receiptTurtle.step([300,0])
+receiptTurtle.step([0,-500])
+receiptTurtle.step([-300,0])
+receiptTurtle.step([0,500])
+receiptTurtle.step([0,-130])
+receiptTurtle.step([300,0])
+receiptTurtle.step([0,-80])
+receiptTurtle.step([-300,0])
+receiptTurtle.step([0,-80])
+receiptTurtle.step([300,0])
+receiptTurtle.step([0,-80])
+receiptTurtle.step([-300,0])
+receiptTurtle.step([0,-80])
+receiptTurtle.step([300,0])
+const last3 = last3digits(seedTop)
+for(let i = 0; i<3; i++){
+  let input = last3[i]
+  const y = 540
+      switch (input) {
+        case 0:
+            zero(xVals[i], y);
+            break;
+        case 1:
+            one(xVals[i], y);
+            break;
+        case 2:
+            two(xVals[i], y);
+            break;
+        case 3:
+            three(xVals[i], y);
+            break;
+        case 4:
+            four(xVals[i], y);
+            break;
+        case 5:
+            five(xVals[i], y);
+            break;
+        case 6:
+            six(xVals[i], y);
+            break;
+        case 7:
+            seven(xVals[i], y);
+            break;
+        case 8:
+            eight(xVals[i], y);
+            break;
+        case 9:
+            nine(xVals[i], y);
+            break;
+        default:
+            console.log(`Invalid input: ${input}`);
+            break;
+    }
+}
+let receiptPolylines = receiptTurtle.lines();
+
+function zero(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,-100])
+  zeroTurtle.step([-50,0])
+  zeroTurtle.step([0,100])
+  drawLines(zeroTurtle.lines())
+}
+
+function one(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.up()
+  zeroTurtle.step([50,0])
+  zeroTurtle.down()
+  zeroTurtle.step([0,-100])
+  drawLines(zeroTurtle.lines())
+}
+
+function two(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([-50,0])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([50,0])
+  drawLines(zeroTurtle.lines())
+}
+
+function three(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([-50,0])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([-50,0])
+  drawLines(zeroTurtle.lines())
+}
+
+function four(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,50])
+  zeroTurtle.step([0,-100])
+  drawLines(zeroTurtle.lines())
+}
+
+function five(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([-50,0])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([-50,0])
+  drawLines(zeroTurtle.lines())
+}
+
+function six(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([-50,0])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([-50,0])
+  zeroTurtle.step([0,50])
+  drawLines(zeroTurtle.lines())
+}
+
+function seven(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,-100])
+  drawLines(zeroTurtle.lines())
+}
+
+function eight(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([-50,0])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,-50])
+  zeroTurtle.step([-50,0])
+  zeroTurtle.step([0,100])
+  drawLines(zeroTurtle.lines())
+}
+
+function nine(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([50,0])
+  zeroTurtle.step([0,-100])
+  zeroTurtle.step([0,50])
+  zeroTurtle.step([-50,0])
+  zeroTurtle.step([0,50])
+  drawLines(zeroTurtle.lines())
+}
 
 const flaglines = [
   [
@@ -3374,4 +3553,5 @@ drawLines(squigglePolylines);
 drawLines(tomatoPolylines);
 drawLines(polylinesBottom);
 drawLines(sesameSeedsBottom);
+drawLines(receiptPolylines);
 drawLines(flaglines)
