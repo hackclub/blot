@@ -1,13 +1,13 @@
 /*
 @title: BlotChess
 @author: Arnnav Kudale (blazecoding2009)
-@snapshot: snapsnot1.png
+@snapshot: snapshot1.png
 */
 
 // Blot Chess Puzzle Generator
 // This program uses the Chess.com API to grab a random puzzle
 // After fetching the random puzzle, this program coverts the FEN format into a Board Array
-// It then draws in a grid and all the pieces on it
+// It then draws in a grid (NOW IN COLOR!) and all the pieces on it
 // Currently it does not show the solution (maybe in the next update it could?!)
 // To show the solution, it could just draw a QR code or a link on the side (can blot even draw a QR code?)
 // Anyways that's that. (Thanks acon for the idea <3)
@@ -17,7 +17,7 @@ const width = 200;
 const height = 200;
 const gridSize = 8;
 const squareSize = width / gridSize;
-const finalLines = [];
+const finalPaths = [];
 const pieces = {
   K: drawPiece,
   Q: drawPiece,
@@ -34,8 +34,6 @@ const pieces = {
 };
 
 setDocDimensions(width, height);
-for (let x = 0; x <= gridSize; x++) finalLines.push([[x * squareSize, 0], [x * squareSize, height]]);
-for (let y = 0; y <= gridSize; y++) finalLines.push([[0, y * squareSize], [width, y * squareSize]]);
 
 function drawPiece(x, y, size, type) {
   const templates = {
@@ -107,7 +105,7 @@ function drawPiece(x, y, size, type) {
       [0.7, 0.9],
     ],
   };
-  finalLines.push(templates[type].map(([dx, dy]) => [x + dx * size, y + dy * size]));
+  finalPaths.push(templates[type].map(([dx, dy]) => [x + dx * size, y + dy * size]));
 }
 
 function drawPieceFilled(x, y, size, type) {
@@ -137,17 +135,46 @@ function fenToBoardArray(fen) {
 }
 
 function drawBoard(boardArray) {
-  	for (let row = 0; row < 8; row++) {
+	for (let row = 0; row < 8; row++) {
 		for (let col = 0; col < 8; col++) {
+			if ((row + col) % 2 === 0) drawWhiteSquare(col * squareSize, row * squareSize, squareSize);
+			else drawBlackSquare(col * squareSize, row * squareSize, squareSize);
+			
 			const piece = boardArray[row][col];
-			if (piece !== " " && pieces[piece]) pieces[piece](
-													col * squareSize,
-													row * squareSize,
-													squareSize,
-													piece.toUpperCase());
+			if (piece !== " " && pieces[piece]) pieces[piece](col * squareSize, row * squareSize, squareSize, piece.toUpperCase());
 		}
-  	}
-  	drawLines(finalLines);
+	}
+	drawLines(finalPaths);
+}
+
+function drawWhiteSquare(x, y, size) {
+  const path = [
+    [x, y],
+    [x + size, y],
+    [x + size, y + size],
+    [x, y + size],
+    [x, y],
+  ];
+  finalPaths.push(path);
+}
+
+function drawBlackSquare(x, y, size) {
+  const path = [
+    [x, y],
+    [x + size, y],
+    [x + size, y + size],
+    [x, y + size],
+    [x, y],
+  ];
+  finalPaths.push(path);
+
+  for (let i = 1; i < 5; i++) {
+    const linePath = [
+      [x, y + i * (size / 5)],
+      [x + size, y + i * (size / 5)],
+    ];
+    finalPaths.push(linePath);
+  }
 }
 
 getDailyPuzzle();
