@@ -15,7 +15,7 @@ const turtle = new bt.Turtle()
 const sunRad = 9;
 const sunRays = 20;
 const randomrays = bt.randIntInRange(5, 8)
-const randomrays1 = bt.randIntInRange(10, 25)
+const randomrays1 = bt.randIntInRange(10, 17)
 const random = bt.randInRange;
 const randnum1 = bt.randIntInRange(10, 30)
 const randnum2 = bt.randIntInRange(10, 30)
@@ -70,6 +70,8 @@ for (let i = 1; i < sunRays + 65; i++) {
   turtle.setAngle(angle).up().forward(0.2).down().forward(distance); // sun ray
 }
 
+const sunraystrim = [[[48, 115], [10, 168], [20, 20]]];
+bt.trim(sunraystrim, 0.25, 0.75);
 
 
 // random cactus position
@@ -212,7 +214,7 @@ const cactus3 = [
 
 function centerPolylines(polylines, documentWidth, documentHeight) {
   const cc = bt.bounds(polylines).cc;
-  bt.translate(polylines, [documentWidth / 12.0, documentHeight / 1.2], cc);
+  bt.translate(polylines, [documentWidth / 5.0, documentHeight / 1.3], cc);
 };
 
 function centerCactus1(cactus1, documentWidth, documentHeight) {
@@ -227,7 +229,7 @@ function centerCactus2(cactus2, documentWidth, documentHeight) {
 
 function centerCactus3(cactus3, documentWidth, documentHeight) {
   const cc = bt.bounds(cactus3).cc;
-  bt.translate(cactus3, [documentWidth / r3posx, documentHeight / r3posy], cc);
+  bt.translate(cactus3, [documentWidth / 1.1, documentHeight / r3posy], cc);
 };
 
 
