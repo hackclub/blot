@@ -4,10 +4,10 @@
 @snapshot: image-1.png
 */
 
-setDocDimensions(1200, 700);
+setDocDimensions(1250, 700);
 
 // Settings
-const seedTop = 17553;
+const seedTop = 20889;
 //
 
 let pattyY;
@@ -195,8 +195,8 @@ drawLines(tomatoPolylines)
 
   
 const receiptTurtle = new bt.Turtle();
-const receiptX = 800
-const xVals = [875,950,1025]
+const receiptX = 850
+const xVals = [925,1000,1075]
 
 receiptTurtle.jump([receiptX, 550]);
 receiptTurtle.step([276,0])
@@ -377,6 +377,65 @@ function nine(x,y){
   zeroTurtle.step([0,50])
   drawLines(zeroTurtle.lines())
 }
+
+function p(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([30,0])
+  zeroTurtle.step([0,-30])
+  zeroTurtle.step([-30,0])
+  zeroTurtle.step([0,30])
+  zeroTurtle.step([0,-60])
+  drawLines(zeroTurtle.lines())
+}
+
+function a(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([30,0])
+  zeroTurtle.step([0,-60])
+  zeroTurtle.step([0,30])
+  zeroTurtle.step([-30,0])
+  zeroTurtle.step([0,30])
+  zeroTurtle.step([0,-60])
+  drawLines(zeroTurtle.lines())
+}
+
+function t(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([30,0])
+  zeroTurtle.step([-15,0])
+  zeroTurtle.step([0,-60])
+  drawLines(zeroTurtle.lines())
+}
+
+function fancyOne(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([15,0])
+  zeroTurtle.step([0,-60])
+  zeroTurtle.step([15,0])
+  zeroTurtle.step([-30,0])
+  drawLines(zeroTurtle.lines())
+}
+
+function dash(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.up()
+  zeroTurtle.step([0,-30])
+  zeroTurtle.down()
+  zeroTurtle.step([30,0])
+  drawLines(zeroTurtle.lines())
+}
+
+fancyOne(900,410)
+dash(950,410)
+p(1000,410)
+a(1050,410)
+t(1100,410)
+
 
 /*
 bt.scale(flaglines, [1, -1])
