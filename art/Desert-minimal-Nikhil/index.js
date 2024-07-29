@@ -17,11 +17,11 @@ const sunRays = 20;
 const randomrays = bt.randIntInRange(5, 8)
 const randomrays1 = bt.randIntInRange(10, 17)
 const random = bt.randInRange;
-const randnum1 = bt.randIntInRange(10, 30)
-const randnum2 = bt.randIntInRange(10, 30)
+const randnum1 = bt.randIntInRange(20, 70)
+const randnum2 = bt.randIntInRange(10, 100)
 const finalLines = [];
-const randx = bt.randIntInRange(0, 10)
-const randy = bt.randIntInRange(30, 60)
+const randx = bt.randIntInRange(4, 218)
+const randy = bt.randIntInRange(49, 60)
 
 // Pyramid 1
 const leftmount = [
@@ -45,7 +45,7 @@ bt.join(finalLines, leftmount);
 // pyramid 2
 const rightmount = [
   bt.nurbs([
-    [67.5, randy + 0],
+    [67.6, randy + 0],
     [randnum2 + 70, 90],
     [randnum2 + 70, 60],
     [width, randy + 0]
@@ -84,7 +84,7 @@ const r2posx = bt.randIntInRange(3.0, 1.5)
 const r2posy = bt.randIntInRange(1.8, 4.0)
 //cactus3
 const r3posx = bt.randIntInRange(1.0, 1.1)
-const r3posy = bt.randIntInRange(1.8, 5.0)
+const r3posy = bt.randIntInRange(1.6, 3.5)
 
 
 // random cactus shape - inspired from augustin
@@ -94,11 +94,11 @@ const r3posy = bt.randIntInRange(1.8, 5.0)
 const rc1 = bt.randIntInRange(13, 21)
 const rc2 = bt.randIntInRange(35, 45)
 //mid
-const rc3 = bt.randIntInRange(41, 49)
-const rc4 = bt.randIntInRange(50, 70)
+const rc3 = bt.randIntInRange(21, 40)
+const rc4 = bt.randIntInRange(67, 69)
 //left
-const rc6 = bt.randIntInRange(20, 33)
-const rc7 = bt.randIntInRange(37, 62)
+const rc6 = bt.randIntInRange(28, 12)
+const rc7 = bt.randIntInRange(53, 80)
 const rc10 = bt.randIntInRange(0, -3)
 //bottom
 const rc8 = bt.randIntInRange(15, 25)
@@ -106,11 +106,11 @@ const rc9 = bt.randIntInRange(9, 14)
 
 //cactus2
 //right
-const rc11 = bt.randIntInRange(13, 21)
-const rc12 = bt.randIntInRange(35, 45)
+const rc11 = bt.randIntInRange(13, 30)
+const rc12 = bt.randIntInRange(30, 61)
 //mid
-const rc13 = bt.randIntInRange(41, 49)
-const rc14 = bt.randIntInRange(50, 70)
+const rc13 = bt.randIntInRange(40, 39)
+const rc14 = bt.randIntInRange(59, 70)
 //left
 const rc16 = bt.randIntInRange(20, 33)
 const rc17 = bt.randIntInRange(37, 62)
@@ -124,12 +124,12 @@ const rc19 = bt.randIntInRange(9, 14)
 const rc21 = bt.randIntInRange(13, 21)
 const rc22 = bt.randIntInRange(35, 45)
 //mid
-const rc23 = bt.randIntInRange(51, 65)
+const rc23 = bt.randIntInRange(58, 81)
 const rc24 = bt.randIntInRange(60, 80)
 //left
-const rc26 = bt.randIntInRange(20, 33)
-const rc27 = bt.randIntInRange(37, 62)
-const rc210 = bt.randIntInRange(0, -3)
+const rc26 = bt.randIntInRange(26, 26)
+const rc27 = bt.randIntInRange(55, 80)
+const rc210 = bt.randIntInRange(0, -2)
 //bottom
 const rc28 = bt.randIntInRange(15, 25)
 const rc29 = bt.randIntInRange(9, 14)
@@ -164,19 +164,19 @@ const cactus1 = [
 const cactus2 = [
   bt.nurbs([
     [9, rc18],
-    [7, 25],
+    [11, 25],
     [6, rc16],
     [rc110, 35],
     [rc110, rc17],
     [5, 35],
-    [7, 33],
+    [7, 30],
     [5, rc13],
     [10, rc14],
     [16, rc13],
     [13, 33],
-    [15, 29],
+    [12, 29],
     [16, 33],
-    [15, 36],
+    [15, 34],
     [21, rc12],
     [20, 33],
     [20, 31],
