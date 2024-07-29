@@ -1,9 +1,6 @@
-import { assertArgs } from "./assert.js";
 import { bounds } from "./bounds.js";
 
-export function translate(polylines, to, origin = [0, 0]) {
-  assertArgs(arguments, ['polylines', 'point', 'point?'], 'bt.translate')
-
+export const translate = (polylines, to, origin = [0, 0]) => {
   polylines.flat().forEach(pt => {
     const [x, y] = translatePt(pt, to, origin);
     pt[0] = x;
@@ -13,9 +10,7 @@ export function translate(polylines, to, origin = [0, 0]) {
   return polylines;
 }
 
-export function rotate(polylines, angle, origin) {
-  assertArgs(arguments, ['polylines', 'number', 'point?'], 'bt.rotate')
-
+export const rotate = (polylines, angle, origin) => {
   if (!origin) origin = bounds(polylines).cc
 
   polylines.flat().forEach(pt => {
@@ -27,9 +22,7 @@ export function rotate(polylines, angle, origin) {
   return polylines
 }
 
-export function scale(polylines, factor, origin) {
-  assertArgs(arguments, ['polylines', ['number', 'point'], 'point?'], 'bt.scale')
-
+export const scale = (polylines, factor, origin) => {
   if (!origin) origin = bounds(polylines).cc
 
   polylines.flat().forEach(pt => {
