@@ -1,3 +1,9 @@
+/*
+@title: BlotChess
+@author: Arnnav Kudale (blazecoding2009)
+@snapshot: snapsnot1.png
+*/
+
 // Blot Chess Puzzle Generator
 // This program uses the Chess.com API to grab a random puzzle
 // After fetching the random puzzle, this program coverts the FEN format into a Board Array
