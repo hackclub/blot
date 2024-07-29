@@ -76,9 +76,10 @@ function drawPiece(x, y, size, type) {
       [0.4, 0.2],
       [0.6, 0.2],
       [0.5, 0.1],
-      [0.3, 0.3],
-      [0.7, 0.3],
-      [0.5, 0.5],
+      [0.4, 0.4],
+      [0.6, 0.4],
+      [0.4, 0.6],
+      [0.6, 0.6],
       [0.3, 0.9],
       [0.7, 0.9],
     ],
@@ -87,30 +88,26 @@ function drawPiece(x, y, size, type) {
       [0.4, 0.2],
       [0.6, 0.2],
       [0.5, 0.1],
-      [0.4, 0.4],
-      [0.6, 0.4],
-      [0.4, 0.6],
-      [0.6, 0.6],
+      [0.5, 0.3],
+      [0.3, 0.4],
+      [0.7, 0.4],
+      [0.5, 0.5],
       [0.3, 0.9],
       [0.7, 0.9],
     ],
     P: [
-      [0.5, 0.1],
-      [0.4, 0.2],
-      [0.6, 0.2],
-      [0.5, 0.1],
-      [0.3, 0.3],
-      [0.7, 0.3],
-      [0.3, 0.9],
-      [0.7, 0.9],
+      [0.5, 0.3],
+      [0.5, 0.7],
+      [0.4, 0.8],
+      [0.6, 0.8],
     ],
   };
   finalPaths.push(templates[type].map(([dx, dy]) => [x + dx * size, y + dy * size]));
 }
 
 function drawPieceFilled(x, y, size, type) {
-  for (let i = 0; i < 10; i++) {
-    drawPiece(x, y + i * 0.01 * size, size, type);
+  for (let i = 0; i < 4; i++) {
+    drawPiece(x, y + i * 0.02 * size, size, type);
   }
 }
 
@@ -120,7 +117,7 @@ function getDailyPuzzle() {
   xhr.onload = function () {
     if (xhr.status >= 200 && xhr.status < 300) {
       const daily = JSON.parse(xhr.responseText);
-      const boardArray = fenToBoardArray(daily.fen);
+      const boardArray = fenToBoardArray("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
       drawBoard(boardArray);
     }
   };
