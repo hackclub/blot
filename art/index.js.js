@@ -1,12 +1,12 @@
 /*
 @title: A Fractal Foray into the Forest
 @author: Adya
-@snapshot: FractalTree
+@snapshot: FractalTree.png
 */
 
 // Set Dimensions
-const width = 125;
-const height = 125;
+const width = 165;
+const height = 160;
 setDocDimensions(width, height);
 
 // Store final lines...
