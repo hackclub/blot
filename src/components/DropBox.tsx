@@ -8,10 +8,10 @@ export default function DropBox() {
     // Make sure the ref is defined
     addDragDrop();
   }, []); // Empty dependency array means this effect runs once after initial render
-  
+
   return (
     <div
-    class="
+      class="
       drop 
       droparea 
       
@@ -31,47 +31,47 @@ export default function DropBox() {
       top-0 
       z-50"
     >
-    Drop an SVG or JS file.
+      Drop an SVG or JS file.
     </div>
   );
 }
 
 function addDragDrop() {
   const droparea: HTMLElement | null = document.querySelector(".droparea");
-  
+
   window.addEventListener("drop", function (evt) {
     const { view } = getStore();
-    
+
     let dt = evt.dataTransfer;
-    
+
     if (dt === null || droparea === null) return;
-    
+
     let files = dt.files;
-    
+
     droparea.classList.add("hidden");
-    
+
     const file = files[0];
     const fileName = file.name.split(".");
     const name = fileName[0];
     const extension = fileName[fileName.length - 1];
-    
+
     var reader = new FileReader();
     reader.readAsText(file);
-    
+
     reader.onloadend = (event) => {
       let text = reader.result;
-      
+
       if (extension === "js") {
         loadCodeFromString(text);
       } else if (extension === "svg") {
         text = text.replaceAll("\n", "");
-        
+
         const polylines = JSON.stringify(tk.svgToPolylines(text));
-        
+
         customAlert(polylines);
-        
+
         // const newLines = `const importedSVG = ${polylines};\n`;
-        
+
         // view.dispatch({
         //   changes: { from: 0, insert: newLines },
         // });
@@ -79,19 +79,19 @@ function addDragDrop() {
         throw Error("Unknown extension:" + extension);
       }
     };
-    
+
     pauseEvent(evt);
   });
-  
+
   window.addEventListener("dragover", function (evt) {
     droparea.classList.remove("hidden");
     pauseEvent(evt);
   });
   ["mouseout"].forEach((trigger) =>
     window.addEventListener(trigger, function (evt) {
-    droparea.classList.add("hidden");
-  }),
-);
+      droparea.classList.add("hidden");
+    }),
+  );
 }
 
 function pauseEvent(e) {
@@ -137,7 +137,7 @@ function customAlert(polylines) {
         <div>Here are the polylines of your SVG. Copy and paste it into the editor.</div>
         <pre style="${polylinesStyle}">${polylines}</pre>
       </div>
-  
+
       <span style="width: 100%; display: flex;">
         <button id="closeButton"" ${buttonClasses}>
           close
@@ -148,7 +148,7 @@ function customAlert(polylines) {
       </span>
     </div>
   `
-  
+
   el.querySelector("#closeButton").addEventListener("click", () => {
     el.remove();
   })
