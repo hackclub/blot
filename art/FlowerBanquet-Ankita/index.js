@@ -1,9 +1,14 @@
 /* 
 @title: Flower Banquet
 @author: Ankita
-@snapshot: snapshot1.png
+@snapshot: snapshot3.png
 */
 
+
+/*
+You can change the number and size of petals, and the positions, colors, and line colors of flowers.
+
+*/
 
 const detail = 6; // no. of petals
 const size = 38; // size of petals
