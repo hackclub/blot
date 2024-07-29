@@ -95,13 +95,13 @@ export async function createComsManager(buffer) {
 }
 
 function pack(msg, payload, msgCount) {
-  // const length = 1+msg.length+1+payload.length+1+1;
+  // const length = 1+msg.length+1+payload.length+1;
   const buffer = []
 
   if (msg.length > 255) console.error('msg too long')
   buffer.push(msg.length)
   msg.split('').forEach(char => buffer.push(char.charCodeAt(0)))
-  if (msg.length > 255) console.error('payload too long')
+  if (payload.length > 255) console.error('payload too long')
   buffer.push(payload.length)
   payload.forEach(byte => buffer.push(byte))
   buffer.push(msgCount)
