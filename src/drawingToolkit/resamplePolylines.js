@@ -1,5 +1,3 @@
-import { assertArgs } from './assert'
-
 function isect_circ_line(
   cx,
   cy,
@@ -108,8 +106,6 @@ function resamplePolyline(polyline, step) {
 }
 
 export function resamplePolylines(polylines, resolution) {
-  assertArgs(arguments, ['polylines', 'number'], 'bt.resample')
-
   polylines.forEach(pl => {
     const newPl = resamplePolyline(pl, resolution)
     while (pl.length > 0) pl.pop()

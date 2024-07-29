@@ -1,8 +1,4 @@
-import { assertArgs } from './assert'
-
 export function catmullRom(controlPoints, segments = 100) {
-  assertArgs(arguments, ['polyline', 'number?'], 'bt.catmullRom');
-
   const isClosed = (points) => {
     const start = points[0];
     const end = points[points.length - 1];

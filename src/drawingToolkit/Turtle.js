@@ -1,13 +1,10 @@
 import { translatePt, rotatePt } from "./affineTransformations.js";
-import { assertArgs } from './assert.js'
 
 const copy = obj => JSON.parse(JSON.stringify(obj))
 
 export class Turtle {
 
   constructor() {
-    assertArgs(arguments, [], 'new bt.Turtle')
-
     this.drawing = true
     this.position = [ 0, 0 ]
     this.angle = 0
@@ -18,8 +15,6 @@ export class Turtle {
   }
 
   up() {
-    assertArgs(arguments, [], 'turtle.up')
-
     if (!this.drawing) return this
     this.drawing = false
     this.path.push([[...this.position]])
@@ -27,15 +22,11 @@ export class Turtle {
   }
 
   down() {
-    assertArgs(arguments, [], 'turtle.down')
-
     this.drawing = true
     return this
   }
 
   goTo([x, y]) {
-    assertArgs(arguments, ['point'], 'turtle.goTo')
-
     const lastPath = this.path.at(-1)
     if (this.drawing) {
       const [lastX, lastY] = this.position
@@ -51,9 +42,7 @@ export class Turtle {
     return this
   }
 
-  step([dx, dy]) {
-    assertArgs(arguments, ['point'], 'turtle.step')
-
+  step([dx, dy]) { // document this
     const [x, y] = this.position;
 
     this.goTo([
@@ -65,8 +54,6 @@ export class Turtle {
   }
 
   jump(pt) {
-    assertArgs(arguments, ['point'], 'turtle.jump')
-
     const [x, y] = pt;
     const lastPath = this.path.at(-1);
     if (lastPath.length === 1) {
@@ -82,8 +69,6 @@ export class Turtle {
   }
 
   forward(distance) {
-    assertArgs(arguments, ['number'], 'turtle.forward')
-
     const last = this.position
     const a = (this.angle / 180) * Math.PI
     const x = last[0] + distance * Math.cos(a)
@@ -95,8 +80,6 @@ export class Turtle {
   }
 
   arc(angle, radius) {
-    assertArgs(arguments, ['number', 'number'], 'turtle.arc')
-
     if (angle === 0 || radius === 0) return this;
     
     const n = 64;
@@ -135,8 +118,6 @@ export class Turtle {
 
   // setHeading?
   setAngle(theta) {
-    assertArgs(arguments, ['number'], 'turtle.setAngle')
-
     this.angle = theta
 
     return this
@@ -147,24 +128,18 @@ export class Turtle {
   // }
 
   right(theta) {
-    assertArgs(arguments, ['number'], 'turtle.right')
-
     this.angle -= theta
 
     return this
   }
 
   left(theta) {
-    assertArgs(arguments, ['number'], 'turtle.left')
-
     this.angle += theta
 
     return this
   }
 
   lines() { // could be called polylines
-    assertArgs(arguments, [], 'turtle.lines')
-
     const pls = copy(this.path);
 
     return pls.filter(pl => pl.length > 1);
@@ -172,8 +147,6 @@ export class Turtle {
 
 
   copy() {
-    assertArgs(arguments, [], 'turtle.copy')
-
     const t = new Turtle()
 
     t.path = copy(this.path)
@@ -185,16 +158,12 @@ export class Turtle {
   }
 
   applyToPath(fn) {
-    assertArgs(arguments, ['function'], 'turtle.applyToPath')
-
     fn(this.path);
     return this;
   }
 
   // undoced
   apply(fn) {
-    assertArgs(arguments, ['function'], 'turtle.apply')
-    
     fn(this);
     return this;
   }

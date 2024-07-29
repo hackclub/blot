@@ -1,8 +1,4 @@
-import { assertArgs } from './assert'
-
 export function iteratePolylines(polylines, fn) {
-  assertArgs(arguments, ['polylines', 'function'], 'bt.iteratePoints')
-
   const toRemove = new Set()
   const toBreak = new Set()
 

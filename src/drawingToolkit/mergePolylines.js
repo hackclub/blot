@@ -1,8 +1,4 @@
-import { assertArgs } from './assert'
-
 export function mergePolylines(polylines) {
-  assertArgs(arguments, ['polylines'], 'bt.merge');
-
   let merged = true;
 
   while (merged) {

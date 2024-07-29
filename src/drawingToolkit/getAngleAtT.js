@@ -1,8 +1,4 @@
-import { assertArgs } from './assert'
-
 export function getAngleAtT(polylines, t) {
-  assertArgs(arguments, ['polylines', 'number'], 'bt.getAngle')
-
   // Calculate the total length of all polylines
   let totalLength = 0
   let lengths = polylines.map(polyline => {

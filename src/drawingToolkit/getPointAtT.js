@@ -1,8 +1,4 @@
-import { assertArgs } from './assert'
-
 export function getPointAtT(polylines, t) {
-  assertArgs(arguments, ['polylines', 'number'], 'bt.getPoint')
-
   t = Math.max(t, 0)
   t = Math.min(t, 1)
 

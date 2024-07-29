@@ -1,4 +1,3 @@
-import { assertArgs } from './drawingToolkit/assert.js'
 import { toolkit } from "./drawingToolkit/toolkit.js";
 import { Turtle } from './drawingToolkit/Turtle.js'
 import { getPosFromErr } from "./getPosFromErr.js";
@@ -63,14 +62,10 @@ https://github.com/hackclub/blot/issues/161`);
         console: patchedConsole,
 
         setDocDimensions(w, h) {
-            assertArgs(arguments, ['number', 'number'], 'setDocDimensions');
-
             docDimensions.width = w;
             docDimensions.height = h;
         },
-        drawLines(polylines = [], style = {}) {
-            assertArgs(arguments, ['polylines', 'any?'], 'drawLines');
-
+        drawLines: (polylines = [], style = {}) => {
             if (polylines.length === 0) return;
 
             const temp = {};

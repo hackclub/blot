@@ -1,8 +1,4 @@
-import { assertArgs } from './assert'
-
 export function getNormalAtT(polylines, t) {
-  assertArgs(arguments, ['polylines', 'number'], 'bt.getNormal')
-
   // Calculate the total length of all polylines
   let totalLength = 0
   let lengths = polylines.map(polyline => {
