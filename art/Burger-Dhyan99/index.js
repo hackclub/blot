@@ -7,7 +7,7 @@
 setDocDimensions(1250, 700);
 
 // Settings
-const seedTop = 20889;
+const seedTop = 7426;
 //
 
 let pattyY;
@@ -15,6 +15,8 @@ let lettuceY;
 let tomatoYStart;
 
 const yVals = [415,342.5,280]
+const receiptYVals = [410,330,250]
+const receiptXVals = [900,870,840]
 const items = ["lettuce","patty","tomato"]
 
 function setOrder(o,pos) {
@@ -32,7 +34,24 @@ function setOrder(o,pos) {
 }
 bt.setRandSeed(seedTop)
 for(let i = 0; i<3; i++){
-setOrder(bt.randIntInRange(0, 2),yVals[i])
+const rand = bt.randIntInRange(0, 2)
+setOrder(rand,yVals[i])
+  switch(rand){
+    case 0:
+        l(receiptXVals[i] + 100,receiptYVals[i])
+        e(receiptXVals[i] + 150,receiptYVals[i])
+        t(receiptXVals[i] + 200,receiptYVals[i])
+        break;
+    case 1:
+        p(receiptXVals[i] + 100,receiptYVals[i])
+        a(receiptXVals[i] + 150,receiptYVals[i])
+        t(receiptXVals[i] + 200,receiptYVals[i])
+        break;
+    case 2:
+        t(receiptXVals[i] + 100,receiptYVals[i])
+        o(receiptXVals[i] + 150,receiptYVals[i])
+        m(receiptXVals[i] + 200,receiptYVals[i])
+  }
 }
 
 function last3digits(number) {
@@ -410,12 +429,77 @@ function t(x,y){
   drawLines(zeroTurtle.lines())
 }
 
+function l(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([0,-60])
+  zeroTurtle.step([30,0])
+  drawLines(zeroTurtle.lines())
+}
+
+function e(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([30,0])
+  zeroTurtle.step([-30,0])
+  zeroTurtle.step([0,-30])
+  zeroTurtle.step([30,0])
+  zeroTurtle.step([-30,0])
+  zeroTurtle.step([0,-30])
+  zeroTurtle.step([30,0])
+  drawLines(zeroTurtle.lines())
+}
+
+function o(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([30,0])
+  zeroTurtle.step([0,-60])
+  zeroTurtle.step([-30,0])
+  zeroTurtle.step([0,60])
+  drawLines(zeroTurtle.lines())
+}
+
+function m(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([0,-60])
+  zeroTurtle.step([0,60])
+  zeroTurtle.step([15,-30])
+  zeroTurtle.step([15,30])
+  zeroTurtle.step([0,-60])
+  drawLines(zeroTurtle.lines())
+}
+
 function fancyOne(x,y){
   const zeroTurtle = new bt.Turtle();
   zeroTurtle.jump([x,y])
   zeroTurtle.step([15,0])
   zeroTurtle.step([0,-60])
   zeroTurtle.step([15,0])
+  zeroTurtle.step([-30,0])
+  drawLines(zeroTurtle.lines())
+}
+
+function fancyTwo(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([30,0])
+  zeroTurtle.step([0,-30])
+  zeroTurtle.step([-30,0])
+  zeroTurtle.step([0,-30])
+  zeroTurtle.step([30,0])
+  drawLines(zeroTurtle.lines())
+}
+
+function fancyThree(x,y){
+  const zeroTurtle = new bt.Turtle();
+  zeroTurtle.jump([x,y])
+  zeroTurtle.step([30,0])
+  zeroTurtle.step([0,-30])
+  zeroTurtle.step([-30,0])
+  zeroTurtle.step([30,0])
+  zeroTurtle.step([0,-30])
   zeroTurtle.step([-30,0])
   drawLines(zeroTurtle.lines())
 }
@@ -432,9 +516,11 @@ function dash(x,y){
 
 fancyOne(900,410)
 dash(950,410)
-p(1000,410)
-a(1050,410)
-t(1100,410)
+fancyTwo(870,330)
+dash(920,330)
+fancyThree(840,250)
+dash(890,250)
+
 
 
 /*
