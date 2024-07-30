@@ -7,17 +7,17 @@
 // available characters:
 // ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890?!.,abcdefghijklmnopqrstuvwxyz_+-*/
 
-const TEXT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890?!.,abcdefghijklmnopqrstuvwxyz_+-*/";
-const FONT_SIZE = 12; // pt
+const TEXT = "The quick brown fox jumps over the lazy dog";
+const FONT_SIZE = bt.randIntInRange(10, 20); // pt
 
-const SIDE_MARGIN = 5; // mm
-const TOP_MARGIN = 5; // mm
+const SIDE_MARGIN = bt.randIntInRange(3, 12); // mm
+const TOP_MARGIN = bt.randIntInRange(3, 12); // mm
 
 const DOC_WIDTH = 125; // mm
 const DOC_HEIGHT = 125; // mm
 
-const PAGE_WIDTH = 74; // mm
-const PAGE_HEIGHT = 105; // mm
+const PAGE_WIDTH = bt.randIntInRange(60, 120);; // mm
+const PAGE_HEIGHT = bt.randIntInRange(60, 120);; // mm
 
 // - - - - - - - - - -
 
