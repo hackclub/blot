@@ -11,7 +11,7 @@ var ParseCoords=($,f=1)=>{const r=[];for(const f of $.split(":"))parseFloat(f)&&
 const randomAntenna = Math.floor(bt.rand() * (40 - 15) + 15);
 const talkgroups = ["EMS", "FIRE", "LAW", "DISPATCH", "OPS"]
 const posadjustx = Math.floor(bt.rand() * (71 - -11) + -11)
-const posadjusty = Math.floor(bt.rand() * (14.5 - -4.5) + -4.5); 
+const posadjusty = Math.floor(bt.rand() * (14.5 - -4.5) + -4.5);
 
 const width = 125;
 const height = 125;
@@ -93,7 +93,7 @@ let usedMenu = []
 for (var i = 0; i < 4; i++) {
   var menuOption = "";
   var alphabet = "abcdefghijklmnopqrstuvwxyz";
-  
+
   menuOption += alphabet[Math.floor(bt.rand() * alphabet.length)];
 
   if (usedMenu.includes(menuOption)) {
@@ -102,58 +102,53 @@ for (var i = 0; i < 4; i++) {
   } else {
     usedMenu.push(menuOption)
   }
-  
-  DrawText(menuOption, [24+(i*5) + posadjustx, 49 + posadjusty], 0.5);
+
+  DrawText(menuOption, [24 + (i * 5) + posadjustx, 49 + posadjusty], 0.5);
 }
 
 var talkgroup = talkgroups[Math.floor(bt.rand() * talkgroups.length)];
 DrawText(talkgroup, [27 + posadjustx, 59 + posadjusty], 0.5);
 
-/*buttons
-  .jump([22.25,46])
-  .forward(5)*/
-
 for (var i = 0; i < 4; i++) {
   const blines = new bt.Turtle()
-  square(22.25+(i * 5) + posadjustx,46 + posadjusty,5,4,buttons)
+  square(22.25 + (i * 5) + posadjustx, 46 + posadjusty, 5, 4, buttons)
   buttons
-    .jump([24.8+(i * 5) + posadjustx,43 + posadjusty])
+    .jump([24.8 + (i * 5) + posadjustx, 43 + posadjusty])
     .arc(360, 1)
-  
+
   blines
-  .jump([24.8+(i * 5) + posadjustx,46 + posadjusty])
-  .left(90)
-  .forward(2)
+    .jump([24.8 + (i * 5) + posadjustx, 46 + posadjusty])
+    .left(90)
+    .forward(2)
   drawLines(blines.lines())
 }
 
 const freq = `${Math.floor(bt.rand() * (9 - 1) + 1)}${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)}.${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)} MHz`
-DrawText(freq, [27 + posadjustx,55 + posadjusty],0.5)
+DrawText(freq, [27 + posadjustx, 55 + posadjusty], 0.5)
 
 
 for (var i = 0; i < 3; i++) {
   for (var x = 0; x < 4; x++) {
-    square(24.5+(i * 5) + posadjustx,40-(x * 4) + posadjusty,5,4,keypad)
+    square(24.5 + (i * 5) + posadjustx, 40 - (x * 4) + posadjusty, 5, 4, keypad)
   }
 }
 
 for (var i = 1; i <= 3; i++) {
-  DrawText(`${i}`, [26.5 + ((i * 5)-5) + posadjustx,37 + posadjusty],0.5)
+  DrawText(`${i}`, [26.5 + ((i * 5) - 5) + posadjustx, 37 + posadjusty], 0.5)
 }
 
 for (var i = 4; i <= 6; i++) {
-  DrawText(`${i}`, [26.5 + (((i-3) * 5)-5) + posadjustx,37-4 + posadjusty],0.5)
+  DrawText(`${i}`, [26.5 + (((i - 3) * 5) - 5) + posadjustx, 37 - 4 + posadjusty], 0.5)
 }
 
 for (var i = 7; i <= 9; i++) {
-  DrawText(`${i}`, [26.5 + (((i-6) * 5)-5) + posadjustx,37-8 + posadjusty],0.5)
+  DrawText(`${i}`, [26.5 + (((i - 6) * 5) - 5) + posadjustx, 37 - 8 + posadjusty], 0.5)
 }
 
-DrawText(`*`, [26.5 + ((1 * 5)-5) + posadjustx,37-12 + posadjusty],0.5)
-DrawText(`0`, [26.5 + ((2 * 5)-5) + posadjustx,37-12 + posadjusty],0.5)
-DrawText(`#`, [26.5 + ((3 * 5)-5) + posadjustx,37-12 + posadjusty],0.5)
+DrawText(`*`, [26.5 + ((1 * 5) - 5) + posadjustx, 37 - 12 + posadjusty], 0.5)
+DrawText(`0`, [26.5 + ((2 * 5) - 5) + posadjustx, 37 - 12 + posadjusty], 0.5)
+DrawText(`#`, [26.5 + ((3 * 5) - 5) + posadjustx, 37 - 12 + posadjusty], 0.5)
 
-// sa$90,f$4,sa$0,r$71.57,f$3.162,sa$0,l$71.57,f$3.162,sa$0,r$90,f$4
 const mSize = 1.5
 logoM
   .jump([30.5 + posadjustx, 71 + posadjusty])
@@ -164,17 +159,16 @@ logoM
   .forward(3.162 + mSize)
   .setAngle(0)
   .left(71.57)
-  .forward(3.162 +mSize)
+  .forward(3.162 + mSize)
   .setAngle(0)
   .right(90)
   .forward(4 + mSize)
 
-//DrawText(`M`, [30.5 + posadjustx, 71 + posadjusty], 1.5)
 
 logo
   .jump([32 + posadjustx, 69.7 + posadjusty])
-  .arc(360,4)
+  .arc(360, 4)
 
-drawLines(logoM.lines(), {width: 4})
+drawLines(logoM.lines(), { width: 4 })
 
-needsRendering.forEach((element) => drawLines(element.lines(), {width: 2}));
+needsRendering.forEach((element) => drawLines(element.lines(), { width: 2 }));
