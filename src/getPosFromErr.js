@@ -45,7 +45,6 @@ export function getPosFromErr(err) {
       // Frames with isEval() are within user code, the
       // topmost one is the error location
       const frame = stack.find(f => f.isEval())
-      console.log(frame, frame.getLineNumber(), frame.getColumnNumber())
       return { line: frame.getLineNumber() - 3, column: frame.getColumnNumber() - 1 }
     }
 

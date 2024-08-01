@@ -4,6 +4,7 @@ Type strings:
 - point: [x, y]
 - polyline: point[]
 - polylines: polyline[]
+- numberArray: [x, y, z]
 - function
 - boolean
 - undefined
@@ -24,8 +25,24 @@ function getType(value) {
   if (Array.isArray(value)) {
     if (value.length === 0) return "emptyArray";
     if (value.length === 2 && value.every(v => typeof v === "number")) return "point";
-    if (value.every(v => getType(v) === "point")) return "polyline";
-    if (value.every(v => getType(v) === "polyline")) return "polylines";
+
+    // Check that the contents of the array match the types specified
+    const checkArray = (arr, types) => {
+      if (arr.length <= 10) {
+        // Check every value
+        return arr.every(v => types.includes(getType(v)));
+      } else {
+        // First, last, and spot check, for efficiency
+        return (
+          types.includes(getType(arr[0])) &&
+          types.includes(getType(arr[arr.length - 1])) &&
+          types.includes(getType(arr[Math.floor(arr.length / 2)]))
+        );
+      }
+    }
+    if (checkArray(value, ["point"])) return "polyline";
+    if (checkArray(value, ["polyline", "emptyArray"])) return "polylines";
+    if (checkArray(value, ["number"])) return "numberArray";
   }
   if (typeof value === "function") return "function";
   if (typeof value === "boolean") return "boolean";
@@ -39,6 +56,7 @@ const typeStrings = {
   polyline: "a single polyline",
   polylines: "an array of polylines",
   emptyArray: "an empty array",
+  numberArray: "an array of numbers",
   function: "a function",
   boolean: "a boolean",
   undefined: "undefined",
@@ -61,7 +79,7 @@ function getTypeString(type) {
 
 function typeMatches(type, expected) {
   if (Array.isArray(expected)) {
-    return expected.some(t => typeMatches(t, type));
+    return expected.some(t => typeMatches(type, t));
   }
   if (expected.endsWith("?") && type === "undefined") return true;
 
@@ -71,12 +89,16 @@ function typeMatches(type, expected) {
     type === "emptyArray" &&
     ["polyline", "polylines"].includes(expectedType)
   ) return true;
+  if (
+    type === "point" &&
+    expectedType === "numberArray"
+  ) return true;
 
   return type === expectedType;
 }
 
 /**
- * @typedef {'number' | 'point' | 'polyline' | 'polylines' | 'function' | 'boolean' | 'undefined' | 'any'} ExpectedTypeString
+ * @typedef {'number' | 'point' | 'polyline' | 'polylines' | 'numberArray' | 'function' | 'boolean' | 'undefined' | 'any'} ExpectedTypeString
  * @typedef {ExpectedTypeString | ExpectedTypeString[]} ExpectedType
  * 
  * @param {any[]} args

@@ -14,7 +14,8 @@ let scaled_cosine = function (i) {
 let perlin// will be initialized lazily by noise() or noiseSeed()
 
 export function noise( vector, options = {}) {
-  assertArgs(arguments, ['point', 'any?'], 'bt.noise')
+  assertArgs(arguments, [['number', 'numberArray'], 'any?'], 'bt.noise')
+
   if (typeof vector === 'number') vector = [vector, 0, 0]
   let [x, y, z] = vector
   y = y || 0
@@ -24,7 +25,7 @@ export function noise( vector, options = {}) {
   const perlin_amp_falloff = options?.falloff || 0.5 // 50% reduction/octave
 
   if (perlin == null) {
-    perlin = Float64Array.from({ length: PERLIN_SIZE + 1 }, rand)
+    perlin = Float64Array.from({ length: PERLIN_SIZE + 1 }, () => rand())
   }
 
   if (x < 0) {

@@ -119,7 +119,7 @@ export const toolkit = {
   getNormal: getNormalAtT,
   resample: resamplePolylines,
   simplify(polylines, tolerance, hq = true) {
-    assertArgs(arguments, ['polylines', 'number', 'boolean?'], 'bt.simplify')
+    assertArgs(arguments, ['polylines', 'number?', 'boolean?'], 'bt.simplify')
 
     polylines.forEach(pl => {
       const newPl = simplifyPolyline(pl, tolerance, hq)
