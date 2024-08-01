@@ -32,7 +32,7 @@ function generateCactusArm(x, y, direction) {
   const armWidth = rr(0.1, 0.15) * 39; // Bigger arm width based on body width
   const parity = direction === 'left' ? -1 : 1;
 
-  let arm = bt.catmullRom([
+  let arm = [bt.catmullRom([
     [x, y + armHeight / 2],
     [x + parity * armWidth / 2, y + armHeight * 0.3],
     [x + parity * armWidth / 2, y - armHeight * 0.3],
@@ -40,7 +40,7 @@ function generateCactusArm(x, y, direction) {
     [x - parity * armWidth / 2, y - armHeight * 0.3],
     [x - parity * armWidth / 2, y + armHeight * 0.3],
     [x, y + armHeight / 2]
-  ], 20);
+  ], 20)];
 
   // Apply translation and rotation to the arm to make it slanted and jut out
   bt.translate(arm, [(bt.randInRange(-1, 1) * 10) / 6, (bt.randInRange(-1, 1) * 10) / 6]);
