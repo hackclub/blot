@@ -7,8 +7,15 @@
 setDocDimensions(1250, 700);
 
 // Settings
-const seedTop = 7426;
+// this can be any int!
+let seedTop = 500990;
+// Or set this to true to get a random burger every time!
+const randGen = false;
 //
+
+if(randGen === true){
+seedTop = bt.randIntInRange(1,99999999)
+}
 
 let pattyY;
 let lettuceY;
