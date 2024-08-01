@@ -136,8 +136,8 @@ const rightArmY = rr(cactusY - 20, cactusY + 10); // Randomize right arm positio
 const leftArm = generateCactusArm(leftArmX, leftArmY, 'left');
 const rightArm = generateCactusArm(rightArmX, rightArmY, 'right');
 
-cacti.push(leftArm);
-cacti.push(rightArm);
+cacti.push(...leftArm);
+cacti.push(...rightArm);
 
 // Generate eyes with glasses
 const eyes = generateEyes(cactusX, cactusY + 25);
