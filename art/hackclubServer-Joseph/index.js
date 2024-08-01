@@ -4,7 +4,7 @@
 @snapshot: snapshots/1.png
 */
 
-// generation vars
+// generation vars// generation vars
 const uhd_length = 15;
 const uhd_length2 = 13;
 const vert_length = 7;
@@ -23,20 +23,20 @@ const t = new bt.Turtle();
 //Multiplers for UHD or Screen 1
 function generateRandomUHDLength(uhd_length) {
   const var_uhd_length = Math.floor(Math.random() * uhd_length * 10);
-  if (var_uhd_length >= 1 && var_uhd_length <= 90) {
+  if (var_uhd_length >= 74 && var_uhd_length <= 95) {
     return var_uhd_length;
   } else {
-    return 50;
+    return 80;
   }
 }
 const var_uhd_length = generateRandomUHDLength(uhd_length);
 
 function generateRandomUHDLength2(uhd_length2) {
   const var_uhd_length2 = Math.floor(Math.random() * uhd_length2 * 10);
-  if (var_uhd_length2 >= 7 && var_uhd_length2 <= 71) {
+  if (var_uhd_length2 >= 25 && var_uhd_length2 <= 45) {
     return var_uhd_length2;
   } else {
-    return 19;
+    return 38;
   }
 }
 
@@ -209,19 +209,19 @@ t.left(-1);
 t.forward(5)
 
 
-const randomNumber = Math.ceil(Math.random() + 0)
+const randomNumber = Math.ceil(Math.random() * 3)
 if (randomNumber === 1) {
   //bios screen
   t.jump([var_uhd_length2, 54.4]);
   t.right(2);
   t.forward(var_uhd_length);
   t.right(90)
-  t.forward(34)
+  t.forward(34) // no
   t.right(90)
   t.forward(var_uhd_length)
   t.left(-90)
-  t.forward(34)
-  
+  t.forward(34) //no
+
   t.jump([53.6, 42.5]);
 
   t.right(89)
@@ -298,7 +298,7 @@ if (randomNumber == 2) {
   t.forward(44)
   t.right(90)
   t.forward(var_vert_length * 1.25 + 22)
-  
+
   t.jump([75, 31])
   t.right(732)
   t.arc(385, 4)
