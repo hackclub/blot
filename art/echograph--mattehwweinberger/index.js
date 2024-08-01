@@ -2,7 +2,7 @@
 /*
 @title: echograph
 @author: mattehwweinberger
-@snapshot: graph1
+@snapshot: graph1.png
 */
 
 
