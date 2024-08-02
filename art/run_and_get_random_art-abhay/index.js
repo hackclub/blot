@@ -8,6 +8,7 @@
 const width = 284;
 const height = 163;
 setDocDimensions(width, height);
+const { Turtle, trim, merge, cut, cover, rotate, scale, translate, originate, iteratePoints, pointInside, resample, join, copy, union, difference, intersection, xor, getAngle, getPoint, getNormal, bounds, nurbs, catmullRom, rand, setRandSeed, randInRange, randIntInRange, noise } = blotToolkit;
 
 function createCirclePoints(centerX, centerY, radius, numSides = 32) {
   const points = [];
@@ -27,18 +28,18 @@ function drawCircle(centerX, centerY, radius, options = {}) {
 function drawRandomCircles() {
   const now = new Date();
   const seed = now.getTime();
-  Math.random(seed);
+  bt.rand(seed);
 
-  const numCircles = Math.floor(Math.random() * 20) + 10;
+  const numCircles = Math.floor(bt.rand() * 20) + 10;
 
   for (let i = 0; i < numCircles; i++) {
     const maxRadius = Math.min(width, height) / 2; 
-    const radius = Math.random() * maxRadius * 0.8;
+    const radius = bt.rand() * maxRadius * 0.8;
 
-    const x = Math.random() * (width - radius * 2) + radius
-    const y = Math.random() * (height - radius * 2) + radius;
+    const x = bt.rand() * (width - radius * 2) + radius
+    const y = bt.rand() * (height - radius * 2) + radius;
 
-    //const hue = Math.floor(Math.random() * 360);
+    //const hue = Math.floor(bt.rand() * 360);
     //const color = `hsl(${hue}, 70%, 50%)`;
 
     drawCircle(x, y, radius, { fill: "white" }); //if wanted, you can change fill to color without quotation marks like this: color only. And also remove those slashes before 'const color & const hue = ......blah...blah'
