@@ -7,9 +7,10 @@
 const width = 450;
 const height = 250;
 setDocDimensions(width, height);
-const radius = 10;
+const radius = 4;
 const gap = radius * 1.5;
 const margin = 30;
+const leftMargin = 30;
 
 function drawCircle(centerX, centerY, radiusX, radiusY) {
   const points = [];
@@ -38,135 +39,146 @@ function drawToyotaEmblem(centerX, centerY) {
 function drawRenaultEmblem(centerX, centerY) {
   drawLines([
     [
-      [centerX, centerY + 12],
-      [centerX + 8, centerY],
-      [centerX, centerY - 12],
-      [centerX - 8, centerY],
-      [centerX, centerY + 12]
+      [centerX, centerY + 6],
+      [centerX + 4, centerY],
+      [centerX, centerY - 6],
+      [centerX - 4, centerY],
+      [centerX, centerY + 6]
     ]
   ]);
   drawLines([
     [
-      [centerX, centerY + 20],
-      [centerX + 12, centerY],
-      [centerX, centerY - 20],
-      [centerX - 12, centerY],
-      [centerX, centerY + 20]
+      [centerX, centerY + 10],
+      [centerX + 6, centerY],
+      [centerX, centerY - 10],
+      [centerX - 6, centerY],
+      [centerX, centerY + 10]
     ]
   ]);
   drawLines([
     [
-      [centerX, centerY - 12],
-      [centerX - 2.5, centerY - 16]
+      [centerX, centerY - 6],
+      [centerX - 1.25, centerY - 8]
     ]
   ]);
   drawLines([
     [
-      [centerX, centerY + 12],
-      [centerX + 2.5, centerY + 16]
+      [centerX, centerY + 6],
+      [centerX + 1.25, centerY + 8]
     ]
   ]);
 }
 
-const carWidth = bt.randInRange(120, 180);
-const carHeight = bt.randInRange(55, 70);
+function drawRims(centerX, centerY, radius) {
+  const numRims = bt.randInRange(5, 20);
+  const innerRadius = radius * 0.3;
+  const rimLength = radius * 0.7;
+
+  drawCircle(centerX, centerY, innerRadius, innerRadius);
+
+  for (let i = 0; i < numRims; i++) {
+    const angle = (2 * Math.PI / numRims) * i;
+    const x1 = centerX + innerRadius * Math.cos(angle);
+    const y1 = centerY + innerRadius * Math.sin(angle);
+    const x2 = centerX + (innerRadius + rimLength) * Math.cos(angle);
+    const y2 = centerY + (innerRadius + rimLength) * Math.sin(angle);
+    
+    drawLines([[[x1, y1], [x2, y2]]]);
+  }
+}
+
+const carWidth = bt.randInRange(110, 130);
+const carHeight = bt.randInRange(35, 45);
 const maxRoofHeight = 30;
 
 function drawAdvancedCar(centerX, centerY) {
-  const roofHeight = bt.randInRange(15, 30);
-  const roofWidth = bt.randInRange(50, carWidth / 1.5);
-  const wheelSize = bt.randInRange(8, 15);
+  const roofHeight = bt.randInRange(20, 30);
+  const roofWidth = bt.randInRange(70, carWidth / 1.5);
+  const wheelSize = bt.randInRange(8, 11);
 
   const drawSpoiler = Math.random() < 0.5;
 
-  const spoilerSize = bt.randInRange(10, 40);
+  const spoilerSize = bt.randInRange(5, 20);
   const spoilerAngle = bt.randInRange(10, 45);
 
-  let carBody = [
+  const frontWheelX = centerX - carWidth / 2 + 2 * wheelSize;
+  const rearWheelX = centerX + carWidth / 2 - 2 * wheelSize;
+  const wheelY = centerY - wheelSize / 6;
+
+  let carBodyFront = [
     [centerX - carWidth / 2, centerY],
-    [centerX - carWidth / 2 + wheelSize, centerY],
-    [centerX - carWidth / 2 + wheelSize, centerY - wheelSize],
-    [centerX - carWidth / 2 + 3 * wheelSize, centerY - wheelSize],
-    [centerX - carWidth / 2 + 3 * wheelSize, centerY],
-    [centerX + carWidth / 2 - 3 * wheelSize, centerY],
-    [centerX + carWidth / 2 - 3 * wheelSize, centerY - wheelSize],
-    [centerX + carWidth / 2 - wheelSize, centerY - wheelSize],
-    [centerX + carWidth / 2 - wheelSize, centerY],
-    [centerX + carWidth / 2, centerY],
-    [centerX + carWidth / 2, centerY - carHeight],
-    [centerX - carWidth / 2, centerY - carHeight],
+    [frontWheelX - wheelSize, centerY]
+  ];
+
+  let carBodyMiddle = [
+    [frontWheelX + wheelSize, centerY],
+    [rearWheelX - wheelSize, centerY]
+  ];
+
+  let carBodyRear = [
+    [rearWheelX + wheelSize, centerY],
+    [centerX + carWidth / 2 - 1, centerY],
+    [centerX + carWidth / 2, centerY - 8],
+    [centerX + carWidth / 2 - 10, centerY - 8],
+    [centerX + carWidth / 2 - 3, centerY - 8],
+    [centerX + carWidth / 2 - 3, centerY - carHeight],
+    [centerX - carWidth / 2 + 3, centerY - carHeight],
+    [centerX - carWidth / 2 + 3, centerY - 8],
+    [centerX - carWidth / 2 + 8, centerY - 8],
+    [centerX - carWidth / 2 - 1, centerY - 8],
     [centerX - carWidth / 2, centerY]
   ];
 
   let carRoof = [
     [centerX - roofWidth / 2, centerY - carHeight],
     [centerX + roofWidth / 2, centerY - carHeight],
-    [centerX + roofWidth / 2 - 5, centerY - carHeight - roofHeight],
-    [centerX - roofWidth / 2 + 5, centerY - carHeight - roofHeight],
+    [centerX + roofWidth / 2 - 20, centerY - carHeight - roofHeight],
+    [centerX - roofWidth / 2 + 10, centerY - carHeight - roofHeight],
     [centerX - roofWidth / 2, centerY - carHeight]
   ];
 
-  let carWindows = [
-    [centerX - roofWidth / 2 + 5, centerY - carHeight],
-    [centerX + roofWidth / 2 - 5, centerY - carHeight],
-    [centerX + roofWidth / 2 - 8, centerY - carHeight - roofHeight + 3],
-    [centerX - roofWidth / 2 + 8, centerY - carHeight - roofHeight + 3],
-    [centerX - roofWidth / 2 + 5, centerY - carHeight]
+  let doorLine = [
+    [centerX - roofWidth / 2 + 50, centerY - carHeight - roofHeight],
+    [centerX - roofWidth / 2 + 50, centerY]
+  ];
+
+  let frontLine = [
+    [centerX - roofWidth / 2 + 10, centerY - carHeight],
+    [centerX - roofWidth / 2 + 10, centerY]
   ];
 
   let spoiler = [
-    [centerX + carWidth / 2, centerY - carHeight],
+    [centerX + carWidth / 2 - 3, centerY - carHeight],
     [centerX + carWidth / 2 + spoilerSize * Math.cos(spoilerAngle * Math.PI / 180), centerY - carHeight - spoilerSize * Math.sin(spoilerAngle * Math.PI / 180)],
     [centerX + carWidth / 2 + spoilerSize * Math.cos(spoilerAngle * Math.PI / 180), centerY - carHeight],
-    [centerX + carWidth / 2, centerY - carHeight]
+    [centerX + carWidth / 2 - 3, centerY - carHeight]
   ];
 
-  carBody = bt.rotate([carBody], 180, [centerX, centerY]);
+  carBodyFront = bt.rotate([carBodyFront], 180, [centerX, centerY]);
+  carBodyMiddle = bt.rotate([carBodyMiddle], 180, [centerX, centerY]);
+  carBodyRear = bt.rotate([carBodyRear], 180, [centerX, centerY]);
   carRoof = bt.rotate([carRoof], 180, [centerX, centerY]);
-  carWindows = bt.rotate([carWindows], 180, [centerX, centerY]);
+  doorLine = bt.rotate([doorLine], 180, [centerX, centerY]);
+  frontLine = bt.rotate([frontLine], 180, [centerX, centerY]);
   spoiler = bt.rotate([spoiler], 180, [centerX, centerY]);
 
-  drawLines(carBody);
+  drawLines(carBodyFront);
+  drawLines(carBodyMiddle);
+  drawLines(carBodyRear);
   drawLines(carRoof);
-  drawLines(carWindows);
+  drawLines(doorLine);
+  drawLines(frontLine);
 
   if (drawSpoiler) {
     drawLines(spoiler);
   }
 
-  const wheelYOffset = wheelSize / 2;
-  const frontWheelX = centerX - carWidth / 2 + 2 * wheelSize;
-  const rearWheelX = centerX + carWidth / 2 - 2 * wheelSize;
-  const wheelY = centerY - wheelYOffset;
-
   drawCircle(frontWheelX, wheelY, wheelSize, wheelSize);
   drawCircle(rearWheelX, wheelY, wheelSize, wheelSize);
 
-  const suspensionCoils = 5;
-
-  function drawSpring(centerX, centerY, height, coils, spacing, reverse) {
-    const points = [];
-    for (let i = 0; i <= coils; i++) {
-      const y = centerY - i * spacing;
-      const xOffset = (i % 2 === 0) ? (reverse ? 3 : -3) : (reverse ? -3 : 3);
-      points.push([centerX + xOffset, y]);
-    }
-    drawLines([points]);
-  }
-
-  const cutoutHeight = wheelSize;
-  const springHeight = cutoutHeight * 0.5;
-  const springSpacing = springHeight / suspensionCoils;
-
-  const springOffsetX = wheelSize / 2;
-  const springOffsetY = wheelSize * 0.5;
-
-  drawSpring(frontWheelX - springOffsetX, wheelY + wheelSize + springOffsetY, springHeight, suspensionCoils, springSpacing, false);
-  drawSpring(frontWheelX + springOffsetX, wheelY + wheelSize + springOffsetY, springHeight, suspensionCoils, springSpacing, true);
-  drawSpring(rearWheelX - springOffsetX, wheelY + wheelSize + springOffsetY, springHeight, suspensionCoils, springSpacing, false);
-  drawSpring(rearWheelX + springOffsetX, wheelY + wheelSize + springOffsetY, springHeight, suspensionCoils, springSpacing, true);
+  drawRims(frontWheelX, wheelY, wheelSize);
+  drawRims(rearWheelX, wheelY, wheelSize);
 }
-
 
 const emblems = [
   { draw: drawAudiEmblem, width: gap * 3, height: radius * 2 },
@@ -177,7 +189,7 @@ const emblems = [
 const minGap = 40;
 
 function getRandomPosition(objectWidth, objectHeight) {
-  const x = bt.randInRange(margin + objectWidth / 2, width - margin - objectWidth / 2);
+  const x = bt.randInRange(margin + objectWidth / 2, (width / 2) - leftMargin - objectWidth / 2);
   const y = bt.randInRange(margin + objectHeight / 2, height - margin - objectHeight / 2 - maxRoofHeight);
   return { x, y };
 }
@@ -202,5 +214,5 @@ do {
 
 if (attempts < maxAttempts) {
   drawAdvancedCar(carPosition.x, carPosition.y);
-  selectedEmblem.draw(carPosition.x, carPosition.y + 30);
+  selectedEmblem.draw(carPosition.x + (carWidth / 2.75), carPosition.y + 25);
 }
