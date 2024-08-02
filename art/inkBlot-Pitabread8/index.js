@@ -117,8 +117,8 @@ drawLines([
 ], { width: 5 });
 
 const createRing = (num, size) => {
-  const petalLength = bt.randInRange(1.0, 6.0);
-  const centerLength = bt.randInRange(0.5, 3.0);
+  const petalLength = 0.5;
+  const centerLength = petalLength * bt.randInRange(1.5, 2.5);
 
   for (let i = 1; i <= num; i++) {
     const petal = [];
@@ -139,7 +139,7 @@ const createRing = (num, size) => {
     bt.translate(petal, [width / 2, height / 2 - 10], bt.bounds(petal).cc);
     bt.rotate(petal, 360 / num * i);
 
-    drawLines(petal, { stroke: "red", width: 3 });
+    drawLines(petal, { stroke: "red", width: 4 });
   }
 }
 
@@ -149,7 +149,7 @@ const fibonacci = (count, n = 1, prev = 0) => {
   return [next].concat(fibonacci(count - 1, next, n));
 }
 
-const ringSizes = fibonacci(bt.randIntInRange(2, 7), 2, 1);
+const ringSizes = fibonacci(2, 3, 2);
 for (let i of ringSizes) createRing(i, 1 / Math.sqrt(i) * 0.4);
 
 const t = new bt.Turtle();
