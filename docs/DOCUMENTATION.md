@@ -668,7 +668,7 @@ const path = myTurtle.path; // Gets the path drawn by the turtle, use this to ge
 
 **Description:** 
 
-Generates a Catmull-Rom spline, which is a type of interpolating curve, passing through a series of control points. The `steps` parameter controls the smoothness of the curve, with higher values resulting in a more detailed curve.
+Generates a [Catmull-Rom spline](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline), which is a type of interpolating curve, passing through a series of control points. The `steps` parameter controls the smoothness of the curve, with higher values resulting in a more detailed curve.
 
 **Example:**
 
@@ -688,7 +688,7 @@ bt.catmullRom([[0, 0], [10, 15], [20, 5]], 100); // Returns a polyline with 100 
 
 **Description:** 
 
-Generates a Non-Uniform Rational B-Spline (NURBS) curve, which provides great flexibility and precision in modeling curves. The `steps` parameter controls the smoothness of the curve, and the `degree` parameter defines the curve's degree, affecting its complexity and how tightly it fits to the control points.
+Generates a [Non-Uniform Rational B-Spline (NURBS)](https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline) curve, which provides great flexibility and precision in modeling curves. The `steps` parameter controls the smoothness of the curve, and the `degree` parameter defines the curve's degree, affecting its complexity and how tightly it fits to the control points.
 
 **Example:**
 
