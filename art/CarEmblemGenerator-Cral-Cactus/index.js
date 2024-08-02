@@ -1,7 +1,7 @@
 /*
 @title: Car Emblem Generator
 @author: Cral_Cactus
-@snapshot: car1.png
+@snapshot: car.png
 */
 
 const width = 450;
