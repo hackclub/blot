@@ -163,7 +163,7 @@ Repeat for the other eccentric nuts.
 
 Now let's do the same thing for the non-adjustable v-wheels.
 
-Take a 35mm screw and a 5mm spacer with a v-wheel and assemble like below.
+Take a 35mm screw and a 6mm spacer with a v-wheel and assemble like below.
 
 ![PXL_20240613_152104229.jpg](./assets/PXL_20240613_152104229.jpg)
 
