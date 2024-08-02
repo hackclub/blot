@@ -2,6 +2,7 @@ name: Check Artwork
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
     paths:
       - 'art/**'
 
@@ -49,8 +50,8 @@ jobs:
             const fs = require('fs');
             const results = fs.readFileSync(process.env.RESULTS_FILE, 'utf8');
             github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              issue_number: context.payload.number,
+              owner: context.payload.repository.owner.login,
+              repo: context.payload.repository.name,
               body: results
             });
