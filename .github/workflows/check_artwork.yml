@@ -1,0 +1,57 @@
+name: Check Artwork
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'art/**'
+
+jobs:
+  check-artwork:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+      issues: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Fetch main branch
+        run: git fetch origin main
+
+      - name: Get new directories
+        id: new_dirs
+        run: |
+          NEW_DIRS=$(git diff --name-only --diff-filter=A origin/main | grep '^art/' | xargs -I{} dirname {} | sort -u | grep -E '^art/[^/]+$')
+          echo "NEW_DIRS=$NEW_DIRS" >> $GITHUB_ENV
+          echo "New directories: $NEW_DIRS"
+
+      - name: Create logs directory
+        run: mkdir -p .github/workflows/logs
+
+      - name: Run artwork checks and save results
+        run: |
+          echo "" > .github/workflows/logs/artwork_check_results.txt
+          for dir in $NEW_DIRS; do
+            echo "Checking directory: $dir" >> .github/workflows/logs/artwork_check_results.txt
+            node .github/workflows/check_artwork.cjs "$dir" >> .github/workflows/logs/artwork_check_results.txt
+          done
+          echo "RESULTS_FILE=.github/workflows/logs/artwork_check_results.txt" >> $GITHUB_ENV
+          cat .github/workflows/logs/artwork_check_results.txt
+      
+      - name: Comment on pull request
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const results = fs.readFileSync(process.env.RESULTS_FILE, 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.payload.number,
+              owner: context.payload.repository.owner.login,
+              repo: context.payload.repository.name,
+              body: results
+            });
