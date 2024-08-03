@@ -1,8 +1,15 @@
 /*
 @title: Message Maze
 @author: Iambodha
-@snapshot: HelloWorld-1.png
+@snapshot: helloworld1.png
 */
+
+// Message Maze is a system where the path of the maze forms a secret message. 
+// This message can be any text you choose.
+
+//To hide your own message scroll to the last line and change the phrase to whatever you like.
+//Make sure to only use capital letters in the english alphabet and spaces. No other special character would work.
+//Enjoy :)
 
 class Maze {
   constructor(cols, rows, start = null, end = null, solutionCells = null) {
