@@ -8,21 +8,39 @@ const width = 125;
 const height = 125;
 setDocDimensions(width, height);
 
-const randSeed = Math.random(); // random seed for variations
+// Simple seed-based random number generator
+function seededRandom(seed) {
+  let x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+// Function to generate a new seed based on the current time
+function generateSeed() {
+  return new Date().getTime() % 100000;
+}
+
+// Use a random seed
+let randomSeed = generateSeed();
 
 // expose parameters to control variations
-const numGills = 10; // number of gills
+const numGills = Math.floor(seededRandom(randomSeed) * 15) + 5; // random number of gills between 5 and 20
 const numSkyLines = 20; // number of sky lines
 const skyLineRadiusFactor = 28; // factor for sky line radius
 const skyLineAngleStep = Math.PI / 90; // angle step for sky lines
 const soilDashLength = 28; // dash length for soil texture
 const soilGapLength = 1; // gap length for soil texture
 
+// Random sizes for mushroom shaft and cap
+const shaftScaleFactor = seededRandom(randomSeed + 1) * 0.5 + 0.75; // random scale factor between 0.75 and 1.25
+const capScaleFactor = seededRandom(randomSeed + 2) * 0.5 + 0.75; // random scale factor between 0.75 and 1.25
+
 // mushroom shaft (stretched triangle)
-const gr = [bt.catmullRom([[5, 1], [-3, 12], [-48, 75], [1, 104], [10, 62], [28, 15], [4, 1]])]; // shaft
+let gr = [bt.catmullRom([[5, 1], [-3, 12], [-48, 75], [1, 104], [10, 62], [28, 15], [4, 1]])]; // shaft
+bt.scale(gr, [shaftScaleFactor, shaftScaleFactor]); // scale shaft
 
 // mushroom cap (catmull-rom curve)
-const vanes = [bt.catmullRom([[-66, -12], [-118, 23], [-37, 75], [-16, 94], [14, 110], [16, -14], [-66, -12]])]; // cap
+let vanes = [bt.catmullRom([[-66, -12], [-118, 23], [-37, 75], [-16, 94], [14, 110], [16, -14], [-66, -12]])]; // cap
+bt.scale(vanes, [capScaleFactor, capScaleFactor]); // scale cap
 
 // gills curve
 const grah = [bt.catmullRom([[-44, -35], [27, -9], [72, 29], [88, 58]])]; // gills
@@ -72,7 +90,7 @@ bt.iteratePoints(mushroom, ([x, y]) => [x - 0.003 * (width / 2 - y) * (width / 2
 bt.rotate(mushroom, 151); // rotate mushroom
 
 // function to create broken sky lines starting from the middle
-function createBrokenSkyLines() {
+function createBrokenSkyLines(seed) {
   const skyLines = [];
   const centerX = width / 2; // center x
   const centerY = height / 2; // center y
@@ -83,7 +101,7 @@ function createBrokenSkyLines() {
     let skyLine = [];
     let isDrawing = true; // flag to draw
     for (let angle = 0; angle < Math.PI * 2; angle += skyLineAngleStep) { // loop for angles
-      if (Math.random() < 0.1) { // random toggle
+      if (seededRandom(seed + i * 10 + angle) < 0.1) { // random toggle
         isDrawing = !isDrawing;
       }
       if (isDrawing && radius > width / 5) { // draw only from the middle
@@ -155,8 +173,8 @@ function addSoilTexture(soil) {
   return texturedSoil; // return textured soil
 }
 
-// create broken sky lines
-const skyLines = createBrokenSkyLines();
+// create broken sky lines using the random seed
+const skyLines = createBrokenSkyLines(randomSeed);
 
 // add texture to soil
 const texturedSoil = addSoilTexture(soil);
