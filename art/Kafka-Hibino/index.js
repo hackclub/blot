@@ -1,14 +1,12 @@
 /*
-/*
-@title: Kafka-Hibino
+@title: Kafka Hibino
 @author: Owen
 @snapshot: 1.png
 */
+const { Turtle, rand, randInRange, randIntInRange } = blotToolkit;
 
 const width = 125;
 const height = 125;
-
-bt.setRandSeed(100)
 
 setDocDimensions(width, height);
 // store final lines here
@@ -143,7 +141,7 @@ const polyline = [
   [30, 30],
   [30, 70]
 ];
-
+ /*
 const mouth = [
   [55, 30],
   [75, 30]
@@ -158,19 +156,51 @@ const eye2 = [
   [80, 50],
   [90, 50]
 ]
+*/
 
-finalLines.push(mouth);
+
+const turtle = new Turtle();
+
+function drawCircle(radius) {
+    const steps = 120; // Number of steps to approximate the circle
+    const angle = 360 / steps;
+
+    for (let i = 0; i < steps; i++) {
+        turtle.forward(2 * Math.PI * radius / steps);
+        turtle.right(angle);
+    }
+}
+
+turtle.up();
+turtle.goTo([1,0]);
+drawCircle(10);
+
 // add the polyline to the final lines
 finalLines.push(polyline);
+/*
 finalLines.push(eye1);
 finalLines.push(eye2);
-
+*/
 
 finalLines.push(ellipticalSemiCirclePoints);
 // transform lines using the toolkit
 // bt.rotate(finalLines, 45);
 
+//mouth
+const rr = bt.randInRange;
+const mouthStartX = rr(40,50)
+const mouthStartY = rr(30,40)
 
+const mouthEndX = (75, 85)
+const mouthEndY = rr(30,40)
+
+const mouthMiddleX = rr(mouthStartX,mouthEndX)
+const mouthMiddleY = rr(mouthStartY,mouthEndY)
+
+const mouth = bt.catmullRom([ [mouthStartX,mouthStartY], [mouthMiddleX,mouthMiddleY], [mouthEndX, mouthEndY] ])
+
+finalLines.push(mouth);
 
 // draw it
 drawLines(finalLines);
+drawLines(turtle.lines());
