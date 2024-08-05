@@ -2,7 +2,7 @@
 @title: framed_landscape
 @author: PonderSlime
 @snapshot: example1.png
-
+*/
 const canvasWidth = 125;
 const canvasHeight = 125;
 
