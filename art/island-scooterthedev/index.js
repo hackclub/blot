@@ -4,12 +4,11 @@
 @snapshot: snapshot2.png
 */
 
-bt.setRandSeed(1814);
+bt.setRandSeed(1812);
 
+// Global settings
 const width = 200;
 const height = 200;
-const roughness = 5;
-const detail = 3;
 const islandSize = 50;
 const waveSize = 15;
 const waveCount = bt.randIntInRange(3, 7);
@@ -17,6 +16,55 @@ const treeCount = bt.randIntInRange(2, 2);
 const houseCount = bt.randIntInRange(1, 1);
 
 setDocDimensions(width, height);
+
+class Noise {
+  constructor(octaves = 1) {
+    this.p = new Uint8Array(512);
+    this.octaves = octaves;
+    for (let i = 0; i < 512; ++i) {
+      this.p[i] = Math.floor(bt.setRandSeed(Date.now()) * 256);
+    }
+  }
+  
+  lerp(t, a, b) {
+    return a + t * (b - a);
+  }
+  
+  grad2d(i, x, y) {
+    const v = (i & 1) === 0 ? x : y;
+    return (i & 2) === 0 ? -v : v;
+  }
+  
+  noise2d(x2d, y2d) {
+    const X = Math.floor(x2d) & 255;
+    const Y = Math.floor(y2d) & 255;
+    const x = x2d - Math.floor(x2d);
+    const y = y2d - Math.floor(y2d);
+    const fx = (3 - 2 * x) * x * x;
+    const fy = (3 - 2 * y) * y * y;
+    const p0 = this.p[X] + Y;
+    const p1 = this.p[X + 1] + Y;
+    return this.lerp(
+      fy,
+      this.lerp(fx, this.grad2d(this.p[p0], x, y), this.grad2d(this.p[p1], x - 1, y)),
+      this.lerp(fx, this.grad2d(this.p[p0 + 1], x, y - 1), this.grad2d(this.p[p1 + 1], x - 1, y - 1))
+    );
+  }
+  
+  noise(x, y, scale = 0.5) {
+    let e = 1;
+    let k = 1;
+    let s = 0;
+    for (let i = 0; i < this.octaves; ++i) {
+      e *= scale;
+      s += e * (1 + this.noise2d(k * x, k * y)) / 2;
+      k *= 2;
+    }
+    return s;
+  }
+}
+
+const perlin = new Noise(3);
 
 function drawIsland(x, y, size) {
   let points = [];
@@ -40,7 +88,7 @@ function drawWaves(x, y, length, height, angle) {
 
   for (let i = 0; i <= waveCount; i++) {
     let px = i * waveLength;
-    let py = Math.sin((i * Math.PI) / waveCount) * height;
+    let py = perlin.noise(x + px * 0.05, y * 0.05) * height;
     points.push([px, py]);
   }
 
