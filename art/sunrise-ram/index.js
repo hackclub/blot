@@ -92,25 +92,79 @@ const randinskx = bt.randIntInRange(0, 80);
 bt.translate(birdLines, [randinskx, randinsky], [0, 0]);
 bt.copy(birdLines);
 
-// Less wide, smaller, and lower left mountain
-const leftmount = [
-  bt.nurbs([
-    [0, randy + 10],                // Lowered
-    [30 + randx, 60 - randy],       // Less wide
-    [30 - randx, 30 + randy],       // Less wide
-    [45, randy + 10]                // Lowered
-  ])
-];
+function createMountain(baseHeight, widthAdjust, heightAdjust) {
+  const leftmount = [
+    bt.nurbs([
+      [0, baseHeight],                // Lowered
+      [30 + randx - widthAdjust, 60 - randy - heightAdjust],       // Less wide
+      [30 - randx + widthAdjust, 30 + randy - heightAdjust],       // Less wide
+      [45, baseHeight]                // Lowered
+    ])
+  ];
 
-// Wider, smaller, and lower right mountain
-const rightmount = [
-  bt.nurbs([
-    [45, randy + 10],               // Lowered
-    [95 - randx, 55 + randy],       // Wider
-    [95 + randx, 40 - randy],       // Wider
-    [width, randy + 10]             // Lowered
-  ])
-];
+  const rightmount = [
+    bt.nurbs([
+      [45, baseHeight],               // Lowered
+      [95 - randx - widthAdjust, 55 + randy - heightAdjust],       // Wider
+      [95 + randx + widthAdjust, 40 - randy - heightAdjust],       // Wider
+      [width, baseHeight]             // Lowered
+    ])
+  ];
+
+  return { leftmount, rightmount };
+}
+
+
+const baseHeight = randy + 10;
+
+// Create three mountains with different sizes and heights
+const mountain1 = createMountain(baseHeight, 0, 0);
+const mountain2 = createMountain(baseHeight, 10, 10);
+const mountain3 = createMountain(baseHeight, 20, 20);
+
+// Combine all mountains into finalLines
+const finalLines = [];
+bt.iteratePoints(mountain1.rightmount, (pt, t) => {
+  const [x, y] = pt;
+  const dy = bt.noise(t * 25, { octaves: 3 }) * 10 * (t === 0 || t === 1 ? 0 : 1);
+  return [x, y + dy];
+});
+bt.join(finalLines, mountain1.rightmount);
+
+bt.iteratePoints(mountain1.leftmount, (pt, t) => {
+  const [x, y] = pt;
+  const dy = bt.noise(t * 25, { octaves: 3 }) * 10 * (t === 0 || t === 1 ? 0 : 1);
+  return [x, y + dy];
+});
+bt.join(finalLines, mountain1.leftmount);
+
+bt.iteratePoints(mountain2.rightmount, (pt, t) => {
+  const [x, y] = pt;
+  const dy = bt.noise(t * 25, { octaves: 3 }) * 10 * (t === 0 || t === 1 ? 0 : 1);
+  return [x, y + dy];
+});
+bt.join(finalLines, mountain2.rightmount);
+
+bt.iteratePoints(mountain2.leftmount, (pt, t) => {
+  const [x, y] = pt;
+  const dy = bt.noise(t * 25, { octaves: 3 }) * 10 * (t === 0 || t === 1 ? 0 : 1);
+  return [x, y + dy];
+});
+bt.join(finalLines, mountain2.leftmount);
+
+bt.iteratePoints(mountain3.rightmount, (pt, t) => {
+  const [x, y] = pt;
+  const dy = bt.noise(t * 25, { octaves: 3 }) * 10 * (t === 0 || t === 1 ? 0 : 1);
+  return [x, y + dy];
+});
+bt.join(finalLines, mountain3.rightmount);
+
+bt.iteratePoints(mountain3.leftmount, (pt, t) => {
+  const [x, y] = pt;
+  const dy = bt.noise(t * 25, { octaves: 3 }) * 10 * (t === 0 || t === 1 ? 0 : 1);
+  return [x, y + dy];
+});
+bt.join(finalLines, mountain3.leftmount);
 
 // Smaller and lower sun
 const sun = [
@@ -122,9 +176,6 @@ const sun = [
     [75, randy + 10]                // Smaller and lower
   ])
 ];
-
-
-
 
 // Cloud Creation
 const cloudOne = new bt.Turtle();
@@ -170,22 +221,6 @@ cloudTwo.arc(76, 11);
 const cloudTwoLines = cloudTwo.lines();
 
 // Draw the sunrise landscape
-const finalLines = [];
-bt.iteratePoints(rightmount, (pt, t) => {
-  const [x, y] = pt;
-  const dy = bt.noise(t * 25, { octaves: 3 }) * 10 * (t === 0 || t === 1 ? 0 : 1);
-  return [x, y + dy];
-});
-bt.join(finalLines, rightmount);
-
-bt.iteratePoints(leftmount, (pt, t) => {
-  const [x, y] = pt;
-  const dy = bt.noise(t * 25, { octaves: 3 }) * 10 * (t === 0 || t === 1 ? 0 : 1);
-  return [x, y + dy];
-});
-bt.join(finalLines, leftmount);
-
-// Draw sunrise colors and elements
 drawLines([
   [
     [0, 0],
@@ -195,9 +230,57 @@ drawLines([
   ]
 ], { fill: "LightSkyBlue" }); // Sky color for sunrise
 
-drawLines(sun, { fill: "Gold" }); // Sun color for sunrise
-drawLines(finalLines, { fill: "LightPink" }); // Mountain color for sunrise
+drawLines(sun, { fill: "Orange" }); // Sun color for sunrise
+
+// Draw mountains with different colors
+drawLines(finalLines.slice(0, mountain1.rightmount.length + mountain1.leftmount.length), { fill: "lightgrey" }); // Mountain 1
+drawLines(finalLines.slice(mountain1.rightmount.length + mountain1.leftmount.length, mountain1.rightmount.length + mountain1.leftmount.length + mountain2.rightmount.length + mountain2.leftmount.length), { fill: "darkgrey" }); // Mountain 2
+drawLines(finalLines.slice(mountain1.rightmount.length + mountain1.leftmount.length + mountain2.rightmount.length + mountain2.leftmount.length), { fill: "grey" }); // Mountain 3
 
 drawLines(birdLines); // Birds flying across the sunrise
-drawLines(cloudOneLines, { stroke: "gray", width: 4 }); // Cloud One
-drawLines(cloudTwoLines, { stroke: "gray", width: 4 }); // Cloud Two
+drawLines(cloudOneLines, { stroke: "White", width: 4, fill: "White" }); // Cloud One
+drawLines(cloudTwoLines, { stroke: "White", width: 4}); // Cloud Two
+
+function tree(t, prevBranchEnd, angle, branchLen, iteration, max_iteration, angle_change, left_shift, right_shift) {
+  if (iteration > max_iteration) {
+    return;
+  }
+
+  t.jump(prevBranchEnd);
+  t.setAngle(angle + angle_change);
+  t.forward(branchLen);
+
+  const end = () => t.path.at(-1).at(-1);
+  tree(t, end(), angle + angle_change, branchLen * 2 / 3 * left_shift, iteration + 1, max_iteration, angle_change, left_shift, right_shift);
+
+  t.jump(prevBranchEnd);
+  t.setAngle(angle - angle_change);
+  t.forward(branchLen);
+
+  tree(t, end(), angle - angle_change, branchLen * 2 / 3 * right_shift, iteration + 1, max_iteration, angle_change, left_shift, right_shift);
+}
+
+function drawMultipleTrees() {
+  const MAX_ITERATION = 8;
+  const ANGLE_CHANGE = bt.randIntInRange(30, 45);
+  const treeHeightFactor = 0.8; 
+  
+  const t1 = new bt.Turtle();
+  tree(t1, [100, 24], 122, 10 * treeHeightFactor, 1, MAX_ITERATION, ANGLE_CHANGE, 1, 3 / 4);
+  drawLines(t1.lines(), { stroke: 'green', width: 2 });
+  
+  const t2 = new bt.Turtle();
+  tree(t2, [14, 20], 90, 8 * treeHeightFactor, 1, (MAX_ITERATION - 2), ANGLE_CHANGE, 3 / 4, 1);
+  drawLines(t2.lines(), { stroke: 'green', width: 2 });
+
+  const t3 = new bt.Turtle();
+  tree(t3, [101, 23], -9, 10 * treeHeightFactor, 1, MAX_ITERATION, ANGLE_CHANGE, 1, 3 / 4);
+  drawLines(t3.lines(), { stroke: 'green', width: 2 });
+  // Draw Trunks
+  drawLines([[[14, 20], [14, 10 * treeHeightFactor]]], { width: 7, stroke: 'brown' });
+  drawLines([[[99, 3], [100, 30 * treeHeightFactor]]], { width: 7, stroke: 'brown' });
+
+}
+
+// Draw multiple trees
+drawMultipleTrees();
