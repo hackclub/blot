@@ -1,27 +1,19 @@
-/*
-@title: Nine Point Circle
-@author: Rishabh R
-@snapshot: snapshot0.svg
-*/
-
-//creates Nine-Point Circle for arbitrary triangle
-const drawTriangle = (pts) => {
-  const t = new bt.Turtle()
-  t.jump(pts[0])
-  pts.forEach(pt => t.goTo(pt))
-  t.goTo(pts[0])
-  drawLines(t.lines(), { 'fill': 'beige' })
-  return t.lines()[0].slice(0, 3)
+const getTriangle = (pts) => {
+  const t = new bt.Turtle();
+  t.jump(pts[0]);
+  pts.forEach(pt => t.goTo(pt));
+  t.goTo(pts[0]);
+  return t.lines();
 };
 
 const getMidpoint = (pts) => {
-  var totalX = 0
-  var totalY = 0
+  let totalX = 0;
+  let totalY = 0;
   pts.forEach(pt => {
     totalX += pt[0];
     totalY += pt[1];
   });
-  return [totalX / pts.length, totalY / pts.length]
+  return [totalX / pts.length, totalY / pts.length];
 };
 
 const calculateIntersection = (p1, p2, p3, p4) => {
@@ -44,11 +36,11 @@ const calculateIntersection = (p1, p2, p3, p4) => {
 
 const drawMedians = (pts, draw = true) => {
   let midpoints = [];
-  const t = new bt.Turtle()
+  const t = new bt.Turtle();
   for (let i = 0; i < pts.length; i++) {
-    let midpoint = getMidpoint([pts[i % pts.length], pts[(i + 1) % pts.length]])
-    t.jump(pts[(i + 2) % pts.length])
-    t.goTo(midpoint)
+    let midpoint = getMidpoint([pts[i % pts.length], pts[(i + 1) % pts.length]]);
+    t.jump(pts[(i + 2) % pts.length]);
+    t.goTo(midpoint);
     midpoints.push(midpoint);
   }
   if (draw) drawLines(t.lines(), { 'stroke': 'red' });
@@ -67,21 +59,21 @@ const calculateAltitude = (pt, pt1, pt2) => {
   return [projScalar * lineVec[0] + x1, projScalar * lineVec[1] + y1];
 };
 
-const drawAltitudes = (pts, draw = true) => {
+const getAltitudes = (pts) => {
   let footPoints = [];
-  let t = new bt.Turtle()
+  let t = new bt.Turtle();
   for (let i = 0; i < pts.length; i++) {
-    t.jump(pts[i])
+    t.jump(pts[i]);
 
     // calculate altitude point
     let altPoint = calculateAltitude(
       pts[i],
       pts[(i + 1) % pts.length],
       pts[(i + 2) % pts.length]);
-    t.goTo(altPoint)
+    t.goTo(altPoint);
     footPoints.push(altPoint);
   }
-  
+
   let altitudes = t.lines();
 
   const orthocenter = calculateIntersection(
@@ -92,36 +84,28 @@ const drawAltitudes = (pts, draw = true) => {
 
   t = new bt.Turtle(); // clear it
   for (let i = 0; i < pts.length; i++) {
-    t.jump(pts[i])
-    t.goTo(orthocenter)
+    t.jump(pts[i]);
+    t.goTo(orthocenter);
   }
 
   altitudes = bt.join(altitudes, t.lines());
-  if (draw) drawLines(altitudes, { 'stroke': 'green' });
   return [altitudes, orthocenter];
 };
 
 const generateVertices = (seed, minX, maxX, minY, maxY) => {
-  bt.setRandSeed(seed)
-  let pt1 = [bt.randInRange(minX, maxX), bt.randInRange(minY, maxY)]
-  let pt2 = [bt.randInRange(minX, maxX), bt.randInRange(minY, maxY)]
-  let pt3 = [bt.randInRange(minX, maxX), bt.randInRange(minY, maxY)]
-  return [pt1, pt2, pt3]
+  bt.setRandSeed(seed);
+  let pt1 = [bt.randInRange(minX, maxX), bt.randInRange(minY, maxY)];
+  let pt2 = [bt.randInRange(minX, maxX), bt.randInRange(minY, maxY)];
+  let pt3 = [bt.randInRange(minX, maxX), bt.randInRange(minY, maxY)];
+  return [pt1, pt2, pt3];
 };
 
 let drawCircle = (pts) => {
-  // Helper function to calculate the determinant
-  /*
-  x11 x12 x13
-  x21 x22 x23
-  x31 x32 x33
-  */
   function det(x11, x12, x13, x21, x22, x23, x31, x32, x33) {
     return x11 * x22 * x33 + x12 * x23 * x31 + x13 * x32 * x21 -
       x13 * x22 * x31 - x12 * x21 * x33 - x11 * x32 * x23;
   }
 
-  // Extract the coordinates of the points
   const [x1, y1] = pts[0];
   const [x2, y2] = pts[1];
   const [x3, y3] = pts[2];
@@ -131,7 +115,6 @@ let drawCircle = (pts) => {
     x2, y2, 1,
     x3, y3, 1);
 
-  // Calculate the determinants
   const cX = 1 / 2 *
     det(x1 ** 2 + y1 ** 2, y1, 1,
       x2 ** 2 + y2 ** 2, y2, 1,
@@ -144,48 +127,79 @@ let drawCircle = (pts) => {
       x3 ** 2 + y3 ** 2, x3, 1) /
     detA;
 
-  // Calculate the radius
-  const r = Math.sqrt((cX - x1) ** 2 + (cY - y1) ** 2)
+  const r = Math.sqrt((cX - x1) ** 2 + (cY - y1) ** 2);
 
-  // draw circle
   let t = new bt.Turtle();
   t.jump([cX, cY]);
-  t.right(90).up().forward(r).left(90).down()
+  t.right(90).up().forward(r).left(90).down();
   t.arc(360, r);
   drawLines(t.lines());
   return [cX, cY];
 };
 
 const drawPoint = (pt) => {
-  const r = 0.97
-  let t = new bt.Turtle()
-  t.jump(pt)
-  t.right(90).up().forward(r).left(90).down()
-  t.arc(360, r)
-  drawLines(t.lines(), { 'fill': 'beige' })
-}
+  const r = 0.97;
+  let t = new bt.Turtle();
+  t.jump(pt);
+  t.right(90).up().forward(r).left(90).down();
+  t.arc(360, r);
+  drawLines(t.lines(), { 'fill': 'beige' });
+};
+
+const isInBounds = (pt, w, h) => {
+  return pt[0] >= 0 && pt[0] <= w && pt[1] >= 0 && pt[1] <= h;
+};
+
+const isTriangleInBounds = (pts, orthocenter, w, h) => {
+  for (const pt of pts) {
+    if (!isInBounds(pt, w, h)) return false;
+  }
+  if (!isInBounds(orthocenter, w, h)) return false;
+  return true;
+};
+
+const calculateTriangleArea = (pts) => {
+  const [x1, y1] = pts[0];
+  const [x2, y2] = pts[1];
+  const [x3, y3] = pts[2];
+  return 0.5 * Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2));
+};
 
 const w = 125;
 const h = 125;
-setDocDimensions(125, 125)
+const minArea = 1000; // Minimum area threshold for the triangle
+setDocDimensions(125, 125);
 
-const seed = bt.randIntInRange(0, 10000); // modify this if you want different triangles
-const points = generateVertices(seed, 5, 120, 5, 120);
-const triangle = drawTriangle(points);
-const midptsOfTriangle = drawMedians(triangle, true);
-const [altitudes, orthocenter] = drawAltitudes(triangle, true);
-let feetOfAltitudes = [];
-let midptsToOrtho = [];
+let seed, points, pts, triangle, midptsOfTriangle, altitudes, orthocenter, feetOfAltitudes, midptsToOrtho;
+let ninePoints;
+points = [0];
+while (!isTriangleInBounds(points, orthocenter, w, h)) {
+  seed = bt.randIntInRange(0, 10000); // modify this if you want different triangles
+  points = generateVertices(seed, 5, 120, 5, 120);
+  triangle = getTriangle(points);
 
-// add feet of altitudes and midpoints between orthocenter and each vertex
-altitudes.forEach(alt => {
-  let vertex = alt[0];
-  feetOfAltitudes.push(alt[1]);
-  let midptToOrtho = getMidpoint([vertex, orthocenter]);
-  midptsToOrtho.push(midptToOrtho);
-});
+  pts = triangle[0].slice(0, 3);
 
-let ninePoints = midptsOfTriangle.concat(feetOfAltitudes, midptsToOrtho);
+  [altitudes, orthocenter] = getAltitudes(pts);
 
-drawCircle(midptsOfTriangle)
+  if (!isInBounds(orthocenter, w, h)) continue;
+  midptsOfTriangle = drawMedians(pts, true);
+
+  drawLines(triangle)
+  drawLines(altitudes, { 'stroke': 'green' });
+
+  feetOfAltitudes = [];
+  midptsToOrtho = [];
+
+  altitudes.forEach(alt => {
+    let vertex = alt[0];
+    feetOfAltitudes.push(alt[1]);
+    let midptToOrtho = getMidpoint([vertex, orthocenter]);
+    midptsToOrtho.push(midptToOrtho);
+  });
+
+  ninePoints = midptsOfTriangle.concat(feetOfAltitudes, midptsToOrtho);
+}
+
+drawCircle(midptsOfTriangle);
 ninePoints.forEach(pt => drawPoint(pt));
