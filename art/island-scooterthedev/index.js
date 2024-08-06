@@ -145,13 +145,28 @@ function isOverlap(object, objects) {
   return false;
 }
 
-function isPointOnIslandOutline(island, x, y) {
-  const tolerance = 3;
-  for (let i = 0; i < island.length - 1; i++) {
-    let p1 = island[i];
-    let p2 = island[i + 1];
-    let distance = Math.abs((p2[1] - p1[1]) * x - (p2[0] - p1[0]) * y + p2[0] * p1[1] - p2[1] * p1[0]) / Math.sqrt((p2[1] - p1[1]) ** 2 + (p2[0] - p1[0]) ** 2);
-    if (distance < tolerance) {
+function boundingBox(points) {
+  let minX = points[0][0],
+    minY = points[0][1],
+    maxX = points[0][0],
+    maxY = points[0][1];
+  for (let [x, y] of points) {
+    if (x < minX) minX = x;
+    if (x > maxX) maxX = x;
+    if (y < minY) minY = y;
+    if (y > maxY) maxY = y;
+  }
+  return { minX, minY, maxX, maxY };
+}
+
+function anyBoxesOverlap(box, boxes) {
+  for (let otherBox of boxes) {
+    if (
+      box.minX < otherBox.maxX &&
+      box.maxX > otherBox.minX &&
+      box.minY < otherBox.maxY &&
+      box.maxY > otherBox.minY
+    ) {
       return true;
     }
   }
@@ -162,13 +177,15 @@ function drawIslandWithWavesTreesHousesAndShip(x, y, islandSize, waveSize, waveC
   let island = drawIsland(x, y, islandSize);
   let waves = [];
   let trees = [];
+  let treeBoxes = [];
   let houses = [];
+  let houseBoxes = [];
   let shipX, shipY;
 
   do {
-    shipX = bt.randIntInRange(10, width - 30); // Ensure ship stays within canvas
+    shipX = bt.randIntInRange(10, width - 30); 
     shipY = bt.randIntInRange(10, height - 30);
-  } while (isPointInIsland(island, shipX, shipY) || isPointOnIslandOutline(island, shipX, shipY));
+  } while (isPointInIsland(island, shipX, shipY));
 
   for (let i = 0; i < waveCount; i++) {
     let angle = bt.randInRange(0, 360);
@@ -179,25 +196,29 @@ function drawIslandWithWavesTreesHousesAndShip(x, y, islandSize, waveSize, waveC
   }
 
   for (let i = 0; i < treeCount; i++) {
-    let tree;
+    let tree, treeBox;
     let treeX, treeY;
     do {
       treeX = x + bt.randInRange(-islandSize / 2, islandSize / 2);
       treeY = y + bt.randInRange(-islandSize / 2, islandSize / 2);
       tree = drawTree(treeX, treeY);
-    } while (!isPointInIsland(island, treeX, treeY) || isOverlap(tree, trees.concat(houses)));
+      treeBox = boundingBox(tree[1]); 
+    } while (!isPointInIsland(island, treeX, treeY) || anyBoxesOverlap(treeBox, treeBoxes.concat(houseBoxes)));
     trees = trees.concat(tree);
+    treeBoxes.push(treeBox);
   }
 
   for (let i = 0; i < houseCount; i++) {
-    let house;
+    let house, houseBox;
     let houseX, houseY;
     do {
       houseX = x + bt.randInRange(-islandSize / 2, islandSize / 2);
       houseY = y + bt.randInRange(-islandSize / 2, islandSize / 2);
       house = drawHouse(houseX, houseY);
-    } while (!isPointInIsland(island, houseX, houseY) || isOverlap(house, trees.concat(houses)));
+      houseBox = boundingBox(house[0]);  
+    } while (!isPointInIsland(island, houseX, houseY) || anyBoxesOverlap(houseBox, treeBoxes.concat(houseBoxes)));
     houses = houses.concat(house);
+    houseBoxes.push(houseBox);
   }
 
   let ship = drawTexturedShip(shipX, shipY);
@@ -206,13 +227,22 @@ function drawIslandWithWavesTreesHousesAndShip(x, y, islandSize, waveSize, waveC
 }
 
 function flipSceneVertically(scene) {
-  return scene.map(line =>
-    line.map(([x, y]) => [x, height - y])
-  );
+  for (let shape of scene) {
+    for (let point of shape) {
+      point[1] = height - point[1];
+    }
+  }
 }
 
-const islandWithWavesTreesHousesAndShip = drawIslandWithWavesTreesHousesAndShip(width / 2, height / 2, islandSize, waveSize, waveCount, treeCount, houseCount);
+let scene = drawIslandWithWavesTreesHousesAndShip(
+  width / 2,
+  height / 2,
+  islandSize,
+  waveSize,
+  waveCount,
+  treeCount,
+  houseCount
+);
 
-const flippedScene = flipSceneVertically(islandWithWavesTreesHousesAndShip);
-
-drawLines(flippedScene);
+flipSceneVertically(scene);
+drawLines(scene);
