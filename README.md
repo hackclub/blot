@@ -9,7 +9,7 @@ Blot is a [**You Ship, We Ship**](https://github.com/hackclub/blot/tree/main?tab
 
 <img width="600" alt="blot-white-bg" src="https://github.com/hackclub/blot/assets/27078897/e332631f-1232-4ac5-a573-57b0c570e980" />
 
-A piece of art made for Blot can be the first program you ever write, but it can also be a challenge for a master programmer. Check out some of the art made already in our [gallery](https://blot.hackclub.com/gallery). Every piece of art you see is actually a program. Many of them create unique pieces everytime the art is run. You may be looking at an artwork which has never been seen before, even by the creator.
+A piece of art made for Blot can be the first program you ever write, but it can also be a challenge for a master programmer. Check out some of the art made already in our [gallery](https://blot.hackclub.com/gallery). Every piece of art you see is actually a program. Many of them create unique pieces every time the art is run. You may be looking at an artwork which has never been seen before, even by the creator.
 
 For a short video introduction to Blot [check out our 38 second trailer](https://www.youtube.com/watch?v=d1noJNmfvC0).
 
@@ -19,7 +19,7 @@ For a short video introduction to Blot [check out our 38 second trailer](https:/
 
 # How It Works
 
-### 1) Create a piece of programatic art in the web editor.
+### 1) Create a piece of programmatic art in the web editor.
 
 To learn the Blot drawing library follow our [getting started guide](https://blot.hackclub.com/editor?guide=start). Check out the examples in the [gallery](https://blot.hackclub.com/gallery) and then follow along with some of our [guides](https://blot.hackclub.com/guides).
 
@@ -87,9 +87,9 @@ Blot has been in development since January 2023 and was released April 2024. We'
 
 ### Programmatic Art
 
-There is all sorts of styles of programmatic art. Here are some examples of great Blot submissions that show a range of styles. This list is by no means exhuastive.
+There are all sorts of styles of programmatic art. Here are some examples of great Blot submissions that show a range of styles. This list is by no means exhaustive.
 
-**The nautral scene** is a common source of artistic inspiration. This could be called figurative or represenational art when it tries to depict a real thing with some fidelity. One example are these roots by Kai (age 17).
+**The natural scene** is a common source of artistic inspiration. This could be called figurative or representational art when it tries to depict a real thing with some fidelity. One example are these roots by Kai (age 17).
 
 <a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/roots-kai/index.js">
   <img width="500" alt="collection" src="https://github.com/hackclub/blot/assets/27078897/a67fec4c-11cc-48b3-981f-5f4108028c03">
@@ -112,7 +112,7 @@ There is all sorts of styles of programmatic art. Here are some examples of grea
 </a>
 
 
-**The data transformation** can be seen in Kieran's (age 15) self portrait. It takes data from an SVG but modifies it programmtically to produce an art piece. This approach could be used to visualize data that may not of been visual to begin with.
+**The data transformation** can be seen in Kieran's (age 15) self portrait. It takes data from an SVG but modifies it programmatically to produce an art piece. This approach could be used to visualize data that may not of been visual to begin with.
 
 <a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/self_portrait-kieran/index.js">
   <img width="500" alt="0" src="https://github.com/hackclub/blot/assets/27078897/145ebbb5-7187-4062-b41f-c6961c5156b4">
@@ -134,7 +134,7 @@ For way more examples check out the [gallery](https://blot.hackclub.com/gallery)
 
 You ship we ship projects are developed to provide technological creative material. The Blot was developed to not just create visual programs on computers but also to explore robotic and interactive technology. Here are some ways the machine or project has been used to create interactive technology experiences.
 
-[**Lineflow**](https://github.com/leomcelroy/lineflow) was developed as an interactive art piece for an MIT Museum event. Participants would create a single line drawing on the computer and would then watch a simulation of a line folding into there drawing. Three frames of that simulation were strung together to create a timeline of the animation that would be drawn by a Blot to be brought home by the participant.
+[**Lineflow**](https://github.com/leomcelroy/lineflow) was developed as an interactive art piece for an MIT Museum event. Participants would create a single line drawing on the computer and would then watch a simulation of a line folding into their drawing. Three frames of that simulation were strung together to create a timeline of the animation that would be drawn by a Blot to be brought home by the participant.
 
 <img width="500" src="https://github-production-user-asset-6210df.s3.amazonaws.com/27078897/291394243-0333b4ca-52cd-4bca-9141-44d05d2775ce.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240411%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240411T224432Z&X-Amz-Expires=300&X-Amz-Signature=ece92c400e0e3f3a9dddd4ca625b731df08c1eb5e04acf045f026896dee79b44&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=731753090">
 
@@ -144,7 +144,7 @@ You ship we ship projects are developed to provide technological creative materi
 
 <img height="500" src="https://github.com/hackclub/blot/assets/27078897/c484d7fe-fb72-4d44-90b5-d7ec0ffe3204">
 
-**Chinese caligraphy workshop** was developed for and run at the [Hack Club leader summit 2024](https://www.youtube.com/watch?v=UZEm5lONg7g) by Bright Li (age 15). During it participants learned how to draw Chinese caligraphy programmatically and then handed ink brushes to Bright's Blot robot to put the drawings to the page.
+**Chinese calligraphy workshop** was developed for and run at the [Hack Club leader summit 2024](https://www.youtube.com/watch?v=UZEm5lONg7g) by Bright Li (age 15). During it participants learned how to draw Chinese calligraphy programmatically and then handed ink brushes to Bright's Blot robot to put the drawings to the page.
 
 <img width="500" alt="Screenshot 2024-04-11 at 6 04 53 PM" src="https://github.com/hackclub/blot/assets/27078897/0de4df40-a742-4f9b-a2eb-d17fdd3a1e22">
 
