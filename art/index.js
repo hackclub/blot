@@ -51,7 +51,7 @@ function drawLeaves(leaves) {
   // Implement the drawing logic for leaves
   leaves.forEach(leaf => {
     const leafCircle = new bt.Turtle()
-      .goTo(leaf)
+      .jump(leaf)
       .down()
       .arc(360, 2)
       .lines();
