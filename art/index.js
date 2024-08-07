@@ -26,15 +26,16 @@ function branch(startX, startY, len, angle) {
   ];
   // Add line to the final lines
   finalLines.push(line);
-  if (len > 4) {
+  if (len > 8) { // Increase the length threshold to reduce the number of elements
     // Draw 2 new branches
     const newAngle = bt.randInRange(-0.15, 0.15); // Add some randomness to the angle
     branch(endX, endY, len * 0.67, angle + Math.PI / 4 + newAngle); // Adjust the angles here
     branch(endX, endY, len * 0.67, angle - Math.PI / 4 + newAngle); // Here as well
   } else {
-    // Add leaves, flowers, and fruits at the tips
-    finalLeaves.push([endX, endY]);
-    if (bt.rand() > 0.5) {
+    // Add leaves, flowers, and fruits at the tips with spacing
+    if (bt.rand() > 0.7) {
+      finalLeaves.push([endX, endY]);
+    } else if (bt.rand() > 0.5) {
       finalFlowers.push([endX, endY]);
     } else {
       finalFruits.push([endX, endY]);
@@ -59,35 +60,51 @@ function drawFinalLines(lines) {
 function drawLeaves(leaves) {
   // Implement the drawing logic for leaves
   leaves.forEach(leaf => {
-    const leafCircle = new bt.Turtle()
+    const leafShape = new bt.Turtle()
       .jump(leaf)
       .down()
-      .arc(360, 2)
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .right(120)
+      .forward(5)
       .lines();
-    drawLines(leafCircle);
+    drawLines(leafShape);
   });
 }
 
 function drawFlowers(flowers) {
   // Implement the drawing logic for flowers
   flowers.forEach(flower => {
-    const flowerCircle = new bt.Turtle()
+    const flowerShape = new bt.Turtle()
       .jump(flower)
       .down()
       .arc(360, 3)
+      .right(45)
+      .arc(360, 3)
+      .right(45)
+      .arc(360, 3)
+      .right(45)
+      .arc(360, 3)
       .lines();
-    drawLines(flowerCircle);
+    drawLines(flowerShape);
   });
 }
 
 function drawFruits(fruits) {
   // Implement the drawing logic for fruits
   fruits.forEach(fruit => {
-    const fruitCircle = new bt.Turtle()
+    const fruitShape = new bt.Turtle()
       .jump(fruit)
       .down()
-      .arc(360, 4)
+      .forward(4)
+      .right(90)
+      .forward(4)
+      .right(90)
+      .forward(4)
+      .right(90)
+      .forward(4)
       .lines();
-    drawLines(fruitCircle);
+    drawLines(fruitShape);
   });
 }
