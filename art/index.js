@@ -39,10 +39,10 @@ function branch(startX, startY, len, angle) {
 branch(width / 2, height / 100, 50, Math.PI / 2); // Start the tree from the center of the canvas
 
 // Draw final lines and leaves
-drawLines(finalLines);
+drawFinalLines(finalLines);
 drawLeaves(finalLeaves);
 
-function drawLines(lines) {
+function drawFinalLines(lines) {
   // Implement the drawing logic for lines
   drawLines(lines);
 }
@@ -51,7 +51,7 @@ function drawLeaves(leaves) {
   // Implement the drawing logic for leaves
   leaves.forEach(leaf => {
     const leafCircle = new bt.Turtle()
-      .jump(leaf)
+      .goTo(leaf)
       .down()
       .arc(360, 2)
       .lines();
