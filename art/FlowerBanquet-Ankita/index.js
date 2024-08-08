@@ -7,7 +7,6 @@
 
 /*
 You can change the number and size of petals, and the positions, colors, and line colors of snowflakes.
-
 */
 
 const detail = 5; // no. of petals
@@ -64,38 +63,32 @@ drawLines(drawing, { fill: fillcolor, stroke: linecolor, width: 2 });
 
 
 const horizontalLine = new bt.Turtle();
-const lineY = 2*height/7; // Y-coordinate for the horizontal line (middle of the canvas)
+const lineY = 2*height/7; 
 
 // Draw the horizontal line
-horizontalLine.jump([0, lineY]); // Start from the left edge of the canvas
-horizontalLine.forward(400); // Move to the right edge of the canvas
+horizontalLine.jump([0, lineY]); 
+horizontalLine.forward(400); 
 
 
-// Render the line
 drawLines(horizontalLine.lines(), { stroke: "black", width: 1 });
 
 
 
 const snowman = new bt.Turtle();
-const snowmanBaseX = 293; // X-coordinate for the snowman base
-const snowmanBaseY = 245; // Y-coordinate for the snowman base
+const snowmanBaseX = 293; 
+const snowmanBaseY = 245;
 
-// Draw the bottom circle (base)
 snowman.jump([snowmanBaseX, snowmanBaseY]);
-snowman.arc(360, 26); // larger circle
+snowman.arc(360, 26); 
 
-// Draw the middle circle
 snowman.jump([snowmanBaseX, snowmanBaseY - 61]);
-snowman.arc(360, 37); // medium circle
+snowman.arc(360, 37);
 
-// Draw the top circle (head)
 snowman.jump([snowmanBaseX, snowmanBaseY - 138]);
-snowman.arc(360, 48); // smaller circle
+snowman.arc(360, 48);
 
-// Draw the snowman body (including the head)
 drawLines(snowman.lines(), { fill: "white", stroke: "black" });
 
-// Draw the eyes (after the head)
 const snowmanEye1 = new bt.Turtle();
 snowmanEye1.jump([snowmanBaseX - 7, snowmanBaseY - -31]);
 snowmanEye1.arc(360, 1);
@@ -106,13 +99,11 @@ snowmanEye2.jump([snowmanBaseX + 9, snowmanBaseY - -31]);
 snowmanEye2.arc(360, 1);
 drawLines(bt.scale(snowmanEye2.lines(), [1.0, 1.0]), { fill: "black" });
 
-// Draw the nose (carrot)
 const snowmanNose = new bt.Turtle();
 snowmanNose.jump([snowmanBaseX + 3, snowmanBaseY - -25]);
 snowmanNose.forward(10);
 drawLines(snowmanNose.lines(), { stroke: "orange", width: 4 });
 
-// Draw the arms
 const snowmanLeftArm = new bt.Turtle();
 snowmanLeftArm.jump([snowmanBaseX - 45, snowmanBaseY - 1]);
 snowmanLeftArm.right(45);
