@@ -123,18 +123,19 @@ function addBackgroundElements() {
     .lines();
   finalBackground.push(sun);
 
-  // Add moon
+  // Add crescent moon
   const moon = new bt.Turtle()
     .jump([20, height - 36.27])
     .down()
-    .arc(360, 10)
+    .arc(380, 10)
+    .arc(180, 8)
     .lines();
   finalBackground.push(moon);
 
   // Add stars
   for (let i = 0; i < 5; i++) {
     const star = new bt.Turtle()
-      .jump([bt.randInRange(10, width - 10), bt.randInRange(10, height / 4)])
+      .jump([bt.randInRange(20, width - 10), bt.randInRange(10, height / 4)])
       .down()
       .arc(360, 2)
       .lines();
