@@ -9,11 +9,12 @@ const width = 165;
 const height = 160;
 setDocDimensions(width, height);
 
-// Store final lines, leaves, flowers, and fruits
+// Store final lines, leaves, flowers, fruits, and background elements
 const finalLines = [];
 const finalLeaves = [];
 const finalFlowers = [];
 const finalFruits = [];
+const finalBackground = [];
 
 // Draw a branch
 function branch(startX, startY, len, angle) {
@@ -46,7 +47,11 @@ function branch(startX, startY, len, angle) {
 // Draw the tree
 branch(width / 2, height / 100, 50, Math.PI / 2); // Start the tree from the center of the canvas
 
-// Draw final lines, leaves, flowers, and fruits
+// Add background elements
+addBackgroundElements();
+
+// Draw final lines, leaves, flowers, fruits, and background elements
+drawBackground(finalBackground);
 drawFinalLines(finalLines);
 drawLeaves(finalLeaves);
 drawFlowers(finalFlowers);
@@ -106,5 +111,54 @@ function drawFruits(fruits) {
       .forward(4)
       .lines();
     drawLines(fruitShape);
+  });
+}
+
+function addBackgroundElements() {
+  // Add sun
+  const sun = new bt.Turtle()
+    .jump([width - 17, height - 25])
+    .down()
+    .arc(360, 10)
+    .lines();
+  finalBackground.push(sun);
+
+  // Add moon
+  const moon = new bt.Turtle()
+    .jump([20, height - 36.27])
+    .down()
+    .arc(360, 10)
+    .lines();
+  finalBackground.push(moon);
+
+  // Add stars
+  for (let i = 0; i < 5; i++) {
+    const star = new bt.Turtle()
+      .jump([bt.randInRange(10, width - 10), bt.randInRange(10, height / 4)])
+      .down()
+      .arc(360, 2)
+      .lines();
+    finalBackground.push(star);
+  }
+
+  // Add clouds
+  for (let i = 0; i < 3; i++) {
+    const cloud = new bt.Turtle()
+      .jump([bt.randInRange(10, width - 10), bt.randInRange(10, height / 4)])
+      .down()
+      .arc(360, 5)
+      .right(45)
+      .arc(360, 5)
+      .right(45)
+      .arc(360, 5)
+      .lines();
+    finalBackground.push(cloud);
+  }
+}
+
+function drawBackground(background) {
+  // Implement the drawing logic for background elements
+  background.forEach(element => {
+    drawLines(element);
   });
 }
