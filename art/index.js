@@ -253,10 +253,68 @@ function addGrass() {
   }
 }
 
+function addSquirrel() {
+  const squirrel = new bt.Turtle()
+    .jump([width / 2 + 10, height / 2 + 20])
+    .down()
+    .forward(5)
+    .right(45)
+    .forward(5)
+    .right(45)
+    .forward(5)
+    .right(45)
+    .forward(5)
+    .lines();
+  finalBackground.push(squirrel);
+}
+
+// Animation (variable - predetermined set...)
+function animateFallingLeaves() {
+  const fallingLeaves = [
+    [width / 2 + 10, height / 2 + 10],
+    [width / 2 - 15, height / 2 + 20],
+    [width / 2 + 20, height / 2 + 30]
+  ];
+  fallingLeaves.forEach(pos => {
+    const leaf = new bt.Turtle()
+      .jump(pos)
+      .down()
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .lines();
+    finalBackground.push(leaf);
+  });
+}
+
+function changeSeason(season) {
+  const colors = {
+    spring: 'green',
+    summer: 'darkgreen',
+    autumn: 'orange',
+    winter: 'white'
+  };
+  const color = colors[season] || 'green';
+  finalLeaves.forEach(leaf => {
+    const leafShape = new bt.Turtle()
+      .jump(leaf)
+      .down()
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .color(color)
+      .lines();
+    drawLines(leafShape);
+  });
+}
+
 function drawBackground(background) {
   // Implement the drawing logic for background elements
   background.forEach(element => {
     drawLines(element);
   });
 }
-
