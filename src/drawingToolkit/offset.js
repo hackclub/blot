@@ -1,3 +1,4 @@
+import { assertArgs } from './assert.js'
 import { ClipperLib } from "./clipper_unminified.js";
 
 const overlap = (p0, p1) => 0.00000001 > Math.abs(p0[0] - p1[0]) + Math.abs(p0[1] - p1[1]);
@@ -10,6 +11,8 @@ const isClosed = shape => {
 }
 
 export function offset(polylines, delta, ops = {}) {
+  assertArgs(arguments, ['polylines', 'number', 'any?'], 'bt.offset')
+
   const ogPolylines = polylines;
   if (typeof polylines.at(0)?.at(0) === "number") polylines = [polylines];
 

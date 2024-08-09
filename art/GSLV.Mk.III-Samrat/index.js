@@ -257,26 +257,26 @@ const cloud3 = [
   ...cloud(70, height - 210, 20)
 ];
 
-drawLines([cloud1], { fill: "white" });
-drawLines([cloud2], { fill: "lightgrey" });
-drawLines([cloud3], { fill: "grey" });
+// drawLines(cloud1, { fill: "white" });
+// drawLines(cloud2, { fill: "lightgrey" });
+// drawLines(cloud3, { fill: "grey" });
 
-const rocket = [
-  ...body, 
-  ...noseCone, 
-  ...leftFin, 
-  ...rightFin, 
-  ...leftBooster, 
-  ...rightBooster, 
-  ...saffronStripe, 
-  ...whiteStripe, 
-  ...greenStripe, 
-  ...chakraOuter.lines()[0], 
-  ...chakra
-];
+// const rocket = [
+//   ...body, 
+//   ...noseCone, 
+//   ...leftFin, 
+//   ...rightFin, 
+//   ...leftBooster, 
+//   ...rightBooster, 
+//   ...saffronStripe, 
+//   ...whiteStripe, 
+//   ...greenStripe, 
+//   ...chakraOuter.lines()[0], 
+//   ...chakra
+// ];
 
-bt.translate(rocket, [0, -150]);
-drawLines(rocket);
+// bt.translate(rocket, [0, -150]);
+// drawLines(rocket);
 
   const t = new bt.Turtle();
   t.forward(100).right(120).forward(100).right(120).forward(100);
@@ -544,28 +544,28 @@ const cloud3 = [
   ...cloud(70, height - 210, 20)
 ];
 
-drawLines([cloud1], { fill: "white" });
-drawLines([cloud2], { fill: "lightgrey" });
-drawLines([cloud3], { fill: "grey" });
+// drawLines(cloud1, { fill: "white" });
+// drawLines(cloud2, { fill: "lightgrey" });
+// drawLines(cloud3, { fill: "grey" });
 
-const rocket = [
-  ...body, 
-  ...noseCone, 
-  ...leftFin, 
-  ...rightFin, 
-  ...leftBooster, 
-  ...rightBooster, 
-  ...saffronStripe, 
-  ...whiteStripe, 
-  ...greenStripe, 
-  ...chakraOuter.lines()[0], 
-  ...chakra, 
-  ...flameYellow,
-  ...flameOrange
-];
+// const rocket = [
+//   ...body, 
+//   ...noseCone, 
+//   ...leftFin, 
+//   ...rightFin, 
+//   ...leftBooster, 
+//   ...rightBooster, 
+//   ...saffronStripe, 
+//   ...whiteStripe, 
+//   ...greenStripe, 
+//   ...chakraOuter.lines()[0], 
+//   ...chakra, 
+//   ...flameYellow,
+//   ...flameOrange
+// ];
 
-bt.translate(rocket, [0, -100]);
-drawLines(rocket);
+// bt.translate(rocket, [0, -100]);
+// drawLines(rocket);
 
   const t = new bt.Turtle();
   const s = 50;
@@ -624,7 +624,7 @@ const addLandPatches = (count) => {
     t.goTo([cx, cy - r]);
     t.down();
     t.arc(360, r);
-    landPatches.push(t.lines());
+    // landPatches.push(...t.lines());
   }
   drawLines(landPatches, { fill: "green" });
 };
@@ -880,28 +880,28 @@ const cloud3 = [
   ...cloud(70, height - 210, 20)
 ];
 
-drawLines([cloud1], { fill: "white" });
-drawLines([cloud2], { fill: "lightgrey" });
-drawLines([cloud3], { fill: "grey" });
+// drawLines(cloud1, { fill: "white" });
+// drawLines(cloud2, { fill: "lightgrey" });
+// drawLines(cloud3, { fill: "grey" });
 
-const rocket = [
-  ...body, 
-  ...noseCone, 
-  ...leftFin, 
-  ...rightFin, 
-  ...leftBooster, 
-  ...rightBooster, 
-  ...saffronStripe, 
-  ...whiteStripe, 
-  ...greenStripe, 
-  ...chakraOuter.lines()[0], 
-  ...chakra, 
-  ...flameYellow,
-  ...flameOrange
-];
+// const rocket = [
+//   ...body, 
+//   ...noseCone, 
+//   ...leftFin, 
+//   ...rightFin, 
+//   ...leftBooster, 
+//   ...rightBooster, 
+//   ...saffronStripe, 
+//   ...whiteStripe, 
+//   ...greenStripe, 
+//   ...chakraOuter.lines()[0], 
+//   ...chakra, 
+//   ...flameYellow,
+//   ...flameOrange
+// ];
 
-bt.translate(rocket, [0, -100]);
-drawLines(rocket);
+// bt.translate(rocket, [0, -100]);
+// drawLines(rocket);
 
   const curve = bt.catmullRom([[0, 0], [30, 20], [50, 100], [125, 125]]);
   drawLines([curve]);

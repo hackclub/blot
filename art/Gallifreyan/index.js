@@ -147,26 +147,10 @@ for (let i = 0; i < letters.length; i++) {
   letterPositions.push([x, y])
 }
 
-let consMainLines = [
-  [
-    []
-  ]
-];
-let consAbsLines = [
-  [
-    []
-  ]
-];
-let consAccLines = [
-  [
-    []
-  ]
-];
-let vowelLines = [
-  [
-    []
-  ]
-];
+let consMainLines = [];
+let consAbsLines = [];
+let consAccLines = [];
+let vowelLines = [];
 for (let i = 0; i < letters.length; i++) {
   let cons = new bt.Turtle().up();
   let pos = letterPositions[i];
@@ -258,11 +242,7 @@ drawLines(consAccLines, { fill: "black" });
 drawLines(vowelLines, { width: 4 });
 
 function drawAcc(c, center, path) {
-  let lines = [
-    [
-      []
-    ]
-  ];
+  let lines = [];
   for (let i = 0; i < letters.length; i++) {
     let acc = new bt.Turtle().up();
 

@@ -85,7 +85,7 @@ for (let pc = 0; pc < pointList.length; pc++) {
       }
       //Add Waves
       let newDist = dist;
-      newDist += (bt.noise(bt.rand() * 2, bt.rand() * 2, bt.rand() * 2) * wavyAmount);
+      newDist += (bt.noise([bt.rand() * 2, bt.rand() * 2, bt.rand() * 2]) * wavyAmount);
       //Add Points
       let oldX = point[0];
       let oldY = point[1];

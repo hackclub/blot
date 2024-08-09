@@ -249,8 +249,9 @@ t.down()
 let turtle = t.pos
 let offset = 0
 for (let i = 1; i <= 139; i++) { 
-let curves = [bt.nurbs([[turtle[0] + offset, turtle[1]], [58.7, 125.4 - offset], [89.5, 115.6 - offset]], 135, 108)];
-let curves2 = [bt.nurbs([[99.4, 113.5 - offset], [110, 111], [125, 108 - offset]], 135, 108)];  
+let curves = [bt.nurbs([[turtle[0] + offset, turtle[1]], [58.7, 125.4 - offset], [89.5, 115.6 - offset]])];
+let curves2 = [bt.nurbs([[99.4, 113.5 - offset], [110, 111], [125, 108 - offset]]
+                       )];  
 bt.join(finalLines, curves);
 bt.join(finalLines, curves2);
 offset = offset - 0.01;

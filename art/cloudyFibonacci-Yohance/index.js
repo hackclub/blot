@@ -111,7 +111,7 @@ bt.translate(spiral, [-3,17])
 console.log(points)
 //const npoints = bt.noise(points)
 //draws curve using points array
-t.jump([points[0, 0], points[0,0]])
+t.jump(points[0])
 /*for (let i = 1; i < points.length; i++){
   t.goTo([points[i][0], points[i][1]])
 }*/

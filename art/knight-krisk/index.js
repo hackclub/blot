@@ -52,7 +52,7 @@ faces = mergedfaces
       y[0]/y[2]*f,
       y[1]/y[2]*f,
     ]), 1-Math.max(0, (x[3][0]*light[0] + x[3][1]*light[1] + x[3][2]*light[2])/Math.pow(x[3][0]*x[3][0] + x[3][1]*x[3][1] + x[3][2]*x[3][2], 0.5)/Math.pow(light[0]*light[0] + light[1]*light[1] + light[2]*light[2], 0.5))])
-    .map(x => [x[0].map(y => [(y[0]*0.5 + 0.5)*width, (y[1]*0.5 + 0.5)*height, y[3]], 0.5), x[1]])
+    .map(x => [x[0].map(y => [(y[0]*0.5 + 0.5)*width, (y[1]*0.5 + 0.5)*height], 0.5), x[1]])
     .map(x => [new bt.Turtle()
       .down()
       .jump(x[0][0])

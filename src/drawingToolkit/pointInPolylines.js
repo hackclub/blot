@@ -1,4 +1,7 @@
+import { assertArgs } from './assert'
+
 export function pointInPolylines(polylines, point, ops = {}) {
+  assertArgs(arguments, ['polylines', 'point'], 'bt.pointInside');
 
   const insides = polylines
     .map(poly => pointInPolyline(point, poly, ops))
