@@ -7,17 +7,17 @@
 const width = 250;
 const height = 250;
 const scale = 21;
-const x_limit = 6.2;
-const y_limit = 4;
+const x_limit = 4.9;
+const y_limit = 3.6;
 const f_left = 129;
 const f_right = 129;
 const diff_accuracy = 0.02;
-const tangents_diff = bt.randInRange(0.02, 0.40);
+const tangents_diff = bt.randInRange(0.1, 0.40);
 const left_tangent = -2;
 const right_tangent = 8;
 const rotation = 1.1;
-const mv_right = 116.4;
-const mv_up = 129.6;
+const mv_right = 112.5;
+const mv_up = 123.2;
 
 //You can provide your own function here, just remember to also provide its derivative
 function f(x) {
