@@ -6,17 +6,17 @@
 
 const width = 250;
 const height = 250;
-const scale = 49;
-const x_limit = 200;
-const y_limit = 200;
-const f_left = -125;
-const f_right = 125;
+const scale = 21;
+const x_limit = 6.2;
+const y_limit = 4;
+const f_left = 129;
+const f_right = 129;
 const diff_accuracy = 0.02;
-const tangents_diff = 0.16;
-const left_tangent = -5;
-const right_tangent = 5;
-const rotation = 25.5;
-const mv_right = 116.5;
+const tangents_diff = bt.randInRange(0.02, 0.40);
+const left_tangent = -2;
+const right_tangent = 8;
+const rotation = 1.1;
+const mv_right = 116.4;
 const mv_up = 129.6;
 
 //You can provide your own function here, just remember to also provide its derivative
@@ -67,6 +67,7 @@ setDocDimensions(width, height);
 
 var function_points = []
 var tangent_line_pairs = []
+var box = [[[0.0, 0.0], [width, 0.0], [width, height], [0.0, height]]];
 
 for (let i = f_left; i <= f_right; i += diff_accuracy) {
   function_points.push([i, f(i)]);
@@ -90,7 +91,8 @@ bt.rotate(tangent_line_pairs, rotation);
 bt.translate(function_points, [mv_right, mv_up]);
 bt.translate(tangent_line_pairs, [mv_right, mv_up]);
 
+
 drawLines(tangent_line_pairs);
-drawLines(function_points);
+//drawLines(function_points);
 
 
