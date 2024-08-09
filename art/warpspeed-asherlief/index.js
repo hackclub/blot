@@ -1,7 +1,7 @@
 /*
 @title: Warp Speed
 @author: asherlief
-@snapshot: center.png
+@snapshot: 1.PNG
 */
 const t = new bt.Turtle()
 const position = t.pos
