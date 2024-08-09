@@ -1,4 +1,4 @@
-# Blot, the plotter bot from Hack Club (this is a test)
+# Blot, the plotter bot from Hack Club
 
 **[🕸 Landing Page](https://blot.hackclub.com)** | **[💻 Online Editor](https://blot.hackclub.com/editor)** | **[👀 Gallery](https://blot.hackclub.com/gallery)**
 
