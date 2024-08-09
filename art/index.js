@@ -145,7 +145,7 @@ function addBackgroundElements() {
   // Add clouds
   for (let i = 0; i < 3; i++) {
     const cloud = new bt.Turtle()
-      .jump([bt.randInRange(10, width - 10), bt.randInRange(10, height / 4)])
+      .jump([bt.randInRange(20, width - 10), bt.randInRange(10, height / 4)])
       .down()
       .arc(360, 5)
       .right(45)
@@ -157,9 +157,106 @@ function addBackgroundElements() {
   }
 }
 
+// Background Elements
+
+// On branches (part of tree)
+function addBirds() {
+  const birdPositions = [
+    [width / 2 + 10, height / 2 + 20],
+    [width / 2 - 15, height / 2 + 30],
+    [width / 2 + 20, height / 2 + 40]
+  ];
+  birdPositions.forEach(pos => {
+    const bird = new bt.Turtle()
+      .jump(pos)
+      .down()
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .lines();
+    finalBackground.push(bird);
+  });
+}
+
+function addButterflies() {
+  const butterflyPositions = [
+    [width / 2 + 30, height / 2 + 50],
+    [width / 2 - 25, height / 2 + 60],
+    [width / 2 + 40, height / 2 + 70]
+  ];
+  butterflyPositions.forEach(pos => {
+    const butterfly = new bt.Turtle()
+      .jump(pos)
+      .down()
+      .arc(180, 5)
+      .right(90)
+      .arc(180, 5)
+      .lines();
+    finalBackground.push(butterfly);
+  });
+}
+
+function addNests() {
+  const nestPositions = [
+    [width / 2 + 5, height / 2 + 25],
+    [width / 2 - 10, height / 2 + 35]
+  ];
+  nestPositions.forEach(pos => {
+    const nest = new bt.Turtle()
+      .jump(pos)
+      .down()
+      .arc(360, 5)
+      .lines();
+    finalBackground.push(nest);
+  });
+}
+
+// In background
+function addBush() {
+  const bush = new bt.Turtle()
+    .jump([width / 2 - 20, 10])
+    .down()
+    .arc(360, 10)
+    .right(45)
+    .arc(360, 10)
+    .right(45)
+    .arc(360, 10)
+    .lines();
+  finalBackground.push(bush);
+}
+
+function addPlant() {
+  const plant = new bt.Turtle()
+    .jump([width / 2 + 20, 15])
+    .down()
+    .arc(360, 5)
+    .right(45)
+    .arc(360, 5)
+    .lines();
+  finalBackground.push(plant);
+}
+
+function addGrass() {
+  for (let i = 0; i < 5; i++) {
+    const grass = new bt.Turtle()
+      .jump([bt.randInRange(10, width - 10), 5])
+      .down()
+      .forward(5)
+      .right(45)
+      .forward(5)
+      .right(45)
+      .forward(5)
+      .lines();
+    finalBackground.push(grass);
+  }
+}
+
 function drawBackground(background) {
   // Implement the drawing logic for background elements
   background.forEach(element => {
     drawLines(element);
   });
 }
+
