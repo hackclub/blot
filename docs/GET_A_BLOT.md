@@ -41,6 +41,7 @@ Here are some examples of some pieces which would **not be accepted**:
 
 - an svg just dropped into the editor with no algorithmic process
 
+Most art takes about 15-20 hours of work to get into the gallery, so make sure to spend time improving and iterating on your project before submitting.
 
 # 2) Make a PR with your original artwork
 
