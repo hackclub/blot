@@ -1,7 +1,7 @@
 /*
 @title: Bohr Model
 @author: itsmeadarsh2008
-@snapshot: BohrModel1.png
+@snapshot: 1.png
 */
 
 const { Turtle, scale, originate } = bt;
