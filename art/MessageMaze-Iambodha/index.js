@@ -368,21 +368,13 @@ function formatInput(message) {
 
 var extension = 10;
 
-async function importPattern(character) {
-  try {
-      const response = await fetch(`https://raw.githubusercontent.com/iambodha/Message-Maze-Blot/main/Updated-MessageMaze/assets/patterns/${character}.json`);
-      
-      if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const jsonData = await response.json();
-      
-      const maze = Maze.fromJSON(jsonData);
-      return maze;
-  } catch (error) {
-      console.error(`Error fetching character pattern: ${error}`);
-  }
+function importPattern(character) {
+  const req = new XMLHttpRequest();
+  const url = `https://raw.githubusercontent.com/iambodha/Message-Maze-Blot/main/Updated-MessageMaze/assets/patterns/${character}.json`
+  req.open("GET", url, false);
+  req.send();
+  const maze = Maze.fromJSON(JSON.parse(req.response));
+  return maze;
 }
 
 function makeRow(charMazesList, start, end, lineWidth) {
@@ -492,14 +484,14 @@ function rBFS(maze, reduced = 8 / 16) {
   return maze;
 }
 
-async function generateMazeWithTextSolution(inputText) {
+function generateMazeWithTextSolution(inputText) {
   const inputTextArr = formatInput(inputText);
 
   const charMazesLists = [];
   for (const line of inputTextArr) {
     const charMazes = [];
     for (const character of line) {
-      const maze = await importPattern(character);
+      const maze = importPattern(character);
       charMazes.push(maze);
     }
     charMazesLists.push(charMazes);
@@ -651,7 +643,7 @@ function randomPattern(size, start, end, retryCount = 0) {
   return maze;
 }
 
-async function generateMazeListFromString(inputString) {
+function generateMazeListFromString(inputString) {
   // Sanitize input string
   inputString = inputString.replace(/[^a-zA-Z]/g, ' ').replace(/\s+/g, ' ').trim();
 
@@ -664,17 +656,17 @@ async function generateMazeListFromString(inputString) {
   }
 
   // Generate the maze
-  const maze = await generateMazeWithTextSolution(inputString);
+  const maze = generateMazeWithTextSolution(inputString);
 
   // Create a list representation of the maze
   const mazeList = maze.exportMaze();
 
   return mazeList;
 }
-async function drawMazeFromString(hiddenMessage) {
+function drawMazeFromString(hiddenMessage) {
   try {
     // Generate maze data from the hidden message
-    const mazeData = await generateMazeListFromString(hiddenMessage);
+    const mazeData = generateMazeListFromString(hiddenMessage);
     console.log(mazeData);
 
     // Set dimensions
@@ -770,5 +762,5 @@ async function drawMazeFromString(hiddenMessage) {
   }
 }
 
-// Call the function with the hidden message
+//Change the string to whatever message you would like :)
 drawMazeFromString("HELLO");
