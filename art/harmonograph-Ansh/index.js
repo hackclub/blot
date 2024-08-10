@@ -1,7 +1,7 @@
 /* 
   @title: Harmonograph
   @author: Ansh Kumar
-  @snapshot: snapshot3
+  @snapshot: 
 */
 
 const width = 125;
@@ -16,6 +16,8 @@ const e= 2.71828
 const polylines= t.lines();
 
 const scale = 30 
+
+//start adjusting the values from here
 const p1 = 1;
 const f1 = 1;
 const d1 = 0; 
@@ -31,6 +33,8 @@ const d3 = 0;
 const p4 = 1; 
 const f4 = 1; 
 const d4 = 0; 
+//adjust values till here
+
 
 function walk(step) {
     const i = step / 100;
