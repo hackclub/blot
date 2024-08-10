@@ -369,13 +369,50 @@ function formatInput(message) {
 var extension = 10;
 
 function importPattern(character) {
+  const urlMapping = {
+    'A': 'https://cloud-cz1gw1n1v-hack-club-bot.vercel.app/0a.json',
+    'B': 'https://cloud-cz1gw1n1v-hack-club-bot.vercel.app/1b.json',
+    'C': 'https://cloud-cz1gw1n1v-hack-club-bot.vercel.app/2c.json',
+    'D': 'https://cloud-cz1gw1n1v-hack-club-bot.vercel.app/3d.json',
+    'E': 'https://cloud-cz1gw1n1v-hack-club-bot.vercel.app/4e.json',
+    'F': 'https://cloud-cz1gw1n1v-hack-club-bot.vercel.app/5f.json',
+    'G': 'https://cloud-cz1gw1n1v-hack-club-bot.vercel.app/6g.json',
+    'H': 'https://cloud-cz1gw1n1v-hack-club-bot.vercel.app/7h.json',
+    'I': 'https://cloud-cz1gw1n1v-hack-club-bot.vercel.app/8i.json',
+    'J': 'https://cloud-cz1gw1n1v-hack-club-bot.vercel.app/9j.json',
+    'M': 'https://cloud-e9mx3wgou-hack-club-bot.vercel.app/0m.json',
+    'Q': 'https://cloud-e9mx3wgou-hack-club-bot.vercel.app/1q.json',
+    'K': 'https://cloud-e9mx3wgou-hack-club-bot.vercel.app/2k.json',
+    'L': 'https://cloud-e9mx3wgou-hack-club-bot.vercel.app/3l.json',
+    'N': 'https://cloud-e9mx3wgou-hack-club-bot.vercel.app/4n.json',
+    'O': 'https://cloud-e9mx3wgou-hack-club-bot.vercel.app/5o.json',
+    'P': 'https://cloud-e9mx3wgou-hack-club-bot.vercel.app/6p.json',
+    'R': 'https://cloud-e9mx3wgou-hack-club-bot.vercel.app/7r.json',
+    'S': 'https://cloud-e9mx3wgou-hack-club-bot.vercel.app/8s.json',
+    'sep': 'https://cloud-e9mx3wgou-hack-club-bot.vercel.app/9sep.json',
+    'W': 'https://cloud-ioa7dqno2-hack-club-bot.vercel.app/0w.json',
+    'X': 'https://cloud-ioa7dqno2-hack-club-bot.vercel.app/1x.json',
+    'Z': 'https://cloud-ioa7dqno2-hack-club-bot.vercel.app/2z.json',
+    'space': 'https://cloud-ioa7dqno2-hack-club-bot.vercel.app/3space.json',
+    'T': 'https://cloud-ioa7dqno2-hack-club-bot.vercel.app/4t.json',
+    'U': 'https://cloud-ioa7dqno2-hack-club-bot.vercel.app/5u.json',
+    'V': 'https://cloud-ioa7dqno2-hack-club-bot.vercel.app/6v.json',
+    'Y': 'https://cloud-ioa7dqno2-hack-club-bot.vercel.app/7y.json'
+  };
+
+  const url = urlMapping[character];
+  if (!url) {
+    throw new Error(`Character "${character}" not found in URL mapping.`);
+  }
+
   const req = new XMLHttpRequest();
-  const url = `https://raw.githubusercontent.com/iambodha/Message-Maze-Blot/main/Updated-MessageMaze/assets/patterns/${character}.json`
   req.open("GET", url, false);
   req.send();
+
   const maze = Maze.fromJSON(JSON.parse(req.response));
   return maze;
 }
+
 
 function makeRow(charMazesList, start, end, lineWidth) {
   const charsMaze = combineHorizontally(charMazesList);
@@ -763,4 +800,4 @@ function drawMazeFromString(hiddenMessage) {
 }
 
 //Change the string to whatever message you would like :)
-drawMazeFromString("HELLO");
+drawMazeFromString("HELLO WORLD");
