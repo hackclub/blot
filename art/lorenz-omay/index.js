@@ -1,7 +1,7 @@
 /*
 @title: Lorenz Attractor
 @author: Leonard (Omay)
-@snapshot: lorenz1.png
+@snapshot: lorenz.png
 */
 
 const rho = 28;
