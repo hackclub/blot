@@ -1,7 +1,7 @@
 /*
 @title: Lorenz Attractor
 @author: Leonard (Omay)
-@snapshot: lorenz.png
+@snapshot: lorenz1.png
 */
 
 const rho = 28;
@@ -30,6 +30,8 @@ let z = 1;
 let minA = Infinity, maxA = -Infinity;
 let minB = Infinity, maxB = -Infinity;
 
+let prevA = 0, prevB = 0;
+
 while (iter < finalIter) {
   let xt = x;
   let yt = y;
@@ -53,6 +55,13 @@ while (iter < finalIter) {
   if (b < minB) minB = b;
   if (b > maxB) maxB = b;
 
+  if (iter > 0) {
+    lines.push([[prevA, prevB], [a, b]]);
+  }
+
+  prevA = a;
+  prevB = b;
+
   iter++;
 }
 
@@ -63,37 +72,11 @@ let scale = Math.min(scaleX, scaleY);
 let offsetX = margin + (width - 2 * margin - (maxA - minA) * scale) / 2;
 let offsetY = margin + (height - 2 * margin - (maxB - minB) * scale) / 2;
 
-x = 1;
-y = 1;
-z = 1;
-iter = 0;
-
-while (iter < finalIter) {
-  let xt = x;
-  let yt = y;
-  let zt = z;
-  x = xt + sigma * (yt - xt) * dt;
-  y = yt + (xt * (rho - zt) - yt) * dt;
-  z = zt + (xt * yt - beta * zt) * dt;
-  
-  let a = 0, b = 0;
-  let at = 0, bt = 0;
-
-  if (xAxis === "x") {a = x; at = xt;}
-  else if (xAxis === "y") {a = y; at = yt;}
-  else if (xAxis === "z") {a = z; at = zt;}
-  
-  if (yAxis === "x") {b = x; bt = xt;}
-  else if (yAxis === "y") {b = y; bt = yt;}
-  else if (yAxis === "z") {b = z; bt = zt;}
-
-  let scaledAt = (at - minA) * scale + offsetX;
-  let scaledBt = (bt - minB) * scale + offsetY;
-  let scaledA = (a - minA) * scale + offsetX;
-  let scaledB = (b - minB) * scale + offsetY;
-
-  lines.push([[scaledAt, scaledBt], [scaledA, scaledB]]);
-  iter++;
-}
+lines = lines.map(val => {
+  return [
+    [(val[0][0] - minA) * scale + offsetX, (val[0][1] - minB) * scale + offsetY],
+    [(val[1][0] - minA) * scale + offsetX, (val[1][1] - minB) * scale + offsetY]
+  ];
+});
 
 drawLines(lines);
