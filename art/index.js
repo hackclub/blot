@@ -162,21 +162,59 @@ function addBackgroundElements() {
   }
 }
 
-// Background Elements
 function addSquirrel() {
-    const squirrel = new bt.Turtle()
-      .jump([width / 2 + 10, height / 2 + 20])
+  const squirrel = new bt.Turtle()
+    .jump([width / 2 + 10, height / 2 + 20])
+    .down()
+    .forward(5)
+    .right(45)
+    .forward(5)
+    .right(45)
+    .forward(5)
+    .right(45)
+    .forward(5)
+    .lines();
+  finalBackground.push(squirrel);
+}
+
+function addBush() {
+  const bush = new bt.Turtle()
+    .jump([width / 2 - 20, 10])
+    .down()
+    .arc(360, 10)
+    .right(45)
+    .arc(360, 10)
+    .right(45)
+    .arc(360, 10)
+    .lines();
+  finalBackground.push(bush);
+}
+
+function addPlant() {
+  const plant = new bt.Turtle()
+    .jump([width / 2 + 20, 15])
+    .down()
+    .arc(360, 5)
+    .right(45)
+    .arc(360, 5)
+    .lines();
+  finalBackground.push(plant);
+}
+
+function addGrass() {
+  for (let i = 0; i < 5; i++) {
+    const grass = new bt.Turtle()
+      .jump([bt.randInRange(10, width - 10), 5])
       .down()
       .forward(5)
       .right(45)
       .forward(5)
       .right(45)
       .forward(5)
-      .right(45)
-      .forward(5)
       .lines();
-    finalBackground.push(squirrel);
+    finalBackground.push(grass);
   }
+}
 
 function drawBackground(background) {
   // Implement the drawing logic for background elements
