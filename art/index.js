@@ -49,10 +49,6 @@ branch(width / 2, height / 100, 50, Math.PI / 2); // Start the tree from the cen
 
 // Add background elements
 addBackgroundElements();
-addSquirrel();
-addBush();
-addPlant();
-addGrass();
 
 // Draw final lines, leaves, flowers, fruits, and background elements
 drawBackground(finalBackground);
@@ -131,8 +127,7 @@ function addBackgroundElements() {
   const moon = new bt.Turtle()
     .jump([20, height - 36.27])
     .down()
-    .arc(180, 10)
-    .jump([22, height - 36.27])
+    .arc(380, 10)
     .arc(180, 8)
     .lines();
   finalBackground.push(moon);
@@ -140,7 +135,7 @@ function addBackgroundElements() {
   // Add stars
   for (let i = 0; i < 5; i++) {
     const star = new bt.Turtle()
-      .jump([bt.randInRange(10, width - 10), bt.randInRange(height - 40, height - 20)])
+      .jump([bt.randInRange(20, width - 10), bt.randInRange(10, height / 4)])
       .down()
       .arc(360, 2)
       .lines();
@@ -150,7 +145,7 @@ function addBackgroundElements() {
   // Add clouds
   for (let i = 0; i < 3; i++) {
     const cloud = new bt.Turtle()
-      .jump([bt.randInRange(10, width - 10), bt.randInRange(height - 40, height - 20)])
+      .jump([bt.randInRange(20, width - 10), bt.randInRange(10, height / 4)])
       .down()
       .arc(360, 5)
       .right(45)
@@ -160,60 +155,158 @@ function addBackgroundElements() {
       .lines();
     finalBackground.push(cloud);
   }
-}
 
-function addSquirrel() {
-  const squirrel = new bt.Turtle()
-    .jump([width / 2 + 10, height / 2 + 20])
-    .down()
-    .forward(5)
-    .right(45)
-    .forward(5)
-    .right(45)
-    .forward(5)
-    .right(45)
-    .forward(5)
-    .lines();
-  finalBackground.push(squirrel);
-}
+// Background Elements
 
-function addBush() {
-  const bush = new bt.Turtle()
-    .jump([width / 2 - 20, 10])
-    .down()
-    .arc(360, 10)
-    .right(45)
-    .arc(360, 10)
-    .right(45)
-    .arc(360, 10)
-    .lines();
-  finalBackground.push(bush);
-}
-
-function addPlant() {
-  const plant = new bt.Turtle()
-    .jump([width / 2 + 20, 15])
-    .down()
-    .arc(360, 5)
-    .right(45)
-    .arc(360, 5)
-    .lines();
-  finalBackground.push(plant);
-}
-
-function addGrass() {
-  for (let i = 0; i < 5; i++) {
-    const grass = new bt.Turtle()
-      .jump([bt.randInRange(10, width - 10), 5])
+  // On branches (part of tree)
+  for (let i = 0; i < 4; i++) {
+    const birdPositions = [
+      [width / 2 + 10, height / 2 + 20],
+      [width / 2 - 15, height / 2 + 30],
+      [width / 2 + 20, height / 2 + 40]
+    ];
+    birdPositions.forEach(pos => {
+      const bird = new bt.Turtle()
+        .jump(pos)
+        .down()
+        .forward(5)
+        .right(120)
+        .forward(5)
+        .right(120)
+        .forward(5)
+        .lines();
+      finalBackground.push(bird);
+    });
+  }
+  
+  for (let i = 0; i < 6;  i++) {
+    const butterflyPositions = [
+      [width / 2 + 30, height / 2 + 50],
+      [width / 2 - 25, height / 2 + 60],
+      [width / 2 + 40, height / 2 + 70]
+    ];
+    butterflyPositions.forEach(pos => {
+      const butterfly = new bt.Turtle()
+        .jump(pos)
+        .down()
+        .arc(180, 5)
+        .right(90)
+        .arc(180, 5)
+        .lines();
+      finalBackground.push(butterfly);
+    });
+  }
+  
+  for (let i = 0; i < 3;  i++) {
+    const nestPositions = [
+      [width / 2 + 5, height / 2 + 25],
+      [width / 2 - 10, height / 2 + 35]
+    ];
+    nestPositions.forEach(pos => {
+      const nest = new bt.Turtle()
+        .jump(pos)
+        .down()
+        .arc(360, 5)
+        .lines();
+      finalBackground.push(nest);
+    });
+  }
+  
+  // In background
+  for (let i = 0; i < 3;  i++) {
+    const bush = new bt.Turtle()
+      .jump([width / 2 - 20, 10])
+      .down()
+      .arc(360, 10)
+      .right(45)
+      .arc(360, 10)
+      .right(45)
+      .arc(360, 10)
+      .lines();
+    finalBackground.push(bush);
+  }
+  
+  for (let i = 0; i < 4;  i++) {
+    const plant = new bt.Turtle()
+      .jump([width / 2 + 20, 15])
+      .down()
+      .arc(360, 5)
+      .right(45)
+      .arc(360, 5)
+      .lines();
+    finalBackground.push(plant);
+  }
+  
+  for (let i = 0; i < 6;  i++) {
+      const grass = new bt.Turtle()
+        .jump([bt.randInRange(10, width - 10), 5])
+        .down()
+        .forward(5)
+        .right(45)
+        .forward(5)
+        .right(45)
+        .forward(5)
+        .lines();
+      finalBackground.push(grass);
+  }
+  
+  for (let i = 0; i < 2;  i++) {
+    const squirrel = new bt.Turtle()
+      .jump([width / 2 + 10, height / 2 + 20])
       .down()
       .forward(5)
       .right(45)
       .forward(5)
       .right(45)
       .forward(5)
+      .right(45)
+      .forward(5)
       .lines();
-    finalBackground.push(grass);
+    finalBackground.push(squirrel);
   }
+  
+  // Animation (variable - predetermined set...)
+  for (let i = 0; i < 6;  i++) {
+    const fallingLeaves = [
+      [width / 2 + 10, height / 2 + 10],
+      [width / 2 - 15, height / 2 + 20],
+      [width / 2 + 20, height / 2 + 30]
+    ];
+    fallingLeaves.forEach(pos => {
+      const leaf = new bt.Turtle()
+        .jump(pos)
+        .down()
+        .forward(5)
+        .right(120)
+        .forward(5)
+        .right(120)
+        .forward(5)
+        .lines();
+      finalBackground.push(leaf);
+    });
+  }
+  
+  for (let i = 0; i < 6;  i++) {
+    const colors = {
+      spring: 'green',
+      summer: 'darkgreen',
+      autumn: 'orange',
+      winter: 'white'
+    };
+    const color = colors[season] || 'green';
+    finalLeaves.forEach(leaf => {
+      const leafShape = new bt.Turtle()
+        .jump(leaf)
+        .down()
+        .forward(5)
+        .right(120)
+        .forward(5)
+        .right(120)
+        .forward(5)
+        .color(color)
+        .lines();
+      drawLines(leafShape);
+    });
 }
 
 function drawBackground(background) {
