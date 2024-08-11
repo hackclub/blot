@@ -16,9 +16,6 @@ const finalFlowers = [];
 const finalFruits = [];
 const finalBackground = [];
 
-// Define the season
-const season = 'spring'; // Change this to 'summer', 'autumn', or 'winter' as needed
-
 // Draw a branch
 function branch(startX, startY, len, angle) {
   const endX = startX + len * Math.cos(angle);
@@ -30,16 +27,16 @@ function branch(startX, startY, len, angle) {
   ];
   // Add line to the final lines
   finalLines.push(line);
-  if (len > 8) { // Increase the length threshold to reduce the number of elements
+  if (len > 10) { // Increase the length threshold to reduce the number of elements
     // Draw 2 new branches
-    const newAngle = bt.randInRange(-0.15, 0.15); // Add some randomness to the angle
+    const newAngle = (Math.random() - 0.5) * 0.2; // Add some randomness to the angle
     branch(endX, endY, len * 0.67, angle + Math.PI / 4 + newAngle); // Adjust the angles here
     branch(endX, endY, len * 0.67, angle - Math.PI / 4 + newAngle); // Here as well
   } else {
     // Add leaves, flowers, and fruits at the tips with spacing
-    if (bt.rand() > 0.7) {
+    if (Math.random() > 0.7) {
       finalLeaves.push([endX, endY]);
-    } else if (bt.rand() > 0.5) {
+    } else if (Math.random() > 0.5) {
       finalFlowers.push([endX, endY]);
     } else {
       finalFruits.push([endX, endY]);
@@ -138,7 +135,7 @@ function addBackgroundElements() {
   // Add stars
   for (let i = 0; i < 5; i++) {
     const star = new bt.Turtle()
-      .jump([bt.randInRange(20, width - 10), bt.randInRange(10, height / 4)])
+      .jump([20 + i * 20, height - 10])
       .down()
       .arc(360, 2)
       .lines();
@@ -148,7 +145,7 @@ function addBackgroundElements() {
   // Add clouds
   for (let i = 0; i < 3; i++) {
     const cloud = new bt.Turtle()
-      .jump([bt.randInRange(20, width - 10), bt.randInRange(10, height / 4)])
+      .jump([30 + i * 30, height - 20])
       .down()
       .arc(360, 5)
       .right(45)
@@ -194,19 +191,6 @@ function addBackgroundElements() {
     finalBackground.push(butterfly);
   });
 
-  const nestPositions = [
-    [width / 2 + 5, height / 2 + 25],
-    [width / 2 - 10, height / 2 + 35]
-  ];
-  nestPositions.forEach(pos => {
-    const nest = new bt.Turtle()
-      .jump(pos)
-      .down()
-      .arc(360, 5)
-      .lines();
-    finalBackground.push(nest);
-  });
-
   // In background
   for (let i = 0; i < 3; i++) {
     const bush = new bt.Turtle()
@@ -234,7 +218,7 @@ function addBackgroundElements() {
 
   for (let i = 0; i < 6; i++) {
     const grass = new bt.Turtle()
-      .jump([bt.randInRange(10, width - 10), 5])
+      .jump([10 + i * 20, 5])
       .down()
       .forward(5)
       .right(45)
@@ -249,55 +233,27 @@ function addBackgroundElements() {
     const squirrel = new bt.Turtle()
       .jump([width / 2 + 10, height / 2 + 20])
       .down()
+      // Draw the body
       .forward(5)
-      .right(45)
+      .right(90)
+      .forward(10)
+      .right(90)
       .forward(5)
-      .right(45)
-      .forward(5)
-      .right(45)
-      .forward(5)
+      .right(90)
+      .forward(10)
+      // Draw the head
+      .jump([width / 2 + 10, height / 2 + 30])
+      .down()
+      .arc(360, 3)
+      // Draw the tail
+      .jump([width / 2 + 15, height / 2 + 20])
+      .down()
+      .arc(180, 5)
+      .right(90)
+      .arc(180, 5)
       .lines();
     finalBackground.push(squirrel);
   }
-
-  // Animation (variable - predetermined set...)
-  const fallingLeaves = [
-    [width / 2 + 10, height / 2 + 10],
-    [width / 2 - 15, height / 2 + 20],
-    [width / 2 + 20, height / 2 + 30]
-  ];
-  fallingLeaves.forEach(pos => {
-    const leaf = new bt.Turtle()
-      .jump(pos)
-      .down()
-      .forward(5)
-      .right(120)
-      .forward(5)
-      .right(120)
-      .forward(5)
-      .lines();
-    finalBackground.push(leaf);
-  });
-
-  const colors = {
-    spring: 'green',
-    summer: 'darkgreen',
-    autumn: 'orange',
-    winter: 'white'
-  };
-  const color = colors[season] || 'green';
-  finalLeaves.forEach(leaf => {
-    const leafShape = new bt.Turtle()
-      .jump(leaf)
-      .down()
-      .forward(5)
-      .right(120)
-      .forward(5)
-      .right(120)
-      .forward(5)
-      .lines();
-    drawLines(leafShape);
-  });
 }
 
 function drawBackground(background) {
