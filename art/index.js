@@ -16,6 +16,9 @@ const finalFlowers = [];
 const finalFruits = [];
 const finalBackground = [];
 
+// Define the season
+const season = 'spring'; // Change this to 'summer', 'autumn', or 'winter' as needed
+
 // Draw a branch
 function branch(startX, startY, len, angle) {
   const endX = startX + len * Math.cos(angle);
@@ -156,64 +159,56 @@ function addBackgroundElements() {
     finalBackground.push(cloud);
   }
 
-// Background Elements
-
   // On branches (part of tree)
-  for (let i = 0; i < 4; i++) {
-    const birdPositions = [
-      [width / 2 + 10, height / 2 + 20],
-      [width / 2 - 15, height / 2 + 30],
-      [width / 2 + 20, height / 2 + 40]
-    ];
-    birdPositions.forEach(pos => {
-      const bird = new bt.Turtle()
-        .jump(pos)
-        .down()
-        .forward(5)
-        .right(120)
-        .forward(5)
-        .right(120)
-        .forward(5)
-        .lines();
-      finalBackground.push(bird);
-    });
-  }
-  
-  for (let i = 0; i < 6;  i++) {
-    const butterflyPositions = [
-      [width / 2 + 30, height / 2 + 50],
-      [width / 2 - 25, height / 2 + 60],
-      [width / 2 + 40, height / 2 + 70]
-    ];
-    butterflyPositions.forEach(pos => {
-      const butterfly = new bt.Turtle()
-        .jump(pos)
-        .down()
-        .arc(180, 5)
-        .right(90)
-        .arc(180, 5)
-        .lines();
-      finalBackground.push(butterfly);
-    });
-  }
-  
-  for (let i = 0; i < 3;  i++) {
-    const nestPositions = [
-      [width / 2 + 5, height / 2 + 25],
-      [width / 2 - 10, height / 2 + 35]
-    ];
-    nestPositions.forEach(pos => {
-      const nest = new bt.Turtle()
-        .jump(pos)
-        .down()
-        .arc(360, 5)
-        .lines();
-      finalBackground.push(nest);
-    });
-  }
-  
+  const birdPositions = [
+    [width / 2 + 10, height / 2 + 20],
+    [width / 2 - 15, height / 2 + 30],
+    [width / 2 + 20, height / 2 + 40]
+  ];
+  birdPositions.forEach(pos => {
+    const bird = new bt.Turtle()
+      .jump(pos)
+      .down()
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .lines();
+    finalBackground.push(bird);
+  });
+
+  const butterflyPositions = [
+    [width / 2 + 30, height / 2 + 50],
+    [width / 2 - 25, height / 2 + 60],
+    [width / 2 + 40, height / 2 + 70]
+  ];
+  butterflyPositions.forEach(pos => {
+    const butterfly = new bt.Turtle()
+      .jump(pos)
+      .down()
+      .arc(180, 5)
+      .right(90)
+      .arc(180, 5)
+      .lines();
+    finalBackground.push(butterfly);
+  });
+
+  const nestPositions = [
+    [width / 2 + 5, height / 2 + 25],
+    [width / 2 - 10, height / 2 + 35]
+  ];
+  nestPositions.forEach(pos => {
+    const nest = new bt.Turtle()
+      .jump(pos)
+      .down()
+      .arc(360, 5)
+      .lines();
+    finalBackground.push(nest);
+  });
+
   // In background
-  for (let i = 0; i < 3;  i++) {
+  for (let i = 0; i < 3; i++) {
     const bush = new bt.Turtle()
       .jump([width / 2 - 20, 10])
       .down()
@@ -225,8 +220,8 @@ function addBackgroundElements() {
       .lines();
     finalBackground.push(bush);
   }
-  
-  for (let i = 0; i < 4;  i++) {
+
+  for (let i = 0; i < 4; i++) {
     const plant = new bt.Turtle()
       .jump([width / 2 + 20, 15])
       .down()
@@ -236,21 +231,21 @@ function addBackgroundElements() {
       .lines();
     finalBackground.push(plant);
   }
-  
-  for (let i = 0; i < 6;  i++) {
-      const grass = new bt.Turtle()
-        .jump([bt.randInRange(10, width - 10), 5])
-        .down()
-        .forward(5)
-        .right(45)
-        .forward(5)
-        .right(45)
-        .forward(5)
-        .lines();
-      finalBackground.push(grass);
+
+  for (let i = 0; i < 6; i++) {
+    const grass = new bt.Turtle()
+      .jump([bt.randInRange(10, width - 10), 5])
+      .down()
+      .forward(5)
+      .right(45)
+      .forward(5)
+      .right(45)
+      .forward(5)
+      .lines();
+    finalBackground.push(grass);
   }
-  
-  for (let i = 0; i < 2;  i++) {
+
+  for (let i = 0; i < 2; i++) {
     const squirrel = new bt.Turtle()
       .jump([width / 2 + 10, height / 2 + 20])
       .down()
@@ -264,49 +259,45 @@ function addBackgroundElements() {
       .lines();
     finalBackground.push(squirrel);
   }
-  
+
   // Animation (variable - predetermined set...)
-  for (let i = 0; i < 6;  i++) {
-    const fallingLeaves = [
-      [width / 2 + 10, height / 2 + 10],
-      [width / 2 - 15, height / 2 + 20],
-      [width / 2 + 20, height / 2 + 30]
-    ];
-    fallingLeaves.forEach(pos => {
-      const leaf = new bt.Turtle()
-        .jump(pos)
-        .down()
-        .forward(5)
-        .right(120)
-        .forward(5)
-        .right(120)
-        .forward(5)
-        .lines();
-      finalBackground.push(leaf);
-    });
-  }
-  
-  for (let i = 0; i < 6;  i++) {
-    const colors = {
-      spring: 'green',
-      summer: 'darkgreen',
-      autumn: 'orange',
-      winter: 'white'
-    };
-    const color = colors[season] || 'green';
-    finalLeaves.forEach(leaf => {
-      const leafShape = new bt.Turtle()
-        .jump(leaf)
-        .down()
-        .forward(5)
-        .right(120)
-        .forward(5)
-        .right(120)
-        .forward(5)
-        .color(color)
-        .lines();
-      drawLines(leafShape);
-    });
+  const fallingLeaves = [
+    [width / 2 + 10, height / 2 + 10],
+    [width / 2 - 15, height / 2 + 20],
+    [width / 2 + 20, height / 2 + 30]
+  ];
+  fallingLeaves.forEach(pos => {
+    const leaf = new bt.Turtle()
+      .jump(pos)
+      .down()
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .lines();
+    finalBackground.push(leaf);
+  });
+
+  const colors = {
+    spring: 'green',
+    summer: 'darkgreen',
+    autumn: 'orange',
+    winter: 'white'
+  };
+  const color = colors[season] || 'green';
+  finalLeaves.forEach(leaf => {
+    const leafShape = new bt.Turtle()
+      .jump(leaf)
+      .down()
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .lines();
+    drawLines(leafShape);
+  });
 }
 
 function drawBackground(background) {
