@@ -39,8 +39,8 @@ function countAndVerifySnapshots(artworkDir) {
     }
     comments.push('✅ Step 2: Metadata found in index.js');
 
-    const metadataBaseName = path.basename(snapshotNameInMetadata, path.extname(snapshotNameInMetadata));
-    const expectedSnapshotBaseName = metadataBaseName.toLowerCase();
+    const metadataBaseName = path.basename(snapshotNameInMetadata, path.extname(snapshotNameInMetadata)).toLowerCase();
+    const expectedSnapshotBaseName = metadataBaseName.replace(/[^a-z]/g, ''); // Ensure only lowercase letters
     comments.push(`✅ Step 3: Expected snapshot base name: ${expectedSnapshotBaseName}`);
 
     try {
@@ -61,14 +61,12 @@ function countAndVerifySnapshots(artworkDir) {
             comments.push(`✅ Step 4: Found ${snapshotsCount} PNG snapshots`);
         }
 
-        let mismatchedNames = false;
         pngSnapshotFiles.forEach((file, index) => {
             const expectedFileName = `${expectedSnapshotBaseName}${index + 1}.png`;
             if (file.toLowerCase() === expectedFileName.toLowerCase()) {
                 comments.push(`✅ PNG Snapshot '${file}' matches the expected name '${expectedFileName}'`);
             } else {
                 comments.push(`::error file=${snapshotsDirPath}/${file}::PNG Snapshot '${file}' should be named '${expectedFileName}'`);
-                mismatchedNames = true;
             }
         });
 
