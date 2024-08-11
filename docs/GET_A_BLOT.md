@@ -61,7 +61,7 @@ Make sure to include this info in a comment at the top of your file.
 ```
 
 __NOTE__
-- Make sure your snapshot matches the name of an image in the `snapshots` folder you submit with `.png` like `example1.png`
+- Make sure your snapshot matches the name of an image in the `snapshots` folder you submit with `.png` like `snapshot1.png`
 
 ## 2.1) Download your program
 
