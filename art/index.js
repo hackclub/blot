@@ -29,14 +29,14 @@ function branch(startX, startY, len, angle) {
   finalLines.push(line);
   if (len > 10) { // Increase the length threshold to reduce the number of elements
     // Draw 2 new branches
-    const newAngle = (Math.random() - 0.5) * 0.2; // Add some randomness to the angle
+    const newAngle = bt.randInRange(-0.1, 0.1); // Add some randomness to the angle
     branch(endX, endY, len * 0.67, angle + Math.PI / 4 + newAngle); // Adjust the angles here
     branch(endX, endY, len * 0.67, angle - Math.PI / 4 + newAngle); // Here as well
   } else {
     // Add leaves, flowers, and fruits at the tips with spacing
-    if (Math.random() > 0.7) {
+    if (bt.randInRange(0, 1) > 0.7) {
       finalLeaves.push([endX, endY]);
-    } else if (Math.random() > 0.5) {
+    } else if (bt.randInRange(0, 1) > 0.5) {
       finalFlowers.push([endX, endY]);
     } else {
       finalFruits.push([endX, endY]);
@@ -234,7 +234,7 @@ function addBackgroundElements() {
       .lines();
     finalBackground.push(mini);
   }
-  
+
   for (let i = 0; i < 4; i++) {
     const plant = new bt.Turtle()
       .jump([width / 2 + 50, 13])
