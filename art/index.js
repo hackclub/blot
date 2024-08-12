@@ -133,32 +133,45 @@ function addBackgroundElements() {
   finalBackground.push(moon);
 
   // Add stars
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 4; i++) {
     const star = new bt.Turtle()
-      .jump([20 + i * 20, height - 10])
+      .jump([16 + i * 48, height - 6])
       .down()
-      .arc(360, 2)
+      .arc(190, 1)
+      .right(90)
+      .arc(180, 1)
+      .right(120)
+      .arc(180, 1)
+      .right(90)
+      .arc(180, 1)
+      .right(126)
+      .arc(180, 1)
       .lines();
     finalBackground.push(star);
   }
 
   // Add clouds
-  for (let i = 0; i < 3; i++) {
+  const cloudPositions = [
+    [width / 2 + 10, height / 2 + 52],
+    [width / 2 - 27, height / 2 + 55],
+    [width / 2 + 45, height / 2 + 58]
+  ];
+  cloudPositions.forEach(pos => {
     const cloud = new bt.Turtle()
-      .jump([30 + i * 30, height - 20])
+      .jump(pos)
       .down()
-      .arc(360, 5)
-      .right(45)
-      .arc(360, 5)
-      .right(45)
-      .arc(360, 5)
+      .arc(180, 6)
+      .right(90)
+      .arc(180, 5)
+      .right(120)
+      .arc(180, 7)
       .lines();
     finalBackground.push(cloud);
-  }
+  });
 
-  // On branches (part of tree)
+  // Flying (near tree, above and below in background)
   const birdPositions = [
-    [width / 2 + 10, height / 2 + 20],
+    [width / 2 + 10, height / 2 + -5],
     [width / 2 - 15, height / 2 + 30],
     [width / 2 + 20, height / 2 + 40]
   ];
@@ -166,35 +179,33 @@ function addBackgroundElements() {
     const bird = new bt.Turtle()
       .jump(pos)
       .down()
-      .forward(5)
-      .right(120)
-      .forward(5)
-      .right(120)
-      .forward(5)
+      .arc(180, -5.6)
+      .right(90)
+      .arc(180, 4)
       .lines();
     finalBackground.push(bird);
   });
 
   const butterflyPositions = [
-    [width / 2 + 30, height / 2 + 50],
-    [width / 2 - 25, height / 2 + 60],
-    [width / 2 + 40, height / 2 + 70]
+    [width / 2 + 30, height / 2 + -35],
+    [width / 2 - 30, height / 2 + -25],
+    [width / 2 + 70, height / 2 + 30]
   ];
   butterflyPositions.forEach(pos => {
     const butterfly = new bt.Turtle()
       .jump(pos)
       .down()
-      .arc(180, 5)
+      .arc(190, 3.6)
       .right(90)
-      .arc(180, 5)
+      .arc(190, 3.6)
       .lines();
     finalBackground.push(butterfly);
   });
 
   // In background
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 2; i++) {
     const bush = new bt.Turtle()
-      .jump([width / 2 - 20, 10])
+      .jump([width / 2 - -62, 20])
       .down()
       .arc(360, 10)
       .right(45)
@@ -205,9 +216,23 @@ function addBackgroundElements() {
     finalBackground.push(bush);
   }
 
+  // Add mini-bushes
+  for (let i = 0; i < 3; i++) {
+    const mini = new bt.Turtle()
+      .jump([20 + i * 17.8, height - 147.5])
+      .down()
+      .arc(360, 4.26)
+      .right(26)
+      .arc(360, 5)
+      .right(32)
+      .arc(355, 5.26)
+      .lines();
+    finalBackground.push(mini);
+  }
+  
   for (let i = 0; i < 4; i++) {
     const plant = new bt.Turtle()
-      .jump([width / 2 + 20, 15])
+      .jump([width / 2 + 50, 13])
       .down()
       .arc(360, 5)
       .right(45)
@@ -216,9 +241,9 @@ function addBackgroundElements() {
     finalBackground.push(plant);
   }
 
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 32; i++) {
     const grass = new bt.Turtle()
-      .jump([10 + i * 20, 5])
+      .jump([1 + i * 5, 10])
       .down()
       .forward(5)
       .right(45)
@@ -231,7 +256,7 @@ function addBackgroundElements() {
 
   for (let i = 0; i < 2; i++) {
     const squirrel = new bt.Turtle()
-      .jump([width / 2 + 10, height / 2 + 20])
+      .jump([width / 2 + 15, height / 2 + -60])
       .down()
       // Draw the body
       .forward(5)
@@ -242,15 +267,15 @@ function addBackgroundElements() {
       .right(90)
       .forward(10)
       // Draw the head
-      .jump([width / 2 + 10, height / 2 + 30])
+      .jump([width / 2 + 20, height / 2 + -60])
       .down()
-      .arc(360, 3)
+      .arc(360, 2.5)
       // Draw the tail
-      .jump([width / 2 + 15, height / 2 + 20])
+      .jump([width / 2 + 20, height / 2 + -60])
       .down()
       .arc(180, 5)
       .right(90)
-      .arc(180, 5)
+      .arc(181, 5)
       .lines();
     finalBackground.push(squirrel);
   }
