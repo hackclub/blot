@@ -120,6 +120,10 @@ function addBackgroundElements() {
     .jump([width - 17, height - 25])
     .down()
     .arc(360, 10)
+    .arc(365, 8)
+    .arc(180, 12)
+    .arc(60, 12)
+    .arc(100, -5)
     .lines();
   finalBackground.push(sun);
 
@@ -129,6 +133,7 @@ function addBackgroundElements() {
     .down()
     .arc(380, 10)
     .arc(180, 8)
+    .arc(170, 6)
     .lines();
   finalBackground.push(moon);
 
@@ -171,17 +176,17 @@ function addBackgroundElements() {
 
   // Flying (near tree, above and below in background)
   const birdPositions = [
-    [width / 2 + 10, height / 2 + -5],
-    [width / 2 - 15, height / 2 + 30],
-    [width / 2 + 20, height / 2 + 40]
+    [width / 2 + 42, height / 2 + 60],
+    [width / 2 - 66, height / 2 + 40],
+    [width / 2 + 70, height / 2 + 50]
   ];
   birdPositions.forEach(pos => {
     const bird = new bt.Turtle()
       .jump(pos)
       .down()
-      .arc(180, -5.6)
+      .arc(180, -4.6)
       .right(90)
-      .arc(180, 4)
+      .arc(180, 4.6)
       .lines();
     finalBackground.push(bird);
   });
@@ -189,7 +194,7 @@ function addBackgroundElements() {
   const butterflyPositions = [
     [width / 2 + 30, height / 2 + -35],
     [width / 2 - 30, height / 2 + -25],
-    [width / 2 + 70, height / 2 + 30]
+    [width / 2 + 45, height / 2 + -20]
   ];
   butterflyPositions.forEach(pos => {
     const butterfly = new bt.Turtle()
