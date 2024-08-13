@@ -57,7 +57,7 @@ while (!baseThreeFound) {
   cloudThreeBase = bt.randInRange(10, 60);
   let cloudOneXDifference = Math.abs(cloudOneBase - cloudThreeBase);
   let cloudTwoXDifference = Math.abs(cloudTwoBase - cloudThreeBase);
-  
+
   let distancedToOne = cloudOneXDifference >= 4 && cloudTwoXDifference >= 10;
   let distancedToTwo = cloudOneXDifference >= 10 && cloudTwoXDifference >= 4;
   if (distancedToOne || distancedToTwo) {
@@ -241,7 +241,7 @@ for (let i = 0; i < rainFinalSet; i++) {
     dropBases.push(base);
     dropTips.push(base + tip);
     dropRightSides.push(rightSide)
-  } else if (runTimes > rainIntensity * 3)  {
+  } else if (runTimes > rainIntensity * 3) {
     // If it's been running for too long
     finalLines = []; // Reset final lines
     dropBases = []; // Reset raindrop bases
