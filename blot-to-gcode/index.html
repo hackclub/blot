@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blot To Gcode</title>
+</head>
+
+<body>
+    <!-- A page with a large text field for pasting code, and a submit button.  Above the text box are settings options: Drawing Feedrate, Travel Feedrate, Pen Up Gcode, Pen Down Gcode-->
+    <h1>Blot To Gcode</h1>
+    <form id="blot-form">
+        <label for="drawing-feedrate">Drawing Feedrate (mm/min):</label>
+        <input type="number" name="drawing-feedrate" id="drawing-feedrate" value="1500"> <br>
+        <label for="travel-feedrate">Travel Feedrate (mm/min):</label>
+        <input type="number" name="travel-feedrate" id="travel-feedrate" value="1500"> <br>
+        <label for="pen-up-gcode">Pen Up Gcode:</label>
+        <input type="text" name="pen-up-gcode" id="pen-up-gcode" value="M5"> <br>
+        <label for="pen-down-gcode">Pen Down Gcode:</label>
+        <input type="text" name="pen-down-gcode" id="pen-down-gcode" value="M3">
+        <br>
+        <label for="blot-code">Paste your blot code here:</label> <br>
+        <textarea name="blot-code" id="blot-code" cols="30" rows="10"></textarea> <br>
+        <input type="submit" value="Convert">
+    </form>
+    <script type="module" src="/blot-to-gcode/index.js"></script>
+    <!-- A text area for the output, and a "save gcode" button -->
+    <h2>Gcode Output</h2>
+    <textarea name="gcode-output" id="gcode-output" cols="30" rows="10"></textarea> <br>
+    <button id="save-gcode">Save Gcode</button>
+</body>
+
+</html>
