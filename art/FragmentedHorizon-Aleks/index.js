@@ -4,7 +4,7 @@
 @snapshot: snapshot1.png
 */
 
-const { randInRange, randIntInRange, catmullRom } = blotToolkit;
+const { randInRange, randIntInRange, catmullRom, cover } = blotToolkit;
 
 //canvas should ideally be a square for best results :)
 const width = 125;
@@ -20,13 +20,16 @@ const mountainHeight = 13;
 const birdSize = 2;
 const numBirds = 6;
 const birdAngle = 90;
+const numSkyscrapers = randIntInRange(10, 15);
+const maxBuildingWidth = 5;
+const maxBuildingHeight = 10;
 
-//these shouldn't need changing unless canvas size is increased
+//shouldn't be changed unless canvas size is increased
 const minSpiralScaling = 0.5;
 const maxSpiralScaling = 1.0;
 const spiralSizing = randInRange(minSpiralScaling, maxSpiralScaling);
 //1.75 is a constant
-const heightFactor = 1.75 - (spiralSizing - maxSpiralScaling);
+const heightFactor = 1.76 - (spiralSizing - maxSpiralScaling);
 
 const finalLines = [];
 
@@ -111,6 +114,30 @@ for (let i = 0; i < 40; i++) {
   finalLines.push(catmullRom(pointsGen(5, shiftX + randIntInRange(-2, 2), shiftY + randIntInRange(-2, 2))));
 }
 
+//draws various sizes of rectangles with slanted tops to resemble skyscrapers
+function drawSkyscrapers() {
+  const Skyscrapers = [];
+
+  for (let i = 0; i < numSkyscrapers; i++) {
+    const buildingWidth = randIntInRange(3, maxBuildingWidth);
+    const buildingHeight = randIntInRange(5, maxBuildingHeight);
+    const x = randIntInRange(0, width - buildingWidth);
+
+    Skyscrapers.push([
+      [x, height / 8.25],
+      [x, height / 8 + buildingHeight],
+      [x + buildingWidth, height / 8.25 + buildingHeight],
+      [x + buildingWidth, height / 8.25],
+      [x, height / 8.25]
+    ]);
+  }
+
+  return Skyscrapers;
+}
+
+const skyscrapers = drawSkyscrapers();
+finalLines.push(...skyscrapers);
+
 //mountain range in the horizon
 function drawMountains() {
   const mountains = [];
@@ -143,6 +170,8 @@ function drawMountains() {
     }
   }
 
+  //places the skyscrapers in front of the mountains
+  cover(mountains, skyscrapers);
   return mountains;
 }
 
