@@ -4,7 +4,6 @@
 @snapshot: image1.png
 */
 
-// canvas size
 const WIDTH = 125;
 const HEIGHT = 125;
 
@@ -14,19 +13,18 @@ const finalLines = [];
 const rr = bt.randInRange;
 const rir = bt.randIntInRange;
 
-// change for more/less spots on mushroom
+// How many spots do you want on the mushroom
 const MUSHROOM_SPOTS = rr(12, 16);
 const GILL_DENSITY = rr(4, 7);
-// gives a little smoosh effect for fake 3D look
+// Distorts the spots on the mushroom
 const SPOT_STRETCH = 0.008;
-// makes the gills curvy
+// Curves the mushroom gills
 const GILL_CURVE = 0.5;
-// how lumpy the spots should be
-// warning, high numbers make ti look freaky
+// Makes spots more bumpy (going past 3 makes it look bad)
 const VAR = 2;
-// affects lumpiness of mushroom cap and stem
+// Changes the shape of the mushroom stem and cap
 const DIFF = 2;
-// # of lines on the stem
+// Lines on the mushroom stem
 const STEM_LINES = 3;
 
 function draw_spot(sides, sideLen = 1, mushCapPatterns) {
@@ -41,20 +39,10 @@ function draw_spot(sides, sideLen = 1, mushCapPatterns) {
   let newSpot = [rr(14, 100), rr(60, 100)];
   bt.translate(curvedShape, newSpot, bt.bounds(curvedShape).cc);
   bt.resample(curvedShape, 4);
-  // randomnes not actually working?
-  // incrementing it all by an equal amount
   bt.iteratePoints(curvedShape, ([x, y]) => [x + SPOT_STRETCH * x ** 2, y]);
   bt.iteratePoints(curvedShape, ([x, y]) => [x + rr(-VAR, VAR), y + rr(-VAR, VAR)]);
 
-  // cant find a function to merge all the spots
-  //drawLines(curvedShape);
-  //bt.cover(mushCapPatterns, curvedShape);
-  //bt.cover(mushCapPatterns, curvedShape);
-  //bt.cover(curvedShape, mushCapPatterns);
-  //bt.merge(mushCapPatterns);
-  //return curvedShape;
   return [bt.catmullRom(...curvedShape)];
-  //return pen.lines();
 }
 
 function centerPolylines(polylines, documentWidth, documentHeight) {
@@ -96,7 +84,6 @@ let mushCap = [bt.catmullRom([
   capLeft,
 ])];
 
-
 let mushGillRing = [bt.catmullRom([
   capFarLeft,
   [57 + rr(-DIFF, DIFF), 61 + rr(-DIFF, DIFF)],
@@ -108,8 +95,6 @@ let mushGillRing = [bt.catmullRom([
   capFarLeft,
 ])];
 
-// change to 2 on final render
-// too resource intensive rn
 bt.resample(mushGillRing, GILL_DENSITY);
 
 let gillRing = [];
@@ -127,12 +112,7 @@ for (let i = 0; i < mushGillRing[0].length; ++i) {
 let mushCapPatterns = [];
 for (let i = 0; i < MUSHROOM_SPOTS; ++i) {
   let spot = draw_spot(rir(4, 8), rr(5, 10), mushCapPatterns);
-  // I FOUND IT IT WAS UNION
   mushCapPatterns = bt.union(spot, mushCapPatterns);
-  //bt.catmullRom(spot);
-  //bt.translate(spot, newSpot, bt.bounds(spot).cc);
-  //let spot = [bt.catmullRom(draw_poly(3, 100))];
-  //drawLines(spot);
 }
 
 let mushStemLines = [];
@@ -156,6 +136,7 @@ let shadow = [bt.catmullRom([
   [60, 31],
 ])];
 bt.cover(shadow, mushStem);
+// adds shadow, doesn't look good
 //drawLines(shadow);
 
 bt.cut(mushCapPatterns, mushCap);
@@ -165,10 +146,8 @@ finalLines.push(...mushCapPatterns);
 bt.cover(mushCap, mushStem);
 bt.cut(mushGillRing, mushCap);
 bt.cut(gillRing, mushCap);
-//bt.cut(gillRing, mushGillRing);
 bt.cover(gillRing, mushStem);
 finalLines.push(...mushStem, ...mushCap, ...mushGillRing, ...gillRing);
 centerPolylines(finalLines, WIDTH, HEIGHT);
-//bt.rotate(finalLines, 45);
 
 drawLines(finalLines);
