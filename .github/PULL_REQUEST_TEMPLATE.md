@@ -13,3 +13,5 @@ Next, make sure you go through **each item** in the following checklist. Delete 
     - [ ] Doesn't rely on colour to look good
 
 If you used based your art on something else, used a tutorial, or remixed it from something else, please link it here:
+
+Lastly, link a picture of your art piece here:
