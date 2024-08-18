@@ -1,7 +1,5 @@
 const { Turtle } = bt;
-let DESIGN = 7 //THIS
-
-
+let DESIGN = 7;
 
 function draw(t, a, b, d, n) {
   let step = 2 * Math.PI / n;
@@ -30,11 +28,28 @@ function draw(t, a, b, d, n) {
   }
 }
 
+function drawBorder() {
+  let border = new Turtle();
+  border.jump([0, 0]);
+  border.down();
+  
+  border.forward(800);
+  border.left(90);
+  border.forward(600);
+  border.left(90);
+  border.forward(800);
+  border.left(90);
+  border.forward(600);
+  
+  return border.lines();
+}
+
 setDocDimensions(800, 600);
 
 let t = new Turtle();
-
-
 draw(t, 5, 3, Math.PI / DESIGN, 1000);
 
 drawLines(t.lines());
+
+let borderLines = drawBorder();
+drawLines(borderLines, { stroke: 'black', width: 3 });
