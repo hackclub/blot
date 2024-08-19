@@ -1,5 +1,5 @@
 /*
-@title: Geometric thing that looks curved but is actally all straight lines
+@title: Supernova
 @author: Gavin Schultz
 @snapshot: example1
 */
@@ -19,10 +19,16 @@ var x2 = 0
 // this variable is for keeping track of how many lines its drawn
 var num = 0
 
-//change this for the width between lines
+// variables for making the stars
+var dx1 = 0
+var dx2 = 0
+var dy1 = 0
+var dy2 = 0
+
+// change this for the width between lines
 const ws = bt.randInRange(1, 5);
 
-//initialize screen
+// initialize screen
 setDocDimensions(width, height);
 
 // store final lines to draw
@@ -110,6 +116,16 @@ while (num < 13) {
   y1 = y1 + ws
   x2 = x2 + ws
   num += 1
+}
+num = 0
+// draw the stars
+while (num < 100) {
+  num += 1
+  dx1 = bt.randInRange(0, 125);
+  dx2 = dx1 + 1
+  dy1 = bt.randInRange(0, 125);
+  dy2 = dy1 + 1
+  drawLines([[[dx1, dy1], [dx2, dy2]]])
 }
 // add the cross to the final lines
 finalLines.push(polyline);
