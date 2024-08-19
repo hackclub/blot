@@ -5,7 +5,6 @@
 @snapshot: snapshot1.png
 */
 
-
 const { Turtle, randInRange } = bt;
 
 function draw(t, a, b, d, n, iterations) {
@@ -13,19 +12,19 @@ function draw(t, a, b, d, n, iterations) {
   
   for (let j = 0; j < iterations; j++) {
     let px = 0, py = 0;
-    let offset = j * 6;
+    let offset = j * 3;
 
     for (let i = 0; i <= n; i++) {
       let v = i * step;
-      let x = (200 + offset) * Math.sin(a * v + d + j / 5) + bt.randInRange(-5, 14);
-      let y = (200 + offset) * Math.sin(b * v + j / 10) + bt.randInRange(-5, 10);
+      let x = (40 + offset) * Math.sin(a * v + d + j / 5) + bt.randInRange(1, 1);
+      let y = (40 + offset) * Math.sin(b * v + j / 10) + bt.randInRange(-1, 1);
 
       if (i === 0) {
-        t.jump([400 + x, 300 + y]);
+        t.jump([62.5 + x, 62.5 + y]);
         t.down();
       } else {
-        let dx = (400 + x) - px;
-        let dy = (300 + y) - py;
+        let dx = (62.5 + x) - px;
+        let dy = (62.5 + y) - py;
         let dist = Math.sqrt(dx * dx + dy * dy);
         let ang = Math.atan2(dy, dx) * 180 / Math.PI;
         
@@ -33,8 +32,8 @@ function draw(t, a, b, d, n, iterations) {
         t.forward(dist);
       }
 
-      px = 400 + x;
-      py = 300 + y;
+      px = 62.5 + x;
+      py = 62.5 + y;
     }
     t.up();
   }
@@ -45,23 +44,23 @@ function drawBorder() {
   border.jump([0, 0]);
   border.down();
   
-  border.forward(800);
+  border.forward(125);
   border.left(90);
-  border.forward(600);
+  border.forward(125);
   border.left(90);
-  border.forward(800);
+  border.forward(125);
   border.left(90);
-  border.forward(600);
+  border.forward(125);
   
   return border.lines();
 }
 
-setDocDimensions(800, 600);
+setDocDimensions(125, 125); 
 
 let t = new Turtle();
-draw(t, 5, 3, Math.PI / 7, 500, 11);
+draw(t, 5, 3, Math.PI / 7, 500, 7);
 
 drawLines(t.lines());
 
 let borderLines = drawBorder();
-drawLines(borderLines, { stroke: 'black', width: 3 });
+drawLines(borderLines, { stroke: 'black', width: 2 });
