@@ -1,3 +1,11 @@
+
+/*
+@title: LissajousCurve
+@author: Pratyush Roy
+@snapshot: snapshot1.png
+*/
+
+
 const { Turtle } = bt;
 
 function draw(t, a, b, d, n, iterations) {
