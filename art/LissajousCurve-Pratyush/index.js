@@ -6,7 +6,7 @@
 */
 
 
-const { Turtle } = bt;
+const { Turtle, randInRange } = bt;
 
 function draw(t, a, b, d, n, iterations) {
   let step = 2 * Math.PI / n;
@@ -17,8 +17,8 @@ function draw(t, a, b, d, n, iterations) {
 
     for (let i = 0; i <= n; i++) {
       let v = i * step;
-      let x = (200 + offset) * Math.sin(a * v + d + j / 5) + Math.random() * 14 - 5;
-      let y = (200 + offset) * Math.sin(b * v + j / 10) + Math.random() * 10 - 5;
+      let x = (200 + offset) * Math.sin(a * v + d + j / 5) + bt.randInRange(-5, 14);
+      let y = (200 + offset) * Math.sin(b * v + j / 10) + bt.randInRange(-5, 10);
 
       if (i === 0) {
         t.jump([400 + x, 300 + y]);
@@ -59,7 +59,7 @@ function drawBorder() {
 setDocDimensions(800, 600);
 
 let t = new Turtle();
-draw(t, 5, 3, Math.PI / 7, 500, 11); 
+draw(t, 5, 3, Math.PI / 7, 500, 11);
 
 drawLines(t.lines());
 
