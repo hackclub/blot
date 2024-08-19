@@ -21,7 +21,7 @@ const hue = bt.randIntInRange(0, 500);
 const saturation = 50; // How colorful the gradient is (higher=more colorful)
 const lightness = 50; // How light or dark the gradient is (higher=darker)
 
-const gradientEnable = true; // Enable lines to be segmented and drawn with a gradient, 
+const gradientEnable = false; // Enable lines to be segmented and drawn with a gradient, 
 //                                at the cost of performance
 
 const lineWidth = 2; // Width of spirograph lines
