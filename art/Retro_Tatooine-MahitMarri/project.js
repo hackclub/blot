@@ -50,8 +50,8 @@ function makeSun(x, y, radius){
     drawLines(turtle.lines());
 }
 
-makeSun(100, 100, Math.random() * (50 - 10) + 10);
+makeSun(100, 100, bt.randInRange(50,10));
 
-makeSun(50, 60, Math.random() * (50 - 10) + 10);
+makeSun(50, 60, bt.randInRange(50,10));
 
 
