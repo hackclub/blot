@@ -1,4 +1,4 @@
-# How to Get a Blot
+# How to Get a Blot!
 
 So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one? The Blot is paid for by Hack Club, including shipping, but you should check for customs fees in your country before ordering. [^1]
 [^1]: Customs fees aren't covered by Hack Club, so please look into how much customs is for an electronics kit order being shipped from the US if you are based outside the US.
@@ -7,16 +7,13 @@ So you just found out about this cool robotic drawing machine which you can buil
 
 ## 1) Make a unique piece of generative art
 
-The first step is to make some generative art like that seen in [the gallery](https://blot.hackclub.com/gallery).
+The first step is to make some generative art like that seen in [the gallery](https://blot.hackclub.com/gallery). You can follow [these guides](https://blot.hackclub.com/guides) to learn how to do that!
 
-You can learn how to use the editor and make art by following some of [these guides](https://blot.hackclub.com/guides).
-
-Some criteria your art needs to meet:
+To get a Blot, your artwork needs to meet the following criteria:
 
 - Your artwork must be beautiful. It has to be something aesthetically interesting.
-- Your artwork must be algorithmic.
-  - It must be able to create multiple versions. To demonstrate this, **submit 3 snapshots**.
-  - You should expose some parameters at the top of your code which can adjust the art. This could be `setRandSeed` or some other variable used in your piece.
+- Your artwork must be generative. 
+  - You should expose some parameters at the top of your code which can adjust the art. This could be `setRandSeed` or some other variable used in your piece. This shold allow you to create multiple versions
 - Your artwork must be drawable by the Blot machine.
   - This means it can't be too busy and have many overlapping lines.
   - It should fit within the workarea.
@@ -27,19 +24,29 @@ Some criteria your art needs to meet:
 I recommend trying to create a [figurative](https://en.wikipedia.org/wiki/Figurative_art) piece, which depicts a real life thing.
 A key to being successful is being intentional with what you make. Sketch something out and have it in mind before you program it.
 
-Here are some examples of some **acceptable pieces**:
+
+
+
+<details>
+<summary>Here are some examples of some <b>acceptable pieces</b></summary>
 
 ![Screenshot 2024-02-16 at 3 02 04 PM](https://github.com/hackclub/blot/assets/27078897/f84f186b-6d9d-467b-baad-fd18eea89991)
 
 <img width="351" alt="Screenshot 2024-02-13 at 4 59 34 PM" src="https://github.com/hackclub/blot/assets/27078897/ea296584-5615-414f-93c9-5a4992928b72">
 
-Here are some examples of some pieces which would **not be accepted**:
+</details>
+
+<details>
+<summary>Here are examples of some pieces which would <b>not be accepted</b></summary>
 
 - an abstract piece generated in a very straightforward manner
 
 ![Screenshot 2024-02-16 at 3 06 05 PM](https://github.com/hackclub/blot/assets/27078897/24e1d26b-1d09-4336-830d-b437ecf8bd10)
 
 - an svg just dropped into the editor with no algorithmic process
+
+</details>
+
 
 Most art takes about 15-20 hours of work to get into the gallery, so make sure to spend time improving and iterating on your project before submitting.
 
