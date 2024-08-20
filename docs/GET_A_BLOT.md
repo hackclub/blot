@@ -9,7 +9,7 @@ So you just found out about this cool robotic drawing machine which you can buil
 
 The first step is to make some generative art like that seen in [the gallery](https://blot.hackclub.com/gallery). You can follow [these guides](https://blot.hackclub.com/guides) to learn how to do that!
 
-To get a Blot, your artwork needs to meet the following criteria:
+To get a Blot, your artwork needs to meet the following criteria (*subject to change*):
 
 - Your artwork must be beautiful. It has to be something aesthetically interesting.
 - Your artwork must be generative. 
