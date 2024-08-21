@@ -1,7 +1,7 @@
 /*
 @title: Indian Flag
 @author: Bhoomi Gharat
-@snapshot: main.png
+@snapshot: snapshot1.png
 */
 
 const width = 125
