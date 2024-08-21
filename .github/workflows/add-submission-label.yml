@@ -5,8 +5,8 @@ on:
     types: [opened, synchronize, reopened]
   schedule:
     - cron: "0 0 * * *" # This will run the workflow daily at midnight UTC
-  workflow_displatch:
-  
+  workflow_dispatch:
+
 
 jobs:
   label_art_submission:
