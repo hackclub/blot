@@ -58,13 +58,13 @@ let deltai = .5 / numstrings;
 
 let xvals = [];
 for (let i = 0.25; i < 0.75; i += deltai) {
-  xvals.push(bt.getPoint(rckt.path, [i])[0]);
+  xvals.push(bt.getPoint(rckt.path, i)[0]);
 }
 
 for (let i = deltai; i < 0.5; i += deltai) {
   let strng = new bt.Turtle();
-  const startpos = bt.getPoint(rckt.path, [i]);
-  const endpos = bt.getPoint(rckt.path, [1 - i]);
+  const startpos = bt.getPoint(rckt.path, i);
+  const endpos = bt.getPoint(rckt.path, 1 - i);
   strng.up().goTo(startpos).down().right(180);
   for (let j = 0; j < xvals.length; j++) {
     if (xvals[j] < startpos[0] && xvals[j] > endpos[0]) {
@@ -79,14 +79,14 @@ for (let i = deltai; i < 0.5; i += deltai) {
 for (let i = .25 + deltai; i < .75; i += deltai) {
   let strng = new bt.Turtle();
   let diff = 0;
-  const startpos = bt.getPoint(rckt.path, [i]);
+  const startpos = bt.getPoint(rckt.path, i);
   let endpos = 0;
   if (i < .5) {
     diff = 2 * (i - .25);
-    endpos = bt.getPoint(rckt.path, [i - diff]);
+    endpos = bt.getPoint(rckt.path, i - diff);
   } else {
     diff = 2 * (.75 - i);
-    endpos = bt.getPoint(rckt.path, [i + diff]);
+    endpos = bt.getPoint(rckt.path, i + diff);
   }
   const hght = startpos[1] - endpos[1];
   strng.up().goTo(startpos).down().right(90).forward(hght);
