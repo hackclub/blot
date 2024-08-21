@@ -6,30 +6,6 @@
 
 const width = 125;
 const height = 125;
-
-setDocDimensions(width * 2, height * 2);
-
-const lines = [];
-
-// Draw the outer square
-lines.push([
-  [0, 0],
-  [width, 0]
-]);
-lines.push([
-  [width, 0],
-  [width, height]
-]);
-lines.push([
-  [width, height],
-  [0, height]
-]);
-lines.push([
-  [0, height],
-  [0, 0]
-]);
-
-// Draw the four small squares
 const smallSquareSize = 20;
 const smallSquareOffsets = [
   [0, 0],
@@ -38,24 +14,12 @@ const smallSquareOffsets = [
   [0, height - smallSquareSize]
 ];
 
-smallSquareOffsets.forEach(([offsetX, offsetY]) => {
-  lines.push([
-    [offsetX, offsetY],
-    [offsetX + smallSquareSize, offsetY]
-  ]);
-  lines.push([
-    [offsetX + smallSquareSize, offsetY],
-    [offsetX + smallSquareSize, offsetY + smallSquareSize]
-  ]);
-  lines.push([
-    [offsetX + smallSquareSize, offsetY + smallSquareSize],
-    [offsetX, offsetY + smallSquareSize]
-  ]);
-  lines.push([
-    [offsetX, offsetY + smallSquareSize],
-    [offsetX, offsetY]
-  ]);
-});
+
+
+setDocDimensions(width * 2, height * 2);
+
+const lines = [];
+const triangles = [];
 
 // Draw the mound
 const moundRadius = 15;
@@ -111,7 +75,78 @@ for (let i = 0; i < starPoints; i++) {
   const innerX = starCenterX + starInnerRadius * Math.cos(innerAngle);
   const innerY = starCenterY + starInnerRadius * Math.sin(innerAngle);
 
-  starLines.push([[outerX, outerY], [innerX, innerY]]);
+  const triangle1 = [
+    [10, 144],
+    [30, 171],
+    [50, 144]
+  ];
+
+  const triangle2 = [
+    [137, 97],
+    [155, 127],
+    [173, 100]
+  ];
+
+  const triangle3 = [
+    [164, 7],
+    [177, 32],
+    [199, 7]
+  ];
+
+  bt.translate(triangles, [2, 16]);
+  
+
+  // Draw the triangles
+  triangles.push(triangle1);
+  triangles.push(triangle2);
+  triangles.push(triangle3);
+  drawLines(triangles);
+
+  // Draw the outer square
+  lines.push([
+    [0, 0],
+    [width, 0]
+  ]);
+  lines.push([
+    [width, 0],
+    [width, height]
+  ]);
+  lines.push([
+    [width, height],
+    [0, height]
+  ]);
+  lines.push([
+    [0, height],
+    [0, 0]
+  ]);
+
+
+
+  smallSquareOffsets.forEach(([offsetX, offsetY]) => {
+    lines.push([
+      [offsetX, offsetY],
+      [offsetX + smallSquareSize, offsetY]
+    ]);
+    lines.push([
+      [offsetX + smallSquareSize, offsetY],
+      [offsetX + smallSquareSize, offsetY + smallSquareSize]
+    ]);
+    lines.push([
+      [offsetX + smallSquareSize, offsetY + smallSquareSize],
+      [offsetX, offsetY + smallSquareSize]
+    ]);
+    lines.push([
+      [offsetX, offsetY + smallSquareSize],
+      [offsetX, offsetY]
+    ]);
+  });
+
+
+
+  starLines.push([
+    [outerX, outerY],
+    [innerX, innerY]
+  ]);
 }
 
 lines.push(...starLines);
