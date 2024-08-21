@@ -3,10 +3,9 @@ name: Label Art Submissions
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    paths: 'art/**'
   schedule:
     - cron: "0 0 * * *" # This will run the workflow daily at midnight UTC
-  paths:
-    - 'art/**'
   workflow_dispatch:
 
 
