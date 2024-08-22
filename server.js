@@ -13,7 +13,7 @@ import guides from "./backend/pages/guides.js";
 import gallery from "./backend/pages/gallery.js";
 import landing from "./backend/pages/landing.js";
 import docs from "./backend/pages/docs.js";
-import submitting from "./backend/pages/submitting.js"
+import submitting from "./backend/pages/submitting.js";
 
 import signUpEmail from "./backend/api/signUpEmail.js";
 import checkSignIn from "./backend/api/checkSignIn.js";
