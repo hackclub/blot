@@ -4,9 +4,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "start": "node server.js",
+    "start": "node dev_server.js",
     "build": "node build.js",
-    "dev": "nodemon -r dotenv/config server.js"
+    "dev": "nodemon -r dotenv/config dev_server.js"
   },
   "nodemonConfig": {
     "watch": [

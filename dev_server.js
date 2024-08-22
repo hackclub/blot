@@ -1,4 +1,5 @@
 import app from './api/index.js'
+import './build.js'
 
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
