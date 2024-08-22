@@ -13,7 +13,7 @@ const alwaysRandom = true;
 const fixedSeed = 12345;
 
 if (alwaysRandom) {
-  const randomSeed = Math.floor(Math.random() * 1000000);
+  const randomSeed = Math.floor(bt.rand() * 1000000);
   bt.setRandSeed(randomSeed);
   // added for debugging just ignore
   console.log(`Using random seed: ${randomSeed}`);
