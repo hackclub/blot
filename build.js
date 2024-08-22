@@ -15,6 +15,7 @@ import guides from "./backend/pages/guides.js";
 import gallery from "./backend/pages/gallery.js";
 import landing from "./backend/pages/landing.js";
 import docs from "./backend/pages/docs.js";
+import submitting from "./backend/pages/submitting.js";
 
 spawn('npx', ['tailwindcss', '-i', './styles.css', '-o', './dist/styles.css']);
 
@@ -108,6 +109,10 @@ build({
   docs: wrapHTML(`
     ${navBar()}
     ${docs()}
+  `),
+  submitting: wrapHTML(`
+    ${navBar()}
+    ${submitting()}
   `),
   editor: wrapHTML(`
     <!-- TODO: add automatically when building -->
