@@ -1,9 +1,10 @@
 # How to Get a Blot!
 
-So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one? The Blot is paid for by Hack Club, including shipping, but you should check for customs fees in your country before ordering. [^1]
-[^1]: Customs fees aren't covered by Hack Club, so please look into how much customs is for an electronics kit order being shipped from the US if you are based outside the US.
+So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one? The Blot is paid for by Hack Club, including shipping, but you should check for customs fees in your country before ordering 
 
-**Prefer a video instead? You can find that [here!](https://youtu.be/AmbjNEPuv14)**
+(Customs fees aren't covered by Hack Club, so please look into how much customs is for an electronics kit order being shipped from the US if you are based outside the US)
+
+**Prefer a video instead? You can find that __[here!](https://youtu.be/AmbjNEPuv14)__**
 
 ## 1) Make a unique piece of generative art
 
@@ -23,8 +24,6 @@ To get a Blot, your artwork needs to meet the following criteria (*subject to ch
 
 I recommend trying to create a [figurative](https://en.wikipedia.org/wiki/Figurative_art) piece, which depicts a real life thing.
 A key to being successful is being intentional with what you make. Sketch something out and have it in mind before you program it.
-
-
 
 
 <details>
