@@ -122,7 +122,7 @@ export default function Toolbar() {
         </div>
         <a class={menuItemClasses} href="/submitting" target="_blank" rel="noopener noreferrer">
           <img src="/icons/question.svg"/>
-           How do I submit?
+           What do I make?
         </a>
       </div>
 

@@ -33,7 +33,7 @@ marked.setOptions({
 
 export default function() {
 
-  const rawMarkdown = fs.readFileSync("./docs/GET_A_BLOT.md", 'utf8');
+  const rawMarkdown = fs.readFileSync("./docs/SUBMISSION_CRITERIA.md", 'utf8');
   
   const html = marked(rawMarkdown);
 

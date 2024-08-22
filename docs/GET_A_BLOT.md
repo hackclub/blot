@@ -10,44 +10,9 @@ So you just found out about this cool robotic drawing machine which you can buil
 
 The first step is to make some generative art like that seen in [the gallery](https://blot.hackclub.com/gallery). You can follow [these guides](https://blot.hackclub.com/guides) to learn how to do that!
 
-To get a Blot, your artwork needs to meet the following criteria (*subject to change*):
+Make sure your artwork meets the [submission criteria](https:/blot.hackclub.com/submitting)
 
-- Your artwork must be beautiful. It has to be something aesthetically interesting.
-- Your artwork must be generative. 
-  - You should expose some parameters at the top of your code which can adjust the art. This could be `setRandSeed` or some other variable used in your piece. This shold allow you to create multiple versions
-- Your artwork must be drawable by the Blot machine.
-  - This means it can't be too busy and have many overlapping lines.
-  - It should fit within the workarea.
-- Your artwork must be original.
-  - You can't just copy an existing piece of art and mess with the numbers.
-  - That being said, you can take inspiration from other art and remix a few pieces together.
-
-I recommend trying to create a [figurative](https://en.wikipedia.org/wiki/Figurative_art) piece, which depicts a real life thing.
-A key to being successful is being intentional with what you make. Sketch something out and have it in mind before you program it.
-
-
-<details>
-<summary>Here are some examples of some <b>acceptable pieces</b></summary>
-
-![Screenshot 2024-02-16 at 3 02 04 PM](https://github.com/hackclub/blot/assets/27078897/f84f186b-6d9d-467b-baad-fd18eea89991)
-
-<img width="351" alt="Screenshot 2024-02-13 at 4 59 34 PM" src="https://github.com/hackclub/blot/assets/27078897/ea296584-5615-414f-93c9-5a4992928b72">
-
-</details>
-
-<details>
-<summary>Here are examples of some pieces which would <b>not be accepted</b></summary>
-
-- an abstract piece generated in a very straightforward manner
-
-![Screenshot 2024-02-16 at 3 06 05 PM](https://github.com/hackclub/blot/assets/27078897/24e1d26b-1d09-4336-830d-b437ecf8bd10)
-
-- an svg just dropped into the editor with no algorithmic process
-
-</details>
-
-
-Most art takes about 15-20 hours of work to get into the gallery, so make sure to spend time improving and iterating on your project before submitting.
+Once you think your artwork is done...
 
 ## 2) Make a PR with your original artwork
 
