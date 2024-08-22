@@ -12,6 +12,10 @@ import deleteFile from "../backend/api/deleteFile.js";
 
 import { supabase } from "../backend/api/supabase.js";
 
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import path from 'path';
+
 const app = express();
 
 app.use(express.json());
@@ -55,4 +59,28 @@ app.get('/welcome-qr-code', (req, res) => {
   res.redirect('/assembly');
 });
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use(express.static(join(__dirname, '../dist')));
+
+app.use((req, res, next) => {
+  let pathName = req.path;
+
+  if (pathName === "/") pathName = "/index";
+
+  if (req.path.indexOf('.') === -1) {
+    const file = path.join(__dirname, '../dist', `${pathName}.html`);
+    res.sendFile(file, (err) => {
+      if (err) next();
+    });
+  } else {
+    next();
+  }
+});
+
+app.use((req, res, next) => {
+  const file = path.join(__dirname, '../dist', `404.html`);
+  res.status(404).sendFile(file);
+});
 export default app;
