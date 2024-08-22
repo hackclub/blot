@@ -22,8 +22,8 @@ if (alwaysRandom) {
   console.log(`Using fixed seed: ${fixedSeed}`);
 }
 
-const flagWidth = 100;
-const flagHeight = 60;
+const flagWidth = 125;
+const flagHeight = 125;
 
 setDocDimensions(flagWidth, flagHeight);
 
