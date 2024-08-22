@@ -24,7 +24,6 @@ import getFiles from "./backend/api/getFiles.js";
 import createShareLink from "./backend/api/createShareLink.js";
 import logout from "./backend/api/logout.js";
 import deleteFile from "./backend/api/deleteFile.js";
-
 import { supabase } from "./backend/api/supabase.js";
 
 build({
