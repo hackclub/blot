@@ -16,8 +16,6 @@ import gallery from "./backend/pages/gallery.js";
 import landing from "./backend/pages/landing.js";
 import docs from "./backend/pages/docs.js";
 
-execSync('npx tailwindcss -i ./styles.css -o ./dist/styles.css');
-
 const OUTPUT_DIR = "./dist"; 
 
 // Function to bundle script sources found in HTML
@@ -100,7 +98,7 @@ export async function build(htmls) {
   // console.timeEnd("COPY")
 }
 
-build({
+await build({
   index: wrapHTML(`
     ${navBar(true)}
     ${landing()}
@@ -136,3 +134,5 @@ build({
   `),
 
 });
+
+execSync('npx tailwindcss -i ./styles.css -o ./dist/styles.css');
