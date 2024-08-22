@@ -6,7 +6,7 @@ import path from 'path';
 import alias from 'esbuild-plugin-alias';
 import inlineWorkerPlugin from 'esbuild-plugin-inline-worker';
 
-import { spawn } from 'child_process';
+import { execSync } from 'child_process';
 
 import { wrapHTML } from "./backend/wrapHTML.js";
 
@@ -16,7 +16,7 @@ import gallery from "./backend/pages/gallery.js";
 import landing from "./backend/pages/landing.js";
 import docs from "./backend/pages/docs.js";
 
-spawn('npx', ['tailwindcss', '-i', './styles.css', '-o', './dist/styles.css']);
+execSync('npx tailwindcss -i ./styles.css -o ./dist/styles.css');
 
 const OUTPUT_DIR = "./dist"; 
 
