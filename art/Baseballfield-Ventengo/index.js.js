@@ -12,7 +12,7 @@ const smallSquareOffsets = [
   [width - smallSquareSize, height - smallSquareSize],
   [0, height - smallSquareSize]
 ];
-const innerBaselineSquareSize = 78;
+const innerBaselineSquareSize = bt.randInRange(20, 92);;
 const innerBaselineSquareOffsetX = (width - innerBaselineSquareSize) / 2;
 const innerBaselineSquareOffsetY = height - innerBaselineSquareSize - 23;
 const lines = [];
@@ -20,7 +20,7 @@ const triangles = [];
 const curve = [];
 const body = [];
 const person = [];
-const fenceRadius = 190;
+const fenceRadius = bt.randInRange(100, 200);;
 const fenceRotation = 105;
 const fenceStartAngle = Math.PI / 2 + fenceRotation;
 const fenceEndAngle = 2.25 * Math.PI / 2 + fenceRotation;
@@ -62,7 +62,7 @@ for (let i = 0; i <= numFencePoints; i++) {
     [fenceCenterX + fenceRadius * Math.cos(angle + fenceAngleIncrement), fenceCenterY + fenceRadius * Math.sin(angle + fenceAngleIncrement)]
   ]);
 }
-  const moundRadius = 15;
+  const moundRadius = bt.randInRange(1, 20);;
 const moundX = width / 2;
 const moundY = height / 2;
 const numPoints = 30;
@@ -108,6 +108,8 @@ const polylines = [];
     [98, 175],]
  const xlocation = bt.randInRange(30, -77);
  const ylocation = bt.randInRange(20, -142);
+  const seatx = bt.randInRange(1, 20);
+  const seaty = bt.randInRange(20, -142);
      
 
   setDocDimensions(width * 2, height * 2)
@@ -135,7 +137,7 @@ drawLines(curve);
 bt.translate(curve, [11, -18]);
 
   
-  bt.translate(triangles, [2, 16]);
+  bt.translate(triangles, [seatx, 16]);
   
 
   // Draw the triangles
