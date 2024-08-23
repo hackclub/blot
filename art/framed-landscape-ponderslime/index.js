@@ -272,7 +272,6 @@ const clippingPolylines = [drawCircle];
 
 bt.difference(subjectPolylines, clippingPolylines);
 bt.join(borderLines, subjectPolylines);
-var coverLand
 bt.cover(t.path, borderLines);
 
 bt.scale(t.path, canvasWidth / bt.bounds(t.path).width);
@@ -289,7 +288,6 @@ drawLines(bt.difference(t.path, borderLines));
 drawLines(bt.difference(sun.path, borderLines));
 drawLines(bt.difference(t4.path, borderLines));
 drawLines(bt.difference(stars, borderLines));
-drawLines(coverLand);
 drawLines(stars, { stroke: "black", fill: "none" });
 
 bt.difference(moonFacePolylines, moonPolylines);
