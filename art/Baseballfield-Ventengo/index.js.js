@@ -12,14 +12,15 @@ const smallSquareOffsets = [
   [width - smallSquareSize, height - smallSquareSize],
   [0, height - smallSquareSize]
 ];
-
 const innerBaselineSquareSize = 78;
 const innerBaselineSquareOffsetX = (width - innerBaselineSquareSize) / 2;
 const innerBaselineSquareOffsetY = height - innerBaselineSquareSize - 23;
 const lines = [];
 const triangles = [];
 const curve = [];
-const fenceRadius = 196;
+const body = [];
+const person = [];
+const fenceRadius = 190;
 const fenceRotation = 105;
 const fenceStartAngle = Math.PI / 2 + fenceRotation;
 const fenceEndAngle = 2.25 * Math.PI / 2 + fenceRotation;
@@ -41,18 +42,15 @@ for (let i = 0; i < starPoints; i++) {
   const triangle1 = [
     [10, 144],
     [30, 171],
-    [50, 144]
-  ];
+    [50, 144] ];
   const triangle2 = [
     [137, 97],
     [155, 127],
-    [173, 100]
-  ];
+    [173, 100] ];
   const triangle3 = [
     [164, 7],
     [177, 32],
-    [199, 7]
-  ];
+    [199, 7]  ];
 const numFencePoints = 50;
 const fenceAngleIncrement = (fenceEndAngle - fenceStartAngle) / numFencePoints;
 for (let i = 0; i <= numFencePoints; i++) {
@@ -78,14 +76,57 @@ for (let i = 0; i < numPoints; i++) {
     [moundX + moundRadius * Math.cos(angle + angleIncrement), moundY + moundRadius * Math.sin(angle + angleIncrement)]
   ]);
 }
-
   const curve1 = bt.catmullRom([[178, 209], [165, 219], [177, 233], [190, 222], [178, 209]])
   const curve2 = bt.catmullRom([[188+5, 219+5], [175+5, 229+5], [187+5, 243+5], [200+5, 232+5], [188+5, 219+5]])
+const polylines = [];
+  const head = [
+    [81, 196],
+    [81, 188],
+    [87, 188],
+    [87, 196],
+    [81, 196],]
+  const body = [
+    [84, 188],
+    [84, 170], ]
+  const arm1 = [
+    [84, 186],
+    [99, 177], ]
+  const arm2 = [
+    [84, 186],
+    [98, 180], ]
+  const legs1 = [
+    [84, 170],
+    [81, 160], ]
+  const legs2 = [
+    [84, 170],
+    [87, 160],]
+  const bat = [
+    [98, 177],
+    [101, 174],
+    [107, 205],
+    [98, 204],
+    [98, 175],]
+   
+     
 
-  setDocDimensions(width * 2, height * 2);
+  setDocDimensions(width * 2, height * 2)
+
+polylines.push(head);
+polylines.push(body);
+polylines.push(arm1);
+polylines.push(arm2);
+polylines.push(legs1);
+polylines.push(legs2); 
+polylines.push(bat);
+drawLines(polylines); 
+const copiedPolylines = bt.copy(polylines); 
+bt.translate(copiedPolylines, [-44, -160]); 
+drawLines(copiedPolylines); 
+
+
 
  
-curve.push (curve1);
+curve.push(curve1);
 curve.push(curve2);
   
 drawLines(curve);
