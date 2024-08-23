@@ -59,6 +59,116 @@ function placeTetromino(tetromino, x, y) {
   });
 }
 
+function calculateScore() {
+  let filledCells = 0;
+  for (let y = 0; y < gridHeight; y++) {
+    for (let x = 0; x < gridWidth; x++) {
+      if (grid[y][x] === 1) {
+        filledCells++;
+      }
+    }
+  }
+  return filledCells;
+}
+
+
+// long list of predefined numbers
+function drawDigit(turtle, digit, x, y) {
+  const segments = {
+    1: [[x + 2, y + 4], [x + 2, y]], 
+    2: [
+      [x, y + 4], [x + 3, y + 4],
+      [x + 3, y + 4], [x + 3, y + 2],
+      [x + 3, y + 2], [x, y + 2],
+      [x, y + 2], [x, y],
+      [x, y], [x + 3, y]
+    ],
+    3: [
+      [x, y + 4], [x + 3, y + 4],
+      [x + 3, y + 4], [x + 3, y + 2],
+      [x + 3, y + 2], [x, y + 2],
+      [x + 3, y + 2], [x + 3, y],
+      [x + 3, y], [x, y]
+    ],
+    4: [
+      [x, y + 4], [x, y + 2],
+      [x, y + 2], [x + 3, y + 2],
+      [x + 3, y + 4], [x + 3, y]
+    ],
+    5: [
+      [x + 3, y + 4], [x, y + 4], 
+      [x, y + 4], [x, y + 2],
+      [x, y + 2], [x + 3, y + 2],
+      [x + 3, y + 2], [x + 3, y], 
+      [x + 3, y], [x, y] 
+    ],
+    6: [
+      [x + 3, y + 4], [x, y + 4], 
+      [x, y + 4], [x, y],
+      [x, y], [x + 3, y],
+      [x + 3, y], [x + 3, y + 2],
+      [x + 3, y + 2], [x, y + 2]
+    ],
+    7: [
+      [x, y + 4], [x + 3, y + 4],
+      [x + 3, y + 4], [x + 3, y],
+    ],
+    8: [
+      [x, y + 4], [x + 3, y + 4],
+      [x + 3, y + 4], [x + 3, y],
+      [x + 3, y], [x, y], 
+      [x, y], [x, y + 4], 
+      [x, y + 2], [x + 3, y + 2]  
+    ],
+    9: [
+      [x + 3, y], [x + 3, y + 4], 
+      [x + 3, y + 4], [x, y + 4], 
+      [x, y + 4], [x, y + 2], 
+      [x, y + 2], [x + 3, y + 2]  
+    ],
+    0: [
+      [x, y + 4], [x + 3, y + 4], 
+      [x + 3, y + 4], [x + 3, y], 
+      [x + 3, y], [x, y],
+      [x, y], [x, y + 4]
+    ]
+  };
+
+  const lines = segments[digit];
+  if (lines) {
+    turtle.jump(lines[0]);
+    turtle.down();
+    for (let i = 1; i < lines.length; i++) {
+      turtle.goTo(lines[i]);
+    }
+    turtle.up();
+  }
+}
+
+function displayScore(score) {
+  const digits = String(score).split('').map(Number);
+  const turtle = new bt.Turtle().up();
+  // change the number on the next line to move the position of the score
+  const xStart = canvasWidth - cellSize + -2.6;
+  const yStart = canvasHeight - cellSize;
+  let x = xStart;
+  let y = yStart;
+  const gap = 1.1; // change this to modify the gap
+
+  digits.forEach((digit, index) => {
+    drawDigit(turtle, digit, x, y);
+    if (index % 2 === 1) { 
+      x = xStart;
+      y -= cellSize;
+    } else {
+      x += (cellSize / 2) + gap; 
+    }
+  });
+
+  const scoreLines = turtle.lines();
+  bt.join(finalLines, scoreLines);
+}
+
 fillBottomLayers();
 
 const randomTetromino = tetrominoes[Math.floor(bt.randInRange(0, tetrominoes.length))];
@@ -85,5 +195,8 @@ const border = [
   ],
 ];
 bt.join(finalLines, border);
+
+const score = calculateScore();
+displayScore(score);
 
 drawLines(finalLines);
