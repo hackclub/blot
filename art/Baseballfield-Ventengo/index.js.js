@@ -106,7 +106,8 @@ const polylines = [];
     [107, 205],
     [98, 204],
     [98, 175],]
-   
+ const xlocation = bt.randInRange(30, -77);
+ const ylocation = bt.randInRange(20, -142);
      
 
   setDocDimensions(width * 2, height * 2)
@@ -120,7 +121,7 @@ polylines.push(legs2);
 polylines.push(bat);
 drawLines(polylines); 
 const copiedPolylines = bt.copy(polylines); 
-bt.translate(copiedPolylines, [-44, -160]); 
+bt.translate(copiedPolylines, [xlocation, ylocation]); 
 drawLines(copiedPolylines); 
 
 
