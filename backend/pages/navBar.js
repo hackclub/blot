@@ -13,11 +13,6 @@ export default function(fadeIn = false) {
           <img src="/icons/editor.svg"/>
           <span class="hidden sm:block">editor</span>
         </a>
-        
-        <a href="/docs" class="flex h-full gap-1 items-center hover:opacity-60">
-          <img src="/icons/book.svg"/>
-          <span class="hidden sm:block">docs</span>
-        </a>  
 
         <a href="/guides" class="flex h-full gap-1 items-center hover:opacity-60">
           <img src="/icons/guides.svg"/>

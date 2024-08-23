@@ -14,7 +14,7 @@ jobs:
       pull-requests: write
       repository-projects: write
       issues: write
-    
+    `
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -41,9 +41,6 @@ jobs:
           done
           echo "RESULTS_FILE=.github/workflows/logs/artwork_check_results.txt" >> $GITHUB_ENV
           cat .github/workflows/logs/artwork_check_results.txt
-
-      - name: Label artwork as submission
-        run: gh pr edit ${{ github.event.pull_request.number }} --add-label "submission"
 
       - name: Comment on pull request
         uses: actions/github-script@v6
