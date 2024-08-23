@@ -4,6 +4,8 @@
 @snapshot: snapshot1.png
 */
 
+// testing labeler
+
 const width = 125;
 const height = 125;
 
