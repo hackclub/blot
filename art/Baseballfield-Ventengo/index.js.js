@@ -12,7 +12,7 @@ const smallSquareOffsets = [
   [width - smallSquareSize, height - smallSquareSize],
   [0, height - smallSquareSize]
 ];
-const innerBaselineSquareSize = bt.randInRange(20, 92);;
+const innerBaselineSquareSize = bt.randInRange(50, 92);;
 const innerBaselineSquareOffsetX = (width - innerBaselineSquareSize) / 2;
 const innerBaselineSquareOffsetY = height - innerBaselineSquareSize - 23;
 const lines = [];
@@ -20,7 +20,7 @@ const triangles = [];
 const curve = [];
 const body = [];
 const person = [];
-const fenceRadius = bt.randInRange(100, 200);;
+const fenceRadius = bt.randInRange(170, 200);;
 const fenceRotation = 105;
 const fenceStartAngle = Math.PI / 2 + fenceRotation;
 const fenceEndAngle = 2.25 * Math.PI / 2 + fenceRotation;
@@ -106,10 +106,10 @@ const polylines = [];
     [107, 205],
     [98, 204],
     [98, 175],]
- const xlocation = bt.randInRange(30, -77);
- const ylocation = bt.randInRange(20, -142);
-  const seatx = bt.randInRange(1, 20);
-  const seaty = bt.randInRange(20, -142);
+ const xlocation = bt.randInRange(34, -15);
+ const ylocation = bt.randInRange(10, -142);
+  const seatx = bt.randInRange(1, 10);
+  //const seaty = bt.randInRange(20, -142);
      
 
   setDocDimensions(width * 2, height * 2)
