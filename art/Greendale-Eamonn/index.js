@@ -7,8 +7,6 @@
 
 
 
-
-
 // check out the workshop tab to get started
 // welcome to blot!
 
@@ -17,7 +15,7 @@
 
 let spin = false // set to false to not let the idea cross path spin/ set to true to let them spin
 let buildings = true // set to false to remove the background
-
+let flagMove = true // set to false to stop flag from moving
 const width = 125;
 const height = 125;
 
@@ -1143,8 +1141,11 @@ drawLines(t.lines())
 
 drawLines(t.lines())
 setDocDimensions(width, height)
+  if (flagMove === false){
 
 const flag = bt.catmullRom([[19, 53],[56, 50],[85, 50], [104, 47], 
                             [108, 67],  [106, 95],[106, 102],[105, 113],[76, 109], [31, 118]])
-
 drawLines([flag])
+  } else {const flag1 = bt.catmullRom([[19, 53],[56, bt.randInRange(47,53 )],[85, bt.randInRange(47,50 )], [104, bt.randInRange(46,47 )], 
+                            [bt.randInRange(100,108 ), 67],  [bt.randInRange(104,108 ), bt.randInRange(92,98 )],[bt.randInRange(103,108 ), bt.randInRange(101,106 )],[bt.randInRange(104,110 ), bt.randInRange(112,114 )],[74, bt.randInRange(109,114 )], [31, 118]])
+         drawLines([flag1])}
