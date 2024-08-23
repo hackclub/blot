@@ -11,8 +11,7 @@ Aleks' Fragmented Horizon is a great example of a detailed, intentionally drawn 
 
 ### Technical Complexity
 Art pieces that push the technical limits of Blot are usually interesting, engaging projects, and so we generally encourage you to do so if you are considering it! For example, Patricio's wireframe renderer can take any set of 3D coordinates and draw it on Blot. Isn't that amazing?
-![Wireframe Renderer](https://raw.githubusercontent.com/hackclub/blot/f6fa3bfc340106087b884d1e5fdc4a08b055a5e4/art/wireframerenderer-Patricio/snapshots/0.png)
-
+![Wireframe Renderer](https://cloud-yygjqyr0r-hack-club-bot.vercel.app/0image.png)
 
 ### Polish & Aesthetics
 The art piece should be aesthetically pleasing & feel like a polished piece of work. For example, this mushroom piece by Xinyang, though it may appear simple at first, is well-put together appears polished
