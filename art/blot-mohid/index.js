@@ -95,7 +95,28 @@ finalLines.push(...bt.cover(bt.cover([LSfrontSquare], [LSstand]), [LSmount]));
 finalLines.push(...bt.cover(bt.cover(bt.cover([LSconnectingLines], [LSstand]), [LSmount]), [LSmount]));
 finalLines.push(...bt.cover([LSstand],[LSmount]))
 
-finalLines.push(LSmount)
+const xrail = [
+  [posx+21,posy+1.4],
+  [posx-30,posy+7],
+  [posx-31.2,posy+6],
+  [posx+20,posy+0.4],
+  [posx-31.2,posy+6],
+  [posx-31.2,posy+4],
+  [posx+20,posy-1.4],
+  [posx-31.2,posy+4],
+  [posx-31.2,posy+3],
+  [posx+20,posy-2.4],
+  [posx-31.2,posy+3],
+  [posx-31.2,posy+1],
+  [posx+20,posy-4.4],
+  [posx+20,posy+0.4],
+  [posx+21,posy+1.4],
+
+]
+
+finalLines.push(...bt.cover([LSmount],[xrail]))
+finalLines.push(xrail)
+  
 
 // draw it
 drawLines(finalLines);
