@@ -113,10 +113,68 @@ const xrail = [
   [posx+21,posy+1.4],
 
 ]
+const RSmount = [
 
+  [posx+21,posy+4.5],
+  [posx+19.5,posy+0.5],
+  [posx+19.5,posy+-6.7],
+  [posx+25,posy-7.3],
+  [posx+28,posy+3.6],
+  [posx+21,posy+4.5],
+  [posx+19.5,posy+0.5],
+  [posx+25.5,posy+-0.2],
+]
+
+const RSstand = [
+  [posx+24.7,posy-1.2],
+  [posx+21,posy-20],
+  [posx+24,posy-20],
+  [posx+27.7,posy+-1.4],
+  [posx+27.7,posy-10.8],
+  [posx+24,posy-20],
+  [posx+27.7,posy-10.8],
+  [posx+37.2,posy-12.3],
+  [posx+37.7,posy-2.5],
+  [posx+39.7,posy+3.7],
+  [posx+27.6,posy+4.9],
+  [posx+24.7,posy-1.2],
+  [posx+37.7,posy-2.5],
+]
+
+const RSrotor = [
+  [posx+34.5,posy+15],
+  [posx+34.5,posy+10],
+  [posx+33.5,posy+10],
+  [posx+33.5,posy+15],
+  [posx+34.5,posy+15],  
+]
+finalLines.push(RSrotor)
+finalLines.push(RSstand)
+finalLines.push(...bt.cover([RSmount],[RSstand]))
 finalLines.push(...bt.cover([LSmount],[xrail]))
-finalLines.push(xrail)
-  
+finalLines.push(...bt.cover([xrail],[RSmount]))
 
+
+
+
+
+const yrail = [
+  [posx+-10.2,posy+22.5],
+  [posx+-26.9,posy+3.8],
+  [posx+-25.1,posy+3.5],
+  [posx+-8.4,posy+22.2],
+  [posx+-25.1,posy+3.5],
+  [posx+-22.8,posy+3.2],
+  [posx+-6.1,posy+22.2],
+  [posx+-22.8,posy+3.2],
+  [posx+-21.1,posy+3.1],
+  [posx-4.4,posy+22.4],
+  [posx+-21.1,posy+3.1],
+  [posx+-21.1,posy+-1.9],
+  [posx-4.4,posy+17.9],
+  
+]
+
+finalLines.push(yrail)
 // draw it
 drawLines(finalLines);
