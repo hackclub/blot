@@ -25,7 +25,7 @@ function ellipse(left, right, top, bottom, numPoints = 100) {
     points.push([x, y]);
   }
 
-  drawLines([points]);
+  return points;
 }
 
 const LSfrontSquare = [
@@ -248,19 +248,23 @@ const pen = [
   [xPos + -22.9 + yslideXOffset, yPos + 11.7 + yslideYOffset],
 ]
 
-ellipse(xPos + -25.6 + yslideXOffset, xPos + -22.9 + yslideXOffset, yPos + 12.3 + yslideYOffset, yPos + 11.3 + yslideYOffset);
+drawLines([ellipse(xPos + -25.6 + yslideXOffset, xPos + -22.9 + yslideXOffset, yPos + 12.3 + yslideYOffset, yPos + 11.3 + yslideYOffset)]);
 
-// the yrail wheel thingies x = 5.9 y = 2
-ellipse(xPos + 0.0, xPos + -6.3, yPos + 3.7, yPos + 5.7);
-ellipse(xPos + 0.0, xPos + -6.3, yPos + 6.6, yPos + 8.3);
-ellipse(xPos + -2.2, xPos + 3.7, yPos + 11.7, yPos + 13.7);
-ellipse(xPos + -2.2, xPos + 3.7, yPos + 9.7, yPos + 11.7);
-ellipse(xPos + -11.9, xPos + -6.9, yPos + 14.7, yPos + 12.4);
-ellipse(xPos + -11.9, xPos + -6.9, yPos + 12.7, yPos + 10.4);
-ellipse(xPos + -16.8, xPos + -11.8, yPos + 7.3, yPos + 9.2);
-ellipse(xPos + -16.8, xPos + -11.8, yPos + 5.3, yPos + 7.2);
+const yrailmount = [
+  [xPos - -5.2, yPos + 8.4],
+  [xPos + 5.2, yPos + 3.7],
+  [xPos - 0.0, yPos + -1.5],
+  [xPos - 18, yPos + 0.5],
+  [xPos - 18, yPos + 4.8],
+  [xPos - 11.9, yPos + 10.0],
+  [xPos - -5.2, yPos + 8.4],
+  [xPos - -0.1, yPos + 2.4],
+  [xPos - 0.0, yPos + -1.5],
+  [xPos - -0.1, yPos + 2.4],
+  [xPos - 18, yPos + 4.5],
+]
 
-
+finalLines.push(yrailmount)
 
 finalLines.push(pen)
 finalLines.push(...bt.cover([ypenclip],[pen]))
