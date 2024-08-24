@@ -1,12 +1,27 @@
 const width = 125;
 const height = 125;
-
 setDocDimensions(width, height);
 
-// store final lines here
+// Store final lines here
 const finalLines = [];
 
-// create a polyline
+
+
+let xslide = 23; // Number between 6 and 60. 
+let yslide = -23; // Number between -35 and 15
+
+
+function withinBounds(value, min, max) {
+    if (value === 'x' || value < min || value > max) {
+        return Math.random() * (max - min) + min;
+    }
+    return value;
+}
+
+const xslideBounds = { min: 6, max: 60 };
+const yslideBounds = { min: -35, max: 15 };
+xslide = withinBounds(xslide, xslideBounds.min, xslideBounds.max);
+yslide = withinBounds(yslide, yslideBounds.min, yslideBounds.max);
 
 const posx = width / 2;
 const posy = height / 2;
@@ -158,16 +173,15 @@ finalLines.push(RSstand);
 
 
 
-const pos = 55; // (-23)-(65)
-const yslide = -21; // (-15)-(-90)
+
 
 const xStart = xrail[0][0];
 const yStart = xrail[0][1];
 const xEnd = xrail[1][0];
 const yEnd = xrail[1][1];
 
-const xPos = xStart + (xEnd - xStart) * (pos / 100);
-const yPos = yStart + (yEnd - yStart) * (pos / 100);
+const xPos = xStart + (xEnd - xStart) * (xslide / 100);
+const yPos = yStart + (yEnd - yStart) * (xslide / 100);
 
 const yRailGradient = (22.5 - 3.8) / (-10.2 + 26.9);
 
@@ -264,20 +278,87 @@ const yrailmount = [
   [xPos - 18, yPos + 4.5],
 ]
 
-finalLines.push(yrailmount)
+const bearing = []
+const bottomcircle = ellipse(xPos - 6.7,xPos - 0.5, yPos + 6.2,yPos + 4.2)
+const wheel = [
+  [xPos - 6.7, yPos + 5.3],
+  [xPos - 0.5, yPos + 5.3],
+  [xPos - 0.5, yPos + 7.2],
+  [xPos - 6.7, yPos + 7.2],
+  [xPos - 6.7, yPos + 5.3],
+]
 
-finalLines.push(pen)
-finalLines.push(...bt.cover([ypenclip],[pen]))
+const bearingleft = [
+  [xPos - 6.7, yPos + 5.3],
+  [xPos - 6.7, yPos + 7.2],
+]
+
+const bearingright = [
+  [xPos - 0.5, yPos + 5.3],
+  [xPos - 0.5, yPos + 7.2],
+]
+const topcircle = ellipse(xPos - 6.7,xPos - 0.5, yPos + 6.2,yPos + 8.2)
+bearing.push(bearingleft)
+bearing.push(bearingright)
+bearing.push(topcircle)
+bearing.push(...bt.cover([bottomcircle],[wheel]))
+
+const bearing2 = bt.copy(bearing)
+const bearing3 = bt.copy(bearing)
+const bearing4 = bt.copy(bearing)
+drawLines(bt.translate(bearing,[0,0.5]))
+drawLines(bt.translate(bearing2,[4,6]))
+drawLines(bt.cover(bt.translate(bearing3,[-5,7]), [yrail]))
+drawLines(bt.cover(bt.translate(bearing4,[-10,2]), [yrail]))
+finalLines.push(...bt.cover(bt.cover(bt.cover([yrailmount],[yrail]), [pen]), [ymount]), [...bearing4])
+
 finalLines.push(...bt.cover(bt.cover([ymount],[pen]), [ypenclip]))
 
-finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover([xrail], [RSmount]), [yrail]), [ymount]), [pen]));
+finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([xrail], [RSmount]), [yrail]), [ymount]), [pen]), [yrail]), [yrailmount]));
 finalLines.push(...bt.cover([RSmount], [RSstand]));
 
 finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover([LSmount], [xrail]), [yrail]), [ymount]),[pen]));
 
 finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([LSstand], [LSmount]), [yrail]), [ymount]), [pen]), [ypenclip]));
-finalLines.push(...bt.cover([yclip],[xrail]));
-finalLines.push(...bt.cover(bt.cover([yrail], [yclip]), [RSmount]));
+finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover([yclip],[xrail]), [...bearing2]), [wheel]), bt.translate([bt.copy(wheel)], [4,6])));
+finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([yrail], [yclip]), [RSmount]), [...bearing2]), [...bearing]), [wheel]), bt.translate([bt.copy(wheel)], [4,6])));
+
+const penclip = [
+  [xPos + -27.4 + yslideXOffset, yPos + -9.58 + yslideYOffset],
+  [xPos + -30.3 + yslideXOffset, yPos + -12.8 + yslideYOffset],
+  [xPos + -30.3 + yslideXOffset, yPos + -23.8 + yslideYOffset],
+  [xPos + -22.2 + yslideXOffset, yPos + -25.8 + yslideYOffset],
+  [xPos + -18.8 + yslideXOffset, yPos + -21.9 + yslideYOffset],
+  [xPos + -18.8 + yslideXOffset, yPos + -10.92 + yslideYOffset],
+  [xPos + -20.6 + yslideXOffset, yPos + -10.64 + yslideYOffset],
+  [xPos + -22.3 + yslideXOffset, yPos + -12.8 + yslideYOffset],
+  [xPos + -27.4 + yslideXOffset, yPos + -12.0 + yslideYOffset],
+  [xPos + -25.4 + yslideXOffset, yPos + -9.88 + yslideYOffset],
+  [xPos + -27.4 + yslideXOffset, yPos + -9.58 + yslideYOffset],
+  [xPos + -30.3 + yslideXOffset, yPos + -12.8 + yslideYOffset],
+  [xPos + -22.3 + yslideXOffset, yPos + -14.3 + yslideYOffset],
+  [xPos + -22.2 + yslideXOffset, yPos + -25.8 + yslideYOffset],
+  [xPos + -22.3 + yslideXOffset, yPos + -14.3 + yslideYOffset],
+  [xPos + -18.8 + yslideXOffset, yPos + -10.92+ yslideYOffset],
+  [xPos + -22.3 + yslideXOffset, yPos + -14.3 + yslideYOffset],
+  [xPos + -30.3 + yslideXOffset, yPos + -12.8 + yslideYOffset],
+
+]
+
+finalLines.push(penclip)
+finalLines.push(...bt.cover(bt.cover([ypenclip],[pen]), [penclip]))
+finalLines.push(...bt.cover([pen], [penclip]))
+
+const belt = [
+  [posx - 45, posy + 15],
+  [posx + 35, posy + 6],
+  [posx + 35, posy + 4],
+  [posx - 45, posy + 13],
+  [posx - 45, posy + 15],
+]
+
+
+finalLines.push(...bt.cover(bt.cover([belt],[yrail]),[yrailmount]))
 
 // draw it
 drawLines(finalLines);
