@@ -1,3 +1,9 @@
+/*
+@title: Blot²
+@author: Mohid
+@snapshot: snapshot1.png
+*/
+
 const width = 125;
 const height = 125;
 setDocDimensions(width, height);
