@@ -1,7 +1,13 @@
 /* 
   @title: Harmonograph
   @author: Ansh Kumar
-  @snapshot: 
+  @snapshot: snapshot3
+  
+  What's Harmonograph?
+  It's a mechanical device that creates geometrical drawings using the motions of a pendulum. And this code is a digital representation of it using mathemmatical functions to simulate the motions and produce patterns.
+
+  Why I Made it?
+  I wanted to explore how maths and computers an create such beautiful patterns. It allowed me to combine my interest in maths and programming to generate intricate designs!
 */
 
 const width = 125;
