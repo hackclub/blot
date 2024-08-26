@@ -5,8 +5,8 @@
 */
 
 // Set variables here (1-100):
-const xmove = 59
-const ymove = 100
+const xmove = 8
+const ymove = 64
 
 
 function mapValue(value, min, max) {
@@ -371,7 +371,7 @@ const belt = [
 ]
 
 
-finalLines.push(...bt.cover(bt.cover([belt],[yrail]),[yrailmount]))
+finalLines.push(...bt.cover(bt.cover(bt.cover([belt],[yrail]),[yrailmount]), [pen]))
 
 const paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
 
@@ -390,5 +390,16 @@ function skew(polyline) {
   return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(iterated, 0.4), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
+function onlyskew(polyline) {
+  const iterated = bt.iteratePoints(polyline, (pt, t) => {
+    const [x, y] = pt;
+    const skewXAmount = (y - -22) * 0.74;
+    const skewYAmount = (x - 380) * -0.10;
+    return [x + skewXAmount, y + skewYAmount];
+  });
+  console.log(iterated);
+  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(iterated, 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
+}
+
 // Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
-const width=125,height=125,fillableArea=15625,targetAreaFill=13906.25,minCircleSize=1;bt.setRandSeed(100),setDocDimensions(125,125);const circles=[];function calculateMaxRadius(){return 62.5}function isOverlaping(r,e,l){return r-l<0||e-l<0||r+l>125||e+l>125||circles.some(i=>l+i.r>Math.sqrt(Math.pow(i.x-r,2)+Math.pow(i.y-e,2))+.01)}function getOpenSlot(r){if(!circles.length)return[62.5,62.5];if(1==circles.length){let e=Math.pow(circles[0].r+r,2),l=bt.rand(),i=Math.round(bt.rand())?Math.sqrt(l*e):-Math.sqrt(l*e),s=Math.round(bt.rand())?Math.sqrt((1-l)*e):-Math.sqrt((1-l)*e);if(!isOverlaping(i,s,r))return[i,s]}for(let c=0;c!=circles.length;c++){let n=circles[c];for(let a=c+1;a!=circles.length;a++){let _=circles[a],o=n.r+_.r,u=n.r+r,d=_.r+r,g=(u*u-d*d+o*o)/(2*o),$=n.x-_.x,f=n.y-_.y,q=-$/f,p=g/o,h=n.x-p*$,x=n.y-p*f,y=h+Math.sqrt(u*u-g*g)/Math.sqrt(1+q*q),O=x+q*Math.sqrt(u*u-g*g)/Math.sqrt(1+q*q);if(!isOverlaping(y,O,r)||!isOverlaping(y=h-Math.sqrt(u*u-g*g)/Math.sqrt(1+q*q),O=x-q*Math.sqrt(u*u-g*g)/Math.sqrt(1+q*q),r))return[y,O]}}}for(let areaFilled=0;areaFilled<targetAreaFill;){let r=calculateMaxRadius(),e,l;for(;void 0==e;)r=l=bt.rand()*r,e=getOpenSlot(l);areaFilled+=l**2*Math.PI,circles.push({x:e[0],y:e[1],r:l})}const t=new bt.Turtle;circles.forEach(r=>{r.r<1||(t.jump([r.x,r.y-r.r]),t.setAngle(0),t.arc(360,r.r))}),drawLines(skew(t.lines()));
+const width=50,height=50,rows=27,cols=45,amplitude=4,frequency=2,phaseShift=6.6;function generateWaveGrid(e,t,a,r,l){let i=[],n=50/t,$=50/e;for(let d=0;d<=e;d++){let f=[];for(let s=0;s<=t;s++){let h=s*n,o=d*$,p=a*Math.sin(2*r*Math.PI*s/t+d*l);f.push([h,o+p])}i.push(f)}return i}function scaleGrid(e,t,a){let r=Math.min(...e.flat().map(e=>e[0])),l=Math.max(...e.flat().map(e=>e[0])),i=Math.min(...e.flat().map(e=>e[1])),n=Math.max(...e.flat().map(e=>e[1])),$=t/(l-r),d=a/(n-i);return e.map(e=>e.map(([e,t])=>[(e-r)*$,(t-i)*d]))}function drawWaveGrid(e){let t=[];for(let a=0;a<e.length;a++)for(let r=0;r<e[a].length-1;r++)t.push([e[a][r],e[a][r+1]]);for(let l=0;l<e[0].length;l++)for(let i=0;i<e.length-1;i++)t.push([e[i][l],e[i+1][l]]);drawLines(onlyskew(t))}setDocDimensions(125,125);const waveGrid=generateWaveGrid(27,45,4,2,6.6),scaledWaveGrid=scaleGrid(waveGrid,50,50);drawWaveGrid(scaledWaveGrid);
