@@ -3,28 +3,42 @@
 @author: Mohid
 @snapshot: snapshot1.png
 */
-
+let finalLines = []
+let width=1,size=3,circuit=15,lines=[],w=33,h=w-1;setDocDimensions(125,125);let rx=w/2,ry=h/2-.5,wedges=4,seed=new bt.Turtle;for(let i=0;i<wedges;i++)for(let dir=0;dir<4;dir++)seed.jump([rx+1*(dir%3>0?i-(wedges-1.5):wedges-.5-i),ry-(dir>1?2*wedges*1:0)]),seed.setAngle(dir>1?90:-90),seed.forward((i+1)*1),seed.setAngle(dir%3<1?0:180),seed.forward((i+1)*1);bt.join(lines,seed.lines());let top=new bt.Turtle;for(let i=0;i<16;i++)top.jump([rx+1*(i+.5),ry]),top.setAngle(90),top.arc(180,(i+.5)*1);bt.join(lines,top.lines());let left=new bt.Turtle;for(let i=0;i<3*wedges+1;i++)left.jump([rx-(wedges-.5)*1-1*i,ry]),left.setAngle(-90),left.arc(90,1*i);for(let i=0;i<wedges;i++)left.jump([rx-(wedges-.5)*1,ry-1*(i+(2*wedges+1))]),left.setAngle(180),left.arc(90,-(1*(i+1)));bt.join(lines,left.lines());let right=new bt.Turtle;for(let i=0;i<3*wedges-1;i++)right.jump([rx+(wedges+.5)*1,ry-1*(i+1)]),right.setAngle(180),right.arc(90,-(1*(i+1)));for(let i=0;i<wedges-1;i++)right.jump([rx-1*(i-(wedges-.5)),ry-1*(2*wedges)]),right.setAngle(270),right.arc(90,(i+1)*1);bt.join(lines,right.lines());const predrawpreskew = bt.translate(bt.scale(lines,4),[46,46]);
+let predraw = onlyskew(bt.copy(predrawpreskew))
+// drawLines(predrawpreskew)
 // Set variables here (1-125):
-let xmove = 12
-let ymove = 13
+const item = 1
+let xmove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][0]
+// let xmove = 0
+let ymove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][1]
+// let ymove = 0
+
+// drawLines(predrawpreskew)
+const drawer = [
+  predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item],
+  [0,0]
+]
+console.log(predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item])
+drawLines([drawer])
 
 
 function mapValue(value, min, max) {
     value = Math.max(0, Math.min(125, value));
-
+    
     return min + (max - min) * (value / 125);
 }
 
-const xslide = mapValue(xmove, 2, 77);
+const xslide = 93 - mapValue(xmove, -3, 92);
 
-const yslide = mapValue(ymove, -64, 11);
+const yslide = mapValue(ymove, -96, 155);
 
 
 const pagewidth = 125;
 const pageheight = 125;
 setDocDimensions(pagewidth, pageheight);
 
-let finalLines = [];
+finalLines = [];
 
 // Scroll to the bottom and paste your blot code under the comment!
 
@@ -385,7 +399,7 @@ drawLines(finalLines)
 function skew(polyline) {
   const iterated = bt.iteratePoints(polyline, (pt, t) => {
     const [x, y] = pt;
-    const skewXAmount = (y - 64) * 0.74;
+    const skewXAmount = (y - 64) * 0.90;
     const skewYAmount = (x - 92) * -0.10;
     return [x + skewXAmount, y + skewYAmount];
   });
@@ -393,10 +407,10 @@ function skew(polyline) {
   return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(...[iterated], 0.4), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
-function onlyskew(polyline) {
+function onlyskewANDclip(polyline) {
   const iterated = bt.iteratePoints(polyline, (pt, t) => {
     const [x, y] = pt;
-    const skewXAmount = (y - -22) * 0.74;
+    const skewXAmount = (y - -22) * 0.90;
     const skewYAmount = (x - 380) * -0.10;
     return [x + skewXAmount, y + skewYAmount];
   });
@@ -404,16 +418,16 @@ function onlyskew(polyline) {
   return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale([iterated], 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
+function onlyskew(polyline) {
+  const iterated = bt.iteratePoints(polyline, (pt, t) => {
+    const [x, y] = pt;
+    const skewXAmount = (y - 64) * 0.90;
+    const skewYAmount = (x - 92) * -0.10;
+    return [x + skewXAmount, y + skewYAmount];
+  });
+  console.log(typeof [iterated]);
+  return bt.scale(iterated, 0.4)
+}
+
 // Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
-const width=1,size=3,circuit=15,lines=[],w=33,h=w-1;setDocDimensions(125,125);const rx=w/2,ry=h/2-.5,wedges=4,seed=new bt.Turtle;for(let i=0;i<wedges;i++)for(let dir=0;dir<4;dir++)seed.jump([rx+1*(dir%3>0?i-(wedges-1.5):wedges-.5-i),ry-(dir>1?2*wedges*1:0)]),seed.setAngle(dir>1?90:-90),seed.forward((i+1)*1),seed.setAngle(dir%3<1?0:180),seed.forward((i+1)*1);bt.join(lines,seed.lines());const top=new bt.Turtle;for(let i=0;i<16;i++)top.jump([rx+1*(i+.5),ry]),top.setAngle(90),top.arc(180,(i+.5)*1);bt.join(lines,top.lines());const left=new bt.Turtle;for(let i=0;i<3*wedges+1;i++)left.jump([rx-(wedges-.5)*1-1*i,ry]),left.setAngle(-90),left.arc(90,1*i);for(let i=0;i<wedges;i++)left.jump([rx-(wedges-.5)*1,ry-1*(i+(2*wedges+1))]),left.setAngle(180),left.arc(90,-(1*(i+1)));bt.join(lines,left.lines());const right=new bt.Turtle;for(let i=0;i<3*wedges-1;i++)right.jump([rx+(wedges+.5)*1,ry-1*(i+1)]),right.setAngle(180),right.arc(90,-(1*(i+1)));for(let i=0;i<wedges-1;i++)right.jump([rx-1*(i-(wedges-.5)),ry-1*(2*wedges)]),right.setAngle(270),right.arc(90,(i+1)*1);bt.join(lines,right.lines()),drawLines(skew(bt.translate(bt.scale(lines,4),[46,46])));
-const item = 1
-xmove = lines[lines.length-item][lines[lines.length-item].length-item][0]
-ymove = lines[lines.length-item][lines[lines.length-item].length-item][1]
-
-
-const drawer = [
-  lines[lines.length-item][lines[lines.length-item].length-item],
-  [0,0]
-]
-console.log(lines[lines.length-item][lines[lines.length-item].length-item])
-drawLines([drawer])
+drawLines(skew(predrawpreskew))
