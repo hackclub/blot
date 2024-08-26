@@ -1,7 +1,7 @@
 /*
 @title: Winter Wonderland 
 @author: Shayan Mazahir
-@snapshot: 
+@snapshot: image1.png
 */
 
 setDocDimensions(125, 125); // Canvas dimensions
