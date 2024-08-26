@@ -113,20 +113,21 @@ function drawPineTree(x, y, size) {
     
     drawLight(xLight, yLight, color);
   }
-
-  // Draw star on top of the tree
-  function drawStar(x, y, size, color) {
-    const turtle = new bt.Turtle().jump([x, y]).setAngle(0).down();
-    for (let i = 0; i < 5; i++) {
-      turtle.forward(size);
-      turtle.right(144);
-    }
-    turtle.up();
-    drawLines(turtle.path, { stroke: color, width: 2 });
-  }
-
-  drawStar(x, y + TRUNK_HEIGHT + FOLIAGE_HEIGHT, 6, STAR_COLOR); // Star on top of the tree
 }
 
 // Draw pine tree
 drawPineTree(90, 35, 1); // Increased width and moved pine tree to the right
+
+// Draw star on top of the tree
+function drawStar(x, y, size, color) {
+    const turtle = new bt.Turtle().jump([x - size / 2, y - size / 2]).setAngle(0).down(); // Adjusted x and y
+    for (let i = 0; i < 5; i++) {
+        turtle.forward(size);
+        turtle.right(144);
+    }
+    turtle.up();
+    drawLines(turtle.path, { stroke: color, width: 2 });
+}
+
+// Draw the star, adjusting its position to perfectly centre it
+drawStar(90, 35 + 8 + 20 + 2, 6, STAR_COLOR); // Adjusted y position
