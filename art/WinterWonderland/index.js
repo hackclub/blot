@@ -18,6 +18,30 @@ const ARM_COLOR = 'brown';
 const LIGHT_COLORS = ['red', 'yellow', 'blue', 'purple', 'pink'];
 const STAR_COLOR = 'gold';
 
+// Snowflake variables
+const SNOWFLAKE_SIZE_MIN = 2;
+const SNOWFLAKE_SIZE_MAX = 6;
+const NUM_SNOWFLAKES = 30;
+
+// Snowman variables
+const SNOWMAN_BASE_SIZE = 12;
+const SNOWMAN_MIDDLE_SIZE = 10;
+const SNOWMAN_HEAD_SIZE = 8;
+const SNOWMAN_SCALE = 1;
+const SNOWMAN_X = 20;
+const SNOWMAN_Y = 35;
+
+// Tree variables
+const TREE_TRUNK_HEIGHT = 8;
+const TREE_TRUNK_WIDTH = 5;
+const TREE_FOLIAGE_HEIGHT = 20;
+const TREE_FOLIAGE_WIDTH = 15;
+const LIGHT_SIZE = 2;
+const NUM_LIGHTS = 8;
+const STAR_SIZE = 6;
+const TREE_X = 90;
+const TREE_Y = 35;
+
 // Draw night sky
 drawLines([[[0, 0], [125, 0], [125, 125], [0, 125], [0, 0]]], { fill: NIGHT_SKY_COLOR, stroke: NIGHT_SKY_COLOR });
 
@@ -38,10 +62,10 @@ function drawSnowflake(turtle, x, y, size, color) {
   turtle.up();
 }
 
-for (let i = 0; i < 30; i++) { // Number of snowflakes
-  const size = bt.randIntInRange(2, 6); // Snowflake size
-  const x = bt.randIntInRange(size, 125 - size); // Ensure snowflake stays within canvas
-  const y = bt.randIntInRange(size, 125 - size); // Ensure snowflake stays within canvas
+for (let i = 0; i < NUM_SNOWFLAKES; i++) {
+  const size = bt.randIntInRange(SNOWFLAKE_SIZE_MIN, SNOWFLAKE_SIZE_MAX);
+  const x = bt.randIntInRange(size, 125 - size);
+  const y = bt.randIntInRange(size, 125 - size);
   const color = SNOWFLAKE_COLORS[bt.randIntInRange(0, SNOWFLAKE_COLORS.length)];
   
   const snowflakeTurtle = new bt.Turtle();
@@ -52,9 +76,9 @@ for (let i = 0; i < 30; i++) { // Number of snowflakes
 
 // Draw a single snowman
 function drawSnowman(x, y, scale) {
-  const BASE_SIZE = 12 * scale;
-  const MIDDLE_SIZE = 10 * scale;
-  const HEAD_SIZE = 8 * scale;
+  const BASE_SIZE = SNOWMAN_BASE_SIZE * scale;
+  const MIDDLE_SIZE = SNOWMAN_MIDDLE_SIZE * scale;
+  const HEAD_SIZE = SNOWMAN_HEAD_SIZE * scale;
   
   // Draw snowman body
   drawLines([[[x - BASE_SIZE, y], [x + BASE_SIZE, y], [x + BASE_SIZE, y + BASE_SIZE * 1.3], [x - BASE_SIZE, y + BASE_SIZE * 1.3], [x - BASE_SIZE, y]]], { fill: 'white', stroke: 'white' });
@@ -81,14 +105,14 @@ function drawSnowman(x, y, scale) {
 }
 
 // Draw single snowman
-drawSnowman(20, 35, 1); // Moved snowman to the left
+drawSnowman(SNOWMAN_X, SNOWMAN_Y, SNOWMAN_SCALE); // Moved snowman to the left
 
 // Draw a pine tree with lights
 function drawPineTree(x, y, size) {
-  const TRUNK_HEIGHT = 8 * size;
-  const TRUNK_WIDTH = 5 * size;
-  const FOLIAGE_HEIGHT = 20 * size;
-  const FOLIAGE_WIDTH = 15 * size; // Wider foliage
+  const TRUNK_HEIGHT = TREE_TRUNK_HEIGHT * size;
+  const TRUNK_WIDTH = TREE_TRUNK_WIDTH * size;
+  const FOLIAGE_HEIGHT = TREE_FOLIAGE_HEIGHT * size;
+  const FOLIAGE_WIDTH = TREE_FOLIAGE_WIDTH * size;
   
   // Draw trunk
   drawLines([[[x - TRUNK_WIDTH / 2, y], [x + TRUNK_WIDTH / 2, y], [x + TRUNK_WIDTH / 2, y + TRUNK_HEIGHT], [x - TRUNK_WIDTH / 2, y + TRUNK_HEIGHT], [x - TRUNK_WIDTH / 2, y]]], { fill: TRUNK_COLOR, stroke: TRUNK_COLOR });
@@ -100,13 +124,12 @@ function drawPineTree(x, y, size) {
   
   // Draw lights on the tree
   function drawLight(x, y, color) {
-    const LIGHT_SIZE = 2; // Size of the light
     drawLines([[[x - LIGHT_SIZE, y], [x + LIGHT_SIZE, y]]], { stroke: color, width: 2 }); // Horizontal line
     drawLines([[[x, y - LIGHT_SIZE], [x, y + LIGHT_SIZE]]], { stroke: color, width: 2 }); // Vertical line
   }
 
   // Light positions on the tree
-  for (let i = 0; i < 20; i++) { // Number of lights
+  for (let i = 0; i < NUM_LIGHTS; i++) {
     const xLight = bt.randIntInRange(x - FOLIAGE_WIDTH / 2, x + FOLIAGE_WIDTH / 2);
     const yLight = bt.randIntInRange(y + TRUNK_HEIGHT, y + TRUNK_HEIGHT + FOLIAGE_HEIGHT);
     const color = LIGHT_COLORS[bt.randIntInRange(0, LIGHT_COLORS.length)];
@@ -126,7 +149,6 @@ function drawPineTree(x, y, size) {
   }
 
   // Calculate the position of the star
-  const STAR_SIZE = 6;
   const starX = x;
   const starY = y + TRUNK_HEIGHT + FOLIAGE_HEIGHT + (STAR_SIZE * 2.85); // Further adjustment
 
@@ -135,4 +157,4 @@ function drawPineTree(x, y, size) {
 }
 
 // Draw pine tree
-drawPineTree(90, 35, 1); // Increased width and moved pine tree to the right
+drawPineTree(TREE_X, TREE_Y, 1); // Increased width and moved pine tree to the right
