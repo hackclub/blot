@@ -4,26 +4,16 @@
 @snapshot: snapshot1.png
 */
 
-let xslide = 23; // Number between 6 and 60. 
-let yslide = -23; // Number between -35 and 15
+let xslide = 'x'; // Number between 6 and 60. 
+let yslide = 'x'; // Number between -35 and 15
 
-const width = 125;
-const height = 125;
-setDocDimensions(width, height);
+const pagewidth = 125;
+const pageheight = 125;
+setDocDimensions(pagewidth, pageheight);
 
 const finalLines = [];
 
-
-function skew(polyline) {
-  return bt.iteratePoints(polyline, (pt, t) => {
-    const [x, y] = pt;
-    const skewXAmount = (y - 96) * 0.74;
-    const skewYAmount = (x - -52) * -0.12;
-    return [x + skewXAmount, y + skewYAmount];
-  });
-}
-
-// Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
+// Scroll to the bottom and paste your blot code under the comment!
 
 function withinBounds(value, min, max) {
     if (value === 'x' || value < min || value > max) {
@@ -374,13 +364,20 @@ const belt = [
 
 finalLines.push(...bt.cover(bt.cover([belt],[yrail]),[yrailmount]))
 
-
-
-
-
-const paper = [[[50, 50], [50, 100], [100, 100], [100, 50], [50, 50]]];
+const paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
 
 finalLines.push(...skew(paper))
 
-// draw it
-drawLines(finalLines);
+
+function skew(polyline) {
+  const iterated = bt.iteratePoints(polyline, (pt, t) => {
+    const [x, y] = pt;
+    const skewXAmount = (y - 66) * 0.74;
+    const skewYAmount = (x - 39) * -0.10;
+    return [x + skewXAmount, y + skewYAmount];
+  });
+  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(iterated, 0.4), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
+}
+
+// Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
+var width=1e3,height=1e3;setDocDimensions(125,125);const t=new bt.Turtle;var xMin=100,xMax=width-xMin,yMin=100,yMax=height-yMin,nLines=80,nPoints=100,dx=(xMax-xMin)/nPoints,dy=(yMax-yMin)/nLines,x=xMin,y=yMin;t.jump([x,y]);for(var mx=(xMin+xMax)/2,i=0;i<nLines;i++){for(var n=randNormal(mx,50),r=randNormal(30,30),a=0;a<nPoints;a++){var $=y+1e3*normalPDF(x+=dx,n,r)+bt.rand();t.goTo([x,$])}x=xMin,y+=dy,t.jump([x,y])}function randNormal(n,r){for(var a=0,$=0;$<6;$+=1)a+=bt.randInRange(-1,1);return n+r*(a/6)}function normalPDF(n,r,a){var $=Math.pow(a,2);return Math.exp(-Math.pow(n-r,2)/(2*$))/Math.sqrt(2*Math.PI*$)}drawLines(skew(bt.translate(bt.scale(t.lines(),.125),[-438,-438])));drawLines(finalLines);
