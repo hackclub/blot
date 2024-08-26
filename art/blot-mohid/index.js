@@ -4,14 +4,27 @@
 @snapshot: snapshot1.png
 */
 
-let xslide = 'x'; // Number between 6 and 60. 
-let yslide = 'x'; // Number between -35 and 15
+// Set variables here (1-100):
+const xmove = 59
+const ymove = 100
+
+
+function mapValue(value, min, max) {
+    value = Math.max(0, Math.min(100, value));
+    
+    return min + (max - min) * (value / 100);
+}
+
+const xslide = mapValue(xmove, 6, 60);
+
+const yslide = mapValue(ymove, -35, 15);
+
 
 const pagewidth = 125;
 const pageheight = 125;
 setDocDimensions(pagewidth, pageheight);
 
-const finalLines = [];
+let finalLines = [];
 
 // Scroll to the bottom and paste your blot code under the comment!
 
@@ -22,10 +35,6 @@ function withinBounds(value, min, max) {
     return value;
 }
 
-const xslideBounds = { min: 6, max: 60 };
-const yslideBounds = { min: -35, max: 15 };
-xslide = withinBounds(xslide, xslideBounds.min, xslideBounds.max);
-yslide = withinBounds(yslide, yslideBounds.min, yslideBounds.max);
 
 const posx = 81;
 const posy = 89;
@@ -368,6 +377,7 @@ const paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
 
 finalLines.push(...skew(paper))
 
+drawLines(finalLines)
 
 function skew(polyline) {
   const iterated = bt.iteratePoints(polyline, (pt, t) => {
@@ -376,8 +386,9 @@ function skew(polyline) {
     const skewYAmount = (x - 39) * -0.10;
     return [x + skewXAmount, y + skewYAmount];
   });
+  console.log(iterated);
   return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(iterated, 0.4), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
 // Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
-var width=1e3,height=1e3;setDocDimensions(125,125);const t=new bt.Turtle;var xMin=100,xMax=width-xMin,yMin=100,yMax=height-yMin,nLines=80,nPoints=100,dx=(xMax-xMin)/nPoints,dy=(yMax-yMin)/nLines,x=xMin,y=yMin;t.jump([x,y]);for(var mx=(xMin+xMax)/2,i=0;i<nLines;i++){for(var n=randNormal(mx,50),r=randNormal(30,30),a=0;a<nPoints;a++){var $=y+1e3*normalPDF(x+=dx,n,r)+bt.rand();t.goTo([x,$])}x=xMin,y+=dy,t.jump([x,y])}function randNormal(n,r){for(var a=0,$=0;$<6;$+=1)a+=bt.randInRange(-1,1);return n+r*(a/6)}function normalPDF(n,r,a){var $=Math.pow(a,2);return Math.exp(-Math.pow(n-r,2)/(2*$))/Math.sqrt(2*Math.PI*$)}drawLines(skew(bt.translate(bt.scale(t.lines(),.125),[-438,-438])));drawLines(finalLines);
+const width=125,height=125,fillableArea=15625,targetAreaFill=13906.25,minCircleSize=1;bt.setRandSeed(100),setDocDimensions(125,125);const circles=[];function calculateMaxRadius(){return 62.5}function isOverlaping(r,e,l){return r-l<0||e-l<0||r+l>125||e+l>125||circles.some(i=>l+i.r>Math.sqrt(Math.pow(i.x-r,2)+Math.pow(i.y-e,2))+.01)}function getOpenSlot(r){if(!circles.length)return[62.5,62.5];if(1==circles.length){let e=Math.pow(circles[0].r+r,2),l=bt.rand(),i=Math.round(bt.rand())?Math.sqrt(l*e):-Math.sqrt(l*e),s=Math.round(bt.rand())?Math.sqrt((1-l)*e):-Math.sqrt((1-l)*e);if(!isOverlaping(i,s,r))return[i,s]}for(let c=0;c!=circles.length;c++){let n=circles[c];for(let a=c+1;a!=circles.length;a++){let _=circles[a],o=n.r+_.r,u=n.r+r,d=_.r+r,g=(u*u-d*d+o*o)/(2*o),$=n.x-_.x,f=n.y-_.y,q=-$/f,p=g/o,h=n.x-p*$,x=n.y-p*f,y=h+Math.sqrt(u*u-g*g)/Math.sqrt(1+q*q),O=x+q*Math.sqrt(u*u-g*g)/Math.sqrt(1+q*q);if(!isOverlaping(y,O,r)||!isOverlaping(y=h-Math.sqrt(u*u-g*g)/Math.sqrt(1+q*q),O=x-q*Math.sqrt(u*u-g*g)/Math.sqrt(1+q*q),r))return[y,O]}}}for(let areaFilled=0;areaFilled<targetAreaFill;){let r=calculateMaxRadius(),e,l;for(;void 0==e;)r=l=bt.rand()*r,e=getOpenSlot(l);areaFilled+=l**2*Math.PI,circles.push({x:e[0],y:e[1],r:l})}const t=new bt.Turtle;circles.forEach(r=>{r.r<1||(t.jump([r.x,r.y-r.r]),t.setAngle(0),t.arc(360,r.r))}),drawLines(skew(t.lines()));
