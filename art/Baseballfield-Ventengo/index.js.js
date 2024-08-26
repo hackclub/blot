@@ -12,7 +12,7 @@ const smallSquareOffsets = [
   [width - smallSquareSize, height - smallSquareSize],
   [0, height - smallSquareSize]
 ];
-const innerBaselineSquareSize = bt.randInRange(50, 92);;
+const innerBaselineSquareSize = bt.randInRange(50, 87);;
 const innerBaselineSquareOffsetX = (width - innerBaselineSquareSize) / 2;
 const innerBaselineSquareOffsetY = height - innerBaselineSquareSize - 23;
 const lines = [];
@@ -20,6 +20,7 @@ const triangles = [];
 const curve = [];
 const body = [];
 const person = [];
+const letter = [];
 const fenceRadius = bt.randInRange(170, 200);;
 const fenceRotation = 105;
 const fenceStartAngle = Math.PI / 2 + fenceRotation;
@@ -109,11 +110,76 @@ const polylines = [];
  const xlocation = bt.randInRange(34, -15);
  const ylocation = bt.randInRange(10, -142);
   const seatx = bt.randInRange(1, 10);
-  //const seaty = bt.randInRange(20, -142);
-     
+  const R = [
+    [30, 25],
+    [35, 25],
+    [35, 21],
+    [30, 21],
+    [30, 25],
+    [30, 17],
+    [30, 21], 
+    [35, 17],
+  ]
+  const O = [
+    [38, 25],
+    [43, 25],
+    [43, 17],
+    [38, 17],
+    [38, 25], ]
+  const C = [
+    [51, 25],
+    [46, 25],
+    [46, 17],
+    [51, 17],]
+  const K = [
+    [59, 25],
+    [54, 21],
+    [54, 25],
+    [54, 21],
+    [59, 17],
+    [54, 21],
+    [54, 17],]
+  const I = [
+    [62, 25],
+    [68, 25],
+    [65, 25],
+    [65, 17],
+    [62, 17],
+    [65, 17],
+    [68, 17],]
+  const E = [
+    [71, 25],
+    [76, 25],
+    [71, 25],
+    [71, 21],
+    [76, 21],
+    [71, 21],
+    [71, 17],
+    [76, 17],]
+  const S = [
+    [79, 25],
+    [84, 25],
+    [79, 25],
+    [79, 21],
+    [84, 21],
+    [84, 17],
+    [79, 17],]
+    
+  
+ 
 
   setDocDimensions(width * 2, height * 2)
+  
+  letter.push(O);
+  letter.push(R);
+  letter.push(C);
+  letter.push(K);
+  letter.push(I);
+  letter.push(E);
+  letter.push(S);
+  drawLines(letter);  
 
+  
 polylines.push(head);
 polylines.push(body);
 polylines.push(arm1);
