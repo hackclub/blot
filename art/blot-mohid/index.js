@@ -4,18 +4,26 @@
 @snapshot: snapshot1.png
 */
 
+let xslide = 23; // Number between 6 and 60. 
+let yslide = -23; // Number between -35 and 15
+
 const width = 125;
 const height = 125;
 setDocDimensions(width, height);
 
-// Store final lines here
 const finalLines = [];
 
 
+function skew(polyline) {
+  return bt.iteratePoints(polyline, (pt, t) => {
+    const [x, y] = pt;
+    const skewXAmount = (y - 96) * 0.74;
+    const skewYAmount = (x - -52) * -0.12;
+    return [x + skewXAmount, y + skewYAmount];
+  });
+}
 
-let xslide = 23; // Number between 6 and 60. 
-let yslide = -23; // Number between -35 and 15
-
+// Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
 
 function withinBounds(value, min, max) {
     if (value === 'x' || value < min || value > max) {
@@ -29,8 +37,8 @@ const yslideBounds = { min: -35, max: 15 };
 xslide = withinBounds(xslide, xslideBounds.min, xslideBounds.max);
 yslide = withinBounds(yslide, yslideBounds.min, yslideBounds.max);
 
-const posx = width / 2;
-const posy = height / 2;
+const posx = 81;
+const posy = 89;
 
 function ellipse(left, right, top, bottom, numPoints = 100) {
   const x_center = (left + right) / 2;
@@ -365,6 +373,14 @@ const belt = [
 
 
 finalLines.push(...bt.cover(bt.cover([belt],[yrail]),[yrailmount]))
+
+
+
+
+
+const paper = [[[50, 50], [50, 100], [100, 100], [100, 50], [50, 50]]];
+
+finalLines.push(...skew(paper))
 
 // draw it
 drawLines(finalLines);
