@@ -4,20 +4,20 @@
 @snapshot: snapshot1.png
 */
 
-// Set variables here (1-100):
-const xmove = -8
-const ymove = -32
+// Set variables here (1-125):
+let xmove = 12
+let ymove = 13
 
 
 function mapValue(value, min, max) {
-    value = Math.max(0, Math.min(100, value));
-    
-    return min + (max - min) * (value / 100);
+    value = Math.max(0, Math.min(125, value));
+
+    return min + (max - min) * (value / 125);
 }
 
 const xslide = mapValue(xmove, 2, 77);
 
-const yslide = mapValue(ymove, -42, 11);
+const yslide = mapValue(ymove, -64, 11);
 
 
 const pagewidth = 125;
@@ -122,7 +122,7 @@ finalLines.push(
     [LSmount]
   )
 );
-finalLines.push(...bt.cover(bt.cover([LSfrontSquare], [LSstand]), [LSmount]));
+
 finalLines.push(
   ...bt.cover(bt.cover(bt.cover([LSconnectingLines], [LSstand]), [LSmount]), [LSmount])
 );
@@ -276,7 +276,7 @@ const pen = [
 ]
 
 drawLines([ellipse(xPos + -25.6 + yslideXOffset, xPos + -22.9 + yslideXOffset, yPos + 12.3 + yslideYOffset, yPos + 11.3 + yslideYOffset)]);
-
+finalLines.push(...bt.cover(bt.cover(bt.cover([LSfrontSquare], [LSstand]), [LSmount]), [pen]));
 const yrailmount = [
   [xPos - -5.2, yPos + 8.4],
   [xPos + 5.2, yPos + 3.7],
@@ -370,7 +370,7 @@ finalLines.push(...bt.cover(bt.cover(bt.cover([belt],[yrail]),[yrailmount]), [pe
 
 drawLines(bt.translate(bearing,[0,0.5]))
 drawLines(bt.translate(bearing2,[4,6]))
-drawLines(bt.cover(bt.translate(bearing3,[-5,7]), [yrail]))
+drawLines(bt.cover(bt.cover(bt.translate(bearing3,[-5,7]), [yrail]), [yclip]))
 drawLines(bt.cover(bt.cover(bt.cover(bt.translate(bearing4,[-10,2]), [yrail]), [pen]), [ypenclip]))
 finalLines.push(...bt.cover(bt.cover(bt.cover([yrailmount],[yrail]), [pen]), [ymount]), [...bearing4])
 
@@ -385,12 +385,12 @@ drawLines(finalLines)
 function skew(polyline) {
   const iterated = bt.iteratePoints(polyline, (pt, t) => {
     const [x, y] = pt;
-    const skewXAmount = (y - 66) * 0.74;
-    const skewYAmount = (x - 39) * -0.10;
+    const skewXAmount = (y - 64) * 0.74;
+    const skewYAmount = (x - 92) * -0.10;
     return [x + skewXAmount, y + skewYAmount];
   });
-  console.log(iterated);
-  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(iterated, 0.4), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
+  console.log(typeof [...iterated]);
+  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(...[iterated], 0.4), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
 function onlyskew(polyline) {
@@ -400,9 +400,20 @@ function onlyskew(polyline) {
     const skewYAmount = (x - 380) * -0.10;
     return [x + skewXAmount, y + skewYAmount];
   });
-  console.log(iterated);
+  console.log(typeof [iterated]);
   return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale([iterated], 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
 // Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
-const width=125,height=125;setDocDimensions(125,125);const scale=.6*Math.random()+.7,planetRadius=35*scale,ringInnerRadiusX=45*scale,ringInnerRadiusY=10*scale,ringInMiddleRadiusX=57*scale,ringInMiddleRadiusY=15*scale,ringOutMiddleRadiusX=63*scale,ringOutMiddleRadiusY=18*scale,ringOuterRadiusX=75*scale,ringOuterRadiusY=23*scale,ringAngle=getRandomAngle();function getRandomAngle(){let e=20*Math.random();return e>10&&(e=350+(e-10)),e}const numStars=10*Math.random()+10,starRadius=.4,saturn={center:[62.5,62.5],radius:planetRadius},rings=[{center:[62.5,62.5],radiusX:ringInnerRadiusX,radiusY:ringInnerRadiusY,angle:ringAngle},{center:[62.5,62.5],radiusX:ringInMiddleRadiusX,radiusY:ringInMiddleRadiusY,angle:ringAngle},{center:[62.5,62.5],radiusX:ringOutMiddleRadiusX,radiusY:ringOutMiddleRadiusY,angle:ringAngle},{center:[62.5,62.5],radiusX:ringOuterRadiusX,radiusY:ringOuterRadiusY,angle:ringAngle}];function createCircle(e,n,r=200){let i=[];for(let a=0;a<=r;a++){let s=a/r*2*Math.PI,t=e[0]+n*Math.cos(s),d=e[1]+n*Math.sin(s);i.push([t,d])}return i}function createStars(e,n,r,i,a,s,t,d){let u=[];for(let l=0;l<e;l++){let c,g;do c=Math.random()*(r-n)+n,g=Math.random()*(a-i)+i;while(g<92&&g>31||t&&Math.sqrt((c-t[0])**2+(g-t[1])**2)<d);let $=createCircle([c,g],s*Math.random()+.6,10);u.push($)}return u}finalLines.push(createCircle(saturn.center,saturn.radius)),rings.forEach(e=>{finalLines.push(...createEllipse(e.center,e.radiusX,e.radiusY,e.angle))});const minX=2,maxX=123,minY=2,maxY=123,avoidCenter=saturn.center,avoidRadius=planetRadius+2,stars=createStars(numStars,2,123,2,123,.4,avoidCenter,avoidRadius);function createEllipse(e,n,r,i,a=200){let s=[],t=Math.PI/180*i,d=[];for(let u=0;u<=a;u++){let l=u/a*2*Math.PI,c=e[0]+n*Math.cos(l),g=e[1]+r*Math.sin(l),$=e[0]+(c-e[0])*Math.cos(t)-(g-e[1])*Math.sin(t),o=e[1]+(c-e[0])*Math.sin(t)+(g-e[1])*Math.cos(t),_=Math.sqrt(($-e[0])**2+(o-e[1])**2);$>=0&&$<=125&&o>=0&&o<=125&&(_>planetRadius||o<e[1])?d.push([$,o]):d.length>0&&(s.push(d),d=[])}return d.length>0&&s.push(d),s}finalLines.push(...stars),drawLines(skew([...[...finalLines]]))
+const width=1,size=3,circuit=15,lines=[],w=33,h=w-1;setDocDimensions(125,125);const rx=w/2,ry=h/2-.5,wedges=4,seed=new bt.Turtle;for(let i=0;i<wedges;i++)for(let dir=0;dir<4;dir++)seed.jump([rx+1*(dir%3>0?i-(wedges-1.5):wedges-.5-i),ry-(dir>1?2*wedges*1:0)]),seed.setAngle(dir>1?90:-90),seed.forward((i+1)*1),seed.setAngle(dir%3<1?0:180),seed.forward((i+1)*1);bt.join(lines,seed.lines());const top=new bt.Turtle;for(let i=0;i<16;i++)top.jump([rx+1*(i+.5),ry]),top.setAngle(90),top.arc(180,(i+.5)*1);bt.join(lines,top.lines());const left=new bt.Turtle;for(let i=0;i<3*wedges+1;i++)left.jump([rx-(wedges-.5)*1-1*i,ry]),left.setAngle(-90),left.arc(90,1*i);for(let i=0;i<wedges;i++)left.jump([rx-(wedges-.5)*1,ry-1*(i+(2*wedges+1))]),left.setAngle(180),left.arc(90,-(1*(i+1)));bt.join(lines,left.lines());const right=new bt.Turtle;for(let i=0;i<3*wedges-1;i++)right.jump([rx+(wedges+.5)*1,ry-1*(i+1)]),right.setAngle(180),right.arc(90,-(1*(i+1)));for(let i=0;i<wedges-1;i++)right.jump([rx-1*(i-(wedges-.5)),ry-1*(2*wedges)]),right.setAngle(270),right.arc(90,(i+1)*1);bt.join(lines,right.lines()),drawLines(skew(bt.translate(bt.scale(lines,4),[46,46])));
+const item = 1
+xmove = lines[lines.length-item][lines[lines.length-item].length-item][0]
+ymove = lines[lines.length-item][lines[lines.length-item].length-item][1]
+
+
+const drawer = [
+  lines[lines.length-item][lines[lines.length-item].length-item],
+  [0,0]
+]
+console.log(lines[lines.length-item][lines[lines.length-item].length-item])
+drawLines([drawer])
