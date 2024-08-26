@@ -5,8 +5,8 @@
 */
 
 // Set variables here (1-100):
-const xmove = 8
-const ymove = 64
+const xmove = -8
+const ymove = -32
 
 
 function mapValue(value, min, max) {
@@ -15,9 +15,9 @@ function mapValue(value, min, max) {
     return min + (max - min) * (value / 100);
 }
 
-const xslide = mapValue(xmove, 6, 60);
+const xslide = mapValue(xmove, 2, 77);
 
-const yslide = mapValue(ymove, -35, 15);
+const yslide = mapValue(ymove, -42, 11);
 
 
 const pagewidth = 125;
@@ -319,22 +319,17 @@ bearing.push(...bt.cover([bottomcircle],[wheel]))
 const bearing2 = bt.copy(bearing)
 const bearing3 = bt.copy(bearing)
 const bearing4 = bt.copy(bearing)
-drawLines(bt.translate(bearing,[0,0.5]))
-drawLines(bt.translate(bearing2,[4,6]))
-drawLines(bt.cover(bt.translate(bearing3,[-5,7]), [yrail]))
-drawLines(bt.cover(bt.translate(bearing4,[-10,2]), [yrail]))
-finalLines.push(...bt.cover(bt.cover(bt.cover([yrailmount],[yrail]), [pen]), [ymount]), [...bearing4])
 
 finalLines.push(...bt.cover(bt.cover([ymount],[pen]), [ypenclip]))
 
 finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([xrail], [RSmount]), [yrail]), [ymount]), [pen]), [yrail]), [yrailmount]));
 finalLines.push(...bt.cover([RSmount], [RSstand]));
 
-finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover([LSmount], [xrail]), [yrail]), [ymount]),[pen]));
+finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([LSmount], [xrail]), [yrail]), [ymount]),[pen]), [ymount]), [ypenclip]));
 
 finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([LSstand], [LSmount]), [yrail]), [ymount]), [pen]), [ypenclip]));
 finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover([yclip],[xrail]), [...bearing2]), [wheel]), bt.translate([bt.copy(wheel)], [4,6])));
-finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([yrail], [yclip]), [RSmount]), [...bearing2]), [...bearing]), [wheel]), bt.translate([bt.copy(wheel)], [4,6])));
+finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([yrail], [yclip]), [RSmount]), [...bearing2]), [...bearing]), [wheel]), bt.translate([bt.copy(wheel)], [4,6])), [ypenclip]));
 
 const penclip = [
   [xPos + -27.4 + yslideXOffset, yPos + -9.58 + yslideYOffset],
@@ -373,6 +368,14 @@ const belt = [
 
 finalLines.push(...bt.cover(bt.cover(bt.cover([belt],[yrail]),[yrailmount]), [pen]))
 
+drawLines(bt.translate(bearing,[0,0.5]))
+drawLines(bt.translate(bearing2,[4,6]))
+drawLines(bt.cover(bt.translate(bearing3,[-5,7]), [yrail]))
+drawLines(bt.cover(bt.cover(bt.cover(bt.translate(bearing4,[-10,2]), [yrail]), [pen]), [ypenclip]))
+finalLines.push(...bt.cover(bt.cover(bt.cover([yrailmount],[yrail]), [pen]), [ymount]), [...bearing4])
+
+
+
 const paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
 
 finalLines.push(...skew(paper))
@@ -398,8 +401,8 @@ function onlyskew(polyline) {
     return [x + skewXAmount, y + skewYAmount];
   });
   console.log(iterated);
-  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(iterated, 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
+  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale([iterated], 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
 // Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
-const width=50,height=50,rows=27,cols=45,amplitude=4,frequency=2,phaseShift=6.6;function generateWaveGrid(e,t,a,r,l){let i=[],n=50/t,$=50/e;for(let d=0;d<=e;d++){let f=[];for(let s=0;s<=t;s++){let h=s*n,o=d*$,p=a*Math.sin(2*r*Math.PI*s/t+d*l);f.push([h,o+p])}i.push(f)}return i}function scaleGrid(e,t,a){let r=Math.min(...e.flat().map(e=>e[0])),l=Math.max(...e.flat().map(e=>e[0])),i=Math.min(...e.flat().map(e=>e[1])),n=Math.max(...e.flat().map(e=>e[1])),$=t/(l-r),d=a/(n-i);return e.map(e=>e.map(([e,t])=>[(e-r)*$,(t-i)*d]))}function drawWaveGrid(e){let t=[];for(let a=0;a<e.length;a++)for(let r=0;r<e[a].length-1;r++)t.push([e[a][r],e[a][r+1]]);for(let l=0;l<e[0].length;l++)for(let i=0;i<e.length-1;i++)t.push([e[i][l],e[i+1][l]]);drawLines(onlyskew(t))}setDocDimensions(125,125);const waveGrid=generateWaveGrid(27,45,4,2,6.6),scaledWaveGrid=scaleGrid(waveGrid,50,50);drawWaveGrid(scaledWaveGrid);
+const width=125,height=125;setDocDimensions(125,125);const scale=.6*Math.random()+.7,planetRadius=35*scale,ringInnerRadiusX=45*scale,ringInnerRadiusY=10*scale,ringInMiddleRadiusX=57*scale,ringInMiddleRadiusY=15*scale,ringOutMiddleRadiusX=63*scale,ringOutMiddleRadiusY=18*scale,ringOuterRadiusX=75*scale,ringOuterRadiusY=23*scale,ringAngle=getRandomAngle();function getRandomAngle(){let e=20*Math.random();return e>10&&(e=350+(e-10)),e}const numStars=10*Math.random()+10,starRadius=.4,saturn={center:[62.5,62.5],radius:planetRadius},rings=[{center:[62.5,62.5],radiusX:ringInnerRadiusX,radiusY:ringInnerRadiusY,angle:ringAngle},{center:[62.5,62.5],radiusX:ringInMiddleRadiusX,radiusY:ringInMiddleRadiusY,angle:ringAngle},{center:[62.5,62.5],radiusX:ringOutMiddleRadiusX,radiusY:ringOutMiddleRadiusY,angle:ringAngle},{center:[62.5,62.5],radiusX:ringOuterRadiusX,radiusY:ringOuterRadiusY,angle:ringAngle}];function createCircle(e,n,r=200){let i=[];for(let a=0;a<=r;a++){let s=a/r*2*Math.PI,t=e[0]+n*Math.cos(s),d=e[1]+n*Math.sin(s);i.push([t,d])}return i}function createStars(e,n,r,i,a,s,t,d){let u=[];for(let l=0;l<e;l++){let c,g;do c=Math.random()*(r-n)+n,g=Math.random()*(a-i)+i;while(g<92&&g>31||t&&Math.sqrt((c-t[0])**2+(g-t[1])**2)<d);let $=createCircle([c,g],s*Math.random()+.6,10);u.push($)}return u}finalLines.push(createCircle(saturn.center,saturn.radius)),rings.forEach(e=>{finalLines.push(...createEllipse(e.center,e.radiusX,e.radiusY,e.angle))});const minX=2,maxX=123,minY=2,maxY=123,avoidCenter=saturn.center,avoidRadius=planetRadius+2,stars=createStars(numStars,2,123,2,123,.4,avoidCenter,avoidRadius);function createEllipse(e,n,r,i,a=200){let s=[],t=Math.PI/180*i,d=[];for(let u=0;u<=a;u++){let l=u/a*2*Math.PI,c=e[0]+n*Math.cos(l),g=e[1]+r*Math.sin(l),$=e[0]+(c-e[0])*Math.cos(t)-(g-e[1])*Math.sin(t),o=e[1]+(c-e[0])*Math.sin(t)+(g-e[1])*Math.cos(t),_=Math.sqrt(($-e[0])**2+(o-e[1])**2);$>=0&&$<=125&&o>=0&&o<=125&&(_>planetRadius||o<e[1])?d.push([$,o]):d.length>0&&(s.push(d),d=[])}return d.length>0&&s.push(d),s}finalLines.push(...stars),drawLines(skew([...[...finalLines]]))
