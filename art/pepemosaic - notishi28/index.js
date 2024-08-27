@@ -11,9 +11,8 @@ const backgroundColor = "#e0f7fa";
 
 setDocDimensions(width, height);
 
-let { sqrt } = Math;
+let { sqrt, min, max } = Math;
 
-// Pepe the Frog parts
 const headOutline = [
   [40, 80], [45, 60], [50, 50], [60, 40], [70, 35], [80, 35], [90, 40],
   [95, 50], [100, 60], [105, 80], [100, 90], [80, 95], [60, 95], [50, 90],
@@ -32,10 +31,19 @@ const mouth = [
   [55, 80], [65, 85], [75, 85], [85, 80]
 ];
 
-// Store final lines
 const finalLines = [headOutline, leftEye, rightEye, mouth];
 
-// Function to generate a hat
+function clipToBoundingBox(lines, width, height) {
+  return lines.map(line => 
+    line.map(([x, y]) => [
+      min(max(x, 0), width),
+      min(max(y, 0), height)
+    ])
+  );
+}
+
+const clippedLines = clipToBoundingBox(finalLines, width, height);
+
 function hat(x, y, r = 1) {
   const t = new bt.Turtle();
   t
@@ -66,10 +74,9 @@ function hat(x, y, r = 1) {
     .forward(side * 2)
     .setAngle(90 * r)
     .forward(side * 2)
-  return t.lines();
+  return clipToBoundingBox(t.lines(), width, height);
 }
 
-// Hats positions and rotations
 const hats = [
   [5.5, 3.5, 60],
   [-10.8, 9.6, 60],
@@ -104,54 +111,49 @@ const hats = [
   [43.6, -11.0, 0]
 ];
 
-// Function to mirror lines vertically
 function mirrorVertically(lines, height) {
   return lines.map(line => line.map(([x, y]) => [x, height - y]));
 }
 
-// Mirror the final lines vertically
-const mirroredLines = mirrorVertically(finalLines, height);
+const mirroredLines = mirrorVertically(clippedLines, height);
 
-// Apply random noise to each point in the lines
 mirroredLines.forEach(line => {
   line.forEach(point => {
-    point[0] += bt.noise(point[0]) * 2 - 1; // Add noise for x
-    point[1] += bt.noise(point[1]) * 2 - 1; // Add noise for y
+    point[0] += bt.noise(point[0]) * 2 - 1;
+    point[1] += bt.noise(point[1]) * 2 - 1;
   });
 });
 
-// Cool effects: rotate, scale, and resample
 bt.rotate(mirroredLines, 30, [width / 2, height / 2]);
 bt.scale(mirroredLines, [0.8, 0.8], [width / 2, height / 2]);
 bt.resample(mirroredLines, 5);
 
-// Center polylines
 function centerPolylines(polylines, documentWidth, documentHeight, offsetX = 0, offsetY = 0) {
   const cc = bt.bounds(polylines).cc;
   bt.translate(polylines, [documentWidth + offsetX, documentHeight + offsetY], cc);
 }
 
-// Move Pepe to the top right corner
 centerPolylines(mirroredLines, width, height, -width / 2, -height / 2);
 
-// Generate a random mosaic effect
-function generateRandomMosaic(lines, minCellSize, maxCellSize) {
+function generateRandomMosaic(lines, minCellSize, maxCellSize, boundingBox) {
   const mosaicLines = [];
   lines.forEach(line => {
     line.forEach(([x, y]) => {
       const cellSize = bt.randIntInRange(minCellSize, maxCellSize);
       const newX = x + bt.randInRange(-cellSize, cellSize);
       const newY = y + bt.randInRange(-cellSize, cellSize);
-      mosaicLines.push([[newX, newY], [newX + cellSize, newY], [newX + cellSize, newY + cellSize], [newX, newY + cellSize], [newX, newY]]);
+
+      const boundedX = min(max(newX, 0), boundingBox.width - cellSize);
+      const boundedY = min(max(newY, 0), boundingBox.height - cellSize);
+
+      mosaicLines.push([[boundedX, boundedY], [boundedX + cellSize, boundedY], [boundedX + cellSize, boundedY + cellSize], [boundedX, boundedY + cellSize], [boundedX, boundedY]]);
     });
   });
   return mosaicLines;
 }
 
-// Apply the random mosaic effect
-const mosaicLines = generateRandomMosaic(mirroredLines, 3, 7);
+const mosaicLines = generateRandomMosaic(mirroredLines, 3, 7, { width, height });
 
-// Draw the background
 drawLines([
   [
     [width, height],
@@ -163,15 +165,13 @@ drawLines([
   fill: backgroundColor
 });
 
-// Draw the hats with random positions
 for (let h of hats) {
-  drawLines(bt.rotate(hat(side + h[0], (side + h[1]) * sqrt(3), h[3] || 1), h[2]), {
+  drawLines(clipToBoundingBox(bt.rotate(hat(side + h[0], (side + h[1]) * sqrt(3), h[3] || 1), h[2]), width, height), {
     stroke: "#000",
     width: 1
   });
 }
 
-// Draw the mosaic with random effects
 mosaicLines.forEach(line => {
   drawLines([line], {
     stroke: "#000",
@@ -179,7 +179,6 @@ mosaicLines.forEach(line => {
   });
 });
 
-// Draw Pepe with effects
 drawLines(mirroredLines, {
   stroke: "#000",
   width: 1
