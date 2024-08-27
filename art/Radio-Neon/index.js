@@ -9,10 +9,14 @@ var ParseCoords=($,f=1)=>{const r=[];for(const f of $.split(":"))parseFloat(f)&&
 
 // Changeable Values
 const randomAntenna = Math.floor(bt.rand() * (40 - 15) + 15);
-const talkgroups = ["EMS", "FIRE", "LAW", "DISPATCH", "OPS"]
+const talkgroups = ["EMS DISP", "FIRE DISP", "LAW DISP", "FIRE OPS", "FIRE TAC", "EMS OPS", "EMS TAC", "LAW OPS", "LAW TAC"]
+const mobilemenuoptions = ["RSSI", "SITE", "SCAN", "ZONE", "ZNUP", "ZNDN", "CHUP", "CHDN", "EMER", "PAGE"] // 4 Characters per option only!
 const posadjustx = Math.floor(bt.rand() * (71 - -11) + -11)
 const posadjusty = Math.floor(bt.rand() * (14.5 - -4.5) + -4.5);
+const typeofradio = Math.round(bt.rand()); //0 is portable, 1 is mobile
+//const typeofradio = 1;
 
+// Please dont touch!
 const width = 125;
 const height = 125;
 const body = new bt.Turtle();
@@ -40,135 +44,228 @@ function square(startx, starty, len1, len2, turtle) {
   }
 }
 
-
-body
-  .jump([(width / 2) - 50 + posadjustx, 5 + posadjusty])
-  .down()
-  .forward(40)
-  .left(90)
-  .forward(75)
-  .left(90)
-  .forward(35)
-  .up()
-  .forward(5)
-  .down()
-  .left(90)
-  .forward(75)
-
-antenna
-  .jump([12.5 + posadjustx, 80 + posadjusty])
-  .left(90)
-  .forward(randomAntenna)
-  .right(90)
-  .forward(5)
-  .right(90)
-  .forward(randomAntenna)
-
-cknob
-  .jump([35 + posadjustx, 80 + posadjusty])
-  .left(90)
-  .forward(6)
-  .right(90)
-  .forward(4)
-  .right(90)
-  .forward(6)
-
-vknob
-  .jump([45 + posadjustx, 80 + posadjusty])
-  .left(90)
-  .forward(3)
-  .right(90)
-  .forward(4)
-  .right(90)
-  .forward(3)
-
-
-square(22.25 + posadjustx, 68 + posadjusty, 20, 20, screen)
-
-for (var i = 0; i < 4; i++) {
-  square(22.25 + (i * 5) + posadjustx, 52 + posadjusty, 5, 4, screen)
-}
-
-let usedMenu = []
-for (var i = 0; i < 4; i++) {
-  var menuOption = "";
-  var alphabet = "abcdefghijklmnopqrstuvwxyz";
-
-  menuOption += alphabet[Math.floor(bt.rand() * alphabet.length)];
-
-  if (usedMenu.includes(menuOption)) {
-    menuOption = "";
-    menuOption += alphabet[Math.floor(bt.rand() * alphabet.length)];
-  } else {
-    usedMenu.push(menuOption)
+if(typeofradio == 0) {
+  body
+    .jump([(width / 2) - 50 + posadjustx, 5 + posadjusty])
+    .down()
+    .forward(40)
+    .left(90)
+    .forward(75)
+    .left(90)
+    .forward(35)
+    .up()
+    .forward(5)
+    .down()
+    .left(90)
+    .forward(75)
+  
+  antenna
+    .jump([12.5 + posadjustx, 80 + posadjusty])
+    .left(90)
+    .forward(randomAntenna)
+    .right(90)
+    .forward(5)
+    .right(90)
+    .forward(randomAntenna)
+  
+  cknob
+    .jump([35 + posadjustx, 80 + posadjusty])
+    .left(90)
+    .forward(6)
+    .right(90)
+    .forward(4)
+    .right(90)
+    .forward(6)
+  
+  vknob
+    .jump([45 + posadjustx, 80 + posadjusty])
+    .left(90)
+    .forward(3)
+    .right(90)
+    .forward(4)
+    .right(90)
+    .forward(3)
+  
+  
+  square(22.25 + posadjustx, 68 + posadjusty, 20, 20, screen)
+  
+  for (var i = 0; i < 4; i++) {
+    square(22.25 + (i * 5) + posadjustx, 52 + posadjusty, 5, 4, screen)
   }
-
-  DrawText(menuOption, [24 + (i * 5) + posadjustx, 49 + posadjusty], 0.5);
-}
-
-var talkgroup = talkgroups[Math.floor(bt.rand() * talkgroups.length)];
-DrawText(talkgroup, [27 + posadjustx, 59 + posadjusty], 0.5);
-
-for (var i = 0; i < 4; i++) {
-  const blines = new bt.Turtle()
-  square(22.25 + (i * 5) + posadjustx, 46 + posadjusty, 5, 4, buttons)
-  buttons
-    .jump([24.8 + (i * 5) + posadjustx, 43 + posadjusty])
-    .arc(360, 1)
-
-  blines
-    .jump([24.8 + (i * 5) + posadjustx, 46 + posadjusty])
+  
+  let usedMenu = []
+  for (var i = 0; i < 4; i++) {
+    var menuOption = "";
+    var alphabet = "abcdefghijklmnopqrstuvwxyz";
+    
+    menuOption += alphabet[Math.floor(bt.rand() * alphabet.length)];
+  
+    if (usedMenu.includes(menuOption)) {
+      menuOption = "";
+      menuOption += alphabet[Math.floor(bt.rand() * alphabet.length)];
+    } else {
+      usedMenu.push(menuOption)
+    }
+    
+    DrawText(menuOption, [24+(i*5) + posadjustx, 49 + posadjusty], 0.5);
+  }
+  
+  var talkgroup = talkgroups[Math.floor(bt.rand() * talkgroups.length)];
+  DrawText(talkgroup, [27 + posadjustx, 59 + posadjusty], 0.5);
+  
+  for (var i = 0; i < 4; i++) {
+    const blines = new bt.Turtle()
+    square(22.25+(i * 5) + posadjustx,46 + posadjusty,5,4,buttons)
+    buttons
+      .jump([24.8+(i * 5) + posadjustx,43 + posadjusty])
+      .arc(360, 1)
+    
+    blines
+    .jump([24.8+(i * 5) + posadjustx,46 + posadjusty])
     .left(90)
     .forward(2)
-  drawLines(blines.lines())
-}
-
-const freq = `${Math.floor(bt.rand() * (9 - 1) + 1)}${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)}.${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)} MHz`
-DrawText(freq, [27 + posadjustx, 55 + posadjusty], 0.5)
-
-
-for (var i = 0; i < 3; i++) {
-  for (var x = 0; x < 4; x++) {
-    square(24.5 + (i * 5) + posadjustx, 40 - (x * 4) + posadjusty, 5, 4, keypad)
+    drawLines(blines.lines())
   }
+  
+  const freq = `${Math.floor(bt.rand() * (9 - 1) + 1)}${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)}.${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)} MHz`
+  DrawText(freq, [27 + posadjustx,55 + posadjusty],0.5)
+  
+  
+  for (var i = 0; i < 3; i++) {
+    for (var x = 0; x < 4; x++) {
+      square(24.5+(i * 5) + posadjustx,40-(x * 4) + posadjusty,5,4,keypad)
+    }
+  }
+  
+  for (var i = 1; i <= 3; i++) {
+    DrawText(`${i}`, [26.5 + ((i * 5)-5) + posadjustx,37 + posadjusty],0.5)
+  }
+  
+  for (var i = 4; i <= 6; i++) {
+    DrawText(`${i}`, [26.5 + (((i-3) * 5)-5) + posadjustx,37-4 + posadjusty],0.5)
+  }
+  
+  for (var i = 7; i <= 9; i++) {
+    DrawText(`${i}`, [26.5 + (((i-6) * 5)-5) + posadjustx,37-8 + posadjusty],0.5)
+  }
+  
+  DrawText(`*`, [26.5 + ((1 * 5)-5) + posadjustx,37-12 + posadjusty],0.5)
+  DrawText(`0`, [26.5 + ((2 * 5)-5) + posadjustx,37-12 + posadjusty],0.5)
+  DrawText(`#`, [26.5 + ((3 * 5)-5) + posadjustx,37-12 + posadjusty],0.5)
+  
+  const mSize = 1.5
+  logoM
+    .jump([30.5 + posadjustx, 71 + posadjusty])
+    .setAngle(90)
+    .forward(4 + mSize)
+    .setAngle(0)
+    .right(71.57)
+    .forward(3.162 + mSize)
+    .setAngle(0)
+    .left(71.57)
+    .forward(3.162 +mSize)
+    .setAngle(0)
+    .right(90)
+    .forward(4 + mSize)
+  
+  
+  logo
+    .jump([32 + posadjustx, 69.7 + posadjusty])
+    .arc(360,4)
+  
+  drawLines(logoM.lines(), {width: 2.5})
+} else if(typeofradio == 1) {
+    body
+    .jump([width -25 + posadjusty, 5 + posadjustx])
+    .down()
+    .left(90)
+    .forward(40)
+    .left(90)
+    .forward(75)
+    .left(90)
+    .forward(40)
+    .left(90)
+    .forward(75)
+
+  square(width -25 - 69.5 + posadjusty, 35 + posadjustx, 65, 20, screen)
+
+  const freq = `${Math.floor(bt.rand() * (9 - 1) + 1)}${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)}.${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)}${Math.floor(bt.rand() * 10)} MHz`
+  DrawText(freq, [width -25 - 50 + posadjusty, 18 + posadjustx],1)
+
+  var talkgroup = talkgroups[Math.floor(bt.rand() * talkgroups.length)];
+  DrawText(talkgroup, [width -25 - 50 + posadjusty, 27 + posadjustx], 1);
+
+  for (var i = 0; i < 3; i++) {
+    square(width -25 - 74 + posadjusty, 21 +(i * 5) + posadjustx,3,2,buttons)
+  }
+
+  const mSize = 1.0
+  logoM
+    .jump([width -25 - 38.3 + posadjusty, 37.4 + posadjustx])
+    .setAngle(90)
+    .forward(4 + mSize)
+    .setAngle(0)
+    .right(71.57)
+    .forward(3.162 + mSize)
+    .setAngle(0)
+    .left(71.57)
+    .forward(3.162 + mSize)
+    .setAngle(0)
+    .right(90)
+    .forward(4 + mSize)
+  
+  
+  logo
+    .jump([width -25 - 37 + posadjusty, 36 + posadjustx])
+    .arc(360,4)
+
+  drawLines(logoM.lines(), {width: 2.5})
+
+  for (var i = 0; i < 5; i++) {
+    square(width -25 - 69.5 + (i * 13) + posadjusty, 15 + posadjustx, 13, 4, screen)  
+  }
+  
+  let usedMenu = []
+  for (var i = 0; i < 5; i++) {
+    var menuOption = "";
+    var alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+    for (var x = 0; x < 5; x++) {
+      //menuOption += alphabet[Math.floor(bt.rand() * alphabet.length)];
+      menuOption = mobilemenuoptions[Math.floor(bt.rand() * mobilemenuoptions.length)];
+      //menuOption += " ";
+    }
+  
+    if (usedMenu.includes(menuOption)) {
+      menuOption = "";
+      for (var x = 0; x < 5; x++) {
+         //menuOption += alphabet[Math.floor(bt.rand() * alphabet.length)];
+         menuOption += mobilemenuoptions[Math.floor(bt.rand() * mobilemenuoptions.length)];
+         //menuOption += " ";
+         usedMenu.push(menuOption)
+      }
+    } else {
+      usedMenu.push(menuOption)
+    }
+    
+    DrawText(menuOption, [width -25 - 66 + (i * 13) + posadjusty, 12 + posadjustx], 0.4);
+  }
+
+  const mcknob = new bt.Turtle();
+  const mvknob = new bt.Turtle();
+
+  mcknob
+    .jump([width -30 + posadjusty, 36.8 + posadjustx])
+    .arc(360,3)
+  
+  mvknob
+    .jump([width -95 + posadjusty, 36.8 + posadjustx])
+    .arc(360,3)
+    .jump([width -95 + posadjusty, 36.8 + posadjustx])
+
+  drawLines(mcknob.lines(), {fill: true})
+  drawLines(mvknob.lines(), {fill: true})
+
 }
 
-for (var i = 1; i <= 3; i++) {
-  DrawText(`${i}`, [26.5 + ((i * 5) - 5) + posadjustx, 37 + posadjusty], 0.5)
-}
-
-for (var i = 4; i <= 6; i++) {
-  DrawText(`${i}`, [26.5 + (((i - 3) * 5) - 5) + posadjustx, 37 - 4 + posadjusty], 0.5)
-}
-
-for (var i = 7; i <= 9; i++) {
-  DrawText(`${i}`, [26.5 + (((i - 6) * 5) - 5) + posadjustx, 37 - 8 + posadjusty], 0.5)
-}
-
-DrawText(`*`, [26.5 + ((1 * 5) - 5) + posadjustx, 37 - 12 + posadjusty], 0.5)
-DrawText(`0`, [26.5 + ((2 * 5) - 5) + posadjustx, 37 - 12 + posadjusty], 0.5)
-DrawText(`#`, [26.5 + ((3 * 5) - 5) + posadjustx, 37 - 12 + posadjusty], 0.5)
-
-const mSize = 1.5
-logoM
-  .jump([30.5 + posadjustx, 71 + posadjusty])
-  .setAngle(90)
-  .forward(4 + mSize)
-  .setAngle(0)
-  .right(71.57)
-  .forward(3.162 + mSize)
-  .setAngle(0)
-  .left(71.57)
-  .forward(3.162 + mSize)
-  .setAngle(0)
-  .right(90)
-  .forward(4 + mSize)
-
-
-logo
-  .jump([32 + posadjustx, 69.7 + posadjusty])
-  .arc(360, 4)
-
-drawLines(logoM.lines(), { width: 4 })
-
-needsRendering.forEach((element) => drawLines(element.lines(), { width: 2 }));
+needsRendering.forEach((element) => drawLines(element.lines(), {width: 2}));
