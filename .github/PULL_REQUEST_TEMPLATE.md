@@ -6,6 +6,7 @@ Next, make sure you go through **each item** in the following checklist. Delete 
 - [ ] I am submitting art that...
   - [ ] is algorithmically generated (will meaningfully change each time the program is run)
   - [ ] is your own work that is not copied from somewhere else
+  - [ ] is drawable through the editor(does not use outside tools)
   - [ ] doesn't call `Math.random()` (See the documentation on [randomness](https://github.com/hackclub/blot/blob/main/public/TOOLKIT.md#randomness))
   - [ ] is drawable on Blot itself (doesn't have lines overlap more than 5 times)
     - [ ] Doesn't overlap lines more than 5 times
