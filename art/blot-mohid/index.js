@@ -415,7 +415,7 @@ finalLines.push(...bt.cover(bt.cover(bt.cover([yrailmount],[yrail]), [pen]), [ym
 
 
 
-const paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
+let paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
 
 finalLines.push(...skew(paper))
 
@@ -443,20 +443,33 @@ function onlyskewANDclip(polyline) {
   return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale([iterated], 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
-function onlyskew(polyline, coord1, coord2, coord3, coord4) {
+function warpToQuadrilateral(polyline, corners) {
+  const [topLeft, topRight, bottomRight, bottomLeft] = corners;
+
   const iterated = bt.iteratePoints(polyline, (pt, t) => {
     const [x, y] = pt;
-    console.log(coord1[0])
+    const u = x / 125;
+    const v = y / 125;
 
-    const skewXAmount = ((y - coord1[1]) * 0.25) + ((y - coord2[1]) * 0.25) + ((y - coord3[1]) * 0.25) + ((y - coord4[1]) * 0.25);
-    const skewYAmount = ((x - coord1[0]) * -0.0625) + ((x - coord2[0]) * -0.0625) + ((x - coord3[0]) * -0.0625) + ((x - coord4[0]) * -0.0625);
+    const xWarped = (1 - u) * ((1 - v) * topLeft[0] + v * bottomLeft[0]) + u * ((1 - v) * topRight[0] + v * bottomRight[0]);
+    const yWarped = (1 - u) * ((1 - v) * topLeft[1] + v * bottomLeft[1]) + u * ((1 - v) * topRight[1] + v * bottomRight[1]);
 
-    return [x + skewXAmount, y + skewYAmount];
+    return [xWarped, yWarped];
   });
 
   console.log(typeof [iterated]);
   return bt.scale(iterated, 0.4);
 }
 
+
+const corners = [
+  [206,33],
+  [-25,43],
+  [74,163],
+  [160,163]
+]
 // Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
-drawLines(onlyskew(predrawpreskew, [1,1], [1,1], [1,1], [1,1]))
+
+paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
+drawLines(warpToQuadrilateral(predrawpreskew, corners))
+drawLines(warpToQuadrilateral(paper, corners))
