@@ -19,6 +19,12 @@ const rotation = 1.1;
 const mv_right = 112.5;
 const mv_up = 123.2;
 
+/*
+A program that draws tangents of a function, with difference between each other being tangents_diff const,
+Like in the example below, the function is sin(x), it will draw lines tangent to it, but it's derivative has to
+be provided, cos(x) is the derivative of sin(x).
+*/
+
 //You can provide your own function here, just remember to also provide its derivative
 function f(x) {
   return Math.sin(x);
