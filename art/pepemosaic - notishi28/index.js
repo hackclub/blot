@@ -135,10 +135,14 @@ function centerPolylines(polylines, documentWidth, documentHeight, offsetX = 0, 
 
 centerPolylines(mirroredLines, width, height, -width / 2, -height / 2);
 
-function generateRandomMosaic(lines, minCellSize, maxCellSize, boundingBox) {
+function generateRandomMosaic(lines, minCellSize, maxCellSize, boundingBox, maxSquares) {
   const mosaicLines = [];
+  const usedPositions = new Set();
+  
   lines.forEach(line => {
     line.forEach(([x, y]) => {
+      if (mosaicLines.length >= maxSquares) return;
+
       const cellSize = bt.randIntInRange(minCellSize, maxCellSize);
       const newX = x + bt.randInRange(-cellSize, cellSize);
       const newY = y + bt.randInRange(-cellSize, cellSize);
@@ -146,13 +150,51 @@ function generateRandomMosaic(lines, minCellSize, maxCellSize, boundingBox) {
       const boundedX = min(max(newX, 0), boundingBox.width - cellSize);
       const boundedY = min(max(newY, 0), boundingBox.height - cellSize);
 
-      mosaicLines.push([[boundedX, boundedY], [boundedX + cellSize, boundedY], [boundedX + cellSize, boundedY + cellSize], [boundedX, boundedY + cellSize], [boundedX, boundedY]]);
+      const key = `${boundedX},${boundedY}`;
+      if (!usedPositions.has(key)) {
+        usedPositions.add(key);
+        mosaicLines.push([[boundedX, boundedY], [boundedX + cellSize, boundedY], [boundedX + cellSize, boundedY + cellSize], [boundedX, boundedY + cellSize], [boundedX, boundedY]]);
+      }
     });
   });
+
   return mosaicLines;
 }
 
-const mosaicLines = generateRandomMosaic(mirroredLines, 3, 7, { width, height });
+const maxSquares = 3; // Reduced number of squares
+const mosaicLines = generateRandomMosaic(mirroredLines, 6, 12, { width, height }, maxSquares);
+
+function moveMosaicToTopRight(lines, boundingBox) {
+  const maxX = boundingBox.width;
+  const maxY = boundingBox.height;
+  const shiftX = maxX * 0.3; // Move towards the top-right
+  const shiftY = maxY * 0.3; // Move towards the top-right
+
+  return lines.map(line => line.map(([x, y]) => [
+    min(max(x + shiftX, 0), maxX),
+    min(max(y + shiftY, 0), maxY)
+  ]));
+}
+
+const movedMosaicLines = moveMosaicToTopRight(mosaicLines, { width, height });
+
+function limitLineOverlap(lines, maxOverlap) {
+  const lineCounts = new Map();
+  const filteredLines = [];
+
+  lines.forEach(line => {
+    const key = JSON.stringify(line);
+    const count = (lineCounts.get(key) || 0) + 1;
+    if (count <= maxOverlap) {
+      lineCounts.set(key, count);
+      filteredLines.push(line);
+    }
+  });
+
+  return filteredLines;
+}
+
+const nonOverlappingMosaicLines = limitLineOverlap(movedMosaicLines, 5);
 
 drawLines([
   [
@@ -172,7 +214,7 @@ for (let h of hats) {
   });
 }
 
-mosaicLines.forEach(line => {
+nonOverlappingMosaicLines.forEach(line => {
   drawLines([line], {
     stroke: "#000",
     width: 1
