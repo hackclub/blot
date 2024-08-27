@@ -5,7 +5,7 @@
 */
 
 // Set the dimensions of the drawing document
-setDocDimensions(800, 800);
+setDocDimensions(125, 125);
 
 const { Turtle, noise, rand, randInRange, randIntInRange, setRandSeed, nurbs } = bt;
 
@@ -14,7 +14,7 @@ setRandSeed(randIntInRange(0, 1000000));
 
 // Parameters
 const GRID_SIZE = 30;
-const CELL_SIZE = 800 / GRID_SIZE;
+const CELL_SIZE = 125 / GRID_SIZE;
 const NUM_LINES = 60;
 const LINE_SEGMENTS = 20;
 const NOISE_SCALE = 0.02;
@@ -58,7 +58,7 @@ const allLines = [];
 
 for (let i = 0; i < NUM_LINES; i++) {
   const turtle = new Turtle();
-  turtle.jump([randInRange(MARGIN, 800 - MARGIN), randInRange(MARGIN, 800 - MARGIN)]);
+  turtle.jump([randInRange(MARGIN, 125 - MARGIN), randInRange(MARGIN, 125 - MARGIN)]);
   turtle.down();
 
   const points = [turtle.pos];
@@ -69,12 +69,12 @@ for (let i = 0; i < NUM_LINES; i++) {
     const [dx, dy] = getFlowDirection(x, y);
     
     turtle.setAngle(Math.atan2(dy, dx) * 180 / Math.PI);
-    turtle.forward(CELL_SIZE * 0.8);
+    turtle.forward(CELL_SIZE * 0.8); // Move 80% of a cell size to create some overlap between cells
     
     // Keep the turtle within bounds and check density
     let [newX, newY] = turtle.pos;
-    newX = Math.max(MARGIN, Math.min(800 - MARGIN, newX));
-    newY = Math.max(MARGIN, Math.min(800 - MARGIN, newY));
+    newX = Math.max(MARGIN, Math.min(125 - MARGIN, newX));
+    newY = Math.max(MARGIN, Math.min(125 - MARGIN, newY));
     
     canContinue = updateDensity(newX, newY);
     if (canContinue) {
@@ -85,7 +85,7 @@ for (let i = 0; i < NUM_LINES; i++) {
 
   if (points.length > 2) {
     // Generate a smooth curve through the points
-    const smoothLine = nurbs(points, { steps: 150 });
+    const smoothLine = nurbs(points, { steps: 100 });  // Reduced steps for smaller drawing
     allLines.push(smoothLine);
   }
 }
