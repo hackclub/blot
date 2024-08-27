@@ -114,7 +114,6 @@ function createMountain(baseHeight, widthAdjust, heightAdjust) {
   return { leftmount, rightmount };
 }
 
-
 const baseHeight = randy + 10;
 
 // Create three mountains with different sizes and heights
@@ -169,11 +168,9 @@ bt.join(finalLines, mountain3.leftmount);
 // Smaller and lower sun
 const sun = [
   bt.nurbs([
-    [25, randy + 10],               // Smaller and lower
-    [25, randy + 20],               // Smaller and lower
+    [35, randy + 25],               // Smaller and lower
     [50, randy + 30],               // Smaller and lower
-    [75, randy + 20],               // Smaller and lower
-    [75, randy + 10]                // Smaller and lower
+    [58, randy + 25],               // Smaller and lower
   ])
 ];
 
@@ -220,7 +217,7 @@ cloudTwo.setAngle(142);
 cloudTwo.arc(76, 11);
 const cloudTwoLines = cloudTwo.lines();
 
-// Draw the sunrise landscape
+// Draw the sunrise landscape without color reliance
 drawLines([
   [
     [0, 0],
@@ -228,18 +225,42 @@ drawLines([
     [125, 125],
     [0, 125]
   ]
-], { fill: "LightSkyBlue" }); // Sky color for sunrise
+]);
 
-drawLines(sun, { fill: "Orange" }); // Sun color for sunrise
+drawLines(sun); // Draw sun with shape
 
-// Draw mountains with different colors
-drawLines(finalLines.slice(0, mountain1.rightmount.length + mountain1.leftmount.length), { fill: "lightgrey" }); // Mountain 1
-drawLines(finalLines.slice(mountain1.rightmount.length + mountain1.leftmount.length, mountain1.rightmount.length + mountain1.leftmount.length + mountain2.rightmount.length + mountain2.leftmount.length), { fill: "darkgrey" }); // Mountain 2
-drawLines(finalLines.slice(mountain1.rightmount.length + mountain1.leftmount.length + mountain2.rightmount.length + mountain2.leftmount.length), { fill: "grey" }); // Mountain 3
+// Draw mountains with varying line thickness
+drawLines(finalLines.slice(0, mountain1.rightmount.length + mountain1.leftmount.length), { width: 3 }); // Mountain 1
+drawLines(finalLines.slice(mountain1.rightmount.length + mountain1.leftmount.length, mountain1.rightmount.length + mountain1.leftmount.length + mountain2.rightmount.length + mountain2.leftmount.length), { width: 2 }); // Mountain 2
+drawLines(finalLines.slice(mountain1.rightmount.length + mountain1.leftmount.length + mountain2.rightmount.length + mountain2.leftmount.length), { width: 1 }); // Mountain 3
 
 drawLines(birdLines); // Birds flying across the sunrise
-drawLines(cloudOneLines, { stroke: "White", width: 4, fill: "White" }); // Cloud One
-drawLines(cloudTwoLines, { stroke: "White", width: 4}); // Cloud Two
+function scaleLines(lines, scale, origin) {
+  return lines.map(line => 
+    line.map(([x, y]) => [
+      origin[0] +3 +(x - origin[0]) * scale, 
+      origin[1] + 1+(y - origin[1]) * scale
+    ])
+  );
+}
+
+
+// Scale the cloud down and position it inside
+const cloudOneOrigin = cloudOneBase;
+const scaledCloudOneLines = scaleLines(cloudOneLines, 0.8, cloudOneOrigin);
+const scaledCloudOneLinesz = scaleLines(cloudOneLines, 0.8, cloudOneOrigin);
+// Draw the original cloud with increased thickness
+drawLines(cloudOneLines, { width: 24 });
+// Create a second scaled copy of cloud one
+const cloudOneOrigin2 = [cloudOneOrigin[0] + 12, cloudOneOrigin[1] - -7]; // Adjust the position
+const scaledCloudOneLines2 = scaleLines(cloudOneLines, 0.5, cloudOneOrigin2);
+
+// Draw the second scaled cloud with similar thickness
+drawLines(scaledCloudOneLines2, { width: 53 });
+// Draw the smaller cloud inside with lesser thickness
+drawLines(scaledCloudOneLines, { width: 31 });
+drawLines(scaledCloudOneLines, { width: 29 });
+drawLines(cloudTwoLines, { width: 1 }); // Cloud Two with simple outline
 
 function tree(t, prevBranchEnd, angle, branchLen, iteration, max_iteration, angle_change, left_shift, right_shift) {
   if (iteration > max_iteration) {
@@ -264,21 +285,21 @@ function drawMultipleTrees() {
   const MAX_ITERATION = 8;
   const ANGLE_CHANGE = bt.randIntInRange(30, 45);
   const treeHeightFactor = 0.8; 
-  
+
   const t1 = new bt.Turtle();
-  tree(t1, [100, 24], 122, 10 * treeHeightFactor, 1, MAX_ITERATION, ANGLE_CHANGE, 1, 3 / 4);
-  drawLines(t1.lines(), { stroke: 'green', width: 2 });
-  
+  tree(t1, [83, 15], 148, 9 * treeHeightFactor, 1, MAX_ITERATION, ANGLE_CHANGE, 1, 3 / 4);
+  drawLines(t1.lines(), { width: 2 });
+
   const t2 = new bt.Turtle();
-  tree(t2, [14, 20], 90, 8 * treeHeightFactor, 1, (MAX_ITERATION - 2), ANGLE_CHANGE, 3 / 4, 1);
-  drawLines(t2.lines(), { stroke: 'green', width: 2 });
+  tree(t2, [14, 11], 90, 7 * treeHeightFactor, 1, (MAX_ITERATION - 2), ANGLE_CHANGE, 3 / 4, 1);
+  drawLines(t2.lines(), { width: 2 });
 
   const t3 = new bt.Turtle();
-  tree(t3, [101, 23], -9, 10 * treeHeightFactor, 1, MAX_ITERATION, ANGLE_CHANGE, 1, 3 / 4);
-  drawLines(t3.lines(), { stroke: 'green', width: 2 });
-  // Draw Trunks
-  drawLines([[[14, 20], [14, 10 * treeHeightFactor]]], { width: 7, stroke: 'brown' });
-  drawLines([[[99, 3], [100, 30 * treeHeightFactor]]], { width: 7, stroke: 'brown' });
+  tree(t3, [84, 16], -21, 7 * treeHeightFactor, 1, MAX_ITERATION, ANGLE_CHANGE, 1, 3 / 4);
+  drawLines(t3.lines(), { width: 2 });
+  // Draw Trunks with thickness for visibility
+  drawLines([[[14, 12], [14, 3 * treeHeightFactor]]], { width: 3 });
+  drawLines([[[83, 4], [83, 20 * treeHeightFactor]]], { width: 3 });
 
 }
 
