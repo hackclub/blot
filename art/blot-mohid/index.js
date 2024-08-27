@@ -4,23 +4,48 @@
 @snapshot: snapshot1.png
 */
 let finalLines = []
-let width=1,size=3,circuit=15,lines=[],w=33,h=w-1;setDocDimensions(125,125);let rx=w/2,ry=h/2-.5,wedges=4,seed=new bt.Turtle;for(let i=0;i<wedges;i++)for(let dir=0;dir<4;dir++)seed.jump([rx+1*(dir%3>0?i-(wedges-1.5):wedges-.5-i),ry-(dir>1?2*wedges*1:0)]),seed.setAngle(dir>1?90:-90),seed.forward((i+1)*1),seed.setAngle(dir%3<1?0:180),seed.forward((i+1)*1);bt.join(lines,seed.lines());let top=new bt.Turtle;for(let i=0;i<16;i++)top.jump([rx+1*(i+.5),ry]),top.setAngle(90),top.arc(180,(i+.5)*1);bt.join(lines,top.lines());let left=new bt.Turtle;for(let i=0;i<3*wedges+1;i++)left.jump([rx-(wedges-.5)*1-1*i,ry]),left.setAngle(-90),left.arc(90,1*i);for(let i=0;i<wedges;i++)left.jump([rx-(wedges-.5)*1,ry-1*(i+(2*wedges+1))]),left.setAngle(180),left.arc(90,-(1*(i+1)));bt.join(lines,left.lines());let right=new bt.Turtle;for(let i=0;i<3*wedges-1;i++)right.jump([rx+(wedges+.5)*1,ry-1*(i+1)]),right.setAngle(180),right.arc(90,-(1*(i+1)));for(let i=0;i<wedges-1;i++)right.jump([rx-1*(i-(wedges-.5)),ry-1*(2*wedges)]),right.setAngle(270),right.arc(90,(i+1)*1);bt.join(lines,right.lines());const predrawpreskew = bt.translate(bt.scale(lines,4),[46,46]);
-let predraw = onlyskew(bt.copy(predrawpreskew))
-// drawLines(predrawpreskew)
-// Set variables here (1-125):
-const item = 1
-let xmove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][0]
-// let xmove = 67
-let ymove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][1]
-// let ymove = 52
+let predrawpreskew = ''
+// How to make the blot draw using your own code:
+// 1. Your drawing MUST be 125x125
+// 2. There should be a variable called 'finalLines' which contains all the lines which
+//    make up your drawing
+// 3. drawLines() should only be called in your whole code
+// 4. Replace the line 'drawLines(finalLines)' with 'predrawpreskew = finalLines'
+// 5. I recommend minifying your code using a site such as hack.club/441cnc
+// 6. Paste your minified code here:
+
+const WIDTH=125,HEIGHT=125;setDocDimensions(125,125);const leftAntStart=bt.randInRange(40,50),leftAntEnd=bt.randInRange(40,50),rightAntStart=bt.randInRange(75,85),rightAntEnd=bt.randInRange(75,85),antWidth=bt.randInRange(4,6),botLeft=[[40,25],[30,25],[25,30],[25,40],],botLeftCurve=bt.nurbs(botLeft,{steps:100,degree:3}),leftLine=[[25,40],[25,85]],topLeft=[[25,85],[25,95],[30,100],[40,100],],topLeftCurve=bt.nurbs(topLeft,{steps:100,degree:3}),topLine=[[40,100],[85,100]],topRight=[[85,100],[95,100],[100,95],[100,85],],topRightCurve=bt.nurbs(topRight,{steps:100,degree:3}),rightLine=[[100,85],[100,40]],botRight=[[100,40],[100,30],[95,25],[85,25],],botRightCurve=bt.nurbs(botRight,{steps:100,degree:3}),botLine=[[85,25],[40,25]],leftMouth=[[50,42],[45,42],[40,47],[45,52],[50,52]],leftMouthCurve=bt.nurbs(leftMouth,{steps:100,degree:4}),topMouthLine=[[50,42],[75,42]],rightMouth=[[75,42],[80,42],[85,47],[80,52],[75,52],],rightMouthCurve=bt.nurbs(rightMouth,{steps:100,degree:4}),botMouthLine=[[75,52],[50,52]],leftEye=[[50,67.5],[42.5,75],[50,82.5],[57.5,75],[50,67.5],],leftEyeCurve=bt.nurbs(leftEye,{steps:100,degree:3}),rightEye=[[75,67.5],[82.5,75],[75,82.5],[67.5,75],[75,67.5],],rightEyeCurve=bt.nurbs(rightEye,{steps:100,degree:3}),leftAntLeft=[[leftAntStart,100],[leftAntEnd,110]],leftAntRight=[[leftAntStart+antWidth,100],[leftAntEnd+antWidth,110]],leftAntTop=[[leftAntEnd-antWidth/5,110],[leftAntEnd+antWidth/2,110+antWidth/2+antWidth/5],[leftAntEnd+antWidth+antWidth/5,110],[leftAntEnd+antWidth/2,110-antWidth/2-antWidth/5],[leftAntEnd-antWidth/5,110],],leftAntTopCircle=bt.nurbs(leftAntTop,{steps:100,degree:3}),rightAntLeft=[[rightAntStart-antWidth,100],[rightAntEnd-antWidth,110]],rightAntRight=[[rightAntStart,100],[rightAntEnd,110]],rightAntTop=[[rightAntEnd-antWidth-antWidth/5,110],[rightAntEnd-antWidth/2,110+antWidth/2+antWidth/5],[rightAntEnd+antWidth/5,110],[rightAntEnd-antWidth/2,110-antWidth/2-antWidth/5],[rightAntEnd-antWidth-antWidth/5,110],],rightAntTopCircle=bt.nurbs(rightAntTop,{steps:100,degree:3});predrawpreskew=finalLines=[botLeftCurve,leftLine,topLeftCurve,topLine,topRightCurve,rightLine,botRightCurve,botLine,leftMouthCurve,topMouthLine,rightMouthCurve,botMouthLine,leftEyeCurve,rightEyeCurve,leftAntLeft,leftAntRight,leftAntTopCircle,rightAntLeft,rightAntRight,rightAntTopCircle,];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // drawLines(predrawpreskew)
-const drawer = [
-  predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item],
-  [0,0]
-]
-console.log(predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item])
-drawLines([drawer])
+const item = 1
+let xmove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][0]
+// let xmove = 235
+let ymove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][1]
+// let ymove = 246
+
+// drawLines(predrawpreskew)
+// const drawer = [
+//   predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item],
+//   [0,0]
+// ]
+// console.log(predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item])
+// drawLines([drawer])
 
 
 function mapValue(value, min, max) {
@@ -29,9 +54,9 @@ function mapValue(value, min, max) {
     return min + (max - min) * (value / 125);
 }
 
-const xslide = 93 - mapValue(xmove, -3, 92);
+const xslide = 93 - mapValue(xmove, 3.38, 93.0);
 
-const yslide = mapValue(ymove, -96, 155);
+const yslide = mapValue(ymove, -137.44, 184);
 
 
 const pagewidth = 125;
@@ -399,19 +424,19 @@ drawLines(finalLines)
 function skew(polyline) {
   const iterated = bt.iteratePoints(polyline, (pt, t) => {
     const [x, y] = pt;
-    const skewXAmount = (y - 64) * 0.90;
-    const skewYAmount = (x - 92) * -0.10;
+    const skewXAmount = (y - 64) * 1.10;
+    const skewYAmount = (x - 56) * -0.249;
     return [x + skewXAmount, y + skewYAmount];
   });
   console.log(typeof [...iterated]);
-  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(...[iterated], 0.4), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
+  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(bt.rotate(...[iterated],7), 0.4), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
 function onlyskewANDclip(polyline) {
   const iterated = bt.iteratePoints(polyline, (pt, t) => {
     const [x, y] = pt;
-    const skewXAmount = (y - -22) * 0.90;
-    const skewYAmount = (x - 380) * -0.10;
+    const skewXAmount = (y - 64) * 1.10;
+    const skewYAmount = (x - 56) * -0.249;
     return [x + skewXAmount, y + skewYAmount];
   });
   console.log(typeof [iterated]);
@@ -421,8 +446,8 @@ function onlyskewANDclip(polyline) {
 function onlyskew(polyline) {
   const iterated = bt.iteratePoints(polyline, (pt, t) => {
     const [x, y] = pt;
-    const skewXAmount = (y - 64) * 0.90;
-    const skewYAmount = (x - 92) * -0.10;
+    const skewXAmount = (y - 64) * 1.10;
+    const skewYAmount = (x - 56) * -0.249;
     return [x + skewXAmount, y + skewYAmount];
   });
   console.log(typeof [iterated]);
