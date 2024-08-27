@@ -10,9 +10,9 @@ let predraw = onlyskew(bt.copy(predrawpreskew))
 // Set variables here (1-125):
 const item = 1
 let xmove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][0]
-// let xmove = 0
+// let xmove = 67
 let ymove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][1]
-// let ymove = 0
+// let ymove = 52
 
 // drawLines(predrawpreskew)
 const drawer = [
