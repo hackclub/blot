@@ -443,22 +443,35 @@ function onlyskewANDclip(polyline) {
   return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale([iterated], 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
-function warpToQuadrilateral(polyline, corners) {
-  const [topLeft, topRight, bottomRight, bottomLeft] = corners;
+function warpPolyline(polyline, targetCorners) {
+  const originalCorners = [
+    [0, 0], [125, 0], [125, 125], [0, 125]
+  ];
 
-  const iterated = bt.iteratePoints(polyline, (pt, t) => {
+  function interpolate(pt, origCorners, targetCorners) {
     const [x, y] = pt;
-    const u = x / 125;
-    const v = y / 125;
+    const [x1, y1] = origCorners[0];
+    const [x2, y2] = origCorners[1];
+    const [x3, y3] = origCorners[2];
+    const [x4, y4] = origCorners[3];
 
-    const xWarped = (1 - u) * ((1 - v) * topLeft[0] + v * bottomLeft[0]) + u * ((1 - v) * topRight[0] + v * bottomRight[0]);
-    const yWarped = (1 - u) * ((1 - v) * topLeft[1] + v * bottomLeft[1]) + u * ((1 - v) * topRight[1] + v * bottomRight[1]);
+    const [tx1, ty1] = targetCorners[0];
+    const [tx2, ty2] = targetCorners[1];
+    const [tx3, ty3] = targetCorners[2];
+    const [tx4, ty4] = targetCorners[3];
 
-    return [xWarped, yWarped];
-  });
+    const u = (x - x1) / (x2 - x1);
+    const v = (y - y1) / (y4 - y1);
 
-  console.log(typeof [iterated]);
-  return bt.scale(iterated, 0.4);
+    const newX = (1 - u) * ((1 - v) * tx1 + v * tx4) + u * ((1 - v) * tx2 + v * tx3);
+    const newY = (1 - u) * ((1 - v) * ty1 + v * ty4) + u * ((1 - v) * ty2 + v * ty3);
+
+    return [newX, newY];
+  }
+
+  const transformedPolyline = polyline.map(pt => interpolate(pt, originalCorners, targetCorners));
+
+  return transformedPolyline;
 }
 
 
