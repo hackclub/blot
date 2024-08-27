@@ -1,3 +1,8 @@
+/*
+@title: Nine-Point Circle
+@author: Rishabh R
+@snapshot: snapshot0.svg
+*/
 const getTriangle = (pts) => {
   const t = new bt.Turtle();
   t.jump(pts[0]);
