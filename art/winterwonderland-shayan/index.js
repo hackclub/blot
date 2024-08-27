@@ -1,52 +1,28 @@
 /*
-@title: Winter Wonderland 
+@title: Winter Wonderland
 @author: Shayan Mazahir
-@snapshot: image1.png
+@snapshot: image3.png
 */
 
 setDocDimensions(125, 125); // Canvas dimensions
 
-// Variables for shades of grey
-const NIGHT_SKY_COLOR = 'black';
-const SNOWFLAKE_COLOR = 'grey';
-const TREE_COLOR = 'darkgrey';
-const TRUNK_COLOR = 'saddlebrown'; 
-const HAT_COLOR = 'darkgrey';
-const CARROT_COLOR = 'darkgrey';
+// Variables for colours
+const NIGHT_SKY_COLOR = 'black'; // Set to black for black-and-white theme
+const SNOWFLAKE_COLORS = ['white', 'lightgrey', 'silver'];
+const TREE_COLOR = 'grey'; // Set to grey for black-and-white theme
+const TRUNK_COLOR = 'darkgrey'; // Set to dark grey for black-and-white theme
+const HAT_COLOR = 'black';
+const CARROT_COLOR = 'white'; // White for visibility in black-and-white
 const BUTTON_COLOR = 'black';
-const ARM_COLOR = 'darkgrey';
-const LIGHT_COLOR = 'lightgrey'; 
-const STAR_COLOR = 'lightgrey';
-
-// Snowflake variables
-const SNOWFLAKE_SIZE_MIN = 2;
-const SNOWFLAKE_SIZE_MAX = 6;
-const NUM_SNOWFLAKES = 30;
-
-// Snowman variables
-const SNOWMAN_BASE_SIZE = 12;
-const SNOWMAN_MIDDLE_SIZE = 10;
-const SNOWMAN_HEAD_SIZE = 8;
-const SNOWMAN_SCALE = 1;
-const SNOWMAN_X = 20;
-const SNOWMAN_Y = 35;
-
-// Tree variables
-const TREE_TRUNK_HEIGHT = 8;
-const TREE_TRUNK_WIDTH = 5;
-const TREE_FOLIAGE_HEIGHT = 20;
-const TREE_FOLIAGE_WIDTH = 15;
-const LIGHT_SIZE = 2;
-const NUM_LIGHTS = 8;
-const STAR_SIZE = 6;
-const TREE_X = 90;
-const TREE_Y = 35;
+const ARM_COLOR = 'darkgrey'; // Set to dark grey for black-and-white theme
+const LIGHT_COLORS = ['white', 'lightgrey', 'silver']; // Adjusted for black-and-white
+const STAR_COLOR = 'white'; // Set to white for black-and-white theme
 
 // Draw night sky
 drawLines([[[0, 0], [125, 0], [125, 125], [0, 125], [0, 0]]], { fill: NIGHT_SKY_COLOR, stroke: NIGHT_SKY_COLOR });
 
-// Draw snowflakes
-function drawSnowflake(turtle, x, y, size) {
+// Draw snowflakes without collisions
+function drawSnowflake(turtle, x, y, size, color) {
   turtle.jump([x, y])
         .setAngle(0)
         .down()
@@ -62,22 +38,43 @@ function drawSnowflake(turtle, x, y, size) {
   turtle.up();
 }
 
-for (let i = 0; i < NUM_SNOWFLAKES; i++) {
-  const size = bt.randIntInRange(SNOWFLAKE_SIZE_MIN, SNOWFLAKE_SIZE_MAX);
-  const x = bt.randIntInRange(size, 125 - size);
-  const y = bt.randIntInRange(size, 125 - size);
-  
-  const snowflakeTurtle = new bt.Turtle();
-  drawSnowflake(snowflakeTurtle, x, y, size);
-  
-  drawLines(snowflakeTurtle.path, { stroke: SNOWFLAKE_COLOR, width: 1 });
+let snowflakePositions = []; // Store positions of snowflakes
+
+function checkCollision(x, y, size) {
+  for (let pos of snowflakePositions) {
+    let dist = Math.sqrt(Math.pow(x - pos[0], 2) + Math.pow(y - pos[1], 2));
+    if (dist < size * 2.5) { // Increased distance threshold to reduce collisions
+      return true;
+    }
+  }
+  return false;
+}
+
+for (let i = 0; i < 30; i++) { // Number of snowflakes
+  let attempts = 0;
+  let x, y, size, color;
+
+  do {
+    size = bt.randIntInRange(2, 6); // Snowflake size
+    x = bt.randIntInRange(size, 125 - size); // Ensure snowflake stays within canvas
+    y = bt.randIntInRange(size, 125 - size); // Ensure snowflake stays within canvas
+    color = SNOWFLAKE_COLORS[bt.randIntInRange(0, SNOWFLAKE_COLORS.length)];
+    attempts++;
+  } while (checkCollision(x, y, size) && attempts < 100); // Retry if there's a collision
+
+  if (attempts < 100) { // Increased attempts for finding non-colliding positions
+    snowflakePositions.push([x, y]);
+    const snowflakeTurtle = new bt.Turtle();
+    drawSnowflake(snowflakeTurtle, x, y, size, color);
+    drawLines(snowflakeTurtle.path, { stroke: color, width: 1 });
+  }
 }
 
 // Draw a single snowman
 function drawSnowman(x, y, scale) {
-  const BASE_SIZE = SNOWMAN_BASE_SIZE * scale;
-  const MIDDLE_SIZE = SNOWMAN_MIDDLE_SIZE * scale;
-  const HEAD_SIZE = SNOWMAN_HEAD_SIZE * scale;
+  const BASE_SIZE = 12 * scale;
+  const MIDDLE_SIZE = 10 * scale;
+  const HEAD_SIZE = 8 * scale;
   
   // Draw snowman body
   drawLines([[[x - BASE_SIZE, y], [x + BASE_SIZE, y], [x + BASE_SIZE, y + BASE_SIZE * 1.3], [x - BASE_SIZE, y + BASE_SIZE * 1.3], [x - BASE_SIZE, y]]], { fill: 'white', stroke: 'white' });
@@ -87,7 +84,7 @@ function drawSnowman(x, y, scale) {
   // Draw snowman features
   drawLines([[[x - 8 * scale, y + BASE_SIZE * 2.9], [x + 8 * scale, y + BASE_SIZE * 2.9], [x + 8 * scale, y + BASE_SIZE * 3.1], [x - 8 * scale, y + BASE_SIZE * 3.1], [x - 8 * scale, y + BASE_SIZE * 2.9]]], { fill: HAT_COLOR, stroke: HAT_COLOR });
   
-  drawLines([[[x - 4 * scale, y + BASE_SIZE * 2.2], [x, y + BASE_SIZE * 2.4], [x + 4 * scale, y + BASE_SIZE * 2.2]]], { stroke: CARROT_COLOR, width: 1 }); // Carrot nose i think
+  drawLines([[[x - 4 * scale, y + BASE_SIZE * 2.2], [x, y + BASE_SIZE * 2.4], [x + 4 * scale, y + BASE_SIZE * 2.2]]], { stroke: CARROT_COLOR, width: 1 }); // Carrot nose
   
   // Draw snowman eyes
   drawLines([[[x - 2 * scale, y + BASE_SIZE * 2.1], [x - 2 * scale, y + BASE_SIZE * 2.1]]], { stroke: BUTTON_COLOR, width: 1 });
@@ -104,14 +101,14 @@ function drawSnowman(x, y, scale) {
 }
 
 // Draw single snowman
-drawSnowman(SNOWMAN_X, SNOWMAN_Y, SNOWMAN_SCALE); 
+drawSnowman(20, 35, 1); // Moved snowman to the left
 
 // Draw a pine tree with lights
 function drawPineTree(x, y, size) {
-  const TRUNK_HEIGHT = TREE_TRUNK_HEIGHT * size;
-  const TRUNK_WIDTH = TREE_TRUNK_WIDTH * size;
-  const FOLIAGE_HEIGHT = TREE_FOLIAGE_HEIGHT * size;
-  const FOLIAGE_WIDTH = TREE_FOLIAGE_WIDTH * size;
+  const TRUNK_HEIGHT = 8 * size;
+  const TRUNK_WIDTH = 5 * size;
+  const FOLIAGE_HEIGHT = 20 * size;
+  const FOLIAGE_WIDTH = 15 * size; // Wider foliage
   
   // Draw trunk
   drawLines([[[x - TRUNK_WIDTH / 2, y], [x + TRUNK_WIDTH / 2, y], [x + TRUNK_WIDTH / 2, y + TRUNK_HEIGHT], [x - TRUNK_WIDTH / 2, y + TRUNK_HEIGHT], [x - TRUNK_WIDTH / 2, y]]], { fill: TRUNK_COLOR, stroke: TRUNK_COLOR });
@@ -122,17 +119,19 @@ function drawPineTree(x, y, size) {
   drawLines([[[x - FOLIAGE_WIDTH / 2, y + TRUNK_HEIGHT + FOLIAGE_HEIGHT * 0.75], [x + FOLIAGE_WIDTH / 2, y + TRUNK_HEIGHT + FOLIAGE_HEIGHT * 0.75], [x, y + TRUNK_HEIGHT + FOLIAGE_HEIGHT + FOLIAGE_HEIGHT * 0.75], [x - FOLIAGE_WIDTH / 2, y + TRUNK_HEIGHT + FOLIAGE_HEIGHT * 0.75]]], { fill: TREE_COLOR, stroke: TREE_COLOR });
   
   // Draw lights on the tree
-  function drawLight(x, y) {
-    drawLines([[[x - LIGHT_SIZE, y], [x + LIGHT_SIZE, y]]], { stroke: LIGHT_COLOR, width: 2 }); // Horizontal line
-    drawLines([[[x, y - LIGHT_SIZE], [x, y + LIGHT_SIZE]]], { stroke: LIGHT_COLOR, width: 2 }); // Vertical line
+  function drawLight(x, y, color) {
+    const LIGHT_SIZE = 2; // Size of the light
+    drawLines([[[x - LIGHT_SIZE, y], [x + LIGHT_SIZE, y]]], { stroke: color, width: 2 }); // Horizontal line
+    drawLines([[[x, y - LIGHT_SIZE], [x, y + LIGHT_SIZE]]], { stroke: color, width: 2 }); // Vertical line
   }
 
   // Light positions on the tree
-  for (let i = 0; i < NUM_LIGHTS; i++) {
-    const xLight = bt.randIntInRange(x - FOLIAGE_WIDTH / 2, x + FOLIAGE_WIDTH / 2);
-    const yLight = bt.randIntInRange(y + TRUNK_HEIGHT, y + TRUNK_HEIGHT + FOLIAGE_HEIGHT);
+  for (let i = 0; i < 10; i++) { // Increased number of lights to 10
+    const xLight = bt.randIntInRange(x - FOLIAGE_WIDTH / 2 + 1, x + FOLIAGE_WIDTH / 2 - 1);
+    const yLight = bt.randIntInRange(y + TRUNK_HEIGHT + 1, y + TRUNK_HEIGHT + FOLIAGE_HEIGHT - 1);
+    const color = LIGHT_COLORS[bt.randIntInRange(0, LIGHT_COLORS.length)];
     
-    drawLight(xLight, yLight);
+    drawLight(xLight, yLight, color);
   }
 
   // Draw star on top of the tree
@@ -147,11 +146,16 @@ function drawPineTree(x, y, size) {
   }
 
   // Calculate the position of the star
+  const STAR_SIZE = 6;
   const starX = x;
-  const starY = y + TRUNK_HEIGHT + FOLIAGE_HEIGHT + (STAR_SIZE * 2.85); 
+  const starY = y + TRUNK_HEIGHT + FOLIAGE_HEIGHT + (STAR_SIZE * 2.5); // Further adjustment
+
   // Draw the star at the calculated position
   drawStar(starX, starY, STAR_SIZE, STAR_COLOR);
 }
 
-// Draw pine tree
-drawPineTree(TREE_X, TREE_Y, 1); 
+// Draw three pine trees with adjusted positions
+drawPineTree(45, 30, 1); // Moved tree to avoid overlap
+drawPineTree(86, 45, 1); // Adjusted position
+drawPineTree(115, 55, 0.9); // Adjusted position
+
