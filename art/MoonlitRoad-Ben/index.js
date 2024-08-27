@@ -20,17 +20,27 @@ const Number_of_Stars = 16
 const Star_Min_Distance = 11 //DO NOT MAKE THIS TOO HIGH
 const Star_Min_Height = 17
 const Star_Size = [1, 0.6]//min, max
+const Star_Points_Number = [3,13]//min, max
 
 //Road
-const Road_Start = 82 //units from left
-const Road_End = 51 // units from left
+const Road_Start = 95 //units from left
+const Road_End = 95 // units from left
 const Road_Width_Start = 26
-const Road_Width_End = 20
+const Road_Width_End = 9
 
 //Moon
 const Moon_Radius = 10
 const Moon_Position = [106,106]
 const Moon_Type = "crescent" // "full": new/full moon phase, "crescent": gibbous/crescent , "quarter": first/last quarter
+
+//Farm
+const Farm_Size = [100, 100]
+
+// Grass Parameters
+const Grass_Density = 137; // Number of grass blades
+const Grass_Length = [2, 5]; // Min and max length
+const Grass_Width = [0.1, 0.3]; // Min and max width
+const Grass_Variation = 15; // Max angle variation
 
 //---------------------------------------------------------------------------------------------//
 
@@ -83,6 +93,14 @@ var RoadCurveRight = bt.catmullRom([
   [Road_End + Road_Width_End, HorizonYAtEnd_1]
 ]);
 
+var HorizonYAtEnd_2 = getHorizonYAtX(Road_End + (Road_Width_End/2), HorizonCurve);
+var RoadMiddleCurve = bt.catmullRom([
+  [Road_Start + Road_Width_Start / 2, 0],
+  [Road_Start + Road_Width_Start / 2 - 10, HorizonYAtEnd_1 - 20],
+  [Road_End + Road_Width_End / 2 + 10, HorizonYAtEnd_1 - 10],
+  [Road_End + Road_Width_End / 2, HorizonYAtEnd_1]
+]);
+
 //Make Moon
 function drawMoon(center, radius, offset) {
     const circleTurtle = new bt.Turtle();
@@ -129,29 +147,21 @@ function drawMoon(center, radius, offset) {
     drawLines(fillTurtle.lines());
 }
 
-if (Moon_Type == "crescent")
-{
+if (Moon_Type == "crescent") {
   drawMoon(Moon_Position, Moon_Radius, bt.randInRange(-18, 18));
 }
 
-if (Moon_Type == "full")
-{
-  var RandBool = bt.randIntInRange(0,1)
+if (Moon_Type == "full") {
+  var RandBool = bt.randIntInRange(0,1);
 
-  if (RandBool == 0)
-  {
+  if (RandBool == 0) {
     drawMoon(Moon_Position, Moon_Radius, 0);
-  }
-  
-  if (RandBool == 1)
-  {
+  } else {
     drawMoon(Moon_Position, Moon_Radius, 100);
   }
-  
 }
 
-if (Moon_Type == "quarter")
-{
+if (Moon_Type == "quarter") {
   function drawQuarterMoon(center, radius, isFirstQuarter) {
     const circleTurtle = new bt.Turtle();
     const numSteps = 360;
@@ -196,28 +206,42 @@ if (Moon_Type == "quarter")
     }
 
     drawLines(fillTurtle.lines());
-}
+  }
 
   const isFirstQuarter = bt.randIntInRange(0, 1) === 0;
   drawQuarterMoon(Moon_Position, Moon_Radius, isFirstQuarter);
 }
 
-// Make Star
-const starturtle = new bt.Turtle()
-starturtle.up()
-starturtle.goTo([0, 0])
-starturtle.down()
-for (let i = 0; i < 4; i++) {
-  starturtle.forward(10)
-  starturtle.left(142)
-  starturtle.forward(10)
-  starturtle.left(308)
+// Make random shapes
+function generateShape(center, radius, numPoints, randomness) {
+    let points = [];
+    let angleStep = (2 * Math.PI) / numPoints;
+    let maxRandomness = radius * (randomness / 100); // Adjusted randomness based on radius
+
+    for (let i = 0; i < numPoints; i++) {
+        let angle = i * angleStep;
+        // Apply a controlled randomness to the radius
+        let randomRadius = radius + bt.randInRange(-maxRandomness, maxRandomness);
+        let x = center[0] + randomRadius * Math.cos(angle);
+        let y = center[1] + randomRadius * Math.sin(angle);
+        points.push([x, y]);
+    }
+    points.push(points[0]); // Close the shape
+
+    return bt.catmullRom(points);
 }
 
-// Draw Functions
-drawLines([RoadCurveLeft], { width: 0, stroke: "#000000" });
-drawLines([RoadCurveRight], { width: 0, stroke: "#000000" });
+function drawShape(center, radius, numPoints, randomness, size, position) {
+    let shape = generateShape(center, radius, numPoints, randomness);
+    drawLines(bt.translate(bt.scale([shape], size), position), { width: 0 });
+}
 
+// Draw Road
+drawLines([RoadCurveLeft], { width: 0 });
+drawLines([RoadCurveRight], { width: 0 });
+drawLines([RoadMiddleCurve], { width: 0 });
+
+// Draw Stars
 var UsedStarPositions = [];
 
 function getDistance(pos1, pos2) {
@@ -231,8 +255,8 @@ for (let i = 0; i < Number_of_Stars; i++) {
     var ChosenPosition;
 
     while (!validPosition) {
-        var ChosenX = bt.randInRange(8, width - 8); // Ensure within boundaries
-        var ChosenY = bt.randInRange(height - 11, Horizon_Height + Star_Min_Height); // Ensure above the horizon
+        var ChosenX = bt.randInRange(8, width - 8);
+        var ChosenY = bt.randInRange(height - 11, Horizon_Height + Star_Min_Height);
         ChosenPosition = [ChosenX, ChosenY];
 
         validPosition = true;
@@ -250,11 +274,79 @@ for (let i = 0; i < Number_of_Stars; i++) {
 
     UsedStarPositions.push(ChosenPosition);
 
+    // Make Star
+    const starCenter = [0, 0];
+    const starRadius = 15;
+    const numPoints = bt.randIntInRange(Star_Points_Number[0], Star_Points_Number[1]);
+
+    const starturtle = new bt.Turtle();
+    
+    const angleStep = (2 * Math.PI) / numPoints;
+    const innerRadius = starRadius / 3;
+    
+    starturtle.up();
+    starturtle.goTo([starCenter[0] + starRadius * Math.cos(0), starCenter[1] + starRadius * Math.sin(0)]);
+    starturtle.down();
+    
+    for (let i = 0; i < numPoints; i++) {
+        let outerAngle = i * angleStep;
+        let innerAngle = outerAngle + angleStep / 2;
+        
+        let outerX = starCenter[0] + starRadius * Math.cos(outerAngle);
+        let outerY = starCenter[1] + starRadius * Math.sin(outerAngle);
+        let innerX = starCenter[0] + innerRadius * Math.cos(innerAngle);
+        let innerY = starCenter[1] + innerRadius * Math.sin(innerAngle);
+
+        starturtle.goTo([outerX, outerY]);
+        
+        starturtle.goTo([innerX, innerY]);
+    }
+    
+    starturtle.goTo([starCenter[0] + starRadius * Math.cos(0), starCenter[1] + starRadius * Math.sin(0)]);
+    
     var star = bt.scale(starturtle.lines(), .5);
     star = bt.translate(star, ChosenPosition);
-    star = bt.rotate(star, 109);
+    star = bt.rotate(star, bt.randInRange(-180, 180));
     star = bt.scale(star, bt.randInRange(Star_Size[0], Star_Size[1]))
-    drawLines(star, { width: 0, stroke: "#000000" });
+    drawLines(star);
 }
 
-drawLines([HorizonCurve], { width: 0, stroke: "#000000" })
+//Make Grass
+function getgrassDistance(x1, x2) {
+    var dx = x1 - x2;
+    return Math.sqrt(dx * dx);
+}
+
+function drawGrass(position, GrassLength, angle) {
+    const grassTurtle = new bt.Turtle();
+    grassTurtle.up();
+    grassTurtle.goTo(position);
+    grassTurtle.down();
+    
+    grassTurtle.setAngle(angle);
+    grassTurtle.forward(GrassLength);
+    
+    drawLines(grassTurtle.lines());
+}
+
+
+
+  var badx = Road_Start + (Road_Width_Start - 8) / 2;
+  var MinDistanceFromBadPoint = 21;
+  
+  for (let i = 0; i < (Grass_Density); i++) 
+  {
+    let validPosition = true;
+    let ChosenPosition = [bt.randInRange(0, width - 3), bt.randInRange(0, Horizon_Height-3)];
+
+    if (getgrassDistance(ChosenPosition[0], badx) < MinDistanceFromBadPoint) {
+        validPosition = false;
+    }
+
+    if (validPosition) {
+        drawGrass(ChosenPosition, 3, bt.randInRange(-40, 40));
+    }
+  }
+
+// Draw Horizon
+drawLines([HorizonCurve], { width: 0 });
