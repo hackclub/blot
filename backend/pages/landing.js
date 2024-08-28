@@ -13,7 +13,7 @@ export default function() {
         </div>
 
         <div>
-          from 
+          from
           <a
             class="box-border m-0 min-w-0 p-0 px-2 bg-[#ec3750] rounded-lg text-white whitespace-nowrap no-underline"
             href="https://www.hackclub.com">

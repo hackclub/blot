@@ -42,9 +42,9 @@ void setup() {
 
   pinMode(enablePin, OUTPUT); // enable pin
 
-  // pinMode(PIN_LED, OUTPUT);
+  pinMode(PIN_LED, OUTPUT);
 
-  // startupIndicator(); // once startup is finished, indicate to user
+  startupIndicator(); // once startup is finished, indicate to user
 }
 
 void loop() {

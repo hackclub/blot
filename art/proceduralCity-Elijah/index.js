@@ -332,8 +332,10 @@ function tree(variant) {
     lines[0] = [...lines[0],
       [lines[0][0][0], 0, 0]
     ]
+    lines = make_2d(lines)
     bt.scale(lines, [0.2, 0.2])
   }
+  lines = make_2d(lines)
   bt.originate(lines)
   bt.scale(lines, [2, 2])
   return lines
@@ -614,6 +616,7 @@ function house(x, y, z, roof_height, roof_rotation, roof_overhang_triangle, roof
       let t_height = bt.bounds(the_tree).height
       the_tree = translate_3d(the_tree, ...socket.slice(0, 3))
       the_tree = rotate_3d(the_tree, 0, socket[3], 0)
+      the_tree = make_2d(the_tree)
       bt.scale(the_tree, [y / t_height / stories * bt.randInRange(min_tree_size, max_tree_size), y / t_height / stories * bt.randInRange(min_tree_size, max_tree_size)])
       the_tree = translate_3d(the_tree, 0, -the_tree[0][0][1], 0)
       // Disabled because rotating trees in yards is sometimes cursed
