@@ -32,6 +32,12 @@ const WIDTH=125,HEIGHT=125;setDocDimensions(125,125);const leftAntStart=bt.randI
 
 
 
+const transform = [
+  [0,0],
+  [48,46],
+  [125,125],
+  [64,-3],
+]
 // drawLines(predrawpreskew)
 const item = 1
 let xmove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][0]
@@ -421,15 +427,17 @@ finalLines.push(...skew(paper))
 
 drawLines(finalLines)
 
+
+
 function skew(polyline) {
   const iterated = bt.iteratePoints(polyline, (pt, t) => {
     const [x, y] = pt;
-    const skewXAmount = (y - 64) * 1.10;
-    const skewYAmount = (x - 56) * -0.249;
-    return [x + skewXAmount, y + skewYAmount];
+    const skewXAmount = x*(transform[3][0]-transform[0][0]) + y*(transform[1][0]-transform[0][0])
+    const skewYAmount = x*(transform[3][1]-transform[0][1]) + y*(transform[1][1]-transform[0][1])
+    return [skewXAmount/125, skewYAmount/125];
   });
   console.log(typeof [...iterated]);
-  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(bt.rotate(...[iterated],7), 0.4), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
+  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(bt.translate(...[iterated], [0,4]), 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
 function onlyskewANDclip(polyline) {
@@ -440,49 +448,13 @@ function onlyskewANDclip(polyline) {
     return [x + skewXAmount, y + skewYAmount];
   });
   console.log(typeof [iterated]);
-  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale([iterated], 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
-}
-
-function warpPolyline(polyline, targetCorners) {
-  const originalCorners = [
-    [0, 0], [125, 0], [125, 125], [0, 125]
-  ];
-
-  function interpolate(pt, origCorners, targetCorners) {
-    const [x, y] = pt;
-    const [x1, y1] = origCorners[0];
-    const [x2, y2] = origCorners[1];
-    const [x3, y3] = origCorners[2];
-    const [x4, y4] = origCorners[3];
-
-    const [tx1, ty1] = targetCorners[0];
-    const [tx2, ty2] = targetCorners[1];
-    const [tx3, ty3] = targetCorners[2];
-    const [tx4, ty4] = targetCorners[3];
-
-    const u = (x - x1) / (x2 - x1);
-    const v = (y - y1) / (y4 - y1);
-
-    const newX = (1 - u) * ((1 - v) * tx1 + v * tx4) + u * ((1 - v) * tx2 + v * tx3);
-    const newY = (1 - u) * ((1 - v) * ty1 + v * ty4) + u * ((1 - v) * ty2 + v * ty3);
-
-    return [newX, newY];
-  }
-
-  const transformedPolyline = polyline.map(pt => interpolate(pt, originalCorners, targetCorners));
-
-  return transformedPolyline;
+  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.translate(bt.scale([iterated], 1), [1,8]), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
 
-const corners = [
-  [206,33],
-  [-25,43],
-  [74,163],
-  [160,163]
-]
+
 // Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
 
 paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
-drawLines(warpToQuadrilateral(predrawpreskew, corners))
-drawLines(warpToQuadrilateral(paper, corners))
+drawLines(skew(predrawpreskew))
+drawLines(paper)
