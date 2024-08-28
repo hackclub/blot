@@ -7,6 +7,19 @@
 */
 
 
+
+
+/* 
+In the past year, I had gotten into this habit of doodling tiny cats on schoolwork, notes, and any piece of paper 
+that was left in my hands. It practically became my signature, as I leave a little cat in the margins of whatever 
+paper is given to me. While the cats I drew were all different, they all had the same characteristics; wide faces,
+big ears, and similarly shaped eyes. That's why, for my blot project, I decided to recreate the cats and their core 
+features within an algorithm. Additionally, in order to make my digital cats more interesting, I came up with a function
+that took whatever shape given to it and mocked a shading technique called "stippling", which has to do with adding more
+dots in spaces of drawings that are shaded as dark.
+*/
+
+
 //params
 const dotThickness = 0.3;
 const masterDensityControl = 0.001;
@@ -118,8 +131,7 @@ looseCatOutline.splice(index, 2, [newPoints]);
 //jaggedOutline(looseCatOutline, 5, "vertical");  
 
 
-const months = ['Jan', 'March', 'April', 'June'];
-months.splice(1, 0, 'Feb');
+
 
 
 
