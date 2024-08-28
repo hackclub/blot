@@ -33,11 +33,13 @@ const WIDTH=125,HEIGHT=125;setDocDimensions(125,125);const leftAntStart=bt.randI
 
 
 const transform = [
-  [0,0],
-  [48,46],
+  [11,-3],
+  [56,68],
   [125,125],
-  [64,-3],
+  [110,-11],
 ]
+
+drawLines([[[0,0],transform[1]]])
 // drawLines(predrawpreskew)
 const item = 1
 let xmove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][0]
@@ -437,7 +439,7 @@ function skew(polyline) {
     return [skewXAmount/125, skewYAmount/125];
   });
   console.log(typeof [...iterated]);
-  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(bt.translate(...[iterated], [0,4]), 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
+  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(bt.translate(...[iterated], [0,0]), 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
 function onlyskewANDclip(polyline) {
