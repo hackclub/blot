@@ -33,7 +33,7 @@ bt.iteratePoints(feather, ([x, y]) => [x - 0.002 * (width / 2 - y) * (width / 2 
 
 bt.rotate(feather, 155);
 bt.translate(feather, [-16, 31]);
-drawLines(feather, { stroke: "brown", width: 3 });
+drawLines(feather, { width: 3 });
 
 const a = 30;
 const b = 55;
@@ -42,7 +42,7 @@ const d = (a + c) / 2;
 const e = 80;
 const f = 82;
 
-drawLines([
+const inkBottle = [
   [
     [a, b + 20],
     [a, a - 10],
@@ -53,7 +53,10 @@ drawLines([
     [a, a - 10],
     [d, a - 13],
     [c, a - 10]
-  ]),
+  ])
+]
+
+drawLines([
   bt.catmullRom([
     [a, b + 20],
     [(a + (d - 8)) / 2, e],
@@ -113,12 +116,12 @@ drawLines([
   [
     [d + 2, f + 7.5],
     [d + 3.5, f + 5.5]
-  ],
+  ]
 ], { width: 5 });
 
 const createRing = (num, size) => {
   const petalLength = 0.5;
-  const centerLength = petalLength * bt.randInRange(1.5, 2.5);
+  const centerLength = petalLength * bt.randInRange(1.5, 1.75);
 
   for (let i = 1; i <= num; i++) {
     const petal = [];
@@ -139,7 +142,7 @@ const createRing = (num, size) => {
     bt.translate(petal, [width / 2, height / 2 - 10], bt.bounds(petal).cc);
     bt.rotate(petal, 360 / num * i);
 
-    drawLines(petal, { stroke: "red", width: 4 });
+    drawLines(petal, { width: 4 });
   }
 }
 
@@ -154,19 +157,35 @@ for (let i of ringSizes) createRing(i, 1 / Math.sqrt(i) * 0.4);
 
 const t = new bt.Turtle();
 t.up().goTo([100, bt.randInRange(38, 56)]).down();
-for (let i = 0; i < 362; i++) t.forward(bt.randInRange(0.1, 0.35)).right(1);
+let size = bt.randInRange(0.1, 0.35);
+for (let i = 0; i < 365; i++) t.forward(size).right(1);
+bt.difference(inkBottle, t.lines());
 t.up().goTo([bt.randInRange(80, 102), bt.randInRange(25, 44)]).down();
-for (let i = 0; i < 359; i++) t.forward(0.2).right(1);
+for (let i = 0; i < 365; i++) t.forward(0.2).right(1);
+bt.difference(inkBottle, t.lines());
 t.up().goTo([81, 28]).down();
-for (let i = 0; i < 359; i++) t.forward(bt.randInRange(0.075, 0.2)).right(1);
+size = bt.randInRange(0.075, 0.2);
+for (let i = 0; i < 365; i++) t.forward(size).right(1);
+bt.difference(inkBottle, t.lines());
 t.up().goTo([67, 24]).down();
-for (let i = 0; i < 359; i++) t.forward(bt.randInRange(0.1, 0.2)).right(1);
+size = bt.randInRange(0.1, 0.2);
+for (let i = 0; i < 365; i++) t.forward(size).right(1);
+bt.difference(inkBottle, t.lines());
 t.up().goTo([bt.randInRange(47, 61), 29]).down();
-for (let i = 0; i < 359; i++) t.forward(0.2).right(1);
+for (let i = 0; i < 365; i++) t.forward(0.2).right(1);
+bt.difference(inkBottle, t.lines());
 t.up().goTo([37, 35]).down();
-for (let i = 0; i < 342; i++) t.forward(bt.randInRange(0.2, 0.3)).right(1);
+size = bt.randInRange(0.2, 0.3);
+for (let i = 0; i < 365; i++) t.forward(size).right(1);
+bt.difference(inkBottle, t.lines());
 t.up().goTo([21, bt.randInRange(18, 63)]).down();
-for (let i = 0; i < 359; i++) t.forward(bt.randInRange(0.1, 0.2)).right(1);
+size = bt.randInRange(0.1, 0.2);
+for (let i = 0; i < 365; i++) t.forward(size).right(1);
+bt.difference(inkBottle, t.lines());
 t.up().goTo([17, bt.randInRange(39, 57)]).down();
-for (let i = 0; i < 359; i++) t.forward(bt.randInRange(0.1, 0.5)).right(1);
-drawLines(t.lines(), { fill: "black", width: 50 });
+size = bt.randInRange(0.1, 0.18);
+for (let i = 0; i < 365; i++) t.forward(size).right(1);
+drawLines(t.lines(), { width: 8 });
+
+bt.difference(inkBottle, t.lines());
+drawLines(inkBottle, { width: 5 });
