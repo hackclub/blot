@@ -6,10 +6,16 @@ import path from 'path';
 import alias from 'esbuild-plugin-alias';
 import inlineWorkerPlugin from 'esbuild-plugin-inline-worker';
 
-import { spawn } from 'child_process';
+import { execSync } from 'child_process';
 
+import { wrapHTML } from "./backend/wrapHTML.js";
 
-spawn('npx', ['tailwindcss', '-i', './styles.css', '-o', './dist/styles.css']);
+import navBar from "./backend/pages/navBar.js";
+import guides from "./backend/pages/guides.js";
+import gallery from "./backend/pages/gallery.js";
+import landing from "./backend/pages/landing.js";
+import docs from "./backend/pages/docs.js";
+import submitting from "./backend/pages/submitting.js";
 
 const OUTPUT_DIR = "./dist"; 
 
@@ -92,3 +98,46 @@ export async function build(htmls) {
   await fs.cpSync("./public", OUTPUT_DIR, { recursive: true });
   // console.timeEnd("COPY")
 }
+
+await build({
+  index: wrapHTML(`
+    ${navBar(true)}
+    ${landing()}
+  `),
+  docs: wrapHTML(`
+    ${navBar()}
+    ${docs()}
+  `),
+  submitting: wrapHTML(`
+    ${navBar()}
+    ${submitting()}
+  `),
+  editor: wrapHTML(`
+    <!-- TODO: add automatically when building -->
+    <link rel="stylesheet" href='./assets/initApp.css'>
+
+
+
+    <main></main>
+    <script type="module" src="./src/initApp.js"></script>
+  `),
+  guides: wrapHTML(`
+    ${navBar()}
+    ${guides()}
+  `),
+  gallery: wrapHTML(`
+    ${navBar()}
+    ${gallery()}
+  `),
+  404: wrapHTML(`
+    ${navBar()}
+    <div class="p-2">nothing here</div>
+  `),
+  test: wrapHTML(`
+    ${navBar()}
+    <div class="bg-red-400">test another page</div>
+  `),
+
+});
+
+execSync('npx tailwindcss -i ./styles.css -o ./dist/styles.css');

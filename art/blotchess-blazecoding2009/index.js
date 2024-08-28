@@ -117,7 +117,7 @@ function getDailyPuzzle() {
   xhr.onload = function () {
     if (xhr.status >= 200 && xhr.status < 300) {
       const daily = JSON.parse(xhr.responseText);
-      const boardArray = fenToBoardArray("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+      const boardArray = fenToBoardArray(daily.fen);
       drawBoard(boardArray);
     }
   };
