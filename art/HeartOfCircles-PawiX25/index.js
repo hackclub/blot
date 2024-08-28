@@ -29,7 +29,7 @@ function generateHeartWaveArt(seed, randomFactor) {
       const x = bt.rand() * width;
       const y = bt.rand() * height;
 
-      if (!isPointInHeartShape(x, y)) {
+      if (!isPointInModifiedHeartShape(x, y)) {
         const shapeType = bt.randIntInRange(0, 2);
 
         if (shapeType === 0) {
@@ -41,7 +41,7 @@ function generateHeartWaveArt(seed, randomFactor) {
           const radiusY = bt.rand() * 1.5;
           const backgroundEllipse = createEllipse(x, y, radiusX, radiusY, 20);
           drawLines([backgroundEllipse]);
-      } else {
+        } else {
           const sides = bt.randIntInRange(3, 5);
           const radius = bt.rand() * 1.5;
           const backgroundPolygon = createPolygon(x, y, radius, sides);
@@ -51,8 +51,13 @@ function generateHeartWaveArt(seed, randomFactor) {
     }
   }
 
-  function isPointInHeartShape(x, y) {
-    const tSteps = 1000; // Increase this for better accuracy
+  function isPointInModifiedHeartShape(x, y) {
+    const tSteps = 2000; // Increase this for better accuracy
+    let isInside = false;
+
+    const heartPoints = [];
+
+    // Generate heart shape with transformations applied
     for (let i = 0; i < tSteps; i++) {
       const t = (i / tSteps) * 2 * Math.PI;
       let [hx, hy] = heartEquation(t);
@@ -60,16 +65,27 @@ function generateHeartWaveArt(seed, randomFactor) {
       hx *= width / heartScalingFactor;
       hy *= height / heartScalingFactor;
 
-      hx = centerX + hx;
-      hy = centerY + hy;
+      const waveOffset1 = waveAmplitude * Math.sin(t * waveFrequency);
+      const waveOffset2 = (waveAmplitude / 2) * Math.cos(t * (waveFrequency * 1.5));
 
-      const distance = Math.hypot(x - hx, y - hy);
+      hx = centerX + hx + (bt.rand() - 0.5) * randomFactor * maxRadius;
+      hy = centerY + (hy + waveOffset1 + waveOffset2) + (bt.rand() - 0.5) * randomFactor * maxRadius;
 
-      if (distance < maxRadius) {
-        return true;
-      }
+      heartPoints.push([hx, hy]);
     }
-    return false;
+
+    let j = heartPoints.length - 1;
+    for (let i = 0; i < heartPoints.length; i++) {
+      const [xi, yi] = heartPoints[i];
+      const [xj, yj] = heartPoints[j];
+
+      const intersect = ((yi > y) !== (yj > y)) &&
+                        (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+      if (intersect) isInside = !isInside;
+      j = i;
+    }
+
+    return isInside;
   }
 
   function createCircle(x, y, radius, sides = 20) {
