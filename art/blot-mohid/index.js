@@ -14,7 +14,7 @@ let predrawpreskew = ''
 // 5. I recommend minifying your code using a site such as hack.club/441cnc
 // 6. Paste your minified code here:
 
-const WIDTH=125,HEIGHT=125;setDocDimensions(125,125);const leftAntStart=bt.randInRange(40,50),leftAntEnd=bt.randInRange(40,50),rightAntStart=bt.randInRange(75,85),rightAntEnd=bt.randInRange(75,85),antWidth=bt.randInRange(4,6),botLeft=[[40,25],[30,25],[25,30],[25,40],],botLeftCurve=bt.nurbs(botLeft,{steps:100,degree:3}),leftLine=[[25,40],[25,85]],topLeft=[[25,85],[25,95],[30,100],[40,100],],topLeftCurve=bt.nurbs(topLeft,{steps:100,degree:3}),topLine=[[40,100],[85,100]],topRight=[[85,100],[95,100],[100,95],[100,85],],topRightCurve=bt.nurbs(topRight,{steps:100,degree:3}),rightLine=[[100,85],[100,40]],botRight=[[100,40],[100,30],[95,25],[85,25],],botRightCurve=bt.nurbs(botRight,{steps:100,degree:3}),botLine=[[85,25],[40,25]],leftMouth=[[50,42],[45,42],[40,47],[45,52],[50,52]],leftMouthCurve=bt.nurbs(leftMouth,{steps:100,degree:4}),topMouthLine=[[50,42],[75,42]],rightMouth=[[75,42],[80,42],[85,47],[80,52],[75,52],],rightMouthCurve=bt.nurbs(rightMouth,{steps:100,degree:4}),botMouthLine=[[75,52],[50,52]],leftEye=[[50,67.5],[42.5,75],[50,82.5],[57.5,75],[50,67.5],],leftEyeCurve=bt.nurbs(leftEye,{steps:100,degree:3}),rightEye=[[75,67.5],[82.5,75],[75,82.5],[67.5,75],[75,67.5],],rightEyeCurve=bt.nurbs(rightEye,{steps:100,degree:3}),leftAntLeft=[[leftAntStart,100],[leftAntEnd,110]],leftAntRight=[[leftAntStart+antWidth,100],[leftAntEnd+antWidth,110]],leftAntTop=[[leftAntEnd-antWidth/5,110],[leftAntEnd+antWidth/2,110+antWidth/2+antWidth/5],[leftAntEnd+antWidth+antWidth/5,110],[leftAntEnd+antWidth/2,110-antWidth/2-antWidth/5],[leftAntEnd-antWidth/5,110],],leftAntTopCircle=bt.nurbs(leftAntTop,{steps:100,degree:3}),rightAntLeft=[[rightAntStart-antWidth,100],[rightAntEnd-antWidth,110]],rightAntRight=[[rightAntStart,100],[rightAntEnd,110]],rightAntTop=[[rightAntEnd-antWidth-antWidth/5,110],[rightAntEnd-antWidth/2,110+antWidth/2+antWidth/5],[rightAntEnd+antWidth/5,110],[rightAntEnd-antWidth/2,110-antWidth/2-antWidth/5],[rightAntEnd-antWidth-antWidth/5,110],],rightAntTopCircle=bt.nurbs(rightAntTop,{steps:100,degree:3});predrawpreskew=finalLines=[botLeftCurve,leftLine,topLeftCurve,topLine,topRightCurve,rightLine,botRightCurve,botLine,leftMouthCurve,topMouthLine,rightMouthCurve,botMouthLine,leftEyeCurve,rightEyeCurve,leftAntLeft,leftAntRight,leftAntTopCircle,rightAntLeft,rightAntRight,rightAntTopCircle,];
+const width=125,height=125;setDocDimensions(125,125);const radius=50,curveStrength=-.15,widthCurveRatio=-20;let lineSpacing=radius/10;const showCircle=!0,t=new bt.Turtle;for(let i=12.5%lineSpacing;i<=125;i+=lineSpacing){let e=i;if(49>Math.abs(e-62.5)){let o=62.5+Math.sqrt(2500-Math.pow(e-62.5,2)),$=62.5-Math.sqrt(2500-Math.pow(e-62.5,2));t.jump([0,e]),t.goTo([$,e]);let n=[bt.nurbs([[$,e],[62.5,-((o-$+-20)*.15)+e],[o,e]])];bt.join(finalLines,n),t.jump([o,e]),t.goTo([125,e])}else t.jump([0,e]),t.goTo([125,e])}t.jump([62.5,12.5]),t.arc(360,50),predrawpreskew=t.lines();let predrawpreskew1=finalLines;
 
 
 
@@ -25,35 +25,30 @@ const WIDTH=125,HEIGHT=125;setDocDimensions(125,125);const leftAntStart=bt.randI
 
 
 
-
-
-
-
-
-
+const x = 31
+const y = 44
 
 const transform = [
-  [11,-3],
-  [56,68],
-  [125,125],
-  [110,-11],
+  [101.15-x,83.6-y],
+  [128.07-x,114-y],
+  [125-x,125-y],
+  [51-x,88-y],
 ]
 
-drawLines([[[0,0],transform[1]]])
-// drawLines(predrawpreskew)
+// drawLines([[[0,0],transform[1]]])
 const item = 1
 let xmove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][0]
-// let xmove = 235
+// let xmove = 303
 let ymove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][1]
-// let ymove = 246
+// let ymove = 56
 
-// drawLines(predrawpreskew)
-// const drawer = [
-//   predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item],
-//   [0,0]
-// ]
-// console.log(predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item])
-// drawLines([drawer])
+drawLines(predrawpreskew)
+const drawer = [
+  predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item],
+  [0,0]
+]
+console.log(predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item])
+drawLines([drawer])
 
 
 function mapValue(value, min, max) {
@@ -62,9 +57,9 @@ function mapValue(value, min, max) {
     return min + (max - min) * (value / 125);
 }
 
-const xslide = 93 - mapValue(xmove, 3.38, 93.0);
+const xslide = 93 - mapValue(xmove, 2.8, 74.8);
 
-const yslide = mapValue(ymove, -137.44, 184);
+const yslide = mapValue(ymove, -89.7, 70);
 
 
 const pagewidth = 125;
@@ -176,7 +171,7 @@ finalLines.push(
 
 
 const xrail = [
-  [posx + 21, posy + 1.4],
+  [posx + 40, posy + 1.4],
   [posx - 30, posy + 7],
   [posx - 31.2, posy + 6],
   [posx + 20, posy + 0.4],
@@ -192,6 +187,9 @@ const xrail = [
   [posx + 20, posy + 0.4],
   [posx + 21, posy + 1.4],
 ];
+
+console.log([posx + 40, posy + 1.4])
+console.log([posx - 30, posy + 7])
 
 const RSmount = [
   [posx + 22.5, posy + 4.2],
@@ -281,6 +279,9 @@ const yclip = [
   [xPos + 4.9 + yslideXOffset, yPos + 22.8 + yslideYOffset],
   [xPos + 6.4 + yslideXOffset, yPos + 24.5 + yslideYOffset],
 ];
+
+
+
 
 const ymount = [
   [xPos + -18.7 + yslideXOffset, yPos + 4.0 + yslideYOffset],
@@ -439,7 +440,7 @@ function skew(polyline) {
     return [skewXAmount/125, skewYAmount/125];
   });
   console.log(typeof [...iterated]);
-  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(bt.translate(...[iterated], [0,0]), 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
+  return bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.scale(bt.translate(...[iterated], transform[0]), 1), [pen]), [penclip]), [ypenclip]), [ymount]), [yrail]), [xrail]), [RSmount])
 }
 
 function onlyskewANDclip(polyline) {
@@ -459,4 +460,5 @@ function onlyskewANDclip(polyline) {
 
 paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
 drawLines(skew(predrawpreskew))
+drawLines(skew(predrawpreskew1))
 drawLines(paper)
