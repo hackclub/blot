@@ -4,6 +4,9 @@
 @snapshot: snapshot.png
 */
 
+// VARIABLE TO DISABLE COLORS AND VARYING LINE THICKNESS
+const disableColorsAndThickness = false;
+
 // DOC DIMENSIONS
 const width = 125;
 const height = 125;
@@ -32,6 +35,9 @@ const maxPenguinScale = 15;
 const minPenguinScale = 5;
 
 setDocDimensions(width, height);
+
+// Store penguins' positions and sizes
+let penguins = [];
 
 function drawPolygon(points, options) {
   for (let i = 0; i < points.length - 1; i++) {
@@ -106,6 +112,9 @@ function DrawPenguin(center, scale) {
     return;
   }
 
+  // Store penguin details for collision detection
+  penguins.push({ center, scale });
+
   // Body
   const bodyPoints = [
     [centerX, centerY - scale],
@@ -150,33 +159,74 @@ function DrawPenguin(center, scale) {
   const rightEyeCenter = [centerX + scale / 4, centerY - scale / 2];
 
   // Drawing
-  drawPolygon(bodyPoints, { stroke: 'black', width: 1 });
-  fillPolygon(bodyPoints, 'black');
-  drawPolygon(bellyPoints, { stroke: 'white', width: 1 });
-  fillPolygon(bellyPoints, 'white');
-  drawPolygon(leftFlipperPoints, { stroke: 'black', width: 1 });
-  fillPolygon(leftFlipperPoints, 'black');
-  drawPolygon(rightFlipperPoints, { stroke: 'black', width: 1 });
-  fillPolygon(rightFlipperPoints, 'black');
-  drawPolygon(beakPoints, { stroke: 'orange', width: 1 });
-  fillPolygon(beakPoints, 'orange');
-  drawCircle(leftEyeCenter, eyeRadius, { stroke: 'black', width: 1 });
-  drawCircle(leftEyeCenter, eyeRadius / 2, { stroke: 'black', width: 1, fill: 'black' });
-  drawCircle(rightEyeCenter, eyeRadius, { stroke: 'black', width: 1 });
-  drawCircle(rightEyeCenter, eyeRadius / 2, { stroke: 'black', width: 1, fill: 'black' });
+  drawPolygon(bodyPoints, { stroke: disableColorsAndThickness ? 'black' : 'black', width: 1 });
+  fillPolygon(bodyPoints, disableColorsAndThickness ? 'black' : 'black');
+  drawPolygon(bellyPoints, { stroke: disableColorsAndThickness ? 'white' : 'white', width: 1 });
+  fillPolygon(bellyPoints, disableColorsAndThickness ? 'white' : 'white');
+  drawPolygon(leftFlipperPoints, { stroke: disableColorsAndThickness ? 'black' : 'black', width: 1 });
+  fillPolygon(leftFlipperPoints, disableColorsAndThickness ? 'black' : 'black');
+  drawPolygon(rightFlipperPoints, { stroke: disableColorsAndThickness ? 'black' : 'black', width: 1 });
+  fillPolygon(rightFlipperPoints, disableColorsAndThickness ? 'black' : 'black');
+  drawPolygon(beakPoints, { stroke: disableColorsAndThickness ? 'black' : 'orange', width: 1 });
+  fillPolygon(beakPoints, disableColorsAndThickness ? 'black' : 'orange');
+  drawCircle(leftEyeCenter, eyeRadius, { stroke: disableColorsAndThickness ? 'black' : 'black', width: 1 });
+  drawCircle(leftEyeCenter, eyeRadius / 2, { stroke: disableColorsAndThickness ? 'black' : 'black', width: 1, fill: 'black' });
+  drawCircle(rightEyeCenter, eyeRadius, { stroke: disableColorsAndThickness ? 'black' : 'black', width: 1 });
+  drawCircle(rightEyeCenter, eyeRadius / 2, { stroke: disableColorsAndThickness ? 'black' : 'black', width: 1, fill: 'black' });
 }
 
-// Draw background and ice cracks
-drawLines([
-  [
-    [0, 0],
-    [width, 0],
-    [width, height],
-    [0, height],
-    [0, 0]
-  ]
-], { stroke: "#B0E0E6", width: 1 });
+// Helper function to detect if a line segment intersects with a penguin's bounding box
+function isSegmentInsidePenguin(segment) {
+  for (let i = 0; i < penguins.length; i++) {
+    const penguin = penguins[i];
+    const [px, py] = penguin.center;
+    const scale = penguin.scale;
 
+    // Define penguin bounding box
+    const left = px - scale;
+    const right = px + scale;
+    const top = py - scale;
+    const bottom = py + scale;
+
+    const [p1, p2] = segment;
+
+    // Check if either end of the segment is inside the bounding box
+    const isPointInsideBox = (p) =>
+      p[0] >= left && p[0] <= right && p[1] >= top && p[1] <= bottom;
+
+    if (isPointInsideBox(p1) || isPointInsideBox(p2)) {
+      return true; // If any point is inside, they intersect
+    }
+
+    // Additional check for line-segment overlap with rectangle edges
+    const lineIntersect = (l1, l2, r1, r2) => {
+      const det = (l1[0] - l2[0]) * (r1[1] - r2[1]) - (l1[1] - l2[1]) * (r1[0] - r2[0]);
+      if (det === 0) return false; // Parallel lines
+
+      const lambda = ((r1[1] - r2[1]) * (r1[0] - l1[0]) + (r2[0] - r1[0]) * (r1[1] - l1[1])) / det;
+      const gamma = ((l1[1] - l2[1]) * (r1[0] - l1[0]) + (l2[0] - l1[0]) * (r1[1] - l1[1])) / det;
+
+      return (0 < lambda && lambda < 1) && (0 < gamma && gamma < 1);
+    };
+
+    // Check for intersection with each edge of the penguin's bounding box
+    const edges = [
+      [[left, top], [right, top]],
+      [[right, top], [right, bottom]],
+      [[right, bottom], [left, bottom]],
+      [[left, bottom], [left, top]]
+    ];
+
+    for (const edge of edges) {
+      if (lineIntersect(p1, p2, edge[0], edge[1])) {
+        return true; // Line intersects with the bounding box
+      }
+    }
+  }
+  return false; // No intersections
+}
+
+// Draw ice cracks with checks for penguins
 for (let i = 0; i < numberOfIceCracks; i++) {
   const startY = Math.max(0, Math.min(height, ((height / numberOfIceCracks) * i) + bt.randInRange(minCrackOffset, maxCrackOffset)));
   const endY = Math.max(0, Math.min(height, ((height / numberOfIceCracks) * (i + 1)) + bt.randInRange(minCrackOffset, maxCrackOffset)));
@@ -191,26 +241,22 @@ for (let i = 0; i < numberOfIceCracks; i++) {
   crackPoints.push([width, endY]);
 
   for (let j = 0; j < crackPoints.length - 1; j++) {
-    drawLines([
-      [
-        crackPoints[j],
-        crackPoints[j + 1]
-      ]
-    ], { stroke: "#ADD8E6", width: iceCrackWidth });
+    const segment = [crackPoints[j], crackPoints[j + 1]];
+
+    // Check for intersection with penguins when color is disabled
+    if (disableColorsAndThickness && isSegmentInsidePenguin(segment)) {
+      continue; // Skip this crack segment if it intersects with any penguin
+    }
+
+    drawLines([segment], { stroke: disableColorsAndThickness ? 'black' : "#ADD8E6", width: disableColorsAndThickness ? 1 : iceCrackWidth });
   }
 }
 
-function DrawRandomPenguins() {
-  const randomNumPenguins = bt.randInRange(minNumPenguins, maxNumPenguins);
-
-  for (let i = 0; i < randomNumPenguins; i++) {
-    const randomPenguinXValue = bt.randInRange(minPenguinXValue, maxPenguinXValue);
-    const randomPenguinYValue = bt.randInRange(minPenguinYValue, maxPenguinYValue);
-    const randomPenguinScale = bt.randInRange(minPenguinScale, maxPenguinScale);
-
-    DrawPenguin([randomPenguinXValue, randomPenguinYValue], randomPenguinScale);
-  }
+// Generate random penguins
+const numPenguins = bt.randInRange(minNumPenguins, maxNumPenguins);
+for (let i = 0; i < numPenguins; i++) {
+  const x = bt.randInRange(minPenguinXValue, maxPenguinXValue);
+  const y = bt.randInRange(minPenguinYValue, maxPenguinYValue);
+  const scale = bt.randInRange(minPenguinScale, maxPenguinScale);
+  DrawPenguin([x, y], scale);
 }
-
-// Draw penguins
-DrawRandomPenguins();
