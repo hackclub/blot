@@ -31,17 +31,17 @@ function generateHeartWaveArt(seed, randomFactor) {
       const shapeType = bt.randIntInRange(0, 2); // 0: Circle, 1: Ellipse, 2: Polygon
 
       if (shapeType === 0) {
-        const radius = bt.rand() * 2;
+        const radius = bt.rand() * 1.5;
         const backgroundCircle = createCircle(x, y, radius, 20);
         drawLines([backgroundCircle]);
       } else if (shapeType === 1) {
-        const radiusX = bt.rand() * 3;
-        const radiusY = bt.rand() * 2;
+        const radiusX = bt.rand() * 2;
+        const radiusY = bt.rand() * 1.5;
         const backgroundEllipse = createEllipse(x, y, radiusX, radiusY, 20);
         drawLines([backgroundEllipse]);
       } else {
-        const sides = bt.randIntInRange(3, 6); // Random polygon with 3 to 6 sides
-        const radius = bt.rand() * 2;
+        const sides = bt.randIntInRange(3, 5);
+        const radius = bt.rand() * 1.5;
         const backgroundPolygon = createPolygon(x, y, radius, sides);
         drawLines([backgroundPolygon]);
       }
