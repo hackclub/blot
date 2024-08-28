@@ -28,24 +28,48 @@ function generateHeartWaveArt(seed, randomFactor) {
     for (let i = 0; i < backgroundPatternDensity; i++) {
       const x = bt.rand() * width;
       const y = bt.rand() * height;
-      const shapeType = bt.randIntInRange(0, 2); // 0: Circle, 1: Ellipse, 2: Polygon
 
-      if (shapeType === 0) {
-        const radius = bt.rand() * 1.5;
-        const backgroundCircle = createCircle(x, y, radius, 20);
-        drawLines([backgroundCircle]);
-      } else if (shapeType === 1) {
-        const radiusX = bt.rand() * 2;
-        const radiusY = bt.rand() * 1.5;
-        const backgroundEllipse = createEllipse(x, y, radiusX, radiusY, 20);
-        drawLines([backgroundEllipse]);
+      if (!isPointInHeartShape(x, y)) {
+        const shapeType = bt.randIntInRange(0, 2);
+
+        if (shapeType === 0) {
+          const radius = bt.rand() * 1.5;
+          const backgroundCircle = createCircle(x, y, radius, 20);
+          drawLines([backgroundCircle]);
+        } else if (shapeType === 1) {
+          const radiusX = bt.rand() * 2;
+          const radiusY = bt.rand() * 1.5;
+          const backgroundEllipse = createEllipse(x, y, radiusX, radiusY, 20);
+          drawLines([backgroundEllipse]);
       } else {
-        const sides = bt.randIntInRange(3, 5);
-        const radius = bt.rand() * 1.5;
-        const backgroundPolygon = createPolygon(x, y, radius, sides);
-        drawLines([backgroundPolygon]);
+          const sides = bt.randIntInRange(3, 5);
+          const radius = bt.rand() * 1.5;
+          const backgroundPolygon = createPolygon(x, y, radius, sides);
+          drawLines([backgroundPolygon]);
+        }
       }
     }
+  }
+
+  function isPointInHeartShape(x, y) {
+    const tSteps = 1000; // Increase this for better accuracy
+    for (let i = 0; i < tSteps; i++) {
+      const t = (i / tSteps) * 2 * Math.PI;
+      let [hx, hy] = heartEquation(t);
+
+      hx *= width / heartScalingFactor;
+      hy *= height / heartScalingFactor;
+
+      hx = centerX + hx;
+      hy = centerY + hy;
+
+      const distance = Math.hypot(x - hx, y - hy);
+
+      if (distance < maxRadius) {
+        return true;
+      }
+    }
+    return false;
   }
 
   function createCircle(x, y, radius, sides = 20) {
