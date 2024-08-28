@@ -174,7 +174,7 @@ finalLines.push(
 
 
 const xrail = [
-  [posx + 40, posy + 1.4],
+  [posx + 22, posy + 1.4],
   [posx - 30, posy + 7],
   [posx - 31.2, posy + 6],
   [posx + 20, posy + 0.4],
@@ -213,7 +213,7 @@ const RSstand = [
   [posx + 27.7, posy - 10.8],
   [posx + 24, posy - 20],
   [posx + 27.7, posy - 10.8],
-  [posx + 37.2, posy - 12.3],
+  [posx + 37.2, posy - 11.8],
   [posx + 37.7, posy - 2.5],
   [posx + 39.7, posy + 3.7],
   [posx + 27.6, posy + 4.9],
@@ -459,7 +459,6 @@ function onlyskewANDclip(polyline) {
 
 
 
-// Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
 
 paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
 if (predrawpreskew != '') {
