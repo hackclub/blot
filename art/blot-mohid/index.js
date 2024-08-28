@@ -9,13 +9,12 @@ let predrawpreskew = ''
 // 1. Your drawing MUST be 125x125
 // 2. There should be a variable called 'finalLines' which contains all the lines which
 //    make up your drawing
-// 3. drawLines() should only be called in your whole code
+// 3. drawLines() should only be called once in your whole code
 // 4. Replace the line 'drawLines(finalLines)' with 'predrawpreskew = finalLines'
-// 5. I recommend minifying your code using a site such as hack.club/441cnc
-// 6. Paste your minified code here:
-
-const width=125,height=125;setDocDimensions(125,125);const radius=50,curveStrength=-.15,widthCurveRatio=-20;let lineSpacing=radius/10;const showCircle=!0,t=new bt.Turtle;for(let i=12.5%lineSpacing;i<=125;i+=lineSpacing){let e=i;if(49>Math.abs(e-62.5)){let o=62.5+Math.sqrt(2500-Math.pow(e-62.5,2)),$=62.5-Math.sqrt(2500-Math.pow(e-62.5,2));t.jump([0,e]),t.goTo([$,e]);let n=[bt.nurbs([[$,e],[62.5,-((o-$+-20)*.15)+e],[o,e]])];bt.join(finalLines,n),t.jump([o,e]),t.goTo([125,e])}else t.jump([0,e]),t.goTo([125,e])}t.jump([62.5,12.5]),t.arc(360,50),predrawpreskew=t.lines();let predrawpreskew1=finalLines;
-
+// 5. Make sure finalLines is not preceded by 'const' or 'let' as it has already
+//    been initialised above.
+// 6. I recommend minifying your code using a site such as hack.club/441cnc
+// 7. Paste your minified code here:
 
 
 
@@ -35,20 +34,24 @@ const transform = [
   [51-x,88-y],
 ]
 
-// drawLines([[[0,0],transform[1]]])
-const item = 1
-let xmove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][0]
-// let xmove = 303
-let ymove = predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item][1]
-// let ymove = 56
+let xmove, ymove;
 
-drawLines(predrawpreskew)
-const drawer = [
-  predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item],
-  [0,0]
-]
-console.log(predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item])
-drawLines([drawer])
+if (predrawpreskew === '') {
+  xmove = 82;
+  ymove = 54;
+} else {
+  let itemIndex = predrawpreskew.length - 1;
+  xmove = predrawpreskew[itemIndex][predrawpreskew[itemIndex].length - 1][0];
+  ymove = predrawpreskew[itemIndex][predrawpreskew[itemIndex].length - 1][1];
+}
+
+// drawLines(predrawpreskew)
+// const drawer = [
+//   predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item],
+//   [0,0]
+// ]
+// console.log(predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item])
+// drawLines([drawer])
 
 
 function mapValue(value, min, max) {
@@ -459,6 +462,7 @@ function onlyskewANDclip(polyline) {
 // Paste your Blot code here, and replace the drawLines() function at the end with drawLines(skew())
 
 paper = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
-drawLines(skew(predrawpreskew))
-drawLines(skew(predrawpreskew1))
+if (predrawpreskew != '') {
+  drawLines(skew(predrawpreskew))
+}
 drawLines(paper)
