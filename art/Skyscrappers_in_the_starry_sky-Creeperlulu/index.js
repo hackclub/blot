@@ -15,6 +15,10 @@ const minStarSize = 0.1;
 const maxStarSize = 1;
 const moonQuality = 50
 const moonRadius = 28;
+const nbrCraters = 6;
+const waterRepeats = 50;
+const waterHeight = 5
+const waterWaves = 1
 
 
 // Initialize scene
@@ -32,7 +36,7 @@ while (fullWidth < width) {
   turtle.setAngle(90);
   const tempHeight = randomizer(minSkyScraperHeight,maxSkyScraperHeight)
   turtle.forward(tempHeight);
-  turtle.setAngle(0);
+  turtle.setAngle(0)
   const tempDivider = randomizer(skyScrapersIntensity, skyScrapersIntensity +25)
   if (fullWidth + (width / tempDivider) >= width) {
     turtle.forward(width - fullWidth);
@@ -46,7 +50,7 @@ while (fullWidth < width) {
   }
   fullWidth = fullWidth + (width / tempDivider);
 }
-  return turtle.lines();
+  return turtle.path;
 }
 
 // Creates a single star
@@ -78,8 +82,21 @@ function createStarrySky(nbr){
   return stars;
 }
 
+function createWater(){
+  const turtle = new bt.Turtle()
+  turtle.up();
+  turtle.goTo([0, waterHeight+waterWaves/2]);
+  turtle.down();
+  for (let i = 0; i < waterRepeats; i++) {
+    turtle.goTo([turtle.pos[0]+((width/waterRepeats)/2),waterHeight+waterWaves])
+    turtle.goTo([turtle.pos[0]+((width/waterRepeats)/2),waterHeight+waterWaves/2])
+  }
+  return turtle.path;
+  
+}
+
 // Creates the moon (really just a simple circle) 
-function createMoon(x, y, radius, nbrPoints) {
+function createCircle(x, y, radius, nbrPoints) {
   const circle = [];
   for (let i = 0; i <= nbrPoints; i++) {
     const angle = (i / nbrPoints) * 2 * Math.PI;
@@ -90,18 +107,28 @@ function createMoon(x, y, radius, nbrPoints) {
 
 
 
+
 // Print the scene
 const u = createSkyScrapers();
 const t = createSkyScrapers();
 const starrySky = createStarrySky(nbrStars);
-const moon = createMoon(width-moonRadius-width/20, height-moonRadius-height/20, moonRadius, moonQuality);
+const moon = createCircle(width-moonRadius-width/20, height-moonRadius-height/20, moonRadius, moonQuality);
+//Craters
+const craters = []
+for (let i = 0; i < nbrCraters; i++){
+  var crater = createCircle(width-moonRadius-width/20+randomizer(20-moonRadius-width/20, 50-moonRadius-height/20), height-moonRadius-height/20 + randomizer(20-moonRadius-height/20, 50-moonRadius-height/20), randomizer(moonRadius/30, moonRadius/10), moonQuality);
+    craters.push(crater);
+}
 drawLines(starrySky);
 drawLines([moon], {fill:"#FFF"});
 drawLines([moon]);
+drawLines(craters);
 drawLines(u, {fill:"#FFF"});
 drawLines(u);
 drawLines(t, {fill:"#FFF"});
 drawLines(t);
+const water = createWater()
+drawLines(water);
 
 
 // Made with ❤ by Creeperlulu
