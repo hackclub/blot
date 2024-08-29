@@ -1,7 +1,7 @@
 /*
 @title: Supernova
 @author: Gavin Schultz
-@snapshot: example1
+@snapshot: example2
 */
 // Geometric thing that looks curved but is actally all straight lines
 // By Gavin Schultz
