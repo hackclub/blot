@@ -706,6 +706,10 @@ function drawMazeFromString(hiddenMessage) {
     const mazeData = generateMazeListFromString(hiddenMessage);
     console.log(mazeData);
 
+    let lastElementMainList = mazeData[mazeData.length - 1];
+    let lastElementSublist = lastElementMainList[lastElementMainList.length - 1];
+    lastElementSublist[1] = 0;
+
     // Set dimensions
     const rows = mazeData.length;
     const cols = mazeData[0].length;
