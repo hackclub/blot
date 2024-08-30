@@ -22,8 +22,6 @@ let predrawpreskew = ''
 
 
 
-
-
 const x = 31
 const y = 44
 
@@ -373,7 +371,7 @@ const bearing4 = bt.copy(bearing)
 
 finalLines.push(...bt.cover(bt.cover([ymount],[pen]), [ypenclip]))
 
-finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([xrail], [RSmount]), [yrail]), [ymount]), [pen]), [yrail]), [yrailmount]));
+finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([xrail], [RSmount]), [yrail]), [ymount]), [pen]), [yrail]), [yrailmount]), [ypenclip]));
 finalLines.push(...bt.cover([RSmount], [RSstand]));
 
 finalLines.push(...bt.cover(bt.cover(bt.cover(bt.cover(bt.cover(bt.cover([LSmount], [xrail]), [yrail]), [ymount]),[pen]), [ymount]), [ypenclip]));
@@ -419,10 +417,10 @@ const belt = [
 
 finalLines.push(...bt.cover(bt.cover(bt.cover([belt],[yrail]),[yrailmount]), [pen]))
 
-drawLines(bt.translate(bearing,[0,0.5]))
-drawLines(bt.translate(bearing2,[4,6]))
-drawLines(bt.cover(bt.cover(bt.translate(bearing3,[-5,7]), [yrail]), [yclip]))
-drawLines(bt.cover(bt.cover(bt.cover(bt.translate(bearing4,[-10,2]), [yrail]), [pen]), [ypenclip]))
+drawLines(bt.cover(bt.translate(bearing,[0,0.5]), [ymount]))
+drawLines(bt.cover(bt.translate(bearing2,[4,6]), [ymount]))
+drawLines(bt.cover(bt.cover(bt.cover(bt.translate(bearing3,[-5,7]), [yrail]), [yclip]), [ymount]))
+drawLines(bt.cover(bt.cover(bt.cover(bt.cover(bt.translate(bearing4,[-10,2]), [yrail]), [pen]), [ypenclip]), [ymount]))
 finalLines.push(...bt.cover(bt.cover(bt.cover([yrailmount],[yrail]), [pen]), [ymount]), [...bearing4])
 
 
