@@ -249,7 +249,7 @@ function getDistance(pos1, pos2) {
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-for (let i = 0; i < Number_of_Stars+10; i++) {
+for (let i = 0; i < Number_of_Stars; i++) {
     var validPosition = false;
     var ChosenPosition;
 
