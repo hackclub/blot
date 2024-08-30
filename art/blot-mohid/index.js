@@ -9,8 +9,8 @@ let predrawpreskew = ''
 // 1. Your drawing MUST be 125x125
 // 2. There should be a variable called 'finalLines' which contains all the lines which
 //    make up your drawing
-// 3. drawLines() should only be called once in your whole code
-// 4. Replace the line 'drawLines(finalLines)' with 'predrawpreskew = finalLines'
+// 3. drawLines() should only be called once in your whole code (i.e. at the end there should be a drawLines(finalLines) bit)
+// 4. Replace the line 'drawLines(finalLines)' with 'predrawpreskew = finalLines' (or whatever the lines variable is called)
 // 5. Make sure finalLines is not preceded by 'const' or 'let' as it has already
 //    been initialised above.
 // 6. I recommend minifying your code using a site such as hack.club/441cnc
