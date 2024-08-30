@@ -7,8 +7,11 @@
 // set alwaysRandom to true to always set random seeds
 // this will ignore the variable fixedSeed
 
+// set addColor to true for color, set addColor to false for no color
+
 // set alwaysRandom to false to use the variable fixedSeed
 const alwaysRandom = true;
+const addColor = false;
 
 const fixedSeed = 12345;
 
@@ -28,7 +31,11 @@ const flagHeight = 125;
 setDocDimensions(flagWidth, flagHeight);
 
 function randomColor() {
-  return `rgb(${bt.randIntInRange(0, 255)}, ${bt.randIntInRange(0, 255)}, ${bt.randIntInRange(0, 255)})`;
+  if (addColor) {
+    return `rgb(${bt.randIntInRange(0, 255)}, ${bt.randIntInRange(0, 255)}, ${bt.randIntInRange(0, 255)})`;
+  } else {
+    return ;
+  }
 }
 
 function clipShape(shape) {
