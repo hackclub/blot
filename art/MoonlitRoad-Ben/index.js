@@ -17,8 +17,7 @@ const Horizon_Random = [15, -1] //min, max
 
 //Stars
 const Number_of_Stars = 16
-const Star_Min_Distance = 11 //DO NOT MAKE THIS TOO HIGH
-const Star_Min_Height = 17
+const Star_Min_Distance = 11
 const Star_Size = [1, 0.6]//min, max
 const Star_Points_Number = [3,13]//min, max
 
@@ -37,10 +36,10 @@ const Moon_Type = "crescent" // "full": new/full moon phase, "crescent": gibbous
 const Farm_Size = [100, 100]
 
 // Grass Parameters
-const Grass_Density = 137; // Number of grass blades
-const Grass_Length = [2, 5]; // Min and max length
-const Grass_Width = [0.1, 0.3]; // Min and max width
-const Grass_Variation = 15; // Max angle variation
+const Grass_Density = 137;
+const Grass_Length = [2, 5];
+const Grass_Width = [0.1, 0.3];
+const Grass_Variation = 15;
 
 //---------------------------------------------------------------------------------------------//
 
@@ -250,13 +249,13 @@ function getDistance(pos1, pos2) {
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-for (let i = 0; i < Number_of_Stars; i++) {
+for (let i = 0; i < Number_of_Stars+10; i++) {
     var validPosition = false;
     var ChosenPosition;
 
     while (!validPosition) {
         var ChosenX = bt.randInRange(8, width - 8);
-        var ChosenY = bt.randInRange(height - 11, Horizon_Height + Star_Min_Height);
+        var ChosenY = bt.randInRange(height - 11, Horizon_Height + 22);
         ChosenPosition = [ChosenX, ChosenY];
 
         validPosition = true;
@@ -337,7 +336,7 @@ function drawGrass(position, GrassLength, angle) {
   for (let i = 0; i < (Grass_Density); i++) 
   {
     let validPosition = true;
-    let ChosenPosition = [bt.randInRange(0, width - 3), bt.randInRange(0, Horizon_Height-3)];
+    let ChosenPosition = [bt.randInRange(0, width - 3), bt.randInRange(3, Horizon_Height-5)];
 
     if (getgrassDistance(ChosenPosition[0], badx) < MinDistanceFromBadPoint) {
         validPosition = false;
