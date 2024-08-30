@@ -180,29 +180,29 @@ function drawRoad() {
   return { roadLines, whiteLines };
 }
 
-const sky = drawSky();
-drawLines(sky, { fill: "Blue" });
+//const sky = drawSky();
+//drawLines(sky);
 
-const ground = drawGround();
-drawLines(ground, { fill: "YellowGreen" });
+//const ground = drawGround();
+//drawLines(ground);
 
 // Draw the sun - hopefully i can make it go in a ARC
 const sun = new bt.Turtle();
 sun.jump([sun_x, sun_y]);
 sun.arc(360, 15);
-drawLines(sun.lines(), { fill: "Gold" });
+drawLines(sun.lines());
 
-const { roadLines, whiteLines } = drawRoad();
-drawLines(roadLines, { fill: "Grey" });
-drawLines(whiteLines, { stroke: "white" });
+//const { roadLines, whiteLines } = drawRoad();
+//drawLines(roadLines);
+//drawLines(whiteLines);
 
 // Draw the car
 const carLines = drawRaceCar();
-drawLines(carLines, { fill: "Red" });
+drawLines(carLines);
 
 const wheelLines = drawWheels();
-drawLines(wheelLines, { fill: "Black" });
+drawLines(wheelLines);
 
 // Draw the grass
 const grassLines = drawGrass();
-drawLines(grassLines, { stroke: "Green" });
+drawLines(grassLines);
