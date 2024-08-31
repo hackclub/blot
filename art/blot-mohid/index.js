@@ -10,12 +10,14 @@ let predrawpreskew = ''
 // 2. There should be a variable called 'finalLines' which contains all the lines which
 //    make up your drawing
 // 3. drawLines() should only be called once in your whole code (i.e. at the end there should be a drawLines(finalLines) bit)
-// 4. Replace the line 'drawLines(finalLines)' with 'predrawpreskew = finalLines' (or whatever the lines variable is called)
+//    If your code really requires lines to be drawn iteratively, then you can try to replace
+//    drawLines(x) in the loop with finalLines.push(...x) (i cant guarantee this will work tho)
+//    Check to see if it works by adding drawLines(finalLines) at the bottom of your code and see if it draws.
+// 4. Replace the line 'drawLines(finalLines)' with 'predrawpreskew = finalLines'
 // 5. Make sure finalLines is not preceded by 'const' or 'let' as it has already
 //    been initialised above.
 // 6. I recommend minifying your code using a site such as hack.club/441cnc
 // 7. Paste your minified code here:
-
 
 
 
@@ -35,20 +37,22 @@ const transform = [
 let xmove, ymove;
 
 if (predrawpreskew === '') {
-  xmove = 82;
-  ymove = 54;
+  xmove = -3;
+  ymove = -1;
 } else {
   let itemIndex = predrawpreskew.length - 1;
   xmove = predrawpreskew[itemIndex][predrawpreskew[itemIndex].length - 1][0];
+  // console.log(xmove)
   ymove = predrawpreskew[itemIndex][predrawpreskew[itemIndex].length - 1][1];
+  // console.log(ymove)
 }
 
 // drawLines(predrawpreskew)
 // const drawer = [
-//   predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item],
+//   predrawpreskew[predrawpreskew.length-1][predrawpreskew[predrawpreskew.length-1].length-1],
 //   [0,0]
 // ]
-// console.log(predrawpreskew[predrawpreskew.length-item][predrawpreskew[predrawpreskew.length-item].length-item])
+// console.log(predrawpreskew[predrawpreskew.length-1][predrawpreskew[predrawpreskew.length-1].length-1])
 // drawLines([drawer])
 
 
@@ -58,9 +62,9 @@ function mapValue(value, min, max) {
     return min + (max - min) * (value / 125);
 }
 
-const xslide = 93 - mapValue(xmove, 2.8, 74.8);
+const xslide = 93 - mapValue(xmove, 6.4, 100.9);
 
-const yslide = mapValue(ymove, -89.7, 70);
+const yslide = mapValue(ymove, -89.6, 77.7);
 
 
 const pagewidth = 125;
@@ -68,8 +72,6 @@ const pageheight = 125;
 setDocDimensions(pagewidth, pageheight);
 
 finalLines = [];
-
-// Scroll to the bottom and paste your blot code under the comment!
 
 function withinBounds(value, min, max) {
     if (value === 'x' || value < min || value > max) {
@@ -188,9 +190,6 @@ const xrail = [
   [posx + 20, posy + 0.4],
   [posx + 21, posy + 1.4],
 ];
-
-console.log([posx + 40, posy + 1.4])
-console.log([posx - 30, posy + 7])
 
 const RSmount = [
   [posx + 22.5, posy + 4.2],
