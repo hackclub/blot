@@ -14,6 +14,8 @@ const r = bt.randInRange(5, 6);
 const rrr = bt.randInRange(3, 3.4);
 const rrrr = bt.randInRange(2, 2.9);
 const rrrrr = bt.randInRange(2, 2.11);
+const rrrrrr = bt.randInRange(11, 0);
+const rrrrrrr = bt.randInRange(16, 0);
 
 const t = new bt.Turtle()
 const size = 80
@@ -75,13 +77,13 @@ const size4 = 100
 const angle3 = 120/180 * Math.PI
 
 drawLines([
-    [[11, 100], [11, size4], [72 * Math.sin(angle3), 127 + size4 * Math.cos(angle3)]]
+    [[rrrrrr, 100], [11, size4], [70 * Math.sin(angle3), 127 + size4 * Math.cos(angle3)]]
 ])
 const size5 = 100
 const angle = 120/180 * Math.PI
 
 drawLines([
-    [[60, 69], [16, 51], [16 * Math.sin(angle), size5 + size5 * Math.cos(angle)]]
+    [[60, 69], [16, 51], [rrrrrrr * Math.sin(angle), size5 + size5 * Math.cos(angle)]]
 ])
 const width3 = 125
 const height3 = 125
@@ -145,4 +147,3 @@ drawLines(rect4, { fill: "red" });
 drawLines(rect, { fill: "red" });
 drawLines(recta, { fill: "yellow" });
 drawLines(rect3, { fill: "red" });
-
