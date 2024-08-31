@@ -4,12 +4,12 @@
 @snapshot: lorenz.png
 */
 
-const rho = 28;
-const sigma = 10;
-const beta = 8 / 3;
+const rho = bt.randInRange(18, 38); // default 28
+const sigma = bt.randInRange(0, 20); // default 10
+const beta = bt.randInRange(2 / 3, 14 / 3); // default 8 / 3
 
-const xAxis = "x"; // Change to "x", "y", or "z"
-const yAxis = "z"; // Change to "x", "y", or "z"
+const xAxis = "xyz".split("")[bt.randIntInRange(0, 2)]; // Change to "x", "y", or "z"
+const yAxis = "xyz".split("").filter(v => v !== xAxis)[bt.randIntInRange(0, 1)]; // Change to "x", "y", or "z"
 
 const dt = 0.01;
 const finalIter = 10000;
