@@ -75,7 +75,7 @@ export default function Toolbar() {
         </h1>
         <RunButton />
         <div class={dropdownContainer}>
-        <img src="/icons/file.svg"/>
+        <div className="mr-1"><img src="/icons/file.svg"/></div>
           {needsSaving ? 'File*' : "File"}
           <div class={dropdownClasses + " left-0 \n " + css}>
             <div class={menuItemClasses} onClick={() => patchStore({ saveToCloudModalOpen: true })}>
@@ -107,12 +107,16 @@ export default function Toolbar() {
         </div> */}
         <a class={menuItemClasses} href="/docs" target="_blank" rel="noopener noreferrer">
           <img src="/icons/book.svg"/>
+          <div className="ml-1">
            Docs
+           </div>
         </a>
         <div class={dropdownContainer}>
           <div class={menuItemClasses} >
           <img src="/icons/download.svg"/>
+          <div className="ml-1">
             Download
+          </div>
           </div>
           <div class={dropdownClasses + " left-0 \n " + css}>
             <DownloadButton />
@@ -122,7 +126,9 @@ export default function Toolbar() {
         </div>
         <a class={menuItemClasses} href="/submitting" target="_blank" rel="noopener noreferrer">
           <img src="/icons/question.svg"/>
+          <div className="ml-1">
            What do I make?
+          </div>
         </a>
       </div>
 
@@ -215,7 +221,8 @@ function RunButton() {
     <Button class="relative" variant="ghost" onClick={() => runCode()}>
       <div class={menuItemClasses}>
       <img src="/icons/run.svg"/>
-      Run (shift+enter)
+      <div className="ml-1">
+        Run (shift+enter)</div>
       </div>
       { getStore().codeRunning  && 
         <div class="absolute mx-auto bottom-0 left-0 right-0 text-xs text-gray-300">
