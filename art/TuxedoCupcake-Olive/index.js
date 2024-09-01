@@ -6,11 +6,20 @@
 
 // These are the things that customize the cupcake!
 
+// Because I want to allow you to see your seed, I need to randomly generate a seed to be the seed... kinda weird but it works
+const seed = bt.randIntInRange(0, 999999999)
+
+// Set to a specific if you want a seeded cupcake, otherwise just 'seed'
+bt.setRandSeed(seed)
+
+// Sets whether the cupcake is in black & white (what the blot will actually draw) vs. color (what looks better)
+const color = true;
+
 // Can be a set number between 30 and 70, or just a random int between those two values
 const startBaseLine = bt.randIntInRange(30, 70)
 
-// How many sprinkles on each row of cupcake
-const sprinks = [bt.randIntInRange(10,20), bt.randIntInRange(7,14), bt.randIntInRange(5, 10)]
+// Toppings
+const toppings = [bt.randIntInRange(10,20), bt.randIntInRange(7,14), bt.randIntInRange(5, 10)]
 const sprinkColors = ["#f75c5c", "#f7975c", "#f7e55c", "#97f75c", "#5c9cf7", "#5c5cf7", "#9a5cf7", "#dc6ef0"]
 
 // Cake colors -> Vanilla, Chocolate, Cinnamon, Lemon
@@ -31,7 +40,8 @@ const base = [
   [30, 10],
   [25, 40]
 ];
-drawLines([base], {fill: "#000000"})
+if (color) drawLines([base], {fill: "#000000"})
+else drawLines([base])
 
 
 const turte = new bt.Turtle() // Cake Turte
@@ -44,7 +54,9 @@ turte.setAngle(180)
 turte.arc(180, 2)
 
 const cakeColor = cakeColors[bt.randIntInRange(0, cakeColors.length - 1)]
-drawLines(turte.path, {fill: cakeColor, stroke: cakeColor})
+if (color) drawLines(turte.path, {fill: cakeColor, stroke: cakeColor})
+else drawLines(turte.path)
+
 
 // base bottom - 30 -> 70, 40pts
 // base top    - 25 -> 75, 50pts
@@ -62,7 +74,8 @@ for (let i = startBaseLine + 3 * Math.sin(Math.PI * (startBaseLine-30) / 40) + 1
   baseLines.push(baseLine(i))
 }
 
-drawLines(baseLines, {stroke: "#1F1F1F", width: 5})
+if (color) drawLines(baseLines, {stroke: "#1F1F1F", width: 5})
+else drawLines(baseLines)
 
 let turty = new bt.Turtle() // Frosting Turty
 
@@ -92,39 +105,116 @@ for (let i = 0; i < 2; i++) {
 turty.arc(175, 4)
 
 const frosting = frostingColors[bt.randIntInRange(0, frostingColors.length - 1)]
-drawLines(turty.path, {fill: frosting[0], stroke: frosting[1], width:16})
+if (color) drawLines(turty.path, {fill: frosting[0], stroke: frosting[1], width:16})
+else drawLines(turty.path)
+
 
 // Sprinkle Bounds:
 // Zone 1: x -> 30-70, y -> 46-52
 // Zone 2: x -> 36-64, y -> 53-61
 // Zone 3: x -> 44-56, y -> 62-70
 
-let sprinkies = [];
-sprinkColors.forEach(() => {sprinkies.push([])})
-
-function drawSprinkle(x, y) {
+function drawSprinkle(x, y, sColor) {
   const sprinkTurt = new bt.Turtle()
   sprinkTurt.jump([x, y])
-  sprinkTurt.setAngle(bt.rand() * 360)
   sprinkTurt.forward(1.5)
   sprinkTurt.arc(180, 0.15)
   sprinkTurt.forward(1.5)
   sprinkTurt.arc(180, .15)
-
-  return sprinkTurt.path[0]
+  const sprinkPath = sprinkTurt.path
+  bt.rotate(sprinkPath, bt.randIntInRange(0, 360))
+  if (color) drawLines(sprinkPath, {fill: sColor, stroke: sColor});
+  else drawLines(sprinkPath)
 }
 
-for (let i = 0; i < sprinks[0]; i++) {
-  sprinkies[bt.randIntInRange(0, sprinkies.length - 1)].push(drawSprinkle(bt.randIntInRange(30, 70), bt.randIntInRange(46, 52)))  
+function drawChocChip(x, y) {
+  const chipTurt = new bt.Turtle()
+  chipTurt.jump([x, y])
+  chipTurt.forward(2)
+  chipTurt.arc(144, .5)
+  chipTurt.forward(1)
+  chipTurt.arc(-180, .2)
+  chipTurt.left(163)
+  chipTurt.arc(127, .5)
+  chipTurt.arc(-66, 0.2)
+  chipTurt.arc(27, 0.2)
+  chipTurt.forward(1)
+  chipTurt.arc(144, .5)
+  const chipPath = chipTurt.path
+  bt.rotate(chipPath, bt.randIntInRange(-90, 90))
+  if (color) drawLines(chipPath, {fill: "#604320", stroke: "#604320"})
+  else drawLines(chipPath)
 }
-for (let i = 0; i < sprinks[1]; i++) {
-  sprinkies[bt.randIntInRange(0, sprinkies.length - 1)].push(drawSprinkle(bt.randIntInRange(36, 64), bt.randIntInRange(53, 61)))  
+
+function drawCashew(x, y) {
+  const cashTurt = new bt.Turtle()
+  cashTurt.jump([x, y])
+  cashTurt.arc(178, 1.2)
+  cashTurt.arc(165, .4)
+  cashTurt.arc(-43, 0.5)
+  cashTurt.arc(-38, 0.88)
+  cashTurt.arc(-78, 0.4)
+  cashTurt.arc(185, 0.24)
+  const cashewPath = cashTurt.path
+  bt.scale(cashewPath, 2.5)
+  bt.rotate(cashewPath, bt.randIntInRange(0, 360))
+  if (color) drawLines(cashewPath, {fill: "#efc591", stroke: "#d4a973"})
+  else drawLines(cashewPath)
 }
-for (let i = 0; i < sprinks[2]; i++) {
-  sprinkies[bt.randIntInRange(0, sprinkies.length - 1)].push(drawSprinkle(bt.randIntInRange(44, 56), bt.randIntInRange(62, 70)))  
+
+function drawTopping(type, x, y, color) {
+  const arr = []
+  let colliding = false
+  for (let i = 0; i < toppingBounds.length; i++) {
+    arr.push(Math.sqrt(Math.pow(x - toppingBounds[i][0], 2) + Math.pow(y, - toppingBounds[i][1], 2)))
+    if (Math.sqrt(Math.pow(x - toppingBounds[i][0], 2) + Math.pow(y - toppingBounds[i][1], 2)) <= toppingSize) {
+      colliding = true
+    }
+  }
+  if (colliding == false) {
+    toppingBounds.push([x, y])
+    switch (type) {
+      case 0:
+        drawSprinkle(x, y, color)
+        break;
+      case 1:
+        drawChocChip(x, y)
+        break;
+      case 2:
+        drawCashew(x, y)
+        break;
+    }  
+  }
+}
+
+const toppingBounds = []
+
+// Random topping: 0=sprinkles, 1=choc chips, 3=cashews
+const pickedTopping = bt.randIntInRange(0, 2)
+let toppingSize = 2;
+if (pickedTopping == 1) toppingSize = 3;
+if (pickedTopping == 2) toppingSize = 6;
+for (let i = 0; i < toppings[0]; i++) {
+  drawTopping(pickedTopping, bt.randIntInRange(28+pickedTopping, 72-pickedTopping), bt.randIntInRange(45+pickedTopping, 52-pickedTopping), sprinkColors[bt.randIntInRange(0, sprinkColors.length - 1)])
+}
+for (let i = 0; i < toppings[1]; i++) {
+  drawTopping(pickedTopping, bt.randIntInRange(36+pickedTopping, 66-pickedTopping), bt.randIntInRange(53+pickedTopping, 61-pickedTopping), sprinkColors[bt.randIntInRange(0, sprinkColors.length - 1)])
+}
+for (let i = 0; i < toppings[2]; i++) {
+  drawTopping(pickedTopping, bt.randIntInRange(42+pickedTopping, 58-pickedTopping), bt.randIntInRange(62+pickedTopping, 70-pickedTopping), sprinkColors[bt.randIntInRange(0, sprinkColors.length - 1)])
 }
 
 
-sprinkies.forEach((sprinkles, i) => {
-  drawLines(sprinkles, {fill: sprinkColors[i], stroke: sprinkColors[i]})
-})
+
+
+
+function drawSeed(seed) {
+  
+}
+
+function drawNumber(num, numTurt) {
+  switch (num) {
+    case 1:
+      
+  }
+}
