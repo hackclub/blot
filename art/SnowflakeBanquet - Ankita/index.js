@@ -5,7 +5,7 @@
 */
 
 /*
-You can change the number and size of snow, and the positions, colors, and line colors of snowflakes.
+You can change the position, color, and size of the snowflakes. You can change the size and position of the snowman, as well as the position of the trees! 
 */
 
 const detail = 5; // no. of flakes
@@ -13,6 +13,24 @@ const size = 22; // size of flakes
 
 const linecolor = "black"; // color of lines
 const fillcolor = "lightblue"; // filled color
+
+
+const treePositions = [ //tree positions
+  [57, 111],
+  [34, 111],
+  [14, 111],
+];
+
+const positions = [ // snowflake positions
+  [128, 143],
+  [47, 77],
+  [328, 60],
+  [56, 337],
+  [181, 264],
+  [328, 317],
+  [47,226],
+];
+
 
 const width = 400;
 const height = 400;
@@ -28,146 +46,140 @@ horizontalLine.jump([0, lineY]);
 horizontalLine.forward(400);
 
 drawLines(horizontalLine.lines(), { stroke: "black", width: 1 });
+const snowmanSize = 1.0; // Change this value to resize the snowman
+const snowmanBaseX = 270; // X position of snowman (doesn't need scaling)
+const snowmanBaseY = 245; // Y position of snowman (doesn't need scaling)
 
 
-/* Add snowdrifts */
+
+
+
+// shadow
 const snowdrift = new bt.Turtle();
-snowdrift.jump([213, 113]);
-snowdrift.forward(59);
-snowdrift.forward(31);
-snowdrift.forward(-29);
-snowdrift.forward(66);
+snowdrift.jump([snowmanBaseX + (8 * snowmanSize) - (70 * snowmanSize), 113]);
+snowdrift.forward(59 * snowmanSize);
+snowdrift.forward(31 * snowmanSize);
+snowdrift.forward(-29 * snowmanSize);
+snowdrift.forward(66 * snowmanSize);
 snowdrift.right(54);
-snowdrift.forward(75);
+snowdrift.forward(75 * snowmanSize);
 drawLines(snowdrift.lines(), { fill: "#D3D3D3", stroke: "#D3D3D3" });
 
-/* Snowman */
+
+
+// snowman body
 const snowman = new bt.Turtle();
-const snowmanBaseX = 293;
-const snowmanBaseY = 245;
-
 snowman.jump([snowmanBaseX, snowmanBaseY]);
-snowman.arc(360, 26);
+snowman.arc(360, 26 * snowmanSize);
 
-snowman.jump([snowmanBaseX, snowmanBaseY - 61]);
-snowman.arc(360, 37);
+snowman.jump([snowmanBaseX, snowmanBaseY - 61 * snowmanSize]);
+snowman.arc(360, 37 * snowmanSize);
 
-snowman.jump([snowmanBaseX, snowmanBaseY - 138]);
-snowman.arc(360, 48);
+snowman.jump([snowmanBaseX, snowmanBaseY - 138 * snowmanSize]);
+snowman.arc(360, 48 * snowmanSize);
 
 drawLines(snowman.lines(), { fill: "white", stroke: "black" });
 
+// snowman eyes
 const snowmanEye1 = new bt.Turtle();
-snowmanEye1.jump([snowmanBaseX - 7, snowmanBaseY - -31]);
-snowmanEye1.arc(360, 1);
+snowmanEye1.jump([snowmanBaseX - 7 * snowmanSize, snowmanBaseY - -27 * snowmanSize]);
+snowmanEye1.arc(360, 1 * snowmanSize);
 drawLines(bt.scale(snowmanEye1.lines(), [1.0, 1.0]), { fill: "black" });
 
 const snowmanEye2 = new bt.Turtle();
-snowmanEye2.jump([snowmanBaseX + 9, snowmanBaseY - -31]);
-snowmanEye2.arc(360, 1);
+snowmanEye2.jump([snowmanBaseX + 9 * snowmanSize, snowmanBaseY - -27 * snowmanSize]);
+snowmanEye2.arc(360, 1 * snowmanSize);
 drawLines(bt.scale(snowmanEye2.lines(), [1.0, 1.0]), { fill: "black" });
 
-const snowmandot1 = new bt.Turtle();
-snowmanEye2.jump([snowmanBaseX + 3, snowmanBaseY - 26]);
-snowmanEye2.arc(360, 1);
-drawLines(bt.scale(snowmanEye2.lines(), [1.0, 1.0]), { fill: "black" });
-
-const snowmandot2 = new bt.Turtle();
-snowmanEye2.jump([snowmanBaseX + 3, snowmanBaseY - 15]);
-snowmanEye2.arc(360, 1);
-drawLines(bt.scale(snowmanEye2.lines(), [1.0, 1.0]), { fill: "black" });
-
-const snowmandot3 = new bt.Turtle();
-snowmanEye2.jump([snowmanBaseX + 3, snowmanBaseY - 37]);
-snowmanEye2.arc(360, 1);
-drawLines(bt.scale(snowmanEye2.lines(), [1.0, 1.0]), { fill: "black" });
-
+// snowman nose
 const snowmanNose = new bt.Turtle();
-snowmanNose.jump([snowmanBaseX + 3, snowmanBaseY - -25]);
-snowmanNose.forward(10);
-drawLines(snowmanNose.lines(), { stroke: "orange", width: 4 });
+snowmanNose.jump([snowmanBaseX + 3 * snowmanSize, snowmanBaseY - -22 * snowmanSize]);
+snowmanNose.forward(10 * snowmanSize);
+drawLines(snowmanNose.lines(), { stroke: "orange", width: 4 * snowmanSize });
 
+// snowman arms
 const snowmanLeftArm = new bt.Turtle();
-snowmanLeftArm.jump([snowmanBaseX - 45, snowmanBaseY - 1]);
+snowmanLeftArm.jump([snowmanBaseX - 45 * snowmanSize, snowmanBaseY - -2 * snowmanSize]);
 snowmanLeftArm.right(45);
-snowmanLeftArm.forward(15);
-drawLines(snowmanLeftArm.lines(), { stroke: "brown", width: 2 });
+snowmanLeftArm.forward(15 * snowmanSize);
+drawLines(snowmanLeftArm.lines(), { stroke: "brown", width: 2 * snowmanSize });
 
 const snowmanRightArm = new bt.Turtle();
-snowmanRightArm.jump([snowmanBaseX + 35, snowmanBaseY - 9]);
+snowmanRightArm.jump([snowmanBaseX + 35 * snowmanSize, snowmanBaseY - 9 * snowmanSize]);
 snowmanRightArm.left(45);
-snowmanRightArm.forward(15);
-drawLines(snowmanRightArm.lines(), { stroke: "brown", width: 2 });
+snowmanRightArm.forward(15 * snowmanSize);
+drawLines(snowmanRightArm.lines(), { stroke: "brown", width: 2 * snowmanSize });
 
-/* Add a hat on the snowman */
+// hat
 const hat = new bt.Turtle();
-hat.jump([snowmanBaseX - 21, snowmanBaseY - -45]); // Base of the hat
-hat.forward(40);
+hat.jump([snowmanBaseX - 20 * snowmanSize, snowmanBaseY - -42 * snowmanSize]); 
+hat.forward(40 * snowmanSize);
 hat.left(90);
-hat.forward(8);
+hat.forward(8 * snowmanSize);
 hat.left(90);
-hat.forward(40);
+hat.forward(40 * snowmanSize);
 hat.left(90);
-hat.forward(8);
-hat.jump([snowmanBaseX - 18, snowmanBaseY - -80]); // Top part of the hat
-hat.forward(30);
+hat.forward(8 * snowmanSize);
+hat.jump([snowmanBaseX - 17 * snowmanSize, snowmanBaseY - -76 * snowmanSize]); 
+hat.forward(30 * snowmanSize);
 hat.left(90);
-hat.forward(33);
+hat.forward(33 * snowmanSize);
 hat.left(90);
-hat.forward(30);
+hat.forward(30 * snowmanSize);
 hat.left(90);
-hat.forward(20);
+hat.forward(20 * snowmanSize);
 drawLines(hat.lines(), { fill: "black", stroke: "black" });
 
-/* Add a scarf on the snowman */
+// scarf
 const scarf = new bt.Turtle();
-scarf.jump([snowmanBaseX - 16, snowmanBaseY - -1]); // Start of the scarf
-scarf.forward(40);
+scarf.jump([snowmanBaseX - 16 * snowmanSize, snowmanBaseY - 1 * snowmanSize]); // Start of the scarf
+scarf.forward(40 * snowmanSize);
 scarf.left(90);
-scarf.forward(10);
+scarf.forward(10 * snowmanSize);
 scarf.left(90);
-scarf.forward(47);
+scarf.forward(47 * snowmanSize);
 scarf.left(90);
-scarf.forward(10);
-scarf.jump([snowmanBaseX - 4, snowmanBaseY - -6]); // Scarf hanging down
+scarf.forward(10 * snowmanSize);
+scarf.jump([snowmanBaseX - 4 * snowmanSize, snowmanBaseY - -4 * snowmanSize]); // Scarf hanging down
 scarf.right(90);
-scarf.forward(15);
+scarf.forward(15 * snowmanSize);
 scarf.left(90);
-scarf.forward(20);
+scarf.forward(20 * snowmanSize);
 scarf.left(90);
-scarf.forward(15);
+scarf.forward(15 * snowmanSize);
 drawLines(scarf.lines(), { fill: "red", stroke: "red" });
 
+// Continue scaling other parts like presents, shadows, and other objects accordingly
+
+
+
 //present
+// Present
 const present = new bt.Turtle();
-present.jump([snowmanBaseX + -72, snowmanBaseY + -135]); 
-present.forward(48);
+present.jump([snowmanBaseX + (-72 * snowmanSize), snowmanBaseY + (-135 * snowmanSize)]); 
+present.forward(48 * snowmanSize);
 present.left(90);
-present.forward(46);
+present.forward(46 * snowmanSize);
 present.left(90);
-present.forward(46);
+present.forward(46 * snowmanSize);
 present.left(90);
-present.forward(46);
+present.forward(46 * snowmanSize);
 drawLines(present.lines(), { fill: "red", stroke: "red" });
 
 const ribbon = new bt.Turtle();
-ribbon.jump([snowmanBaseX + -47, snowmanBaseY + -94]);
+ribbon.jump([snowmanBaseX + (-47 * snowmanSize), snowmanBaseY + (-94 * snowmanSize)]);
 ribbon.left(129);
-ribbon.forward(26);
-ribbon.jump([snowmanBaseX + -47, snowmanBaseY + -94]);
+ribbon.forward(26 * snowmanSize);
+ribbon.jump([snowmanBaseX + (-47 * snowmanSize), snowmanBaseY + (-94 * snowmanSize)]);
 ribbon.left(275);
-ribbon.forward(26);
-ribbon.jump([snowmanBaseX + -47, snowmanBaseY + -95]);
+ribbon.forward(26 * snowmanSize);
+ribbon.jump([snowmanBaseX + (-47 * snowmanSize), snowmanBaseY + (-95 * snowmanSize)]);
 ribbon.left(225);
-ribbon.forward(38);
-drawLines(ribbon.lines(), { stroke: "yellow", width: 10 });
+ribbon.forward(38 * snowmanSize);
+drawLines(ribbon.lines(), { stroke: "yellow", width: 10 * snowmanSize });
 
 /* Trees */
-const treePositions = [
-  [49, 111],
-  [34, 111],
-  [14, 111],
-];
+
 
 treePositions.forEach(pos => {
   const trunk = new bt.Turtle();
@@ -187,7 +199,7 @@ treePositions.forEach(pos => {
   leaves.forward(35);
   leaves.forward(42);
 
-  /* Add lights to trees */
+// tree lights
   const lights = new bt.Turtle();
   lights.jump([pos[0] + -5, pos[1] + 43]);
   for (let i = 0; i < 3; i++) {
@@ -217,15 +229,6 @@ treePositions.forEach(pos => {
 
 
 
-const positions = [
-  [128, 143],
-  [47, 77],
-  [328, 60],
-  [56, 337],
-  [181, 264],
-  [328, 317],
-  [47,226],
-];
 
 function draw_petal(turtle, length) {
   for (let i = 0; i < 2; i++) {
@@ -252,4 +255,3 @@ positions.forEach(pos => {
 });
 
 drawLines(drawing, { fill: fillcolor, stroke: linecolor, width: 2 });
-
