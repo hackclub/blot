@@ -203,18 +203,3 @@ for (let i = 0; i < toppings[1]; i++) {
 for (let i = 0; i < toppings[2]; i++) {
   drawTopping(pickedTopping, bt.randIntInRange(42+pickedTopping, 58-pickedTopping), bt.randIntInRange(62+pickedTopping, 70-pickedTopping), sprinkColors[bt.randIntInRange(0, sprinkColors.length - 1)])
 }
-
-
-
-
-
-function drawSeed(seed) {
-  
-}
-
-function drawNumber(num, numTurt) {
-  switch (num) {
-    case 1:
-      
-  }
-}
