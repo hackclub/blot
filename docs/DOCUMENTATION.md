@@ -30,21 +30,16 @@ The units are millimeters (mm).
 setDocDimensions(800, 600);
 ```
 
-### drawLines(polylines, options = { fill, stroke, width })
+### drawLines(polylines)
 
 **Parameters:**
 - `polylines` ([number, number][][]): A list of polylines
-- `options` (object): Optional values which can be passed to the drawing function
-  - `fill` (string): Add color to the inside of polylines
-  - `stroke` (string): Add color along the path of polylines
-  - `width` (number): Change the width of polylines; the value is in pixels
 
 **Returns:** Nothing.
 
 **Description:**
 
 Draws a copy of the polylines passed onto the screen. 
-Your line drawings are best represented by not assigning any optional properties.
 
 **Example:**
 
