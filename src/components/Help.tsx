@@ -79,7 +79,7 @@ export default function Help({
       if (workshop === null) return;
 
       if (confirm("Reset text editor?"))
-        loadCodeFromString(`// check out the workshop tab to get started\n${defaultProgram}`);
+        loadCodeFromString(`${defaultProgram}`);
 
       // TODO Oz added this hack 2024-03-13 to save his sanity while developing the
       // getting started guide. But hey, wouldn't the sane thing be to serve from our own server
