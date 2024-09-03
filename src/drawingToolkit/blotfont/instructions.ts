@@ -12,7 +12,7 @@ const ParseCoords = (cstr: string, multScale: number = 1): Array<number> => {
 }
 
 // Run a limited set of Turtle functions as simplified string instructions
-export const RunInstructions = (inst:string, org?:Point, scale:number=1,returnEndpoint = false):Point|Array<Polyline> => {
+export const RunInstructions = (inst:string, org?:Point, scale:number=1,returnEndpoint = false):[Point,Array<Polyline>]|Array<Polyline> => {
     const turtle = new Turtle()
     if (org) {
         turtle.jump(org)
@@ -55,7 +55,7 @@ export const RunInstructions = (inst:string, org?:Point, scale:number=1,returnEn
     }
     //drawTurtles([turtle])
     if (returnEndpoint) {
-        return turtle.position as Point
+        return [turtle.position as Point,turtle.lines()]
     } else {
         return turtle.lines()
     }

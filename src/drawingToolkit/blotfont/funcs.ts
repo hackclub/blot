@@ -12,15 +12,18 @@ export type Polyline = Array<Point>
 
 export const DrawBezier = (org: Point, ang: number, scale: number, bezfunc: any, curveSizes: Point, instructions?: string): Array<Polyline> => {
   const turtle = new Turtle()
+  const otherLines:Array<Polyline> = []
   if (instructions) {
-    turtle.jump(RunInstructions(instructions, org, scale, true))
+    const preperf = RunInstructions(instructions, org, scale, true)
+    turtle.jump(preperf[0])
+    otherLines.push(...preperf[1] as Array<Polyline>)
   }
   turtle.setAngle(ang)
   turtle.forward(curveSizes[0] * scale)
   resamplePolylines(turtle.path, 0.1)
   warp(turtle, x => bezfunc(x) * curveSizes[1] * scale)
 
-  return turtle.lines()
+  return [...otherLines,...turtle.lines()]
 }
 
 export const DrawText = (text: string, org: Point, scale: number = 100, spacing: Point = [2.5, 4.5]): Array<Polyline> => {
