@@ -10,7 +10,7 @@ So you just found out about this cool robotic drawing machine which you can buil
 
 The first step is to make some generative art like that seen in [the gallery](https://blot.hackclub.com/gallery). You can follow [these guides](https://blot.hackclub.com/guides) to learn how to do that!
 
-Make sure your artwork meets the [submission criteria](https:/blot.hackclub.com/submitting)
+Make sure your artwork meets the [submission criteria](https://blot.hackclub.com/submitting)
 
 Once you think your artwork is done...
 
