@@ -44,7 +44,7 @@ function sinwavegen(y) {
 
 let sinwaves = [];
 
-for (let y = 2 + Math.abs(rotation); y <= height - 2 - Math.abs(rotation); y += steps) {
+for (let y = 0; y <= height; y += steps) {
   sinwaves.push(bt.rotate([sinwavegen(y)], rotation)[0]) // convert into array rotate it and then undo the array conversion
   // if any polyline doesnt work try wrapping it in [] or doing [0] =)
 }
