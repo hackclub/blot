@@ -17,6 +17,8 @@ So, I thought of creating an opposite work—one that enhances the energy radiat
 When water waves pass through a slit, diffraction occurs, introducing curves into the otherwise uniform,
 parallel wavefronts. I added lines perpendicular to the wavefronts to intensify the sense of outward radiation.
 
+You can create different visual effects by adjusting the slit width (gapW)
+
 */
 const width = 120;
 const height = 130;
@@ -25,7 +27,7 @@ setDocDimensions(width, height);
 
 // Slit
 const barW = 20;
-const gapW = 10;
+const gapW = 10;// try it!
 const barY = 80;
 const gapL = (width - gapW) / 2;
 const gapR = (width + gapW) / 2;
