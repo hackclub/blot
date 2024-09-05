@@ -2,7 +2,7 @@
 /*
 @title: SinBall
 @author: Hrushal Nikhare
-@snapshot: the name of the snapshot file you want in the gallery
+@snapshot: Sinball
 */
 // check out this guide to learn how to program in blot
 // https://blot.hackclub.com/editor?guide=start
