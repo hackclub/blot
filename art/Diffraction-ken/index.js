@@ -2,15 +2,22 @@
 @title: Diffraction
 @author: ken
 @snapshot: gapW=10
+
+
+What is Diffraction
+Diffraction is the bending or spreading of waves around the edges of an obstacle or through a gap, 
+as they enter the shadowed region behind it. The amount of diffraction depends on the size of the gap 
+compared to the wavelength of the waves. Diffraction is most pronounced when the gap size is similar 
+to the wavelength, causing the waves to spread out in semi-circular patterns. (Source: Wikipedia)
+
+Why I Chose Diffraction as My Theme
+I drew inspiration from this piece (https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/2DLight-Will/index.js). 
+At first, I noticed it seemed to block the light coming from the center. 
+So, I thought of creating an opposite work—one that enhances the energy radiating from the center. 
+When water waves pass through a slit, diffraction occurs, introducing curves into the otherwise uniform,
+parallel wavefronts. I added lines perpendicular to the wavefronts to intensify the sense of outward radiation.
+
 */
-
-//Diffraction is the interference or bending of waves around 
-//the corners of an obstacle or through an aperture into the region 
-//of geometrical shadow of the obstacle/aperture.
-//The amount of diffraction depends on the size of the gap. 
-//Diffraction is greatest when the size of the gap is similar to the wavelength of the wave.
-//In this case, when the waves pass through the gap they become semi-circular.(By wikipedia)
-
 const width = 120;
 const height = 130;
 
