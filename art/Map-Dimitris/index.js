@@ -149,22 +149,41 @@ function drawBush(pos, base) {
   return bt.translate([bt.catmullRom(turtle.lines()[0])], pos)
 }
 
+const arcL = Math.SQRT2 * 2 * Math.sin(45 / 2 * Math.PI / 180) // Length of arc projected to axis
 function drawTree(pos) {
   const height = bt.randInRange(2, 5)
+  const width = bt.randInRange(1.5, 3)
+  const topSize = bt.randInRange(width - 1, width + 1)
   const turtle = new bt.Turtle()
-    .down()
-    .step([0, height])
-    .step([0, -height])
-    .step([1, 0])
-    .step([0, height])
-    .up()
-    .step([-1, 0])
-    .down()
-  return bt.translate([turtle.lines()[0], ...drawBush([0, height], 1)], pos)
+    .jump([0, height])
+    .setAngle(-90)
+    .forward(height - arcL)
+    .arc(-45, 2)
+    .setAngle(0)
+    .forward(width)
+    .setAngle(180 - 45)
+    .arc(-45, 2)
+    .forward(height - arcL)
+  if (height > 4 && width < 2.25 && bt.rand() < 0.75) {
+    turtle
+      .up()
+      .step([0, -2])
+      .setAngle(45)
+      .down()
+      .forward(1)
+      .up()
+      .forward(-0.5)
+      .right(bt.randInRange(20, 50))
+      .down()
+      .forward(0.5)
+  }
+  const top = drawBush([(width - topSize - arcL) / 2, height], topSize)
+  const trunk = turtle.lines()
+  return bt.translate([...trunk, ...top], [pos[0] - (width) / 2 + 2 * arcL, pos[1]])
 }
 
 function drawTreeOrBush(pos) {
-  return bt.rand() <= options.tree.bushReplaceChance ? drawBush([pos[0] + 0.5, pos[1]], 2) : drawTree([pos[0] + 1, pos[1]])
+  return bt.rand() <= options.tree.bushReplaceChance ? drawBush([pos[0] + 0.5, pos[1]], bt.randInRange(1, 3)) : drawTree([pos[0], pos[1]])
 }
 
 function drawFish(pos, angle) {
