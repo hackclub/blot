@@ -6,7 +6,7 @@ import path from 'path';
 import alias from 'esbuild-plugin-alias';
 import inlineWorkerPlugin from 'esbuild-plugin-inline-worker';
 
-import { spawn } from 'child_process';
+import { execSync } from 'child_process';
 
 import { wrapHTML } from "./backend/wrapHTML.js";
 
@@ -16,8 +16,6 @@ import gallery from "./backend/pages/gallery.js";
 import landing from "./backend/pages/landing.js";
 import docs from "./backend/pages/docs.js";
 import submitting from "./backend/pages/submitting.js";
-
-spawn('npx', ['tailwindcss', '-i', './styles.css', '-o', './dist/styles.css']);
 
 const OUTPUT_DIR = "./dist"; 
 
@@ -101,7 +99,7 @@ export async function build(htmls) {
   // console.timeEnd("COPY")
 }
 
-build({
+await build({
   index: wrapHTML(`
     ${navBar(true)}
     ${landing()}
@@ -141,3 +139,5 @@ build({
   `),
 
 });
+
+execSync('npx tailwindcss -i ./styles.css -o ./dist/styles.css');

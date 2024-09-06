@@ -32,7 +32,9 @@ body[data-theme = 'dark'] .dropdownClasses{
   height: 1.25rem;
   fill: currentColor;
 }
-
+body[data-theme=dark] h1{
+  filter: invert(0) !important
+}
 .disconnectedIcon * {
   fill: red;
 }
