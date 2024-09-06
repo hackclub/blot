@@ -1,3 +1,21 @@
+/*
+@title: A Fractal Foray into the Forest
+@author: Adya
+@snapshot: FractalTree.png
+*/
+
+// Set Dimensions
+const width = 165;
+const height = 160;
+setDocDimensions(width, height);
+
+// Store final lines, leaves, flowers, fruits, and background elements
+const finalLines = [];
+const finalLeaves = [];
+const finalFlowers = [];
+const finalFruits = [];
+const finalBackground = [];
+
 // Draw a branch
 function branch(startX, startY, len, angle) {
   const endX = startX + len * Math.cos(angle);
@@ -12,14 +30,13 @@ function branch(startX, startY, len, angle) {
   if (len > 10) { // Increase the length threshold to reduce the number of elements
     // Draw 2 new branches
     const newAngle = bt.randInRange(-0.1, 0.1); // Add some randomness to the angle
-    branch(endX, endY, len * bt.randInRange(0.6, 0.75), angle + Math.PI / 4 + newAngle); // Adjust the angles here
-    branch(endX, endY, len * bt.randInRange(0.6, 0.75), angle - Math.PI / 4 + newAngle); // Here as well
+    branch(endX, endY, len * 0.67, angle + Math.PI / 4 + newAngle); // Adjust the angles here
+    branch(endX, endY, len * 0.67, angle - Math.PI / 4 + newAngle); // Here as well
   } else {
     // Add leaves, flowers, and fruits at the tips with spacing
-    const rand = bt.randInRange(0, 1);
-    if (rand > 0.7) {
+    if (bt.randInRange(0, 1) > 0.7) {
       finalLeaves.push([endX, endY]);
-    } else if (rand > 0.5) {
+    } else if (bt.randInRange(0, 1) > 0.5) {
       finalFlowers.push([endX, endY]);
     } else {
       finalFruits.push([endX, endY]);
@@ -27,96 +44,165 @@ function branch(startX, startY, len, angle) {
   }
 }
 
+// Draw the tree
+branch(width / 2, height / 100, 50, Math.PI / 2); // Start the tree from the center of the canvas
+
 // Add background elements
+addBackgroundElements();
+
+// Draw final lines, leaves, flowers, fruits, and background elements
+drawBackground(finalBackground);
+drawFinalLines(finalLines);
+drawLeaves(finalLeaves);
+drawFlowers(finalFlowers);
+drawFruits(finalFruits);
+
+function drawFinalLines(lines) {
+  // Implement the drawing logic for lines
+  drawLines(lines);
+}
+
+function drawLeaves(leaves) {
+  // Implement the drawing logic for leaves
+  leaves.forEach(leaf => {
+    const leafShape = new bt.Turtle()
+      .jump(leaf)
+      .down()
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .right(120)
+      .forward(5)
+      .lines();
+    drawLines(leafShape);
+  });
+}
+
+function drawFlowers(flowers) {
+  // Implement the drawing logic for flowers
+  flowers.forEach(flower => {
+    const flowerShape = new bt.Turtle()
+      .jump(flower)
+      .down()
+      .arc(360, 3)
+      .right(45)
+      .arc(360, 3)
+      .right(45)
+      .arc(360, 3)
+      .right(45)
+      .arc(360, 3)
+      .lines();
+    drawLines(flowerShape);
+  });
+}
+
+function drawFruits(fruits) {
+  // Implement the drawing logic for fruits
+  fruits.forEach(fruit => {
+    const fruitShape = new bt.Turtle()
+      .jump(fruit)
+      .down()
+      .forward(4)
+      .right(90)
+      .forward(4)
+      .right(90)
+      .forward(4)
+      .right(90)
+      .forward(4)
+      .lines();
+    drawLines(fruitShape);
+  });
+}
+
 function addBackgroundElements() {
   // Add sun
   const sun = new bt.Turtle()
-    .jump([width - bt.randInRange(15, 20), height - bt.randInRange(20, 30)])
+    .jump([width - 17, height - 25])
     .down()
-    .arc(360, bt.randInRange(8, 12))
-    .arc(365, bt.randInRange(6, 10))
-    .arc(180, bt.randInRange(10, 14))
-    .arc(60, bt.randInRange(10, 14))
-    .arc(100, bt.randInRange(-6, -4))
+    .arc(360, 10)
+    .arc(365, 8)
+    .arc(180, 12)
+    .arc(60, 12)
+    .arc(100, -5)
     .lines();
   finalBackground.push(sun);
 
   // Add crescent moon
   const moon = new bt.Turtle()
-    .jump([bt.randInRange(15, 25), height - bt.randInRange(30, 40)])
+    .jump([20, height - 36.27])
     .down()
-    .arc(380, bt.randInRange(8, 12))
-    .arc(180, bt.randInRange(6, 10))
-    .arc(170, bt.randInRange(4, 8))
+    .arc(380, 10)
+    .arc(180, 8)
+    .arc(170, 6)
     .lines();
   finalBackground.push(moon);
 
   // Add stars
   for (let i = 0; i < 4; i++) {
     const star = new bt.Turtle()
-      .jump([bt.randInRange(10, 20) + i * bt.randInRange(40, 50), height - bt.randInRange(5, 10)])
+      .jump([16 + i * 48, height - 6])
       .down()
-      .arc(190, bt.randInRange(0.5, 1.5))
+      .arc(190, 1)
       .right(90)
-      .arc(180, bt.randInRange(0.5, 1.5))
+      .arc(180, 1)
       .right(120)
-      .arc(180, bt.randInRange(0.5, 1.5))
+      .arc(180, 1)
       .right(90)
-      .arc(180, bt.randInRange(0.5, 1.5))
+      .arc(180, 1)
       .right(126)
-      .arc(180, bt.randInRange(0.5, 1.5))
+      .arc(180, 1)
       .lines();
     finalBackground.push(star);
   }
 
   // Add clouds
   const cloudPositions = [
-    [width / 2 + bt.randInRange(5, 15), height / 2 + bt.randInRange(50, 55)],
-    [width / 2 - bt.randInRange(25, 30), height / 2 + bt.randInRange(50, 60)],
-    [width / 2 + bt.randInRange(40, 50), height / 2 + bt.randInRange(55, 60)]
+    [width / 2 + 10, height / 2 + 52],
+    [width / 2 - 27, height / 2 + 55],
+    [width / 2 + 45, height / 2 + 58]
   ];
   cloudPositions.forEach(pos => {
     const cloud = new bt.Turtle()
       .jump(pos)
       .down()
-      .arc(180, bt.randInRange(5, 7))
+      .arc(180, 6)
       .right(90)
-      .arc(180, bt.randInRange(4, 6))
+      .arc(180, 5)
       .right(120)
-      .arc(180, bt.randInRange(6, 8))
+      .arc(180, 7)
       .lines();
     finalBackground.push(cloud);
   });
 
   // Flying (near tree, above and below in background)
   const birdPositions = [
-    [width / 2 + bt.randInRange(40, 45), height / 2 + bt.randInRange(55, 65)],
-    [width / 2 - bt.randInRange(60, 70), height / 2 + bt.randInRange(35, 45)],
-    [width / 2 + bt.randInRange(65, 75), height / 2 + bt.randInRange(45, 55)]
+    [width / 2 + 42, height / 2 + 60],
+    [width / 2 - 66, height / 2 + 40],
+    [width / 2 + 70, height / 2 + 50]
   ];
   birdPositions.forEach(pos => {
     const bird = new bt.Turtle()
       .jump(pos)
       .down()
-      .arc(180, bt.randInRange(-5, -4))
+      .arc(180, -4.6)
       .right(90)
-      .arc(180, bt.randInRange(4, 5))
+      .arc(180, 4.6)
       .lines();
     finalBackground.push(bird);
   });
 
   const butterflyPositions = [
-    [width / bt.randInRange(2, 2.3) + bt.randInRange(25, 35), height / 2 + bt.randInRange(-40, -30)],
-    [width / bt.randInRange(2, 2.4) - bt.randInRange(25, 35), height / 2 + bt.randInRange(-30, -20)],
-    [width / bt.randInRange(2, 2.2) + bt.randInRange(40, 50), height / 2 + bt.randInRange(-25, -15)]
+    [width / bt.randInRange (2, 2.3) + 30, height / 2 + -35],
+    [width / bt.randInRange (2, 2.4) - 30, height / 2 + -25],
+    [width / bt.randInRange (2, 2.2) + 45, height / 2 + -20]
   ];
   butterflyPositions.forEach(pos => {
     const butterfly = new bt.Turtle()
       .jump(pos)
       .down()
-      .arc(bt.randInRange(140, 200), bt.randInRange(3, 4))
+      .arc(bt.randInRange(150, 200), 3.6)
       .right(90)
-      .arc(190, bt.randInRange(3, 4))
+      .arc(190, 3.6)
       .lines();
     finalBackground.push(butterfly);
   });
@@ -124,13 +210,13 @@ function addBackgroundElements() {
   // In background
   for (let i = 0; i < 2; i++) {
     const bush = new bt.Turtle()
-      .jump([width / 2 - bt.randInRange(60, 65), bt.randInRange(15, 25)])
+      .jump([width / 2 - -62, 20])
       .down()
-      .arc(360, bt.randInRange(8, 12))
+      .arc(360, 10)
       .right(45)
-      .arc(360, bt.randInRange(8, 12))
+      .arc(360, 10)
       .right(45)
-      .arc(360, bt.randInRange(8, 12))
+      .arc(360, 10)
       .lines();
     finalBackground.push(bush);
   }
@@ -138,44 +224,44 @@ function addBackgroundElements() {
   // Add mini-bushes
   for (let i = 0; i < 3; i++) {
     const mini = new bt.Turtle()
-      .jump([bt.randInRange(15, 25) + i * bt.randInRange(15, 20), height - bt.randInRange(140, 150)])
+      .jump([20 + i * 17.8, height - 147.5])
       .down()
-      .arc(360, bt.randInRange(4, 5))
-      .right(bt.randInRange(20, 30))
-      .arc(360, bt.randInRange(4, 6))
-      .right(bt.randInRange(30, 35))
-      .arc(355, bt.randInRange(4, 6))
+      .arc(360, 4.26)
+      .right(26)
+      .arc(360, 5)
+      .right(32)
+      .arc(355, 5.26)
       .lines();
     finalBackground.push(mini);
   }
 
   for (let i = 0; i < 4; i++) {
     const plant = new bt.Turtle()
-      .jump([width / 2 + bt.randInRange(45, 55), bt.randInRange(10, 15)])
+      .jump([width / 2 + 50, 13])
       .down()
-      .arc(360, bt.randInRange(4, 6))
+      .arc(360, 5)
       .right(45)
-      .arc(360, bt.randInRange(4, 6))
+      .arc(360, 5)
       .lines();
     finalBackground.push(plant);
   }
 
   for (let i = 0; i < 32; i++) {
     const grass = new bt.Turtle()
-      .jump([bt.randInRange(0, 5) + i * bt.randInRange(4, 6), bt.randInRange(5, 10)])
+      .jump([1 + i * 5, 8.67])
       .down()
-      .forward(bt.randInRange(4, 6))
+      .forward(5)
       .right(45)
-      .forward(bt.randInRange(4, 6))
+      .forward(5)
       .right(45)
-      .forward(bt.randInRange(4, 6))
+      .forward(5)
       .lines();
     finalBackground.push(grass);
   }
 
   for (let i = 0; i < 2; i++) {
     const squirrel = new bt.Turtle()
-      .jump([width / 2 + bt.randInRange(10, 20), height / 2 + bt.randInRange(-65, -55)])
+      .jump([width / 2 + 15, height / 2 + -60])
       .down()
       // Draw the body
       .forward(5)
@@ -206,3 +292,4 @@ function drawBackground(background) {
     drawLines(element);
   });
 }
+
