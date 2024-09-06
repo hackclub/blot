@@ -119,17 +119,17 @@ function addBackgroundElements() {
   const sun = new bt.Turtle()
     .jump([width - 17, height - 25])
     .down()
-    .arc(360, 10)
-    .arc(365, 8)
-    .arc(180, 12)
-    .arc(60, 12)
-    .arc(100, -5)
+    .arc(360, bt.randInRange(8, 10))
+    .arc(365, bt.randInRange(6, 10))
+    .arc(180, bt.randInRange(10, 14))
+    .arc(60, bt.randInRange(10, 14))
+    .arc(100, bt.randInRange(-6, -4))
     .lines();
   finalBackground.push(sun);
 
   // Add crescent moon
   const moon = new bt.Turtle()
-    .jump([20, height - 36.27])
+    .jump([bt.randInRange(16, 20), height - bt.randInRange(36, 39)])
     .down()
     .arc(380, 10)
     .arc(180, 8)
@@ -142,15 +142,15 @@ function addBackgroundElements() {
     const star = new bt.Turtle()
       .jump([16 + i * 48, height - 6])
       .down()
-      .arc(190, 1)
+      .arc(190, bt.randInRange(0.6, 1.2))
       .right(90)
-      .arc(180, 1)
+      .arc(180, bt.randInRange(0.6, 1.2))
       .right(120)
-      .arc(180, 1)
+      .arc(180, bt.randInRange(0.6, 1.2))
       .right(90)
-      .arc(180, 1)
+      .arc(180, bt.randInRange(0.6, 1.2))
       .right(126)
-      .arc(180, 1)
+      .arc(180, bt.randInRange(0.6, 1.2))
       .lines();
     finalBackground.push(star);
   }
@@ -165,11 +165,11 @@ function addBackgroundElements() {
     const cloud = new bt.Turtle()
       .jump(pos)
       .down()
-      .arc(180, 6)
+      .arc(180, bt.randInRange(5, 7))
       .right(90)
-      .arc(180, 5)
+      .arc(180, bt.randInRange(4, 6))
       .right(120)
-      .arc(180, 7)
+      .arc(180, bt.randInRange(6, 8))
       .lines();
     finalBackground.push(cloud);
   });
@@ -292,4 +292,3 @@ function drawBackground(background) {
     drawLines(element);
   });
 }
-
