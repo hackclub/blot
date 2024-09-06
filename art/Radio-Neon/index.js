@@ -13,8 +13,8 @@ const talkgroups = ["EMS DISP", "FIRE DISP", "LAW DISP", "FIRE OPS", "FIRE TAC",
 const mobilemenuoptions = ["RSSI", "SITE", "SCAN", "ZONE", "ZNUP", "ZNDN", "CHUP", "CHDN", "EMER", "PAGE"] // 4 Characters per option only!
 const posadjustx = Math.floor(bt.rand() * (71 - -11) + -11)
 const posadjusty = Math.floor(bt.rand() * (14.5 - -4.5) + -4.5);
-const typeofradio = Math.round(bt.rand()); //0 is portable, 1 is mobile
-//const typeofradio = 1;
+//const typeofradio = Math.round(bt.rand()); //0 is portable, 1 is mobile
+const typeofradio = 1;
 
 // Please dont touch!
 const width = 125;
@@ -234,20 +234,15 @@ if(typeofradio == 0) {
       //menuOption += alphabet[Math.floor(bt.rand() * alphabet.length)];
       menuOption = mobilemenuoptions[Math.floor(bt.rand() * mobilemenuoptions.length)];
       //menuOption += " ";
+      if (usedMenu.includes(menuOption)) {
+        menuOption = mobilemenuoptions[Math.floor(bt.rand() * mobilemenuoptions.length)];
+        usedMenu.push(menuOption)
+      } else {
+        usedMenu.push(menuOption)
+      }
+      
     }
   
-    if (usedMenu.includes(menuOption)) {
-      menuOption = "";
-      for (var x = 0; x < 5; x++) {
-         //menuOption += alphabet[Math.floor(bt.rand() * alphabet.length)];
-         menuOption += mobilemenuoptions[Math.floor(bt.rand() * mobilemenuoptions.length)];
-         //menuOption += " ";
-         usedMenu.push(menuOption)
-      }
-    } else {
-      usedMenu.push(menuOption)
-    }
-    
     DrawText(menuOption, [width -25 - 66 + (i * 13) + posadjusty, 12 + posadjustx], 0.4);
   }
 
