@@ -16,6 +16,25 @@ const finalFlowers = [];
 const finalFruits = [];
 const finalBackground = [];
 
+function setup() {
+  createCanvas(400, 400);
+  noLoop();
+}
+
+function draw() {
+  background(255);
+  let centerX = width / 2;
+  let centerY = height / 2;
+  let radius = 50;
+  let colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#8B00FF'];
+
+  for (let i = colors.length - 1; i >= 0; i--) {
+    fill(colors[i]);
+    arc(centerX, centerY, radius * 2, radius * 2, PI, TWO_PI);
+    radius -= 5;
+  }
+}
+
 // Draw a branch
 function branch(startX, startY, len, angle) {
   const endX = startX + len * Math.cos(angle);
@@ -184,25 +203,25 @@ function addBackgroundElements() {
     const bird = new bt.Turtle()
       .jump(pos)
       .down()
-      .arc(180, -4.6)
+      .arc(180, bt.randInRange(-5, -4.6))
       .right(90)
-      .arc(180, 4.6)
+      .arc(180, bt.randInRange(4.6, 5))
       .lines();
     finalBackground.push(bird);
   });
 
   const butterflyPositions = [
-    [width / bt.randInRange (2, 2.3) + 30, height / 2 + -35],
-    [width / bt.randInRange (2, 2.4) - 30, height / 2 + -25],
-    [width / bt.randInRange (2, 2.2) + 45, height / 2 + -20]
+    [width / bt.randInRange(2, 2.3) + 30, height / 2 + -35],
+    [width / bt.randInRange(2, 2.4) - 30, height / 2 + -25],
+    [width / bt.randInRange(2, 2.2) + 45, height / 2 + -20]
   ];
   butterflyPositions.forEach(pos => {
     const butterfly = new bt.Turtle()
       .jump(pos)
       .down()
-      .arc(bt.randInRange(150, 200), 3.6)
+      .arc(bt.randInRange(140, 200), bt.randInRange(3, 4))
       .right(90)
-      .arc(190, 3.6)
+      .arc(190, bt.randInRange(3, 4))
       .lines();
     finalBackground.push(butterfly);
   });
@@ -267,7 +286,7 @@ function addBackgroundElements() {
       .forward(5)
       .right(90)
       .forward(10)
-      .right(90)
+       .right(90)
       .forward(5)
       .right(90)
       .forward(10)
@@ -282,6 +301,7 @@ function addBackgroundElements() {
       .right(90)
       .arc(181, 5)
       .lines();
+      
     finalBackground.push(squirrel);
   }
 }
