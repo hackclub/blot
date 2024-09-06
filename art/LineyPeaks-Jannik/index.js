@@ -7,7 +7,7 @@
 // SETTINGS
 const RANDOM_POINTS = 8000 // Point placement: 0 for grid, 0 < x for random
 
-const GRID_SIZE = 180
+const GRID_SIZE = 125
 const DEBUG = false
 const GRADIENT_SCALE = 20;
 const LINE_SCALE = 100;
@@ -41,15 +41,15 @@ function hiddenFunction(x, y) {
 }
 
 // Drawing wrapper
-    const turtle = new bt.Turtle()
-    turtle.down();
-    function drawLine(x1, y1, x2, y2) {
-              // Stay inside area
-        x2 = Math.min(GRID_SIZE - 1, Math.max(0, x2))
-        y2 = Math.min(GRID_SIZE - 1, Math.max(0, y2))
-        turtle.jump([x1, y1]);
-        turtle.goTo([x2, y2]);
-    }
+const turtle = new bt.Turtle()
+turtle.down();
+function drawLine(x1, y1, x2, y2) {
+    // Stay inside area
+    x2 = Math.min(GRID_SIZE - 1, Math.max(0, x2))
+    y2 = Math.min(GRID_SIZE - 1, Math.max(0, y2))
+    turtle.jump([x1, y1]);
+    turtle.goTo([x2, y2]);
+}
 
 
 // Step 1: Place points, either random or on a grid, carrying a value from the hidden function for their location
@@ -155,6 +155,6 @@ for (let i = 0; i < points.length; i++) {
 }
 
 
-    drawLines(turtle.path)
+drawLines(turtle.path)
 
 console.log("done")
