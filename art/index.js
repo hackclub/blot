@@ -16,6 +16,7 @@ const finalFlowers = [];
 const finalFruits = [];
 const finalBackground = [];
 
+/*
 function setup() {
   createCanvas(400, 400);
   noLoop();
@@ -23,45 +24,49 @@ function setup() {
 
 function draw() {
   background(255);
-  drawRainbowArc(width / 2, height / 2, 50);
-}
+  let centerX = width / 2;
+  let centerY = height / 2;
+  let radius = 50;
+  let colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#8B00FF'];
 
-function drawRainbowArc(centerX, centerY, radius) {
-  const colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#8B00FF'];
   for (let i = colors.length - 1; i >= 0; i--) {
     fill(colors[i]);
     arc(centerX, centerY, radius * 2, radius * 2, PI, TWO_PI);
     radius -= 5;
   }
 }
+*/
 
 // Draw a branch
 function branch(startX, startY, len, angle) {
   const endX = startX + len * Math.cos(angle);
   const endY = startY + len * Math.sin(angle);
-  finalLines.push([[startX, startY], [endX, endY]]);
-  if (len > 10) {
-    const newAngle = bt.randInRange(-0.1, 0.1);
-    branch(endX, endY, len * 0.67, angle + Math.PI / 4 + newAngle);
-    branch(endX, endY, len * 0.67, angle - Math.PI / 4 + newAngle);
+  // Create a line
+  const line = [
+    [startX, startY],
+    [endX, endY]
+  ];
+  // Add line to the final lines
+  finalLines.push(line);
+  if (len > 10) { // Increase the length threshold to reduce the number of elements
+    // Draw 2 new branches
+    const newAngle = bt.randInRange(-0.1, 0.1); // Add some randomness to the angle
+    branch(endX, endY, len * 0.67, angle + Math.PI / 4 + newAngle); // Adjust the angles here
+    branch(endX, endY, len * 0.67, angle - Math.PI / 4 + newAngle); // Here as well
   } else {
-    addLeafFlowerOrFruit(endX, endY);
-  }
-}
-
-function addLeafFlowerOrFruit(x, y) {
-  const rand = bt.randInRange(0, 1);
-  if (rand > 0.7) {
-    finalLeaves.push([x, y]);
-  } else if (rand > 0.5) {
-    finalFlowers.push([x, y]);
-  } else {
-    finalFruits.push([x, y]);
+    // Add leaves, flowers, and fruits at the tips with spacing
+    if (bt.randInRange(0, 1) > 0.7) {
+      finalLeaves.push([endX, endY]);
+    } else if (bt.randInRange(0, 1) > 0.5) {
+      finalFlowers.push([endX, endY]);
+    } else {
+      finalFruits.push([endX, endY]);
+    }
   }
 }
 
 // Draw the tree
-branch(width / 2, height / 100, 50, Math.PI / 2);
+branch(width / 2, height / 100, 50, Math.PI / 2); // Start the tree from the center of the canvas
 
 // Add background elements
 addBackgroundElements();
@@ -74,10 +79,12 @@ drawFlowers(finalFlowers);
 drawFruits(finalFruits);
 
 function drawFinalLines(lines) {
+  // Implement the drawing logic for lines
   drawLines(lines);
 }
 
 function drawLeaves(leaves) {
+  // Implement the drawing logic for leaves
   leaves.forEach(leaf => {
     const leafShape = new bt.Turtle()
       .jump(leaf)
@@ -93,6 +100,7 @@ function drawLeaves(leaves) {
 }
 
 function drawFlowers(flowers) {
+  // Implement the drawing logic for flowers
   flowers.forEach(flower => {
     const flowerShape = new bt.Turtle()
       .jump(flower)
@@ -110,6 +118,7 @@ function drawFlowers(flowers) {
 }
 
 function drawFruits(fruits) {
+  // Implement the drawing logic for fruits
   fruits.forEach(fruit => {
     const fruitShape = new bt.Turtle()
       .jump(fruit)
@@ -127,19 +136,7 @@ function drawFruits(fruits) {
 }
 
 function addBackgroundElements() {
-  addSun();
-  addMoon();
-  addStars();
-  addClouds();
-  addFlyingElements();
-  addBushes();
-  addMiniBushes();
-  addPlants();
-  addGrass();
-  addSquirrels();
-}
-
-function addSun() {
+  // Add sun
   const sun = new bt.Turtle()
     .jump([width - 17, height - 25])
     .down()
@@ -150,9 +147,8 @@ function addSun() {
     .arc(100, bt.randInRange(-6, -4))
     .lines();
   finalBackground.push(sun);
-}
 
-function addMoon() {
+  // Add crescent moon
   const moon = new bt.Turtle()
     .jump([bt.randInRange(16, 20), height - bt.randInRange(36, 39)])
     .down()
@@ -161,9 +157,8 @@ function addMoon() {
     .arc(170, 6)
     .lines();
   finalBackground.push(moon);
-}
 
-function addStars() {
+  // Add stars
   for (let i = 0; i < 4; i++) {
     const star = new bt.Turtle()
       .jump([16 + i * 48, height - 6])
@@ -180,9 +175,8 @@ function addStars() {
       .lines();
     finalBackground.push(star);
   }
-}
 
-function addClouds() {
+  // Add clouds
   const cloudPositions = [
     [width / 2 + 10, height / 2 + 52],
     [width / 2 - 27, height / 2 + 55],
@@ -200,9 +194,8 @@ function addClouds() {
       .lines();
     finalBackground.push(cloud);
   });
-}
 
-function addFlyingElements() {
+  // Flying (near tree, above and below in background)
   const birdPositions = [
     [width / 2 + 42, height / 2 + 60],
     [width / 2 - 66, height / 2 + 40],
@@ -234,9 +227,8 @@ function addFlyingElements() {
       .lines();
     finalBackground.push(butterfly);
   });
-}
 
-function addBushes() {
+  // In background
   for (let i = 0; i < 2; i++) {
     const bush = new bt.Turtle()
       .jump([width / 2 - -62, 20])
@@ -249,9 +241,8 @@ function addBushes() {
       .lines();
     finalBackground.push(bush);
   }
-}
 
-function addMiniBushes() {
+  // Add mini-bushes
   for (let i = 0; i < 3; i++) {
     const mini = new bt.Turtle()
       .jump([20 + i * 17.8, height - 147.5])
@@ -264,10 +255,8 @@ function addMiniBushes() {
       .lines();
     finalBackground.push(mini);
   }
-}
 
-function addPlant() {
-    for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 4; i++) {
     const plant = new bt.Turtle()
       .jump([width / 2 + 50, 13])
       .down()
@@ -277,9 +266,7 @@ function addPlant() {
       .lines();
     finalBackground.push(plant);
   }
-}
 
-function addPlant() {
   for (let i = 0; i < 32; i++) {
     const grass = new bt.Turtle()
       .jump([1 + i * 5, 8.67])
@@ -292,9 +279,7 @@ function addPlant() {
       .lines();
     finalBackground.push(grass);
   }
-}
 
-function addSquirrel() {
   for (let i = 0; i < 2; i++) {
     const squirrel = new bt.Turtle()
       .jump([width / 2 + 15, height / 2 + -60])
@@ -328,24 +313,4 @@ function drawBackground(background) {
   background.forEach(element => {
     drawLines(element);
   });
-}
-
-function branch(len) {
-    blot.push();
-    if (len > 4) {
-        blot.strokeWeight(map(len, 10, 100, 1, 4));
-        blot.line(0, 0, 0, -len);
-        blot.translate(0, -len);
-        blot.rotate(angle);
-        branch(len * 0.67);
-        blot.rotate(-2 * angle);
-        branch(len * 0.67);
-    }
-    blot.pop();
-}
-
-function draw() {
-    blot.background(51);
-    blot.translate(blot.width / 2, blot.height);
-    branch(100);
 }
