@@ -1,8 +1,11 @@
 import { bounds } from "./bounds.js";
 import { pointInPolylines } from "./pointInPolylines.js"
 import { mergePolylines } from "./mergePolylines.js";
+import { assertArgs } from "./assert.js";
 
-export const cut = (polylines0, polylines1, assumeClosed = true) => {
+export function cut(polylines0, polylines1, assumeClosed = true) {
+  assertArgs(arguments, ['polylines', 'polylines', 'boolean?'], 'bt.cut');
+
   if (assumeClosed) polylines1.forEach(poly => {
     const [x, y] = poly.at(0);
     poly.push([x, y]);
@@ -25,7 +28,9 @@ export const cut = (polylines0, polylines1, assumeClosed = true) => {
   return polylines0;
 };
 
-export const cover = (polylines0, polylines1, assumeClosed = true) => {
+export function cover(polylines0, polylines1, assumeClosed = true) {
+  assertArgs(arguments, ['polylines', 'polylines', 'boolean?'], 'bt.cover');
+
   if (assumeClosed) polylines1.forEach(poly => {
     const [x, y] = poly.at(0);
     poly.push([x, y]);

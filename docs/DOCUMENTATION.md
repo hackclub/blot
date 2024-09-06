@@ -30,21 +30,16 @@ The units are millimeters (mm).
 setDocDimensions(800, 600);
 ```
 
-### drawLines(polylines, options = { fill, stroke, width })
+### drawLines(polylines)
 
 **Parameters:**
 - `polylines` ([number, number][][]): A list of polylines
-- `options` (object): Optional values which can be passed to the drawing function
-  - `fill` (string): Add color to the inside of polylines
-  - `stroke` (string): Add color along the path of polylines
-  - `width` (number): Change the width of polylines; the value is in pixels
 
 **Returns:** Nothing.
 
 **Description:**
 
 Draws a copy of the polylines passed onto the screen. 
-Your line drawings are best represented by not assigning any optional properties.
 
 **Example:**
 
@@ -668,7 +663,7 @@ const path = myTurtle.path; // Gets the path drawn by the turtle, use this to ge
 
 **Description:** 
 
-Generates a Catmull-Rom spline, which is a type of interpolating curve, passing through a series of control points. The `steps` parameter controls the smoothness of the curve, with higher values resulting in a more detailed curve.
+Generates a [Catmull-Rom spline](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline), which is a type of interpolating curve, passing through a series of control points. The `steps` parameter controls the smoothness of the curve, with higher values resulting in a more detailed curve.
 
 **Example:**
 
@@ -688,7 +683,7 @@ bt.catmullRom([[0, 0], [10, 15], [20, 5]], 100); // Returns a polyline with 100 
 
 **Description:** 
 
-Generates a Non-Uniform Rational B-Spline (NURBS) curve, which provides great flexibility and precision in modeling curves. The `steps` parameter controls the smoothness of the curve, and the `degree` parameter defines the curve's degree, affecting its complexity and how tightly it fits to the control points.
+Generates a [Non-Uniform Rational B-Spline (NURBS)](https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline) curve, which provides great flexibility and precision in modeling curves. The `steps` parameter controls the smoothness of the curve, and the `degree` parameter defines the curve's degree, affecting its complexity and how tightly it fits to the control points.
 
 **Example:**
 

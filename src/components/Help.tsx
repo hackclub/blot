@@ -45,14 +45,13 @@ export default function Help({
   helpHeight: number;
 }) {
   const { theme } = getStore()
-  console.log(theme)
+  
   let css = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
   let isDark = false
   if(theme == "dark"){
     css = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
     isDark = true
   }
-  console.log(isDark)
   const closed = helpHeight <= 0;
 
   const [tab, setTab] = useState<"workshop" | "toolkit">("toolkit");
@@ -80,7 +79,7 @@ export default function Help({
       if (workshop === null) return;
 
       if (confirm("Reset text editor?"))
-        loadCodeFromString(`// check out the workshop tab to get started\n${defaultProgram}`);
+        loadCodeFromString(`${defaultProgram}`);
 
       // TODO Oz added this hack 2024-03-13 to save his sanity while developing the
       // getting started guide. But hey, wouldn't the sane thing be to serve from our own server
