@@ -31,7 +31,7 @@ jobs:
             for (const file of changedFiles.data) {
               if (!file.filename.endsWith('index.js')) continue;
               const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${pr.head.sha}/${file.filename}`
-              const blotUrl = `https://blot.hackclub.com/editor?src=${rawUrl}`;
+              const blotUrl = `https://blot.hackclub.com/editor?src=${encodeURI(rawUrl)}`;
 
               if (!also) {
                 commentbody += `\`${file.filename}\` looks like art! [preview it in the editor](${blotUrl})\n`
