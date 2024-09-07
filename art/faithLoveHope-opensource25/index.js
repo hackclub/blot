@@ -5,10 +5,14 @@
 */
 
 // you can change this to your preferences
+const blotSingleColor = null; // set this to null for getting the colored look or set it to a specific color like "Black" to see the artwork like blot would draw it.
+const blotFill = true; // set if the artwork should be filled or not on blot (only takes effect if previous is not null)
+// the background will not be drawn when blotSingleColor is not null!
+
 var colorOptions = ["AliceBlue", "AntiqueWhite", "Aqua", "Aquamarine", "Azure", "Beige", "Bisque", "Black", "BlanchedAlmond", "Blue", "BlueViolet", "Brown", "BurlyWood", "CadetBlue", "Chartreuse", "Chocolate", "Coral", "CornflowerBlue", "Cornsilk", "Crimson", "Cyan", "DarkBlue", "DarkCyan", "DarkGoldenRod", "DarkGray", "DarkGrey", "DarkGreen", "DarkKhaki", "DarkMagenta", "DarkOliveGreen", "DarkOrange", "DarkOrchid", "DarkRed", "DarkSalmon", "DarkSeaGreen", "DarkSlateBlue", "DarkSlateGray", "DarkSlateGrey", "DarkTurquoise", "DarkViolet", "DeepPink", "DeepSkyBlue", "DimGray", "DimGrey", "DodgerBlue", "FireBrick", "FloralWhite", "ForestGreen", "Fuchsia", "Gainsboro", "GhostWhite", "Gold", "GoldenRod", "Gray", "Grey", "Green", "GreenYellow", "HoneyDew", "HotPink", "IndianRed", "Indigo", "Ivory", "Khaki", "Lavender", "LavenderBlush", "LawnGreen", "LemonChiffon", "LightBlue", "LightCoral", "LightCyan", "LightGoldenRodYellow", "LightGray", "LightGrey", "LightGreen", "LightPink", "LightSalmon", "LightSeaGreen", "LightSkyBlue", "LightSlateGray", "LightSlateGrey", "LightSteelBlue", "LightYellow", "Lime", "LimeGreen", "Linen", "Magenta", "Maroon", "MediumAquaMarine", "MediumBlue", "MediumOrchid", "MediumPurple", "MediumSeaGreen", "MediumSlateBlue", "MediumSpringGreen", "MediumTurquoise", "MediumVioletRed", "MidnightBlue", "MintCream", "MistyRose", "Moccasin", "NavajoWhite", "Navy", "OldLace", "Olive", "OliveDrab", "Orange", "OrangeRed", "Orchid", "PaleGoldenRod", "PaleGreen", "PaleTurquoise", "PaleVioletRed", "PapayaWhip", "PeachPuff", "Peru", "Pink", "Plum", "PowderBlue", "Purple", "RebeccaPurple", "Red", "RosyBrown", "RoyalBlue", "SaddleBrown", "Salmon", "SandyBrown", "SeaGreen", "SeaShell", "Sienna", "Silver", "SkyBlue", "SlateBlue", "SlateGray", "SlateGrey", "Snow", "SpringGreen", "SteelBlue", "Tan", "Teal", "Thistle", "Tomato", "Turquoise", "Violet", "Wheat", "White", "WhiteSmoke", "Yellow", "YellowGreen"];
 
 const backgroundColor = selectColor(); // symbol nice look: "White"
-const backgroundLineCount = bt.randIntInRange(5, 10); //symbol nice look: 0
+const backgroundLineCount = bt.randIntInRange(5, 10); //symbol nice look: 0; 0=no lines
 function backgroundLineSteps(){return bt.randIntInRange(5, 50);}
 function backgroundLineWidth(){return bt.randIntInRange(2, 5);}
 function backgroundLineColor(){return selectColor();}
@@ -122,11 +126,8 @@ function generateAnchor(){
 
 
 
-drawBackground();
-
 const cross = generateCrosss();
 bt.translate(cross, [0, heightAnchor+heightHeart])
-drawLines(cross, { fill: crossFillColor, stroke:crossStrokeColor, width: crossLineWidth });
 
 const anchor = generateAnchor();
 const smallAnchor = bt.iteratePoints(anchor, (pt, t) => {
@@ -135,7 +136,6 @@ const smallAnchor = bt.iteratePoints(anchor, (pt, t) => {
 });
 bt.rotate(anchor, 180);
 bt.translate(smallAnchor, [6.25, borderOffset]);
-drawLines(anchor, { fill: anchorFillColor, stroke:anchorStrokeColor, width: anchorLineWidth });
 
 const heart = generateHeart();
 const smallHeart = bt.iteratePoints(heart, (pt, t) => {
@@ -143,4 +143,25 @@ const smallHeart = bt.iteratePoints(heart, (pt, t) => {
   return [x*0.25, y*0.25];
 });
 bt.translate(smallHeart, [width/2, heightAnchor]);
-drawLines(smallHeart, { fill: heartFillColor, stroke:heartStrokeColor, width: heartLineWidth });
+
+
+
+if (blotSingleColor == null){ // multi color version
+  drawBackground();
+
+  drawLines(cross, { fill: crossFillColor, stroke:crossStrokeColor, width: crossLineWidth });
+  drawLines(anchor, { fill: anchorFillColor, stroke:anchorStrokeColor, width: anchorLineWidth });
+  drawLines(smallHeart, { fill: heartFillColor, stroke:heartStrokeColor, width: heartLineWidth });
+}
+else{ // blot / single color version
+  if (blotFill == true){
+    drawLines(cross, { fill: blotSingleColor, stroke: blotSingleColor, width: crossLineWidth });
+    drawLines(anchor, { fill: blotSingleColor, stroke: blotSingleColor, width: anchorLineWidth });
+    drawLines(smallHeart, { fill: blotSingleColor, stroke: blotSingleColor, width: heartLineWidth });
+  }
+  else{
+    drawLines(cross, { stroke:blotSingleColor, width: crossLineWidth });
+    drawLines(anchor, { stroke:blotSingleColor, width: anchorLineWidth });
+    drawLines(smallHeart, { stroke:blotSingleColor, width: heartLineWidth });
+  }
+}
