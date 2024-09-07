@@ -81,34 +81,40 @@ for (let i = 0; i < numPoints; i++) {
   const curve2 = bt.catmullRom([[188+5, 219+5], [175+5, 229+5], [187+5, 243+5], [200+5, 232+5], [188+5, 219+5]])
 const polylines = [];
   const head = [
-    [81, 196],
-    [81, 188],
-    [87, 188],
-    [87, 196],
-    [81, 196],]
-  const body = [
-    [84, 188],
-    [84, 170], ]
-  const arm1 = [
-    [84, 186],
-    [99, 177], ]
-  const arm2 = [
-    [84, 186],
-    [98, 180], ]
-  const legs1 = [
-    [84, 170],
-    [81, 160], ]
-  const legs2 = [
-    [84, 170],
-    [87, 160],]
-  const bat = [
-    [98, 177],
-    [101, 174],
-    [107, 205],
-    [98, 204],
-    [98, 175],]
- const xlocation = bt.randInRange(34, -15);
- const ylocation = bt.randInRange(10, -142);
+  [92 / 2, 214 / 2],
+  [92 / 2, 206 / 2],
+  [98 / 2, 206 / 2],
+  [98 / 2, 214 / 2],
+  [92 / 2, 214 / 2],
+];
+const body = [
+  [95 / 2, 206 / 2],
+  [95 / 2, 188 / 2],
+];
+const arm1 = [
+  [95 / 2, 204 / 2],
+  [110 / 2, 195 / 2],
+];
+const arm2 = [
+  [95 / 2, 204 / 2],
+  [109 / 2, 198 / 2],
+];
+const legs1 = [
+  [95 / 2, 188 / 2],
+  [92 / 2, 178 / 2],
+];
+const legs2 = [
+  [95 / 2, 188 / 2],
+  [98 / 2, 178 / 2],
+];
+const bat = [
+  [109 / 2, 195 / 2],
+  [112 / 2, 192 / 2],
+  [118 / 2, 223 / 2],
+  [109 / 2, 222 / 2],
+  [109 / 2, 193 / 2],
+];
+
   const seatx = bt.randInRange(1, 10);
   const R = [
     [30, 25],
@@ -187,10 +193,19 @@ polylines.push(arm2);
 polylines.push(legs1);
 polylines.push(legs2); 
 polylines.push(bat);
-drawLines(polylines); 
+
+
 const copiedPolylines = bt.copy(polylines); 
-bt.translate(copiedPolylines, [xlocation, ylocation]); 
-drawLines(copiedPolylines); 
+const copyPoly1 = bt.copy(copiedPolylines);
+const copyPoly2 = bt.copy(copyPoly1);
+bt.translate(copiedPolylines, [45, 12]); 
+bt.translate(copyPoly1, [62, -66]);
+bt.translate(polylines, [-24, 13]);
+bt.translate(copyPoly2, [-40, -75]);
+drawLines(polylines);
+drawLines(copyPoly1);
+drawLines(copiedPolylines);
+drawLines(copyPoly2);
 
 
 
