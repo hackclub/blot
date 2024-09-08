@@ -2,6 +2,19 @@
 @title: Lorenz Attractor
 @author: Leonard (Omay)
 @snapshot: lorenz.png
+
+The Lorenz System is a system of Ordinary Differential 
+Equation, and a popular example of a chaotic pattern. 
+This is a pattern that, while technically predictable, 
+slight differences in the initial state lead to 
+drastically different results. It is commonly associated 
+with the Butterfly Effect, which says that a flap of a 
+butterflys wings could lead to a disaster, due to a 
+slight change in conditions leading to significant 
+changes in outcome. The Lorenz Attractor also looks 
+like a butterfly when plotted on the XZ plane, which 
+is a nice coincidence.
+Wikipedia: https://en.wikipedia.org/wiki/Lorenz_system
 */
 
 const rho = bt.randInRange(18, 38); // default 28
