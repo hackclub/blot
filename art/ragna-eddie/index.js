@@ -382,14 +382,46 @@ if (Math.floor(bt.randInRange(0, 2)) == 1) {
 
 
 const cloud = new bt.Turtle()
-function drawclouds(x) {return}
+function drawClouds(x, y) {
+  cloud.jump([x, y])
+  cloud.setAngle(bt.randInRange(-10, 10))
+  cloud.right(-93)
+  cloud.arc(172, 10)
+  cloud.right(153)
+  cloud.arc(172, 7)
+  cloud.right(168)
+  cloud.arc(172, 4)
+  cloud.right(106)
+  cloud.arc(172, 4)
+  cloud.right(46)
+  cloud.arc(89, 11)
+  cloud.right(82)
+  cloud.arc(89, 11)
+  cloud.right(87)
+  cloud.arc(89, 11)
+  cloud.right(92)
+  cloud.arc(89, 8)
+  cloud.right(45)
+  cloud.arc(172, 4)
+  cloud.right(106)
+  cloud.arc(172, 4)
+  cloud.right(170)
+  cloud.arc(172, 6)
+  clouds.push(...bt.scale(cloud.lines(), bt.randInRange(0.1, 0.5)))
+}
+
+drawClouds(bt.randIntInRange(27, 40), bt.randIntInRange(15, 121))
+
+drawClouds(bt.randInRange(86, 150), bt.randInRange(15, 121))
+
+drawClouds(bt.randInRange(15, 150), bt.randInRange(15, 150))
+
 
 bodyOutline.push(...bo.lines())
 bodyBack.push(...bb.lines())
 bodyFace.push(...be.lines())
 bodyBelly.push(...bl.lines())
 arms.push(...arm.lines())
-clouds.push(...cloud.lines())
 
 
 body.push(...bodyOutline,  ...bodyBack, ...bodyFace, ...bodyBelly)
