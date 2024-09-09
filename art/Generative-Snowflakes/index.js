@@ -1,18 +1,19 @@
 /*
 @title: Generative-Snowflakes
 @author: Ye Gao
-@snapshot: the name of the snapshot file you want in the gallery
+@snapshots: 1.png
 */
 
 const width = 125;
 const height = 125;
-setDocDimensions(125, 125);
+setDocDimensions(width, height);
 
-const flakeWidth = 3;
-const flakeLength = 40;
+const flakeWidth = 2;
+const flakeLength = 20;
 const maxDepth = 3;
-const grid = 4;
 const myTurtle = new bt.Turtle();
+
+const grid = bt.randIntInRange(4, 9);
 
 function flake(len, wid, num, depth) {
   for (let i = 0; i < num; i++) {
@@ -36,17 +37,19 @@ function walk(x, y, rot) {
   myTurtle.goTo([x, y]);
   myTurtle.down();
   
-  const sizeVariation = bt.randInRange(0.8, 1.2);
+  const sizeVariation = 1 + bt.randIntInRange(-1, 1) * 0.05;
   const flakeLen = (flakeLength / grid) * sizeVariation;
   const flakeWid = (flakeWidth / grid) * sizeVariation;
+  
   flake(flakeLen, flakeWid, 6, 1);
 }
 
 for (let i = 0; i < grid; ++i) {
   for (let j = 0; j < grid; ++j) {
-    let x = (width / grid) * (i + 0.5) + bt.randInRange(-5, 5);
-    let y = (height / grid) * (j + 0.5) + bt.randInRange(-5, 5);
+    let x = (width / grid) * (i + 0.5) + bt.randIntInRange(-3, 3);
+    let y = (height / grid) * (j + 0.5) + bt.randIntInRange(-3, 3);
     let rot = bt.randIntInRange(0, 360);
+
     walk(x, y, rot);
   }
 }
