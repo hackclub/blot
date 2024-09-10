@@ -71,7 +71,7 @@ const options = {
   },
   tree: {
     N: 50,
-    bushReplaceChance: 0.3,
+    bushReplaceChance: 0.2,
     paddingX: 5,
     paddingY: 15,
     riverDistance: 5
@@ -149,21 +149,23 @@ function drawBush(pos, base) {
   return bt.translate([bt.catmullRom(turtle.lines()[0])], pos)
 }
 
-const arcL = Math.SQRT2 * 2 * Math.sin(45 / 2 * Math.PI / 180) // Length of arc projected to axis
-function drawTree(pos) {
+const chord = 2 * 2 * Math.sin(45 / 2 * Math.PI / 180)
+const arcX = chord * Math.sin(22.5 * Math.PI / 180) // Length of arc projected to X axis
+const arcY = chord * Math.cos(22.5 * Math.PI / 180) // Length of arc projected to Y axis
+console.log(arcX,arcY)
+function drawTree(pos,width) {
   const height = bt.randInRange(2, 5)
-  const width = bt.randInRange(1.5, 3)
   const topSize = bt.randInRange(width - 1, width + 1)
   const turtle = new bt.Turtle()
-    .jump([0, height])
+    .jump([arcX, height])
     .setAngle(-90)
-    .forward(height - arcL)
+    .forward(height - arcY)
     .arc(-45, 2)
     .setAngle(0)
     .forward(width)
     .setAngle(180 - 45)
     .arc(-45, 2)
-    .forward(height - arcL)
+    .forward(height - arcY)
   if (height > 4 && width < 2.25 && bt.rand() < 0.75) {
     turtle
       .up()
@@ -177,13 +179,24 @@ function drawTree(pos) {
       .down()
       .forward(0.5)
   }
-  const top = drawBush([(width - topSize - arcL) / 2, height], topSize)
+  const top = drawBush([(width - topSize) / 2, height], topSize)
   const trunk = turtle.lines()
-  return bt.translate([...trunk, ...top], [pos[0] - (width) / 2 + 2 * arcL, pos[1]])
+  return bt.translate([...trunk, ...top], pos)
+}
+
+function drawCenteredBush(pos,base){
+  return drawBush([pos[0]+(3-base)/2,pos[1]],base)
+}
+function drawCenteredTree(pos,width){
+  return drawTree([pos[0]+(3-width)/2,pos[1]],width)
+}
+
+function drawCenteredTreeOrBush(pos) {
+  return bt.rand() <= options.tree.bushReplaceChance ? drawCenteredBush(pos, bt.randInRange(1, 3)) : drawCenteredTree(pos, bt.randInRange(1.5, 3))
 }
 
 function drawTreeOrBush(pos) {
-  return bt.rand() <= options.tree.bushReplaceChance ? drawBush([pos[0] + 0.5, pos[1]], bt.randInRange(1, 3)) : drawTree([pos[0], pos[1]])
+  return bt.rand() <= options.tree.bushReplaceChance ? drawBush(pos, bt.randInRange(1, 3)) : drawTree(pos,bt.randInRange(1.5, 3))
 }
 
 function drawFish(pos, angle) {
@@ -435,16 +448,18 @@ setVisited(firstHouse)
 
 const cityPoints = []
 const roadStarts = []
+const cityLines = []
+const treeLines = []
 
 while (!queue.isEmpty()) {
   const [x, y] = queue.dequeue()
   if (bt.rand() < (1 - options.city.skipChance)) {
-    drawLines(drawHouse([x, y]))
+    cityLines.push(...drawHouse([x, y]))
     size++
     cityPoints.push([x, y], [x + 3, y], [x, y + 6], [x + 3, y + 6])
     roadStarts.push([x - 1, y - 1])
   } else if (bt.rand() < options.city.treeReplaceChance) {
-    drawLines(drawTreeOrBush([x, y]))
+    treeLines.push(...drawCenteredTreeOrBush([x, y]))
     cityPoints.push([x, y], [x, y + 6])
   }
   for (let ox = -5; ox <= 5; ox += 5) {
@@ -462,12 +477,15 @@ while (!queue.isEmpty()) {
 const cityHull = convexHull(cityPoints)
 
 // Road
-drawLines(createRoad([firstHouse[0] - 1, firstHouse[1] - 1]))
+cityLines.push(...createRoad([firstHouse[0] - 1, firstHouse[1] - 1]))
 let roadStart = roadStarts[bt.randIntInRange(1, roadStarts.length - 1)]
 while (allRoadPoints.findIndex((a) => (a[0] == roadStart[0] && a[1] == roadStart[1])) != -1) {
   roadStart = roadStarts[bt.randIntInRange(1, roadStarts.length - 1)]
 }
-drawLines(createRoad(roadStart))
+cityLines.push(...createRoad(roadStart))
+
+bt.cover(cityLines,treeLines)
+drawLines([...cityLines,...treeLines])
 
 // Trees
 
@@ -481,22 +499,31 @@ function nearCity([x, y]) {
 }
 
 const trees = []
-function onTree([x, y]) {
+function nearTree([x, y],dx,dy) {
   return trees.some(([tx, ty]) => {
-    if (Math.abs(y - ty) <= 6 && Math.abs(x - tx) <= 2) return true
+    if (Math.abs(y - ty) <= dy && Math.abs(x - tx) <= dx) return true
     return false
   })
 }
-
+ 
 for (let i = 0; i < options.tree.N; i++) {
   let x = bt.randInRange(options.tree.paddingX, width - options.tree.paddingX)
   let y = bt.randInRange(options.tree.paddingY, height - options.tree.paddingY)
   while (
-    nearCity([x, y]) || nearRiver([x, y], options.tree.riverDistance) || onTree([x, y])
+    nearCity([x, y]) || nearRiver([x, y], options.tree.riverDistance) || nearTree([x,y],2,6)
   ) {
     x = bt.randInRange(options.tree.paddingX, width - options.tree.paddingX)
     y = bt.randInRange(options.tree.paddingY, height - options.tree.paddingY)
   }
+  const tree = drawTreeOrBush([x, y])
+  if(nearTree([x,y],6,9)){
+    if(tree.length == 1) bt.cover(treeLines,tree)
+    else {
+      bt.cover(treeLines,[tree[1]])
+      bt.cover(tree,treeLines)
+    }
+  }
   trees.push([x, y])
-  drawLines(drawTreeOrBush([x, y]))
+  treeLines.push(...tree)
 }
+drawLines(treeLines)
