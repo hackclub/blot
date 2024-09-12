@@ -1,7 +1,7 @@
 /*
-@title: Feather Quilt
+@title: Feather Quilt with Structured Random Rotation
 @author: Amspy
-@snapshot: Feather5.jpg
+@snapshot: FeatherR.jpg
 */
 
 const width = 125;
@@ -105,18 +105,22 @@ for (let i = 0; i < numFeathersX; i++) {
     for (let j = 0; j < numFeathersY; j++) {
         const featherCopy = bt.copy(originalFeather);
 
-        const gridX = quiltThickness + i * cellWidth + cellWidth;
-        const gridY = quiltThickness + j * cellHeight + cellHeight;
-        bt.translate(featherCopy, [gridX, gridY]);
+        const gridX = quiltThickness + i * cellWidth + cellWidth / 2;
+        const gridY = quiltThickness + j * cellHeight + cellHeight / 2;
 
-        if ((i + j) % 2 === 0) {
-            bt.rotate(featherCopy, 180);
-        }
+        
+        const randomAngle = bt.rand() * 360;
+
+        
+        bt.translate(featherCopy, [gridX, gridY]);
+        bt.rotate(featherCopy, randomAngle, [gridX, gridY]);
 
         feathers.push(featherCopy);
     }
 }
 
+
 const trimmedFeathers = feathers.map(feather => bt.cut(feather, quiltBoundary));
+
 
 drawLines(trimmedFeathers.flat());
