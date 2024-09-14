@@ -10,10 +10,11 @@ setDocDimensions(width, height);
 
 const numCircles = 117;
 const maxRadius = 3;
+const minRadius = 0.5;
 const waveAmplitude = 5;
 const waveFrequency = 2;
 const randomFactor = 0.2;
-const seed = 116;
+const seed = Math.floor(Math.random() * 1000);
 const heartScalingFactor = 35;
 const backgroundPatternDensity = 100;
 const margin = maxRadius * 1;
@@ -32,7 +33,7 @@ function generateHeartWaveArt(seed, randomFactor) {
       const y = bt.rand() * height;
 
       if (!isPointInModifiedHeartShape(x, y, margin)) {
-        const shapeType = bt.randIntInRange(0, 2);
+        const shapeType = bt.randIntInRange(0, 3);
 
         if (shapeType === 0) {
           const radius = bt.rand() * 1.5;
@@ -47,12 +48,19 @@ function generateHeartWaveArt(seed, randomFactor) {
           if (!isOverlapWithHeartCircles(x, y, Math.max(radiusX, radiusY))) {
             drawLines([backgroundEllipse]);
           }
-        } else {
-          const sides = bt.randIntInRange(3, 5);
+        } else if (shapeType === 2) {
+          const sides = bt.randIntInRange(3, 6);
           const radius = bt.rand() * 1.5;
           const backgroundPolygon = createPolygon(x, y, radius, sides);
           if (!isOverlapWithHeartCircles(x, y, radius)) {
             drawLines([backgroundPolygon]);
+          }
+        } else {
+          const spiralRadius = bt.rand() * 2;
+          const turns = bt.randInRange(1, 3);
+          const backgroundSpiral = createSpiral(x, y, spiralRadius, turns);
+          if (!isOverlapWithHeartCircles(x, y, spiralRadius)) {
+            drawLines([backgroundSpiral]);
           }
         }
       }
@@ -60,7 +68,7 @@ function generateHeartWaveArt(seed, randomFactor) {
   }
 
   function isPointInModifiedHeartShape(x, y, margin) {
-    const tSteps = 2000; // Increase this for better accuracy
+    const tSteps = 2000;
     let isInside = false;
 
     const heartPoints = [];
@@ -172,6 +180,19 @@ function generateHeartWaveArt(seed, randomFactor) {
     return polyline;
   }
 
+  function createSpiral(x, y, radius, turns) {
+    const polyline = [];
+    const points = 50 * turns;
+    for (let i = 0; i < points; i++) {
+      const t = (i / points) * turns * 2 * Math.PI;
+      const r = (radius * t) / (turns * 2 * Math.PI);
+      const xPos = x + r * Math.cos(t);
+      const yPos = y + r * Math.sin(t);
+      polyline.push([xPos, yPos]);
+    }
+    return polyline;
+  }
+
   function heartEquation(t) {
     const x = 16 * Math.pow(Math.sin(t), 3);
     const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
@@ -191,17 +212,37 @@ function generateHeartWaveArt(seed, randomFactor) {
 
     const finalX = centerX + x + (bt.rand() - 0.5) * randomFactor * maxRadius;
     const finalY = centerY + (y + waveOffset1 + waveOffset2) + (bt.rand() - 0.5) * randomFactor * maxRadius;
-
-    // Varying circle sizes for depth
-    const radius = maxRadius * (1 + (bt.rand() - 0.5) * randomFactor * (i / numCircles));
+    
+	// Varying circle sizes for depth
+    const radiusVariation = bt.randInRange(0.5, 1.5);
+    const radius = bt.randInRange(minRadius, maxRadius) * radiusVariation * (1 + (bt.rand() - 0.5) * randomFactor * (i / numCircles));
 
     const circle = createCircle(finalX, finalY, radius);
     finalPolylines.push(circle);
     heartCircles.push([finalX, finalY, radius]);
   }
 
+  for (let i = 0; i < 10; i++) {
+    const t = bt.rand() * 2 * Math.PI;
+    let [x, y] = heartEquation(t);
+
+    x *= width / heartScalingFactor;
+    y *= height / heartScalingFactor;
+
+    const finalX = centerX + x + (bt.rand() - 0.5) * randomFactor * maxRadius * 2;
+    const finalY = centerY + y + (bt.rand() - 0.5) * randomFactor * maxRadius * 2;
+
+    const radius = bt.randInRange(maxRadius * 1.5, maxRadius * 3);
+
+    if (isPointInModifiedHeartShape(finalX, finalY, -margin)) {
+      const circle = createCircle(finalX, finalY, radius);
+      finalPolylines.push(circle);
+      heartCircles.push([finalX, finalY, radius]);
+    }
+  }
+
   createBackgroundPattern();
   drawLines(finalPolylines);
 }
-
+ 
 generateHeartWaveArt(seed, randomFactor);
