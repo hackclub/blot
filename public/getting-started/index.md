@@ -2,11 +2,11 @@
 title: Getting started with Blot
 ---
 
-Blot is a way to make art with code. The instructions you write in this editor can generate art on screen, but they can also control the Blot drawing machine!
+Blot is a way to build interactive art through code. The instructions you write in this editor can generate art on screen, but they can also control the Blot drawing machine!
 
 This guide will introduce you to some of the main tools in the toolkit, and help you make your first artwork. As you work through it, you will see **text in bold, with suggested challenges**, but you should also feel free to just tinker with your own ideas. Along the way, we'll also use the example of drawing a feather, just to demonstrate what can be achieved with each set of tools.
 
-If you are a complete beginner to JavaScript we recommend watching [this short introduction to programming](https://youtu.be/3KAan1PzmxA).
+If you are a complete beginner to JavaScript, we recommend watching [this short introduction to programming](https://youtu.be/3KAan1PzmxA).
 
 <img src="/getting-started/steps.png" style="margin:auto" />
 
