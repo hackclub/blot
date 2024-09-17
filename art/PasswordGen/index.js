@@ -33,7 +33,7 @@ const numPassword = 5 //number of passwords to generate
 const length = 20; //password length
 
 //Change to limit what chars can be used (do not add any that are not listed, they do not have code to work)
-const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?';  
+const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%()_+[]|;:,.<>?';  
 
 /**
  * Generates a secure password of a given length.
@@ -396,7 +396,7 @@ var DrawBezier = (org, ang, scale, bezfunc, curveSizes, instructions) => {
   return;
 };
 
-var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
+var DrawText = (text, org, scale = 10, spacing = [2.5, 4.5]) => {
   let xInd = 0;
   let yInd = 0;
   for (const x of text.toLowerCase()) {
@@ -444,18 +444,18 @@ var DrawText = (text, org, scale = 100, spacing = [2.5, 4.5]) => {
 };
 
 // main.ts
-setDocDimensions(850, 1098);
+setDocDimensions(125, 125);
 
-DrawText("", [48, 789], 14);
+DrawText("", [48, 125], 14);
 DrawText(
   `Passwords: (DO NOT USE)`,
-  [48, 1033],
-  7
+  [5, 115],
+  1.25
 );
 for (let t = 0; t < numPassword; t++){
 DrawText(passwordGen(length),
-  [75, 989 - t*35],
-  4.75,
+  [15, 107 - t*7.5],
+  1,
   [2.75, 5]
 );
 }
