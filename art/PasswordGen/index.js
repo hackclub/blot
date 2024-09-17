@@ -29,8 +29,8 @@ Made using BlotFont Library:
 
 
 //edit to change the number of passwords and their length
-const numPassword = 5 //number of passwords to generate
-const length = 20; //password length
+const numPassword = 15 //number of passwords to generate
+const length = 37; //password length
 
 //Change to limit what chars can be used (do not add any that are not listed, they do not have code to work)
 const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%()_+[]|;:,.<>?';  
@@ -60,7 +60,7 @@ function passwordGen(length) {
         const hardwareConcurrency = navigator.hardwareConcurrency || ''; // Number of CPU threads (if available)
         const timezoneOffset = new Date().getTimezoneOffset(); // Timezone offset in minutes
         const platform = navigator.platform; // Platform
-        const randomBytes = Array.from({ length: 16 }, () => Math.random()).join('-'); // Additional random bytes
+        const randomBytes = Array.from({ length: 16 }, () => bt.rand()).join('-'); // Additional random bytes
 
         // Combine all sources of entropy into a single string
         const entropySources = [
