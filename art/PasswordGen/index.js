@@ -1,5 +1,5 @@
 /*
-@title: PasswordGen(do not use)
+@title: Password/BackupCode gen (do not use)
 @author: Carter Tollman
 @snapshot: 0.png
 
@@ -8,6 +8,8 @@ Made using BlotFont Library:
   @author: geschmit
   @Source: https://github.com/geschmit/blotfont
   
+ChatGPT, Claude, Gemini, and Llama3.1 helped troubleshoot the SHA-256 algorithm (it was mostly me being dumb :/ )
+  
   The code generates a secure, random password of a specified length using cryptographic techniques.
   It combines multiple sources of entropy, such as the current time and system information, to create
   a string of random data. This entropy is hashed using the SHA-256 algorithm to produce a 
@@ -15,7 +17,7 @@ Made using BlotFont Library:
   based on the hash to construct the password. This process ensures that the generated password is 
   both unpredictable and meets the required length. 
   
-  PLEASE DO NOT USE THE PASSWORDS, IF YOU GET HACKED I DO NOT WANT OT BE AT FUALT (SORRY <3)
+  PLEASE DO NOT USE THE PASSWORDS, IF YOU GET HACKED I DO NOT WANT TO BE AT FAULT (SORRY <3)
 
   ** WARNING - DO NOT USE PASSWORDS GENERATED! **
     THIS IS NOT SECURE BECAUSE THE RANDOMNESS IS LIMITED 
@@ -24,8 +26,8 @@ Made using BlotFont Library:
   ** WARNING - DO NOT USE PASSWORDS GENERATED! **
 */
 
-const numPassword = 10 //number of passwords to generate
-const length = 18; //password length
+const numPassword = 3 //number of passwords to generate
+const length = 60; //password length
 
 /**
  * Generates a secure password of a given length.
