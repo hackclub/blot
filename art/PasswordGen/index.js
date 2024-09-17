@@ -8,7 +8,7 @@ Made using BlotFont Library:
   @author: geschmit
   @Source: https://github.com/geschmit/blotfont
   
-ChatGPT, Claude, Gemini, and Llama3.1 helped troubleshoot the SHA-256 algorithm (it was mostly me being dumb :/ )
+  ChatGPT, Gemini, Claude, and Llama3.1 helped troubleshoot the SHA-256 algorithm (it was mostly me being dumb)
   
   The code generates a secure, random password of a specified length using cryptographic techniques.
   It combines multiple sources of entropy, such as the current time and system information, to create
@@ -26,8 +26,14 @@ ChatGPT, Claude, Gemini, and Llama3.1 helped troubleshoot the SHA-256 algorithm 
   ** WARNING - DO NOT USE PASSWORDS GENERATED! **
 */
 
-const numPassword = 3 //number of passwords to generate
-const length = 60; //password length
+
+
+//edit to change the number of passwords and their length
+const numPassword = 5 //number of passwords to generate
+const length = 20; //password length
+
+//Change to limit what chars can be used (do not add any that are not listed, they do not have code to work)
+const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?';  
 
 /**
  * Generates a secure password of a given length.
@@ -36,7 +42,6 @@ const length = 60; //password length
  */
 function passwordGen(length) {
     // Define the character set to use for the password
-    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?';
 
     /**
      * Gathers entropy from various sources to help generate a random value.
@@ -45,7 +50,7 @@ function passwordGen(length) {
     function gatherEntropy() {
         // Get various sources of entropy
         const now = Date.now(); // Current timestamp
-        const random = Math.random(); // Basic random value
+        const random = bt.rand(); // Basic random value
         const performanceNow = performance.now(); // High-resolution time
         const navigatorInfo = navigator.userAgent; // User agent string
         const language = navigator.language; // Browser language
