@@ -4,10 +4,16 @@
 @snapshot: snapshot1.png
 */
 
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+// 
 // This blot will generate either a mobile (vehicle mounted) or portable (handheld) radio.
-// The first line of text on the screen (typically XXNXX (or a bunch of different variations), replacing Xs with letters and N with numbers) is the callsign (on air identifier) of the repeater owner
+// The first line of text on the screen (typically XXNXX (or a bunch of different variations), replacing Xs with letters and N with numbers) is the callsign (on air identifier) of the repeater owner.
 // The second line of text on the screen (typically NNN.NNN MHz, replacing Ns with numbers) is the frequency of the repeater in MHZ.
 // All of this data is pulled from the RepeaterBook API. More info can be found at https://www.repeaterbook.com/wiki/doku.php?id=api
+// If you're wondering what a repeater is- in simple terms,repeater consists of a transmitter and receiver. The receiver receives radio frequencies, and rebroadcasts them via a higher power transmitter.
+// 
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
 // Changeable Values
