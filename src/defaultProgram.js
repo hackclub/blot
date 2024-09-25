@@ -1,8 +1,20 @@
-export const defaultProgram = `// welcome to blot!
+export const defaultProgram = 
 
-// check out this guide to learn how to program in blot
-// https://blot.hackclub.com/editor?guide=start
+`
+/*
+  Welcome to Blot!
 
+  To get started with learning Blot's toolkit,
+  you can find a handful of guides here: https://blot.hackclub.com/guides
+
+  You can find full documentation on Blot's toolkit by clicking the button at the top!
+
+ Before you make a submission, there are a couple *mandatory* requirements for your PR:
+
+ - It must be drawable in Blot! This means keeping the dimensions at 125x125 or smaller
+ - It must change based on different parameters; it cannot be hardcoded.
+
+*/
 const width = 125;
 const height = 125;
 

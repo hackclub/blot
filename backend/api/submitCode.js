@@ -1,3 +1,5 @@
+// This code checks for whether or not the code // session is legit or noty
+
 import { supabase } from "./supabase.js";
 import checkValidSession from "./checkValidSession.js";
 

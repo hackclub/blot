@@ -8,6 +8,7 @@ Type strings:
 - function
 - boolean
 - undefined
+- string
 
 You can append a "?" to any type to make it optional,
 but optional arguments must be at the end of your type
@@ -47,6 +48,7 @@ function getType(value) {
   if (typeof value === "function") return "function";
   if (typeof value === "boolean") return "boolean";
   if (value === undefined) return "undefined";
+  if (typeof value === "string") return "string";
   return "unknown";
 }
 
@@ -61,6 +63,7 @@ const typeStrings = {
   boolean: "a boolean",
   undefined: "undefined",
   unknown: "an unknown type",
+  string: "a string",
   any: "any type"
 }
 function getTypeString(type) {
@@ -98,7 +101,7 @@ function typeMatches(type, expected) {
 }
 
 /**
- * @typedef {'number' | 'point' | 'polyline' | 'polylines' | 'numberArray' | 'function' | 'boolean' | 'undefined' | 'any'} ExpectedTypeString
+ * @typedef {'number' | 'point' | 'polyline' | 'polylines' | 'numberArray' | 'function' | 'boolean' | 'undefined' | 'string' | 'any'} ExpectedTypeString
  * @typedef {ExpectedTypeString | ExpectedTypeString[]} ExpectedType
  * 
  * @param {any[]} args
