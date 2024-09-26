@@ -1,7 +1,7 @@
 /*
 @title: A Million Mazes
 @author: akul
-@snapshot: mazeThumbnail.svg
+@snapshot: image(1).png
 */
 
 var MazeDrawer = /** @class */ (function () {
