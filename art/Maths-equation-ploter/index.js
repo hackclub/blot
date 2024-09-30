@@ -14,12 +14,21 @@ setDocDimensions(size, size);
 
 const graphUnits = (size - 24) / (scale * 2);
 
+const coefficientSets = [
+ //  Write Values for 
+ // linear equation (y = mx + b)
+ // quadratic (y = ax^2 + bx + c)
+ // cubic (y = ax^3 + bx^2 + cx + d)
+  { linear: { m: 2, b: -5 }, quadratic: { a: 1, b: -2, c: -3 }, cubic: { a: 0.5, b: 1, c: -1, d: -1 } },
+  { linear: { m: -1, b: 4 }, quadratic: { a: 0.5, b: 3, c: 2 }, cubic: { a: -0.3, b: -1, c: 2, d: 0 } },
+  { linear: { m: 1, b: -1 }, quadratic: { a: -1, b: 2, c: 1 }, cubic: { a: 0.2, b: 0, c: -1, d: 2 } },
+  { linear: { m: 3, b: -3 }, quadratic: { a: 2, b: 1, c: -5 }, cubic: { a: -0.1, b: 2, c: 3, d: -2 } },
+];
+
 function getCoefficients() {
-  return {
-    linear: { m: 2, b: -5 },  // Write Values for linear equation (y = mx + b)
-    quadratic: { a: 1, b: -2, c: -3 }, // Write Values for quadratic (y = ax^2 + bx + c)
-    cubic: { a: 0.5, b: 1, c: -1, d: -1 }  // Write Values for cubic (y = ax^3 + bx^2 + cx + d)
-  };
+  const currentTime = Math.floor(Date.now() / 1000); 
+  const index = currentTime % coefficientSets.length; 
+  return coefficientSets[index];
 }
 
 const coeffs = getCoefficients();
@@ -39,7 +48,6 @@ function cubicEquation(x) {
   return coeffs.cubic.a * x * x * x + coeffs.cubic.b * x * x + coeffs.cubic.c * x + coeffs.cubic.d;
 }
 
-// Function to create graph lines
 function makeGraph(equation) {
   var graph = [];
   graph[0] = [];
@@ -103,4 +111,3 @@ drawLines(lines);
 drawLines(makeGraph(linearEquation), { stroke: "red", width: 3 });
 drawLines(makeGraph(quadraticEquation), { stroke: "blue", width: 3, dash: [5, 5] });
 drawLines(makeGraph(cubicEquation), { stroke: "green", width: 3 });
-
