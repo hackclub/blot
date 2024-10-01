@@ -148,7 +148,7 @@ function drawFrostTexture() {
         const x = randInt(0, width);
         const y = randInt(0, height);
         const radius = randInRange(0.5, frostPatchRadius);
-        drawCircle([x, y], radius, { stroke: 'rgba(255, 255, 255, 0.2)', width: 1 });
+        drawCircle([x, y], radius, { stroke: 'rgba(255, 255, 255, 0.1 + Math.random() * 0.3)', width: 1 }); // Variation in opacity
     }
 }
 
@@ -260,6 +260,18 @@ function DrawPenguin(center, scale, rotation, addScarf = false) {
     drawCircle(rightEyeCenter, eyeRadius, { stroke: 'black', width: 1 });
     drawCircle(rightEyeCenter, eyeRadius / 2, { stroke: 'black', width: 1, fill: 'black' });
 
+    // Draw a white dot on the circle the penguin is on
+    const dotRadius = scale * 0.1; // Adjust the dot size as needed
+    drawCircle(center, dotRadius, { stroke: 'white', fill: 'white' }); // Draw white dot at center
+
+    // Add snow dots to the body
+    const numSnowDots = randInt(5, 15); // Random number of snow dots
+    for (let i = 0; i < numSnowDots; i++) {
+        const dotX = randInt(centerX - bodyWidth / 2, centerX + bodyWidth / 2);
+        const dotY = randInt(centerY - bodyHeight / 2, centerY + bodyHeight / 2);
+        drawCircle([dotX, dotY], 1, { stroke: 'white', fill: 'white' }); // Small white circle for snow
+    }
+
     // Add scarf if true
     if (addScarf) {
         let scarfPoints = [
@@ -273,6 +285,7 @@ function DrawPenguin(center, scale, rotation, addScarf = false) {
         fillPolygon(scarfPoints, scarfColor);
     }
 }
+
 
 function drawPenguinShadow(penguin) {
     const { center, scale } = penguin;
@@ -334,30 +347,32 @@ for (let i = 0; i < numPenguins; i++) {
 drawFishUnderIce(); // Add playful fish under the ice
 
 // Now that penguins are initialized, draw the ice cracks
-
 function drawIceCracks() {
-  for (let i = 0; i < numberOfIceCracks; i++) {
-    const startX = randInt(0, width);
-    const startY = randInt(0, height);
-    let points = [[startX, startY]];
+    for (let i = 0; i < numberOfIceCracks; i++) {
+        const startX = randInt(0, width);
+        const startY = randInt(0, height);
+        let points = [[startX, startY]];
 
-    for (let j = 0; j < crackSegments; j++) {
-      const lastPoint = points[points.length - 1];
-      const nextX = lastPoint[0] + randInRange(minCrackOffset, maxCrackOffset);
-      const nextY = lastPoint[1] + randInRange(minCrackOffset, maxCrackOffset);
+        for (let j = 0; j < crackSegments; j++) {
+            const lastPoint = points[points.length - 1];
+            const nextX = lastPoint[0] + randInRange(minCrackOffset, maxCrackOffset);
+            const nextY = lastPoint[1] + randInRange(minCrackOffset, maxCrackOffset);
 
-      if (nextX < 0 || nextX > width || nextY < 0 || nextY > height) {
-        break;
-      }
+            if (nextX < 0 || nextX > width || nextY < 0 || nextY > height) {
+                break;
+            }
 
-      if (!isPointNearPenguin([nextX, nextY])) {
-        points.push([nextX, nextY]);
-      }
+            if (!isPointNearPenguin([nextX, nextY])) {
+                points.push([nextX, nextY]);
+            }
+        }
+
+        // Varying crack color and width for depth
+        drawLines([points], { stroke: lerpColor(iceHighlightColor, iceShadowColor, Math.random()), width: randInRange(1, 2) });
     }
-
-    drawLines([points], { stroke: iceHighlightColor, width: iceCrackWidth });
-  }
 }
+
+
 
 function drawIceShadowCracks() {
   for (let i = 0; i < numberOfIceCracks; i++) {
@@ -385,30 +400,53 @@ function drawIceShadowCracks() {
 
 // Drawing the background gradient, controlled by the disableColorsAndThickness flag
 function drawIceGradient() {
-  // Check if colors and thickness are disabled
-  if (disableColorsAndThickness) {
-    // Simulate a solid background fill by drawing horizontal lines across the entire area
-    for (let y = 0; y < height; y++) {
-      drawLines([[[0, y], [width, y]]], { stroke: iceColor, width: 1 });
+    if (disableColorsAndThickness) {
+        for (let y = 0; y < height; y++) {
+            drawLines([[[0, y], [width, y]]], { stroke: iceColor, width: 1 });
+        }
+    } else {
+        const gradientSteps = 150;
+        for (let i = 0; i < gradientSteps; i++) {
+            const colorRatio = i / gradientSteps;
+            drawLines([[[0, i * (height / gradientSteps)], [width, i * (height / gradientSteps)]]], {
+                stroke: lerpColor(iceColor, iceHighlightColor, colorRatio + Math.random() * 0.1), // Adding noise to the gradient
+                width: 1
+            });
+        }
     }
-  } else {
-    // Draw the gradient background
-    const gradientSteps = 150;
-    for (let i = 0; i < gradientSteps; i++) {
-      const colorRatio = i / gradientSteps;
-      drawLines([[[0, i * (height / gradientSteps)], [width, i * (height / gradientSteps)]]], {
-        stroke: lerpColor(iceColor, iceHighlightColor, colorRatio),
-        width: 1
-      });
-    }
-  }
 }
+
+function drawIceShadows() {
+    for (let i = 0; i < numberOfIceCracks; i++) {
+        const startX = randInt(0, width);
+        const startY = randInt(0, height);
+        let points = [[startX, startY]];
+
+        for (let j = 0; j < crackSegments; j++) {
+            const lastPoint = points[points.length - 1];
+            const nextX = lastPoint[0] + randInRange(minCrackOffset, maxCrackOffset);
+            const nextY = lastPoint[1] + randInRange(minCrackOffset, maxCrackOffset);
+
+            if (nextX < 0 || nextX > width || nextY < 0 || nextY > height) {
+                break;
+            }
+
+            if (!isPointNearPenguin([nextX, nextY])) {
+                points.push([nextX, nextY]);
+            }
+        }
+
+        // Draw shadow cracks with a darker shade
+        drawLines([points], { stroke: iceShadowColor, width: iceCrackWidth });
+    }
+}
+
+
 drawFrostTexture(); // Frosty texture for the ice
 drawIcebergs(); // Distant icebergs
-
-drawIceCracks();
-drawIceShadowCracks();
-// drawIceGradient();
+drawIceCracks(); // Draw ice cracks
+drawIceShadowCracks(); // Shadow cracks
+// drawIceGradient(); 
 
 
 // Check if the crack point is near any penguin
