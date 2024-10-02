@@ -22,28 +22,34 @@ head.setAngle(104)
 head.arc(152, 40);
 drawLines(head.lines(), {fill:"yellow"})
 
+const random = bt.randIntInRange(58, 60)
 const hair = new bt.Turtle()
-hair.jump([59.5, 109.5])
+hair.jump([random, 109.4])
 hair.setAngle(90)
 hair.arc(27, 26);
 
-hair.jump([57.5, 109.4])
+const random1 = bt.randIntInRange(57, 58.5)
+hair.jump([random1, 109.4])
 hair.setAngle(96)
 hair.arc(18, 26);
 
-hair.jump([55.4, 109.4])
+const random2 = bt.randIntInRange(55, 56.5)
+hair.jump([random2, 109.4])
 hair.setAngle(102)
 hair.arc(9, 26);
 
-hair.jump([62.8, 119.8])
+const random3 = bt.randIntInRange(61, 63)
+hair.jump([random3, 119.8])
 hair.setAngle(66)
 hair.arc(32, -19);
 
-hair.jump([65.1, 116.3])
+const random4 = bt.randIntInRange(64, 66)
+hair.jump([random4, 116.3])
 hair.setAngle(61)
 hair.arc(22, -19);
 
-hair.jump([66.5, 113.2])
+const random5 = bt.randIntInRange(66, 68)
+hair.jump([random5, 113.2])
 hair.setAngle(61)
 hair.arc(13, -19);
 drawLines(hair.lines())
@@ -146,8 +152,9 @@ eyelid.setAngle(-61)
 eyelid.arc(122, 18.8)
 drawLines(eyelid.lines(), {fill:"white"})
 
+const random6 = bt.randIntInRange(52, 53)
 const eye = new bt.Turtle()
-eye.jump([52.7, 78.4])
+eye.jump([random6, 78.4])
 eye.setAngle(-97)
 eye.arc(194, 6.2)
 drawLines(eye.lines(), {fill:"brown"})
