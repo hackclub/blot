@@ -22,6 +22,8 @@ const bodyOutline = [];
 const bodyFace = []
 const bodyBack = [];
 const bodyBelly = [];
+const text = [];
+const btm = [];
 
 const turnMove = (turtle, direction, directionAngle, length) => {
   switch (direction) {
@@ -382,7 +384,14 @@ if (Math.floor(bt.randInRange(0, 2)) == 1) {
 
 
 const cloud = new bt.Turtle()
+cloud.pos = [0,0]
 function drawClouds(x, y) {
+  // cloud.jump([0,0])
+  const cloud = new bt.Turtle()
+  cloud.down()
+  // cloud.pos = [0,0]
+  // cloud.goTo([10,0])
+  // console.log(cloud.pos)
   cloud.jump([x, y])
   cloud.setAngle(bt.randInRange(-10, 10))
   cloud.right(-93)
@@ -407,16 +416,114 @@ function drawClouds(x, y) {
   cloud.arc(172, 4)
   cloud.right(170)
   cloud.arc(172, 6)
-  clouds.push(...bt.scale(cloud.lines(), bt.randInRange(0.1, 0.5)))
+  clouds.push(...bt.scale(cloud.lines(), bt.randInRange(0.2, 0.3)))
+  cloud.up()
 }
 
-drawClouds(bt.randIntInRange(27, 40), bt.randIntInRange(15, 121))
+drawClouds(bt.randIntInRange(29, 40), bt.randIntInRange(38, 101))
 
-drawClouds(bt.randInRange(86, 150), bt.randInRange(15, 121))
+drawClouds(bt.randInRange(111, 125), bt.randInRange(26, 121))
 
-drawClouds(bt.randInRange(15, 150), bt.randInRange(15, 150))
+// drawClouds(bt.randInRange(15, 150), bt.randInRange(15, 150))
 
+const txt = new bt.Turtle()
+txt.pos = [0,0]
+function textDraw() {
+  // txt.pos = [23, 8]
+  txt.down()
+  txt.jump([15, 99])
+  turnMove(txt, "left", 90, 18)
+  turnMove(txt, "left", -93, 11)
+  turnMove(txt, "left", -90, 11)
+  turnMove(txt, "left", -90, 2)
+  turnMove(txt, "left", 100, 8)
+  turnMove(txt, "left", -90, 4)
+  turnMove(txt, "left", -90, 6)
+  turnMove(txt, "left", 90, 2)
+  turnMove(txt, "left", 83, 4)
+  turnMove(txt, "left", -93, 3)
+  txt.jump([18, 108])
+  turnMove(txt, "left", -89, 6)
+  turnMove(txt, "left", -93, 3.5)
+  turnMove(txt, "left", -93, 5.5)
+  turnMove(txt, "left", -80, 3.2)
+  // A
+  txt.jump([18, 108])
+  txt.up()
+}
 
+// textDraw()
+
+text.push(...txt.lines())
+
+let randomness;
+function randomtext(number) {
+  switch (number) {
+    case 0:
+      randomness = bt.text("RAGNOHACKS",[29,109],2.7)
+      break;
+    case 1:
+      randomness = bt.text("ragnohacks.ca",[21,109],2.7)
+      break;
+    case 2:
+      randomness = bt.text("register now!",[23,109],2.7)
+      break;
+  }
+}
+randomtext(bt.randIntInRange(0, 2))
+
+let bottom = new bt.Turtle();
+function rbottom(num) {
+  switch (num) {
+    case 0:
+      bottom.down()
+      bottom.jump([39, 19])
+      bottom.right(-93)
+      bottom.arc(172, 10)
+      bottom.right(153)
+      bottom.arc(172, 7)
+      bottom.right(168)
+      bottom.arc(172, 4)
+      bottom.right(106)
+      bottom.arc(172, 4)
+      bottom.right(46)
+      bottom.arc(89, 11)
+      bottom.right(82)
+      bottom.arc(89, 11)
+      bottom.right(87)
+      bottom.arc(89, 11)
+      bottom.right(92)
+      bottom.arc(89, 8)
+      bottom.right(45)
+      bottom.arc(172, 4)
+      bottom.right(106)
+      bottom.arc(172, 4)
+      bottom.right(170)
+      bottom.arc(172, 6)
+      btm.push(...bt.rotate(bt.scale(bottom.lines(), 0.8), bt.randIntInRange(-10, 10)))
+      btm.push(...bt.rotate(bt.translate(bt.scale(bottom.lines(), 0.5), [41, -1]), bt.randIntInRange(-13, 13)))
+      btm.push(...bt.rotate(bt.translate(bt.scale(bottom.lines(), 0.6), [77, -1]), bt.randIntInRange(-13, 13)))
+      bottom.up()
+      break;
+    case 1:
+      bottom.down()
+      bottom.jump([124, 0])
+      for (let i=0; i<11; i++) {
+        const randNum = bt.randIntInRange(5, 20)
+        bottom.angle = 90
+        bottom.forward(randNum)
+        turnMove(bottom, "left", 90, 11.2)
+        turnMove(bottom, "left", 90, randNum)
+      }
+      btm.push(...bottom.lines())
+      bottom.up()
+      break;
+    default:
+      console.log("ehyo?")
+  }
+}
+rbottom(bt.randIntInRange(0, 1))
+// btm.push(...bottom.lines())
 bodyOutline.push(...bo.lines())
 bodyBack.push(...bb.lines())
 bodyFace.push(...be.lines())
@@ -424,7 +531,7 @@ bodyBelly.push(...bl.lines())
 arms.push(...arm.lines())
 
 
-body.push(...bodyOutline,  ...bodyBack, ...bodyFace, ...bodyBelly)
+body.push(...bodyOutline,  ...bodyBack, ...bodyFace, ...bodyBelly, ...text)
 
-const final = [...body, ...back, ...exclaim, ...arms, ...clouds]
+const final = [...body, ...back, ...exclaim, ...arms, ...clouds, ...randomness, ...btm]
 drawLines(final)
