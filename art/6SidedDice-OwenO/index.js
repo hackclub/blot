@@ -73,7 +73,8 @@ function drawDots(num) {
 }
 
 // Generate a random number between 1 and 6
-const randomNumber = Math.floor(Math.random() * 6) + 1;
+const randomNumber = bt.randIntInRange(1,6); 
+
 
 // Draw the dots based on the random number
 drawDots(randomNumber);
