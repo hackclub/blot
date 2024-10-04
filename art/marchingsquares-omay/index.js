@@ -1,7 +1,7 @@
 /*
 @title: Marching Squares
 @author: Leonard (Omay)
-@snapshot: squares
+@snapshot: squares.png
 */
 
 const width = 125;
@@ -9,11 +9,10 @@ const height = 125;
 
 setDocDimensions(width, height);
 
-let res = 2;
-let layers = 6;
+let res = 0.1;
+let layers = 10;
 
-let noiseScale = 0.05;
-bt.setRandSeed(1);
+let noiseScale = 0.005;
 
 let map = [];
 let lines = [];
@@ -41,7 +40,7 @@ for (let i = 0; i < width / res; i++) {
   }
 }
 
-for (let layer = 0; layer < 1; layer += 1 / (layers + 1)) {
+for (let layer = 0; layer < 1; layer += 1 / layers) {
   for (let i = 0; i < map.length - 1; i++) {
     for (let j = 0; j < map[i].length - 1; j++) {
       let valueA = map[i][j];
