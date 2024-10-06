@@ -15,7 +15,7 @@ const waveAmplitude = 6;
 const waveFrequency = 3;
 const randomFactor = 0.25;
 const seed = Math.floor(Math.random() * 1000);
-const heartScalingFactor = 32;
+const heartScalingFactor = 35;
 const backgroundPatternDensity = 150;
 const margin = maxRadius * 1.2;
 
@@ -38,28 +38,28 @@ function generateHeartWaveArt(seed, randomFactor) {
         if (shapeType === 0) {
           const radius = bt.rand() * 1.2;
           const backgroundCircle = createCircle(x, y, radius, 20);
-          if (!isOverlapWithHeartCircles(x, y, radius)) {
+          if (!isOverlapWithHeartCircles(x, y, radius) && isWithinBounds(x, y, radius)) {
             drawLines([backgroundCircle]);
           }
         } else if (shapeType === 1) {
           const radiusX = bt.rand() * 1.5;
           const radiusY = bt.rand() * 1.2;
           const backgroundEllipse = createEllipse(x, y, radiusX, radiusY, 20);
-          if (!isOverlapWithHeartCircles(x, y, Math.max(radiusX, radiusY))) {
+          if (!isOverlapWithHeartCircles(x, y, Math.max(radiusX, radiusY)) && isWithinBounds(x, y, Math.max(radiusX, radiusY))) {
             drawLines([backgroundEllipse]);
           }
         } else if (shapeType === 2) {
           const sides = bt.randIntInRange(3, 7);
           const radius = bt.rand() * 1.2;
           const backgroundPolygon = createPolygon(x, y, radius, sides);
-          if (!isOverlapWithHeartCircles(x, y, radius)) {
+          if (!isOverlapWithHeartCircles(x, y, radius) && isWithinBounds(x, y, radius)) {
             drawLines([backgroundPolygon]);
           }
         } else if (shapeType === 3) {
           const spiralRadius = bt.rand() * 1.5;
           const turns = bt.randInRange(1, 2.5);
           const backgroundSpiral = createSpiral(x, y, spiralRadius, turns);
-          if (!isOverlapWithHeartCircles(x, y, spiralRadius)) {
+          if (!isOverlapWithHeartCircles(x, y, spiralRadius) && isWithinBounds(x, y, spiralRadius)) {
             drawLines([backgroundSpiral]);
           }
         } else {
@@ -67,7 +67,7 @@ function generateHeartWaveArt(seed, randomFactor) {
           const innerRadius = outerRadius * 0.5;
           const points = bt.randIntInRange(5, 8);
           const backgroundStar = createStar(x, y, outerRadius, innerRadius, points);
-          if (!isOverlapWithHeartCircles(x, y, outerRadius)) {
+          if (!isOverlapWithHeartCircles(x, y, outerRadius) && isWithinBounds(x, y, outerRadius)) {
             drawLines([backgroundStar]);
           }
         }
@@ -141,6 +141,10 @@ function generateHeartWaveArt(seed, randomFactor) {
       }
     }
     return false;
+  }
+
+  function isWithinBounds(x, y, radius) {
+    return x - radius >= 0 && x + radius <= width && y - radius >= 0 && y + radius <= height;
   }
 
   function createCircle(x, y, radius, sides = 20) {
@@ -238,13 +242,15 @@ function generateHeartWaveArt(seed, randomFactor) {
     const finalX = centerX + x + (bt.rand() - 0.5) * randomFactor * maxRadius;
     const finalY = centerY + (y + waveOffset1 + waveOffset2 + waveOffset3) + (bt.rand() - 0.5) * randomFactor * maxRadius;
     
-	// Varying circle sizes for depth
+    // Varying circle sizes for depth
     const radiusVariation = bt.randInRange(0.5, 1.8);
     const radius = bt.randInRange(minRadius, maxRadius) * radiusVariation * (1 + (bt.rand() - 0.5) * randomFactor * (i / numCircles));
 
-    const circle = createCircle(finalX, finalY, radius);
-    finalPolylines.push(circle);
-    heartCircles.push([finalX, finalY, radius]);
+    if (isWithinBounds(finalX, finalY, radius)) {
+      const circle = createCircle(finalX, finalY, radius);
+      finalPolylines.push(circle);
+      heartCircles.push([finalX, finalY, radius]);
+    }
   }
 
   for (let i = 0; i < 15; i++) {
@@ -259,7 +265,7 @@ function generateHeartWaveArt(seed, randomFactor) {
 
     const radius = bt.randInRange(maxRadius * 1.2, maxRadius * 2.5);
 
-    if (isPointInModifiedHeartShape(finalX, finalY, -margin)) {
+    if (isPointInModifiedHeartShape(finalX, finalY, -margin) && isWithinBounds(finalX, finalY, radius)) {
       const circle = createCircle(finalX, finalY, radius);
       finalPolylines.push(circle);
       heartCircles.push([finalX, finalY, radius]);
