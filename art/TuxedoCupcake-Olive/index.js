@@ -201,7 +201,7 @@ function drawCupcake(cx, cy, cwidth, ccolor, overlap) {
       coloredPaths.forEach((path) => {
         bt.union(wholeCupcake, path.path)
       })
-      bt.cover(path.path, overlap)
+      bt.difference(path.path, overlap)
       drawLines(path.path, {fill: path.options.fill, width: .000001})
     })
     return wholeCupcake
