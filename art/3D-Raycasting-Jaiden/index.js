@@ -69,7 +69,10 @@ const slopeThreshold = 0;
 
 // if there's a dramatic shift, if you want the tops to go from bottom to top, set this to true
 // or it'll just go from the higher level to the lower level on top
-const topsToBottom = true;
+const topsToBottom = false;
+
+//contains the lines within the slopes. if true, it'll just cut off the line if it goes out of bounds
+const containLinesWithinShading = true;
 
 //fov for display. 60 is a good value
 const fov = 60;
@@ -79,7 +82,7 @@ const fov = 60;
 //if in local enviornment, set to true. If in the blot editor, set to false.
 //just flips it around and edits the values accordingly
 //ignore this one if you're in the blot editor
-const inLocalEnviornment = false;
+const inLocalEnviornment = true;
 
 const blotwidth = 125;
 const blotheight = 125;
@@ -239,7 +242,7 @@ function vertShadedRectangleWithSlant(x,y,w,h,slope,level, max=10000) {
         let yh = yDown + (slope * w);
         let flag = false;
 
-        if (yh < y) {
+        if (yh < y && containLinesWithinShading) {
             xw = x + (y - yDown) / slope;
 
             yh = y;
@@ -327,14 +330,18 @@ function fillFinalLines() {
 
     for (let i = 1; i < heights.length; i++) {
         if (Math.abs(heights[i] - heights[i - 1]) > maxJumpForShift) {
+
+            let lowerHeight = Math.min(heights[i], heights[i - 1]);
+            let higherHeight = Math.max(heights[i], heights[i - 1]);
+
             tops[tops.length - 1].push([
                 width * (i / fov),
-                height - offset - heights[i - 1]
+                height - offset - lowerHeight
             ]);
 
             tops[tops.length - 1].push([
                 width * (i / fov),
-                height - offset + (topsToBottom ? 0 : -heights[i])
+                height - offset + (topsToBottom ? 0 : -higherHeight)
             ]);
 
             tops.push([
