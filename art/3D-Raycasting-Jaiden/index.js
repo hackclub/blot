@@ -82,7 +82,7 @@ const fov = 60;
 //if in local enviornment, set to true. If in the blot editor, set to false.
 //just flips it around and edits the values accordingly
 //ignore this one if you're in the blot editor
-const inLocalEnviornment = true;
+const inLocalEnviornment = false;
 
 const blotwidth = 125;
 const blotheight = 125;
