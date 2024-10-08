@@ -61,7 +61,15 @@ const displayMap = true;
 const displayRaycasting = true;
 
 //how much the shading is scaled by. increasing will decrease the amount of shading, vice versa
-const shadingScale = 1;
+//1 is good for picturing what it'll look like, but for drawing, 3/4 looks better honestly
+const shadingScale = 2;
+
+//how much the slope threshold must be to think it's actually changed perspective
+const slopeThreshold = 0;
+
+// if there's a dramatic shift, if you want the tops to go from bottom to top, set this to true
+// or it'll just go from the higher level to the lower level on top
+const topsToBottom = true;
 
 //fov for display. 60 is a good value
 const fov = 60;
@@ -81,7 +89,6 @@ const scale = 4;
 //for local enviornment
 const width = 125 * scale;
 const height = 125 * scale;
-
 
 const walls = [];
 
@@ -226,22 +233,33 @@ function vertShadedRectangleWithSlant(x,y,w,h,slope,level, max=10000) {
     for (let t = 0; t <= 100; t += level) {
         let p = t / 100;
 
+        let yDown = y + (h * p);
+
         let xw = x + w;
-        let yh = y + (h * p) + (slope * w);
+        let yh = yDown + (slope * w);
         let flag = false;
 
+        if (yh < y) {
+            xw = x + (y - yDown) / slope;
+
+            yh = y;
+
+            flag = true;
+        }
+
         if (yh > max) {
+            xw = x + (max - yDown) / slope;
+
             yh = max;
-            xw = x + w;
+
             flag = true;
         }
 
         paths.push([
-            [x, y + (h * p)],
+            [x, yDown],
             [xw, yh],
         ]);
 
-        if (flag) break;
     }
     return paths;
 }
@@ -282,6 +300,8 @@ function fillFinalLines() {
     let heights = [];
     let lastChange = 0;
 
+    let heightList2 = [];
+
     for (let i = 0; i < fov; i++) {
         let m = (i - (fov / 2));
         let wallHeight = raycastFromPosition(playerPos.x, playerPos.y, playerPos.rot + (m * Math.PI / 180));
@@ -293,6 +313,10 @@ function fillFinalLines() {
         }
 
         heights.push(lineHeight);
+
+        heightList2.push([
+            m, lineHeight
+        ])
     }
 
     let signChanges = [];
@@ -310,7 +334,7 @@ function fillFinalLines() {
 
             tops[tops.length - 1].push([
                 width * (i / fov),
-                height - offset - heights[i]
+                height - offset + (topsToBottom ? 0 : -heights[i])
             ]);
 
             tops.push([
@@ -319,7 +343,6 @@ function fillFinalLines() {
                     height - offset - heights[i]
                 ]
             ]);
-            
         } else {
             tops[tops.length - 1].push([
                 width * (i / fov),
@@ -335,49 +358,45 @@ function fillFinalLines() {
         }
         
         let thisChange = heights[i] - heights[i - 1];
+        let slope = -(thisChange) / (width / fov);
 
-        if (Math.sign(lastChange) != Math.sign(thisChange) && i != 0) {
+        if (Math.sign(lastChange) != Math.sign(slope) && Math.abs(slope) > slopeThreshold && i != 0) {
             signChanges.push([
                 [
-                    width * (i / fov),
+                    width * ((i + 0.5) / fov),
                     height - offset - heights[i]
                 ],
                 [
-                    width * (i / fov),
+                    width * ((i + 0.5) / fov),
                     height - offset
                 ]
             ]);
         }
 
-        lastChange = thisChange;
+        lastChange = slope;
     }
 
-    let topSlopes = [];
-
-    for (let top of tops) {        
-        for (let i = 1; i < top.length - 1; i++) {
-            let slope = (top[i + 1][1] - top[i][1]) / (top[i + 1][0] - top[i][0]);
-            topSlopes.push(slope);
-            if (i == 1) {
-                topSlopes.push(slope);
-            }
-        }
-    }
     if (displayShading) {
-        for (let i = 0; i < fov; i++) {
-            let h = heights[i];
-            let slope = i == fov - 1 ? topSlopes[i] : topSlopes[i + 2];
+        let lastHeight = heightList2[0][1];
+        for (let i = 1; i < fov; i++) {
+            let h = heightList2[i][1];
 
-            if (slope == Infinity || slope == -Infinity || isNaN(slope)) {
-                slope = topSlopes[i + 3];
+            if (Math.abs(lastHeight - h) > maxJumpForShift) {
+                lastHeight = h;
             }
+
+            let slope = -(heightList2[i][1] - lastHeight) / (width / fov);
 
             let x = width * (i / fov);
             let y = height - offset - h;
 
             let w = width / fov;
+            
+            let lines = vertShadedRectangleWithSlant(x, y, w, h, slope, 1.5 * shadingScale, height - offset);
 
-            finalLines.push(...vertShadedRectangleWithSlant(x, y, w, h, slope, 1.5 * shadingScale, height - offset));
+            finalLines.push(...lines);
+
+            lastHeight = h;
         }
     }
 
@@ -431,16 +450,25 @@ if (displayMap) {
 
 if (!inLocalEnviornment) {
     for (let path of finalLines) {
+        let toRemove = []
         for (let i = 0; i < path.length; i++) {
             //for some reason, direct modification doesn't work in blot... so we have to do this
 
             let x = path[i][0];
             let y = path[i][1];
 
+            if (isNaN(x) || isNaN(y)) {
+                toRemove.push(i);
+            }
+
             path[i] = [
                 x / scale,
                 blotheight - (y / scale)
             ];
+        }
+
+        for (let i = toRemove.length - 1; i >= 0; i--) {
+            path.splice(toRemove[i], 1);
         }
     }
 }
