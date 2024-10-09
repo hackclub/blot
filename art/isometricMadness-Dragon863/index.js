@@ -78,7 +78,7 @@ function drawBackgroundPattern(width, height, scale) {
     myTurtle.left(90);
     for (let x = 0; x <= width; x++) {
         for (let y = 0; y <= height - 1; y++) {
-            if (Math.random() > 0.5) {
+            if (bt.rand() > 0.5) {
                 myTurtle.down();
                 myTurtle.forward(1);
                 myTurtle.up();
