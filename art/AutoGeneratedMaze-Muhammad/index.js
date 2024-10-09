@@ -4,11 +4,11 @@
 @snapshot: image4.png
 */
 
-const width = 400;
-const height = 400;
+const width = 125;
+const height = 125;
 setDocDimensions(width, height);
 
-const cellSize = 20;
+const cellSize = 2;
 const cols = Math.floor(width / cellSize);
 const rows = Math.floor(height / cellSize);
 
