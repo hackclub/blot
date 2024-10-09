@@ -1,0 +1,88 @@
+name: Plagiarism Checker
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+on:
+  pull_request:
+    paths:
+      - "art/**/*.js"
+
+jobs:
+  plagiarism-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Compare50 && beautifulsoup4
+        run: pip install compare50 beautifulsoup4
+
+      - name: Get list of changed files
+        id: changed-files
+        run: |
+          echo "Pull Request Base SHA: ${{ github.event.pull_request.base.sha }}"
+          echo "Pull Request Head SHA: ${{ github.event.pull_request.head.sha }}"
+          git diff --name-only --diff-filter=AM --find-renames --find-copies ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} | grep 'art/.*\.js$' | xargs
+          js_files=$(git diff --name-only --diff-filter=AM --find-renames --find-copies ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} | grep 'art/.*\.js$' | xargs)
+          echo "FILES=$js_files" >> $GITHUB_ENV
+
+      - name: Run Plagiarism Detection Script
+        if: env.FILES != ''
+        run: python .github/scripts/plagiarism_check.py "${{ env.FILES }}" art output_dir saved_dir
+
+      - name: Extract and Display Similarity Percentages
+        run: python .github/scripts/extract_percentages.py saved_dir/
+        id: extract-percentages
+
+      - name: Upload Compare50 Results as Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compare50-results
+          path: saved_dir/
+
+      - name: Save PR number to file
+        if: always()
+        run: echo ${{ github.event.pull_request.number }} > pr_number.txt
+
+      - name: Upload Plagiarism Report as Artifact
+        if: always() && steps.extract-percentages.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: plagiarism-report
+          path: plagiarism-report.md
+
+      - name: Check for High Plagiarism Percentages
+        if: always() && steps.extract-percentages.outcome == 'failure'
+        run: echo "Plagiarism percentage over threshold detected."
+
+      - name: Post Markdown as Comment
+        if: always() && steps.extract-percentages.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            console.log("Reading pr number...")
+            const prNumber = fs.readFileSync('./pr_number.txt', 'utf8').trim();
+            console.log("Reading report...")
+            const markdownContent = fs.readFileSync('./plagiarism-report.md', 'utf8');
+            console.log("Posting the Markdown content as a comment...");
+            const commentResponse = await github.rest.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: markdownContent
+            });
+            console.log(`Comment posted successfully: ${commentResponse.data.html_url}`);

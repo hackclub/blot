@@ -20,6 +20,9 @@ import { catmullRom } from "./catmullRom.js";
 import { nurbs } from "./nurbs.js";
 import { offset } from "./offset.js"
 import { assertArgs } from "./assert.js";
+import { DrawText as text } from "./blotfont/funcs.js";
+import { RunInstructions as fromInstructions } from "./blotfont/instructions.js";
+import { letters } from "./blotfont/letters.js";
 
 // import * as polyclip from 'polyclip-ts';
 // import polygonClipping from "polygon-clipping";
@@ -234,7 +237,12 @@ export const toolkit = {
     assertArgs(arguments, ['any'], 'bt.copy')
 
     return JSON.parse(JSON.stringify(obj));
-  }
+  },
+
+  // blotfont api
+  text,
+  fromInstructions,
+  letters
 }
 
 

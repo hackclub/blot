@@ -1,8 +1,10 @@
+import { PostHog } from "posthog-node";
+
 export default function() {
 
   const linkClasses = "cursor-pointer text-lg box-border m-0 min-w-0 text-red-600 underline hover:decoration-wavy"
-
   return `
+  
     ${popupModal()}
     ${thanks()}
     <div class="relative flex flex-col w-full" style="height: calc(100vh - 51px); min-height: 600px;">
@@ -22,7 +24,7 @@ export default function() {
         </div>
 
         <div class="text-xl leading-none font-light tracking-normal pt-2.5">
-          Write a program that creates art and we'll send you* a CNC machine that can draw it.
+          Write an interactive art piece, and we'll send you* a CNC machine that can draw it!
         </div>
 
         <div class="sm:flex-row flex-col flex gap-2">
