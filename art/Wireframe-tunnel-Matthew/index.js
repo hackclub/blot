@@ -6,9 +6,8 @@
 // MODIFIYABLE CONSTANTS
 const width = 125;
 const height = 125;
-const randDepth = Math.ceil(Math.random() * 10); // Length of tunnel (non-negative)
+const randDepth = bt.randIntInRange(0, 10); // Length of tunnel (non-negative)
 const sideTunnel = 0.35;  // Probability of a branching tunnel (0 to 1 inclusive)
-
 
 let leftPoints = [
   [0, height],
@@ -18,6 +17,7 @@ let rightPoints = [
   [width, height],
   [width, 0],
 ];
+
 const t = new bt.Turtle();
 
 function drawTrapezoid(p1, p2, p3, p4) { // Includes rectangle
@@ -57,7 +57,7 @@ for (let depth = 0; depth < randDepth; depth++) {
     [nextRightX, nextBottomY],
   ];
 
-  if (Math.random() < sideTunnel) {
+  if (bt.rand() < sideTunnel) {
     drawSideCorridor(
       leftPoints[0],
       leftPoints[1],
@@ -73,7 +73,7 @@ for (let depth = 0; depth < randDepth; depth++) {
     );
   }
 
-  if (Math.random() < sideTunnel) {
+  if (bt.rand() < sideTunnel) {
     drawSideCorridor(
       rightPoints[0],
       rightPoints[1],
