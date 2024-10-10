@@ -29,7 +29,6 @@ function drawTrapezoid(p1, p2, p3, p4) { // Includes rectangle
 }
 
 function drawSideCorridor(p1, p2, p3, p4) {
-  let corridorDepth = 0.3;
   let p5 = [p1[0], p3[1]];
   let p6 = [p2[0], p4[1]];
   t.jump(p5);
