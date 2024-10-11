@@ -40,7 +40,7 @@ const randomizeMaze = true;
 let playerPos = {
     x: 0,
     y: -2,
-    rot: -Math.PI / 4
+    rot: (2 * Math.PI) - (Math.PI / 4)
 }
 
 //if you want to randomly generate the player position, set this to true
@@ -59,6 +59,11 @@ const displayMap = true;
 
 //if you want to display the massive chunk of lines that is the raycasting in the map
 const displayRaycasting = true;
+
+//if you want to display ONLY the outer lines of the raycasting, set this to true
+//stops the filled in shading, good for drawing. displayRaycasting must be set equal to true though
+//if false, you'll see the full extent of the raycasting (it's filled in black)
+const displayOuterRaycasting = true;
 
 //how much the shading is scaled by. increasing will decrease the amount of shading, vice versa
 //1 is good for picturing what it'll look like, but for drawing, 3/4 looks better honestly
@@ -297,8 +302,11 @@ const finalLines = [
 
 translateEnviornment();
 
+let farthestDistance = 0;
+let closestDistance = 1000;
+
 function fillFinalLines() {
-    const offset = 100;
+    const offset = displayMap ? 100 : 0;
 
     let heights = [];
     let lastChange = 0;
@@ -320,6 +328,14 @@ function fillFinalLines() {
         heightList2.push([
             m, lineHeight
         ])
+
+        if (wallHeight > farthestDistance) {
+            farthestDistance = wallHeight;
+        }
+
+        if (wallHeight < closestDistance) {
+            closestDistance = wallHeight;
+        }
     }
 
     let signChanges = [];
@@ -419,6 +435,449 @@ function fillFinalLines() {
     ]]);
 }
 
+const font = {
+    "A": [
+        [
+            [0.9, 1],
+            [0.5, 0],
+            [0.1, 1]
+        ],
+        [
+            [0.3, 0.7],
+            [0.7, 0.7]
+        ]
+    ],
+    "B": [
+        [
+            [0.1, 0],
+            [0.1, 1],
+            [0.7, 1],
+            [0.9, 0.8],
+            [0.7, 0.5],
+            [0.1, 0.5],
+        ],
+        [
+            [0.7, 0.5],
+            [0.9, 0.2],
+            [0.7, 0],
+            [0.1, 0]
+        ]
+    ],
+    "C": [
+        [
+            [0.9, 0],
+            [0.1, 0],
+            [0.1, 1],
+            [0.9, 1]
+        ]
+    ],
+    "D": [
+        [
+            [0.1, 0],
+            [0.1, 1],
+            [0.7, 1],
+            [0.9, 0.5],
+            [0.7, 0],
+            [0.1, 0]
+        ]
+    ],
+    "E": [
+        [
+            [0.9, 0],
+            [0.1, 0],
+            [0.1, 1],
+            [0.9, 1]
+        ],
+        [
+            [0.1, 0.5],
+            [0.7, 0.5]
+        ]
+    ],
+    "F": [
+        [
+            [0.9, 0],
+            [0.1, 0],
+            [0.1, 1]
+        ],
+        [
+            [0.1, 0.5],
+            [0.7, 0.5]
+        ]
+    ],
+    "G": [
+        [
+            [0.9, 0],
+            [0.1, 0],
+            [0.1, 1],
+            [0.9, 1],
+            [0.9, 0.5],
+            [0.5, 0.5]
+        ]
+    ],
+    "H": [
+        [
+            [0.1, 0],
+            [0.1, 1]
+        ],
+        [
+            [0.9, 0],
+            [0.9, 1]
+        ],
+        [
+            [0.1, 0.5],
+            [0.9, 0.5]
+        ]
+    ],
+    "I": [
+        [
+            [0.5, 0],
+            [0.5, 1]
+        ],
+        [
+            [0.3, 0],
+            [0.7, 0]
+        ],
+        [
+            [0.3, 1],
+            [0.7, 1]
+        ]
+    ],
+    "J": [
+        [
+            [0.9, 0],
+            [0.9, 1],
+            [0.1, 1],
+            [0.1, 0.5]
+        ]
+    ],
+    "K": [
+        [
+            [0.1, 0],
+            [0.1, 1]
+        ],
+        [
+            [0.1, 0.5],
+            [0.9, 1]
+        ],
+        [
+            [0.1, 0.5],
+            [0.9, 0]
+        ]
+    ],
+    "L": [
+        [
+            [0.1, 0],
+            [0.1, 1],
+            [0.9, 1]
+        ]
+    ],
+    "M": [
+        [
+            [0.1, 1],
+            [0.1, 0],
+            [0.5, 0.5],
+            [0.9, 0],
+            [0.9, 1]
+        ]
+    ],
+    "N": [
+        [
+            [0.1, 1],
+            [0.1, 0],
+            [0.9, 1],
+            [0.9, 0]
+        ]
+    ],
+    "O": [
+        [
+            [0.1, 0],
+            [0.1, 1],
+            [0.9, 1],
+            [0.9, 0],
+            [0.1, 0]
+        ]
+    ],
+    "P": [
+        [
+            [0.1, 1],
+            [0.1, 0],
+            [0.9, 0],
+            [0.9, 0.5],
+            [0.1, 0.5]
+        ]
+    ],
+    "Q": [
+        [
+            [0.1, 0],
+            [0.1, 1],
+            [0.9, 1],
+            [0.9, 0],
+            [0.1, 0]
+        ],
+        [
+            [0.5, 0.5],
+            [1.2, 1.2]
+        ]
+    ],
+    "R": [
+        [
+            [0.1, 1],
+            [0.1, 0],
+            [0.9, 0],
+            [0.9, 0.5],
+            [0.1, 0.5]
+        ],
+        [
+            [0.1, 0.5],
+            [0.9, 1]
+        ]
+    ],
+    "S": [
+        [
+            [0.9, 0],
+            [0.1, 0],
+            [0.1, 0.5],
+            [0.9, 0.5],
+            [0.9, 1],
+            [0.1, 1]
+        ]
+    ],
+    "T": [
+        [
+            [0.5, 0],
+            [0.5, 1]
+        ],
+        [
+            [0, 0],
+            [1, 0]
+        ]
+    ],
+    "U": [
+        [
+            [0.1, 0],
+            [0.1, 1],
+            [0.9, 1],
+            [0.9, 0]
+        ]
+    ],
+    "V": [
+        [
+            [0.1, 0],
+            [0.5, 1],
+            [0.9, 0]
+        ]
+    ],
+    "W": [
+        [
+            [0.1, 0],
+            [0.1, 1],
+            [0.5, 0.5],
+            [0.9, 1],
+            [0.9, 0]
+        ]
+    ],
+    "X": [
+        [
+            [0.1, 0],
+            [0.9, 1]
+        ],
+        [
+            [0.1, 1],
+            [0.9, 0]
+        ]
+    ],
+    "Y": [
+        [
+            [0.1, 0],
+            [0.5, 0.5],
+            [0.9, 0]
+        ],
+        [
+            [0.5, 0.5],
+            [0.5, 1]
+        ]
+    ],
+    "Z": [
+        [
+            [0.1, 0],
+            [0.9, 0],
+            [0.1, 1],
+            [0.9, 1]
+        ]
+    ],
+    "1": [
+        [
+            [0.5, 0],
+            [0.5, 1]
+        ],
+        [
+            [0.5, 0],
+            [0.2, 0.3]
+        ],
+        [
+            [0.2, 1],
+            [0.8, 1]
+        ]
+    ],
+    "2": [
+        [
+            [0.9, 1],
+            [0.1, 1],
+            [0.1, 0.5],
+            [0.9, 0.5],
+            [0.9, 0],
+            [0.1, 0]
+        ]
+    ],
+    "3": [
+        [
+            [0.1, 0],
+            [0.9, 0],
+            [0.9, 0.5],
+            [0.1, 0.5],
+        ],
+        [
+            [0.9, 0.5],
+            [0.9, 1],
+            [0.1, 1]
+        ]
+    ],
+    "4": [
+        [
+            [0.9, 1],
+            [0.9, 0],
+            [0.1, 0.5],
+            [0.9, 0.5]
+        ]
+    ],
+    "5": [
+        [
+            [0.9, 0],
+            [0.1, 0],
+            [0.1, 0.5],
+            [0.9, 0.5],
+            [0.9, 1],
+            [0.1, 1]
+        ]
+    ],
+    "6": [
+        [
+            [0.9, 0],
+            [0.1, 0],
+            [0.1, 1],
+            [0.9, 1],
+            [0.9, 0.5],
+            [0.1, 0.5]
+        ]
+    ],
+    "7": [
+        [
+            [0.1, 0],
+            [0.9, 0],
+            [0.5, 1]
+        ]
+    ],
+    "8": [
+        [
+            [0.9, 0],
+            [0.9, 1],
+            [0.1, 1],
+            [0.1, 0],
+            [0.9, 0]
+        ],
+        [
+            [0.9, 0.5],
+            [0.1, 0.5]
+        ]
+    ],
+    "9": [
+        [
+            [0.1, 0],
+            [0.9, 0],
+            [0.9, 1],
+            [0.1, 1]
+        ],
+        [
+            [0.1, 0],
+            [0.1, 0.5],
+            [0.9, 0.5]
+        ],
+    ],
+    "0": [
+        [
+            [0.9, 0],
+            [0.1, 0],
+            [0.1, 1],
+            [0.9, 1],
+            [0.9, 0]
+        ],
+        [
+            [0.9, 0],
+            [0.1, 1]
+        ]
+    ],
+    "(": [
+        [
+            [0.9, 0],
+            [0.5, 0.5],
+            [0.9, 1]
+        ]
+    ],
+    ")": [
+        [
+            [0.1, 0],
+            [0.5, 0.5],
+            [0.1, 1]
+        ]
+    ],
+    ".": [
+        [
+            [0.5, 0],
+            [0.5, 0.1]
+        ]
+    ],
+    ",": [
+        [
+            [0.5, 1],
+            [0.5, 0.8],
+            [0.4, 0.7]
+        ]
+    ],
+};
+
+function drawText(text, x, y, size, spacing) {
+    let paths = [];
+
+    let currentX = x;
+    let currentY = y;
+
+    for (let i = 0; i < text.length; i++) {
+        if (text[i] == " ") {
+            currentX += size * 1.5;
+            continue;
+        }
+
+        let letter = font[text[i].toUpperCase()];
+
+        for (let path of letter) {
+            let newPath = [];
+
+            for (let point of path) {
+                newPath.push([
+                    currentX + point[0] * size,
+                    currentY + point[1] * size
+                ]);
+            }
+
+            paths.push(newPath);
+        }
+
+        currentX += size * 1.5;
+    }
+
+    return paths;
+}
+
 function drawMap() {
     const offset = 95;
 
@@ -434,19 +893,49 @@ function drawMap() {
     ])
 
     if (displayRaycasting) {
+        let p1 = []
+        
         for (let i = 0; i < fov; i++) {
+
+
             let m = i - (fov / 2);
             let wallHeight = raycastFromPosition(playerPos.x, playerPos.y, playerPos.rot + (m * Math.PI / 180));
 
-            finalLines.push([[
-                playerPos.x,
-                height - offset + playerPos.y,
-            ], [
-                playerPos.x + Math.cos(playerPos.rot + (m * Math.PI / 180)) * wallHeight,
-                height - offset + playerPos.y + Math.sin(playerPos.rot + (m * Math.PI / 180)) * wallHeight
-            ]]);
+            let xn = playerPos.x + Math.cos(playerPos.rot + (m * Math.PI / 180)) * wallHeight;
+            let yn = height - offset + playerPos.y + Math.sin(playerPos.rot + (m * Math.PI / 180)) * wallHeight
+            
+            if (displayOuterRaycasting && (i == 0 || i == fov - 1)) {
+                finalLines.push([[
+                    playerPos.x,
+                    height - offset + playerPos.y,
+                ], [
+                    xn,
+                    yn
+                ]]);
+            }
+
+            p1.push([xn, yn]);
         }
+
+        if (displayOuterRaycasting) finalLines.push(p1);
     }
+
+    finalLines.push(
+        ...drawText("A 3D SPACE", 120, 410, 10),
+    )
+    finalLines.push(
+        ...drawText("CURRENT POSITION IS (" + playerPos.x + ", " + playerPos.y + ")", 120, 430, 8),
+    )
+
+    let degrees = playerPos.rot * 180 / Math.PI;
+
+    finalLines.push(
+        ...drawText("AND ROTATION IS " + Math.round(degrees) + " DEGREES", 120, 450, 8),
+    )
+
+    finalLines.push(
+        ...drawText("DISTANCES FROM " + Math.round(closestDistance) + " TO " + Math.round(farthestDistance), 120, 470, 8),
+    )
 }
 
 fillFinalLines();
