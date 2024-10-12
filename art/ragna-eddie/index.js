@@ -545,34 +545,31 @@ function randomBg(num) {
       
         // bg.left(90)
         // fireBump(6)
-        for (let i=0; i<16; i++) {
+        for (let i=0; i<18; i++) {
           bg.left(90)
           fireBump(bt.randIntInRange(5, 6))
-          bg.setAngle(bt.randIntInRange(-22, -26))
+          bg.setAngle(bt.randIntInRange(-19, -21))
         }
-        for (let i=0; i<3; i++) {
-          bg.right(-41)
-          fireBump(bt.randIntInRange(4, 6))
-          bg.setAngle(bt.randIntInRange(-18, -26))
+        
+        for (let i=0; i<10; i++) {
+          bg.left(3)
+          fireBump(bt.randIntInRange(5, 6))
+          bg.setAngle(bt.randIntInRange(-19, -21))
         }
-        for (let i=0; i<14; i++) {
-          // bg.right(-6)
-          bg.setAngle(-32)
-          fireBump(bt.randIntInRange(4, 6))
-          bg.setAngle(bt.randIntInRange(-18, -26))
-        }
-        for (let i=0; i<5; i++) {
-          // bg.right(52)
-          bg.setAngle(-28)
-          fireBump(bt.randIntInRange(4, 6))
-          bg.setAngle(bt.randIntInRange(-18, -26))
-        }
-        // const h = Math.ceil(-32+(-1*Math.abs(Math.atan((bg.pos[1]-26)/(bg.pos[0]-100)) * (180 / Math.PI))))
-        for (let i=0; i<19; i++) {
-          bg.setAngle(-124)
+        const pas = bg.pos
+      
+        bg.jump([112, 19])
+        for (let i=0; i<25; i++) {
+          bg.setAngle(-295)
           // bg.setAngle(h)
           fireBump(bt.randIntInRange(4, 5))
         }
+        for (let i=0; i<11; i++) {
+          bg.setAngle(-217)
+          // bg.setAngle(h)
+          fireBump(bt.randIntInRange(4, 5))
+        }
+        bg.goTo(pas)
         background.push(...bg.lines())
         break;
       // case 1:
