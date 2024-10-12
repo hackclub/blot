@@ -3,6 +3,8 @@
 // check out this guide to learn how to program in blot
 // https://blot.hackclub.com/editor?guide=start
 
+// fire
+
 const width = 125;
 const height = 125;
 
@@ -24,6 +26,7 @@ const bodyBack = [];
 const bodyBelly = [];
 const text = [];
 const btm = [];
+const background = [];
 
 const turnMove = (turtle, direction, directionAngle, length) => {
   switch (direction) {
@@ -420,9 +423,9 @@ function drawClouds(x, y) {
   cloud.up()
 }
 
-drawClouds(bt.randIntInRange(29, 40), bt.randIntInRange(38, 101))
+// drawClouds(bt.randIntInRange(29, 40), bt.randIntInRange(38, 101))
 
-drawClouds(bt.randInRange(111, 125), bt.randInRange(26, 121))
+// drawClouds(bt.randInRange(111, 125), bt.randInRange(26, 121))
 
 // drawClouds(bt.randInRange(15, 150), bt.randInRange(15, 150))
 
@@ -523,6 +526,66 @@ function rbottom(num) {
   }
 }
 rbottom(bt.randIntInRange(0, 1))
+
+
+const bg = new bt.Turtle()
+function fireBump(size) {
+  turnMove(bg, "left", bt.randIntInRange(55, 66), size)
+  turnMove(bg, "left", bt.randIntInRange(-113, -154), bt.randIntInRange(size-4, size))
+}
+function randomBg(num) {
+  switch (num) {
+      case 0:
+        bg.down()
+        bg.jump([30, 19])
+        turnMove(bg, "left", -272, 2)
+        fireBump(11)
+        // bg.left(90)
+        // fireBump(5)
+      
+        // bg.left(90)
+        // fireBump(6)
+        for (let i=0; i<16; i++) {
+          bg.left(90)
+          fireBump(bt.randIntInRange(5, 6))
+          bg.setAngle(bt.randIntInRange(-22, -26))
+        }
+        for (let i=0; i<3; i++) {
+          bg.right(-41)
+          fireBump(bt.randIntInRange(4, 6))
+          bg.setAngle(bt.randIntInRange(-18, -26))
+        }
+        for (let i=0; i<14; i++) {
+          // bg.right(-6)
+          bg.setAngle(-32)
+          fireBump(bt.randIntInRange(4, 6))
+          bg.setAngle(bt.randIntInRange(-18, -26))
+        }
+        for (let i=0; i<5; i++) {
+          // bg.right(52)
+          bg.setAngle(-28)
+          fireBump(bt.randIntInRange(4, 6))
+          bg.setAngle(bt.randIntInRange(-18, -26))
+        }
+        // const h = Math.ceil(-32+(-1*Math.abs(Math.atan((bg.pos[1]-26)/(bg.pos[0]-100)) * (180 / Math.PI))))
+        for (let i=0; i<19; i++) {
+          bg.setAngle(-124)
+          // bg.setAngle(h)
+          fireBump(bt.randIntInRange(4, 5))
+        }
+        background.push(...bg.lines())
+        break;
+      // case 1:
+      //   randomness = bt.text("ragnohacks.ca",[21,109],2.7)
+      //   break;
+      // case 2:
+      //   randomness = bt.text("register now!",[23,109],2.7)
+      //   break;
+  }
+}
+randomBg(0)
+
+
 // btm.push(...bottom.lines())
 bodyOutline.push(...bo.lines())
 bodyBack.push(...bb.lines())
@@ -533,5 +596,5 @@ arms.push(...arm.lines())
 
 body.push(...bodyOutline,  ...bodyBack, ...bodyFace, ...bodyBelly, ...text)
 
-const final = [...body, ...back, ...exclaim, ...arms, ...clouds, ...randomness, ...btm]
+const final = [...body, ...back, ...exclaim, ...arms, ...clouds, ...randomness, ...btm, ...background]
 drawLines(final)
