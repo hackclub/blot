@@ -530,9 +530,36 @@ rbottom(bt.randIntInRange(0, 1))
 
 const bg = new bt.Turtle()
 function fireBump(size) {
-  turnMove(bg, "left", bt.randIntInRange(55, 66), size)
-  turnMove(bg, "left", bt.randIntInRange(-113, -154), bt.randIntInRange(size-4, size))
+  turnMove(bg, "left", bt.randIntInRange(75, 86), size)
+  turnMove(bg, "left", bt.randIntInRange(-126, -154), bt.randIntInRange(size-2, size+5))
 }
+
+function drawLightning(turtle, length, size, onezero) {
+  let x;
+  const rdm = onezero
+  
+  if (rdm === 0) {
+    x = bt.randIntInRange(10, 30)
+  } else {
+    x = bt.randIntInRange(90, 105)
+  }
+  turtle.jump([x, 104])
+  
+  turtle.setAngle(-90)
+  const direction = (rdm === 1) ? "left" : "right"
+  for (let i=0; i<size; i++) {
+    
+    turnMove(turtle, direction, bt.randIntInRange(22, 33), length);
+    if (bt.randIntInRange(0, 1) === 0) {
+      turnMove(turtle, direction, bt.randIntInRange(-165, -106), bt.randIntInRange(length-4, length+10))
+    } else {
+      turnMove(turtle, direction, 307, bt.randIntInRange(length-4, length+13))
+    }
+    turtle.setAngle(-90)
+  }
+  turnMove(turtle, direction, 0, bt.randIntInRange(length-4, length))
+}
+
 function randomBg(num) {
   switch (num) {
       case 0:
@@ -540,47 +567,51 @@ function randomBg(num) {
         bg.jump([30, 19])
         turnMove(bg, "left", -272, 2)
         fireBump(11)
-        // bg.left(90)
-        // fireBump(5)
-      
-        // bg.left(90)
-        // fireBump(6)
-        for (let i=0; i<18; i++) {
-          bg.left(90)
+
+        for (let i=0; i<17; i++) {
+          bg.left(114)
           fireBump(bt.randIntInRange(5, 6))
           bg.setAngle(bt.randIntInRange(-19, -21))
         }
         
         for (let i=0; i<10; i++) {
-          bg.left(3)
+          bg.left(10)
           fireBump(bt.randIntInRange(5, 6))
           bg.setAngle(bt.randIntInRange(-19, -21))
         }
         const pas = bg.pos
       
         bg.jump([112, 19])
-        for (let i=0; i<25; i++) {
-          bg.setAngle(-295)
+        for (let i=0; i<17; i++) {
+          bg.setAngle(-258)
           // bg.setAngle(h)
           fireBump(bt.randIntInRange(4, 5))
         }
         for (let i=0; i<11; i++) {
-          bg.setAngle(-217)
+          bg.setAngle(-201)
           // bg.setAngle(h)
           fireBump(bt.randIntInRange(4, 5))
         }
         bg.goTo(pas)
         background.push(...bg.lines())
         break;
-      // case 1:
-      //   randomness = bt.text("ragnohacks.ca",[21,109],2.7)
-      //   break;
+      case 1:
+        bg.down()
+        bg.jump([41, 54])
+        // turnMove(bg, "left", -66, 83)
+        drawLightning(bg, 5, 8, 0);
+        drawLightning(bg, 5, 8, 1);
+
+        // background.push(...bg.lines(), ...bt.translate(bg.lines(), [3, 0]))
+        background.push(...bg.lines())
+        break;
       // case 2:
       //   randomness = bt.text("register now!",[23,109],2.7)
       //   break;
   }
 }
-randomBg(0)
+randomBg(bt.randIntInRange(0, 1))
+// randomBg(0)
 
 
 // btm.push(...bottom.lines())
