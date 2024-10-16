@@ -168,7 +168,7 @@ musicInput.forEach((bar, barIndex) => {
     if (stemDirection === "down") {
       finalLines.push([[xPos + 4, yPos], [xPos + 4, yPos - 13]]);
     } else {
-      finalLines.push([[xPos - 4, yPos], [xPos - 4, yPos + 13]]);
+      finalLines.push([[xPos + 4, yPos], [xPos + 4, yPos + 13]]);
     }
   });
 });
