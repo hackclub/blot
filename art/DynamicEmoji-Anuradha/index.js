@@ -9,10 +9,8 @@ setDocDimensions(width, height);
 
 // Variables
 const eyeRadius = 5;
-const numHairs = 47; // number of hairs
 const headCenter = [width / 2, height / 2];
 const headRadius = 50;
-
 
 function approximateCircle(center, radius, segments = 32) {
     const angleStep = (2 * Math.PI) / segments;
@@ -26,7 +24,6 @@ function approximateCircle(center, radius, segments = 32) {
     }
     return points;
 }
-
 
 function generateHair(numHairs) {
     const hairs = [];
@@ -51,7 +48,6 @@ function generateHair(numHairs) {
     }
     return hairs;
 }
-
 
 function generateEmoji(type) {
     const finalLines = [];
@@ -148,19 +144,22 @@ function generateEmoji(type) {
     bt.join(finalLines, [leftEyebrow]);
     bt.join(finalLines, [rightEyebrow]);
 
-
     const hairs = generateHair(numHairs);
     bt.join(finalLines, hairs);
-
 
     const finalBounds = bt.bounds(finalLines);
     const finalScale = width / finalBounds.width * 0.93;
     bt.scale(finalLines, finalScale);
     bt.translate(finalLines, [width / 2, height / 2], bt.bounds(finalLines).cc);
 
-
     drawLines(finalLines);
 }
 
-// different types of emojis 
-generateEmoji('sad');  //'sad', 'happy', 'angry','surprised'
+// no of hairs in randomly multiples of 6
+const numHairs = Math.floor(Math.random() * 10) * 6;
+
+// select the emoji type randomy
+const emojiTypes = ['sad', 'happy', 'angry', 'surprised'];
+const randomEmojiType = emojiTypes[Math.floor(Math.random() * emojiTypes.length)];
+
+generateEmoji(randomEmojiType);
