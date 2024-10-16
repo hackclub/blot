@@ -1,4 +1,10 @@
 /*
+@title: Sheet music generator!
+@author: s1072489
+@snapshot: default.png
+
+
+/*
   Hiya! This project generates a 2-bar music staff based on an input array of notes and lengths.
 */
 
