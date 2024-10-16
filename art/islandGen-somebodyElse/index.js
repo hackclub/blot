@@ -22,7 +22,7 @@ let angl = bt.randInRange(4,10);
 let cloudNum = 4 //bt.randIntInRange(2,6)
 let grassNum = bt.randIntInRange(10,20)
 let horizonHeight = 43
-let buildNum = 6 //HAS to be even, 0 to turn off
+//let buildNum = 3 //HAS to be even, 0 to turn off
 
 //doc dimensions, the return
 setDocDimensions(width, height);
@@ -34,32 +34,36 @@ setDocDimensions(width, height);
 const finalLines = [];
 const secondLines = [];
 
-// create two buildings (or more)
-function building() {
-
-  while (buildNum != 0) {
-    let b1Height = bt.randInRange(5,8)
-    let b1Angle = bt.randInRange(7,11)
-    let b2Height = bt.randInRange(10,20)
-    let b2Angle = bt.randInRange(7,11)
-    
-    t4.jump([bt.randInRange(20,100), heightLeft]);
-    t4.setAngle(90);
-    t4.forward(b1Height);
-    t4.setAngle(10);
-    t4.forward(bt.randInRange(3,10));
-    t4.setAngle(270);
-    t4.forward(b1Height+(b1Angle/2));
-    buildNum -= 1
-    t4.left(180);
-    t4.forward(b2Height);
-    t4.setAngle(b2Angle)
-    t4.forward(3)
-    t4.setAngle(270);
-    t4.forward(b2Height+(b2Angle/2))
-    buildNum -= 1
-  }
+function building() {  
+  t4.jump([bt.randInRange(20,40), heightLeft]);
+  actualBuilding()
+  t4.jump([bt.randInRange(50,70), heightLeft]);
+  actualBuilding()
+  t4.jump([bt.randInRange(80,100), heightLeft]);
+  actualBuilding()
 }
+
+function actualBuilding() {
+  let b1Height = bt.randInRange(5,8)
+  let b1Angle = bt.randInRange(7,11)
+  let b2Height = bt.randInRange(10,20)
+  let b2Angle = bt.randInRange(7,11)
+  let b1len = bt.randInRange(3,5)
+  let b2len = bt.randInRange(2, 5)
+  
+  t4.setAngle(90);
+  t4.forward(b1Height);
+  t4.setAngle(10);
+  t4.forward(b1len);
+  t4.setAngle(270);
+  t4.forward(b1Height+(b1Angle/2));
+  t4.left(180);
+  t4.forward(b2Height);
+  t4.setAngle(b2Angle)
+  t4.forward(b2len)
+  t4.setAngle(270);
+  t4.forward(b2Height+(b2Angle/2))
+};
 //finalLines.push(building)
 const island = [
   [10, heightLeft], [115, heightRight], //main line
