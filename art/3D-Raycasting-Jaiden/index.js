@@ -82,6 +82,17 @@ const containLinesWithinShading = true;
 //fov for display. 60 is a good value
 const fov = 60;
 
+//enables a sky.
+const enableSky = true;
+
+//runs this through a spacing function, floor(e^{(-1/x) * y + 3}). this is the x in the function. (increase = increase in distance between lines)
+const skyLineSpacing = 150;
+
+//if you want to make sure it doesn't make too thin spacing (make it too thick)
+//acts as a minimum spacing for the sky
+//set this to 0 to disable.
+const minSkySpacing = 1;
+
 /* end parameters */
 
 //if in local enviornment, set to true. If in the blot editor, set to false.
@@ -305,6 +316,8 @@ translateEnviornment();
 let farthestDistance = 0;
 let closestDistance = 1000;
 
+let topLinesHeight = {};
+
 function fillFinalLines() {
     const offset = displayMap ? 100 : 0;
 
@@ -336,6 +349,16 @@ function fillFinalLines() {
         if (wallHeight < closestDistance) {
             closestDistance = wallHeight;
         }
+
+        lineHeight = 400 - Math.floor(lineHeight);
+
+        if (!(lineHeight in topLinesHeight)) {
+            topLinesHeight[lineHeight] = [];
+        }
+
+        for (let x = width * (i / fov); x < width * ((i + 1) / fov); x++) {
+            topLinesHeight[lineHeight].push(Math.floor(x));
+        }
     }
 
     let signChanges = [];
@@ -346,7 +369,6 @@ function fillFinalLines() {
 
     for (let i = 1; i < heights.length; i++) {
         if (Math.abs(heights[i] - heights[i - 1]) > maxJumpForShift) {
-
             let lowerHeight = Math.min(heights[i], heights[i - 1]);
             let higherHeight = Math.max(heights[i], heights[i - 1]);
 
@@ -433,6 +455,66 @@ function fillFinalLines() {
         width,
         height - offset
     ]]);
+}
+
+function drawSky() {
+    //sort top line heights
+    for (let key of Object.keys(topLinesHeight)) {
+        topLinesHeight[key].sort((a, b) => a - b);
+    }
+
+    let dAdd = (y) => {
+        let n = Math.exp((-1/skyLineSpacing) * y + 3);
+
+        return n < minSkySpacing ? minSkySpacing : n;
+    }
+
+    let findFirstRecordingOfX = (x) => {
+        for (let key of Object.keys(topLinesHeight)) {
+            if (topLinesHeight[key].includes(x)) {
+                return key;
+            }
+        }
+        
+        return -1;
+    }
+
+    for (let y = 0; y < 400; y += dAdd(y)) {
+        let frx = findFirstRecordingOfX(1);
+
+        let inWall = frx != -1 && frx < y;
+        let x = 0;
+        let lastX = 0;
+
+        for (; x <= width; x++) {
+            frx = findFirstRecordingOfX(x);
+
+            if (frx != -1 && frx <= y) {
+                if (!inWall) {
+                    inWall = true;
+                    
+                    if (lastX != x) {
+                        finalLines.push([
+                            [lastX, y],
+                            [x, y]
+                        ])
+                    }
+                }
+            } else {
+                if (inWall) {
+                    inWall = false;
+                    lastX = x;
+                }
+            }
+        }
+
+        if (!inWall) {
+            finalLines.push([
+                [lastX, y],
+                [width, y]
+            ])
+        }
+    }
 }
 
 const font = {
@@ -939,6 +1021,10 @@ function drawMap() {
 }
 
 fillFinalLines();
+
+if (enableSky) {
+    drawSky();
+}
 
 if (displayMap) {
     drawMap();
