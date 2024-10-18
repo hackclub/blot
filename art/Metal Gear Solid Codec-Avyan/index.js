@@ -1,5 +1,5 @@
 /*
-@title: definitelyInconspicuouos
+@title: DefinitelyInconspicous
 @author: Avyan Mehra
 @snapshot: Heroes.jpg
 */
