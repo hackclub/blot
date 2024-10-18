@@ -1,7 +1,7 @@
 /*
 @title: Happy Birb
 @author: Ayaan Grover
-@snapshot: a birb
+@snapshot: snapshot3.png
 */
 const width = 125;
 const height = 125;
