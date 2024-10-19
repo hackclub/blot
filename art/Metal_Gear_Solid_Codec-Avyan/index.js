@@ -1,9 +1,9 @@
 /*
 @title: DefinitelyInconspicous
 @author: Avyan Mehra
-@snapshot: Heroes.jpg
+@snapshot: HeroesFixed.jpg
 */
-setDocDimensions(150, 150);
+setDocDimensions(125, 125);
 
 // Outlines
 
@@ -17,7 +17,7 @@ const outline = new bt.Turtle()
   .right(90)
   .forward(50)
   .right(90)
-  .forward(100)
+  .forward(101)
 
 const pttOut = new bt.Turtle()
 .jump([100,25])
@@ -3124,23 +3124,23 @@ const dec = new bt.Turtle()
 
 
 //Text
-drawLines(bt.rotate(bt.offset(bt.text("PTT", [66,27], 1.5, [5, 4.5]),0.5),180))
-drawLines(bt.rotate(bt.offset(bt.text("PTT", [66,27], 1.5, [5, 4.5]),0.8),180))
-drawLines(bt.rotate(bt.offset(bt.text("PTT", [66,27], 1.5, [5, 4.5]),1),180))
+drawLines(bt.rotate(bt.offset(bt.text("PTT", [53,115], 1.5, [5, 4.5]),0.5),0))
+drawLines(bt.rotate(bt.offset(bt.text("PTT", [53,115], 1.5, [5, 4.5]),0.8),0))
+drawLines(bt.rotate(bt.offset(bt.text("PTT", [53,115], 1.5, [5, 4.5]),1),0))
 
-drawLines(bt.rotate(bt.offset(bt.text("MEMORY", [55,67], 1.5, [5, 4.5]),0.5),180))
-drawLines(bt.rotate(bt.offset(bt.text("MEMORY", [55,67], 1.5, [5, 4.5]),0.8),180))
-drawLines(bt.rotate(bt.offset(bt.text("MEMORY", [55,67], 1.5, [5, 4.5]),1),180))
-drawLines(bt.rotate(bt.translate(pttOut.lines(), [0,40]),180))
+drawLines(bt.rotate(bt.offset(bt.text("MEMORY", [42,75], 1.5, [5, 4.5]),0.5),0))
+drawLines(bt.rotate(bt.offset(bt.text("MEMORY", [42,75], 1.5, [5, 4.5]),0.8),0))
+drawLines(bt.rotate(bt.offset(bt.text("MEMORY", [42,75], 1.5, [5, 4.5]),1),0))
+drawLines(bt.rotate(bt.translate(pttOut.lines(), [-13,88]),180))
 //drawLines(bt.translate(bt.offset(bt.rotate(bt.text("180.15", [69,67], 1.5, [5, 4.5]), 180),0.5), [-23,-12]))
 
 // Outlines
 
-drawLines(outline.lines());
-drawLines(pttOut.lines());
-drawLines(bt.rotate(freqChange.lines(), -90))
-drawLines(bt.translate(bt.rotate(freqChange.lines(), 90), [81,0]))
-drawLines(freqFrame.lines())
+drawLines(bt.translate(outline.lines(), [-13,48]));
+drawLines(bt.translate(pttOut.lines(), [-13,48]));
+drawLines(bt.translate(bt.rotate(freqChange.lines(), -90), [-14,46]))
+drawLines(bt.translate(bt.rotate(freqChange.lines(), 90), [68,46]))
+drawLines(bt.translate(freqFrame.lines(), [-13,48]))
 // drawLines(bt.translate(dig0.lines(), [10,10]))
 // drawLines(bt.translate(dig1.lines(), [20,10]))
 // drawLines(bt.translate(dig2.lines(), [30,10]))
@@ -3153,8 +3153,8 @@ drawLines(freqFrame.lines())
 // drawLines(bt.translate(dig9.lines(), [100,10]))
 
 // Frequency Setter
-drawLines(bt.translate(dig1.lines(), [86,50]));
-bar(2, 63, 60)
+drawLines(bt.rotate(bt.translate(dig1.lines(), [52,88]), 180));
+bar(2, 74, 86)
 
 var freqCount = 0;
 var freq = 0.0;
@@ -3177,42 +3177,43 @@ while (freqCount != 4) {
 var digits = freq.toString().split('');  
 var numbers = digits.map(Number);
 
-var xCord = 78;
+var xCord = 59;
 var loop = 0;
 
 for (var i = 0; i < 5; i++) {
   var no = numbers[i];
 
   if (loop != 0) {
-    xCord = 78 - (8 * loop);
+    xCord = 59 + (7 * loop);
   }
 
   if (no == 0 || no == null) {
-    drawLines(bt.translate(dig0.lines(), [xCord, 50]));
+    drawLines(bt.rotate(bt.translate(dig0.lines(), [xCord, 88]), 180));
   } else if (no == 1) {
-    drawLines(bt.translate(dig1.lines(), [xCord, 50]));
+    drawLines(bt.rotate(bt.translate(dig1.lines(), [xCord, 88]), 180));
   } else if (no == 2) {
-    drawLines(bt.translate(dig2.lines(), [xCord, 50]));
+    drawLines(bt.rotate(bt.translate(dig2.lines(), [xCord, 88]), 180));
   } else if (no == 3) {
-    drawLines(bt.translate(dig3.lines(), [xCord, 50]));
+    drawLines(bt.rotate(bt.translate(dig3.lines(), [xCord, 88]), 180));
   } else if (no == 4) {
-    drawLines(bt.translate(dig4.lines(), [xCord, 50]));
+    drawLines(bt.rotate(bt.translate(dig4.lines(), [xCord, 88]), 180));
   } else if (no == 5) {
-    drawLines(bt.translate(dig5.lines(), [xCord, 50]));
+    drawLines(bt.rotate(bt.translate(dig5.lines(), [xCord, 88]), 180));
   } else if (no == 6) {
-    drawLines(bt.translate(dig6.lines(), [xCord, 50]));
+    drawLines(bt.rotate(bt.translate(dig6.lines(), [xCord, 88]), 180));
   } else if (no == 7) {
-    drawLines(bt.translate(dig7.lines(), [xCord, 50]));
+    drawLines(bt.rotate(bt.translate(dig7.lines(), [xCord, 88]), 180));
   } else if (no == 8) {
-    drawLines(bt.translate(dig8.lines(), [xCord, 50]));
+    drawLines(bt.rotate(bt.translate(dig8.lines(), [xCord, 88]), 180));
   } else if (no == 9) {
-    drawLines(bt.translate(dig9.lines(), [xCord, 50]));
+    drawLines(bt.rotate(bt.translate(dig9.lines(), [xCord, 88]), 180));
   }
 
   loop += 1;
 }
 
 // Bars
+
 function bar(length, xCor, yCor) {
 const bar1 = new bt.Turtle()
 .setAngle(90)
@@ -3294,25 +3295,24 @@ function barWO(length, xCor, yCor, th) {
   drawLines(bt.translate(bar2.lines(), [xCor, yCor]))
 }
 
-bar(10,96,59)
 const barWLines = bt.randIntInRange(4,13)
+
 for (var i = 0; i < 12; i++) {
   if (i+1 <= barWLines) {
-    bar(10 + (Math.pow(1.4, i)) , (96 - (Math.pow(1.4, i))), (59 - (2 * i)))
+    bar(10 + (Math.pow(1.4, i)) , (31), (88 + (2 * i)))
   } else if (i+1 > barWLines) {
-    barWO(10 + (Math.pow(1.4, i)) , (96 - (Math.pow(1.4, i))), (59 - (2 * i)), 2)
+    barWO(10 + (Math.pow(1.4, i)) , (31), (88 + (2 * i)), 2)
   }
 }
-barWO(62, 44, 36, 1)
 
 // Dialogue
 
 const textList = ["What's the situation Snake?", "Where - I - Can - See - Ya", "A Hind D? Colonel What's a\nRussian Gunship doing here", "Snake? Snake? Snake!", "You Idiot!", "Nice to meet you, Snake", "It's easy to forget what\na sin is in the middle of\na battlefield.", "I’m just a man who’s\ngood at what he does:\nKilling.", "There are no heroes in war.\nThe only heroes I know are\neither dead or in prison.\nOne or the other.", "SNAAAAAAAAAAKE!!!"]
 var chosen = textList[bt.randIntInRange(0,9)]
-drawLines(bt.offset(bt.rotate(bt.text(chosen, [3,124], 1.5, [3.6,9]), 180), 0.5))
+drawLines(bt.offset(bt.text(chosen, [7,46], 1.2, [3.6,9]), 0.5))
 
 // Select
-drawLines(bt.offset(bt.rotate(bt.text("PRESS SELECT TO EXIT", [21,10], 1.5, [3.6,9]), 180), 0.3))
-drawLines(bt.offset(bt.rotate(bt.text("PRESS SELECT TO EXIT", [21,10], 1.5, [3.6,9]), 180), 0.5))
-drawLines(bt.offset(bt.rotate(bt.text("PRESS SELECT TO EXIT", [21,10], 1.5, [3.6,9]), 180), 0.8))
+drawLines(bt.offset(bt.rotate(bt.text("PRESS SELECT TO EXIT", [10,60], 1.5, [3.6,9]), 0), 0.3))
+drawLines(bt.offset(bt.rotate(bt.text("PRESS SELECT TO EXIT", [10,60], 1.5, [3.6,9]), 0), 0.5))
+drawLines(bt.offset(bt.rotate(bt.text("PRESS SELECT TO EXIT", [10,60], 1.5, [3.6,9]), 0), 0.8))
 
