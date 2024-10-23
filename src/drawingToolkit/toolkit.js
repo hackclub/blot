@@ -42,6 +42,10 @@ export const toolkit = {
     assertArgs(arguments, ['polylines', 'polylines', 'any?'], 'bt.difference');
     return boolean(polylines0, polylines1, "difference", ops);
   },
+  xor(polylines0, polylines1, ops = {}){
+    assertArgs(arguments, ['polylines', 'polylines', 'any?'], 'bt.xor');
+    return boolean(polylines0, polylines1, "xor", ops);
+  },
   offset,
   iteratePoints: iteratePolylines,
   transform,
