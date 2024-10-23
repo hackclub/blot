@@ -59,12 +59,12 @@ const numPenguins = randInt(3, 6); // Adjust number for balance on the paper
 
 // Helper function to generate a random integer between min (inclusive) and max (inclusive)
 function randInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(bt.rand() * (max - min + 1)) + min;
 }
 
 // Helper function to generate a random float between min (inclusive) and max (inclusive)
 function randInRange(min, max) {
-  return Math.random() * (max - min) + min;
+  return bt.rand() * (max - min) + min;
 }
 
 function lerpColor(color1, color2, ratio) {
@@ -148,7 +148,7 @@ function drawFrostTexture() {
         const x = randInt(0, width);
         const y = randInt(0, height);
         const radius = randInRange(0.5, frostPatchRadius);
-        drawCircle([x, y], radius, { stroke: 'rgba(255, 255, 255, 0.1 + Math.random() * 0.3)', width: 1 }); // Variation in opacity
+        drawCircle([x, y], radius, { stroke: 'rgba(255, 255, 255, 0.1 + bt.rand() * 0.3)', width: 1 }); // Variation in opacity
     }
 }
 
@@ -368,7 +368,7 @@ function drawIceCracks() {
         }
 
         // Varying crack color and width for depth
-        drawLines([points], { stroke: lerpColor(iceHighlightColor, iceShadowColor, Math.random()), width: randInRange(1, 2) });
+        drawLines([points], { stroke: lerpColor(iceHighlightColor, iceShadowColor, bt.rand()), width: randInRange(1, 2) });
     }
 }
 
@@ -409,7 +409,7 @@ function drawIceGradient() {
         for (let i = 0; i < gradientSteps; i++) {
             const colorRatio = i / gradientSteps;
             drawLines([[[0, i * (height / gradientSteps)], [width, i * (height / gradientSteps)]]], {
-                stroke: lerpColor(iceColor, iceHighlightColor, colorRatio + Math.random() * 0.1), // Adding noise to the gradient
+                stroke: lerpColor(iceColor, iceHighlightColor, colorRatio + bt.rand() * 0.1), // Adding noise to the gradient
                 width: 1
             });
         }
