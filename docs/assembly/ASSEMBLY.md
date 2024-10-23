@@ -267,7 +267,7 @@ Let's add the eccentric wheel first. Make a stack with the M5x25 screw like so
 
 ![PXL_20240614_194327740.jpg](./assets/PXL_20240614_194327740.jpg)
 
-Attach it to the pen holder by slipping it through the printed part and securing a v-wheel on the back.
+Attach it to the pen holder by slipping it through the printed part and securing a nut on the back.
 
 ![Screenshot 2024-06-14 at 4.54.00 PM.png](./assets/Screenshot%202024-06-14%20at%204.54.00%20PM.png)
 
