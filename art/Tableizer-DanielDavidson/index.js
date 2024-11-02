@@ -15,7 +15,8 @@ const legLength = bt.randIntInRange(10, 20);
 const t = new bt.Turtle()
 const tarea = new bt.Turtle()
 const cup = new bt.Turtle()
-
+const bowl = new bt.Turtle()
+const bowl2 = new bt.Turtle()
 
 setDocDimensions(width, height);
 
@@ -127,7 +128,33 @@ cup.arc(186, 2.37)
 cup.forward(-12)
 cup.arc(180, 3)
 
-
 const scale = bt.scale(cup.lines(), [1, 0.5])
-drawLines(bt.cover(t.lines(), scale))
+
+let bowlX = bt.randIntInRange(xMin, xMax)
+let bowlY = bt.randIntInRange(yMin, yMax)
+while (!bt.pointInside(tarea.lines(), [bowlX, bowlY - 5.5]) || (bowlX > cupX - 9 && bowlX < cupX + 6) || (bowlY > cupY - 3 && bowlY < cupY + 7)){
+bowlX = bt.randIntInRange(xMin, xMax)
+bowlY = bt.randIntInRange(yMin, yMax)
+}
+
+bowl.jump([bowlX, bowlY])
+
+bowl.arc(360, 3) 
+bowl.arc(90, 3)
+bowl.forward(-1)
+bowl2.jump(bowl.pos)
+bowl2.right(90)
+bowl2.forward(-1.0)
+bowl2.forward(1.0)
+bowl2.arc(-180, 3)
+bowl2.forward(1)
+const bowlscale = bt.scale(bowl.lines(), [1, 0.5])
+const bowllines = bowlscale.concat(bowl2.lines())
+const bowlscale2 = bt.scale(bowllines, [1.5, 1])
+const scale2 = bowlscale2.concat(scale)
+drawLines(bowlscale2)
+
+
+
+drawLines(bt.cover(t.lines(), scale2))
 drawLines(scale)
