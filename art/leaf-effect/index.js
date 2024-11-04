@@ -1,3 +1,9 @@
+/*
+@title: leaf-effect
+@author: Elijah R. Spitzer
+@snapshot: snapshot1.png
+*/
+
 setDocDimensions(125, 125);
 
 function rotatePoint([x, y], angle) {
