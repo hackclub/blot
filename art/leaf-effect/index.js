@@ -42,8 +42,8 @@ function drawLeaf(rotationAngle, offsetX, offsetY) {
 }
 
 for (let i = 0; i < 3; i++) {
-  const randomRotation = Math.random() * 360;
-  const offsetX = (Math.random() - 0.5) * 10;
-  const offsetY = (Math.random() - 0.5) * 10;
+  const randomRotation = bt.randIntInRange(0, 360); 
+  const offsetX = bt.randIntInRange(-5, 5);         
+  const offsetY = bt.randIntInRange(-5, 5);         
   drawLeaf(randomRotation, offsetX, offsetY);
 }
