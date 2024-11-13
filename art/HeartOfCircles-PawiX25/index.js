@@ -14,6 +14,7 @@ const minRadius = 0.3;
 const waveAmplitude = 6;
 const waveFrequency = 3;
 const randomFactor = 0.25;
+const randomHeartFactor = 0.25;
 const seed = Math.floor(Math.random() * 1000);
 const heartScalingFactor = 35;
 const backgroundPatternDensity = 150;
@@ -136,7 +137,7 @@ function generateHeartWaveArt(seed, randomFactor) {
   function isOverlapWithHeartCircles(x, y, radius) {
     for (const [hx, hy, hr] of heartCircles) {
       const distance = Math.hypot(x - hx, y - hy);
-      if (distance < (hr + radius)) {
+      if (distance < (hr + radius) * 0.8) {
         return true;
       }
     }
@@ -222,12 +223,17 @@ function generateHeartWaveArt(seed, randomFactor) {
   }
 
   function heartEquation(t) {
-    const x = 16 * Math.pow(Math.sin(t), 3);
-    const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+    const a = 16 + (bt.rand() - 0.5) * randomHeartFactor;
+    const b = 13 + (bt.rand() - 0.5) * randomHeartFactor;
+    const c = 5 + (bt.rand() - 0.5) * randomHeartFactor;
+    const d = 2 + (bt.rand() - 0.5) * randomHeartFactor;
+    const e = 1 + (bt.rand() - 0.5) * randomHeartFactor;
+    const x = a * Math.pow(Math.sin(t), 3);
+    const y = b * Math.cos(t) - c * Math.cos(2 * t) - d * Math.cos(3 * t) - e * Math.cos(4 * t);
     return [x, y];
   }
 
-  // Generate heart circles and background pattern
+  // Generate heart circles with overlap checking
   for (let i = 0; i < numCircles; i++) {
     const t = (i / numCircles) * 2 * Math.PI;
     let [x, y] = heartEquation(t);
@@ -239,14 +245,22 @@ function generateHeartWaveArt(seed, randomFactor) {
     const waveOffset2 = (waveAmplitude / 2) * Math.cos(t * (waveFrequency * 1.5));
     const waveOffset3 = (waveAmplitude / 3) * Math.sin(t * (waveFrequency * 2));
 
-    const finalX = centerX + x + (bt.rand() - 0.5) * randomFactor * maxRadius;
-    const finalY = centerY + (y + waveOffset1 + waveOffset2 + waveOffset3) + (bt.rand() - 0.5) * randomFactor * maxRadius;
-    
+    let finalX = centerX + x + (bt.rand() - 0.5) * randomFactor * maxRadius;
+    let finalY = centerY + (y + waveOffset1 + waveOffset2 + waveOffset3) + (bt.rand() - 0.5) * randomFactor * maxRadius;
+
     // Varying circle sizes for depth
     const radiusVariation = bt.randInRange(0.5, 1.8);
     const radius = bt.randInRange(minRadius, maxRadius) * radiusVariation * (1 + (bt.rand() - 0.5) * randomFactor * (i / numCircles));
 
-    if (isWithinBounds(finalX, finalY, radius)) {
+    let attempts = 0;
+    const maxAttempts = 5;
+    while (isOverlapWithHeartCircles(finalX, finalY, radius) && attempts < maxAttempts) {
+      finalX += (bt.rand() - 0.5) * radius;
+      finalY += (bt.rand() - 0.5) * radius;
+      attempts++;
+    }
+
+    if (!isOverlapWithHeartCircles(finalX, finalY, radius) && isWithinBounds(finalX, finalY, radius)) {
       const circle = createCircle(finalX, finalY, radius);
       finalPolylines.push(circle);
       heartCircles.push([finalX, finalY, radius]);
@@ -260,12 +274,12 @@ function generateHeartWaveArt(seed, randomFactor) {
     x *= width / heartScalingFactor;
     y *= height / heartScalingFactor;
 
-    const finalX = centerX + x + (bt.rand() - 0.5) * randomFactor * maxRadius * 2;
-    const finalY = centerY + y + (bt.rand() - 0.5) * randomFactor * maxRadius * 2;
+    let finalX = centerX + x + (bt.rand() - 0.5) * randomFactor * maxRadius * 2;
+    let finalY = centerY + y + (bt.rand() - 0.5) * randomFactor * maxRadius * 2;
 
     const radius = bt.randInRange(maxRadius * 1.2, maxRadius * 2.5);
 
-    if (isPointInModifiedHeartShape(finalX, finalY, -margin) && isWithinBounds(finalX, finalY, radius)) {
+    if (isPointInModifiedHeartShape(finalX, finalY, -margin) && !isOverlapWithHeartCircles(finalX, finalY, radius) && isWithinBounds(finalX, finalY, radius)) {
       const circle = createCircle(finalX, finalY, radius);
       finalPolylines.push(circle);
       heartCircles.push([finalX, finalY, radius]);
