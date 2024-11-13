@@ -1,0 +1,27 @@
+
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 125 125" 
+                  width="125mm" 
+                  height="125mm"
+                  style="transform: scale(1, -1)">
+                    <path 
+                    d="M 59.207464 71.984924  L 83.319805 50.701010  L 83.319805 26.659380  L 41.600505 18.881205  L 22.508622 54.943651  L 51.500000 76.863961  L 59.278175 71.914214  L 85.441125 98.077164  L 40.186292 86.763456  L 47.964466 32.316234  L 91.805087 39.387302  L 24.629942 119.290368  L 29.579690 42.215729  L 91.805087 39.387302  L 50.792893 62.014719  L 24.629942 119.290368  L 29.579690 40.801515  L 84.026912 96.662951" 
+                    stroke-width="1" 
+                    stroke="black" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+<path 
+                    d="M 45.552228 78.784185  L 40.348640 13.202764  L 37.787656 107.761959  L 59.251055 43.114279" 
+                    stroke-width="1" 
+                    stroke="black" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="transform: scale(1, 1);"
+                    />
+                </svg>
+            
