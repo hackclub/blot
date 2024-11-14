@@ -376,9 +376,21 @@ function createTriangle(sideLength, height, y, x, angle) {
 }
 
 if (Math.floor(bt.randInRange(0, 2)) == 1) {
-  createTriangle(6, 9, 31, 97, 40)
-  createTriangle(5, 13, 25, 91, 75)
-  createTriangle(5, 14, 36, 105, 9)
+  if (Math.floor(bt.randInRange(0, 2)) == 1)  {
+    createTriangle(6, 9, 31, 97, 40)
+    createTriangle(5, 13, 25, 91, 75)
+    createTriangle(5, 14, 36, 105, 9) 
+  } else {
+    if (Math.floor(bt.randInRange(0, 2)) == 1)  {
+      createTriangle(6, 9, 77, 100, -33)
+      createTriangle(5, 13, 87, 100, -55)
+      createTriangle(5, 14, 72, 106, -8)
+    } else {
+      createTriangle(8, 14, 79, 106, -22)
+      createTriangle(5, 10, 87, 100, -53)
+      createTriangle(5, 10, 72, 102, 4)
+    }
+  }
 } else {
   createTriangle(8, 14, 27, 99, 40)
   createTriangle(5, 10, 28, 90, 75)
@@ -568,39 +580,32 @@ function randomBg(num) {
         turnMove(bg, "left", -272, 2)
         fireBump(11)
 
-        for (let i=0; i<17; i++) {
+        for (let i=0; i<15; i++) {
           bg.left(114)
           fireBump(bt.randIntInRange(5, 6))
           bg.setAngle(bt.randIntInRange(-19, -21))
         }
         
-        for (let i=0; i<10; i++) {
-          bg.left(10)
-          fireBump(bt.randIntInRange(5, 6))
-          bg.setAngle(bt.randIntInRange(-19, -21))
-        }
-        const pas = bg.pos
-      
-        bg.jump([112, 19])
+        bg.up()
+        // const pas = bg.pos
+        // this is for connecting the lines
+        bg.jump([110, 20])
+        bg.down()
         for (let i=0; i<17; i++) {
-          bg.setAngle(-258)
-          // bg.setAngle(h)
-          fireBump(bt.randIntInRange(4, 5))
+          bg.left(125)
+          fireBump(bt.randIntInRange(5, 6))
+          bg.setAngle(bt.randIntInRange(-19, -28))
         }
-        for (let i=0; i<11; i++) {
-          bg.setAngle(-201)
-          // bg.setAngle(h)
-          fireBump(bt.randIntInRange(4, 5))
-        }
-        bg.goTo(pas)
+      
+        // bg.goTo(pas)
         background.push(...bg.lines())
         break;
       case 1:
         bg.down()
         bg.jump([41, 54])
         // turnMove(bg, "left", -66, 83)
-        drawLightning(bg, 5, 8, 0);
-        drawLightning(bg, 5, 8, 1);
+        drawLightning(bg, 5, 6, 0);
+        drawLightning(bg, 5, 6, 1);
 
         // background.push(...bg.lines(), ...bt.translate(bg.lines(), [3, 0]))
         background.push(...bg.lines())
