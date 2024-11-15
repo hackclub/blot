@@ -15,6 +15,7 @@ const penguinPupil = new bt.Turtle()
   .arc(360, 2)
 
 if (1 == chance) {
+  const cloudX = bt.randIntInRange(26, 80)
   const penguin_body = new bt.Turtle()
     //head
     .jump([62.5, 50])
@@ -110,12 +111,31 @@ if (1 == chance) {
     .forward(8)
     .right(90)
     .forward(1)
-
+  const cloud = new bt.Turtle()
+    .jump([cloudX,100])
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .left(65)
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .left(65)
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .forward(2)
+    
+    
+  drawLines(bt.scale(cloud.path, [1, 1]));  
   drawLines(bt.scale(hat.path, [1, 1]), { fill: "black" });
   drawLines(bt.scale(sun.path, [1, 1]));
   drawLines(bt.scale(penguin_body.path, [1, 1]));
 } 
-else if (2 == chance) {
+else if (2  == chance) {
   const boltX = bt.randIntInRange(15,90)
   const boat = new bt.Turtle()
     //boat
@@ -228,13 +248,33 @@ else if (2 == chance) {
     .forward(7)
     .right(130)
     .forward(30)
+  const cloud = new bt.Turtle()
+    .jump([boltX,100])
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .left(65)
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .left(65)
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .forward(2)
     
+    
+  drawLines(bt.scale(cloud.path, [1, 1]));
   drawLines(bt.scale(sun.path, [1, 1]));
   drawLines(bt.scale(lightning.path, [1, 1]));
   drawLines(bt.scale(boat.path, [1, 1]));
   drawLines(bt.scale(water.path, [1, 1]),{fill:"black"});
 }
 else if (3 == chance) {
+  const cloudX = bt.randIntInRange(20,100)
   const iceburg = new bt.Turtle()
     //main peak
     .jump([7,50])
@@ -392,7 +432,26 @@ else if (3 == chance) {
     bt.randIntInRange(1, 125)
   ])
     .arc(360, .5);
-  
+  const cloud = new bt.Turtle()
+    .jump([cloudX,100])
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .left(65)
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .left(65)
+    .arc(45,15)
+    .right(35)
+    .arc(45,15)
+    .forward(2)
+    
+    
+  drawLines(bt.scale(cloud.path, [1, 1]));
   drawLines(bt.scale(water.path, [1, 1]),{fill:"black"});
   drawLines(bt.scale(iceburg.path, [1, 1]));
   drawLines(bt.scale(snow.path, [1, 1]));
