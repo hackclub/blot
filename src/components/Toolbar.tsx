@@ -102,9 +102,9 @@ export default function Toolbar() {
         {/* <div class={menuItemClasses} onClick={tidyCode}>
           Tidy code
         </div> */}
-       {/* <div class={menuItemClasses} onClick={animateLines}>
+       <div class={menuItemClasses} onClick={animateLines}>
           animate
-        </div> */}
+        </div>
         <a class={menuItemClasses} href="/docs" target="_blank" rel="noopener noreferrer">
           <img src="/icons/book.svg"/>
           <div className="ml-1">
