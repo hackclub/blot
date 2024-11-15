@@ -21,8 +21,6 @@ and input your own latex! Just use the
 renderLatex(yourLatexStringHere) function call!
 
 TODO
-- show example of ALL features
-- handle nested square roots by making outer ones bigger
 - add more commands (https://blog.writefull.com/the-100-most-frequent-latex-commands/)
 - center shorter one in fractions
 */
@@ -37,10 +35,14 @@ setDocDimensions(width, height);
 
 // RANDOM EXPRESSION SECTION START (this code is for demo purposes only)
 
+{
+const DEMO_N = 2; // SET THIS TO CHANGE DEMO: (1 = random generated integrals, 2 = all features)
+
+if (DEMO_N == 1) {
 // renderLatex(String.raw`b \int c \sqrt{b}f \times g \cdot e \frac{a}{b}c+-*/^dmmogus`);
 {
-  renderLatex(String.raw`\int x \sqrt{x^2 + 24} dx`, [10, 5]);
-  renderLatex(String.raw`latex\,\, renderer
+  renderLatex(String.raw`\int x \sqrt{x^2 + \sqrt{2 + 2\sqrt{2}}} dx`, [10, 5]);
+  renderLatex(String.raw`latex\,\, renderer \,\, (demo1)
 infinite \,\, possibilities!`, [5, 115]);
 }
 {
@@ -75,6 +77,21 @@ infinite \,\, possibilities!`, [5, 115]);
   }
   renderLatex(String.raw`int by parts
 \int (${pn.join('+')})\cos (x) \, dx`, [10, 30]); // random integral
+}
+} else if (DEMO_N == 2) {
+  renderLatex(String.raw`latex\,\, renderer v2 \,\, (demo2)`, [2.5, 115]);
+  renderLatex(String.raw`fractions \,\, \frac{2x+3}{(x-3)(x+2)}`, [2.5, 105]);
+  renderLatex(String.raw`integrals \,\, \int \, xe^x \, dx`, [2.5, 95]);
+  renderLatex(String.raw`exponents \,\, 2^2 \cdot 4^2`, [2.5, 85]);
+  renderLatex(String.raw`ops \,\, 1+2-3*4/5 \times 6 \cdot 7`, [2.5, 75]);
+  renderLatex(String.raw`parens \,\, 2(3(x+4(x+7)))`, [2.5, 65]);
+  renderLatex(String.raw`roots \,\, \sqrt{x + 4 \sqrt{x+2}} \times \sqrt{2x+4}`, [2.5, 55]);
+  renderLatex(String.raw`nested roots \,\, \sqrt{2x+3\sqrt{4\sqrt{5}\sqrt{6\sqrt{7}}}}`, [2.5, 45]);
+  renderLatex(String.raw`nested fractions \,\, \frac{\frac{1+x}{2+2x}}{3+3x}`, [2.5, 35]);
+  renderLatex(String.raw`trig \,\, \cos (2) \sin (2)`, [2.5, 25]);
+  renderLatex(String.raw`more \,\, calculus \,\, \frac{\, d}{dx}(x+4\int ^x 3 dz)`, [2.5, 15]);
+  renderLatex(String.raw`everything \,\, \frac{\, d}{dx} (\int \frac{\frac{xe^x+1*3\cdot 4 \times 3 /2}{1-2(1) \sin 2}}{\sqrt{2+2\sqrt{2}}} dx)`, [2.5, 5]);
+}
 }
 
 // RANDOM EXPRESSION SECTION END
