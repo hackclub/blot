@@ -27,43 +27,47 @@ setDocDimensions(width, height);
 const finalLines = [];
 
 // create repeats
-const randomRepeat = bt.randInRange(25, 100);
+const randomRepeat = bt.randInRange(10, 20);
 let rotation = 180 / (randomRepeat + 1);
 let rotated = 0;
 
-const offset = bt.randInRange(1, 31.25);
 
 for (let i = 0; i < randomRepeat; i++) {
   rotated += rotation;
+  const offset = bt.randInRange(1, 31.25);
+  const anchor = 62.5
 
   if (rotated < 90) {
-    let xchange = 62.5 * Math.sin(rotated);
-    let ychange = 62.5 * Math.sin(90 - rotated);
+    let xchange = anchor * Math.sin(rotated);
+    let ychange = anchor * Math.sin(90 - rotated);
     const newLine = bt.catmullRom([
-      [62.5 + xchange, 62.5 + ychange],
-      [62.5 + xchange - offset, 62.5 + ychange - offset],
-      [62.5 - xchange + offset, 62.5 - ychange + offset],
-      [62.5 - xchange, 62.5 - ychange],
+      [anchor + xchange, anchor + ychange],
+      [anchor + xchange - offset, anchor + ychange - offset],
+      [anchor + offset, anchor - offset],
+      [anchor - xchange + offset, anchor - ychange + offset],
+      [anchor - xchange, anchor - ychange],
     ]);
     finalLines.push(newLine);
   } else if (rotated > 90) {
-    let xchange = 62.5 * Math.sin(180 - rotated);
-    let ychange = 62.5 * Math.sin(rotated - 90);
+    let xchange = anchor * Math.sin(180 - rotated);
+    let ychange = anchor * Math.sin(rotated - 90);
     const newLine = bt.catmullRom([
-      [62.5 + xchange, 62.5 + ychange],
-      [62.5 + xchange - offset, 62.5 + ychange - offset],
-      [62.5 - xchange + offset, 62.5 - ychange + offset],
-      [62.5 - xchange, 62.5 - ychange],
+      [anchor + xchange, anchor + ychange],
+      [anchor + xchange - offset, anchor + ychange - offset],
+      [anchor + offset, anchor - offset],
+      [anchor - xchange + offset, anchor - ychange + offset],
+      [anchor - xchange, anchor - ychange],
     ]);
     finalLines.push(newLine);
   } else if ((rotated = 90)) {
-    let xchange = 62.5;
+    let xchange = anchor;
     let ychange = 0;
     const newLine = bt.catmullRom([
-      [62.5 + xchange, 62.5 + ychange],
-      [62.5 + xchange - offset, 62.5 + ychange - offset],
-      [62.5 - xchange + offset, 62.5 - ychange + offset],
-      [62.5 - xchange, 62.5 - ychange],
+      [anchor + xchange, anchor + ychange],
+      [anchor + xchange - offset, anchor + ychange - offset],
+      [anchor + offset, anchor - offset],
+      [anchor - xchange + offset, anchor - ychange + offset],
+      [anchor - xchange, anchor - ychange],
     ]);
     finalLines.push(newLine);
   }
