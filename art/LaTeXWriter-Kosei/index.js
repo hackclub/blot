@@ -19,10 +19,7 @@ of my friends will actually use for practicing
 - To use it, comment out the "random expression" section
 and input your own latex! Just use the
 renderLatex(yourLatexStringHere) function call!
-
-TODO
-- add more commands (https://blog.writefull.com/the-100-most-frequent-latex-commands/)
-- center shorter one in fractions
+- https://blog.writefull.com/the-100-most-frequent-latex-commands/
 */
 
 
@@ -219,7 +216,7 @@ function parseLatex(latex) {
   return parsed;
 }
 
-function renderParsed(parsed, originalOrigin, scale, spacingV) {
+function renderParsed(parsed, originalOrigin, scale, spacingV, drawNothing = false) {
   let origin = [...originalOrigin]; // clone origin since it will be mutated
   // console.log(origin)
 
@@ -298,7 +295,7 @@ function renderParsed(parsed, originalOrigin, scale, spacingV) {
           let oldOriginX = origin[0];
           origin[0] += 1.5 * scale;
           let newScale = scale / 1.1;
-          let newOrigin = renderParsed(p.body[0], origin, newScale, spacingV);
+          let newOrigin = renderParsed(p.body[0], origin, newScale, spacingV, drawNothing);
           const t = new bt.Turtle();
           t.jump([oldOriginX, origin[1]]);
           t.up();
@@ -317,8 +314,31 @@ function renderParsed(parsed, originalOrigin, scale, spacingV) {
         }
         case 'frac': {
           let newScale = scale / 2.1;
-          let bottomOrigin = renderParsed(p.body[1], [origin[0] + spacingSize / 2 * scale, origin[1]], newScale, spacingV);
-          let topOrigin = renderParsed(p.body[0], [origin[0] + spacingSize / 2 * scale, origin[1] + (textSizeY) * (scale / 2 + scale / 2 - scale / 2.1)], newScale, spacingV);
+
+          // New: slower but recursively render first to get size so we can center
+          let bottomOrigin = renderParsed(p.body[1], [origin[0] + spacingSize / 2 * scale, origin[1]], newScale, spacingV, true);
+          let topOrigin = renderParsed(p.body[0], [origin[0] + spacingSize / 2 * scale, origin[1] + (textSizeY) * (scale / 2 + scale / 2 - scale / 2.1)], newScale, spacingV, true);
+          let bottomWidth = bottomOrigin[0] - origin[0];
+          let topWidth = topOrigin[0] - origin[0];
+          let bottomOffset = 0;
+          let topOffset = 0;
+          if (topWidth > bottomWidth) {
+            // center bottom
+            bottomOffset = (topWidth - bottomWidth) / 2;
+          } else {
+            // center top
+            topOffset = (bottomWidth - topWidth) / 2;
+          }
+          
+          renderParsed(p.body[1], [origin[0] + spacingSize / 2 * scale + bottomOffset, origin[1]], newScale, spacingV, drawNothing);
+          renderParsed(p.body[0], [origin[0] + spacingSize / 2 * scale + topOffset, origin[1] + (textSizeY) * (scale / 2 + scale / 2 - scale / 2.1)], newScale, spacingV, drawNothing);
+
+          // Old: faster but no center
+          /*
+          renderParsed(p.body[1], [origin[0] + spacingSize / 2 * scale, origin[1]], newScale, spacingV);
+          renderParsed(p.body[0], [origin[0] + spacingSize / 2 * scale, origin[1] + (textSizeY) * (scale / 2 + scale / 2 - scale / 2.1)], newScale, spacingV);
+          */
+
           const t = new bt.Turtle();
           t.jump([origin[0], origin[1] + textSizeY / 2 * scale]);
           let newOrigin = [Math.max(bottomOrigin[0], topOrigin[0]) - (spacingSize * newScale) + spacingSize / 2 * scale, origin[1]];
@@ -340,7 +360,7 @@ function renderParsed(parsed, originalOrigin, scale, spacingV) {
 
           // keep consistent height for roots!
           let newScale = scale / 2;
-          let newOrigin = renderParsed(p.body[0], [origin[0], origin[1] + textSizeY * scale - (textSizeY) * newScale], newScale, spacingV);
+          let newOrigin = renderParsed(p.body[0], [origin[0], origin[1] + textSizeY * scale - (textSizeY) * newScale], newScale, spacingV, drawNothing);
 
           origin = [newOrigin[0] - spacingSize * newScale + spacingSize * scale, origin[1]];
           break;
@@ -370,7 +390,9 @@ function renderParsed(parsed, originalOrigin, scale, spacingV) {
   }
   
   // 3. draw
-  drawLines(lines);
+  if (!drawNothing) {
+    drawLines(lines);
+  }
 
   return origin;
 }
