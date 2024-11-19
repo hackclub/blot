@@ -131,7 +131,7 @@ if (1 == chance) {
     
     
   drawLines(bt.scale(cloud.path, [1, 1]));  
-  drawLines(bt.scale(hat.path, [1, 1]), { fill: "black" });
+  drawLines(bt.scale(hat.path, [1, 1]));
   drawLines(bt.scale(sun.path, [1, 1]));
   drawLines(bt.scale(penguin_body.path, [1, 1]));
 } 
@@ -271,7 +271,7 @@ else if (2  == chance) {
   drawLines(bt.scale(sun.path, [1, 1]));
   drawLines(bt.scale(lightning.path, [1, 1]));
   drawLines(bt.scale(boat.path, [1, 1]));
-  drawLines(bt.scale(water.path, [1, 1]),{fill:"black"});
+  drawLines(bt.scale(water.path, [1, 1]));
 }
 else if (3 == chance) {
   const cloudX = bt.randIntInRange(20,100)
@@ -452,7 +452,7 @@ else if (3 == chance) {
     
     
   drawLines(bt.scale(cloud.path, [1, 1]));
-  drawLines(bt.scale(water.path, [1, 1]),{fill:"black"});
+  drawLines(bt.scale(water.path, [1, 1]));
   drawLines(bt.scale(iceburg.path, [1, 1]));
   drawLines(bt.scale(snow.path, [1, 1]));
 }
@@ -651,7 +651,7 @@ else if (4 == chance){
     .arc(360, .5);
 
   drawLines(bt.scale(boat.path, [1,1]));
-  drawLines(bt.scale(water.path, [1, 1]),{fill:"black"});
+  drawLines(bt.scale(water.path, [1, 1]));
   drawLines(bt.scale(iceburg.path, [1, 1]));
   drawLines(bt.scale(snow.path, [1, 1]));
 }
@@ -701,15 +701,17 @@ else if(5 < chance){
     .jump([astroidX,110])
     .arc(360,4)
     //tail
-    .jump([astroidX-14,116])
-    .forward(10)
+    .jump([astroidX-20,116])
+    .forward(16)
     .right(70)
     .forward(4)
+    .right(120)
+    .forward(16)
     
 
-  drawLines(bt.scale(astroid.path,[1,1]),{fill:"black"});
+  drawLines(bt.scale(astroid.path,[1,1]));
   drawLines(bt.scale(smoke.path, [1,1]));
-  drawLines(bt.scale(volcano.path, [1,1]),{fill:"black"});
+  drawLines(bt.scale(volcano.path, [1,1]));
 }
 else {
   const igloo = new bt.Turtle()
@@ -933,11 +935,11 @@ else {
 
 
   drawLines(bt.scale(penguin_body.path, [1, 1]));
-  drawLines(bt.scale(penguinPupil.path, [1, 1]), { fill: "black" });
+  drawLines(bt.scale(penguinPupil.path, [1, 1]));
   drawLines(bt.scale(igloo.path, [1, 1]));
-  drawLines(bt.scale(iglooColor.path, [1, 1]), { fill: "black" });
-  drawLines(bt.scale(snow.path, [1, 1]), { fill: "black" });
+  drawLines(bt.scale(iglooColor.path, [1, 1]));
+  drawLines(bt.scale(snow.path, [1, 1]));
   drawLines(bt.scale(snowMan.path, [1, 1]));
-  drawLines(bt.scale(hat.path, [1, 1]), { fill: "black" });
-  drawLines(bt.scale(snowManColor.path, [1, 1]), { fill: "black" });
+  drawLines(bt.scale(hat.path, [1, 1]));
+  drawLines(bt.scale(snowManColor.path, [1, 1]));
 }
