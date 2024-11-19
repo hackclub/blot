@@ -15,7 +15,7 @@ const waveAmplitude = 6;
 const waveFrequency = 3;
 const randomFactor = 0.25;
 const randomHeartFactor = 0.25;
-const seed = Math.floor(Math.random() * 1000);
+const seed = Math.floor(bt.rand() * 1000);
 const heartScalingFactor = 35;
 const backgroundPatternDensity = 150;
 const margin = maxRadius * 1.2;
@@ -26,6 +26,14 @@ function generateHeartWaveArt(seed, randomFactor) {
   const centerX = width / 2;
   const centerY = height / 1.7;
   const heartCircles = [];
+
+  const heartParams = {
+    a: 16 + (bt.rand() - 0.5) * randomHeartFactor,
+    b: 13 + (bt.rand() - 0.5) * randomHeartFactor,
+    c: 5 + (bt.rand() - 0.5) * randomHeartFactor,
+    d: 2 + (bt.rand() - 0.5) * randomHeartFactor,
+    e: 1 + (bt.rand() - 0.5) * randomHeartFactor
+  };
 
   // Function to create background texture
   function createBackgroundPattern() {
@@ -223,13 +231,11 @@ function generateHeartWaveArt(seed, randomFactor) {
   }
 
   function heartEquation(t) {
-    const a = 16 + (bt.rand() - 0.5) * randomHeartFactor;
-    const b = 13 + (bt.rand() - 0.5) * randomHeartFactor;
-    const c = 5 + (bt.rand() - 0.5) * randomHeartFactor;
-    const d = 2 + (bt.rand() - 0.5) * randomHeartFactor;
-    const e = 1 + (bt.rand() - 0.5) * randomHeartFactor;
-    const x = a * Math.pow(Math.sin(t), 3);
-    const y = b * Math.cos(t) - c * Math.cos(2 * t) - d * Math.cos(3 * t) - e * Math.cos(4 * t);
+    const x = heartParams.a * Math.pow(Math.sin(t), 3);
+    const y = heartParams.b * Math.cos(t) - 
+              heartParams.c * Math.cos(2 * t) - 
+              heartParams.d * Math.cos(3 * t) - 
+              heartParams.e * Math.cos(4 * t);
     return [x, y];
   }
 
