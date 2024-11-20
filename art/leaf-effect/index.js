@@ -1,13 +1,48 @@
 /*
-@title: Randomized Leaf Mandala
+@title: Leaf Pattern
 @author: Elijah R. Spitzer
-@snapshot: leaf_mandala.png
+@snapshot: snapshot1.png
 */
 
 setDocDimensions(125, 125);
 
+function drawLeaf(centerX, centerY, scale, rotationAngle) {
+  const leafWidth = 17 * scale;
+  const leafHeight = 20 * scale;
+
+  const leafShape = [
+    [centerX, centerY - leafHeight],
+    [centerX + leafWidth / 2, centerY - leafHeight / 4],
+    [centerX + leafWidth / 2, centerY],
+    [centerX, centerY + leafHeight],
+    [centerX - leafWidth / 2, centerY],
+    [centerX - leafWidth / 2, centerY - leafHeight / 4],
+    [centerX, centerY - leafHeight],
+  ];
+
+  const rotatedLeafShape = leafShape.map(([x, y]) =>
+    rotatePoint([x, y], rotationAngle, centerX, centerY)
+  );
+
+  drawLines([rotatedLeafShape]);
+
+  const veinLines = [
+    [[centerX, centerY - leafHeight], [centerX, centerY + leafHeight]],
+    [[centerX, centerY - leafHeight / 2], [centerX + leafWidth / 4, centerY]],
+    [[centerX, centerY], [centerX + leafWidth / 4, centerY + leafHeight / 2]],
+    [[centerX, centerY - leafHeight / 2], [centerX - leafWidth / 4, centerY]],
+    [[centerX, centerY], [centerX - leafWidth / 4, centerY + leafHeight / 2]],
+  ];
+
+  veinLines.forEach(([start, end]) => {
+    const rotatedStart = rotatePoint(start, rotationAngle, centerX, centerY);
+    const rotatedEnd = rotatePoint(end, rotationAngle, centerX, centerY);
+    drawLines([[rotatedStart, rotatedEnd]]);
+  });
+}
+
 function rotatePoint([x, y], angle, centerX, centerY) {
-  const radians = (Math.PI / 180) * angle;
+  const radians = (Math.PI / 212) * angle;
   const dx = x - centerX;
   const dy = y - centerY;
   const rotatedX = centerX + dx * Math.cos(radians) - dy * Math.sin(radians);
@@ -15,53 +50,50 @@ function rotatePoint([x, y], angle, centerX, centerY) {
   return [rotatedX, rotatedY];
 }
 
-function drawLeaf(centerX, centerY, rotationAngle, scale) {
-  const leafOutline = [
-    [centerX, centerY - 20 * scale],
-    [centerX + 7.5 * scale, centerY - 10 * scale],
-    [centerX + 7.5 * scale, centerY],
-    [centerX, centerY + 20 * scale],
-    [centerX - 7.5 * scale, centerY],
-    [centerX - 7.5 * scale, centerY - 10 * scale],
-    [centerX, centerY - 20 * scale],
-  ].map((point) => rotatePoint(point, rotationAngle, centerX, centerY));
+// Variables for the radial layout
+const canvasSize = 125;
+const centerX = canvasSize / 2;
+const centerY = canvasSize / 2;
+const numRings = 5; // Number of concentric rings
+const baseRadius = 25; // Radius of the innermost ring
+const radiusIncrement = 30; // Increment of radius for each ring
+const leavesPerRing = [8, 12, 16]; // Leaves per ring (fewer on inner rings)
+const scaleRange = [0.6, 1.0]; // Scale range for leaves
+const rotationRange = 102; // Maximum rotation angle
+const downsize = 0.65; // Downsizing factor for scale and radius
 
-  drawLines([leafOutline]);
+for (let ring = 0; ring < numRings; ring++) {
+  const radius = (baseRadius + ring * radiusIncrement) * Math.pow(downsize, ring);
 
-  const midrib = [
-    [centerX, centerY - 20 * scale],
-    [centerX, centerY + 20 * scale],
-  ].map((point) => rotatePoint(point, rotationAngle, centerX, centerY));
+  for (let i = 0; i < leavesPerRing[ring]; i++) {
+    const angle = (360 / leavesPerRing[ring]) * i;
+    const radian = (Math.PI / 180) * angle;
 
-  drawLines([midrib]);
+    const leafX = centerX + radius * Math.cos(radian);
+    const leafY = centerY + radius * Math.sin(radian);
 
-  const sideVeins = [
-    [[centerX, centerY - 15 * scale], [centerX + 5 * scale, centerY - 5 * scale]],
-    [[centerX, centerY - 5 * scale], [centerX + 6 * scale, centerY + 5 * scale]],
-    [[centerX, centerY + 5 * scale], [centerX + 5 * scale, centerY + 15 * scale]],
-    [[centerX, centerY - 15 * scale], [centerX - 5 * scale, centerY - 5 * scale]],
-    [[centerX, centerY - 5 * scale], [centerX - 6 * scale, centerY + 5 * scale]],
-    [[centerX, centerY + 5 * scale], [centerX - 5 * scale, centerY + 15 * scale]],
-  ].map((vein) =>
-    vein.map((point) => rotatePoint(point, rotationAngle, centerX, centerY))
-  );
+    const scale =
+      (Math.random() * (scaleRange[1] - scaleRange[0]) + scaleRange[0]) *
+      Math.pow(downsize, ring);
+    const rotation = Math.random() * rotationRange * 2 - rotationRange;
 
-  drawLines(sideVeins);
+    drawLeaf(leafX, leafY, scale, rotation);
+  }
 }
 
-const centerX = 62.5;
-const centerY = 62.5;
-const numLeaves = bt.randIntInRange(8, 16);
-const radius = 30;
+const numCentralLeaves = 25;
+const centralRadius = 76 * downsize;
 
-for (let i = 0; i < numLeaves; i++) {
-  const angle = (360 / numLeaves) * i + bt.randIntInRange(-10, 10);
-  const leafRotation = bt.randIntInRange(-30, 30);
-  const scale = bt.randIntInRange(80, 120) / 100;
-
+for (let i = 0; i < numCentralLeaves; i++) {
+  const angle = (360 / numCentralLeaves) * i;
   const radian = (Math.PI / 180) * angle;
-  const leafX = centerX + radius * Math.cos(radian);
-  const leafY = centerY + radius * Math.sin(radian);
 
-  drawLeaf(leafX, leafY, angle + leafRotation, scale);
+  const leafX = centerX + centralRadius * Math.cos(radian);
+  const leafY = centerY + centralRadius * Math.sin(radian);
+
+  const scale =
+    (Math.random() * (scaleRange[1] - scaleRange[0]) + scaleRange[0]) * downsize;
+  const rotation = Math.random() * rotationRange * 2 - rotationRange;
+
+  drawLeaf(leafX, leafY, scale, rotation);
 }
