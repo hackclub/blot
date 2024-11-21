@@ -7,12 +7,12 @@ Next, make sure you go through **each item** in the following checklist. Delete 
 - [ ] I am submitting art that...
   - [ ] is algorithmically generated (will meaningfully change each time the program is run)
   - [ ] is your own work that is not copied from somewhere else
-  - [ ] is drawable through the editor(does not use outside tools)
+  - [ ] is drawable through the editor (does not use outside tools)
   - [ ] doesn't call `Math.random()` (See the documentation on [randomness](https://github.com/hackclub/blot/blob/main/public/TOOLKIT.md#randomness))
-  - [ ] is drawable on Blot itself (doesn't have lines overlap more than 5 times)
+  - [ ] is drawable on Blot itself
     - [ ] Doesn't overlap lines more than 5 times
     - [ ] Fits in the working area of 125x125mm
-    - [ ] Doesn't rely on colour to look good
+    - [ ] Doesn't rely on color or the fill option to look good (and has a toggle if you do use it)
 
 If you used based your art on something else, used a tutorial, or remixed it from something else, please link it here:
 
