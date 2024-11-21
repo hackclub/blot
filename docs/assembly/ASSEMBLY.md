@@ -192,7 +192,7 @@ And these tools:
 - __1 x__ 2.5mm allen key
 - __1 x__ 2mm allen key
 
-We'll start by placing the timing belt pulley on to the shaft of the stepper motor.
+We'll start by placing the timing belt pulley on to the shaft of the stepper motor. The top of the pulley should be flush with the top of the shaft.
 
 ![PXL_20240613_153208987.jpg](./assets/PXL_20240613_153208987.jpg)
 
@@ -210,11 +210,13 @@ Secure the motor in place with the M3x10mm screws.
 
 ![PXL_20240613_153027084.jpg](./assets/PXL_20240613_153027084.jpg)
 
-Place the rubber feet on the motor.
+Place the rubber feet on the leg.
 
 ![Screenshot 2024-06-14 at 4.55.06 PM.png](./assets/Screenshot%202024-06-14%20at%204.55.06%20PM.png)
 
 ![PXL_20240613_153004363.jpg](./assets/PXL_20240613_153004363.jpg)
+
+Repeat this for the other leg.
 
 We're done!
 
@@ -517,11 +519,11 @@ The first step to running your Blot is to flash the Blot firmware to the Xiao.
 
 [You can download the firmware here.](https://github.com/hackclub/blot/raw/main/hardware/motor-control-board/firmware/uf2/firmware.ino.uf2)
 
-First hold down the boot button (right button with a small `B` next to it) on your Xiao and then plug it into your computer.
+First hold down the boot button (right button with a small `B` next to it) on your Xiao and then plug it into your computer while still holding the button.
 
 <img width="500" src="./assets/xiao-labelled.png" />
 
-It should appear as a drive.
+It should appear as a drive, at which point you can release the button. If it doesn't appear, try again until it appears.
 
 Next drop the firmware `.uf2` file onto drive.
 
@@ -530,6 +532,8 @@ Now the firmware is flashed.
 __Connecting__
 
 To power the Blot plug it into the USB-C brick that comes with your machine. Any USB-C brick that can deliver at least 20W should work. The Blot expects 9V 1A.
+
+Flip the power switch on the board to turn the Blot on.
 
 ![PXL_20240710_153733136.jpg](./assets/PXL_20240710_153733136.jpg)
 
@@ -669,6 +673,8 @@ Your Blot can draw quite precisely, poor performance is often due to:
   - If your drawing has irregular pen strokes your pen may not be low enough or your surface may be uneven.
 
 - Machine improperly homed.
+
+  - Ensure that your blot is all the way in the correct corner when you press set origin. Then ensure your blot starts in that same corner when you run your project.
 
 - Paper sliding.
   
