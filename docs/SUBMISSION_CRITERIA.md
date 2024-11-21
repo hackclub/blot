@@ -35,9 +35,9 @@ Make your own art!
 
 - **Your artwork must be generative.** You should have some variables at the top that are controlled by randomness functions such as `bt.randIntInRange()` that change the artwork
 
-- **Your artwork should be drawable by Blot**, which means it shouldn't excessively cross a certain area multiple times
+- **Your artwork should be drawable by Blot**, which means it shouldn't excessively cross a certain area multiple times. The general guideline is that crossing over one point any more than 5 times will rip the paper.
 
-- **Your artwork should not rely on color.** Unfortunately, Blot doesn't have multi-color capabilities yet. Maybe you can be the first to add it!
+- **Your artwork should not rely on the fill option.** (This includes color or filling with black) Unfortunately, Blot doesn't understand the fill option yet. Maybe you can be the first to add it! In the mean time, you can use thin stripes to effectively shade an area.
 
 ## Submitting
 If you feel like your art piece meets these requirements, you can find the submission instructions **[here.](https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md)** 
