@@ -1,9 +1,8 @@
-/*
-@title: Scribbles
-@author: Tanish
-@snapshot: snip.png
+/* 
+@title: Scribbles 
+@author: Tanish 
+@snapshot: snip.png, snip(1).png, snip(2).png 
 */
-
 
 const width = 125;
 const height = 125;
@@ -25,11 +24,11 @@ function pseudoRandom(seed) {
 }
 
 // Generate a consistent yet variable seed based on the current date and time
-let seed = new Date().toISOString();  // Changed to 'let'
+let seed = new Date().toISOString();
 
 // Function to get a pseudo-random integer
 function getPseudoInt(min, max) {
-    seed += "x";  // Alter the seed to change results
+    seed += "x";
     return min + (pseudoRandom(seed) % (max - min + 1));
 }
 
@@ -43,12 +42,25 @@ function getPseudoColor() {
     return color;
 }
 
-// Draw lines with pseudo-random colors
+// Function to calculate evenly spaced points
+function calculatePoint(index, total, dimension) {
+    const spacing = dimension / total;
+    return Math.floor(index * spacing + spacing / 2);
+}
+
+// Directions
+const directions = [
+    [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]
+];
+
+// Draw 100 non-intersecting lines
 for (let i = 0; i < numLines; i++) {
-    const x1 = getPseudoInt(0, width);
-    const y1 = getPseudoInt(0, height);
-    const x2 = getPseudoInt(0, width);
-    const y2 = getPseudoInt(0, height);
+    const x1 = calculatePoint(i % 10, 10, width);
+    const y1 = calculatePoint(Math.floor(i / 10), 10, height);
+    const [dx, dy] = directions[getPseudoInt(0, directions.length - 1)];
+    const length = Math.min(width, height) / 10;
+    const x2 = Math.max(0, Math.min(width, x1 + dx * length));
+    const y2 = Math.max(0, Math.min(height, y1 + dy * length));
     const color = getPseudoColor();
     drawLines([
         [[x1, y1], [x2, y2]]
