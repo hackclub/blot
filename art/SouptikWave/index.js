@@ -1,169 +1,86 @@
 /*
-@title: Waves
+@title: Clockl
 @author: souptik samanta
 @snapshot: snapshot1.png
 */
+const canvasWidth = 125;
+const canvasHeight = 125;
 
-const gu = 6;
-const fm = 3;
-const dw = 150;
-const dh = 150;
-const mi = 100;
-const ss = 1;
-const cs = 4;
+// Clock radius you may change this : )
+const clockRadius = 30;
+const markerLength = 3;
+const markerOffset = 1;
+const includeSeconds = true;
 
-let vf = [];
-const sv = Date.now();
+setDocDimensions(canvasWidth, canvasHeight);
 
-function mv(val, is, ie, os, oe, clamp = false) {
-    let mapped = os + ((val - is) * (oe - os)) / (ie - is);
-    if (clamp) mapped = Math.max(os, Math.min(mapped, oe));
-    return mapped;
+const clockLines = [];
+
+const turtle = new bt.Turtle();
+
+turtle.up();
+turtle.forward(clockRadius);
+turtle.down();
+let centerX = canvasWidth / 2;
+let centerY = canvasHeight / 2;
+
+function degreesToRadians(angleInDegrees) {
+  return angleInDegrees * (Math.PI / 180);
 }
 
-function ca(x, y) {
-    const off = Math.sin(sv * 0.0001 + x * 0.1) + Math.cos(sv * 0.0001 + y * 0.1);
-    return mv(off * 0.5, -1, 1, 0, Math.PI * 2);
+// Draw the clock's circular border
+for (let angle = 0; angle < degreesToRadians(360); angle += 0.01) {
+  centerX = Math.cos(angle) * clockRadius;
+  centerY = Math.sin(angle) * clockRadius;
+  turtle.goTo([centerX, centerY]);
+}
+turtle.up();
+
+for (let angle = 0; angle <= degreesToRadians(361); angle += degreesToRadians(360) / 12) {
+  centerX = Math.cos(angle) * (clockRadius - markerOffset);
+  centerY = Math.sin(angle) * (clockRadius - markerOffset);
+  turtle.goTo([centerX, centerY]);
+  turtle.down();
+  centerX = Math.cos(angle) * (clockRadius - (markerOffset + markerLength));
+  centerY = Math.sin(angle) * (clockRadius - (markerOffset + markerLength));
+  turtle.goTo([centerX, centerY]);
+  centerX = Math.cos(angle) * (clockRadius - markerOffset);
+  centerY = Math.sin(angle) * (clockRadius - markerOffset);
+  turtle.goTo([centerX, centerY]);
+  turtle.up();
 }
 
-function ig(w, h, angleFn) {
-    setDocDimensions(w, h);
-    for (let i = 0; i < w / gu; i++) {
-        vf[i] = [];
-        for (let j = 0; j < h / gu; j++) {
-            const angle = angleFn(i * gu, j * gu);
-            vf[i][j] = new Vector(fm, angle, false);
-        }
-    }
+turtle.up();
+turtle.goTo([0, 0]);
+turtle.down();
+
+let currentTime = new Date();
+let hourAngle = (currentTime.getMinutes() + currentTime.getHours() * 60) / 60 / 24 * 2 * 360;
+let minuteAngle = (currentTime.getMinutes()) / 60 * 360;
+let hourRadian = degreesToRadians(360 - hourAngle + 90);
+let minuteRadian = degreesToRadians(360 - minuteAngle + 90);
+
+centerX = Math.cos(hourRadian) * clockRadius / 2;
+centerY = Math.sin(hourRadian) * clockRadius / 2;
+turtle.goTo([centerX, centerY]);
+turtle.goTo([0, 0]);
+centerX = Math.cos(minuteRadian) * clockRadius / 4 * 3;
+centerY = Math.sin(minuteRadian) * clockRadius / 4 * 3;
+turtle.goTo([centerX, centerY]);
+
+if (includeSeconds) {
+  let secondAngle = (currentTime.getSeconds()) / 60 * 360;
+  let secondRadian = degreesToRadians(360 - secondAngle + 90);
+  centerX = Math.cos(secondRadian) * clockRadius / 4 * 2.5;
+  centerY = Math.sin(secondRadian) * clockRadius / 4 * 2.5;
+  turtle.down();
+  turtle.goTo([0, 0]);
+  turtle.goTo([centerX, centerY]);
 }
 
-function gc() {
-    for (let x = 0; x < dw; x += cs) {
-        for (let y = 0; y < dh; y += cs) {
-            rc(mi, ss, new Coord(x, y));
-        }
-    }
-}
+bt.join(clockLines, turtle.lines());
 
-function rc(it, sd, start) {
-    let pathPoints = [];
-    let pos = start;
+const centerCoordinates = bt.bounds(clockLines).cc;
+bt.translate(clockLines, [canvasWidth / 2, canvasHeight / 2], centerCoordinates);
 
-    for (let i = 0; i < it; i++) {
-        const col = Math.floor(pos.x / gu);
-        const row = Math.floor(pos.y / gu);
-
-        if (row < 0 || row >= vf.length || col < 0 || col >= vf[0].length) break;
-
-        pathPoints.push(pos.toArray());
-        const angle = vf[col][row].angle;
-        pos.x += sd * Math.cos(angle);
-        pos.y += sd * Math.sin(angle);
-
-        if (pos.x < 0 || pos.x >= dw || pos.y < 0 || pos.y >= dh) break;
-    }
-
-    if (pathPoints.length > 2) {
-        const curve = [bt.nurbs(pathPoints, { steps: 200, degree: 2 })];
-        drawLines(curve, { width: 1, stroke: "#000000" });
-    }
-}
-
-class Coord {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    angleTo(other) {
-        const dy = other.y - this.y;
-        const dx = other.x - this.x;
-        return Math.atan2(dy, dx);
-    }
-
-    toArray() {
-        return [this.x, this.y];
-    }
-}
-
-class Vector {
-    constructor(m, a, deg = true) {
-        if (deg) a *= Math.PI / 180;
-        this.x = m * Math.cos(a);
-        this.y = m * Math.sin(a);
-        this.m = m;
-        this.angle = a;
-    }
-
-    drawVector(x = 0, y = 0) {
-        const lineSegment = [
-            [x, y],
-            [x + this.x, y + this.y]
-        ];
-        drawLines([lineSegment], { width: 1, stroke: "#000000" });
-    }
-}
-
-class LineStyle {
-    constructor(t, c) {
-        this.t = t;
-        this.c = c;
-    }
-
-    applyToPath(path) {
-        drawLines([path], { width: this.t, stroke: this.c });
-    }
-}
-
-function blp(nl, ls, ct) {
-    for (let layer = 0; layer < nl; layer++) {
-        const offset = layer * ls;
-        for (let x = offset; x < dw; x += cs) {
-            for (let y = offset; y < dh; y += cs) {
-                const customPath = tlp(mi, ss, new Coord(x, y), layer, ct);
-                const style = new LineStyle(layer + 1, "#000000");
-                style.applyToPath(customPath);
-            }
-        }
-    }
-}
-
-function tlp(ms, ml, startPos, layerIndex, thickness) {
-    let pointPath = [];
-    let curPos = startPos;
-
-    for (let step = 0; step < ms; step++) {
-        const col = Math.floor(curPos.x / gu);
-        const row = Math.floor(curPos.y / gu);
-
-        if (row < 0 || row >= vf.length || col < 0 || col >= vf[0].length) break;
-
-        pointPath.push(curPos.toArray());
-        const dirAngle = vf[col][row].angle + layerIndex * 0.01;
-        curPos.x += ml * Math.cos(dirAngle);
-        curPos.y += ml * Math.sin(dirAngle);
-
-        if (curPos.x < 0 || curPos.x >= dw || curPos.y < 0 || curPos.y >= dh) break;
-    }
-
-    return pointPath;
-}
-
-function rv(seedBase) {
-    for (let i = 0; i < vf.length; i++) {
-        for (let j = 0; j < vf[i].length; j++) {
-            const modAngle = ca(seedBase + i, seedBase + j);
-            vf[i][j].angle = modAngle;
-        }
-    }
-}
-
-function gp(sm) {
-    rv(sm);
-    ig(dw, dh, ca);
-    blp(3, 2, 1.5);
-}
-
-ig(dw, dh, ca);
-gc();
-gp(50);
+drawLines(clockLines);
