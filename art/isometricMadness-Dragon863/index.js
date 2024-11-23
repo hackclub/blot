@@ -7,21 +7,28 @@
 const width = 125;
 const height = 125;
 
+// Set this to false if using a blot machine
+const fillMode = false;
+
+// Change this to modify the appearance of the background. Keep it between 0 and 1
+const backgroundDensity = 0.6;
+
 // Configures block size. This is *not* constrained to stay within the canvas.
 const blockScale = 15;
 
 // Use this to define the pattern you want to make. Defaults to a H (for hack club, naturally!)
 // 1 = block
 // 0 = no block
-const configurableMap = [
-    [0, 0, 0, 0],
-    [0, 1, 0, 1],
-    [0, 1, 0, 1],
-    [0, 1, 1, 1],
-    [0, 1, 1, 1],
-    [0, 1, 0, 1],
-    [0, 1, 0, 1],
-]
+// Leave empty to randomly generate a pattern (doesn't look amazing though)
+let configurableMap = [
+    [0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0],
+    [0, 1, 1, 1, 0],
+    [0, 1, 1, 1, 0],
+    [0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0],
+];
 
 setDocDimensions(width, height);
 
@@ -35,12 +42,29 @@ let leftFaces = [];
 let rightFaces = [];
 let bottomFaces = [];
 
+// Random pattern generator
+if (configurableMap.length === 0) {
+  // Prevent flowing over the top
+  configurableMap = [0,0,0,0,0];
+  for (let j = 1; j < 7; j++) {
+    let row = [];
+    for (let i = 0; i < 4; i++) {
+      if (bt.rand() < 0.5) {
+        row[i] = 0;
+      } else {
+        row[i] = 1;
+      }
+    }
+    configurableMap[j] = row;
+  }
+}
+
 // Main function, this adds an isometric block (cube)
 function addIsometricBlock(x, y, scale) {
     // Prepare for a lot of maths! This function will create lines for each face.
     // Whilst it may look very complicated, it's really just working out the coordinates of point at a 30 degree angle (this is called isometric projection)
   
-    // Left (black) face
+    // Left (grey) face
     const leftFace = [
         [x, y],
         [x + cos(30 * rad) * scale, y + sin(30 * rad) * scale],
@@ -49,7 +73,7 @@ function addIsometricBlock(x, y, scale) {
         [x, y],
     ];
 
-    // Right (grey) face
+    // Right (black) face
     const rightFace = [
         [x + cos(30 * rad) * scale, y + sin(30 * rad) * scale],
         [x + cos(30 * rad) * scale + cos(30 * rad) * scale, y + sin(30 * rad) * scale - sin(30 * rad) * scale],
@@ -70,7 +94,7 @@ function addIsometricBlock(x, y, scale) {
     return [leftFace, rightFace, bottomFace];
 }
 
-function drawBackgroundPattern(width, height, scale) {
+function drawBackgroundPattern(width, height, scale, polylines) {
     // Makes a cool background!
     const myTurtle = new bt.Turtle();
     myTurtle.goTo([1, 0]); // Not sure why this isn't 0, 0 to be honest but it works
@@ -78,13 +102,18 @@ function drawBackgroundPattern(width, height, scale) {
     myTurtle.left(90);
     for (let x = 0; x <= width; x++) {
         for (let y = 0; y <= height - 1; y++) {
-            if (bt.rand() > 0.5) {
-                myTurtle.down();
-                myTurtle.forward(1);
-                myTurtle.up();
+            if (bt.pointInside(polylines, [myTurtle.pos[0], myTurtle.pos[1] + 1]) || bt.pointInside(polylines, myTurtle.pos)) {
+              myTurtle.up();
+              myTurtle.forward(1);
             } else {
-                myTurtle.up();
-                myTurtle.forward(1);
+              if (bt.rand() > (1-backgroundDensity)) {
+                  myTurtle.down();
+                  myTurtle.forward(1);
+                  myTurtle.up();
+              } else {
+                  myTurtle.up();
+                  myTurtle.forward(1);
+              }
             }
         }
         myTurtle.goTo([x, 0]);
@@ -105,7 +134,7 @@ for (let j = 0; j < configurableMap.length; j++) {
         }
         // Start location for cube to be drawn
         const x = i * xOffset;
-        const y = (height - blockScale * 1.5) - j * yOffset;
+        const y = height - (j + 1) * yOffset;
       
         const block = addIsometricBlock(x, y, blockScale);
 
@@ -121,10 +150,21 @@ for (let j = 0; j < configurableMap.length; j++) {
     }
 }
 
-// Don't forget the cool background! :)
-drawBackgroundPattern(width, height, blockScale);
 
-// Draw it!
-drawLines(bottomFaces, { stroke: "black", fill: "white" });
-drawLines(leftFaces, { fill: "grey", stroke: "grey" });
-drawLines(rightFaces, { fill: "black" });
+// I should *not* have to wonder why, but ...bottomFaces must be last when joining the arrays to send to the drawBackgroundPattern function
+// or else there will occasionally be a random face that gets filled in. I spent almost an hour debugging that. Thanks JS.
+if (fillMode) {
+  // Draw it!
+  drawLines(bottomFaces, {stroke: "black", fill: "white" });
+  drawLines(leftFaces, { fill: "grey", stroke: "grey" });
+  drawLines(rightFaces, { fill: "black" });
+
+  // Don't forget the cool background! :)
+  drawBackgroundPattern(width, height, blockScale, [...leftFaces, ...rightFaces, ...bottomFaces]);
+} else {
+  drawLines(bottomFaces);
+  drawLines(leftFaces);
+  drawLines(rightFaces);
+  
+  drawBackgroundPattern(width, height, blockScale, [...leftFaces, ...rightFaces, ...bottomFaces]);
+}
