@@ -6,11 +6,13 @@
 const canvasWidth = 125;
 const canvasHeight = 125;
 
-// Clock radius you may change this :)
+
+// Clock radius you may change all this stuff :) sky is not the limit lol
 const clockRadius = 32;
 const markerLength = 3.1;
 const markerOffset = 1.4;
 const includeSeconds = true;
+
 
 setDocDimensions(canvasWidth, canvasHeight);
 
@@ -116,16 +118,23 @@ function generateTree(treeX, treeY, treeHeight) {
 
   for (let layer = 0; layer < 5; layer++) {
     painter.goTo([treeX, treeY + treeHeight]);
+  
     painter.goTo([treeX + treeHeight / 6, treeY + treeHeight * 0.5]);
+  
+    
     painter.goTo([treeX, treeY + treeHeight]);
+  
     painter.goTo([treeX - treeHeight / 6, treeY + treeHeight * 0.5]);
+ 
     painter.goTo([treeX, treeY + treeHeight]);
+   
     treeHeight -= 1;
   }
 
   painter.goTo([treeX, treeY]);
   return painter;
 }
+
 
 painter.up();
 painter.goTo([sunDiameter, canvasHeight]);
@@ -149,6 +158,7 @@ for (let mountain = 0; mountain < totalMountains; mountain++) {
 
   
   
+
   
   for (let step = 0; step < canvasWidth / (totalMountains * 2); step++) {
     mountainX += 1;
@@ -172,23 +182,19 @@ for (let mountain = 0; mountain < totalMountains; mountain++) {
       painter.goTo([mountainX, mountainY]);
     }
     mountainX += 1;
+    
     mountainY += randomRange(-3, 1);
+  
     painter.goTo([mountainX, mountainY]);
+    
   }
+  
 }
 
 
 
-painter.up();
-painter.goTo([randomRange(sunDiameter * 2.1, canvasWidth - 4), canvasHeight - randomRange(5, sunDiameter)]);
-painter.down();
-painter.forward(10);
-painter.left(45);
-painter.forward(5);
-painter.right(90);
-painter.forward(5);
-painter.left(45);
-painter.forward(10);
+
+
 ///draw ing yay lol 
 bt.join(sceneElements, painter.lines());
 
