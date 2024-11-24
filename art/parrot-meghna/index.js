@@ -946,7 +946,7 @@ drawLines(log3);
 
 const log4= [
   bt.nurbs([
-    [6, 26],
+    [6, 27],
     [5, 0],
     [5, 0]
   ])
@@ -984,7 +984,7 @@ drawLines(log6);
 
 const log7= [
   bt.nurbs([
-    [-17, 15],
+    [-17, 14],
     [-20, 4],
     [-18, 0]
   ])
@@ -1188,8 +1188,8 @@ const leaf6= [
   ])
 ]
 
-bt.translate( leaf6, [160.1, 49]);
-bt.rotate( leaf6, -44);
+bt.translate( leaf6, [167.7, 63]);
+bt.rotate( leaf6, -36);
 
 const twoLeaf = bt.join(leaf4,leaf5,leaf6);
 bt.translate(twoLeaf,[-2,0]);
@@ -1358,8 +1358,8 @@ const leaf1LE= [
   ])
 ]
 
-bt.translate( leaf1LE, [53.3, 62]);
-bt.rotate( leaf1LE, 43);
+bt.translate( leaf1LE, [50.2, 57]);
+bt.rotate( leaf1LE, 64);
 
 
 
@@ -1367,25 +1367,25 @@ const leaf2LE= [
   bt.nurbs([
     [-16, 27],
     [-32, -1],
-    [-18, 0]
+    [-18, 1]
   ])
 ]
 
-bt.translate( leaf2LE, [55.5, 57]);
-bt.rotate( leaf2LE, 45);
+bt.translate( leaf2LE, [53.6, 51]);
+bt.rotate( leaf2LE, 66);
 
 
 
 const leaf3LE= [
   bt.nurbs([
-    [-16, 19],
-    [-14, 9],
+    [-17, 17],
+    [-15, 10],
     [-18, 0]
   ])
 ]
 
-bt.translate( leaf3LE, [56.2, 62]);
-bt.rotate( leaf3LE, 41);
+bt.translate( leaf3LE, [55.8, 57]);
+bt.rotate( leaf3LE, 59);
 
 
 const leafLeft = bt.join(leaf1LE,leaf2LE,leaf3LE);
@@ -1399,7 +1399,7 @@ drawLines(leafLeft);
 
 const leaf4LE= [
   bt.nurbs([
-    [-7, 48],
+    [-7, 47],
     [4, 31],
     [-18, 0]
   ])
@@ -1412,7 +1412,7 @@ drawLines(leaf4LE);
 
 const leaf5LE= [
   bt.nurbs([
-    [-16, 27],
+    [-16, 28],
     [-22, 9],
     [-18, 0]
   ])
@@ -1425,7 +1425,7 @@ drawLines(leaf5LE);
 
 const leaf6LE= [
   bt.nurbs([
-    [-16, 29],
+    [-16, 31],
     [-18, 24],
     [-18, 0]
   ])
@@ -1491,7 +1491,7 @@ drawLines(feathere3);
 
 const feathere4= [
  ([
-    [-6, 33],
+    [-6, 34],
     [0, 0],
     [0, 0]
   ])
@@ -1504,8 +1504,8 @@ drawLines(feathere4);
 
 const feathere5= [
  ([
-    [-6, 34],
-    [0, 0],
+    [-7, 35],
+    [-2, 2],
     [0, 0]
   ])
 ]
@@ -1528,9 +1528,9 @@ drawLines(feathere6);
 
 const feathere7= [
  ([
-    [-6, 2],
+    [-5, 2],
     [0, 0],
-    [0, 0]
+    [0, -1]
   ])
 ]
 
@@ -1602,9 +1602,9 @@ drawLines( berry5);
 
 const berry6= [
 bt.nurbs ([
-    [-26, 1],
-    [-20, 0],
-    [-13, 0]
+    [-31, -1],
+    [-18, 1],
+    [-8, -5]
   ])
 ]
 
@@ -1644,6 +1644,53 @@ drawLines(berries);
 
 
 
+const berrie2= [
+ berries
+  ]
+
+bt.scale(berries, [0.4, 0.4]);
+bt.translate(berries, [66, 2]);
+bt.rotate(berries,117);
+drawLines(berries);
+
+//more randomized leafs 
+
+
+//const leafMo1 = [leaf6LE]
+//bt.scale(leafMo1, [0.4, 0.4]);
+//bt.translate(berries, [66, 2]);
+//bt.rotate(berries,117);
+//drawLines(berries);
+
+
+//const leafLeft = bt.join(leaf1LE,leaf2LE,leaf3LE);
+//bt.scale(leafLeft, bt.randInRange(1, 2),[47,61]);
+
+//drawLines(leafLeft);
+
+
+
+const leafMo1=bt.copy(leafLeft);
+drawLines(leafMo1);
+
+bt.scale(leafMo1, [0.4, 0.4]);
+bt.translate(leafMo1, [96, 39]);
+bt.rotate(leafMo1,278);
+drawLines(leafMo1);
+
+bt.randInRange(105,1);
+
+
+
+const leafMo2=bt.copy(leafLeft);
+drawLines(leafMo2);
+
+bt.scale(leafMo2, [0.4, 0.4]);
+bt.translate(leafMo2, [45, -35]);
+bt.rotate(leafMo2,458);
+drawLines(leafMo2);
+
+bt.randInRange(-1,2);
 
 
 
