@@ -19,6 +19,10 @@ import { bounds } from "./bounds.js";
 import { catmullRom } from "./catmullRom.js";
 import { nurbs } from "./nurbs.js";
 import { offset } from "./offset.js"
+import { assertArgs } from "./assert.js";
+import { DrawText as text } from "./blotfont/funcs.js";
+import { RunInstructions as fromInstructions } from "./blotfont/instructions.js";
+import { letters } from "./blotfont/letters.js";
 
 // import * as polyclip from 'polyclip-ts';
 // import polygonClipping from "polygon-clipping";
@@ -26,10 +30,22 @@ import { offset } from "./offset.js"
 // import { bezierEasing } from "./bezierEasing.js";
 
 export const toolkit = {
-  union: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "union", ops),
-  intersection: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "intersection", ops),
-  difference: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "difference", ops),
-  xor: (polylines0, polylines1, ops = {}) => boolean(polylines0, polylines1, "xor", ops),
+  union(polylines0, polylines1, ops = {}) {
+    assertArgs(arguments, ['polylines', 'polylines', 'any?'], 'bt.union');
+    return boolean(polylines0, polylines1, "union", ops);
+  },
+  intersection(polylines0, polylines1, ops = {}) {
+    assertArgs(arguments, ['polylines', 'polylines', 'any?'], 'bt.intersection');
+    return boolean(polylines0, polylines1, "intersection", ops);
+  },
+  difference(polylines0, polylines1, ops = {}) {
+    assertArgs(arguments, ['polylines', 'polylines', 'any?'], 'bt.difference');
+    return boolean(polylines0, polylines1, "difference", ops);
+  },
+  xor(polylines0, polylines1, ops = {}){
+    assertArgs(arguments, ['polylines', 'polylines', 'any?'], 'bt.xor');
+    return boolean(polylines0, polylines1, "xor", ops);
+  },
   offset,
   iteratePoints: iteratePolylines,
   transform,
@@ -47,6 +63,8 @@ export const toolkit = {
   // bezierEasing, // used to be in
   catmullRom,
   nurbs(points, ops = {}) {
+    assertArgs(arguments, ['polyline', 'any?'], 'bt.nurbs')
+
     const degree = ops.degree ?? 2;
     const steps = ops.steps ?? 100;
     const boundary = isClosed(points) ? "closed" : "clamped";
@@ -92,6 +110,8 @@ export const toolkit = {
     }
   },
   originate(polylines) {
+    assertArgs(arguments, ['polylines'], 'bt.originate')
+
     const cc = bounds(polylines).cc;
     translate(polylines, [0, 0], cc);
     return polylines;
@@ -106,6 +126,8 @@ export const toolkit = {
   getNormal: getNormalAtT,
   resample: resamplePolylines,
   simplify(polylines, tolerance, hq = true) {
+    assertArgs(arguments, ['polylines', 'number?', 'boolean?'], 'bt.simplify')
+
     polylines.forEach(pl => {
       const newPl = simplifyPolyline(pl, tolerance, hq)
       while (pl.length > 0) pl.pop()
@@ -120,6 +142,8 @@ export const toolkit = {
   trim: trimPolylines,
   merge: mergePolylines,
   svgToPolylines(svgString) { // undoced
+    assertArgs(arguments, ['string'], 'bt.svgToPolylines')
+
     try {
       const parser = new DOMParser();
       const doc = parser.parseFromString(svgString, 'image/svg+xml');
@@ -213,7 +237,16 @@ export const toolkit = {
 
     return first;
   },
-  copy: obj => JSON.parse(JSON.stringify(obj))
+  copy(obj) {
+    assertArgs(arguments, ['any'], 'bt.copy')
+
+    return JSON.parse(JSON.stringify(obj));
+  },
+
+  // blotfont api
+  text,
+  fromInstructions,
+  letters
 }
 
 

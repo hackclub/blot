@@ -1,5 +1,8 @@
+import { assertArgs } from './assert'
 
 export function bounds(polylines) {
+  assertArgs(arguments, ['polylines'], 'bt.bounds');
+
   const { xMin, xMax, yMin, yMax } = extrema(polylines.flat());
 
   const width = xMax - xMin;
