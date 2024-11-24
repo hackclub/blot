@@ -1,15 +1,15 @@
 /*
 @title: Clockl
 @author: souptik samanta
-@snapshot: snapshot1.png
+@snapshot: img1.png
 */
 const canvasWidth = 125;
 const canvasHeight = 125;
 
-// Clock radius you may change this : )
-const clockRadius = 30;
-const markerLength = 3;
-const markerOffset = 1;
+// Clock radius you may change this :)
+const clockRadius = 32;
+const markerLength = 3.1;
+const markerOffset = 1.4;
 const includeSeconds = true;
 
 setDocDimensions(canvasWidth, canvasHeight);
@@ -21,8 +21,8 @@ const turtle = new bt.Turtle();
 turtle.up();
 turtle.forward(clockRadius);
 turtle.down();
-let centerX = canvasWidth / 2;
-let centerY = canvasHeight / 2;
+let centerX = canvasWidth / 1.4;
+let centerY = canvasHeight / 1.2;
 
 function degreesToRadians(angleInDegrees) {
   return angleInDegrees * (Math.PI / 180);
@@ -80,7 +80,118 @@ if (includeSeconds) {
 
 bt.join(clockLines, turtle.lines());
 
+
+
+
 const centerCoordinates = bt.bounds(clockLines).cc;
 bt.translate(clockLines, [canvasWidth / 2, canvasHeight / 2], centerCoordinates);
+
+
+
+// scenery
+
+setDocDimensions(canvasWidth, canvasHeight);
+
+const sceneElements = [];
+
+const painter = new bt.Turtle();
+const randomRange = bt.randInRange;
+const sunDiameter = randomRange(12, 24);
+
+// Draw sun rays
+for (let ray = 0; ray < 20; ray++) {
+  painter.up();
+  painter.goTo([0, canvasHeight]);
+  painter.forward(sunDiameter + 2);
+  painter.down();
+  painter.forward(sunDiameter / 2.002);
+  painter.right(4.4);
+}
+// tree gen
+
+function generateTree(treeX, treeY, treeHeight) {
+  painter.up();
+  painter.goTo([treeX, treeY]);
+  painter.down();
+
+  for (let layer = 0; layer < 5; layer++) {
+    painter.goTo([treeX, treeY + treeHeight]);
+    painter.goTo([treeX + treeHeight / 6, treeY + treeHeight * 0.5]);
+    painter.goTo([treeX, treeY + treeHeight]);
+    painter.goTo([treeX - treeHeight / 6, treeY + treeHeight * 0.5]);
+    painter.goTo([treeX, treeY + treeHeight]);
+    treeHeight -= 1;
+  }
+
+  painter.goTo([treeX, treeY]);
+  return painter;
+}
+
+painter.up();
+painter.goTo([sunDiameter, canvasHeight]);
+painter.down();
+for (let arcStep = 0; arcStep < 90; arcStep++) {
+  painter.forward((3 * sunDiameter) / 180);
+  painter.right(1);
+}
+
+// Drawing rhe mountains
+painter.up();
+let mountainX = 0;
+let mountainY = canvasWidth * randomRange(0.3, 0.5);
+painter.goTo([mountainX, mountainY]);
+painter.down();
+const totalMountains = Math.floor(randomRange(2, 4));
+
+for (let mountain = 0; mountain < totalMountains; mountain++) {
+  mountainX = (canvasWidth / totalMountains) * mountain;
+
+
+  
+  
+  
+  for (let step = 0; step < canvasWidth / (totalMountains * 2); step++) {
+    mountainX += 1;
+    let treeTrigger = Math.floor(randomRange(5, 20));
+    if (treeTrigger === 9) {
+      painter.up();
+      generateTree(mountainX, mountainY, treeTrigger);
+      painter.down();
+      painter.goTo([mountainX, mountainY]);
+    }
+    mountainY += randomRange(-1, 3);
+    painter.goTo([mountainX, mountainY]);
+  }
+
+  for (let step = 0; step < canvasWidth / (totalMountains * 2); step++) {
+    let treeTrigger = Math.floor(randomRange(5, 14));
+    if (treeTrigger === 9) {
+      painter.up();
+      generateTree(mountainX, mountainY, treeTrigger);
+      painter.down();
+      painter.goTo([mountainX, mountainY]);
+    }
+    mountainX += 1;
+    mountainY += randomRange(-3, 1);
+    painter.goTo([mountainX, mountainY]);
+  }
+}
+
+
+
+painter.up();
+painter.goTo([randomRange(sunDiameter * 2.1, canvasWidth - 4), canvasHeight - randomRange(5, sunDiameter)]);
+painter.down();
+painter.forward(10);
+painter.left(45);
+painter.forward(5);
+painter.right(90);
+painter.forward(5);
+painter.left(45);
+painter.forward(10);
+///draw ing yay lol 
+bt.join(sceneElements, painter.lines());
+
+drawLines(sceneElements);
 
 drawLines(clockLines);
