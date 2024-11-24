@@ -116,7 +116,12 @@ function generateTree(treeX, treeY, treeHeight) {
   painter.goTo([treeX, treeY]);
   painter.down();
 
-  for (let layer = 0; layer < 5; layer++) {
+ 
+for (let l1y=0; l1y< randomRange(1, 5); l1y++)
+
+{
+  
+  for (let layer = 0; layer < 1; layer++) {
     painter.goTo([treeX, treeY + treeHeight]);
   
     painter.goTo([treeX + treeHeight / 6, treeY + treeHeight * 0.5]);
@@ -129,7 +134,7 @@ function generateTree(treeX, treeY, treeHeight) {
     painter.goTo([treeX, treeY + treeHeight]);
    
     treeHeight -= 1;
-  }
+  }}
 
   painter.goTo([treeX, treeY]);
   return painter;
@@ -147,10 +152,10 @@ for (let arcStep = 0; arcStep < 90; arcStep++) {
 // Drawing rhe mountains
 painter.up();
 let mountainX = 0;
-let mountainY = canvasWidth * randomRange(0.3, 0.5);
+let mountainY = canvasWidth * randomRange(0.2, .3);
 painter.goTo([mountainX, mountainY]);
 painter.down();
-const totalMountains = Math.floor(randomRange(2, 4));
+const totalMountains = Math.floor(randomRange(2, 5));
 
 for (let mountain = 0; mountain < totalMountains; mountain++) {
   mountainX = (canvasWidth / totalMountains) * mountain;
@@ -162,8 +167,8 @@ for (let mountain = 0; mountain < totalMountains; mountain++) {
   
   for (let step = 0; step < canvasWidth / (totalMountains * 2); step++) {
     mountainX += 1;
-    let treeTrigger = Math.floor(randomRange(5, 20));
-    if (treeTrigger === 9) {
+    let treeTrigger = Math.floor(randomRange(9, 20));
+    if (treeTrigger === 6) {
       painter.up();
       generateTree(mountainX, mountainY, treeTrigger);
       painter.down();
