@@ -59,6 +59,7 @@ to check this text act on the "STRINGA" variable:
   if you set a value to this variable this value will be written
 
 --PROBLEMS AND BUGS:--
+
 If you run into any problems with the script, don't hesitate to contact me on slack
 ID: @giacomo
 */
@@ -71,33 +72,37 @@ var Vy = [];
 var Ax = [];
 var Ay = [];
 var r = [];
-var t, scalex, scaley, numb_of_stars, stringa;
+var t, scalex, scaley, numb_of_stars, stringa, randomNumber;
 
 
 //--INSERT DATA BELOW--//   inizializzo variabili
+      randomNumber = false; //if this = true is random else is the value that you select in the below variable.
 //════════════════════//
-x[0] = 0.50;
+      x[0] = 0.50;     
 //════════════════════//
-y[0] = 0.00;
+      y[0] = 0.0;
 //════════════════════//
-Vx[0] = 0;
+      Vx[0] = 0;
 //════════════════════//
-Vy[0] = 1.57;
+      Vy[0] = 1.57;
 //════════════════════//
-t = 0.10; //this is ∆t
+      t = 0.10; //this is ∆t, IS NOT RANDOM
 //════════════════════//
-scalex = 60;
-scaley = 40;
+      scalex = 60;    //if you use  RANDOM VALUES PLEASE CORRET THIS VALUE TO FIT THE DRAW IN THE BLU SQUARE
+      scaley = 40;    //if you use  RANDOM VALUES PLEASE CORRET THIS VALUE TO FIT THE DRAW IN THE BLU SQUARE
 //════════════════════//
-numb_of_stars = 0; //if this =  0 is random, if is -1 no star draw else is nuber of stars. (should be >=0 || ==-1)
+    numb_of_stars = 0; //if this =  0 is random, if is -1 no star draw else is nuber of stars. (should be >=0 || ==-1)
 //════════════════════//
-stringa = ""; //if this is == "" is random, else print what you write in
+    stringa = ""; //if this is == "" is random, else print what you write in
 
 
 
 //DO NOT TUCH ANYTHINGH BELOW!  DO NOT TUCH ANYTHINGH BELOW!
 //DO NOT TUCH ANYTHINGH BELOW!  DO NOT TUCH ANYTHINGH BELOW!
-
+    if(randomNumber == true){
+        x[0]= (bt.randIntInRange(41, 68))/100;
+        y[0] = (bt.randIntInRange(-40, 33))/100;
+    }
 
 //inizializzo variabili non inserite da utente
 
@@ -143,13 +148,29 @@ function centerPolylines(polylines, documentWidth, documentHeight) {
     const cc = bt.bounds(polylines).cc;
     bt.translate(polylines, [documentWidth / 2, documentHeight / 2], cc);
 }
+//planet on ellips
+function createCircle(centerx, centery, radius, numPoints = 200) {
+  const points = [];
+  for (let i = 0; i <= numPoints; i++) {
+    const angle = (i / numPoints) * 2 * Math.PI;
+    const x = centerx + radius * Math.cos(angle);
+    const y = centery + radius * Math.sin(angle);
+    points.push([x, y]);
+  }
+  return points;
+}
 //scale and call the function to center
+var randompoint, planet;
+randompoint = bt.randIntInRange(0, x.length);
+planet= createCircle(0, 0, bt.randIntInRange(1, 10));
+
+
 l = bt.scale(l, [scalex, scaley]);
 centerPolylines(l, 125, 125);
-
+planet = bt.translate([planet], [l[0][randompoint][0], l[0][randompoint][1]]);
 //draw
 drawLines(l);
-
+drawLines(planet);
 //draw cartesian plan
 drawLines([
     [[62.5, 10], [62.5, 125]]
@@ -193,11 +214,45 @@ function drawstars(n) {
         ys = bt.randIntInRange(20, height - 10);
         ds = bt.randIntInRange(3, 9);
         star(xs, ys, ds);
+        
     }
+    
 }
+//draw the star
+star(62.5,62.5, bt.randIntInRange(5,12));
+//draw the planet
+
+
+// function DrawPlanet(lunghezza){
+//   var planets = [], planet= [];
+//   var randompoint, randomx, randomy, radius;
+//   if(lunghezza <=0){
+//     return;
+//   }else{
+//     console.log(lunghezza);
+//     randompoint = bt.randIntInRange(0, lunghezza);
+//     console.log(randompoint);
+//     radius = bt.randIntInRange(10, 40);
+//     console.log(radius);
+//     randomx= x[randompoint];
+//     console.log(randomx);
+//     randomy= y[randompoint];
+//     console.log(randomy);
+//     planet = createCircle(randomx, randomy, radius);
+//     planets.push(planet);
+//     //planets= bt.scale(planets, [scalex, scaley]);
+//     centerPolylines(planets, randomx, randomy);
+//     drawLines(planets);
+//   }
+// }
+
+
+//disegnare tutte cose
 if (numb_of_stars != -1) {
     drawstars(numb_of_stars);
 }
+console.log(x.length + "c");
+// DrawPlanet(x.length);
 
 //random text
 function generaNomePianeta() {
