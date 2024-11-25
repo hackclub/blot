@@ -1,19 +1,5 @@
-Write a short description about your art piece, such as what your artwork represents and your experience drawing it!
+** Attention!!! Blot is not accepting any further PRs as of right now! Please head over to https://highseas.hackclub.com/ if you would like to work toward a blot. **
 
-Next, make sure you go through **each item** in the following checklist. Delete this line after!
+For a more detailed explanation, please read this slack post: https://hackclub.slack.com/archives/C0188CY57PZ/p1732341551647529?thread_ts=1732313225.355179&cid=C0188CY57PZ
 
-- [ ] I have read the steps to [getting a blot](https://github.com/hackclub/blot/blob/main/docs/GET_A_BLOT.md)
-- [ ] I have read all the [submission requirements](https://blot.hackclub.com/submitting) and follow them 
-- [ ] I am submitting art that...
-  - [ ] is algorithmically generated (will meaningfully change each time the program is run)
-  - [ ] is your own work that is not copied from somewhere else
-  - [ ] is drawable through the editor(does not use outside tools)
-  - [ ] doesn't call `Math.random()` (See the documentation on [randomness](https://github.com/hackclub/blot/blob/main/public/TOOLKIT.md#randomness))
-  - [ ] is drawable on Blot itself (doesn't have lines overlap more than 5 times)
-    - [ ] Doesn't overlap lines more than 5 times
-    - [ ] Fits in the working area of 125x125mm
-    - [ ] Doesn't rely on colour to look good
-
-If you used based your art on something else, used a tutorial, or remixed it from something else, please link it here:
-
-Lastly, link a picture of your art piece here:
+Thanks!
