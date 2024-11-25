@@ -531,6 +531,8 @@ __Connecting__
 
 To power the Blot plug it into the USB-C brick that comes with your machine. Any USB-C brick that can deliver at least 20W should work. The Blot expects 9V 1A.
 
+Make sure the power switch on the underside of the Blot is set to "on".
+
 ![PXL_20240710_153733136.jpg](./assets/PXL_20240710_153733136.jpg)
 
 Connect your Blot to the web editor by plugging the Xiao in over USB.
