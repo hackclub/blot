@@ -59,7 +59,6 @@ to check this text act on the "STRINGA" variable:
   if you set a value to this variable this value will be written
 
 --PROBLEMS AND BUGS:--
-
 If you run into any problems with the script, don't hesitate to contact me on slack
 ID: @giacomo
 */
@@ -91,7 +90,7 @@ var t, scalex, scaley, numb_of_stars, stringa, randomNumber;
       scalex = 60;    //if you use  RANDOM VALUES PLEASE CORRET THIS VALUE TO FIT THE DRAW IN THE BLU SQUARE
       scaley = 40;    //if you use  RANDOM VALUES PLEASE CORRET THIS VALUE TO FIT THE DRAW IN THE BLU SQUARE
 //════════════════════//
-    numb_of_stars = 0; //if this =  0 is random, if is -1 no star draw else is nuber of stars. (should be >=0 || ==-1)
+    numb_of_stars = 4; //if this =  0 is random, if is -1 no star draw else is nuber of stars. (should be >=0 || ==-1)
 //════════════════════//
     stringa = ""; //if this is == "" is random, else print what you write in
 
@@ -100,10 +99,14 @@ var t, scalex, scaley, numb_of_stars, stringa, randomNumber;
 //DO NOT TUCH ANYTHINGH BELOW!  DO NOT TUCH ANYTHINGH BELOW!
 //DO NOT TUCH ANYTHINGH BELOW!  DO NOT TUCH ANYTHINGH BELOW!
     if(randomNumber == true){
+        do{
         x[0]= (bt.randIntInRange(41, 68))/100;
+        console.log(x[0] + "x");
         y[0] = (bt.randIntInRange(-40, 33))/100;
+        console.log(y[0] + "y");
+        }while(x[0] >= 0.4 && x[0] <= 0.6 && y[0] >= -0.4 && y[0] <= 0.25);
     }
-
+    console.log("------");
 //inizializzo variabili non inserite da utente
 
 r[0] = Math.sqrt(Math.pow(x[0], 2) + Math.pow(y[0], 2))
@@ -127,7 +130,7 @@ do {
     Ay[i] = -y[i] / Math.pow(r[i], 3);
     Vy[i] = Vy[i - 1] + t * Ay[i];
     Vx[i] = Vx[i - 1] + t * Ax[i];
-    console.log(`y[${i}]: ${y[i]}, x[${i}]: ${x[i]}, r[${i}]: ${r[i]}, Ax[${i}]: ${Ax[i]}, Ay[${i}]: ${Ay[i]}, Vy[${i}]: ${Vy[i]}, Vx[${i}]: ${Vx[i]}`);
+    //console.log(`y[${i}]: ${y[i]}, x[${i}]: ${x[i]}, r[${i}]: ${r[i]}, Ax[${i}]: ${Ax[i]}, Ay[${i}]: ${Ay[i]}, Vy[${i}]: ${Vy[i]}, Vx[${i}]: ${Vx[i]}`);
     
 } while (Math.abs(x[i] - x[0]) > soglia || i == 1);
 
@@ -161,13 +164,13 @@ function createCircle(centerx, centery, radius, numPoints = 200) {
 }
 //scale and call the function to center
 var randompoint, planet;
-randompoint = bt.randIntInRange(0, x.length);
+randompoint = bt.randIntInRange(0, x.length-1);
 planet= createCircle(0, 0, bt.randIntInRange(1, 10));
-
-
 l = bt.scale(l, [scalex, scaley]);
 centerPolylines(l, 125, 125);
 planet = bt.translate([planet], [l[0][randompoint][0], l[0][randompoint][1]]);
+
+
 //draw
 drawLines(l);
 drawLines(planet);
@@ -200,14 +203,16 @@ function star(x, y, size) {
     drawLines(starLines);
 }
 function drawstars(n) {
-    var xs, ys, ds;
+    var xs, ys, ds, nstar, ncircle, val, circle;
     if (n == 0) {
         n = bt.randIntInRange(1, 10)
     } else if (n < 0) {
         return console.error("n should be >=0");
     }
-    console.log(n);
-    for (n; n > 0; n--) {
+    val= bt.randIntInRange(1, n-1 )
+    nstar= n- val;
+    ncircle = n- nstar;
+    for (nstar; nstar > 0; nstar--) {
         //const width = 125;
         //const height = 125;
         xs = bt.randIntInRange(10, width - 10);
@@ -216,42 +221,25 @@ function drawstars(n) {
         star(xs, ys, ds);
         
     }
+    for (ncircle; ncircle > 0; ncircle--) {
+        //const width = 125;
+        //const height = 125;
+        xs = bt.randIntInRange(10, width - 10);
+        ys = bt.randIntInRange(20, height - 10);
+        ds = bt.randIntInRange(3, 9);
+        circle = createCircle(xs, ys, ds);
+        drawLines([circle]);
+    }
     
 }
 //draw the star
-star(62.5,62.5, bt.randIntInRange(5,12));
-//draw the planet
-
-
-// function DrawPlanet(lunghezza){
-//   var planets = [], planet= [];
-//   var randompoint, randomx, randomy, radius;
-//   if(lunghezza <=0){
-//     return;
-//   }else{
-//     console.log(lunghezza);
-//     randompoint = bt.randIntInRange(0, lunghezza);
-//     console.log(randompoint);
-//     radius = bt.randIntInRange(10, 40);
-//     console.log(radius);
-//     randomx= x[randompoint];
-//     console.log(randomx);
-//     randomy= y[randompoint];
-//     console.log(randomy);
-//     planet = createCircle(randomx, randomy, radius);
-//     planets.push(planet);
-//     //planets= bt.scale(planets, [scalex, scaley]);
-//     centerPolylines(planets, randomx, randomy);
-//     drawLines(planets);
-//   }
-// }
-
+star(62.5,62.5, bt.randIntInRange(12,15));
 
 //disegnare tutte cose
 if (numb_of_stars != -1) {
     drawstars(numb_of_stars);
 }
-console.log(x.length + "c");
+
 // DrawPlanet(x.length);
 
 //random text
