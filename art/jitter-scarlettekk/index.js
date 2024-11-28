@@ -22,9 +22,9 @@ const bounds = [[[0, 0], [0, 125], [125, 125], [125, 0], [0, 0]]];
 const t = new bt.Turtle();
 const tt = new bt.Turtle(); //used for introducing wobble
 const ttt = new bt.Turtle(); //used for tracking the pure spiral
-t.jump([63,63]);
-tt.jump([63,63]);
-ttt.jump([63,63]);
+t.jump([66,63]);
+tt.jump([66,63]);
+ttt.jump([66,63]);
 ttt.up();
 tt.up();
 t.down();
