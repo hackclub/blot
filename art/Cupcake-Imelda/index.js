@@ -69,31 +69,39 @@ for (let i = 0; i < 10; i++) {
   myTurtle.forward(2)
   myTurtle.left(235)
   myTurtle.forward(1.7)
+  myTurtle.up()
+  myTurtle.goTo([128,42])
+  myTurtle.down()
 }
-
+myTurtle.setAngle(-155)
+myTurtle.arc(-54,99)
 const polyline = [
   [78, 54],
-  [128, 40],
-  [102, 0],
-  [50, 3],
-  [34, 48],
-  [113,60],
-  [34, 48],
+  [128, 39],
+  [97, 0],
+  [54, 3],
+  [37, 48],
+  [114,60],
+  
   [127,40],
  
 ];
+//#DDCC00
 const polyline2 = [
   [36,47],
   [80,110],
   [128,39]
   ]
 // add the polyline to the final lines
+
 finalLines.push(polyline,polyline2);
 
 // transform lines using the toolkit
 bt.rotate(finalLines, 3);
 
-// draw it 
+// draw it
+//const lines= bt.join(finalLines, myTurtle.lines());
+//drawLines(polyline2, {fill: "red"})
 bt.join(finalLines, myTurtle.lines());
 bt.translate(finalLines, [-20, 0])
 drawLines(finalLines)
