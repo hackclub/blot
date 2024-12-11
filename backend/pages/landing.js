@@ -24,7 +24,7 @@ export default function() {
         </div>
 
         <div class="text-xl leading-none font-light tracking-normal pt-2.5">
-          Write an interactive art piece, and we'll send you* a CNC machine that can draw it!
+          Program generative art in javascript. Draw it on a machine by <a href="https://highseas.hackclub.com/" target="_blank">Hack Club</a>
         </div>
 
         <div class="sm:flex-row flex-col flex gap-2">
