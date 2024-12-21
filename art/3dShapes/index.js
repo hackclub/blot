@@ -1,7 +1,7 @@
 /*
 @title: 3d Shapes
 @author: Anshuman Mishra
-@snapshot: 3dshapes.png
+@snapshot: 3dShapes.jpg
 */
 const width = 400;
 const height = 100;
