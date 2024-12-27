@@ -24,7 +24,9 @@ export default function() {
         </div>
 
         <div class="text-xl leading-none font-light tracking-normal pt-2.5">
-          Program generative art in javascript. Draw it on a machine by <a href="https://highseas.hackclub.com/" target="_blank">Hack Club</a>
+          <p>Program generative art in javascript. Draw it on a machine by <a href="https://hackclub.com/" target="_blank">Hack Club</a></p>
+          <p>Blot is no longer an active You Ship, We Ship (YSWS) program at Hack Club. Get it from <a href="https://hackclub.com/" target="_blank"><u>High Seas</u></a>instead!</p>
+          
         </div>
 
         <div class="sm:flex-row flex-col flex gap-2">
