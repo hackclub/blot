@@ -1,48 +1,179 @@
 /*
-@title: Complex Pentagons
+@title: Starry Night
 @author: CyberZenDev
 @snapshot: snap1.png
 */
 
-const width = 125;
-const height = 125;
-
+const width = 200;
+const height = 150;
 setDocDimensions(width, height);
 
 const finalLines = [];
 
-// Define the base pentagon vertices centered at (0, 0)
-const basePentagon = [
-    [0, -50],
-    [43.30, -25],
-    [26.98, 25],
-    [-26.98, 25],
-    [-43.30, -25],
-    [0, -50]
+const moonCenter = [width - bt.randInRange(15, 35), bt.randInRange(10, height / 4)];
+const moonRadius = bt.randInRange(8, 12);
+const moonPath = [];
+
+for (let i = 0; i <= 360; i += 10) {
+  const radian = (i * Math.PI) / 180;
+  const x = moonCenter[0] + moonRadius * Math.cos(radian);
+  const y = moonCenter[1] + moonRadius * Math.sin(radian);
+  moonPath.push([x, y]);
+}
+finalLines.push(moonPath);
+
+const houseWidth = bt.randInRange(40, 60);
+const houseHeight = bt.randInRange(30, 40);
+const houseX = (width - houseWidth) / 2;
+const houseY = height - houseHeight - 15;
+
+const houseBase = [
+  [houseX, houseY],
+  [houseX + houseWidth, houseY],
+  [houseX + houseWidth, houseY + houseHeight],
+  [houseX, houseY + houseHeight],
+  [houseX, houseY]
 ];
+finalLines.push(houseBase);
 
-// Loop for 100 nested pentagons
-for (let i = 0; i < 130; i++) {
-    const innerPentagon = JSON.parse(JSON.stringify(basePentagon)); 
+const roof = [
+  [houseX, houseY],
+  [houseX + houseWidth / 2, houseY - houseHeight / 3],
+  [houseX + houseWidth, houseY]
+];
+finalLines.push(roof);
 
-    const scaleFactor = 1 - (bt.randIntInRange(0, 5) / 100);  
-    bt.scale([innerPentagon], scaleFactor); 
-    bt.rotate([innerPentagon], (i * 3.6) + bt.randIntInRange(0, 30)); 
-    bt.translate([innerPentagon], [63.1, 75.6]); 
+const doorWidth = houseWidth / 4;
+const doorHeight = houseHeight / 2;
+const doorX = houseX + houseWidth / 2 - doorWidth / 2;
+const doorY = houseY + houseHeight - doorHeight;
 
-    finalLines.push(innerPentagon);
+const door = [
+  [doorX, doorY],
+  [doorX + doorWidth, doorY],
+  [doorX + doorWidth, doorY + doorHeight],
+  [doorX, doorY + doorHeight],
+  [doorX, doorY]
+];
+finalLines.push(door);
+
+const numWindows = bt.randIntInRange(1, 3);
+const windows = [];
+const windowSize = houseWidth / 8;
+
+for (let i = 0; i < numWindows; i++) {
+  let windowX, windowY;
+  let overlap = false;
+  let attempts = 0;
+  const maxAttempts = 15;
+
+  do {
+    overlap = false;
+    windowX = houseX + bt.randInRange(windowSize, houseWidth - windowSize * 2);
+    windowY = houseY + bt.randInRange(windowSize, houseHeight - windowSize * 2);
+    attempts++;
+
+    if (
+      windowX + windowSize > doorX &&
+      windowX < doorX + doorWidth &&
+      windowY + windowSize > doorY &&
+      windowY < doorY + doorHeight
+    ) {
+      overlap = true;
+    }
+
+    if (!overlap) {
+      for (const existingWindow of windows) {
+        if (
+          windowX + windowSize > existingWindow.x &&
+          windowX < existingWindow.x + existingWindow.size &&
+          windowY + windowSize > existingWindow.y &&
+          windowY < existingWindow.y + existingWindow.size
+        ) {
+          overlap = true;
+          break;
+        }
+      }
+    }
+  } while (overlap && attempts < maxAttempts);
+
+  if (attempts < maxAttempts) {
+    const window = [
+      [windowX, windowY],
+      [windowX + windowSize, windowY],
+      [windowX + windowSize, windowY + windowSize],
+      [windowX, windowY + windowSize],
+      [windowX, windowY]
+    ];
+    finalLines.push(window);
+    windows.push({ x: windowX, y: windowY, size: windowSize });
+  }
 }
 
-const sunRadius = 15; 
-const sunCenter = [62.5, 62.5]; 
-
-const sunCircle = [];
-for (let angle = 0; angle < 360; angle += 10) {
-    const radians = (angle * Math.PI) / 180;
-    sunCircle.push([sunCenter[0] + sunRadius * Math.cos(radians), sunCenter[1] + sunRadius * Math.sin(radians)]);
+const grassY = height - 5;
+const numGrassBlades = width;
+for (let i = 0; i < numGrassBlades; i++) {
+  const grassX = i;
+  const grassHeight = bt.randInRange(3, 10);
+  const variation = bt.randInRange(-1, 1);
+  const grassBlade = [
+    [grassX, grassY],
+    [grassX + variation, grassY - grassHeight],
+    [grassX + variation * 2, grassY]
+  ];
+  finalLines.push(grassBlade);
 }
-sunCircle.push(sunCircle[0]); 
 
-finalLines.push(sunCircle); 
+const stars = [];
+const numStars = bt.randIntInRange(10, 20);
+const starSize = 2;
+
+for (let i = 0; i < numStars; i++) {
+  let starX, starY;
+  let overlap = false;
+  let attempts = 0;
+  const maxAttempts = 15;
+
+  do {
+    overlap = false;
+    starX = bt.randInRange(5, width - 5);
+    starY = bt.randInRange(5, moonCenter[1] - moonRadius);
+
+    const distToMoon = Math.sqrt((starX - moonCenter[0]) ** 2 + (starY - moonCenter[1]) ** 2);
+    if (distToMoon < moonRadius + 5) {
+      overlap = true;
+    }
+
+    if (!overlap) {
+      for (const existingStar of stars) {
+        const distToStar = Math.sqrt(
+          (starX - existingStar.x) ** 2 + (starY - existingStar.y) ** 2
+        );
+        if (distToStar < starSize * 3) {
+          overlap = true;
+          break;
+        }
+      }
+    }
+
+    attempts++;
+  } while (overlap && attempts < maxAttempts);
+
+  if (attempts < maxAttempts) {
+    const star = [
+      [starX - starSize, starY],
+      [starX, starY - starSize],
+      [starX + starSize, starY],
+      [starX, starY + starSize],
+      [starX - starSize, starY]
+    ];
+    finalLines.push(star);
+    stars.push({ x: starX, y: starY });
+  }
+}
+
+const centerX = width / 2;
+const centerY = height / 2;
+bt.rotate(finalLines, 180, [centerX, centerY]);
 
 drawLines(finalLines);
