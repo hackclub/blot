@@ -40,11 +40,12 @@ bt.rotate(topEdge, 46);
 
 
 const beak = bt.join(topEdge, bottomEdge);
+
 bt.rotate(beak, 59);
 bt.translate(beak, [19, 50]);
 bt.scale(beak, [1.2, 1.1]);
 // draw it
-drawLines(beak);
+//drawLines(beak);
 
 const joint = [
   bt.nurbs([
@@ -56,7 +57,7 @@ const joint = [
 bt.translate(joint, [70, 148]);
 bt.rotate(joint, 6);
 
-drawLines(joint);
+//drawLines(joint);
 
 //BEAK DONE 
 
@@ -73,11 +74,11 @@ const mouthLine = [
 
 bt.translate(mouthLine, [50.0, 138]);
 bt.rotate(mouthLine, -25);
-drawLines(mouthLine);
+//drawLines(mouthLine);
 
 const highBeak = bt.join(beak, mouthLine)
 
-drawLines(highBeak);
+//drawLines(highBeak);
 
 
 //curve at the mouth
@@ -91,7 +92,7 @@ const mouthCurve = [
 
 bt.translate(mouthCurve, [79.1, 234]);
 bt.rotate(mouthCurve, -129);
-drawLines(mouthCurve);
+//drawLines(mouthCurve);
 
 
 
@@ -111,7 +112,7 @@ const headL = [
 
 bt.translate(headL, [67.6, 248]);
 bt.rotate(headL, -6);
-drawLines(headL);
+//drawLines(headL);
 
 
 const head2 = [
@@ -124,7 +125,7 @@ const head2 = [
 
 bt.translate(head2, [71.7, 251]);
 bt.rotate(head2, 202);
-drawLines(head2);
+//drawLines(head2);
 
 const head = [
   bt.nurbs([
@@ -136,7 +137,7 @@ const head = [
 
 bt.translate(head, [87.5, 248]);
 bt.rotate(head, 171);
-drawLines(head);
+//drawLines(head);
 
 const head3 = [
   bt.nurbs([
@@ -148,7 +149,7 @@ const head3 = [
 
 bt.translate(head3, [103.7, 244]);
 bt.rotate(head3, 140);
-drawLines(head3);
+//drawLines(head3);
 
 
 const head4 = [
@@ -161,7 +162,7 @@ const head4 = [
 
 bt.translate(head4, [121.0, 226]);
 bt.rotate(head4, 102);
-drawLines(head4);
+//drawLines(head4);
 
 const head5 = [
   bt.nurbs([
@@ -173,7 +174,10 @@ const head5 = [
 
 bt.translate(head5, [81.9, 221]);
 bt.rotate(head5, 70);
-drawLines(head5);
+//drawLines(head5);
+
+
+//done woith headddd
 
 
 const wing1 = [
@@ -549,7 +553,7 @@ const shiny = [
 ]
 bt.scale(shiny, [0.1, -0.1]);
 bt.translate(shiny, [-5, 63]);
-drawLines(shiny);
+//drawLines(shiny);
 const sun = [
   bt.nurbs([
     [xoff + radius, 0 + yoff],
@@ -566,7 +570,12 @@ const sun = [
 bt.scale(sun, [0.2, -0.2]);
 bt.translate(sun, [-4, 63]);
 bt.difference(sun, shiny);
-drawLines(sun, { fill: "#080A07", stroke: "#080A07" });
+
+const filledSun = bt.copy(sun);
+
+
+//drawLines(filledSun,{fill:"black"});
+ 
 
 
 
@@ -581,7 +590,7 @@ const eye = [
 
 bt.translate(eye, [89.7, 144]);
 bt.rotate(eye, 407);
-drawLines(eye);
+//drawLines(eye);
 
 
 const faceD = [
@@ -594,7 +603,7 @@ const faceD = [
 
 bt.translate(faceD, [89.0, 143]);
 bt.rotate(faceD, 589);
-drawLines(faceD);
+//drawLines(faceD);
 
 const faceL2 = [
   bt.nurbs([
@@ -606,7 +615,7 @@ const faceL2 = [
 
 bt.translate(faceL2, [92.8, 147]);
 bt.rotate(faceL2, 399);
-drawLines(faceL2);
+//drawLines(faceL2);
 
 
 const faceL3 = [
@@ -619,7 +628,7 @@ const faceL3 = [
 
 bt.translate(faceL3, [79.7, 143]);
 bt.rotate(faceL3, 398);
-drawLines(faceL3);
+//drawLines(faceL3);
 
 const faceL4 = [
   bt.nurbs([
@@ -631,7 +640,7 @@ const faceL4 = [
 
 bt.translate(faceL4, [87.2, 146]);
 bt.rotate(faceL4, 418);
-drawLines(faceL4);
+//drawLines(faceL4);
 
 const faceL5 = [
   bt.nurbs([
@@ -643,7 +652,19 @@ const faceL5 = [
 
 bt.translate(faceL5, [89.9, 142]);
 bt.rotate(faceL5, 418);
-drawLines(faceL5);
+//drawLines(faceL5);
+
+
+//head combineee
+
+//const headDirection = Math.random()>0.5?1:-1;
+//const wholeHead = bt.join(beak,joint,mouthLine,highBeak,mouthCurve,headL,head2,head,head3,head4,head5,shiny,sun,eye,
+          //                faceD,faceL2,faceL3,faceL4,faceL5);
+//bt.translate(wholeHead,[42,8]);
+//bt.translate(wholeHead,[85.4,104]);
+//bt.scale(wholeHead,[headDirection,1]);
+
+//drawLines(wholeHead);
 
 
 //feather detail
@@ -827,7 +848,7 @@ const atBeak = [
 
 bt.translate( atBeak , [83.5, 134]);
 bt.rotate( atBeak, 154);
-drawLines( atBeak);
+//drawLines( atBeak);
 
 const atBeak2= [
   bt.nurbs([
@@ -839,7 +860,39 @@ const atBeak2= [
 
 bt.translate( atBeak2 , [90.8, 135]);
 bt.rotate( atBeak2, 280);
-drawLines( atBeak2);
+//drawLines( atBeak2);
+
+//head combineee
+
+const headDirection = bt.rand()>0.5?1:-1;
+const wholeHead = bt.join(joint,highBeak,mouthCurve,headL,head2,head,head3,head4,head5,shiny,sun,eye,
+                          faceD,faceL2,faceL3,faceL4,faceL5,atBeak,atBeak2);//beak,mouthline are inclued
+bt.translate(wholeHead,[-85,-103]);
+bt.translate(wholeHead,[85.4,103]);
+bt.scale(wholeHead,[headDirection,1]);
+
+const flipPosition = headDirection ===-1? [15,3]:[0,0];
+bt.translate(wholeHead,flipPosition);
+
+//const pivotPoint =[88,135];
+//const rotationAngle = headDirection === -1? -30 : 30;
+//bt.rotate(wholeHead, rotationAngle, pivotPoint);
+
+if(headDirection === -1) {
+  bt.rotate(wholeHead,-13,[80,125]);
+}
+
+
+
+drawLines(wholeHead);
+
+//drawLines(filledSun,{fill:"black"});
+
+
+
+
+
+
 
 const atbody= [
   bt.nurbs([
@@ -1296,7 +1349,7 @@ const leafL8= [
   ])
 ]
 
-bt.translate( leafL8, [87.1, 71]);
+bt.translate( leafL8, [87.5, 71]);
 bt.rotate( leafL8, 182);
 
 
@@ -1682,15 +1735,10 @@ bt.randInRange(105,1);
 
 
 
-const leafMo2=bt.copy(leafLeft);
-drawLines(leafMo2);
 
-bt.scale(leafMo2, [0.4, 0.4]);
-bt.translate(leafMo2, [45, -35]);
-bt.rotate(leafMo2,458);
-drawLines(leafMo2);
 
-bt.randInRange(-1,2);
+
+
 
 
 
