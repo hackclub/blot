@@ -37,11 +37,13 @@ function degreesToRadians(angleInDegrees) {
 
 // Function to check if a point is within canvas bounds
 function isWithinBounds(x, y) {
+  
   return x >= 0 && x <= canvasWidth && y >= 0 && y <= canvasHeight;
 }
 
 // Function to check if a point is outside the clock area
 function isOutsideClock(x, y) {
+  
   const dx = x - clockCenterX;
   const dy = y - clockCenterY;
   return Math.sqrt(dx * dx + dy * dy) > clockRadius;
@@ -51,22 +53,30 @@ function isOutsideClock(x, y) {
 function safeMoveToForScenery(turtle, x, y) {
   if (isWithinBounds(x, y) && isOutsideClock(x, y)) {
     turtle.goTo([x, y]);
+
+    
   }
+  
+  
 }
+
 
 // Draw the clock ofc
 for (let angle = 0; angle < degreesToRadians(360); angle += 0.01) {
   const x = Math.cos(angle) * clockRadius;
   const y = Math.sin(angle) * clockRadius;
   turtle.goTo([x, y]); 
+
   
 }
+
 turtle.up();
 
 for (let angle = 0; angle <= degreesToRadians(361); angle += degreesToRadians(360) / 12) {
   let x = Math.cos(angle) * (clockRadius - markerOffset);
   let y = Math.sin(angle) * (clockRadius - markerOffset);
   turtle.goTo([x, y]); 
+
   
   turtle.down();
   x = Math.cos(angle) * (clockRadius - (markerOffset + markerLength));
@@ -76,6 +86,8 @@ for (let angle = 0; angle <= degreesToRadians(361); angle += degreesToRadians(36
   x = Math.cos(angle) * (clockRadius - markerOffset);
   y = Math.sin(angle) * (clockRadius - markerOffset);
   turtle.goTo([x, y]); 
+
+
   
   turtle.up();
 }
@@ -166,6 +178,7 @@ safeMoveToForScenery(painter, mountainX, mountainY);
 painter.down();
 const totalMountains = Math.floor(randomRange(2, 5));
 
+
 for (let mountain = 0; mountain < totalMountains; mountain++) {
   mountainX = (canvasWidth / totalMountains) * mountain;
 
@@ -194,8 +207,81 @@ for (let mountain = 0; mountain < totalMountains; mountain++) {
     mountainY += randomRange(-3, 1);
     safeMoveToForScenery(painter, mountainX, mountainY);
   }
+
+  
+  function drawBirds(count, regionCenterX, regionCenterY, regionRadius) {
+  const birdLines = [];
+  const birdTurtle = new bt.Turtle();
+  const existingBirds = [];
+  
+
+  for (let i = 0; i < count; i++) {
+    let birdX, birdY;
+    let isValidPosition;
+
+
+    
+    do {
+      isValidPosition = true;
+      const angle = Math.random() * 2 * Math.PI;
+      const radius = Math.random() * regionRadius;
+      birdX = regionCenterX + radius * Math.cos(angle);
+      birdY = regionCenterY + radius * Math.sin(angle);
+
+
+      
+      if (!isWithinBounds(birdX, birdY) || !isOutsideClock(birdX, birdY)) {
+        isValidPosition = false;
+        continue;
+      }
+
+
+      
+      for (const [existingX, existingY] of existingBirds) {
+        const distance = Math.sqrt(
+          Math.pow(birdX - existingX, 2) + Math.pow(birdY - existingY, 2)
+        );
+        if (distance < 8) { // Minimum distance to avoid overlap
+          isValidPosition = false;
+          break;
+        }
+      }
+    } while (!isValidPosition);
+
+
+        existingBirds.push([birdX, birdY]);
+
+    const birdSize = Math.random() * 5 + 2; 
+
+    
+
+
+    birdTurtle.up();
+    birdTurtle.goTo([birdX, birdY]);
+    birdTurtle.down();
+    birdTurtle.goTo([birdX - birdSize, birdY - birdSize / 2]);
+    birdTurtle.goTo([birdX + birdSize, birdY - birdSize / 2]); 
+  }
+
+  bt.join(birdLines, birdTurtle.lines());
+  drawLines(birdLines);
 }
 
-bt.join(sceneElements, painter.lines());
+
+  
+const regionCenterX = 30; 
+  
+const regionCenterY = 80; 
+  
+const regionRadius = 25;  
+  
+
+drawBirds(1, regionCenterX, regionCenterY, regionRadius);
+
+}
+
+bt.join(sceneElements, painter.lines() );
+
 drawLines(sceneElements);
 drawLines(clockLines);
+
