@@ -11,6 +11,10 @@ setDocDimensions(width, height);
 const numVisualizers = 18; // Variable that controls the number of visualizer boxes
 const textScale = 2.5; // Size of text
 const customName = "noCustomText"; // If set to "noCustomText", then the custom text will not be used. If it is set to something else, then use instead of randomly genorated name.
+// Wordlists for random name generation
+const firstWordList = ["alpha", "beta", "gamma", "delta", "echo", "zeta", "theta", "kappa", "lambda", "sigma"];
+const secondWordList = ["wave", "stream", "light", "pulse", "ray", "spark", "trail", "flow", "beam", "path"];
+
 
 // Visualizer dimensions and layout
 const visualizerBoxStartX = 10; // Starting X position for the visualizer box
@@ -32,18 +36,23 @@ const artBoxHeight = 20; // Height of the art box
 // Store final lines here
 const finalLines = [];
 
-// Function to genorate random name
-function generateRandomName(length) {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let name = "";
-  for (let i = 0; i < length; i++) {
-    name += chars.charAt(Math.floor(Math.random() * chars.length));
+// Function to generate a random name using two wordlists
+function generateRandomName() {
+  for (let attempts = 0; attempts < 100; attempts++) {
+    const firstWord = firstWordList[Math.floor(Math.random() * firstWordList.length)];
+    const secondWord = secondWordList[Math.floor(Math.random() * secondWordList.length)];
+    const combinedName = firstWord + secondWord;
+
+    if (combinedName.length <= 12) { // Make sure the text is not too long 
+      return combinedName;
+    }
   }
-  return name;
+  // Fallback to a single random word if no valid combination is found (should not happen with the provided wordlist)
+  return firstWordList[Math.floor(Math.random() * firstWordList.length)];
 }
 
-// Generate a random name (3 to 12 characters)
-const randomName = generateRandomName(bt.randInRange(3, 12));
+// Generate a random name
+const randomName = generateRandomName();
 
 // Calculating the orientation of 3 points, used to to check if lines overlap
 function orientation(p, q, r) {
@@ -82,7 +91,6 @@ function lineIntersectionCount(line, lines) {
   }
   return count;
 }
-
 
 // Fixed shapes
 const box = [
@@ -205,21 +213,66 @@ const artBox = [
 finalLines.push(artBox);
 
 // Generate random art inside the art box with overlap prevention
-const artLines = [];
+const artShapes = [];
 const maxOverlaps = 4;
 const maxAttempts = 100; // Shouldn't be needed, but here just in case
 for (let i = 0; i < 10; i++) {
   let attempts = 0;
   while (attempts < maxAttempts) {
-    const x1 = bt.randInRange(artBoxX, artBoxX + artBoxWidth);
-    const y1 = bt.randInRange(artBoxY, artBoxY + artBoxHeight);
-    const x2 = bt.randInRange(artBoxX, artBoxX + artBoxWidth);
-    const y2 = bt.randInRange(artBoxY, artBoxY + artBoxHeight);
+    const shapeType = bt.randIntInRange(0, 2); // 0 = line, 1 = circle, 2 = square
+    if (shapeType === 0) {
+      // Random line
+      const x1 = bt.randInRange(artBoxX, artBoxX + artBoxWidth);
+      const y1 = bt.randInRange(artBoxY, artBoxY + artBoxHeight);
+      const x2 = bt.randInRange(artBoxX, artBoxX + artBoxWidth);
+      const y2 = bt.randInRange(artBoxY, artBoxY + artBoxHeight);
 
-    const newLine = [[x1, y1], [x2, y2]];
-    if (lineIntersectionCount(newLine, artLines) <= maxOverlaps) {
-      artLines.push(newLine);
-      finalLines.push(newLine);
+      const newLine = [[x1, y1], [x2, y2]];
+      if (lineIntersectionCount(newLine, artShapes) <= maxOverlaps) {
+        artShapes.push(newLine);
+        finalLines.push(newLine);
+        break;
+      }
+    } else if (shapeType === 1) {
+      // Lazy circle
+      const cx = bt.randInRange(artBoxX + 5, artBoxX + artBoxWidth - 5);
+      const cy = bt.randInRange(artBoxY + 5, artBoxY + artBoxHeight - 5);
+      const radius = bt.randInRange(3, Math.min(artBoxWidth, artBoxHeight) / 4);
+      const segments = 12; // Number of segments in the circle
+      const circleLines = [];
+
+      for (let j = 0; j < segments; j++) {
+        const angle1 = (j * 2 * Math.PI) / segments;
+        const angle2 = ((j + 1) * 2 * Math.PI) / segments;
+
+        const x1 = cx + radius * Math.cos(angle1);
+        const y1 = cy + radius * Math.sin(angle1);
+        const x2 = cx + radius * Math.cos(angle2);
+        const y2 = cy + radius * Math.sin(angle2);
+
+        circleLines.push([[x1, y1], [x2, y2]]);
+      }
+
+      if (circleLines.every(line => lineIntersectionCount(line, artShapes) <= maxOverlaps)) {
+        artShapes.push(...circleLines);
+        finalLines.push(...circleLines);
+        break;
+      }
+    } else if (shapeType === 2) {
+      // Random square
+      const x1 = bt.randInRange(artBoxX, artBoxX + artBoxWidth - 5);
+      const y1 = bt.randInRange(artBoxY, artBoxY + artBoxHeight - 5);
+      const side = bt.randInRange(2, Math.min(artBoxWidth, artBoxHeight) / 4);
+
+      const newSquare = [
+        [x1, y1],
+        [x1 + side, y1],
+        [x1 + side, y1 + side],
+        [x1, y1 + side],
+        [x1, y1]
+      ];
+      artShapes.push(newSquare);
+      finalLines.push(newSquare);
       break;
     }
     attempts++;
