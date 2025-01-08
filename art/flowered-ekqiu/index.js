@@ -18,6 +18,8 @@
  - It must change based on different parameters; it cannot be hardcoded.
 
 */
+var offset
+
 const width = 125;
 const height = 125;
 
@@ -35,17 +37,17 @@ let rotated = 0;
 for (let i = 0; i < randomRepeat; i++) {
   rotated += rotation;
   const offset = bt.randInRange(1, 31.25);
-  const anchor = 62.5
+  const anchor = 47.5
 
   if (rotated < 90) {
-    let xchange = anchor * Math.sin(rotated);
+    let xchange = (anchor * Math.sin(rotated));
     let ychange = anchor * Math.sin(90 - rotated);
     const newLine = bt.catmullRom([
-      [anchor + xchange, anchor + ychange],
+      [anchor + xchange+ bt.randInRange(-5, 5), anchor + ychange+ bt.randInRange(-5, 5)],
       [anchor + xchange - offset, anchor + ychange - offset],
-      [anchor + offset, anchor - offset],
+      [anchor + offset+ bt.randInRange(-5, 5), anchor - offset+ bt.randInRange(-5, 5)],
       [anchor - xchange + offset, anchor - ychange + offset],
-      [anchor - xchange, anchor - ychange],
+      [anchor - xchange+ bt.randInRange(-5, 5), anchor - ychange+ bt.randInRange(-5, 5)],
     ]);
     finalLines.push(newLine);
   } else if (rotated > 90) {
@@ -73,7 +75,29 @@ for (let i = 0; i < randomRepeat; i++) {
   }
 }
 
-bt.scale(finalLines, 0.6);
+bt.translate(finalLines, [15, 59])
+bt.rotate(finalLines, -46)
+
+let startx = 66
+let starty = -45
+let endx = 61
+let endy =  70.5
+let change = 0
+const fillers = [[startx, starty]]
+let newset = (endy - starty) / (randomRepeat)
+let repeatt = bt.randInRange(5,10)
+
+for (let i = 0; i < repeatt; i++) {
+  change += newset
+  
+  fillers.push([bt.randInRange(-25,147),starty + change])
+}
+fillers.push([endx, endy])
+console.log(finalLines)
+finalLines.push(bt.catmullRom(fillers))
+console.log(fillers)
+console.log(finalLines)
+bt.scale(finalLines, 0.5);
 
 // draw it
 drawLines(finalLines);
