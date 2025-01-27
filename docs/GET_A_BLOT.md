@@ -1,3 +1,5 @@
+## UPDATE: BLOT IS NO LONGER AN ACTIVE YSWS PROGRAM AT HACK CLUB, YOU CAN GET IT FROM PARTICIPATING IN [HIGH SEAS](https://highseas.hackclub.com) INSTEAD!
+
 # How to Get a Blot!
 
 So you just found out about this cool robotic drawing machine which you can build yourself, but how can you get one? The Blot is paid for by Hack Club, including shipping, but you should check for customs fees in your country before ordering 

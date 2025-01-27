@@ -1,0 +1,18 @@
+on:
+  workflow_dispatch:  # Allows you to trigger the workflow manually
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Comment on all open PRs
+        run: |
+          PRS=$(gh pr list --state open --json number -q '.[].number')
+          for PR in $PRS; do
+            gh pr comment $PR --body "This PR is being closed due to blot's sunset as a YSWS program. Read the pins of #blot for a further explanation. Sorry for the sudden change - you can check out the other YSWSes that are currently open at ysws.hackclub.com though! They're pretty awesome"
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
