@@ -6,7 +6,7 @@ If you'd like to [watch a short video (6 minutes) of building a Blot you can cli
 
 It takes me about 30 minutes in real time to assemble a Blot but I have lots of experience (and designed the machine). Don't be discouraged if it takes a few hours (or more) there is a lot to learn along the way.
 
-Here are all the parts that come with your Blot. The source of truth for the Blot components is the [BOM (Bill of Materials) available here](./BOM.toml).
+Here are all the parts that come with your Blot. The source of truth for the Blot components is the [BOM (Bill of Materials) available here](../BOM.toml).
 
 ![PXL_20240614_202958435.jpg](./assets/PXL_20240614_202958435.jpg)
 
