@@ -47,7 +47,7 @@
     "loops": "^1.0.1",
     "marked": "^7.0.4",
     "marked-highlight": "^2.1.0",
-    "nanoid": "^5.0.3",
+    "nanoid": "^5.0.9",
     "polyclip-ts": "^0.16.3",
     "polygon-clipping": "^0.15.7",
     "posthog-node": "^4.2.0",
