@@ -2,7 +2,7 @@
 
 **[🕸 Landing Page](https://blot.hackclub.com)** | **[💻 Online Editor](https://blot.hackclub.com/editor)** | **[👀 Gallery](https://blot.hackclub.com/gallery)**
 
-> Saw Blot at [RMRRF](https://rmrrf.com) 2026? That was a fork of the firmware here, check it out [here](https://github.com/samdev-7/upgraded-blot).
+> Saw Blot at [RMRRF](https://rmrrf.com) 2026? That was a fork of the firmware, check it out [here](https://github.com/samdev-7/upgraded-blot).
 
 Create programmatic art in our web-based editor and submit it to the gallery and we'll send you a CNC machine which can make that art for free.
 Blot is a [**You Ship, We Ship**](https://github.com/hackclub/blot/tree/main?tab=readme-ov-file#you-ship-we-ship) project from [Hack Club](https://hackclub.com).
