@@ -2,8 +2,10 @@
 
 **[🕸 Landing Page](https://blot.hackclub.com)** | **[💻 Online Editor](https://blot.hackclub.com/editor)** | **[👀 Gallery](https://blot.hackclub.com/gallery)**
 
+> Saw Blot at [RMRRF](https://rmrrf.com) 2026? That was a fork of the firmware here, check it out [here](https://github.com/samdev-7/upgraded-blot).
+
 Create programmatic art in our web-based editor and submit it to the gallery and we'll send you a CNC machine which can make that art for free.
-Blot is a [**You Ship, We Ship**](https://github.com/hackclub/blot/tree/main?tab=readme-ov-file#you-ship-we-ship) project from [Hack Club](https://hackclub.com). 
+Blot is a [**You Ship, We Ship**](https://github.com/hackclub/blot/tree/main?tab=readme-ov-file#you-ship-we-ship) project from [Hack Club](https://hackclub.com).
 
 > Everything about Blot is open source. The online editor and drawing library can be freely used by anyone, and we encourage all to submit to the gallery through PRs! However, you must be a teenager or younger to receive a free machine.
 
@@ -43,14 +45,14 @@ The [bill of materials can be found here](/docs/BOM.toml) and an [assembly guide
 
 # Blot is...
 
-**A custom CNC drawing machine** designed from scratch to introduce you to digital fabrication. 
+**A custom CNC drawing machine** designed from scratch to introduce you to digital fabrication.
 It's made of 6 unique 3D printed parts with a custom control board and easy to understand firmware, which can be interfaced with through JavaScript in the browser.
 Blot is designed in OnShape. Check out the [3D model of the project](https://cad.onshape.com/documents/536478c2ac00624edd8e2182/w/945ceabd15096661108b7650/e/61fd4346c9fdab983c6ba24d?renderMode=0&uiState=66980ee799bd766f406eb9c8).
 You can find the [bill of materials here](https://blot.hackclub.com/assembly) and, if you'd like to 3D print your Blot, [the parts are here](https://github.com/hackclub/blot/tree/main/hardware/mechanical/drawing-thing-v4). The entire build costs about $150 dollars. If you're a teen we will give you all the parts for a PR with your an art piece you coded yourself.
 
 **A web based editor for programmatic art** that we designed specifically for pen plotting with a [custom geometry library](/docs/DOCUMENTATION.md).
-We practiced programmatic pen plotting with [some](https://github.com/LingDong-) [amazing artists](https://static1.squarespace.com/static/63fbc39db5b01b5fa30423db/t/649b424d33b2ce3e0d5b63a5/1687896656015/June+Cohort+Zine.pdf). 
-There is so much to learn and explore on the programming and the aesthetic side. 
+We practiced programmatic pen plotting with [some](https://github.com/LingDong-) [amazing artists](https://static1.squarespace.com/static/63fbc39db5b01b5fa30423db/t/649b424d33b2ce3e0d5b63a5/1687896656015/June+Cohort+Zine.pdf).
+There is so much to learn and explore on the programming and the aesthetic side.
 
 <img width="300" alt="parts" src="https://github.com/hackclub/blot/assets/27078897/04ab7345-03fa-4b60-9870-64a99327e8cd">
 
@@ -111,7 +113,6 @@ There are all sorts of styles of programmatic art. Here are some examples of gre
   </picture>
 </a>
 
-
 **The data transformation** can be seen in Kieran's (age 15) self portrait. It takes data from an SVG but modifies it programmatically to produce an art piece. This approach could be used to visualize data that may not of been visual to begin with.
 
 <a href="https://blot.hackclub.com/editor?src=https://raw.githubusercontent.com/hackclub/blot/main/art/self_portrait-kieran/index.js">
@@ -140,7 +141,7 @@ You ship we ship projects are developed to provide technological creative materi
 
 <img width="500" src="https://github.com/hackclub/blot/assets/27078897/bfdb83c4-5b65-419f-8b3a-4ceab3bb7f33"/>
 
-**The infinite gallery** at [Outernet](https://www.youtube.com/watch?v=O1s5HqSqKi0) (Hack Club's 2023 summer hackathon). Leo, Kai, and Henry constructed a black out box that contained an infinite art gallery. Participant's entered a room sized black box with one wall illuminated with artwork and a giant joystick in the center. They could navigate the gallery with the joystick and as they explored new (possibly never before seen) art was generated based on their location. 
+**The infinite gallery** at [Outernet](https://www.youtube.com/watch?v=O1s5HqSqKi0) (Hack Club's 2023 summer hackathon). Leo, Kai, and Henry constructed a black out box that contained an infinite art gallery. Participant's entered a room sized black box with one wall illuminated with artwork and a giant joystick in the center. They could navigate the gallery with the joystick and as they explored new (possibly never before seen) art was generated based on their location.
 
 <img height="500" src="https://github.com/hackclub/blot/assets/27078897/c484d7fe-fb72-4d44-90b5-d7ec0ffe3204">
 
@@ -150,9 +151,9 @@ You ship we ship projects are developed to provide technological creative materi
 
 # It's All Open Source
 
-Every part of Blot is freely available for you to investigate and discover. 
+Every part of Blot is freely available for you to investigate and discover.
 That includes the editor, the hardware design, the electronics, and even the finances around the project.
-We think people deserve tools they can take ownership of. That's why we give away the source for free. 
+We think people deserve tools they can take ownership of. That's why we give away the source for free.
 
 Our projects at Hack Club have hundreds of teenage contributors from all over the world. If you want to learn how to program, we invite you to jump in and start building tools used by thousands.
 
@@ -160,13 +161,13 @@ You're also welcome to participate and use our tools if you aren't a teen (like 
 
 # You Ship, We Ship
 
-At Hack Club we're reimagining a new type of public education for technology. We believe people learn best by creating things they care about and sharing them with others. We build open source creative tools with young people all around the world. These tools are gateways to new subjects in technology like [embedded systems](https://sprig.hackclub.com), [circuits](https://onboard.hackclub.com) or digital fabrication robotics. When teenagers build things with our tools we send them more creative materials for free. 
+At Hack Club we're reimagining a new type of public education for technology. We believe people learn best by creating things they care about and sharing them with others. We build open source creative tools with young people all around the world. These tools are gateways to new subjects in technology like [embedded systems](https://sprig.hackclub.com), [circuits](https://onboard.hackclub.com) or digital fabrication robotics. When teenagers build things with our tools we send them more creative materials for free.
 
 Our goal is to build a new type of library online that offers learners not just media to consume but tools to create. And it is free and open source to all. We're just getting started...
 
 # Development
 
-Join the `#blot` channel on the [Hack Club Slack](https://hackclub.com/slack). 
+Join the `#blot` channel on the [Hack Club Slack](https://hackclub.com/slack).
 
 The Blot editor is run with an Express server.
 
@@ -184,17 +185,17 @@ yarn dev
 ```
 
 # License
+
 The Hack Club Blot is open source and licensed under the [MIT License](https://github.com/hackclub/blot/LICENSE.md). Fork, remix, and make it your own! Pull requests and other contributions greatly appreciated.
 
 # Acknowledgements
 
 Many people have contributed to Blot, to mention a few and give much thanks too...
 
-MIT's Center for Bits and Atoms for providing expert advice and occasionally a space to work. 
+MIT's Center for Bits and Atoms for providing expert advice and occasionally a space to work.
 
-Sam Hu and his team at ISourceAsia for supplying Blot parts and becoming a critical part of the Blot team. 
+Sam Hu and his team at ISourceAsia for supplying Blot parts and becoming a critical part of the Blot team.
 
 Paul Hamilton for his contributions to embedded circuit designs.
 
 Oz Nova for writing an excellent getting started guide.
-
