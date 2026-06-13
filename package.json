@@ -37,7 +37,7 @@
     "codemirror": "^6.0.1",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.1",
-    "esbuild": "^0.20.0",
+    "esbuild": "^0.28.1",
     "esbuild-plugin-alias": "^0.2.1",
     "esbuild-plugin-inline-worker": "^0.1.1",
     "express": "^4.18.2",
