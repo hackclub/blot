@@ -8,7 +8,7 @@ The assembled blot control board is a main board with a set of smaller boards at
     - 1x USB-C Power Delivery board ([designed in house](./circuit/power-delivery/))
     - 1x Stepper motor breakout board ([designed in house](./circuit/stepper-motor-headers/))
 
-![A set of three assembled control boards and decoy boards](https://cloud-1qtfaazar-hack-club-bot.vercel.app/0image_from_ios.jpg)
+![A set of three assembled control boards and decoy boards](https://cdn.hackclub.com/rescue?url=https://cloud-1qtfaazar-hack-club-bot.vercel.app/0image_from_ios.jpg)
 
 The KiCAD project files are provided in the repo and are designed with KiCAD v7. This may not be compatible with previous versions, but you can get the latest version [here](https://www.kicad.org/download/). 
 
@@ -16,7 +16,7 @@ The KiCAD project files are provided in the repo and are designed with KiCAD v7.
 
 The carrier board wires the breakouts together, provides external power circuitry for the A4988 and steppers, and a convenient way to mount the board to the blot machine. It's a simple 2-layer 1.6mm PCB measured at 50x70mm. It also has a pin header breaking out 5 unused GPIO pins, including 1 DAC channel, 2 analog-capable pins, and one I2C bus. 
 
-![KiCAD Render of Carrier Board](https://cloud-msqq36tmv-hack-club-bot.vercel.app/0v1.20-render-populated.png)
+![KiCAD Render of Carrier Board](https://cdn.hackclub.com/rescue?url=https://cloud-msqq36tmv-hack-club-bot.vercel.app/0v1.20-render-populated.png)
 
 ## Power Delivery Board
 
@@ -26,7 +26,7 @@ During prototyping, we used an off-the-shelf module from Amazon. These only had 
 
 *As a precaution: while this board is breadboard friendly, typical solderless breadboards are only rated up to _5V @ 1A_. Do _not_ use this on a solderless breadboard.*
 
-![KiCAD Render of PD Board](https://cloud-msqq36tmv-hack-club-bot.vercel.app/1cypd_usb-pd_9v1a.png)
+![KiCAD Render of PD Board](https://cdn.hackclub.com/rescue?url=https://cloud-msqq36tmv-hack-club-bot.vercel.app/1cypd_usb-pd_9v1a.png)
 
 ## Additional Relevant Reading
 

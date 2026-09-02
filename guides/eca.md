@@ -1,6 +1,6 @@
 ---
 title: Elementary Cellular Automata
-thumbnail: https://cloud-i7potzeq3-hack-club-bot.vercel.app/00image-2-2.webp
+thumbnail: https://cdn.hackclub.com/rescue?url=https://cloud-i7potzeq3-hack-club-bot.vercel.app/00image-2-2.webp
 contributors: henrybass
 ---
 
@@ -10,8 +10,8 @@ contributors: henrybass
 
 Through extremely simple rules, complex patterns can be created.
 
-<img alt="elementary cellular automata" src="https://cloud-i7potzeq3-hack-club-bot.vercel.app/00image-2-2.webp" width="512"/>
-<img alt="elementary cellular automata" src="https://cloud-4du3fnctv-hack-club-bot.vercel.app/00image-3.webp" width="512"/>
+<img alt="elementary cellular automata" src="https://cdn.hackclub.com/rescue?url=https://cloud-i7potzeq3-hack-club-bot.vercel.app/00image-2-2.webp" width="512"/>
+<img alt="elementary cellular automata" src="https://cdn.hackclub.com/rescue?url=https://cloud-4du3fnctv-hack-club-bot.vercel.app/00image-3.webp" width="512"/>
 
 The rules behind Elementary Cellular Automata, or ECA, are very simple.
 
@@ -115,7 +115,7 @@ By using the following rendering method, we can some visually interesting result
 - For each pixel rendered, check the 3 pixels above
 - Draw a line to any above pixel if it's filled
 
-<img src="https://cloud-r14rh28dk-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-r14rh28dk-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 Here's that in code:
 
@@ -172,6 +172,6 @@ drawTurtles([ t ])
 
 Great job! There are plenty of variations on ECAs that you can explore. Here's a few more drawings done with the code, by setting only the center pixel as a one:
 
-<img src="https://cloud-alkz1n9h6-hack-club-bot.vercel.app/0image.png" width="512"/>
-<img src="https://cloud-1w9qj075i-hack-club-bot.vercel.app/0image.png" width="512"/>
-<img src="https://cloud-ioqpd12zd-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-alkz1n9h6-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-1w9qj075i-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-ioqpd12zd-hack-club-bot.vercel.app/0image.png" width="512"/>

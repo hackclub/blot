@@ -94,7 +94,7 @@ Blot includes a number of drawing functions in the `Toolkit`. Let's familiarize 
 
 Below we will walk through two tutorials. 
 
-![](https://cloud-qogbw3upi-hack-club-bot.vercel.app/0260524306-bcaf04e7-a00e-4f98-aaed-01eeebf2c79c.webp)
+![](https://cdn.hackclub.com/rescue?url=https://cloud-qogbw3upi-hack-club-bot.vercel.app/0260524306-bcaf04e7-a00e-4f98-aaed-01eeebf2c79c.webp)
 
 The first one, `Square Disarray`, we will recreate a classic digital art piece. It is aimed more at beginners and will rely on programming concepts like variables, loops, and functions.
 

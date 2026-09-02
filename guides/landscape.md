@@ -1,12 +1,12 @@
 ---
 title: Landscape
-thumbnail: https://cloud-bxuqstv0l-hack-club-bot.vercel.app/00image-2.webp
+thumbnail: https://cdn.hackclub.com/rescue?url=https://cloud-bxuqstv0l-hack-club-bot.vercel.app/00image-2.webp
 contributors: henrybass
 ---
 
 ### (Intermediate, ~45 min, by Henry Bass)
 
-<img alt="landscape" src="https://cloud-bxuqstv0l-hack-club-bot.vercel.app/00image-2.webp" width="512"/>
+<img alt="landscape" src="https://cdn.hackclub.com/rescue?url=https://cloud-bxuqstv0l-hack-club-bot.vercel.app/00image-2.webp" width="512"/>
 
 This is an explainer on how to create art like the image above in the [Blot editor](https://blot.hackclub.dev/). It assumes some knowledge of programming in JavaScript and how Blot works, but nothing beyond that.
 
@@ -21,22 +21,22 @@ This is an explainer on how to create art like the image above in the [Blot edit
 
 To try and create realistic terrain, we should first look at the real thing. Here's a map of some hills in Canada:
 
-<img src="https://cloud-g5b83d93q-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-g5b83d93q-hack-club-bot.vercel.app/0image.png" width="512"/>
 Notice that, although the terrain is complex, it looks somewhat random. There's also seemingly random detail at both large and small scales, from massive hills to small bumps.
 
 To replicate this in code, a technique is used called Fractal Noise. A reasonable first step would be to start out with pure randomness.
 
 Here's an image made up of large pixels of completely random brightness:
 
-<img src="https://cloud-fgexi20ng-hack-club-bot.vercel.app/0test.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-fgexi20ng-hack-club-bot.vercel.app/0test.png" width="512"/>
 
 Real terrain, of course, isn't made up of large squares. To get closer to the real thing, we can blur this image to make it smoother.
 
-<img src="https://cloud-i3ygpagk6-hack-club-bot.vercel.app/0test1.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-i3ygpagk6-hack-club-bot.vercel.app/0test1.png" width="512"/>
 
 This is much closer, but it's missing an essential aspect: Detail. Hills on a large scale resemble our image, but that resemblance breaks when we look closer. Conveniently though, the detail at both large and small scales looks pretty similar. So to capture this, we can try adding together our random noise on different scales. Each time, we decrease the amplitude of the noise and the blur radius ("Sigma"), while increasing the frequency.
 
-<img src="https://cloud-oidzg4hcv-hack-club-bot.vercel.app/0untitled_drawing__5_.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-oidzg4hcv-hack-club-bot.vercel.app/0untitled_drawing__5_.png" width="512"/>
 
 That looks a lot closer! As a note, the amount we change the frequency, amplitude, and blur with respect to each octave is arbitrary, and tweaking those functions can lead to interesting variations of our noise. The name of this technique is: _Fractal Noise_.
 
@@ -94,7 +94,7 @@ You may notice that there's a straight line between the start and end of each pa
 
 If all goes well, you should see many rough lines, that look something like this:
 
-<img src="https://cloud-2d1gm9q2d-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-2d1gm9q2d-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 To give the appearance that we're looking at this from the side, we can divide the y value by 2 or 3 in each `goTo` command. This will shrink the terrain vertically, but leave the hill height the same.
 
@@ -110,7 +110,7 @@ sea_level =
 
 Of course, for this code, you'd need to set actual values to all the variables mentioned. By now, you'll probably have something that looks like this:
 
-<img src="https://cloud-nngt3uf5z-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-nngt3uf5z-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 Most of the hard work is done by now! But, you might be noticing a big problem with how this all looks, especially with high enough mountains. We can see through the terrain in some places! Because we're just 2D drawing lines that _look_ 3D, paths in "front" of others won't block paths that are "behind". To solve this, we need something called **occlusion**.
 
@@ -139,7 +139,7 @@ Now, for each point, we can check if we're below the previous maximum y value, w
 
 Once that's implemented, the image will look more like this:
 
-<img src="https://cloud-lp7dkev90-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-lp7dkev90-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 If you compare that to the image before occlusion, you'll see the difference. Now, we're almost done! The image still looks a bit too much like just noise, and we can go farther to make it look like real islands.
 
@@ -161,7 +161,7 @@ t.goTo([x, y])
 
 Then, we should only call this if `Math.random() > tree_prob && height * (y + perspective_offset) > tree_line`. We multiply by `(y + perspective_offset)` to cancel out the division back in the `getHeight` function, and ignore perspective. With all this done, you'll have a nice looking landscape, generated 100% from code. Great job!
 
-<img src="https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-gfjjr08b1-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 ## More experimentation
 

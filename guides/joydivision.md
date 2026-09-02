@@ -117,4 +117,4 @@ The occlusion works best when `dx` is really low.
 
 And that's it, you're done! When drawing the final image, you should see something like this:
 
-<img src="https://cloud-osfrnfrf2-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-osfrnfrf2-hack-club-bot.vercel.app/0image.png" width="512"/>

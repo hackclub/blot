@@ -1,6 +1,6 @@
 ---
 title: How to draw a leaf
-thumbnail: https://cloud-7rdff2vjy-hack-club-bot.vercel.app/0250635645-9ce96217-bc5e-49cc-87b2-178681188eb3.webp
+thumbnail: https://cdn.hackclub.com/rescue?url=https://cloud-7rdff2vjy-hack-club-bot.vercel.app/0250635645-9ce96217-bc5e-49cc-87b2-178681188eb3.webp
 contributors: leomcelroy
 ---
 
@@ -13,7 +13,7 @@ Let's learn how to draw a leaf that looks likes this.
 <img
   width="389"
   alt="leaf"
-  src="https://cloud-7rdff2vjy-hack-club-bot.vercel.app/0250635645-9ce96217-bc5e-49cc-87b2-178681188eb3.webp"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-7rdff2vjy-hack-club-bot.vercel.app/0250635645-9ce96217-bc5e-49cc-87b2-178681188eb3.webp"
 />
 
 Let's break it down into parts.

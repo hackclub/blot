@@ -76,7 +76,7 @@ If specific changes can not be suggested that make the submission acceptable the
 
 Requesting changes should be done using the "Code Review" GitHub feature, marking "Request changes" for any PR that isn't ready to be merged:
 
-![](https://cloud-3exn8zq44-hack-club-bot.vercel.app/0screenshot_2024-07-19_at_12.14.41.png)
+![](https://cdn.hackclub.com/rescue?url=https://cloud-3exn8zq44-hack-club-bot.vercel.app/0screenshot_2024-07-19_at_12.14.41.png)
 
 # Accepting PRs
 

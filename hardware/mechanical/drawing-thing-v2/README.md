@@ -1,6 +1,6 @@
 # Haxidraw
 
-<img width="500" alt="drawing machine with a turtle illustration" src="https://cloud-g6sk6by5j-hack-club-bot.vercel.app/0screenshot_2023-04-06_at_1.50.17_pm.png" align="right" />
+<img width="500" alt="drawing machine with a turtle illustration" src="https://cdn.hackclub.com/rescue?url=https://cloud-g6sk6by5j-hack-club-bot.vercel.app/0screenshot_2023-04-06_at_1.50.17_pm.png" align="right" />
 
 The Haxidraw is a "you ship, we ship" project, similar to [Sprig](https://sprig.hackclub.com). This time if you make some digital art we'll send you the parts to build a robot which can make that art real.
 
@@ -18,14 +18,14 @@ The 3D printed parts are found in [`/stls`](./stls) if you are able to print the
 
 | Part           | Quantity | Image                                                                                                                      | notes                                      |
 | -------------- | -------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
-| Belt clamp     | 1        | <img alt="b" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/5screen_shot_2023-05-17_at_20.22.06.png" width="200" /> |                                            |
-| Foot           | 2        | <img alt="f" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/3screen_shot_2023-05-17_at_20.22.47.png" width="200" /> | laser cut, peel off the film if applicable |
-| Motor bracket  | 2        | <img alt="m" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/1screen_shot_2023-05-17_at_20.23.34.png" width="200" /> |                                            |
-| Belt clamp cap | 2        | <img alt="c" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/7screen_shot_2023-05-17_at_20.21.54.png" width="200" /> |                                            |
-| Carriage       | 1        | <img alt="c" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/0screen_shot_2023-05-17_at_20.22.32.png" width="200" /> |                                            |
-| Idler front    | 1        | <img alt="i" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/2screen_shot_2023-05-17_at_20.22.58.png" width="200" /> |                                            |
-| Pen holder     | 1        | <img alt="p" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/4screen_shot_2023-05-17_at_20.23.42.png" width="200" /> |                                            |
-| Printed rail   | 1        | <img alt="r" src="https://cloud-2yh3i7iba-hack-club-bot.vercel.app/6screen_shot_2023-05-17_at_20.23.52.png" width="200" /> |                                            |
+| Belt clamp     | 1        | <img alt="b" src="https://cdn.hackclub.com/rescue?url=https://cloud-2yh3i7iba-hack-club-bot.vercel.app/5screen_shot_2023-05-17_at_20.22.06.png" width="200" /> |                                            |
+| Foot           | 2        | <img alt="f" src="https://cdn.hackclub.com/rescue?url=https://cloud-2yh3i7iba-hack-club-bot.vercel.app/3screen_shot_2023-05-17_at_20.22.47.png" width="200" /> | laser cut, peel off the film if applicable |
+| Motor bracket  | 2        | <img alt="m" src="https://cdn.hackclub.com/rescue?url=https://cloud-2yh3i7iba-hack-club-bot.vercel.app/1screen_shot_2023-05-17_at_20.23.34.png" width="200" /> |                                            |
+| Belt clamp cap | 2        | <img alt="c" src="https://cdn.hackclub.com/rescue?url=https://cloud-2yh3i7iba-hack-club-bot.vercel.app/7screen_shot_2023-05-17_at_20.21.54.png" width="200" /> |                                            |
+| Carriage       | 1        | <img alt="c" src="https://cdn.hackclub.com/rescue?url=https://cloud-2yh3i7iba-hack-club-bot.vercel.app/0screen_shot_2023-05-17_at_20.22.32.png" width="200" /> |                                            |
+| Idler front    | 1        | <img alt="i" src="https://cdn.hackclub.com/rescue?url=https://cloud-2yh3i7iba-hack-club-bot.vercel.app/2screen_shot_2023-05-17_at_20.22.58.png" width="200" /> |                                            |
+| Pen holder     | 1        | <img alt="p" src="https://cdn.hackclub.com/rescue?url=https://cloud-2yh3i7iba-hack-club-bot.vercel.app/4screen_shot_2023-05-17_at_20.23.42.png" width="200" /> |                                            |
+| Printed rail   | 1        | <img alt="r" src="https://cdn.hackclub.com/rescue?url=https://cloud-2yh3i7iba-hack-club-bot.vercel.app/6screen_shot_2023-05-17_at_20.23.52.png" width="200" /> |                                            |
 
 ### Electronics
 

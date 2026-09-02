@@ -1,6 +1,6 @@
 ---
 title: Raymarching in Blot
-thumbnail: https://cloud-79ah2o72z-hack-club-bot.vercel.app/00image.webp
+thumbnail: https://cdn.hackclub.com/rescue?url=https://cloud-79ah2o72z-hack-club-bot.vercel.app/00image.webp
 contributors: henrybass
 pinned: true
 ---
@@ -9,7 +9,7 @@ The goal of this guide will be to simulate 3D environments, with realistic light
 
 <img 
   alt="Raymarching in Blot"
-  src="https://cloud-79ah2o72z-hack-club-bot.vercel.app/00image.webp"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-79ah2o72z-hack-club-bot.vercel.app/00image.webp"
   width="512"
 />
 
@@ -419,7 +419,7 @@ And that's the camera object!
 This whole time, we haven't done much Haxidraw-specific code at all. To actually draw the output, we'll need a way of representing a pixel as a turtle path. To do this, we can use a process called [dithering.](https://en.wikipedia.org/wiki/Dither) Let's take a closer look at the original image, to see how this is used:
 
 <img
-  src="https://cloud-5v54vbcnl-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-5v54vbcnl-hack-club-bot.vercel.app/0image.png"
   width="512"
 />
 
@@ -498,7 +498,7 @@ If there was a shadow, we can leave the brightness at zero - no light is hitting
 If the vector from the light to the hit point and the normal of the surface are parallel, then the hit point is very directly illuminated. On the other hand, if the two vectors are perpendicular, then we shouldn't shade the point very brightly. We can use the dot product to determine exactly how parallel or perpendicular these vectors actually are.
 
 <img
-  src="https://cloud-prkn4o0zj-hack-club-bot.vercel.app/0untitled_1_.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-prkn4o0zj-hack-club-bot.vercel.app/0untitled_1_.png"
   width="512"
 />
 
@@ -563,18 +563,18 @@ drawTurtles(t)
 Great job! If all went well, you should have a working 3D renderer for the Haxidraw. It's capable of rendering any shape with a defined SDF, so there are plenty of possibilities to explore. Here are a few scenes I've created with the engine:
 
 <img
-  src="https://cloud-8vr3j0wiq-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-8vr3j0wiq-hack-club-bot.vercel.app/0image.png"
   width="512"
 />
 <img
-  src="https://cloud-5ewdcrd1t-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-5ewdcrd1t-hack-club-bot.vercel.app/0image.png"
   width="512"
 />
 
 The result of an interesting graphical glitch:
 
 <img
-  src="https://cloud-hx649z5vl-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-hx649z5vl-hack-club-bot.vercel.app/0image.png"
   width="512"
 />
 
