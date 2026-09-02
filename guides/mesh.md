@@ -1,6 +1,6 @@
 ---
 title: Draw a triangle mesh
-thumbnail: https://cloud-mgfukhxlr-hack-club-bot.vercel.app/00image__1_.webp
+thumbnail: https://cdn.hackclub.com/rescue?url=https://cloud-mgfukhxlr-hack-club-bot.vercel.app/00image__1_.webp
 contributors: henrybass
 ---
 
@@ -8,7 +8,7 @@ contributors: henrybass
 
 ---
 
-<img alt="triangle mesh" src="https://cloud-mgfukhxlr-hack-club-bot.vercel.app/00image__1_.webp" width="512"/>
+<img alt="triangle mesh" src="https://cdn.hackclub.com/rescue?url=https://cloud-mgfukhxlr-hack-club-bot.vercel.app/00image__1_.webp" width="512"/>
 
 We'll build the above mesh like this:
 

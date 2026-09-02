@@ -1,6 +1,6 @@
 ---
 title: Roots
-thumbnail: https://cloud-54f820d0z-hack-club-bot.vercel.app/00roots.webp
+thumbnail: https://cdn.hackclub.com/rescue?url=https://cloud-54f820d0z-hack-club-bot.vercel.app/00roots.webp
 contributors: profsucrose
 ---
 
@@ -10,7 +10,7 @@ Let's walk through the process of how the following image was generated:
 
 <img
   alt="roots"
-  src="https://cloud-54f820d0z-hack-club-bot.vercel.app/00roots.webp"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-54f820d0z-hack-club-bot.vercel.app/00roots.webp"
   width="200"
 />
 
@@ -47,7 +47,7 @@ drawTurtles([ turtles ])
 You should get something like the screenshot below:
 
 <img
-  src="https://cloud-53ljw5q8m-hack-club-bot.vercel.app/0random_walk.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-53ljw5q8m-hack-club-bot.vercel.app/0random_walk.png"
   width="300"
 />
 
@@ -125,7 +125,7 @@ If you're interested, here's a [visualization of smoothstep in Desmos](https://w
 The above edits should produce something like:
 
 <img
-  src="https://cloud-kaucor8o9-hack-club-bot.vercel.app/0thickness.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-kaucor8o9-hack-club-bot.vercel.app/0thickness.png"
   width="400"
 />
 
@@ -188,7 +188,7 @@ function gaussianRandom(mean = 0, stdev = 1) {
 The shape of the branch should now be (subtly) different:
 
 <img
-  src="https://cloud-hvaqgannn-hack-club-bot.vercel.app/0normal_dist.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-hvaqgannn-hack-club-bot.vercel.app/0normal_dist.png"
   width="300"
 />
 
@@ -236,7 +236,7 @@ function makeBranch() {
 This should produce something like:
 
 <img
-  src="https://cloud-q2juhr9qv-hack-club-bot.vercel.app/0branches.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-q2juhr9qv-hack-club-bot.vercel.app/0branches.png"
   width="300"
 />
 
@@ -324,7 +324,7 @@ function thicken(turtle, startingTime) {
 You should now be able to produce something like the screenshot below:
 
 <img
-  src="https://cloud-2sueak8hm-hack-club-bot.vercel.app/0final_roots.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-2sueak8hm-hack-club-bot.vercel.app/0final_roots.png"
   width="400"
 />
 

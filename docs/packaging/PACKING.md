@@ -19,7 +19,7 @@ Each box should be pre-assembled before packing a blot box & each of the parts s
 
 This is a letter that accompanies every blot. It's a quick, friendly message and includes a screw size guide. It's drawn on small cardstock using a blot.
 
-![](https://cloud-m6norcnvl-hack-club-bot.vercel.app/0img_2588.jpg)
+![](https://cdn.hackclub.com/rescue?url=https://cloud-m6norcnvl-hack-club-bot.vercel.app/0img_2588.jpg)
 
 The code for drawing this on a blot can be found in [notecard.js](./notecard.js). Please make sure to increment the blot number on the card before shipping & documenting on Airtable's list of Blot orders when you send a Blot with a specific number.
 
@@ -82,7 +82,7 @@ The electronics box should contain:
     - [ ] 2 stepper driver
     - [ ] 1 xiao seeed rp2040
     - [ ] usb-c power distribution board
-    - [ ] [horizontal stepper breakout](https://cloud-9z8rqqzj6-hack-club-bot.vercel.app/0img_0759.jpg)
+    - [ ] [horizontal stepper breakout](https://cdn.hackclub.com/rescue?url=https://cloud-9z8rqqzj6-hack-club-bot.vercel.app/0img_0759.jpg)
   - [ ] servo motor
   - [ ] servo motor arm
 

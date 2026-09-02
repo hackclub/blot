@@ -317,7 +317,7 @@ Next I'm going to use interrupts to make the movement code non-blocking in the f
 
 Last week, we recevied the control boards from JLCPCB, and I assembled a few. I documented the components and assembly process in [`motor-control-board/`](./motor-control-board/README.md). Here's a photo of what the board looks like:
 
-![assembled control board](https://cloud-gxlagq7i7-hack-club-bot.vercel.app/0img_4025.jpg)
+![assembled control board](https://cdn.hackclub.com/rescue?url=https://cloud-gxlagq7i7-hack-club-bot.vercel.app/0img_4025.jpg)
 
 The next step would be writing firmware for this board so that it can be used in the modular-things editor.
 
@@ -419,7 +419,7 @@ I also spent some time with our collaborators at MIT looking at the networking s
 
 Looking forward we still need to sort out our pen holder, design a custom connector for board-to-board communication, figure out power delivery (right now everything is powered by 5V), and put the whole system through its paces.
 
-<img src="https://cloud-8drubj8im-hack-club-bot.vercel.app/0screen_shot_2023-03-10_at_8.09.23_pm.png" width="300" alt="latest development of machine"><img src="https://cloud-8drubj8im-hack-club-bot.vercel.app/1screen_shot_2023-03-10_at_8.10.52_pm.png" width="300" alt="stiffer motor brackets">
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-8drubj8im-hack-club-bot.vercel.app/0screen_shot_2023-03-10_at_8.09.23_pm.png" width="300" alt="latest development of machine"><img src="https://cdn.hackclub.com/rescue?url=https://cloud-8drubj8im-hack-club-bot.vercel.app/1screen_shot_2023-03-10_at_8.10.52_pm.png" width="300" alt="stiffer motor brackets">
 
 ## 2023-03-03 - @exu3
 
@@ -427,7 +427,7 @@ Looking forward we still need to sort out our pen holder, design a custom connec
 
 This week, I got the latest version of the 2d-cut parts fabricated using metal for a better test to see how the machine flexes/bends/moves when tensioned. I sent the DXF files to a super cool local manufacturing company to get them fabricated. The pieces were cut from 1/4" thick aluminum on a waterjet, then sandblasted to remove burr.
 
-<img src="https://cloud-9j4oha9ti-hack-club-bot.vercel.app/0img_3612.jpg" alt="machine with metal plats and feet" width="500">
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-9j4oha9ti-hack-club-bot.vercel.app/0img_3612.jpg" alt="machine with metal plats and feet" width="500">
 
 ## 2023-02-24 - @leomcelroy
 
@@ -439,9 +439,9 @@ In addition to Ella's pen holder we experimented with a minimal part sliding des
 
 Ultimately the flat pieces (carriage plates and feet) will be made out of metal. Consequently they'll be much stiffer than the current plates which bend (causing the wheels to wiggle) if you stick out floating axis arm and press on it. In order to get a more representative test I cut some plate from Delrin on a ShopBot (seen in image 3). The best test though would just be to have them fabricated from aluminum as the design intends. I'll try an order for that next week.
 
-<img src="https://cloud-605hpcdwy-hack-club-bot.vercel.app/2screen_shot_2023-02-24_at_7.26.54_pm.png" width="500" alt="">
-<img src="https://cloud-605hpcdwy-hack-club-bot.vercel.app/1screen_shot_2023-02-24_at_7.28.19_pm.png" width="500" alt="">
-<img src="https://cloud-605hpcdwy-hack-club-bot.vercel.app/0pxl_20230223_205609117__1_.jpg" width="500" alt="delrin on shop bot">
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-605hpcdwy-hack-club-bot.vercel.app/2screen_shot_2023-02-24_at_7.26.54_pm.png" width="500" alt="">
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-605hpcdwy-hack-club-bot.vercel.app/1screen_shot_2023-02-24_at_7.28.19_pm.png" width="500" alt="">
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-605hpcdwy-hack-club-bot.vercel.app/0pxl_20230223_205609117__1_.jpg" width="500" alt="delrin on shop bot">
 
 ## 2023-02-17 - @exu3
 
@@ -454,7 +454,7 @@ This week’s update in development of the drawing thing includes the fabricatio
 
 I also thought about a new design for the pen holder. Specifically using a compliant mechanism, to reduce the number of parts needed, and because I think they are cool. I haven’t fabricated this part yet, but it will be one of my objectives for the week ahead.
 
-<img src="https://cloud-lqlntubb2-hack-club-bot.vercel.app/0screenshot_2023-02-17_at_10.22.40_pm.png" width="300" alt="3d model of machine prototype"> <img src="https://cloud-lqlntubb2-hack-club-bot.vercel.app/1screenshot_2023-02-17_at_10.17.23_pm.png" width="300" alt="3d model of machine prototype">
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-lqlntubb2-hack-club-bot.vercel.app/0screenshot_2023-02-17_at_10.22.40_pm.png" width="300" alt="3d model of machine prototype"> <img src="https://cdn.hackclub.com/rescue?url=https://cloud-lqlntubb2-hack-club-bot.vercel.app/1screenshot_2023-02-17_at_10.17.23_pm.png" width="300" alt="3d model of machine prototype">
 
 ## 2023-02-10 - @leomcelroy
 
@@ -472,8 +472,8 @@ I took a pass at creating an SVG importing interface within the modular things e
 
 Very excited to start making art with this soon!
 
-<img src="https://cloud-e1pbn3n73-hack-club-bot.vercel.app/3screen_shot_2023-02-10_at_9.31.20_pm.png" width="500" alt="3d model of machine prototype"><img src="https://cloud-e1pbn3n73-hack-club-bot.vercel.app/2screen_shot_2023-02-10_at_9.36.23_pm.png" width="500" alt="machine wheels">
-<img src="https://cloud-e1pbn3n73-hack-club-bot.vercel.app/1screen_shot_2023-02-10_at_9.30.53_pm.png" width="500" alt="machine with improved feet design"><img src="https://cloud-e1pbn3n73-hack-club-bot.vercel.app/0img_3313__2_.jpg" width="500" alt="pen holder that uses nails as rails">
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-e1pbn3n73-hack-club-bot.vercel.app/3screen_shot_2023-02-10_at_9.31.20_pm.png" width="500" alt="3d model of machine prototype"><img src="https://cdn.hackclub.com/rescue?url=https://cloud-e1pbn3n73-hack-club-bot.vercel.app/2screen_shot_2023-02-10_at_9.36.23_pm.png" width="500" alt="machine wheels">
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-e1pbn3n73-hack-club-bot.vercel.app/1screen_shot_2023-02-10_at_9.30.53_pm.png" width="500" alt="machine with improved feet design"><img src="https://cdn.hackclub.com/rescue?url=https://cloud-e1pbn3n73-hack-club-bot.vercel.app/0img_3313__2_.jpg" width="500" alt="pen holder that uses nails as rails">
 
 ## 2023-02-03 - @exu3
 

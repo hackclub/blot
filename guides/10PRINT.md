@@ -1,6 +1,6 @@
 ---
 title: 10PRINT
-thumbnail: https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp
+thumbnail: https://cdn.hackclub.com/rescue?url=https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp
 contributors: henrybass
 ---
 
@@ -12,7 +12,7 @@ _This tutorial is aimed at beginners, but it works best if you have a little pri
 `10 PRINT CHR$(205.5+RND(1)); : GOTO 10`
 From just that one line, the following intricate pattern is created:
 
-<img alt="10print" src="https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp" width="512"/>
+<img alt="10print" src="https://cdn.hackclub.com/rescue?url=https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp" width="512"/>
 
 There's even a book named after this program: [10print.org](https://10print.org/)! For this guide, let's try to replicate this artwork for **_Blot_**. (This tutorial works fine if you don't have one!)
 
@@ -20,7 +20,7 @@ A Blot is a small drawing robot that can be programed from a browser. You send i
 
 <img src="https://haxidraw.hackclub.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdrawing-machine.726ff526.png&w=3840&q=75" width="512"/>
 
-<img src="https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 Here are some examples of art people have made with Blot:
 
@@ -42,7 +42,7 @@ On a high level, here's our strategy:
 
 This looks like:
 
-<img src="https://cloud-eeo1n3h1p-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-eeo1n3h1p-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 So, let's start making something! Boot up the editor at [editor.haxidraw.hackclub.com](https://editor.haxidraw.hackclub.com/). On the left side of the screen, you write code. On the other side, you can see a preview of what you're building. At any point, press "**Run Code**" at the top to see what you've made so far.
 
@@ -101,7 +101,7 @@ Raise the pen, but this time, start out a bit to the right of `x, y`. Lower the 
 
 Visually, this looks like:
 
-<img src="https://cloud-3xbhxnc09-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-3xbhxnc09-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 We've finished the drawing function, but we still need to call it. To run some code repeatedly, we use a `for` loop. We move across each row, left to right. At each grid cell, we call the `draw` function to draw the random slash. Once we hit the end of a row, we return to the start.
 
@@ -136,7 +136,7 @@ And, lastly, let's draw this to the screen! This is done simply by calling the f
 
 And, you're done! If all went well, you should be seeing something like the below art:
 
-<img src="https://cloud-e0wpk8chk-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-e0wpk8chk-hack-club-bot.vercel.app/0image.png" width="512"/>
 
 Great job! You can still go farther with this, if you want.
 

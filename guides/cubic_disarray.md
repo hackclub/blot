@@ -1,12 +1,12 @@
 ---
 title: Cubic Disarray
-thumbnail: https://cloud-r9jbhouts-hack-club-bot.vercel.app/0im.webp
+thumbnail: https://cdn.hackclub.com/rescue?url=https://cloud-r9jbhouts-hack-club-bot.vercel.app/0im.webp
 contributors: henrybass
 ---
 
 **_Georg Nees_** was a pioneer of digital art, responsible for interesting works like Cubic Disarray.
 
-<img alt="cubic disarray" src="https://cloud-r9jbhouts-hack-club-bot.vercel.app/0im.webp" width="512"/>
+<img alt="cubic disarray" src="https://cdn.hackclub.com/rescue?url=https://cloud-r9jbhouts-hack-club-bot.vercel.app/0im.webp" width="512"/>
 
 Let's try to recreate this in the Blot editor. A good first step to reverse engineering any artwork is to break it down into the obvious components. There's a grid of squares, and the squares closer to the bottom seem to be rotated more and more.
 
@@ -73,4 +73,4 @@ for (let x = 0; x < size; x++) {
 
 And, you're done! The final result should look something like this in the editor:
 
-<img src="https://cloud-ot8pxbd0h-hack-club-bot.vercel.app/0image.png" width="512"/>
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-ot8pxbd0h-hack-club-bot.vercel.app/0image.png" width="512"/>

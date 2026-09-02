@@ -1,6 +1,6 @@
 # Blot
 
-<img width="500" alt="drawing machine with a turtle illustration" src="https://cloud-g6sk6by5j-hack-club-bot.vercel.app/0screenshot_2023-04-06_at_1.50.17_pm.png" align="right" />
+<img width="500" alt="drawing machine with a turtle illustration" src="https://cdn.hackclub.com/rescue?url=https://cloud-g6sk6by5j-hack-club-bot.vercel.app/0screenshot_2023-04-06_at_1.50.17_pm.png" align="right" />
 
  Blot is a "you ship, we ship" project, similar to [Sprig](https://sprig.hackclub.com). This time if you make some digital art we'll send you the parts to build a robot which can make that art real.
 
@@ -18,15 +18,15 @@ The 3D printed parts are found in [`/stls`](./stls) if you are able to print the
 
 | Part              | Quantity | Image                                                                                                            | notes |
 | ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------- | ----- |
-| Belt clip         | 1        | <img alt="belt clip" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/3beltclip.png" width="200" />         |       |
-| Foot              | 2        | <img alt="foot" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/6feet.png" width="200" />                  |       |
-| Motor bracket     | 2        | <img alt="motor bracket" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/7motorbracket.png" width="200" /> |       |
-| Carriage          | 1        | <img alt="carriage" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/5carriage.png" width="200" />          |       |
-| Idler front       | 1        | <img alt="idler front" src="https://cloud-4kyr0v6gn-hack-club-bot.vercel.app/0idlerfront.png" width="200" />     |       |
-| Pen holder        | 1        | <img alt="pen holder" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/1penholder.png" width="200" />       |       |
-| Printed rail      | 1        | <img alt="rail" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/2printedrail.png" width="200" />           |       |
-| PCB Mount         | 1        | <img alt="mount" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/0pcbmount.png"                            |       |
-| Management Spacer | 1        | <img alt "spacer" src="https://cloud-r8rwrwooq-hack-club-bot.vercel.app/4cablespacer.png"                        |       |
+| Belt clip         | 1        | <img alt="belt clip" src="https://cdn.hackclub.com/rescue?url=https://cloud-r8rwrwooq-hack-club-bot.vercel.app/3beltclip.png" width="200" />         |       |
+| Foot              | 2        | <img alt="foot" src="https://cdn.hackclub.com/rescue?url=https://cloud-r8rwrwooq-hack-club-bot.vercel.app/6feet.png" width="200" />                  |       |
+| Motor bracket     | 2        | <img alt="motor bracket" src="https://cdn.hackclub.com/rescue?url=https://cloud-r8rwrwooq-hack-club-bot.vercel.app/7motorbracket.png" width="200" /> |       |
+| Carriage          | 1        | <img alt="carriage" src="https://cdn.hackclub.com/rescue?url=https://cloud-r8rwrwooq-hack-club-bot.vercel.app/5carriage.png" width="200" />          |       |
+| Idler front       | 1        | <img alt="idler front" src="https://cdn.hackclub.com/rescue?url=https://cloud-4kyr0v6gn-hack-club-bot.vercel.app/0idlerfront.png" width="200" />     |       |
+| Pen holder        | 1        | <img alt="pen holder" src="https://cdn.hackclub.com/rescue?url=https://cloud-r8rwrwooq-hack-club-bot.vercel.app/1penholder.png" width="200" />       |       |
+| Printed rail      | 1        | <img alt="rail" src="https://cdn.hackclub.com/rescue?url=https://cloud-r8rwrwooq-hack-club-bot.vercel.app/2printedrail.png" width="200" />           |       |
+| PCB Mount         | 1        | <img alt="mount" src="https://cdn.hackclub.com/rescue?url=https://cloud-r8rwrwooq-hack-club-bot.vercel.app/0pcbmount.png"                            |       |
+| Management Spacer | 1        | <img alt "spacer" src="https://cdn.hackclub.com/rescue?url=https://cloud-r8rwrwooq-hack-club-bot.vercel.app/4cablespacer.png"                        |       |
 
 ### Electronics
 

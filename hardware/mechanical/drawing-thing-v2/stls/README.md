@@ -9,7 +9,7 @@
 - [idler-front_x1.stl](./idler-front_x1.stl)
 - [pen-holder_x1.stl](./pen-holder_x1.stl)
 
-<img src="https://cloud-kip63zhfi-hack-club-bot.vercel.app/0img_3948.jpg" alt="parts on Prusa MINI bed" width="500">
+<img src="https://cdn.hackclub.com/rescue?url=https://cloud-kip63zhfi-hack-club-bot.vercel.app/0img_3948.jpg" alt="parts on Prusa MINI bed" width="500">
 
 _I've tried to print the parts for this machine with various printers/filaments/beds/settings, and have listed my takeaways below. This was just my experience, so perhaps yours could be different._
 

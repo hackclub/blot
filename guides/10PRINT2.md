@@ -1,6 +1,6 @@
 ﻿---
 title: 10PRINT2
-thumbnail: https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp
+thumbnail: https://cdn.hackclub.com/rescue?url=https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp
 contributors: henrybass
 ---
 
@@ -16,7 +16,7 @@ From just that one line, the following intricate pattern is be created:
 
 <img
   alt="10print2"
-  src="https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-ajv6et0c3-hack-club-bot.vercel.app/0the_ppg256_article_image.webp"
   width="512px"
 />
 
@@ -25,12 +25,12 @@ There's even a book named after this program: [10print.org](https://10print.org/
 A Blot is a small drawing robot that can be programed from a browser. You send it instructions through code, and it follows those instructions to create a drawing. By the end of this guide, you will have created some art that can be drawn by the machine!
 
 <img
-  src="https://cloud-imp7l9zfa-hack-club-bot.vercel.app/0232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-imp7l9zfa-hack-club-bot.vercel.app/0232548454-cfc5bbb6-f242-43a8-bbec-d573518cc505.jpg"
   width="512px"
 />
 
 <img
-  src="https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-gal4nsl32-hack-club-bot.vercel.app/0image.png"
   width="512px"
 />
 
@@ -79,7 +79,7 @@ drawSlash(0, 0, 10, 10);
 ```
 
 <img
-  src="https://cloud-8v0w01f9r-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-8v0w01f9r-hack-club-bot.vercel.app/0image.png"
   width="512px"
 />
 
@@ -98,7 +98,7 @@ drawSlash(0 + i, 0, 12, 12)
 ```
 
 <img
-  src="https://cloud-q034t1mck-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-q034t1mck-hack-club-bot.vercel.app/0image.png"
   width="512px"
 />
 
@@ -112,7 +112,7 @@ for (let i = 0; i < 10; i++) {
 ```
 
 <img
-  src="https://cloud-gx75sdvws-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-gx75sdvws-hack-club-bot.vercel.app/0image.png"
   width="512px"
 />
 
@@ -128,21 +128,21 @@ for (let i = 0; i < 10; i++) {
 ```
 
 <img
-  src="https://cloud-ivwz75d5q-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-ivwz75d5q-hack-club-bot.vercel.app/0image.png"
   width="512px"
 />
 
 The lines don't quite reach the edge of the screen, though. Try changing `gridCellSize` until it fits.
 
 <img
-  src="https://cloud-3n0g15soa-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-3n0g15soa-hack-club-bot.vercel.app/0image.png"
   width="512px"
 />
 
 We're getting close, but all the lines still face in the same direction. Going back to `drawSlash`, try flipping the lines we draw horizontally, making them face the other way.
 
 <img
-  src="https://cloud-7ho7ggvxw-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-7ho7ggvxw-hack-club-bot.vercel.app/0image.png"
   width="512px"
 />
 
@@ -169,14 +169,14 @@ function drawSlash(x, y, width, height) {
 Good work!
 
 <img
-  src="https://cloud-hu9gaiddg-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-hu9gaiddg-hack-club-bot.vercel.app/0image.png"
   width="512px"
 />
 
 If we change 0.5 to something lower, we see more of one type of line than another.
 
 <img
-  src="https://cloud-bjalbh40g-hack-club-bot.vercel.app/0image.png"
+  src="https://cdn.hackclub.com/rescue?url=https://cloud-bjalbh40g-hack-club-bot.vercel.app/0image.png"
   width="512px"
 />
 
